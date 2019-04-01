@@ -35,6 +35,7 @@ public class PropertyCrop implements IProperty<CropListEntry>
 	@Override
 	public Class getValueClass()
 	{
+		//THIS IS A TEST
 		return CropListEntry.class;
 	}
 	
