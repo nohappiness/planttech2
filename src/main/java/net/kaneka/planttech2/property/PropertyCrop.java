@@ -36,6 +36,7 @@ public class PropertyCrop implements IProperty<CropListEntry>
 	public Class getValueClass()
 	{
 		//THIS IS A TEST
+		int i = 10;
 		return CropListEntry.class;
 	}
 	
