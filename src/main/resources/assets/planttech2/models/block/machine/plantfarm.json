@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": 
+    {
+        "up": "planttech2:blocks/machines/plantfarm_top",
+        "down": "planttech2:blocks/machines/machines_side_top",
+        "north": "planttech2:blocks/machines/machines_side_top",
+        "east": "planttech2:blocks/machines/machines_side_top",
+        "west": "planttech2:blocks/machines/machines_side_top",
+        "south": "planttech2:blocks/machines/machines_side_top"
+    }
+}

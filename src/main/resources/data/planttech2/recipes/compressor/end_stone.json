@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:endstone_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:end_stone",
+      "amount": 1
+    }
+  }

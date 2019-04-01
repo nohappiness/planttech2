@@ -1,0 +1,34 @@
+{
+    "textures": {
+        "connection_east": "planttech2:blocks/cables/connection_both",
+        "cable_texture": "planttech2:blocks/cables/cable"
+    },
+    "elements": [
+        {
+            "name": "connection_east",
+            "from": [14, 6, 6],
+            "to": [16, 10, 10],
+            "faces": {
+                "north": {"uv": [0, 0, 4, 6], "texture": "#connection_east"},
+                "east": {"uv": [6, 6, 10, 10], "texture": "#connection_east"},
+                "south": {"uv": [4, 0, 8, 6], "texture": "#connection_east"},
+                "west": {"uv": [6, 6, 10, 10], "texture": "#connection_east"},
+                "up": {"uv": [4, 0, 8, 6], "texture": "#connection_east"},
+                "down": {"uv": [4, 0, 8, 6], "texture": "#connection_east"}
+            }
+        },
+        {
+            "name": "east",
+            "from": [9, 7, 7],
+            "to": [15, 9, 9],
+            "faces": {
+                "north": {"uv": [0, 7, 7, 9], "texture": "#cable_texture"},
+                "east": {"uv": [0, 7, 2, 9], "texture": "#cable_texture"},
+                "south": {"uv": [9, 7, 16, 9], "texture": "#cable_texture"},
+                "west": {"uv": [0, 7, 2, 9], "texture": "#cable_texture"},
+                "up": {"uv": [9, 7, 16, 9], "texture": "#cable_texture"},
+                "down": {"uv": [9, 7, 16, 9], "texture": "#cable_texture"}
+            }
+        }
+    ]
+}

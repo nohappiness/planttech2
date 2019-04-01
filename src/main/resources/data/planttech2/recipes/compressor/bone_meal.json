@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:color_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:bone_meal",
+      "amount": 1
+    }
+  }

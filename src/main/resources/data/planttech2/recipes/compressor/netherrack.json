@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:netherrack_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:netherrack",
+      "amount": 1
+    }
+  }

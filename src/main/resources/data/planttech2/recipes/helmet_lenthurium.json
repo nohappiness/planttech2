@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "A A",
+        "   "
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:lenthurium_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:helmet_lenthurium",
+        "count": 1
+    }
+}

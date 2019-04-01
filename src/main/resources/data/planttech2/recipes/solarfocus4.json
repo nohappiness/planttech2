@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ABA",
+        "BCB",
+        "ABA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "minecraft:glass_pane"
+        },
+        "B": 
+        {
+            "item": "planttech2:solarfocus_3"
+        },
+        "C": 
+        {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "item": "planttech2:solarfocus_4",
+        "count": 1
+    }
+}

@@ -1,0 +1,15 @@
+modLoader="javafml" #mandatory
+loaderVersion="[24,)" 
+issueTrackerURL="http://my.issue.tracker/" #optional
+logoFile="examplemod.png" 
+credits="Artists: veyezx, BeerCav and andrew0030"
+authors="Kaneka" 
+[[mods]] #mandatory
+modId="planttech2" 
+version="${version}" 
+displayName="PlantTech 2"
+# updateJSONURL="http://myurl.me/" #optional
+# The description text for the mod (multi line!) (#mandatory)
+description='''
+PlantTech 2 combines plants and tech for a whole new experience
+'''

@@ -1,0 +1,49 @@
+{
+    "_comment1": "When not enabled, crops will have no parents and will not be shown in plantencyclopedia",
+    "enabled": true,
+    "_comment2": "0 = extreme Cold, 1 = cold, 2 = normal, 3 = warm, 4 = extreme warm",
+    "temperature": 1,
+    "_comment3": "Allow these items to be used as seeds for this crop when clicking on crop bars",
+    "additional_seeds": [
+        "minecraft:carrot_seeds",
+        "planttech2:dancium_block"
+    ],
+    "_comment4": "Add possible drops to this crop. Droprate depends on productivity trait", 
+    "additional_drops":[
+        {
+            "item": "minecraft:diamond",
+            "min": 0, 
+            "max": 4
+        },
+        {
+            "tag": "forge:block/iron",
+            "min": 0, 
+            "max": 2
+        }, 
+        {
+            "item": "planttech2:dancium_block", 
+            "min": 1, 
+            "max": 5
+        }
+    ],
+    "parents": [
+        {
+            "_comment": "The order of the partner doesnt matter",
+            "_comment2": "Chance to mutate in %",
+            "partner_1": "enderdragon",
+            "partner_2": "enderman",
+            "chance": 5
+        },
+        {
+            "partner_1": "dirt",
+            "partner_2": "diamond",
+            "chance": 2.5
+        },
+        {
+            "partner_1": "copper",
+            "partner_2": "tin", 
+            "chance": 6
+        }
+    ],
+    "soil": "minecraft:farmland"
+}

@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "BCB",
+        "DDD"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "minecraft:emerald"
+        },
+        "B": 
+        {
+            "item": "planttech2:cable"
+        },
+        "C": 
+        {
+            "item": "minecraft:daylight_detector"
+        },
+        "D": 
+        {
+            "item": "planttech2:plantium_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:solargenerator",
+        "count": 1
+    }
+}

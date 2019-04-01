@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "planttech2:dancium_block"
+        }
+    ],
+    "result": {
+        "item": "planttech2:dancium_ingot",
+        "count": 9
+    }
+}

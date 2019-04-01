@@ -1,0 +1,56 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "planttech2:model_crop",
+        "textures": { "bars": "planttech2:blocks/cropbars"}
+    },
+    "variants": {
+        "0": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }   
+        }],
+        "1": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "2": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "3": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "4": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "5": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "6": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_0"
+            }
+        }],
+        "7": [{
+            "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_1"
+            }
+        }]
+    },
+    "inventory": {
+        "model": "crop",
+        "textures": {
+                "crop": "planttech2:blocks/plants/plant_allium_1"
+            }
+    }
+
+}

@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:lava_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:lava_bucket",
+      "amount": 1
+    }
+  }

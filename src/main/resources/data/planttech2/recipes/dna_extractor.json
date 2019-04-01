@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ABA",
+        "ACA",
+        "AAA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+        "B": 
+        {
+            "item": "minecraft:diamond_hoe"
+        },
+        "C": 
+        {
+            "item": "planttech2:dna_container_empty"
+        }
+    },
+    "result": {
+        "item": "planttech2:dna_extractor",
+        "count": 1
+    }
+}

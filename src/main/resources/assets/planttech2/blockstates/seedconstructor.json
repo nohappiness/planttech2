@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "planttech2:block/machine/seedconstructor" },
+        "facing=south": { "model": "planttech2:block/machine/seedconstructor", "y": 180 },
+        "facing=west":  { "model": "planttech2:block/machine/seedconstructor", "y": 270 },
+        "facing=east":  { "model": "planttech2:block/machine/seedconstructor", "y": 90 }
+    }
+}

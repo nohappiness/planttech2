@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:soulsand_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:soul_sand",
+      "amount": 1
+    }
+  }

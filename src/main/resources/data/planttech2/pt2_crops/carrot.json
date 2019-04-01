@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "additional_seeds": [
+        "minecraft:carrot"
+    ],
+    "additional_drops":[
+        {
+            "item": "minecraft:carrot",
+            "min": 0, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+        "block": "minecraft:farmland"
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:squid_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:ink_sac",
+      "amount": 1
+    }
+  }
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:color_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:ink_sac",
+      "amount": 1
+    }
+  }

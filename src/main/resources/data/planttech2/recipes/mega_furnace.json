@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "BCB",
+        "AAA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "minecraft:furnace"
+        },
+        "B": 
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+        "C": 
+        {
+            "item": "planttech2:plantium_block"
+        }
+    },
+    "result": {
+        "item": "planttech2:mega_furnace",
+        "count": 1
+    }
+}

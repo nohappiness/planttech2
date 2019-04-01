@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:shulker_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:shulker_shell",
+      "amount": 1
+    }
+  }

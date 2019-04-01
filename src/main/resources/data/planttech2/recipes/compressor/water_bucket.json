@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:water_particles",
+      "amount": 8
+    },
+    "result": {
+      "item": "minecraft:water_bucket",
+      "amount": 1
+    }
+  }

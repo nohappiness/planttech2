@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "BCB",
+        "AAA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_block"
+        },
+        "B": 
+        {
+            "item": "planttech2:cable"
+        },
+        "C": 
+        {
+            "item": "minecraft:diamond_hoe"
+        }
+    },
+    "result": {
+        "item": "planttech2:plantfarm",
+        "count": 1
+    }
+}

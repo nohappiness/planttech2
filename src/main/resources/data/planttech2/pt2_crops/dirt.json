@@ -1,0 +1,19 @@
+{
+    "enabled": true,
+    "temperature": "WARM",
+    "parents": [
+        {
+            "part1": "",
+            "part2": ""
+        },
+        {
+            "part_1": "",
+            "part_2": ""
+        }
+    ],
+    "soil": 
+    {
+        "block": "minecraft:soil",
+        "tag": "forge:dirt"
+    }
+}

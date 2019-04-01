@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " A ",
+        "ABA",
+        " A "
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+        "B": 
+        {
+            "item": "planttech2:plantium_block"
+        }
+    },
+    "result": {
+        "item": "planttech2:cable",
+        "count": 16
+    }
+}

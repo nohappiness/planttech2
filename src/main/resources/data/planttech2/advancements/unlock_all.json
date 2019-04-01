@@ -1,0 +1,105 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+	    "planttech2:analyser",
+	    "planttech2:boots_dancium",
+	    "planttech2:boots_kanekium",
+	    "planttech2:boots_kinnoium",
+	    "planttech2:boots_lenthurium",
+	    "planttech2:cable",
+	    "planttech2:chestplate_dancium",
+	    "planttech2:chestplate_kanekium",
+	    "planttech2:chestplate_kinnoium",
+	    "planttech2:chestplate_lenthurium",
+	    "planttech2:cropbars",
+	    "planttech2:compressor",
+	    "planttech2:dancium_block",
+	    "planttech2:dancium_ingot1",
+	    "planttech2:dancium_ingot2",
+	    "planttech2:dancium_nugget",
+	    "planttech2:dna_cleaner",
+	    "planttech2:dna_combiner",
+	    "planttech2:dna_container_empty",
+	    "planttech2:dna_extractor",
+	    "planttech2:dna_remover",
+	    "planttech2:guide_genetic_engineering",
+	    "planttech2:guide_overview",
+	    "planttech2:guide_plants",
+	    "planttech2:helmet_dancium",
+	    "planttech2:helmet_kanekium",
+	    "planttech2:helmet_kinnoium",
+	    "planttech2:helmet_lenthurium",
+	    "planttech2:identifier",
+	    "planttech2:kanekium_block",
+	    "planttech2:kanekium_ingot1",
+	    "planttech2:kanekium_ingot2",
+	    "planttech2:kanekium_nugget",
+	    "planttech2:kinnoium_block",
+	    "planttech2:kinnoium_ingot1",
+	    "planttech2:kinnoium_ingot2",
+	    "planttech2:kinnoium_nugget",
+	    "planttech2:leggings_dancium",
+	    "planttech2:leggings_kanekium",
+	    "planttech2:leggings_kinnoium",
+	    "planttech2:leggings_lenthurium",
+	    "planttech2:lenthurium_block",
+	    "planttech2:lenthurium_ingot1",
+	    "planttech2:lenthurium_ingot2",
+	    "planttech2:lenthurium_nugget",
+	    "planttech2:mega_furnace",
+	    "planttech2:plantfarm",
+	    "planttech2:plantium_block",
+	    "planttech2:plantium_ingot",
+	    "planttech2:plantium_ingot2",
+	    "planttech2:plantium_ingot3",
+	    "planttech2:plantium_nugget",
+	    "planttech2:rangeupgrade1",
+	    "planttech2:rangeupgrade2",
+	    "planttech2:rangeupgrade3",
+	    "planttech2:rangeupgrade4",
+	    "planttech2:seedconstructor",
+	    "planttech2:seedsqueezer",
+	    "planttech2:solarfocus1",
+	    "planttech2:solarfocus2",
+	    "planttech2:solarfocus3",
+	    "planttech2:solarfocus4",
+	    "planttech2:solargenerator",
+	    "planttech2:speedupgrade1",
+	    "planttech2:speedupgrade2",
+	    "planttech2:speedupgrade3",
+	    "planttech2:speedupgrade4",
+	    "planttech2:thermometer",
+	    "planttech2:wrench"
+    ],
+    "loot": ["planttech2:guide"]
+  },
+  "criteria": {
+    "has_wheat_seeds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { 
+        "items": [
+          {
+            "item": "minecraft:wheat_seeds"
+          }
+        ]
+      }
+    },
+    "has_iron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:iron_ingot"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_wheat_seeds",
+      "has_iron"
+    ]
+  ]
+}
