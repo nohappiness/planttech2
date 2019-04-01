@@ -18,6 +18,7 @@ public class BlockBase extends Block
 	this.group = group;
 	this.name = name; 
 	setRegistryName(name);
+	//This is a command
     }
 
     public Item createItemBlock()
