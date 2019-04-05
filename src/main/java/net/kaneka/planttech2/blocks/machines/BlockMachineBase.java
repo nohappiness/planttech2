@@ -67,7 +67,7 @@ public class BlockMachineBase extends BlockBase
 
     public BlockMachineBase(String name, ItemGroup group)
     {
-	super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f), name, group);
+	super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f), name, group, true);
     }
 
     public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)

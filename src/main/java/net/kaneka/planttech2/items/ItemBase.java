@@ -15,5 +15,7 @@ public class ItemBase extends Item
 	super(property);
 	this.name = name;
 	setRegistryName(name);
+	
+	ModItems.ITEMS.add(this);
     }
 }

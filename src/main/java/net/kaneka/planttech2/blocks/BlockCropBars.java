@@ -25,7 +25,7 @@ public class BlockCropBars extends BlockBase
 {
     public BlockCropBars()
     {
-	super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", PlantTechMain.groupmain);
+	super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", PlantTechMain.groupmain, true);
     }
 
     @Override

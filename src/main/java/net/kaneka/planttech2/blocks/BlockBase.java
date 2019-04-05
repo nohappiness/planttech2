@@ -12,13 +12,18 @@ public class BlockBase extends Block
     private String name; 
     private ItemGroup group;
 
-    public BlockBase(Properties property, String name, ItemGroup group)
+    public BlockBase(Properties property, String name, ItemGroup group, boolean hasItem)
     {
 	super(property);
 	this.group = group;
 	this.name = name; 
 	setRegistryName(name);
-	//This is a command
+	
+	ModBlocks.BLOCKS.add(this); 
+	if(hasItem)
+	{
+	    ModBlocks.BLOCKITEMS.add(this); 
+	}
     }
 
     public Item createItemBlock()

@@ -71,7 +71,7 @@ public class BlockCable extends BlockBase
 
     public BlockCable()
     {
-	super(Block.Properties.create(Material.IRON), "cable", PlantTechMain.groupmachines);
+	super(Block.Properties.create(Material.IRON), "cable", PlantTechMain.groupmachines, true);
     }
 
     @Override
