@@ -57,12 +57,14 @@ public class BlockMachineFacing extends BlockMachineBase
     {
 	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
-
+    
+    /*
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
 	worldIn.setBlockState(pos, this.getDefaultState().with(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
+    */
 
     @Override
     public IBlockState rotate(IBlockState state, Rotation rot)

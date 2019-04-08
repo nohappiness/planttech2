@@ -12,7 +12,7 @@ public class ContainerEnergyStorage extends ContainerBase
     {
 	super(player, tileentity, 1);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-	this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84));
+	this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 135, 85));
     }
 
 }

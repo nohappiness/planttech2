@@ -1,0 +1,16 @@
+PlantTech 2 Version 0.00.01 MC 1.13.2
+ - As forge isn´t released yet, this is just a testing version.
+ - Cables do not work and can not be done in current forge version, all machines run without energy for testing.
+
+0.00.01 -> 0.00.02
+ - Fixed the gui buttons "next" and "last".
+
+0.00.02 -> 0.00.03
+ - Fixed the issue that no machinegui were able to open.
+
+0.00.03 -> 0.00.04
+ - Fixed errors with the plantfarm. 
+
+0.00.04 -> 0.00.05
+ - Crops are destroyable in creative again
+ - Added Energystorages

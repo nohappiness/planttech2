@@ -28,35 +28,39 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
     @Override
     public void onSlotContentChanged()
     {
-	if (!world.isRemote)
+	if (world != null)
 	{
-	    int newTier = getUpgradeTier(0, 3);
-	    if (currentTier != newTier)
+	    if (!world.isRemote)
 	    {
-		switch (newTier)
+		int newTier = getUpgradeTier(0, 3);
+		if (currentTier != newTier)
 		{
-		case 0:
-		    energystorage.setEnergyMaxStored(1000);
-		    break;
-		case 1:
-		    energystorage.setEnergyMaxStored(10000);
-		    break;
-		case 2:
-		    energystorage.setEnergyMaxStored(100000);
-		    break;
-		case 3:
-		    energystorage.setEnergyMaxStored(1000000);
-		    break;
-		}
-		IBlockState state = world.getBlockState(pos);
-		if(state != null)
-		{
-		    if(state.getBlock() == ModBlocks.ENERGYSTORAGE)
+		    switch (newTier)
 		    {
-			world.setBlockState(pos, state.with(BlockEnergyStorage.TIER, newTier),2);
+		    case 0:
+			energystorage.setEnergyMaxStored(1000);
+			break;
+		    case 1:
+			energystorage.setEnergyMaxStored(10000);
+			break;
+		    case 2:
+			energystorage.setEnergyMaxStored(100000);
+			break;
+		    case 3:
+			energystorage.setEnergyMaxStored(1000000);
+			break;
 		    }
+		    IBlockState state = world.getBlockState(pos);
+		    if (state != null)
+		    {
+			if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
+			{
+			    world.setBlockState(pos, state.with(BlockEnergyStorage.TIER, newTier), 2);
+			    markDirty();
+			}
+		    }
+		    currentTier = newTier;
 		}
-		currentTier = newTier;
 	    }
 	}
     }
@@ -65,7 +69,6 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
     public void read(NBTTagCompound compound)
     {
 	super.read(compound);
-	onSlotContentChanged();
     }
 
     @Override

@@ -21,6 +21,7 @@
     "container.dnacleaner": "DNA Cleaner",
     "container.seedconstructor": "Seedconstructor",
     "container.compressor": "Compressor",
+    "container.energystorage": "Energystorage",
 
     "item.planttech2.guide_overview": "Tablet: Planttech 2 Overview",
     "item.planttech2.guide_plants": "Tablet: Plant Encyclopedia",
@@ -39,6 +40,9 @@
     "item.planttech2.rangeupgrade_1": "Rangeupgrade Tier 1",
     "item.planttech2.rangeupgrade_2": "Rangeupgrade Tier 2",
     "item.planttech2.rangeupgrade_3": "Rangeupgrade Tier 3",
+    "item.planttech2.capacityupgrade_1": "Capacityupgrade Tier 1",
+    "item.planttech2.capacityupgrade_2": "Capacityupgrade Tier 2",
+    "item.planttech2.capacityupgrade_3": "Capacityupgrade Tier 3",
     "item.planttech2.rangeupgrade_4": "Rangeupgrade Tier 4",
     "item.planttech2.plantium_ingot": "Plantium Ingot",
     "item.planttech2.plantium_nugget": "Plantium Nugget",
@@ -471,6 +475,7 @@
     "block.planttech2.dna_cleaner": "DNA Cleaner",
     "block.planttech2.seedconstructor": "Seedconstructor",
     "block.planttech2.compressor": "Compressor",
+    "block.planttech2.energystorage": "Energystorage",
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",
