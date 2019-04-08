@@ -135,6 +135,8 @@ public class BlockMachineBase extends BlockBase
 	    return new TileEntityDNACleaner();
 	else if (this == ModBlocks.COMPRESSOR)
 	    return new TileEntityCompressor();
+	else if (this == ModBlocks.ENERGYSTORAGE)    
+	    return new TileEntityEnergyStorage();
 	else
 	    return new TileEntityIdentifier();
     }
@@ -163,8 +165,8 @@ public class BlockMachineBase extends BlockBase
 	    return new ContainerDNACleaner(playerInventory, (TileEntityDNACleaner) te);
 	else if (this == ModBlocks.COMPRESSOR && te instanceof TileEntityCompressor)
 	    return new ContainerCompressor(playerInventory, (TileEntityCompressor) te);
-	/*else if (this == ModBlocks.ENERGYSTORAGE && te instanceof TileEntityEnergyStorage)
-	    return new ContainerEnergyStorage(playerInventory, (TileEntityEnergyStorage) te);*/
+	else if (this == ModBlocks.ENERGYSTORAGE && te instanceof TileEntityEnergyStorage)
+	    return new ContainerEnergyStorage(playerInventory, (TileEntityEnergyStorage) te);
 	else
 	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
     }
@@ -199,6 +201,8 @@ public class BlockMachineBase extends BlockBase
 		return GUIReferences.GUI_DNA_CLEANER;
 	    else if (this == ModBlocks.COMPRESSOR)
 		return GUIReferences.GUI_COMPRESSOR;
+	    else if(this == ModBlocks.ENERGYSTORAGE)
+		return GUIReferences.GUI_ENERGYSTORAGE;
 	    else return GUIReferences.GUI_IDENTIFIER; 
     }
     

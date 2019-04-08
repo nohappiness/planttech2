@@ -93,6 +93,11 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
     {
 	return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
     }
+    
+    public void onSlotContentChanged()
+    {
+	
+    }
 
     public int getField(int id)
     {

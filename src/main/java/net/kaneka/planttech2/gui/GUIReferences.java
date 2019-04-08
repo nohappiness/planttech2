@@ -18,5 +18,6 @@ public class GUIReferences
 	public static final String GUI_SEEDCONSTRUCTOR = "tileentityseedconstructor"; 
 	public static final String GUI_DNA_CLEANER = "tileentitydnacleaner"; 
 	public static final String GUI_COMPRESSOR = "tileentitycompressor"; 
+	public static final String GUI_ENERGYSTORAGE = "tileentityenergystorage"; 
 	
 }

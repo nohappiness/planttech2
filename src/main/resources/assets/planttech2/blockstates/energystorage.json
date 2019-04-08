@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=north,tier=0": { "model": "planttech2:block/machine/energystorage_tier_1" },
+        "facing=south,tier=0": { "model": "planttech2:block/machine/energystorage_tier_1", "y": 180 },
+        "facing=west,tier=0":  { "model": "planttech2:block/machine/energystorage_tier_1", "y": 270 },
+        "facing=east,tier=0":  { "model": "planttech2:block/machine/energystorage_tier_1", "y": 90 },
+        "facing=north,tier=1": { "model": "planttech2:block/machine/energystorage_tier_2" },
+        "facing=south,tier=1": { "model": "planttech2:block/machine/energystorage_tier_2", "y": 180 },
+        "facing=west,tier=1":  { "model": "planttech2:block/machine/energystorage_tier_2", "y": 270 },
+        "facing=east,tier=1":  { "model": "planttech2:block/machine/energystorage_tier_2", "y": 90 },
+        "facing=north,tier=2": { "model": "planttech2:block/machine/energystorage_tier_3" },
+        "facing=south,tier=2": { "model": "planttech2:block/machine/energystorage_tier_3", "y": 180 },
+        "facing=west,tier=2":  { "model": "planttech2:block/machine/energystorage_tier_3", "y": 270 },
+        "facing=east,tier=2":  { "model": "planttech2:block/machine/energystorage_tier_3", "y": 90 },
+        "facing=north,tier=3": { "model": "planttech2:block/machine/energystorage_tier_4" },
+        "facing=south,tier=3": { "model": "planttech2:block/machine/energystorage_tier_4", "y": 180 },
+        "facing=west,tier=3":  { "model": "planttech2:block/machine/energystorage_tier_4", "y": 270 },
+        "facing=east,tier=3":  { "model": "planttech2:block/machine/energystorage_tier_4", "y": 90 }
+    }
+}

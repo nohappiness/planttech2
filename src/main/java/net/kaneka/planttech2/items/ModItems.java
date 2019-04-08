@@ -29,6 +29,9 @@ public class ModItems
     
     public static ItemBase ANALYSER = new ItemAnalyser(), 
 	    		   BIOMASS = new ItemBase("biomass", new Item.Properties().group(PlantTechMain.groupmain)),  
+	    		   CAPACITYUPGRADE_TIER_1 = new ItemWithTier("capacityupgrade_1", new Item.Properties().group(PlantTechMain.groupmain), 1, 3),
+	    		   CAPACITYUPGRADE_TIER_2 = new ItemWithTier("capacityupgrade_2", new Item.Properties().group(PlantTechMain.groupmain), 2, 3),
+	    		   CAPACITYUPGRADE_TIER_3 = new ItemWithTier("capacityupgrade_3", new Item.Properties().group(PlantTechMain.groupmain), 3, 3),
 	    		   COLOR_PARTICLES = new ItemParticle("color"),
 	    		   DNA_CONTAINER_EMPTY = new ItemBase("dna_container_empty", new Item.Properties().group(PlantTechMain.groupmain)), 
 	    		   DNA_CONTAINER = new ItemDNAContainer(), 

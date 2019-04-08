@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.machines.BlockCable;
+import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
 import net.kaneka.planttech2.blocks.machines.BlockMachineBase;
 import net.kaneka.planttech2.blocks.machines.BlockMachineFacing;
 import net.kaneka.planttech2.items.ItemCropSeed;
@@ -33,7 +34,7 @@ public class ModBlocks
                             DNA_COMBINER = new BlockMachineFacing("dna_combiner", PlantTechMain.groupmachines),
                 	    DNA_EXTRACTOR = new BlockMachineFacing("dna_extractor", PlantTechMain.groupmachines),
                             DNA_REMOVER = new BlockMachineFacing("dna_remover", PlantTechMain.groupmachines),
-                            ENERGYSTORAGE = new BlockMachineFacing("energystorage", PlantTechMain.groupmachines), 
+                            ENERGYSTORAGE = new BlockEnergyStorage(), 
                             IDENTIFIER = new BlockMachineFacing("identifier", PlantTechMain.groupmachines),    	    
                             KANEKIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kanekium_block", PlantTechMain.groupmain, true),
                             KINNOIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kinnoium_block", PlantTechMain.groupmain, true),        

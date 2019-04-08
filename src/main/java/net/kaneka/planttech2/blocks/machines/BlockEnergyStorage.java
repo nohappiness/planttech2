@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.ModBlocks;
+import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
@@ -9,25 +9,24 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockMachineFacing extends BlockMachineBase
+public class BlockEnergyStorage extends BlockMachineBase
 {
     public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
-
-    public BlockMachineFacing(String name, ItemGroup tab)
+    public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 3);
+    
+    public BlockEnergyStorage()
     {
-	super(name, tab);
-	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH));
+	super("energystorage", PlantTechMain.groupmachines);
+	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH).with(TIER, 0));
     }
-
     
     @Override
     public void onBlockAdded(IBlockState state, World worldIn, BlockPos pos, IBlockState oldState)
@@ -48,16 +47,16 @@ public class BlockMachineFacing extends BlockMachineBase
 		face = EnumFacing.EAST;
 	    else if (face == EnumFacing.EAST && east.isFullCube() && !west.isFullCube())
 		face = EnumFacing.WEST;
-	    worldIn.setBlockState(pos, state.with(FACING, face), 2);
+	    worldIn.setBlockState(pos, state.with(FACING, face).with(TIER, 0), 2);
 	}
     }
-
+    
     @Override
     public IBlockState getStateForPlacement(BlockItemUseContext context)
     {
 	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
-
+    
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
     {
@@ -79,7 +78,7 @@ public class BlockMachineFacing extends BlockMachineBase
     @Override
     protected void fillStateContainer(Builder<Block, IBlockState> builder)
     {
-        builder.add(FACING);
+        builder.add(FACING).add(TIER);
     }
 
 }

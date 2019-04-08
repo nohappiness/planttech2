@@ -18,6 +18,7 @@ import net.kaneka.planttech2.gui.GUIDNACleaner;
 import net.kaneka.planttech2.gui.GUIDNACombiner;
 import net.kaneka.planttech2.gui.GUIDNAExtractor;
 import net.kaneka.planttech2.gui.GUIDNARemover;
+import net.kaneka.planttech2.gui.GUIEnergyStorage;
 import net.kaneka.planttech2.gui.GUIIdentifier;
 import net.kaneka.planttech2.gui.GUIMegaFurnace;
 import net.kaneka.planttech2.gui.GuiGuidePlants;
@@ -33,6 +34,7 @@ import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACombiner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNARemover;
+import net.kaneka.planttech2.tileentity.machine.TileEntityEnergyStorage;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
@@ -153,12 +155,19 @@ public class GuiHandler
 		return new GUISolarGenerator(player.inventory, (TileEntitySolarGenerator) te);
 	    }
 	}
+	else if (path.equals(GUIReferences.GUI_ENERGYSTORAGE))
+	{
+	    BlockPos pos = msg.getAdditionalData().readBlockPos();
+	    TileEntity te = Minecraft.getInstance().world.getTileEntity(pos);
+	    if(te instanceof TileEntityEnergyStorage)
+	    {
+		return new GUIEnergyStorage(player.inventory, (TileEntityEnergyStorage) te);
+	    }
+	}
 	else 
 	{
 	    PlantTechMain.LOGGER.info("Unknown guiID:" + path);
 	}
-	
-	
 	
 	return null;
     }

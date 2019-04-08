@@ -4,6 +4,7 @@ import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
+import net.kaneka.planttech2.tileentity.machine.TileEntityEnergy;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
@@ -100,9 +101,9 @@ public class ContainerCompressor extends ContainerBase
 
 class ChangeCheckSlot extends SlotItemHandler
 {
-    private TileEntityCompressor te; 
+    private TileEntityEnergy te; 
 
-    public ChangeCheckSlot(TileEntityCompressor te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
+    public ChangeCheckSlot(TileEntityEnergy te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
     {
 	super(itemHandler, index, xPosition, yPosition);
 	this.te = te; 
@@ -111,7 +112,7 @@ class ChangeCheckSlot extends SlotItemHandler
     @Override
     public void onSlotChanged()
     {
-	te.setRecipe();
+	te.onSlotContentChanged();
 	super.onSlotChanged();
     }
 }
