@@ -4,6 +4,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.librarys.CropListEntry;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

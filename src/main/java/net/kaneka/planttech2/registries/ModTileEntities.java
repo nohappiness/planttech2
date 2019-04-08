@@ -1,6 +1,7 @@
-package net.kaneka.planttech2.tileentity;
+package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.kaneka.planttech2.tileentity.cable.TileEntityCable;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;

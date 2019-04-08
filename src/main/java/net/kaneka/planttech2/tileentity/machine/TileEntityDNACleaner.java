@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.ContainerDNACleaner;
-import net.kaneka.planttech2.items.ModItems;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

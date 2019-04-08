@@ -2,11 +2,11 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockCropBase;
-import net.kaneka.planttech2.blocks.ModBlocks;
 import net.kaneka.planttech2.container.ContainerPlantFarm;
 import net.kaneka.planttech2.items.ItemWithTier;
-import net.kaneka.planttech2.items.ModItems;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.block.state.IBlockState;

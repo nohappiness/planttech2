@@ -4,8 +4,8 @@ import java.awt.Color;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerSolarGenerator;
-import net.kaneka.planttech2.items.ModItems;
 import net.kaneka.planttech2.proxy.ClientProxy;
+import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.kaneka.planttech2.utilities.Constants;

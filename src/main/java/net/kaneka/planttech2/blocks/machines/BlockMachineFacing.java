@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.ModBlocks;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;

@@ -18,6 +18,7 @@ import net.kaneka.planttech2.gui.GuiGuideGeneticEngineering;
 import net.kaneka.planttech2.gui.GuiGuideOverview;
 import net.kaneka.planttech2.gui.GuiGuidePlants;
 import net.kaneka.planttech2.librarys.CropListEntryConfiguration;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;

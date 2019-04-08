@@ -12,10 +12,10 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerCompressor;
-import net.kaneka.planttech2.items.ModItems;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -3,7 +3,7 @@ package net.kaneka.planttech2.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.kaneka.planttech2.blocks.ModBlocks;
+import net.kaneka.planttech2.registries.ModBlocks;
 
 public class GUIReferences
 {

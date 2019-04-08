@@ -4,8 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-import net.kaneka.planttech2.blocks.ModBlocks;
-import net.kaneka.planttech2.items.ModItems;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

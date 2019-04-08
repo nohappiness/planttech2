@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.ModBlocks;
 import net.kaneka.planttech2.blocks.machines.BlockCable;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

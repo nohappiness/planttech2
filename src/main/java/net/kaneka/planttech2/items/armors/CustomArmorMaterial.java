@@ -2,13 +2,12 @@ package net.kaneka.planttech2.items.armors;
 
 import java.util.function.Supplier;
 
-import net.kaneka.planttech2.items.ModItems;
-
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadBase;
 import net.minecraft.util.SoundEvent;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.init.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

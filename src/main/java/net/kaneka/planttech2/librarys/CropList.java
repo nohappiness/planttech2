@@ -15,13 +15,13 @@ import java.util.Set;
 import org.apache.commons.lang3.text.WordUtils;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.ModBlocks;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.filehelper.BlacklistFileHandler;
 import net.kaneka.planttech2.filehelper.ParentsFileHandler;
 import net.kaneka.planttech2.filehelper.SoilFileHandler;
 import net.kaneka.planttech2.filehelper.TemperatureFileHandler;
-import net.kaneka.planttech2.items.ModItems;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiBossOverlay;
 import net.minecraft.client.gui.GuiScreenBook;

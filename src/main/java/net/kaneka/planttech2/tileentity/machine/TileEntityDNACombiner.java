@@ -4,8 +4,8 @@ import java.util.Random;
 
 import net.kaneka.planttech2.container.ContainerDNACombiner;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.items.ModItems;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

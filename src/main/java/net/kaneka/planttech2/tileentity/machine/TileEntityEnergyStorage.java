@@ -1,10 +1,10 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.blocks.ModBlocks;
 import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
 import net.kaneka.planttech2.container.ContainerCompressor;
 import net.kaneka.planttech2.container.ContainerEnergyStorage;
-import net.kaneka.planttech2.tileentity.ModTileEntities;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -53,7 +53,7 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
 		{
 		    if(state.getBlock() == ModBlocks.ENERGYSTORAGE)
 		    {
-			world.setBlockState(pos, state.with(BlockEnergyStorage.TIER, newTier));
+			world.setBlockState(pos, state.with(BlockEnergyStorage.TIER, newTier),2);
 		    }
 		}
 		currentTier = newTier;
@@ -78,10 +78,5 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
 	return new ContainerEnergyStorage(playerInventory, this);
-    }
-    
-    @Override
-    public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
-        return oldState.getBlock() != newSate.getBlock();
     }
 }

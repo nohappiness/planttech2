@@ -9,6 +9,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockCropBase;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;

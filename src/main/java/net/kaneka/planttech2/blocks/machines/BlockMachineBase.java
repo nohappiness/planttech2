@@ -7,7 +7,6 @@ import java.util.function.Consumer;
 import io.netty.buffer.Unpooled;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockBase;
-import net.kaneka.planttech2.blocks.ModBlocks;
 import net.kaneka.planttech2.container.ContainerCompressor;
 import net.kaneka.planttech2.container.ContainerDNACleaner;
 import net.kaneka.planttech2.container.ContainerDNACombiner;
@@ -21,6 +20,7 @@ import net.kaneka.planttech2.container.ContainerSeedSqueezer;
 import net.kaneka.planttech2.container.ContainerSeedconstructor;
 import net.kaneka.planttech2.container.ContainerSolarGenerator;
 import net.kaneka.planttech2.gui.GUIReferences;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACombiner;
@@ -74,14 +74,12 @@ public class BlockMachineBase extends BlockBase
     {
 	return this;
     }
-    
+
     @Override
     public ItemStack getPickBlock(IBlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, EntityPlayer player)
     {
-        return new ItemStack(this);
+	return new ItemStack(this);
     }
-
-   
 
     @Override
     public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
@@ -89,9 +87,12 @@ public class BlockMachineBase extends BlockBase
 	if (!world.isRemote)
 	{
 	    TileEntity te = world.getTileEntity(pos);
-	    if(te instanceof TileEntityEnergy)
+	    if (te instanceof TileEntityEnergy)
 	    {
-        	    NetworkHooks.openGui((EntityPlayerMP) player, (TileEntityEnergy)te, extraData -> {extraData.writeBlockPos(pos);});
+		NetworkHooks.openGui((EntityPlayerMP) player, (TileEntityEnergy) te, extraData ->
+		{
+		    extraData.writeBlockPos(pos);
+		});
 	    }
 	}
 
@@ -109,7 +110,7 @@ public class BlockMachineBase extends BlockBase
     {
 	return true;
     }
-    
+
     @Override
     public TileEntity createTileEntity(IBlockState state, IBlockReader world)
     {
@@ -135,12 +136,12 @@ public class BlockMachineBase extends BlockBase
 	    return new TileEntityDNACleaner();
 	else if (this == ModBlocks.COMPRESSOR)
 	    return new TileEntityCompressor();
-	else if (this == ModBlocks.ENERGYSTORAGE)    
+	else if (this == ModBlocks.ENERGYSTORAGE)
 	    return new TileEntityEnergyStorage();
 	else
 	    return new TileEntityIdentifier();
     }
-    
+
     public Container createContainer(InventoryPlayer playerInventory, TileEntity te)
     {
 	if (this == ModBlocks.IDENTIFIER && te instanceof TileEntityIdentifier)
@@ -176,49 +177,53 @@ public class BlockMachineBase extends BlockBase
     {
 	return EnumBlockRenderType.MODEL;
     }
-    
+
     public String getGuiString()
     {
 	if (this == ModBlocks.IDENTIFIER)
-		return GUIReferences.GUI_IDENTIFIER;
-	    else if (this == ModBlocks.MEGAFURNACE)
-		return GUIReferences.GUI_MEGA_FURNACE; 
-	    else if (this == ModBlocks.PLANTFARM)
-		return GUIReferences.GUI_PLANTFARM;
-	    else if (this == ModBlocks.SOLARGENERATOR)
-		return GUIReferences.GUI_SOLARGENERATOR;
-	    else if (this == ModBlocks.SEEDSQUEEZER)
-		return GUIReferences.GUI_SEEDSQUEEZER;
-	    else if (this == ModBlocks.DNA_COMBINER)
-		return GUIReferences.GUI_DNA_COMBINER;
-	    else if (this == ModBlocks.DNA_EXTRACTOR)
-		return GUIReferences.GUI_DNA_EXTRACTOR;
-	    else if (this == ModBlocks.DNA_REMOVER)
-		return GUIReferences.GUI_DNA_REMOVER;
-	    else if (this == ModBlocks.SEEDCONSTRUCTOR)
-		return GUIReferences.GUI_SEEDCONSTRUCTOR;
-	    else if (this == ModBlocks.DNA_CLEANER)
-		return GUIReferences.GUI_DNA_CLEANER;
-	    else if (this == ModBlocks.COMPRESSOR)
-		return GUIReferences.GUI_COMPRESSOR;
-	    else if(this == ModBlocks.ENERGYSTORAGE)
-		return GUIReferences.GUI_ENERGYSTORAGE;
-	    else return GUIReferences.GUI_IDENTIFIER; 
+	    return GUIReferences.GUI_IDENTIFIER;
+	else if (this == ModBlocks.MEGAFURNACE)
+	    return GUIReferences.GUI_MEGA_FURNACE;
+	else if (this == ModBlocks.PLANTFARM)
+	    return GUIReferences.GUI_PLANTFARM;
+	else if (this == ModBlocks.SOLARGENERATOR)
+	    return GUIReferences.GUI_SOLARGENERATOR;
+	else if (this == ModBlocks.SEEDSQUEEZER)
+	    return GUIReferences.GUI_SEEDSQUEEZER;
+	else if (this == ModBlocks.DNA_COMBINER)
+	    return GUIReferences.GUI_DNA_COMBINER;
+	else if (this == ModBlocks.DNA_EXTRACTOR)
+	    return GUIReferences.GUI_DNA_EXTRACTOR;
+	else if (this == ModBlocks.DNA_REMOVER)
+	    return GUIReferences.GUI_DNA_REMOVER;
+	else if (this == ModBlocks.SEEDCONSTRUCTOR)
+	    return GUIReferences.GUI_SEEDCONSTRUCTOR;
+	else if (this == ModBlocks.DNA_CLEANER)
+	    return GUIReferences.GUI_DNA_CLEANER;
+	else if (this == ModBlocks.COMPRESSOR)
+	    return GUIReferences.GUI_COMPRESSOR;
+	else if (this == ModBlocks.ENERGYSTORAGE)
+	    return GUIReferences.GUI_ENERGYSTORAGE;
+	else
+	    return GUIReferences.GUI_IDENTIFIER;
     }
-    
+
     @Override
     public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
     {
-	if (worldIn.getTileEntity(pos) instanceof TileEntityEnergyInventory)
+	if (state.getBlock() != newState.getBlock())
 	{
-	    TileEntityEnergyInventory te = (TileEntityEnergyInventory) worldIn.getTileEntity(pos);
-	    List<ItemStack> toSpawn = te.getInventoryContent();
-	    for (ItemStack stack: toSpawn)
+	    if (worldIn.getTileEntity(pos) instanceof TileEntityEnergyInventory)
 	    {
-		worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+		TileEntityEnergyInventory te = (TileEntityEnergyInventory) worldIn.getTileEntity(pos);
+		List<ItemStack> toSpawn = te.getInventoryContent();
+		for (ItemStack stack : toSpawn)
+		{
+		    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+		}
 	    }
+	    super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
-        super.onReplaced(state, worldIn, pos, newState, isMoving);
     }
 
 }

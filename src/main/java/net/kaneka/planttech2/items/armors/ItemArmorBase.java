@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.items.armors;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.ModItems;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

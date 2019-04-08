@@ -1,10 +1,14 @@
-package net.kaneka.planttech2.blocks;
+package net.kaneka.planttech2.registries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.blocks.BlockBase;
+import net.kaneka.planttech2.blocks.BlockCropBars;
+import net.kaneka.planttech2.blocks.BlockCropBase;
+import net.kaneka.planttech2.blocks.BlockCropBase.ColorHandler;
 import net.kaneka.planttech2.blocks.machines.BlockCable;
 import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
 import net.kaneka.planttech2.blocks.machines.BlockMachineBase;

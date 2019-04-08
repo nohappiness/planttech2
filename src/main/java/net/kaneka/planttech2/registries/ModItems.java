@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.items;
+package net.kaneka.planttech2.registries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,17 @@ import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GUIReferences;
+import net.kaneka.planttech2.items.ItemAnalyser;
+import net.kaneka.planttech2.items.ItemBase;
+import net.kaneka.planttech2.items.ItemCropSeed;
+import net.kaneka.planttech2.items.ItemDNAContainer;
+import net.kaneka.planttech2.items.ItemFertilizer;
+import net.kaneka.planttech2.items.ItemGuide;
+import net.kaneka.planttech2.items.ItemParticle;
+import net.kaneka.planttech2.items.ItemThermometer;
+import net.kaneka.planttech2.items.ItemWithTier;
+import net.kaneka.planttech2.items.ItemWrench;
+import net.kaneka.planttech2.items.ItemParticle.ColorHandler;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
 import net.kaneka.planttech2.items.armors.ItemArmorBase;
 import net.kaneka.planttech2.librarys.CropListEntry;
