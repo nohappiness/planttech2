@@ -9,12 +9,10 @@ import net.minecraft.item.Item;
 
 public class ItemBase extends Item
 {
-    protected String name;
 
     public ItemBase(String name, Properties property)
     {
 	super(property);
-	this.name = name;
 	setRegistryName(name);
 	
 	ModItems.ITEMS.add(this);

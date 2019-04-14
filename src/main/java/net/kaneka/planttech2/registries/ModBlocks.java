@@ -80,6 +80,7 @@ public class ModBlocks
 
     }
 
+    @OnlyIn(Dist.CLIENT)
     public static void registerBlockColorHandler(ColorHandlerEvent.Block event)
     {
 	for(BlockCropBase block: CROPS.values())

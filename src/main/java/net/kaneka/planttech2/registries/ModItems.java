@@ -8,6 +8,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GUIReferences;
 import net.kaneka.planttech2.items.ItemAnalyser;
 import net.kaneka.planttech2.items.ItemBase;
+import net.kaneka.planttech2.items.ItemBiomassContainer;
 import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.items.ItemDNAContainer;
 import net.kaneka.planttech2.items.ItemFertilizer;
@@ -29,6 +30,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -39,7 +42,8 @@ public class ModItems
     public static List<ItemArmorBase> ITEMSARMOR = new ArrayList<ItemArmorBase>(); 
     
     public static ItemBase ANALYSER = new ItemAnalyser(), 
-	    		   BIOMASS = new ItemBase("biomass", new Item.Properties().group(PlantTechMain.groupmain)),  
+	    		   BIOMASS = new ItemBase("biomass", new Item.Properties().group(PlantTechMain.groupmain)), 
+	    		   BIOMASSCONTAINER = new ItemBiomassContainer(),
 	    		   CAPACITYUPGRADE_TIER_1 = new ItemWithTier("capacityupgrade_1", new Item.Properties().group(PlantTechMain.groupmain), 1, 3),
 	    		   CAPACITYUPGRADE_TIER_2 = new ItemWithTier("capacityupgrade_2", new Item.Properties().group(PlantTechMain.groupmain), 2, 3),
 	    		   CAPACITYUPGRADE_TIER_3 = new ItemWithTier("capacityupgrade_3", new Item.Properties().group(PlantTechMain.groupmain), 3, 3),
@@ -133,6 +137,7 @@ public class ModItems
 
     }
     
+    @OnlyIn(Dist.CLIENT)
     public static void registerItemColorHandler(ColorHandlerEvent.Item event)
     {
 	for (ItemBase entry : PARTICLES.values())

@@ -35,6 +35,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -47,6 +48,7 @@ public class ItemGuide extends ItemBase
     }
 
     @Override
+    @OnlyIn(Dist.CLIENT)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
     {
 	if (worldIn.isRemote)

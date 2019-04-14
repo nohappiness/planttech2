@@ -8,6 +8,7 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

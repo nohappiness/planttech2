@@ -4,6 +4,7 @@ import net.kaneka.planttech2.container.ContainerDNAExtractor;
 import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.tileentity.machine.TileEntityEnergy;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;

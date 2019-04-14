@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.tileentity.machine.TileEntityEnergy;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

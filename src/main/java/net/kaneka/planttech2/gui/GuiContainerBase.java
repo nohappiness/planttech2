@@ -2,8 +2,8 @@ package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerSolarGenerator;
-import net.kaneka.planttech2.tileentity.machine.TileEntityEnergy;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.kaneka.planttech2.utilities.CustomFontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -42,7 +42,7 @@ public class GuiContainerBase extends GuiContainer
 	        this.renderHoveredToolTip(mouseX, mouseY);
 	}
 	
-	private void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(int mouseX, int mouseY)
 	{
 		drawTooltip( te.getEnergyStored() + "/" + te.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
 	}
@@ -67,6 +67,13 @@ public class GuiContainerBase extends GuiContainer
 	{
 		int i = this.te.getEnergyStored();
 		int j = this.te.getMaxEnergyStored();
+		return i != 0 && j != 0 ? i * pixels / j : 0; 
+	}
+	
+	protected int getFluidStoredScaled(int pixels)
+	{
+		int i = te.getField(2);
+		int j = te.getField(3);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 

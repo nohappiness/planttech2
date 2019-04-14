@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.tileentity.machine;
+package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
     @Override
     public NBTTagCompound write(NBTTagCompound compound)
     {
-	compound.setTag("inventory", this.itemhandler.serializeNBT());
+	compound.setTag("inventory", itemhandler.serializeNBT());
 	super.write(compound);
 	return compound;
     }
@@ -72,9 +72,9 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
     public void read(NBTTagCompound compound)
     {
 	int slotamount = itemhandler.getSlots();// prevent crash
-	this.itemhandler.deserializeNBT(compound.getCompound("inventory"));
-	if (this.itemhandler.getSlots() != slotamount)
-	    this.itemhandler.setSize(slotamount);// prevent crash when invsize changed while update
+	itemhandler.deserializeNBT(compound.getCompound("inventory"));
+	if (itemhandler.getSlots() != slotamount)
+	    itemhandler.setSize(slotamount);// prevent crash when invsize changed while update
 	super.read(compound);
     }
 

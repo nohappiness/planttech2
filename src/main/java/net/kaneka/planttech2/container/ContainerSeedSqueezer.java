@@ -19,20 +19,22 @@ public class ContainerSeedSqueezer extends ContainerBase
 	
 	public ContainerSeedSqueezer(InventoryPlayer player, TileEntitySeedSqueezer tileentity) 
 	{
-		super(player, tileentity, 11);
+		super(player, tileentity, 14);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int y = 0; y < 3; y++)
 		{
 			for(int x = 0; x < 3; x++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 3, 24 + x * 18, 29 + y * 18));
+				this.addSlot(new SlotItemHandler(handler, x + y * 3, 51 + x * 18, 29 + y * 18));
 			}
 		}
 		
 		this.addSlot(new NoAccessSlot(handler, 9, 113, 47));
 		this.addSlot(new SlotItemHandler(handler, 10, 88, 65));
 		this.addSlot(new SlotItemHandler(handler, 11, 138, 47));
+		this.addSlot(new SlotItemHandler(handler, 12, 18, 86));
+		this.addSlot(new SlotItemHandler(handler, 13, 36, 86));
 		
 	}
 	

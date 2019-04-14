@@ -6,6 +6,8 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -13,13 +15,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class TileEntitySeedconstructor extends TileEntityEnergyInventory
+public class TileEntitySeedconstructor extends TileEntityEnergyInventoryFluid
 {
     private int ticksPassed = 0;
 
     public TileEntitySeedconstructor()
     {
-	super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 4);
+	super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 5, 5000);
     }
 
     @Override
@@ -29,11 +31,10 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventory
 	{
 	    ItemStack stack1 = itemhandler.getStackInSlot(0);
 	    ItemStack stack2 = itemhandler.getStackInSlot(1);
-	    ItemStack stack3 = itemhandler.getStackInSlot(2);
 
-	    if (!stack1.isEmpty() && !stack2.isEmpty() && stack3.isEmpty())
+	    if (!stack1.isEmpty() && stack2.isEmpty())
 	    {
-		if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && stack2.getItem() == ModItems.BIOMASS && stack2.getCount() >= 32)
+		if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && fluidtank.getBiomass() >= fluidPerItem())
 		{
 		    if (ticksPassed < ticksPerItem())
 		    {
@@ -62,12 +63,19 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventory
 			    }
 			}
 			ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
-			itemhandler.setStackInSlot(2, traits.addToItemStack(stack));
-			stack2.shrink(32);
+			itemhandler.setStackInSlot(1, traits.addToItemStack(stack));
+			fluidtank.extract(fluidPerItem());
 		    }
 		}
 	    }
 	}
+	
+	doFluidLoop();
+    }
+    
+    public int fluidPerItem()
+    {
+	return 500; 
     }
 
     public int energyPerTick()
@@ -104,43 +112,62 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventory
     @Override
     public int getField(int id)
     {
-	switch (id)
+	if (id < 4)
 	{
-	case 0:
-	case 1:
 	    return super.getField(id);
-	case 2:
-	    return this.ticksPassed;
-	default:
-	    return 0;
+	}
+	else
+	{
+	    switch (id)
+	    {
+	    case 4:
+		return this.ticksPassed;
+	    default:
+		return 0;
+	    }
 	}
     }
 
     @Override
     public void setField(int id, int value)
     {
-	switch (id)
+	if (id < 4)
 	{
-	case 0:
-	case 1:
 	    super.setField(id, value);
-	    break;
-	case 2:
-	    this.ticksPassed = value;
-	    break;
+	}
+	else
+	{
+	    switch (id)
+	    {
+	    case 4:
+		ticksPassed = value;
+		break;
+	    }
 	}
     }
 
     @Override
     public int getAmountFields()
     {
-	return 3;
+	return 5;
     }
 
     @Override
     public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
     {
 	return new ContainerSeedconstructor(playerInventory, this);
+    }
+
+    @Override
+    protected int getFluidInSlot()
+    {
+	return 3;
+    }
+
+    @Override
+    protected int getFluidOutSlot()
+    {
+	return 4;
     }
 
 }

@@ -23,10 +23,12 @@ public class ContainerSeedconstructor extends ContainerBase
 		super(player, tileentity, 18);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 78, 31));
-		this.addSlot(new SlotItemHandler(handler, 1, 114, 31));
-		this.addSlot(new SlotItemHandler(handler, 2, 96, 67));
-		this.addSlot(new SlotItemHandler(handler, 3, 55, 44));
+		this.addSlot(new SlotItemHandler(handler, 0, 96, 30));
+		this.addSlot(new SlotItemHandler(handler, 1, 96, 67));
+		this.addSlot(new SlotItemHandler(handler, 2, 72, 44));
+
+		this.addSlot(new SlotItemHandler(handler, 3, 18, 86));
+		this.addSlot(new SlotItemHandler(handler, 4, 36, 86));
 		
 	}
 	

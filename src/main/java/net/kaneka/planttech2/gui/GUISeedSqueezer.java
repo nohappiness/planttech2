@@ -24,7 +24,7 @@ public class GUISeedSqueezer extends GuiContainerBase
 	{
 		String tileName = this.te.getDisplayName().getUnformattedComponentText();
 		fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) -5, 14, Integer.parseInt("00e803",16));
-		fontRenderer.drawString(String.valueOf(te.getField(3)), (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) -5, 100, Integer.parseInt("00e803",16));
+		
 		this.zLevel =+ 300; 
 		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		this.mc.getTextureManager().bindTexture(TEXTURES);
@@ -45,11 +45,22 @@ public class GUISeedSqueezer extends GuiContainerBase
 		int k = this.getEnergyStoredScaled(74);
 		this.drawTexturedModalRect(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
 		
+		int j = this.getFluidStoredScaled(55);
+		this.drawTexturedModalRect(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);
+		
 	}
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = this.te.getField(2);
+		int i = this.te.getField(4);
 		return i != 0 ? i * pixels / ((TileEntitySeedSqueezer) this.te).getTicksPerItem() : 0;
+	}
+	
+	@Override
+	protected void drawTooltips(int mouseX, int mouseY)
+	{
+	    drawTooltip( te.getField(2) + "/" + te.getField(3), mouseX, mouseY, 27, 28, 16, 55);
+
+	    super.drawTooltips(mouseX,mouseY);
 	}
 }

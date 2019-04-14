@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.tileentity.machine;
+package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.energy.BioEnergyStorage;

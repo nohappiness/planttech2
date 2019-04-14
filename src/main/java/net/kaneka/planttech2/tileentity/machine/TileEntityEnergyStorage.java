@@ -5,6 +5,7 @@ import net.kaneka.planttech2.container.ContainerCompressor;
 import net.kaneka.planttech2.container.ContainerEnergyStorage;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

@@ -3,6 +3,7 @@ package net.kaneka.planttech2.tileentity.machine;
 import net.kaneka.planttech2.container.ContainerDNACleaner;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -97,7 +98,7 @@ public class TileEntityDNACleaner extends TileEntityEnergyInventory
 	case 1:
 	    return super.getField(id);
 	case 2:
-	    return this.ticksPassed;
+	    return ticksPassed;
 	default:
 	    return 0;
 	}
@@ -113,7 +114,7 @@ public class TileEntityDNACleaner extends TileEntityEnergyInventory
 	    super.setField(id, value);
 	    break;
 	case 2:
-	    this.ticksPassed = value;
+	    ticksPassed = value;
 	    break;
 	}
     }

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.filehelper.CropListJSONGenerator;
 import net.kaneka.planttech2.filehelper.RecipeJSONGenerator;
 import net.kaneka.planttech2.filehelper.RecipesCompressorFileHandler;
@@ -114,6 +115,8 @@ public class PlantTechMain
 	
 	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::openGui);
+			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
+			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
 	});
 
 	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -184,6 +187,7 @@ public class PlantTechMain
 	
     }
     
+    /*
     @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
     public static class RegistryForgeEvents
     {
@@ -201,4 +205,5 @@ public class PlantTechMain
 	    ModBlocks.registerBlockColorHandler(event);
 	}
     }
+    */
 }

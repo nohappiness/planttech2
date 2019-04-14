@@ -16,6 +16,7 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

@@ -43,10 +43,10 @@ public class BioEnergyStorage extends EnergyStorage
     public NBTTagCompound serializeNBT()
     {
 	NBTTagCompound nbtList = new NBTTagCompound();
-	nbtList.setInt("energy", this.energy);
-	nbtList.setInt("capacity", this.capacity);
-	nbtList.setInt("maxreceive", this.maxReceive);
-	nbtList.setInt("maxextract", this.maxExtract);
+	nbtList.setInt("energy", energy);
+	nbtList.setInt("capacity", capacity);
+	nbtList.setInt("maxreceive", maxReceive);
+	nbtList.setInt("maxextract", maxExtract);
 	return nbtList;
     }
 
