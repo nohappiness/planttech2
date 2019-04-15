@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,11 +11,9 @@ public class ContainerBase extends Container
 {
     protected final TileEntityEnergy tileentity;
     protected int[] fields;
-    private int amountSlots;
 
     public ContainerBase(InventoryPlayer player, TileEntityEnergy tileentity, int slots)
     {
-	this.amountSlots = slots;
 	for (int y = 0; y < 3; y++)
 	{
 	    for (int x = 0; x < 9; x++)

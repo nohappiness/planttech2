@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.container;
 
 import net.kaneka.planttech2.items.ItemCropSeed;
-import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

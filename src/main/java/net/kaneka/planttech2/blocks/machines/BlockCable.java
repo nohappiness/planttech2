@@ -1,58 +1,37 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Lists;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockBase;
-import net.kaneka.planttech2.blocks.BlockCropBase;
-import net.kaneka.planttech2.gui.GUIReferences;
-import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TileEntityCable;
-import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
-import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.property.IExtendedBlockState;
 import net.minecraftforge.common.property.IExtendedState;
 import net.minecraftforge.common.property.IUnlistedProperty;
-import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class BlockCable extends BlockBase
 {
@@ -74,7 +53,8 @@ public class BlockCable extends BlockBase
 	super(Block.Properties.create(Material.IRON), "cable", PlantTechMain.groupmachines, true);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
 	if (!worldIn.isRemote && hand.equals(EnumHand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
@@ -92,7 +72,8 @@ public class BlockCable extends BlockBase
         return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
     }
     
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)
     {
 	return Item.getItemFromBlock(ModBlocks.CABLE);
@@ -137,7 +118,8 @@ public class BlockCable extends BlockBase
 	return new ItemBlock(this, new Item.Properties().group(PlantTechMain.groupmain)).setRegistryName("cable");
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
     {
 	TileEntity te = worldIn.getTileEntity(pos);
@@ -175,7 +157,6 @@ public class BlockCable extends BlockBase
 	HashMap<Integer, AxisAlignedBB> boxes = getCollisionBoxListConnectionsList(worldIn, pos);
 	HashMap<Integer, RayTraceResult> rayTraces = rayTraceList(pos, start, end, boxes);
 
-	RayTraceResult raytraceresult1 = null;
 	double d1 = 0.0D;
 	int returnval = -1;
 	for (HashMap.Entry<Integer, RayTraceResult> entry : rayTraces.entrySet())
@@ -184,7 +165,6 @@ public class BlockCable extends BlockBase
 
 	    if (d0 > d1)
 	    {
-		raytraceresult1 = entry.getValue();
 		d1 = d0;
 		returnval = entry.getKey();
 
@@ -246,7 +226,8 @@ public class BlockCable extends BlockBase
 	return state;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
     {
 	EnumFacing neighborfacing = null;

@@ -1,15 +1,8 @@
 package net.kaneka.planttech2.gui;
 
-import java.io.IOException;
-
-import net.java.games.input.Mouse;
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.gui.buttons.CustomGuiButton;
 import net.kaneka.planttech2.items.ItemGuide;
-import net.kaneka.planttech2.proxy.ClientProxy;
-import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.utilities.CustomFontRenderer;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -40,9 +33,9 @@ public class GuiGuideBase extends GuiScreen
     public void initGui()
     {
 	super.initGui();
-	if (mc.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+	if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
 	{
-	    mc.getInstance().player.getHeldItemMainhand().setDamage(1);
+	    Minecraft.getInstance().player.getHeldItemMainhand().setDamage(1);
 	}
 	selectedId = -1;
 	this.guiLeft = (this.width - 400) / 2;
@@ -89,8 +82,8 @@ public class GuiGuideBase extends GuiScreen
 
     protected void drawBackground()
     {
-	this.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
-	this.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
+	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
     }
 
     protected void drawForeground()
@@ -101,9 +94,9 @@ public class GuiGuideBase extends GuiScreen
     private void drawFadeInEffect()
     {
 	float percentage = 1f - ((float) fadeInTimer / 50f);
-	this.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
+	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
 
-	this.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
     }
 
     @Override
@@ -165,9 +158,9 @@ public class GuiGuideBase extends GuiScreen
     @Override
     public void onGuiClosed()
     {
-	if (mc.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+	if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
 	{
-	    mc.getInstance().player.getHeldItemMainhand().setDamage(0);
+	    Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
 	}
     }
 }

@@ -2,8 +2,6 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockCropBase;
-import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,11 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class ItemAnalyser extends ItemBase

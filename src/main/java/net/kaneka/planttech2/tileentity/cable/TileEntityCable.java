@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.tileentity.cable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -9,9 +8,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.machines.BlockCable;
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,16 +16,11 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.extensions.IForgeTileEntity;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TileEntityCable extends TileEntity implements ITickable
@@ -40,9 +31,14 @@ public class TileEntityCable extends TileEntity implements ITickable
     { 0, 0, 0, 0, 0, 0 };
     private int maxTransferRate = 20;
 
-    private List<BlockPos> cables = new ArrayList();
+    private List<BlockPos> cables = new ArrayList<BlockPos>();
     private HashMap<Integer, List<Connection>> connectionsMaster = new HashMap<Integer, List<Connection>>()
     {
+	/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 	{
 	    put(0, new ArrayList<Connection>());
 	    put(1, new ArrayList<Connection>());
@@ -80,7 +76,6 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    consumer.clear();
 	    storages.clear();
 
-	    BlockPos nextPos;
 
 	    for (Connection con : this.connectionsMaster.get(0))
 	    {
@@ -364,8 +359,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     public void initCable(IBlockState state)
     {
 	TileEntity te;
-	boolean changedConnections = false;
-	List<BlockPos> neighborMaster = new ArrayList();
+	List<BlockPos> neighborMaster = new ArrayList<BlockPos>();
 	for (EnumFacing facing : EnumFacing.values())
 	{
 	    te = this.getWorld().getTileEntity(this.getPos().offset(facing));
@@ -378,14 +372,10 @@ public class TileEntityCable extends TileEntity implements ITickable
 		    {
 			neighborMaster.add(cable.getMasterPos());
 		    }
-		    changedConnections = true;
 
 		}
 
-		if (te.getCapability(CapabilityEnergy.ENERGY, facing).isPresent())
-		{
-		    changedConnections = true;
-		}
+		
 	    }
 	}
 
@@ -410,7 +400,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    this.combineAndAdd(neighborMaster);
 	    break;
 	}
-	this.checkConnections();
+	checkConnections();
 	markDirty();
 
     }
@@ -418,7 +408,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     public void deleteCable()
     {
 	TileEntity te;
-	List<BlockPos> neighborCables = new ArrayList();
+	List<BlockPos> neighborCables = new ArrayList<BlockPos>();
 	for (EnumFacing facing : EnumFacing.values())
 	{
 	    te = this.getWorld().getTileEntity(this.getPos().offset(facing));

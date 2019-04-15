@@ -1,12 +1,10 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerSeedconstructor;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.EntityPlayer;

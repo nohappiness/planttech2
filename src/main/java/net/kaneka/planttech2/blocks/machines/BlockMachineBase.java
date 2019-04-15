@@ -1,11 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
 import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
-
-import io.netty.buffer.Unpooled;
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockBase;
 import net.kaneka.planttech2.container.ContainerCompressor;
 import net.kaneka.planttech2.container.ContainerDNACleaner;
@@ -42,12 +37,9 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -55,10 +47,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -208,7 +197,8 @@ public class BlockMachineBase extends BlockBase
 	    return GUIReferences.GUI_IDENTIFIER;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
     {
 	if (state.getBlock() != newState.getBlock())

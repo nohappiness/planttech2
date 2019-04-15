@@ -1,10 +1,8 @@
 package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.packets.ButtonPressMessage.ButtonPressMessageHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;

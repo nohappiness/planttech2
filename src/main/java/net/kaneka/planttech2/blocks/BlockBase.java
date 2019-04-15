@@ -1,9 +1,7 @@
 package net.kaneka.planttech2.blocks;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemGroup;

@@ -1,18 +1,6 @@
 package net.kaneka.planttech2.handlers;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.ContainerCompressor;
-import net.kaneka.planttech2.container.ContainerDNACleaner;
-import net.kaneka.planttech2.container.ContainerDNACombiner;
-import net.kaneka.planttech2.container.ContainerDNAExtractor;
-import net.kaneka.planttech2.container.ContainerDNARemover;
-import net.kaneka.planttech2.container.ContainerIdentifier;
-import net.kaneka.planttech2.container.ContainerMegaFurnace;
-import net.kaneka.planttech2.container.ContainerPlantFarm;
-import net.kaneka.planttech2.container.ContainerSeedSqueezer;
-import net.kaneka.planttech2.container.ContainerSeedconstructor;
-import net.kaneka.planttech2.container.ContainerSolarGenerator;
-import net.kaneka.planttech2.gui.GuiGuideOverview;
 import net.kaneka.planttech2.gui.GUICompressor;
 import net.kaneka.planttech2.gui.GUIDNACleaner;
 import net.kaneka.planttech2.gui.GUIDNACombiner;
@@ -21,14 +9,11 @@ import net.kaneka.planttech2.gui.GUIDNARemover;
 import net.kaneka.planttech2.gui.GUIEnergyStorage;
 import net.kaneka.planttech2.gui.GUIIdentifier;
 import net.kaneka.planttech2.gui.GUIMegaFurnace;
-import net.kaneka.planttech2.gui.GuiGuidePlants;
 import net.kaneka.planttech2.gui.GUIPlantFarm;
 import net.kaneka.planttech2.gui.GUIReferences;
 import net.kaneka.planttech2.gui.GUISeedSqueezer;
 import net.kaneka.planttech2.gui.GUISeedconstructor;
 import net.kaneka.planttech2.gui.GUISolarGenerator;
-import net.kaneka.planttech2.gui.GuiGuideGeneticEngineering;
-import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACombiner;
@@ -46,8 +31,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.network.FMLPlayMessages;
 
 public class GuiHandler

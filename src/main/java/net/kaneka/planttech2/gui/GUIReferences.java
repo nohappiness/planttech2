@@ -1,10 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.kaneka.planttech2.registries.ModBlocks;
-
 public class GUIReferences
 {
 	public static final String GUI_MEGA_FURNACE = "tileentitymegafurnace"; 

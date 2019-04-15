@@ -16,10 +16,6 @@ import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedconstructor;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.energy.EnergyStorage;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModTileEntities 

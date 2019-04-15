@@ -10,11 +10,9 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
 
@@ -163,7 +161,7 @@ public class CableModel implements IUnbakedModel
 	}
 	catch (Exception exception)
 	{
-	    PlantTechMain.instance.LOGGER.info("CableModel.bake() failed due to exception:" + exception);
+	    PlantTechMain.LOGGER.info("CableModel.bake() failed due to exception:" + exception);
 	    return ModelLoaderRegistry.getMissingModel().bake(modelGetter, spriteGetter, state, uvlock, format);
 	}
     }

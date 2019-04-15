@@ -5,8 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.enums.EnumTemperature;
-import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

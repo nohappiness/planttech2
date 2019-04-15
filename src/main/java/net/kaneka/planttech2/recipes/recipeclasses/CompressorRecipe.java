@@ -1,11 +1,5 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.sql.rowset.spi.TransactionalWriter;
-
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -15,17 +9,13 @@ import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.IRegistry;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.RecipeType;
-import net.minecraftforge.common.crafting.VanillaRecipeTypes;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class CompressorRecipe implements IRecipe

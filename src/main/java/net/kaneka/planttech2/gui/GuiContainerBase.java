@@ -1,14 +1,10 @@
 package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.ContainerSolarGenerator;
-import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
-import net.kaneka.planttech2.utilities.CustomFontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiContainerBase extends GuiContainer

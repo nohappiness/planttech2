@@ -2,12 +2,9 @@ package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
 import net.kaneka.planttech2.fluids.TempFluidTank;
 import net.kaneka.planttech2.items.ItemBiomassContainer;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public abstract class TileEntityEnergyInventoryFluid extends TileEntityEnergyInventory
 {

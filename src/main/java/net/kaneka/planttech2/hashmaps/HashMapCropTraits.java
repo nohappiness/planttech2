@@ -165,7 +165,7 @@ public class HashMapCropTraits
 	}
 	if (this.getType() != oldTraits.getType())
 	{
-	    Set<CropListEntry> possibleChilds = PlantTechMain.instance.croplist.getByParents(this.getType(), oldTraits.getType());
+	    Set<CropListEntry> possibleChilds = PlantTechMain.croplist.getByParents(this.getType(), oldTraits.getType());
 	    if (!possibleChilds.isEmpty())
 	    {
 		float sumNewTyp = 0;

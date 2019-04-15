@@ -1,34 +1,17 @@
 package net.kaneka.planttech2.gui;
 
-import java.io.IOException;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerCompressor;
-import net.kaneka.planttech2.container.ContainerDNACleaner;
-import net.kaneka.planttech2.container.ContainerDNAExtractor;
-import net.kaneka.planttech2.container.ContainerIdentifier;
-import net.kaneka.planttech2.container.ContainerMegaFurnace;
-import net.kaneka.planttech2.gui.buttons.CustomGuiButton;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
-import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
-import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
-import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
-import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GUICompressor extends GuiContainerBase
 {
     private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
-    private ItemStack[] possibleProducts = new ItemStack[20]; 
 
     public GUICompressor(InventoryPlayer player, TileEntityCompressor te)
     {

@@ -3,12 +3,9 @@ package net.kaneka.planttech2.filehelper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import net.kaneka.planttech2.PlantTechMain;
 
 public class BaseFileHandler
 {

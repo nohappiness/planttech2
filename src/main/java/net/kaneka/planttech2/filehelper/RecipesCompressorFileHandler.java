@@ -3,15 +3,6 @@ package net.kaneka.planttech2.filehelper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
-
-import javax.vecmath.Tuple4d;
-
-import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 

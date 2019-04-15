@@ -1,8 +1,5 @@
 package net.kaneka.planttech2.tileentity;
 
-import java.awt.List;
-import java.util.ArrayList;
-
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -11,18 +8,14 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class TileEntityCrops extends TileEntity implements ITickable
 {
@@ -86,13 +79,13 @@ public class TileEntityCrops extends TileEntity implements ITickable
 
     public NonNullList<ItemStack> addDrops(NonNullList<ItemStack> drops, int growstate)
     {
-	PlantTechMain.instance.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
+	PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
 	return drops;
     }
 
     public void dropsRemoveOneSeed(NonNullList<ItemStack> drops, int growstate)
     {
-	PlantTechMain.instance.croplist.getEntryByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate);
+	PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate);
     }
 
     @Override

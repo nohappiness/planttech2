@@ -7,7 +7,6 @@ import net.kaneka.planttech2.items.ItemWithTier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityType;
@@ -82,7 +81,6 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
     {
 	if (!worldIn.isRemote && !stack.isEmpty() && worldIn.getGameRules().getBoolean("doTileDrops") && !worldIn.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
 	{
-	    float f = 0.5F;
 	    double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 	    double d1 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 	    double d2 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;

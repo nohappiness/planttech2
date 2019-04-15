@@ -1,14 +1,11 @@
 package net.kaneka.planttech2.gui.buttons;
 
-import net.kaneka.planttech2.proxy.ClientProxy;
-import net.kaneka.planttech2.utilities.CustomFontRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
-import net.minecraftforge.fml.client.config.GuiUtils;
 
 public class CustomGuiButton extends GuiButton
 {
@@ -34,8 +31,8 @@ public class CustomGuiButton extends GuiButton
 	         GlStateManager.enableBlend();
 	         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 	         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	         this.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i * 20 - 20, 50, 20, 200,40);
-	         this.drawModalRectWithCustomSizedTexture(this.x + 50, this.y, 150, i * 20 - 20, 50, 20, 200, 40);
+	         Gui.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i * 20 - 20, 50, 20, 200,40);
+	         Gui.drawModalRectWithCustomSizedTexture(this.x + 50, this.y, 150, i * 20 - 20, 50, 20, 200, 40);
 	         this.renderBg(minecraft, mouseX, mouseY);
             int j = Integer.parseInt("00e803",16);
 

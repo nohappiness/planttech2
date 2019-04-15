@@ -2,7 +2,6 @@ package net.kaneka.planttech2.packets;
 
 import java.util.function.Supplier;
 
-import io.netty.buffer.ByteBuf;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;

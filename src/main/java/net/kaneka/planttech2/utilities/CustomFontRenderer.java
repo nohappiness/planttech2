@@ -1,12 +1,8 @@
 package net.kaneka.planttech2.utilities;
 
-import net.minecraft.client.GameSettings;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.Font;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 public class CustomFontRenderer extends FontRenderer
 {

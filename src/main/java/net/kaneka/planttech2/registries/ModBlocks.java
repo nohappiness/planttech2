@@ -8,12 +8,10 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockBase;
 import net.kaneka.planttech2.blocks.BlockCropBars;
 import net.kaneka.planttech2.blocks.BlockCropBase;
-import net.kaneka.planttech2.blocks.BlockCropBase.ColorHandler;
 import net.kaneka.planttech2.blocks.machines.BlockCable;
 import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
 import net.kaneka.planttech2.blocks.machines.BlockMachineBase;
 import net.kaneka.planttech2.blocks.machines.BlockMachineFacing;
-import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -22,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlocks
@@ -61,7 +58,7 @@ public class ModBlocks
 	
 	BlockCropBase tempcrop; 
 	String name; 
-	for(CropListEntry entry : PlantTechMain.instance.croplist.getAllEntries())
+	for(CropListEntry entry : PlantTechMain.croplist.getAllEntries())
 	{
 	    name = entry.getString();
 	    tempcrop = new BlockCropBase(name);

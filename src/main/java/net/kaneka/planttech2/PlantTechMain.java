@@ -1,20 +1,13 @@
 package net.kaneka.planttech2;
 
-import java.util.stream.Collectors;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.kaneka.planttech2.events.ClientEvents;
-import net.kaneka.planttech2.filehelper.CropListJSONGenerator;
-import net.kaneka.planttech2.filehelper.RecipeJSONGenerator;
-import net.kaneka.planttech2.filehelper.RecipesCompressorFileHandler;
 import net.kaneka.planttech2.handlers.GuiHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
-import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.packets.ButtonPressMessage.ButtonPressMessageHandler;
 import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
@@ -24,23 +17,18 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeSerializers;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -49,8 +37,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -138,7 +124,7 @@ public class PlantTechMain
 	ModRecipeSerializers.registerAll(); 
 	PlantTech2PacketHandler.register();
 	//NetworkRegistry.INSTANCE.registerGuiHandler(PlantTechMain.instance, new GuiHandler());
-	PlantTechMain.instance.croplist.configuratePlanttechEntries();
+	PlantTechMain.croplist.configuratePlanttechEntries();
 	//PlantTechMain.instance.recipeLists.initRecipeCompressor();
 	LootTableHandler.register();
 	

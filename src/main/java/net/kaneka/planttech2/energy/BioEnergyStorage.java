@@ -1,8 +1,6 @@
 package net.kaneka.planttech2.energy;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class BioEnergyStorage extends EnergyStorage

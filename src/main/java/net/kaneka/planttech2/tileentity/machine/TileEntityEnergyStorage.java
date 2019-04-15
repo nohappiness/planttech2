@@ -1,20 +1,15 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
-import net.kaneka.planttech2.container.ContainerCompressor;
 import net.kaneka.planttech2.container.ContainerEnergyStorage;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class TileEntityEnergyStorage extends TileEntityEnergyInventory
 {

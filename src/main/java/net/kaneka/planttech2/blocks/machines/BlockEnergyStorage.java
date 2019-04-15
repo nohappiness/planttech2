@@ -6,7 +6,6 @@ import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
@@ -69,7 +68,8 @@ public class BlockEnergyStorage extends BlockMachineBase
 	return state.with(FACING, rot.rotate((EnumFacing) state.get(FACING)));
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public IBlockState mirror(IBlockState state, Mirror mirrorIn)
     {
 	return state.rotate(mirrorIn.toRotation((EnumFacing) state.get(FACING)));

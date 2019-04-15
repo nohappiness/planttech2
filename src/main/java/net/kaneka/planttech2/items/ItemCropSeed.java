@@ -1,25 +1,15 @@
 package net.kaneka.planttech2.items;
 
 import java.util.List;
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -101,9 +91,9 @@ public class ItemCropSeed extends ItemBase
     {
 	if (tolerance == 0)
 	{
-	    return PlantTechMain.instance.croplist.getEntryByName(type).getTemperature().getDisplayString();
+	    return PlantTechMain.croplist.getEntryByName(type).getTemperature().getDisplayString();
 	}
-	int id = PlantTechMain.instance.croplist.getEntryByName(type).getTemperature().getId();
+	int id = PlantTechMain.croplist.getEntryByName(type).getTemperature().getId();
 	int min = id - tolerance;
 	int max = id + tolerance;
 	if (min < 0)
@@ -119,7 +109,7 @@ public class ItemCropSeed extends ItemBase
 
     private String getSoilString(String type)
     {
-	ItemStack soil = PlantTechMain.instance.croplist.getEntryByName(type).getSoil();
+	ItemStack soil = PlantTechMain.croplist.getEntryByName(type).getSoil();
 	if (soil.isEmpty())
 	{
 	    return " / ";
@@ -135,7 +125,7 @@ public class ItemCropSeed extends ItemBase
 	@Override
 	public int getColor(ItemStack stack, int color)
 	{
-	    return PlantTechMain.instance.croplist.getEntryByName(((ItemCropSeed) stack.getItem()).getEntryName()).getSeedColor();
+	    return PlantTechMain.croplist.getEntryByName(((ItemCropSeed) stack.getItem()).getEntryName()).getSeedColor();
 	}
     }
 }

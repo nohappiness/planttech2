@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.enums;
 
-import java.util.EnumSet;
-
 import net.minecraft.util.text.TextComponentTranslation;
 
 public enum EnumTemperature

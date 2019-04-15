@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -10,21 +9,11 @@ import net.kaneka.planttech2.gui.buttons.CustomGuiButton;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.librarys.utils.Drop;
 import net.kaneka.planttech2.librarys.utils.Parents;
-import net.kaneka.planttech2.proxy.ClientProxy;
-import net.kaneka.planttech2.utilities.CustomFontRenderer;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLabel;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class GuiGuidePlants extends GuiGuideBase
 {
@@ -39,7 +28,7 @@ public class GuiGuidePlants extends GuiGuideBase
 
     public GuiGuidePlants()
     {
-	super(PlantTechMain.instance.croplist.getLengthWithoutBlacklisted() - 8, true);
+	super(PlantTechMain.croplist.getLengthWithoutBlacklisted() - 8, true);
     }
 
     @Override
@@ -67,8 +56,8 @@ public class GuiGuidePlants extends GuiGuideBase
     {
 	if (selectedId != -1)
 	{
-	    this.drawModalRectWithCustomSizedTexture(this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
-	    this.renderItem(this.mainseed, 261, 32);
+	    drawModalRectWithCustomSizedTexture(this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
+	    renderItem(this.mainseed, 261, 32);
 	    RenderHelper.disableStandardItemLighting();
 	    RenderHelper.enableGUIStandardItemLighting();
 	    if(soil != null) if(!soil.isEmpty())
@@ -101,12 +90,12 @@ public class GuiGuidePlants extends GuiGuideBase
     @Override
     protected void updateButtons()
     {
-	List<String> list = PlantTechMain.instance.croplist.getAllEntriesWithoutBlacklisted();
+	List<String> list = PlantTechMain.croplist.getAllEntriesWithoutBlacklisted();
 	for (int i = 0; i < 8; i++)
 	{
 	    if(scrollPos + i < list.size())
 	    {
-		CropListEntry entry = PlantTechMain.instance.croplist.getEntryByName(list.get(scrollPos + i));
+		CropListEntry entry = PlantTechMain.croplist.getEntryByName(list.get(scrollPos + i));
 		this.buttons.get(i).displayString = entry.getDisplayNameUnformated();
 		buttonIDs[i] = entry.getID(); 
 	    }
@@ -140,10 +129,11 @@ public class GuiGuidePlants extends GuiGuideBase
 
     }
 
-    protected void setItems(int id)
+    @SuppressWarnings("deprecation")
+	protected void setItems(int id)
     {
 	selectedId = id;
-	CropListEntry entry = PlantTechMain.instance.croplist.getByID(id);
+	CropListEntry entry = PlantTechMain.croplist.getByID(id);
 	selectedName = entry.getDisplayNameUnformated();
 	if (entry.getMainSeed() != null)
 	{
@@ -206,8 +196,8 @@ public class GuiGuidePlants extends GuiGuideBase
 	    {
 		if (i < 4)
 		{
-		    this.parents[i][0] = PlantTechMain.instance.croplist.getEntryByName(parents.getParent(0)).getMainSeed();
-		    this.parents[i][1] = PlantTechMain.instance.croplist.getEntryByName(parents.getParent(1)).getMainSeed();
+		    this.parents[i][0] = PlantTechMain.croplist.getEntryByName(parents.getParent(0)).getMainSeed();
+		    this.parents[i][1] = PlantTechMain.croplist.getEntryByName(parents.getParent(1)).getMainSeed();
 		}
 		i++;
 	    }
@@ -298,7 +288,7 @@ public class GuiGuidePlants extends GuiGuideBase
 
 		if (clickedOn != null)
 		{
-		    CropListEntry entry = PlantTechMain.instance.croplist.getBySeed(clickedOn);
+		    CropListEntry entry = PlantTechMain.croplist.getBySeed(clickedOn);
 		    if (entry != null)
 		    {
 			this.setItems(entry.getID());
@@ -330,12 +320,12 @@ public class GuiGuidePlants extends GuiGuideBase
     {
 	if (selectedId == -1)
 	{
-	    this.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
+	    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
 	}
 	else
 	{
-	    this.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 196, 300, this.ySize, 512, 512);
+	    Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 196, 300, this.ySize, 512, 512);
 	}
-	this.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
     }
 }

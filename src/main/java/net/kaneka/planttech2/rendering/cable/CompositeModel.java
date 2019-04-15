@@ -1,16 +1,10 @@
 package net.kaneka.planttech2.rendering.cable;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
-import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.machines.BlockCable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

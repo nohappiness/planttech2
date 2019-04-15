@@ -1,18 +1,12 @@
 package net.kaneka.planttech2.librarys;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-
-import org.apache.commons.lang3.text.WordUtils;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
@@ -20,18 +14,12 @@ import net.kaneka.planttech2.filehelper.BlacklistFileHandler;
 import net.kaneka.planttech2.filehelper.ParentsFileHandler;
 import net.kaneka.planttech2.filehelper.SoilFileHandler;
 import net.kaneka.planttech2.filehelper.TemperatureFileHandler;
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.block.Block;
-import net.minecraft.client.gui.GuiBossOverlay;
-import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
 
 public class CropList
 {
@@ -464,7 +452,7 @@ public class CropList
 
     private void loadParents()
     {
-	PlantTechMain.instance.LOGGER.info("initiate cropparents");
+	PlantTechMain.LOGGER.info("initiate cropparents");
 	ParentsFileHandler parentsfile = new ParentsFileHandler();
 	List<String> list = parentsfile.loadFile();
 	int i = 1;
@@ -485,28 +473,28 @@ public class CropList
 			    }
 			    else
 			    {
-				PlantTechMain.instance.LOGGER.info("line " + i + " not existing croptype: " + input);
+				PlantTechMain.LOGGER.info("line " + i + " not existing croptype: " + input);
 			    }
 			}
 			else
 			{
-			    PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			    PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 			}
 		    }
 		    else
 		    {
-			PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 		    }
 		}
 	    }
 	    i++;
 	}
-	PlantTechMain.instance.LOGGER.info("finish cropparents");
+	PlantTechMain.LOGGER.info("finish cropparents");
     }
 
     private void loadTemperatures()
     {
-	PlantTechMain.instance.LOGGER.info("initiate croptemperature");
+	PlantTechMain.LOGGER.info("initiate croptemperature");
 	TemperatureFileHandler temperaturesfile = new TemperatureFileHandler();
 	List<String> list = temperaturesfile.loadFile();
 	int i = 1;
@@ -528,28 +516,28 @@ public class CropList
 			    }
 			    else
 			    {
-				PlantTechMain.instance.LOGGER.info("line " + i + " not existing croptype: " + input);
+				PlantTechMain.LOGGER.info("line " + i + " not existing croptype: " + input);
 			    }
 			}
 			else
 			{
-			    PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			    PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 			}
 		    }
 		    else
 		    {
-			PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 		    }
 		}
 	    }
 	    i++;
 	}
-	PlantTechMain.instance.LOGGER.info("finish croptemperature");
+	PlantTechMain.LOGGER.info("finish croptemperature");
     }
 
     private void loadSoils()
     {
-	PlantTechMain.instance.LOGGER.info("initiate cropsoils");
+	PlantTechMain.LOGGER.info("initiate cropsoils");
 	SoilFileHandler soilsfile = new SoilFileHandler();
 	List<String> list = soilsfile.loadFile();
 	int i = 1;
@@ -571,28 +559,28 @@ public class CropList
 			    }
 			    else
 			    {
-				PlantTechMain.instance.LOGGER.info("line " + i + " not existing croptype: " + input);
+				PlantTechMain.LOGGER.info("line " + i + " not existing croptype: " + input);
 			    }
 			}
 			else
 			{
-			    PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			    PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 			}
 		    }
 		    else
 		    {
-			PlantTechMain.instance.LOGGER.info("line " + i + " not matching pattern: " + input);
+			PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input);
 		    }
 		}
 	    }
 	    i++;
 	}
-	PlantTechMain.instance.LOGGER.info("finish cropsoil");
+	PlantTechMain.LOGGER.info("finish cropsoil");
     }
 
     private void loadBlacklist()
     {
-	PlantTechMain.instance.LOGGER.info("initiate blacklist");
+	PlantTechMain.LOGGER.info("initiate blacklist");
 	BlacklistFileHandler blacklistfile = new BlacklistFileHandler();
 	List<String> list = blacklistfile.loadFile();
 	int i = 1;
@@ -609,13 +597,13 @@ public class CropList
 		    }
 		    else
 		    {
-			PlantTechMain.instance.LOGGER.info("line " + i + " not existing croptype: " + input);
+			PlantTechMain.LOGGER.info("line " + i + " not existing croptype: " + input);
 		    }
 		}
 	    }
 	    i++;
 	}
-	PlantTechMain.instance.LOGGER.info("finish blacklist");
+	PlantTechMain.LOGGER.info("finish blacklist");
     }
 
     private boolean existEntry(String name, int i)
@@ -626,7 +614,7 @@ public class CropList
 	}
 	else
 	{
-	    PlantTechMain.instance.LOGGER.info("missing croplistentry in line " + i + ": " + name + " does not exists!");
+	    PlantTechMain.LOGGER.info("missing croplistentry in line " + i + ": " + name + " does not exists!");
 	    return false;
 	}
     }

@@ -1,12 +1,8 @@
 package net.kaneka.planttech2.items;
 
-import java.util.Random;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.librarys.utils.Drop;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;

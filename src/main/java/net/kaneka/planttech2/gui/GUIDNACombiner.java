@@ -2,16 +2,7 @@ package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerDNACombiner;
-import net.kaneka.planttech2.container.ContainerDNAExtractor;
-import net.kaneka.planttech2.container.ContainerIdentifier;
-import net.kaneka.planttech2.container.ContainerMegaFurnace;
-import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACombiner;
-import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
-import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
-import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

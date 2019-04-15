@@ -3,17 +3,7 @@ package net.kaneka.planttech2.filehelper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 
 public class CropListJSONGenerator
 {
@@ -53,28 +43,6 @@ public class CropListJSONGenerator
     {
 	this.lines[nextLine] = line;
 	this.nextLine++;
-    }
-
-    private void createSeedFile(String name)
-    {
-	addLine("{");
-	addLine("    \"parent\": \"item/generated\",");
-	addLine("    \"textures\": {");
-	addLine("        \"layer0\": \"planttech2:items/seeds\"");
-	addLine("    }");
-	addLine("}");
-	saveFile(name + "_seeds");
-    }
-
-    private void createParticleFile(String name)
-    {
-	addLine("{");
-	addLine(" \"parent\": \"item/generated\",");
-	addLine(" \"textures\": {");
-	addLine("      \"layer0\": \"planttech2:items/particles\"");
-	addLine("  }");
-	addLine("}");
-	saveFile(name + "_particles");
     }
 
     private void createBlockstateFile(String name)

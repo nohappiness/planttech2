@@ -2,10 +2,7 @@ package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerSeedSqueezer;
-import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
-import net.kaneka.planttech2.container.ContainerMegaFurnace;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;

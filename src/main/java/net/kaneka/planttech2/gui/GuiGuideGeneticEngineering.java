@@ -1,20 +1,12 @@
 package net.kaneka.planttech2.gui;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.buttons.CustomGuiButton;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
 
 public class GuiGuideGeneticEngineering extends GuiGuideBase
 {
     private String[] keys = new String[6];
-    private String header;
     List<String> lines = new ArrayList<String>();
     private double charsPerLine = 40D;
     private double linesPerSite = 14D;

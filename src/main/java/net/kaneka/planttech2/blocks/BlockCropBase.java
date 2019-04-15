@@ -2,18 +2,13 @@ package net.kaneka.planttech2.blocks;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.items.ItemAnalyser;
-import net.kaneka.planttech2.items.ItemParticle;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.property.PropertyCrop;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.minecraft.block.Block;
@@ -22,11 +17,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
@@ -36,20 +29,12 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReaderBase;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.BlockStateContainer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.model.ModelLoader;
 
 public class BlockCropBase extends BlockContainer
 {
@@ -78,10 +63,10 @@ public class BlockCropBase extends BlockContainer
     public void updateCrop(World world, BlockPos pos, HashMapCropTraits traits)
     {
 	IBlockState state = world.getBlockState(pos);
-	int growstate = state.get(this.GROWSTATE).intValue();
+	int growstate = state.get(GROWSTATE).intValue();
 	if (growstate < 7)
 	{
-	    if (this.canGrow(world, pos, traits))
+	    if (canGrow(world, pos, traits))
 	    {
 		world.setBlockState(pos, state.with(GROWSTATE, Integer.valueOf(growstate) + 1));
 		// world.setBlockState(pos, state.withProperty(GROWSTATE,
@@ -104,7 +89,7 @@ public class BlockCropBase extends BlockContainer
 			    if (world.getTileEntity(possiblePartner) instanceof TileEntityCrops)
 			    {
 				HashMapCropTraits partnertraits = ((TileEntityCrops) world.getTileEntity(possiblePartner)).getTraits();
-				world.setBlockState(blockpos, this.getDefaultState());
+				world.setBlockState(blockpos, getDefaultState());
 				if (world.getTileEntity(blockpos) instanceof TileEntityCrops && world.getTileEntity(pos) instanceof TileEntityCrops)
 				{
 				    ((TileEntityCrops) world.getTileEntity(blockpos)).setTraits(((TileEntityCrops) world.getTileEntity(pos)).getTraits().calculateNewTraits(partnertraits));
@@ -115,7 +100,7 @@ public class BlockCropBase extends BlockContainer
 		    }
 		    if (!(world.getBlockState(blockpos).getBlock() instanceof BlockCropBase))
 		    {
-			world.setBlockState(blockpos, this.getDefaultState());
+			world.setBlockState(blockpos, getDefaultState());
 			if (world.getTileEntity(blockpos) instanceof TileEntityCrops && world.getTileEntity(pos) instanceof TileEntityCrops)
 			{
 			    ((TileEntityCrops) world.getTileEntity(blockpos)).setTraits(((TileEntityCrops) world.getTileEntity(pos)).getTraits().copy());
@@ -135,7 +120,7 @@ public class BlockCropBase extends BlockContainer
     public void updateCreative(World world, BlockPos pos)
     {
 	IBlockState state = world.getBlockState(pos);
-	int growstate = state.get(this.GROWSTATE).intValue();
+	int growstate = state.get(GROWSTATE).intValue();
 	if (growstate < 7)
 	{
 	    world.setBlockState(pos, state.with(GROWSTATE, 7));
@@ -155,7 +140,7 @@ public class BlockCropBase extends BlockContainer
 
     private List<BlockPos> getNeighborBlockPosRandomExeptOne(BlockPos pos, BlockPos exept)
     {
-	List<BlockPos> neighbors = this.getNeighborBlockPosRandom(pos);
+	List<BlockPos> neighbors = getNeighborBlockPosRandom(pos);
 	neighbors.remove(exept);
 	return neighbors;
     }
@@ -224,7 +209,7 @@ public class BlockCropBase extends BlockContainer
 
     public boolean rightSoil(World world, BlockPos pos, String name)
     {
-	ItemStack stack = PlantTechMain.instance.croplist.getEntryByName(name).getSoil();
+	ItemStack stack = PlantTechMain.croplist.getEntryByName(name).getSoil();
 	if (stack.isEmpty())
 	{
 	    return true;
@@ -245,7 +230,7 @@ public class BlockCropBase extends BlockContainer
 
     public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
     {
-	EnumTemperature temp = PlantTechMain.instance.croplist.getEntryByName(name).getTemperature();
+	EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
 	if (temp.inRange(world.getBiome(pos).getDefaultTemperature(), tolerance))
 	{
 	    return true;
@@ -264,7 +249,7 @@ public class BlockCropBase extends BlockContainer
     @Override
     public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune)
     {
-	int growstate = state.get(this.GROWSTATE).intValue();
+	int growstate = state.get(GROWSTATE).intValue();
 	TileEntity te = world.getTileEntity(pos);
 	if (te instanceof TileEntityCrops)
 	{
@@ -295,10 +280,11 @@ public class BlockCropBase extends BlockContainer
 	world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-	int growstate = state.get(this.GROWSTATE).intValue();
+	int growstate = state.get(GROWSTATE).intValue();
 	if (growstate > 6 && hand.equals(EnumHand.MAIN_HAND) && !worldIn.isRemote)
 	{
 	    ItemStack holdItem = player.getHeldItem(EnumHand.MAIN_HAND);
@@ -378,7 +364,7 @@ public class BlockCropBase extends BlockContainer
 	{
 	    if (tintindex == 0)
 	    {
-		return PlantTechMain.instance.croplist.getEntryByName(((BlockCropBase) state.getBlock()).getEntryName()).getSeedColor();
+		return PlantTechMain.croplist.getEntryByName(((BlockCropBase) state.getBlock()).getEntryName()).getSeedColor();
 	    }
 	    return 0xFFFFFFFF;
 
