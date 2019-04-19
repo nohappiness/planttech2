@@ -1,6 +1,8 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.ContainerMegaFurnace;
+import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
@@ -9,7 +11,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class TileEntityMegaFurnace extends TileEntityEnergyInventory
 {
@@ -68,7 +72,7 @@ public class TileEntityMegaFurnace extends TileEntityEnergyInventory
 	}
 	else
 	{
-	    // world.getRecipeManager().getRecipe(itemhandler, world)
+		//RecipeWrapper wrapper = new RecipeWrapper(itemhandler, 1, 1);
 	    ItemStack output = new ItemStack(Items.COAL);
 	    if (output.isEmpty())
 	    {

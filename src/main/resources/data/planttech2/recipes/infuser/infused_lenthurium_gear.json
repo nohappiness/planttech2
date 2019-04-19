@@ -1,0 +1,10 @@
+{
+	"type": "planttech2:infusing",
+	"input": {
+		"item": "planttech2:gear_lenthurium",
+		"biomass": 200
+	},
+	"result": {
+		"item": "planttech2:gear_lenthurium_infused"
+	}
+}

@@ -116,7 +116,7 @@ public class TileEntityDNACombiner extends TileEntityEnergyInventory
     @Override
     public String getNameString()
     {
-	return "dna_combiner";
+	return "dnacombiner";
     }
 
     @Override

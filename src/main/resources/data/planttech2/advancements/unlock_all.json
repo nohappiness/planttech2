@@ -70,7 +70,16 @@
 	    "planttech2:speedupgrade3",
 	    "planttech2:speedupgrade4",
 	    "planttech2:thermometer",
-	    "planttech2:wrench"
+	    "planttech2:wrench",
+	    "planttech2:gear_dancium",
+		"planttech2:gear_iron",
+		"planttech2:gear_kanekium",
+		"planttech2:gear_kinnoium",
+		"planttech2:gear_lenthurium",
+		"planttech2:gear_plantium",
+		"planttech2:infuser",
+		"planttech2:machineshell", 
+		"planttech2:biomasscontainer"
     ],
     "loot": ["planttech2:guide"]
   },

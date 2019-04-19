@@ -9,6 +9,7 @@ import net.kaneka.planttech2.container.ContainerDNAExtractor;
 import net.kaneka.planttech2.container.ContainerDNARemover;
 import net.kaneka.planttech2.container.ContainerEnergyStorage;
 import net.kaneka.planttech2.container.ContainerIdentifier;
+import net.kaneka.planttech2.container.ContainerInfuser;
 import net.kaneka.planttech2.container.ContainerMegaFurnace;
 import net.kaneka.planttech2.container.ContainerPlantFarm;
 import net.kaneka.planttech2.container.ContainerSeedSqueezer;
@@ -23,6 +24,7 @@ import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNARemover;
 import net.kaneka.planttech2.tileentity.machine.TileEntityEnergyStorage;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
+import net.kaneka.planttech2.tileentity.machine.TileEntityInfuser;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
@@ -127,6 +129,8 @@ public class BlockMachineBase extends BlockBase
 	    return new TileEntityCompressor();
 	else if (this == ModBlocks.ENERGYSTORAGE)
 	    return new TileEntityEnergyStorage();
+	else if (this == ModBlocks.INFUSER)
+		return new TileEntityInfuser(); 
 	else
 	    return new TileEntityIdentifier();
     }
@@ -157,6 +161,8 @@ public class BlockMachineBase extends BlockBase
 	    return new ContainerCompressor(playerInventory, (TileEntityCompressor) te);
 	else if (this == ModBlocks.ENERGYSTORAGE && te instanceof TileEntityEnergyStorage)
 	    return new ContainerEnergyStorage(playerInventory, (TileEntityEnergyStorage) te);
+	else if (this == ModBlocks.INFUSER && te instanceof TileEntityInfuser)
+    	return new ContainerInfuser(playerInventory, (TileEntityInfuser) te);
 	else
 	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
     }
@@ -193,6 +199,8 @@ public class BlockMachineBase extends BlockBase
 	    return GUIReferences.GUI_COMPRESSOR;
 	else if (this == ModBlocks.ENERGYSTORAGE)
 	    return GUIReferences.GUI_ENERGYSTORAGE;
+	else if (this == ModBlocks.INFUSER)
+	    return GUIReferences.GUI_INFUSER;
 	else
 	    return GUIReferences.GUI_IDENTIFIER;
     }

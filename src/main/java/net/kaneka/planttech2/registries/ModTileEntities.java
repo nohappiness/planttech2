@@ -10,6 +10,7 @@ import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNARemover;
 import net.kaneka.planttech2.tileentity.machine.TileEntityEnergyStorage;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
+import net.kaneka.planttech2.tileentity.machine.TileEntityInfuser;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
@@ -34,6 +35,7 @@ public class ModTileEntities
     public static final TileEntityType<?> SEEDCONSTRUCTOR_TE = TileEntityType.Builder.create(TileEntitySeedconstructor::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityseedconstructor"); 
     public static final TileEntityType<?> COMPRESSOR_TE = TileEntityType.Builder.create(TileEntityCompressor::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitycompressor"); 
     public static final TileEntityType<?> ENERGYSTORAGE_TE = TileEntityType.Builder.create(TileEntityEnergyStorage::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"); 
+    public static final TileEntityType<?> INFUSER_TE = TileEntityType.Builder.create(TileEntityInfuser::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"); 
     
     
     
@@ -52,7 +54,8 @@ public class ModTileEntities
 		    		 DNACOMBINER_TE, 
 		    		 SEEDCONSTRUCTOR_TE, 
 		    		 COMPRESSOR_TE, 
-		    		 ENERGYSTORAGE_TE);
+		    		 ENERGYSTORAGE_TE, 
+		    		 INFUSER_TE);
 		
 	}
 

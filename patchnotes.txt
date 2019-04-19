@@ -14,3 +14,15 @@ PlantTech 2 Version 0.00.01 MC 1.13.2
 0.00.04 -> 0.00.05
  - Crops are destroyable in creative again
  - Added Energystorages
+ 
+0.00.05 -> 0.00.06
+ - Crops now drops seeds again
+ - replaced the biomass item with a biomass fluid
+   -> Seedsqueezer now produces biomass fluid 
+   -> Seedconstructor now need biomass fluid
+   -> Biomass can be transported with a biomasscontainer
+ - Added gears and machineshells 
+ - Added the Infuser to infuse gears and machineshells 
+ - Changed recipes to use the new gears and shells
+ 
+

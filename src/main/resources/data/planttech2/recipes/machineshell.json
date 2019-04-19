@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "A A",
+        "A A",
+        "ABA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+         "B": 
+        {
+            "item": "minecraft:iron_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:machineshell",
+        "count": 1
+    }
+}

@@ -90,7 +90,7 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
     @Override
     public String getNameString()
     {
-	return "dna_remover";
+	return "dnayremover";
     }
 
     @Override

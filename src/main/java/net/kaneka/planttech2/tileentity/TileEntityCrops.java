@@ -19,118 +19,118 @@ import net.minecraft.util.NonNullList;
 
 public class TileEntityCrops extends TileEntity implements ITickable
 {
-    private long startTick = 0;
-    private HashMapCropTraits traits = new HashMapCropTraits();
+	private long startTick = 0;
+	private HashMapCropTraits traits = new HashMapCropTraits();
 
-    public TileEntityCrops()
-    {
-	super(ModTileEntities.CROPS_TE);
-    }
-
-    @Override
-    public void tick()
-    {
-	if (this.world != null && !this.world.isRemote)
+	public TileEntityCrops()
 	{
-
-	    if ((world.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
-	    {
-		Block block = world.getBlockState(pos).getBlock(); 
-		if (block instanceof BlockCropBase)
-		{
-		    ((BlockCropBase) block).updateCrop(this.world, this.pos, this.traits);
-		}
-	    }
+		super(ModTileEntities.CROPS_TE);
 	}
 
-    }
+	@Override
+	public void tick()
+	{
+		if (this.world != null && !this.world.isRemote)
+		{
 
-    public void setTraits(HashMapCropTraits traits)
-    {
-	this.traits = traits;
-    }
+			if ((world.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
+			{
+				Block block = world.getBlockState(pos).getBlock();
+				if (block instanceof BlockCropBase)
+				{
+					((BlockCropBase) block).updateCrop(this.world, this.pos, this.traits);
+				}
+			}
+		}
 
-    public HashMapCropTraits getTraits()
-    {
-	return this.traits;
-    }
+	}
 
-    public String getCropType()
-    {
-	return this.traits.getType();
-    }
+	public void setTraits(HashMapCropTraits traits)
+	{
+		this.traits = traits;
+	}
 
-    public void setStartTick()
-    {
-	this.startTick = world.getGameTime();
-    }
+	public HashMapCropTraits getTraits()
+	{
+		return this.traits;
+	}
 
-    public ItemStack getSeedDrop()
-    {
-	// TODO
-	/*
-	 * System.out.println(this.traits.getType()); ItemStack stack =
-	 * this.traits.createItemStackwithTraits(this.traits.getType().getSeed());
-	 * System.out.println(stack);
-	 */
-	return new ItemStack(Items.CARROT);
+	public String getCropType()
+	{
+		return this.traits.getType();
+	}
 
-    }
+	public void setStartTick()
+	{
+		this.startTick = world.getGameTime();
+	}
 
-    public NonNullList<ItemStack> addDrops(NonNullList<ItemStack> drops, int growstate)
-    {
-	PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
-	return drops;
-    }
+	public ItemStack getSeedDrop()
+	{
+		// TODO
+		/*
+		 * System.out.println(this.traits.getType()); ItemStack stack =
+		 * this.traits.createItemStackwithTraits(this.traits.getType().getSeed());
+		 * System.out.println(stack);
+		 */
+		return new ItemStack(Items.CARROT);
 
-    public void dropsRemoveOneSeed(NonNullList<ItemStack> drops, int growstate)
-    {
-	PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate);
-    }
+	}
 
-    @Override
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-	NBTTagCompound nbtTagCompound = new NBTTagCompound();
-	write(nbtTagCompound);
-	return new SPacketUpdateTileEntity(this.pos, 1, nbtTagCompound);
-    }
+	public NonNullList<ItemStack> addDrops(NonNullList<ItemStack> drops, int growstate)
+	{
+		PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
+		return drops;
+	}
 
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
-    {
-	read(packet.getNbtCompound());
-    }
+	public void dropsRemoveOneSeed(NonNullList<ItemStack> drops, int growstate)
+	{
+		PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate);
+	}
 
-    @Override
-    public NBTTagCompound getUpdateTag()
-    {
-	NBTTagCompound nbtTagCompound = new NBTTagCompound();
-	write(nbtTagCompound);
-	return nbtTagCompound;
-    }
+	@Override
+	@Nullable
+	public SPacketUpdateTileEntity getUpdatePacket()
+	{
+		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		write(nbtTagCompound);
+		return new SPacketUpdateTileEntity(this.pos, 1, nbtTagCompound);
+	}
 
-    @Override
-    public void handleUpdateTag(NBTTagCompound tag)
-    {
-	this.read(tag);
-    }
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
+	{
+		read(packet.getNbtCompound());
+	}
 
-    @Override
-    public NBTTagCompound write(NBTTagCompound compound)
-    {
-	super.write(compound);
-	compound.setLong("starttick", this.startTick);
-	compound = traits.addToNBT(compound);
-	return compound;
-    }
+	@Override
+	public NBTTagCompound getUpdateTag()
+	{
+		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		write(nbtTagCompound);
+		return nbtTagCompound;
+	}
 
-    @Override
-    public void read(NBTTagCompound compound)
-    {
-	super.read(compound);
-	this.startTick = compound.getLong("starttick");
-	this.traits.fromNBT(compound);
-    }
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag)
+	{
+		this.read(tag);
+	}
+
+	@Override
+	public NBTTagCompound write(NBTTagCompound compound)
+	{
+		super.write(compound);
+		compound.setLong("starttick", this.startTick);
+		compound = traits.addToNBT(compound);
+		return compound;
+	}
+
+	@Override
+	public void read(NBTTagCompound compound)
+	{
+		super.read(compound);
+		this.startTick = compound.getLong("starttick");
+		this.traits.fromNBT(compound);
+	}
 }

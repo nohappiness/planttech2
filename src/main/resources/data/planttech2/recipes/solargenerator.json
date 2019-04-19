@@ -1,14 +1,14 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "AAA",
-        "BCB",
+        "ACA",
+        "BEB",
         "DDD"
     ],
     "key": {
         "A": 
         {
-            "item": "minecraft:emerald"
+            "item": "planttech2:gear_plantium_infused"
         },
         "B": 
         {
@@ -21,6 +21,10 @@
         "D": 
         {
             "item": "planttech2:plantium_ingot"
+        },
+        "E": 
+        {
+            "item": "planttech2:machineshell_infused"
         }
     },
     "result": {

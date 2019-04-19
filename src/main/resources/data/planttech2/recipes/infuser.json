@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "CAC",
+        "BDB",
+        "CAC"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+        "B": 
+        {
+            "item": "planttech2:cable"
+        },
+        "C": 
+        {
+            "item": "planttech2:gear_plantium"
+        },
+        "D": 
+        {
+            "item": "planttech2:machineshell"
+        }
+    },
+    "result": {
+        "item": "planttech2:identifier",
+        "count": 1
+    }
+}

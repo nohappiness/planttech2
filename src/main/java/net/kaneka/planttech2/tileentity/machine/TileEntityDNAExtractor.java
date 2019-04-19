@@ -87,7 +87,7 @@ public class TileEntityDNAExtractor extends TileEntityEnergyInventory
     @Override
     public String getNameString()
     {
-	return "dna_extractor";
+	return "dnaextractor";
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.kaneka.planttech2.gui.GUIDNAExtractor;
 import net.kaneka.planttech2.gui.GUIDNARemover;
 import net.kaneka.planttech2.gui.GUIEnergyStorage;
 import net.kaneka.planttech2.gui.GUIIdentifier;
+import net.kaneka.planttech2.gui.GUIInfuser;
 import net.kaneka.planttech2.gui.GUIMegaFurnace;
 import net.kaneka.planttech2.gui.GUIPlantFarm;
 import net.kaneka.planttech2.gui.GUIReferences;
@@ -21,6 +22,7 @@ import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNARemover;
 import net.kaneka.planttech2.tileentity.machine.TileEntityEnergyStorage;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
+import net.kaneka.planttech2.tileentity.machine.TileEntityInfuser;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
@@ -145,6 +147,15 @@ public class GuiHandler
 	    if(te instanceof TileEntityEnergyStorage)
 	    {
 		return new GUIEnergyStorage(player.inventory, (TileEntityEnergyStorage) te);
+	    }
+	}
+	else if (path.equals(GUIReferences.GUI_INFUSER))
+	{
+	    BlockPos pos = msg.getAdditionalData().readBlockPos();
+	    TileEntity te = Minecraft.getInstance().world.getTileEntity(pos);
+	    if(te instanceof TileEntityInfuser)
+	    {
+		return new GUIInfuser(player.inventory, (TileEntityInfuser) te);
 	    }
 	}
 	else 

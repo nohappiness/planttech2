@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "ABA",
-        "ACA",
-        "AAA"
+        "CBC",
+        "ADA",
+        "BAB"
     ],
     "key": {
         "A": 
@@ -12,11 +12,15 @@
         },
         "B": 
         {
-            "item": "minecraft:flint"
+            "item": "planttech2:gear_lenthurium_infused"
         },
         "C": 
         {
             "item": "planttech2:dna_container_empty"
+        }, 
+        "D": 
+        {
+            "item": "planttech2:machineshell_infused"
         }
     },
     "result": {

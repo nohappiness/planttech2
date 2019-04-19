@@ -172,24 +172,4 @@ public class PlantTechMain
 	}
 	
     }
-    
-    /*
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
-    public static class RegistryForgeEvents
-    {
-	
-	
-	@SubscribeEvent
-	public static void registerColorItem(ColorHandlerEvent.Item event)
-	{
-	    ModItems.registerItemColorHandler(event);
-	}
-	
-	@SubscribeEvent
-	public static void registerColorBlock(ColorHandlerEvent.Block event)
-	{
-	    ModBlocks.registerBlockColorHandler(event);
-	}
-    }
-    */
 }

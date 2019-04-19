@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "ABA",
+        "CBC",
         "ACA",
-        "AAA"
+        "BAB"
     ],
     "key": {
         "A": 
@@ -12,11 +12,15 @@
         },
         "B": 
         {
-            "item": "minecraft:diamond_axe"
+            "item": "planttech2:gear_dancium_infused"
         },
         "C": 
         {
             "item": "planttech2:dna_container_empty"
+        },
+        "D": 
+        {
+            "item": "planttech2:machineshell_infused"
         }
     },
     "result": {
