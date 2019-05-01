@@ -1,0 +1,15 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:vine_seeds",
+        "minecraft:vine"
+    ],
+    "drops":[
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

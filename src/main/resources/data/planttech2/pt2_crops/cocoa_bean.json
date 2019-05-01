@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "temperature": 3,
+    "seeds": [
+        "planttech2:cocoa_bean_seeds",
+        "minecraft:cocoa_beans"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:color_particles",
+            "min": 1, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

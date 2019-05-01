@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 0,
+    "seeds": [
+        "planttech2:polarbear_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:polarbear_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "cow",
+            "partner_2": "panda", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

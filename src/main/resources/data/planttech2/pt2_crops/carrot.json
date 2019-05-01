@@ -1,10 +1,11 @@
 {
     "enabled": true,
     "temperature": 2,
-    "additional_seeds": [
+    "seeds": [
+        "planttech2:carrot_seeds",
         "minecraft:carrot"
     ],
-    "additional_drops":[
+    "drops":[
         {
             "item": "minecraft:carrot",
             "min": 0, 
@@ -15,6 +16,5 @@
     ],
     "soil": 
     {
-        "block": "minecraft:farmland"
     }
 }

@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:skeleton_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:skeleton_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "pig",
+            "partner_2": "cow", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

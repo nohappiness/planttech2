@@ -1,0 +1,19 @@
+{
+    "enabled": false,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:enderium_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:enderium_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

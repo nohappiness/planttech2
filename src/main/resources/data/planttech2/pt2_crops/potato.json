@@ -1,0 +1,25 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:potato_seeds",
+        "minecraft:potato"
+    ],
+    "drops":[
+        {
+            "item": "minecraft:poisonous_potato",
+            "min": 0, 
+            "max": 4
+        },
+        {
+            "item": "minecraft:potato",
+            "min": 1, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

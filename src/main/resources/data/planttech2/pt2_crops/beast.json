@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:beast_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:beast_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "illager",
+            "partner_2": "witch", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

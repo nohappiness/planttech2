@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:kinnoium_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:kinnoium_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "plantium",
+            "partner_2": "pig", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

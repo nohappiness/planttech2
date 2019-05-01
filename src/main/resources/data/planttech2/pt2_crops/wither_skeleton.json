@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 4,
+    "seeds": [
+        "planttech2:wither_skeleton_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:wither_skeleton_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "skeleton",
+            "partner_2": "netherrack", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

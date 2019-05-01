@@ -1,0 +1,15 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:sugarcane_seeds",
+        "minecraft:sugar_cane"
+    ],
+    "drops":[
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

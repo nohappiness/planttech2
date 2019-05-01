@@ -1,0 +1,25 @@
+{
+    "enabled": true,
+    "temperature": 1,
+    "seeds": [
+        "planttech2:fish_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:fish_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "cactus",
+            "partner_2": "sugarcane", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+        "block": "planttech2:dna_combiner"
+    }
+}

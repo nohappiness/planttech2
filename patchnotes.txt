@@ -25,4 +25,8 @@ PlantTech 2 Version 0.00.01 MC 1.13.2
  - Added the Infuser to infuse gears and machineshells 
  - Changed recipes to use the new gears and shells
  
+0.00.06 -> 0.00.07
+ - Removed all the txt config files in config/planttech2 
+ - Added crop configuration with data packs
+ - Every crop has it own file with all the configurations
 

@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 1,
+    "seeds": [
+        "planttech2:drowned_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:drowned_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "stray",
+            "partner_2": "husk", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

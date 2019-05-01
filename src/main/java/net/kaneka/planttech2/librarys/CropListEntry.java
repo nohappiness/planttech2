@@ -1,6 +1,8 @@
 package net.kaneka.planttech2.librarys;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -22,7 +24,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 
     private String name;
 
-    private Set<ItemStack> seeds = new HashSet<ItemStack>();
+    private List<ItemStack> seeds = new ArrayList<ItemStack>();
 
     private ItemStack mainSeed = new ItemStack(Items.WHEAT_SEEDS);
 
@@ -123,7 +125,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 	return this.mainSeedDrop;
     }
 
-    public Set<ItemStack> getSeeds()
+    public List<ItemStack> getSeeds()
     {
 	return seeds;
     }
@@ -157,7 +159,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 	    {
 		this.parents = new HashSet<Parents>();
 	    }
-	    this.parents.add(new Parents(parent1, parent2));
+	    this.parents.add(new Parents(parent1, parent2, chance));
 	    this.chance = chance;
 	}
 	return this;
@@ -291,6 +293,28 @@ public class CropListEntry implements Comparable<CropListEntry>
 
     public boolean hasParticle()
     {
-	return this.hasParticle;
+    	return this.hasParticle;
+    }
+    
+    public void clearLists()
+    {	
+    	clearSeeds();
+    	clearDrops();
+    	clearParents();
+    }
+    
+    public void clearSeeds()
+    {
+    	if(seeds != null) seeds.clear();
+    }
+    
+    public void clearDrops()
+    {
+    	if(drops != null) drops.clear();
+    }
+    
+    public void clearParents()
+    {
+    	if(parents != null) parents.clear();
     }
 }

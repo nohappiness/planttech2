@@ -1,19 +1,24 @@
 {
     "enabled": true,
-    "temperature": "WARM",
+    "temperature": 2,
+    "seeds": [
+        "planttech2:dirt_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:dirt_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
     "parents": [
         {
-            "part1": "",
-            "part2": ""
-        },
-        {
-            "part_1": "",
-            "part_2": ""
+            "partner_1": "melon",
+            "partner_2": "pumpkin", 
+            "chance": 0.1
         }
     ],
     "soil": 
     {
-        "block": "minecraft:soil",
-        "tag": "forge:dirt"
     }
 }

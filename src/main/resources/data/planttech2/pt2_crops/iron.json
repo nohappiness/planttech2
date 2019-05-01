@@ -1,0 +1,25 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:iron_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:iron_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "redstone",
+            "partner_2": "gold", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+        "block": "minecraft:iron_ore"
+    }
+}

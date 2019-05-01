@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:cow_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:cow_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "carrot",
+            "partner_2": "potato", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

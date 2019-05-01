@@ -146,7 +146,7 @@ public class GuiGuidePlants extends GuiGuideBase
 	    this.soil = new ItemStack(Item.getItemFromBlock(Blocks.DIRT));
 	}
 
-	Set<ItemStack> seeds = entry.getSeeds();
+	List<ItemStack> seeds = entry.getSeeds();
 	Set<Drop> drops = entry.getDrops();
 	Set<Parents> parentslist = entry.getParents();
 

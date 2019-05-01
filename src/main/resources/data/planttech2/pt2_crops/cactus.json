@@ -1,0 +1,21 @@
+{
+    "enabled": true,
+    "temperature": 3,
+    "seeds": [
+        "planttech2:cactus_seeds",
+        "minecraft:cactus"
+    ],
+    "drops":[
+        {
+            "item": "minecraft:cactus",
+            "min": 0, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+        "block": "minecraft:sand"
+    }
+}

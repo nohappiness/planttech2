@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 1,
+    "seeds": [
+        "planttech2:endstone_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:endstone_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "coal",
+            "partner_2": "chorus", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

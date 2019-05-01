@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:mycelium_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:mycelium_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "netherrack",
+            "partner_2": "mooshroom", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

@@ -1,0 +1,25 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:redstone_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:redstone_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "gold",
+            "partner_2": "glowstone", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+        "block": "minecraft:redstone_ore"
+    }
+}

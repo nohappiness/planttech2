@@ -1,0 +1,14 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:wither_rose_seeds"
+    ],
+    "drops":[
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

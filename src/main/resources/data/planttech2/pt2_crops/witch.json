@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:witch_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:witch_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "villager",
+            "partner_2": "soulsand", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

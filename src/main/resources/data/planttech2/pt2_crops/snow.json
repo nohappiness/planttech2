@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 0,
+    "seeds": [
+        "planttech2:snow_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:snow_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "polarbear",
+            "partner_2": "water", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "temperature": 1,
+    "seeds": [
+        "planttech2:squid_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:squid_particles",
+            "min": 0, 
+            "max": 8
+        },
+        {
+            "item": "planttech2:color_particles",
+            "min": 0, 
+            "max": 2
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "nether_wart",
+            "partner_2": "vine", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

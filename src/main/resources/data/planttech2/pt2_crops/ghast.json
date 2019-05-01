@@ -1,0 +1,24 @@
+{
+    "enabled": true,
+    "temperature": 4,
+    "seeds": [
+        "planttech2:ghast_seeds"
+    ],
+    "drops":[
+        {
+            "item": "planttech2:ghast_particles",
+            "min": 0, 
+            "max": 8
+        }
+    ],
+    "parents": [
+        {
+            "partner_1": "magma_cube",
+            "partner_2": "blaze", 
+            "chance": 0.1
+        }
+    ],
+    "soil": 
+    {
+    }
+}

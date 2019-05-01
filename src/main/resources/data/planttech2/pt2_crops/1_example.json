@@ -4,12 +4,12 @@
     "_comment2": "0 = extreme Cold, 1 = cold, 2 = normal, 3 = warm, 4 = extreme warm",
     "temperature": 1,
     "_comment3": "Allow these items to be used as seeds for this crop when clicking on crop bars",
-    "additional_seeds": [
+    "seeds": [
         "minecraft:carrot_seeds",
         "planttech2:dancium_block"
     ],
     "_comment4": "Add possible drops to this crop. Droprate depends on productivity trait", 
-    "additional_drops":[
+    "drops":[
         {
             "item": "minecraft:diamond",
             "min": 0, 
@@ -45,5 +45,8 @@
             "chance": 6
         }
     ],
-    "soil": "minecraft:farmland"
+    "soil": 
+    {
+        "block": "minecraft:soil"
+    }
 }

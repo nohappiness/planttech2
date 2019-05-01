@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:melon_seeds",
+        "minecraft:melon_seeds"
+    ],
+    "drops":[
+        {
+            "item": "minecraft:melon",
+            "min": 0, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

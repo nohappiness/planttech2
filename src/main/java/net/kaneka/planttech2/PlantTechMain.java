@@ -3,7 +3,9 @@ package net.kaneka.planttech2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
+import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.GuiHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
@@ -41,135 +43,131 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod("planttech2")
 public class PlantTechMain
 {
-    public static final String MODID = "planttech2";
-    
-    public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
+	public static final String MODID = "planttech2";
 
-    public static final Logger LOGGER = LogManager.getLogger(MODID);
-    
-    public static PlantTechMain instance;
-    
-    public static final ItemGroup groupmain = new ItemGroup("planttech2_main")
-    {
-	@OnlyIn(Dist.CLIENT)
-	public ItemStack createIcon()
-	{
-	    return new ItemStack(ModItems.WRENCH);
-	}
-    };
-    
-    public static final ItemGroup groupmachines = new ItemGroup("planttech2_machines")
-    {
-	@OnlyIn(Dist.CLIENT)
-	public ItemStack createIcon()
-	{
-	    return new ItemStack(ModBlocks.SOLARGENERATOR);
-	}
-    };
+	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
-    public static final ItemGroup groupseeds = new ItemGroup("planttech2_seeds")
-    {
-	@OnlyIn(Dist.CLIENT)
-	public ItemStack createIcon()
-	{
-	    return new ItemStack(ModItems.SEEDS.get("diamond"));
-	}
-    };
+	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    public static final ItemGroup groupparticles = new ItemGroup("planttech2_particles")
-    {
-	@OnlyIn(Dist.CLIENT)
-	public ItemStack createIcon()
-	{
-	    return new ItemStack(ModItems.COLOR_PARTICLES);
-	}
-    };
+	public static PlantTechMain instance;
 
-    public static final ItemGroup groupToolsAndArmor = new ItemGroup("planttech2_toolsandarmor")
-    {
-	@OnlyIn(Dist.CLIENT)
-	public ItemStack createIcon()
+	public static final ItemGroup groupmain = new ItemGroup("planttech2_main")
 	{
-	    return new ItemStack(ModItems.CHESTPLATE_KANEKIUM);
-	}
-    };
-    
-    public static CropList croplist = new CropList();
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModItems.WRENCH);
+		}
+	};
 
-    public PlantTechMain()
-    {
-	
-	DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+	public static final ItemGroup groupmachines = new ItemGroup("planttech2_machines")
+	{
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModBlocks.SOLARGENERATOR);
+		}
+	};
+
+	public static final ItemGroup groupseeds = new ItemGroup("planttech2_seeds")
+	{
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModItems.SEEDS.get("diamond"));
+		}
+	};
+
+	public static final ItemGroup groupparticles = new ItemGroup("planttech2_particles")
+	{
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModItems.COLOR_PARTICLES);
+		}
+	};
+
+	public static final ItemGroup groupToolsAndArmor = new ItemGroup("planttech2_toolsandarmor")
+	{
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModItems.CHESTPLATE_KANEKIUM);
+		}
+	};
+
+	public static CropList croplist = new CropList();
+
+	public PlantTechMain()
+	{
+
+		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::openGui);
 			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
 			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
-	});
+		});
 
-	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-	FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-	MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public static void onServerStarting(FMLServerStartingEvent event)
-    {
-	// do something when the server starts
-    }
-
-    private void setup(final FMLCommonSetupEvent event)
-    {
-	ModRecipeSerializers.registerAll(); 
-	PlantTech2PacketHandler.register();
-	//NetworkRegistry.INSTANCE.registerGuiHandler(PlantTechMain.instance, new GuiHandler());
-	PlantTechMain.croplist.configuratePlanttechEntries();
-	//PlantTechMain.instance.recipeLists.initRecipeCompressor();
-	LootTableHandler.register();
-	
-	//new RecipeJSONGenerator().createRecipes();
-    }
-
-    private void doClientStuff(final FMLClientSetupEvent event)
-    {
-	ModelLoaderRegistry.registerLoader(new ModelLoaderCable());
-    }
-
-    private void enqueueIMC(final InterModEnqueueEvent event)
-    {
-	// some example code to dispatch IMC to another mod
-    }
-
-    private void processIMC(final InterModProcessEvent event)
-    {
-	// some example code to receive and process InterModComms from other mods
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the
-    // contained class (this is subscribing to the MOD event bus
-    @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents
-    {
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event)
-	{
-	    ModItems.register(event.getRegistry());
-	    ModBlocks.registerItemBlocks(event.getRegistry());
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
+		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
 	}
 
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event)
+	private void onServerStarting(FMLServerStartingEvent event)
 	{
-	    PlantTechMain.croplist.addPlanttechEntries();
-	    ModBlocks.register(event.getRegistry());
+		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
-	
-	@SubscribeEvent
-	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+
+	private void setup(final FMLCommonSetupEvent event)
 	{
-	    ModTileEntities.register(event.getRegistry());
+		ModRecipeSerializers.registerAll();
+		PlantTech2PacketHandler.register();
+		PlantTechMain.croplist.configuratePlanttechEntries();
+		LootTableHandler.register();
 	}
-	
-    }
+
+	private void doClientStuff(final FMLClientSetupEvent event)
+	{
+		ModelLoaderRegistry.registerLoader(new ModelLoaderCable());
+	}
+
+	private void enqueueIMC(final InterModEnqueueEvent event)
+	{
+		// some example code to dispatch IMC to another mod
+	}
+
+	private void processIMC(final InterModProcessEvent event)
+	{
+		// some example code to receive and process InterModComms from other mods
+	}
+
+	// You can use EventBusSubscriber to automatically subscribe events on the
+	// contained class (this is subscribing to the MOD event bus
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class RegistryEvents
+	{
+		@SubscribeEvent
+		public static void registerItems(RegistryEvent.Register<Item> event)
+		{
+			ModItems.register(event.getRegistry());
+			ModBlocks.registerItemBlocks(event.getRegistry());
+		}
+
+		@SubscribeEvent
+		public static void registerBlocks(RegistryEvent.Register<Block> event)
+		{
+			PlantTechMain.croplist.addPlanttechEntries();
+			ModBlocks.register(event.getRegistry());
+		}
+
+		@SubscribeEvent
+		public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+		{
+			ModTileEntities.register(event.getRegistry());
+		}
+
+	}
 }
