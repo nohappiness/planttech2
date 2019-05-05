@@ -18,6 +18,7 @@ import net.kaneka.planttech2.items.ItemWithTier;
 import net.kaneka.planttech2.items.ItemWrench;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
 import net.kaneka.planttech2.items.armors.ItemArmorBase;
+import net.kaneka.planttech2.items.upgradeable.ItemMultitool;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -67,7 +68,8 @@ public class ModItems
 	    		   KINNOIUM_INGOT = new ItemBase("kinnoium_ingot", new Item.Properties().group(PlantTechMain.groupmain)), 
 	    		   KINNOIUM_NUGGET = new ItemBase("kinnoium_nugget", new Item.Properties().group(PlantTechMain.groupmain)),
 	    		   LENTHURIUM_INGOT = new ItemBase("lenthurium_ingot", new Item.Properties().group(PlantTechMain.groupmain)), 
-	    		   LENTHURIUM_NUGGET = new ItemBase("lenthurium_nugget", new Item.Properties().group(PlantTechMain.groupmain)),  
+	    		   LENTHURIUM_NUGGET = new ItemBase("lenthurium_nugget", new Item.Properties().group(PlantTechMain.groupmain)), 
+	    		   MULTITOOL = new ItemMultitool(), 
 	    		   PLANTIUM_INGOT  = new ItemBase("plantium_ingot", new Item.Properties().group(PlantTechMain.groupmain)), 
 	    		   PLANTIUM_NUGGET = new ItemBase("plantium_nugget", new Item.Properties().group(PlantTechMain.groupmain)),
 	    		   RANGEUPGRADE_TIER_1 = new ItemWithTier("rangeupgrade_1", new Item.Properties().group(PlantTechMain.groupmain), 1, 1),

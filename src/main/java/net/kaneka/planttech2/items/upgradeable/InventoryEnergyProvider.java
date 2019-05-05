@@ -1,0 +1,61 @@
+package net.kaneka.planttech2.items.upgradeable;
+
+import net.kaneka.planttech2.energy.BioEnergyStorage;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+
+public class InventoryEnergyProvider implements ICapabilitySerializable<NBTTagCompound>
+{
+	
+	protected BioEnergyStorage energystorage;
+	private LazyOptional<IEnergyStorage> energyCap;
+	protected ItemStackHandler itemhandler;
+    private LazyOptional<IItemHandler> inventoryCap;
+	
+	public InventoryEnergyProvider(int storage, int invSize)
+	{
+		energystorage = new BioEnergyStorage(storage);
+		energyCap = LazyOptional.of(() -> energystorage);
+		itemhandler = new ItemStackHandler(invSize);
+		inventoryCap = LazyOptional.of(() -> itemhandler);
+	}
+
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> cap, EnumFacing side)
+	{
+		if (cap == CapabilityEnergy.ENERGY)
+		{
+		    return energyCap.cast();
+		}
+		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
+		    return inventoryCap.cast();
+		}
+		return null;
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT()
+	{
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setTag("inventory", itemhandler.serializeNBT());
+		compound.setTag("energy", energystorage.serializeNBT());
+		return compound;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt)
+	{
+		itemhandler.deserializeNBT(nbt.getCompound("inventory"));
+		energystorage.deserializeNBT(nbt.getCompound("energy"));
+	}
+
+}
