@@ -23,6 +23,7 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<NBTTagCo
 	public InventoryEnergyProvider(int storage, int invSize)
 	{
 		energystorage = new BioEnergyStorage(storage);
+		energystorage.setEnergyStored(storage);
 		energyCap = LazyOptional.of(() -> energystorage);
 		itemhandler = new ItemStackHandler(invSize);
 		inventoryCap = LazyOptional.of(() -> itemhandler);

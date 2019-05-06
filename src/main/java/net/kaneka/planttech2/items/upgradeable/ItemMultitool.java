@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -36,7 +37,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class ItemMultitool extends ItemBase
+public class ItemMultitool extends ItemBaseUpgradeable
 {
 	private static final Set<Block> EFFECTIVE_ON_SPADE = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK,
 	        Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER,
@@ -75,12 +76,6 @@ public class ItemMultitool extends ItemBase
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
-	{
-		return new InventoryEnergyProvider(10000, 10);
-	}
-
-	@Override
 	public boolean canHarvestBlock(ItemStack stack, IBlockState state)
 	{
 		Block block = state.getBlock();
@@ -97,6 +92,10 @@ public class ItemMultitool extends ItemBase
 	public float getDestroySpeed(ItemStack stack, IBlockState state)
 	{
 		Material material = state.getMaterial();
+		if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
+		{
+			return getEfficiency();
+		}
 		return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency();
 	}
 
@@ -117,7 +116,7 @@ public class ItemMultitool extends ItemBase
 				world.setBlockState(blockpos, state_for_spade, 11);
 				if (entityplayer != null)
 				{
-					extractEnergy(ctx.getItem(), 1);
+					extractEnergy(ctx.getItem(), 1, false);
 				}
 			}
 
@@ -131,7 +130,7 @@ public class ItemMultitool extends ItemBase
 				world.setBlockState(blockpos, block.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
 				if (entityplayer != null)
 				{
-					extractEnergy(ctx.getItem(), 1);
+					extractEnergy(ctx.getItem(), 1, false);
 				}
 			}
 
@@ -139,17 +138,6 @@ public class ItemMultitool extends ItemBase
 		}
 
 		return EnumActionResult.PASS;
-	}
-
-	public int extractEnergy(ItemStack stack, int amount)
-	{
-		// TODO
-		return 0;
-	}
-
-	public int receiveEnergy(ItemStack stack, int amount)
-	{
-		return 0;
 	}
 
 	public int getHarvestLevel()
@@ -160,41 +148,7 @@ public class ItemMultitool extends ItemBase
 
 	public float getEfficiency()
 	{
-		return 1.5F;
+		return 4F;
 	}
 
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
-	{
-		LazyOptional<IEnergyStorage> provider = stack.getCapability(CapabilityEnergy.ENERGY);
-		if(provider != null)
-		{
-			IEnergyStorage storage = provider.orElse(null); 
-			if(storage != null)
-			{
-				{
-					tooltip.add(new TextComponentString(storage.getEnergyStored() + "/" +storage.getMaxEnergyStored())); 
-				}
-			}
-	}
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
-	
-	
-	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
-	{
-		LazyOptional<IEnergyStorage> provider = stack.getCapability(CapabilityEnergy.ENERGY);
-		if(provider != null)
-		{
-			IEnergyStorage storage = provider.orElse(null); 
-			if(storage != null)
-			{
-				{
-					storage.receiveEnergy(1, false); 
-				}
-			}
-	}
-		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
-	}
 }
