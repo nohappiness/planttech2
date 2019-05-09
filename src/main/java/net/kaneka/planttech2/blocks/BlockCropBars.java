@@ -5,6 +5,7 @@ import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +22,7 @@ public class BlockCropBars extends BlockBase
 {
     public BlockCropBars()
     {
-	super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", PlantTechMain.groupmain, true);
+	super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", ModCreativeTabs.groupmain, true);
     }
 
     @SuppressWarnings("deprecation")

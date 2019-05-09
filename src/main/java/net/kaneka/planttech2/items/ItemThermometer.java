@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +16,7 @@ public class ItemThermometer extends ItemBase
 
 	public ItemThermometer()
 	{
-		super("thermometer", new Item.Properties().group(PlantTechMain.groupmain));
+		super("thermometer", new Item.Properties().group(ModCreativeTabs.groupmain));
 	}
 
 	@Override

@@ -3,11 +3,11 @@ package net.kaneka.planttech2.blocks.machines;
 import java.util.HashMap;
 import javax.annotation.Nullable;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockBase;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TileEntityCable;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -28,16 +27,10 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.common.property.IExtendedState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 public class BlockCable extends BlockBase
 {
-    public static final IUnlistedProperty<Integer> UP = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("up", 0, 4)), NORTH = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("north", 0, 4)),
-	    WEST = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("west", 0, 4)), SOUTH = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("south", 0, 4)),
-	    EAST = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("east", 0, 4)), DOWN = new net.minecraftforge.common.property.Properties.PropertyAdapter<Integer>(IntegerProperty.create("down", 0, 4));
 
     protected static final AxisAlignedBB[] AABB_CONNECTIONS =
     { new AxisAlignedBB(0.375D, 0.0D, 0.375D, 0.625D, 0.125D, 0.625D), // DOWN
@@ -50,7 +43,7 @@ public class BlockCable extends BlockBase
 
     public BlockCable()
     {
-	super(Block.Properties.create(Material.IRON), "cable", PlantTechMain.groupmachines, true);
+	super(Block.Properties.create(Material.IRON), "cable", ModCreativeTabs.groupmachines, true);
     }
 
     @SuppressWarnings("deprecation")
@@ -115,7 +108,7 @@ public class BlockCable extends BlockBase
 
     public Item createItemBlock()
     {
-	return new ItemBlock(this, new Item.Properties().group(PlantTechMain.groupmain)).setRegistryName("cable");
+	return new ItemBlock(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
     }
 
     @SuppressWarnings("deprecation")
@@ -207,24 +200,6 @@ public class BlockCable extends BlockBase
 	return list;
     }
 
-    @Override
-    public IBlockState getExtendedState(IBlockState state, IBlockReader reader, BlockPos pos)
-    {
-	if (state instanceof IExtendedBlockState)
-	{
-	    IExtendedState<IBlockState> extState = (IExtendedBlockState) state;
-	    TileEntity te = reader.getTileEntity(pos);
-	    if (te instanceof TileEntityCable)
-	    {
-		TileEntityCable tec = (TileEntityCable) te;
-		return ((IExtendedState<IBlockState>) ((IExtendedState<IBlockState>) ((IExtendedState<IBlockState>) ((IExtendedState<IBlockState>) ((IExtendedState<IBlockState>) extState.withProperty(UP, ((TileEntityCable) te).getConnection(EnumFacing.UP))).withProperty(DOWN, ((TileEntityCable) te).getConnection(EnumFacing.DOWN)))
-			.withProperty(EAST, ((TileEntityCable) te).getConnection(EnumFacing.EAST))).withProperty(WEST, ((TileEntityCable) te).getConnection(EnumFacing.WEST)))
-			.withProperty(NORTH, ((TileEntityCable) te).getConnection(EnumFacing.NORTH))).withProperty(SOUTH, ((TileEntityCable) te).getConnection(EnumFacing.SOUTH));
-	    }
-
-	}
-	return state;
-    }
 
     @SuppressWarnings("deprecation")
 	@Override

@@ -1,10 +1,10 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuiGuideGeneticEngineering;
 import net.kaneka.planttech2.gui.GuiGuideOverview;
 import net.kaneka.planttech2.gui.GuiGuidePlants;
 import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,7 +22,7 @@ public class ItemGuide extends ItemBase
 
     public ItemGuide(String name)
     {
-	super("guide_" + name, new Item.Properties().defaultMaxDamage(1).group(PlantTechMain.groupmain));
+	super("guide_" + name, new Item.Properties().defaultMaxDamage(1).group(ModCreativeTabs.groupmain));
     }
 
     @Override

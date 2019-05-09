@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.rendering.cable.CableModel;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -19,6 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.client.model.ModelDataManager;
+import net.minecraftforge.client.model.data.IModelData;
+import net.minecraftforge.client.model.data.ModelDataMap;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -58,10 +62,17 @@ public class TileEntityCable extends TileEntity implements ITickable
     public void tick()
     {
 
-	if (!world.isRemote && isMaster)
-	{
-	    transferEnergy();
-	}
+    	if (!world.isRemote && isMaster)
+    	{
+    	    transferEnergy();
+    	}
+    	updateCable();
+    }
+    
+    private void updateCable()
+    {
+    	ModelDataManager.requestModelDataRefresh(this);
+        world.markBlockRangeForRenderUpdate(getPos(), getPos());
     }
 
     private void transferEnergy()
@@ -775,6 +786,17 @@ public class TileEntityCable extends TileEntity implements ITickable
 	}
 	setConnection(EnumFacing.byIndex(i), next);
 	sendUpdates();
+    }
+    
+    @Override
+    public IModelData getModelData()
+    {
+    	return new ModelDataMap.Builder().withInitial(CableModel.DATA_DOWN, connections[EnumFacing.DOWN.getIndex()])
+    			.withInitial(CableModel.DATA_EAST, connections[EnumFacing.EAST.getIndex()])
+    			.withInitial(CableModel.DATA_NORTH, connections[EnumFacing.NORTH.getIndex()])
+    			.withInitial(CableModel.DATA_WEST, connections[EnumFacing.WEST.getIndex()])
+    			.withInitial(CableModel.DATA_SOUTH, connections[EnumFacing.SOUTH.getIndex()])
+    			.withInitial(CableModel.DATA_UP, connections[EnumFacing.UP.getIndex()]).build();
     }
     
 }

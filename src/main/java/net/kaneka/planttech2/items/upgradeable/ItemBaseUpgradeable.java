@@ -2,6 +2,7 @@ package net.kaneka.planttech2.items.upgradeable;
 
 import java.util.List;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
 import net.kaneka.planttech2.energy.BioEnergyStorage;
@@ -50,7 +51,7 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public int receiveEnergy(ItemStack stack, int amount, boolean simulate)
 	{
@@ -83,49 +84,48 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable
 		}
 		return 0;
 	}
-	
+
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
 	{
-		if(!((EntityPlayer)attacker).abilities.isCreativeMode)
+		if (!((EntityPlayer) attacker).abilities.isCreativeMode)
 		{
 			extractEnergy(stack, getEnergyCostHit(stack), false);
 			updateTag(stack);
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
 	{
-		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F && !((EntityPlayer)entityLiving).abilities.isCreativeMode) 
+		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F && !((EntityPlayer) entityLiving).abilities.isCreativeMode)
 		{
-			extractEnergy(stack, getEnergyCostBreak(stack), false); 
+			extractEnergy(stack, getEnergyCostBreak(stack), false);
 			updateTag(stack);
 		}
 		return true;
 	}
-	
+
 	private int getEnergyCostHit(ItemStack stack)
 	{
-		return 50; 
+		return 50;
 	}
-	
-	private int getEnergyCostBreak(ItemStack stack)
+
+	protected int getEnergyCostBreak(ItemStack stack)
 	{
-		return 50; 
+		return 50;
 	}
-	
-	private double getAttackSpeed()
+
+	private double getAttackSpeed(ItemStack stack)
 	{
-		return 5.0D;
+		return -2.4D;
 	}
-	
-	private double getDamage()
+
+	private double getAttDamage(ItemStack stack)
 	{
-		return 2.0D; 
+		return 5D;
 	}
-	
 
 	protected IEnergyStorage getEnergyCap(ItemStack stack)
 	{
@@ -136,50 +136,51 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable
 		}
 		return null;
 	}
-	
+
 	protected IItemHandler getInvCap(ItemStack stack)
 	{
-		LazyOptional<IItemHandler> provider = stack.getCapability( CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+		LazyOptional<IItemHandler> provider = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
 		if (provider != null)
 		{
 			return provider.orElse(null);
 		}
 		return null;
 	}
-	
-	@Override 
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
-	      @SuppressWarnings("deprecation")
-		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot);
-	      if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-	         multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", getDamage(), 0));
-	         multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", getAttackSpeed(), 0));
-	      }
 
-	      return multimap;
-	   }
-	
+	@Override
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
+	{
+		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+		if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
+		{
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", getAttDamage(stack), 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", getAttackSpeed(stack), 0));
+		}
+
+		return multimap;
+	}
+
 	protected void updateTag(ItemStack stack)
 	{
 		NBTTagCompound tag = stack.getTag();
-		if(tag == null)
+		if (tag == null)
 		{
-			tag = new NBTTagCompound(); 
+			tag = new NBTTagCompound();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
-		if(storage instanceof BioEnergyStorage)
+		if (storage instanceof BioEnergyStorage)
 		{
-			System.out.println("test"); 
+			System.out.println("test");
 			tag.setInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
 			tag.setInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
 		}
 		stack.setTag(tag);
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		NBTTagCompound tag = stack.getTag(); 
+		NBTTagCompound tag = stack.getTag();
 		if (tag != null)
 		{
 			tooltip.add(new TextComponentString(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
@@ -187,29 +188,29 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-	
+
 	@Override
 	public boolean showDurabilityBar(ItemStack stack)
 	{
-		if(getDurabilityForDisplay(stack) >= 1)
+		if (getDurabilityForDisplay(stack) >= 1)
 		{
-			return false; 
+			return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTag(); 
+		NBTTagCompound tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
 		}
-		
+
 		return 1D;
 	}
-	
+
 	@Override
 	public int getRGBDurabilityForDisplay(ItemStack stack)
 	{

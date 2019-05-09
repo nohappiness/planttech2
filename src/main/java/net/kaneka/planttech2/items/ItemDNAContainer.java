@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,7 +21,7 @@ public class ItemDNAContainer extends ItemBase
 
     public ItemDNAContainer()
     {
-	super("dna_container",new Item.Properties().group(PlantTechMain.groupmain));
+	super("dna_container",new Item.Properties().group(ModCreativeTabs.groupmain));
     }
 
     @Override

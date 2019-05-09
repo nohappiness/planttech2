@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,33 +8,22 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableMap.Builder;
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.ItemBase;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemMultitool extends ItemBaseUpgradeable
 {
@@ -72,69 +60,85 @@ public class ItemMultitool extends ItemBaseUpgradeable
 
 	public ItemMultitool()
 	{
-		super("multitool", new Item.Properties().group(PlantTechMain.groupToolsAndArmor));
+		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
 	}
 
 	@Override
 	public boolean canHarvestBlock(ItemStack stack, IBlockState state)
 	{
-		Block block = state.getBlock();
-		int i = getHarvestLevel();
-		if (state.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE)
+		if(extractEnergy(stack, getEnergyCostBreak(stack), true) < getEnergyCostBreak(stack))
 		{
-			return i >= state.getHarvestLevel();
+    		Block block = state.getBlock();
+    		int i = getHarvestLevel();
+    		if (state.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE)
+    		{
+    			return i >= state.getHarvestLevel();
+    		}
+    		Material material = state.getMaterial();
+    		return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK || block.getBlock() == Blocks.COBWEB;
 		}
-		Material material = state.getMaterial();
-		return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK;
+		return false;
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, IBlockState state)
 	{
-		Material material = state.getMaterial();
-		if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
+		if(extractEnergy(stack, getEnergyCostBreak(stack), true) < getEnergyCostBreak(stack))
 		{
-			return getEfficiency();
+    		Material material = state.getMaterial();
+    		if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
+    		{
+    			return getEfficiency();
+    		}
+    		
+    		if (state.getBlock() == Blocks.COBWEB) 
+    		{
+    	         return 15.0F;
+    		}
+    		return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency();
 		}
-		return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency();
+		return super.getDestroySpeed(stack, state);
 	}
 
 	@Override
 	public EnumActionResult onItemUse(ItemUseContext ctx)
 	{
-		World world = ctx.getWorld();
-		BlockPos blockpos = ctx.getPos();
-		IBlockState state = world.getBlockState(blockpos);
-		IBlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
-		Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
-		if (ctx.getFace() != EnumFacing.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
+		if(extractEnergy(ctx.getItem(), getEnergyCostBreak(ctx.getItem()), true) < getEnergyCostBreak(ctx.getItem()))
 		{
-			EntityPlayer entityplayer = ctx.getPlayer();
-			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!world.isRemote)
-			{
-				world.setBlockState(blockpos, state_for_spade, 11);
-				if (entityplayer != null)
-				{
-					extractEnergy(ctx.getItem(), 1, false);
-				}
-			}
-
-			return EnumActionResult.SUCCESS;
-		} else if (block != null)
-		{
-			EntityPlayer entityplayer = ctx.getPlayer();
-			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!world.isRemote)
-			{
-				world.setBlockState(blockpos, block.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
-				if (entityplayer != null)
-				{
-					extractEnergy(ctx.getItem(), 1, false);
-				}
-			}
-
-			return EnumActionResult.SUCCESS;
+    		World world = ctx.getWorld();
+    		BlockPos blockpos = ctx.getPos();
+    		IBlockState state = world.getBlockState(blockpos);
+    		IBlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
+    		Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
+    		if (ctx.getFace() != EnumFacing.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
+    		{
+    			EntityPlayer entityplayer = ctx.getPlayer();
+    			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+    			if (!world.isRemote)
+    			{
+    				world.setBlockState(blockpos, state_for_spade, 11);
+    				if (entityplayer != null)
+    				{
+    					extractEnergy(ctx.getItem(), 1, false);
+    				}
+    			}
+    
+    			return EnumActionResult.SUCCESS;
+    		} else if (block != null)
+    		{
+    			EntityPlayer entityplayer = ctx.getPlayer();
+    			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+    			if (!world.isRemote)
+    			{
+    				world.setBlockState(blockpos, block.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
+    				if (entityplayer != null)
+    				{
+    					extractEnergy(ctx.getItem(), 1, false);
+    				}
+    			}
+    
+    			return EnumActionResult.SUCCESS;
+    		}
 		}
 
 		return EnumActionResult.PASS;

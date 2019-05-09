@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -22,7 +23,7 @@ public class ItemCropSeed extends ItemBase
     private String entryName; 
     public ItemCropSeed(String entryName)
     {
-	super(entryName + "_seeds",new  Item.Properties().group(PlantTechMain.groupseeds));
+	super(entryName + "_seeds",new  Item.Properties().group(ModCreativeTabs.groupseeds));
 	this.entryName = entryName; 
     }
     

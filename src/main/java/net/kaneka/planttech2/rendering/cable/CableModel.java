@@ -10,14 +10,26 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.model.ModelRotation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.extensions.IForgeBakedModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.data.ModelProperty;
 import net.minecraftforge.common.model.IModelState;
 
 public class CableModel implements IUnbakedModel
 {
+	
+	public static final ModelProperty<Integer> DATA_UP = new ModelProperty<Integer>();
+	public static final ModelProperty<Integer> DATA_DOWN = new ModelProperty<Integer>();
+	public static final ModelProperty<Integer> DATA_WEST = new ModelProperty<Integer>();
+	public static final ModelProperty<Integer> DATA_EAST = new ModelProperty<Integer>();
+	public static final ModelProperty<Integer> DATA_NORTH = new ModelProperty<Integer>();
+	public static final ModelProperty<Integer> DATA_SOUTH = new ModelProperty<Integer>();
+	 
+	 
     public static final ResourceLocation TEXTURE_CABLE = new ResourceLocation("planttech2:blocks/cables/cable");
     public static final ResourceLocation TEXTURE_IN = new ResourceLocation("planttech2:blocks/cables/connection_in");
     public static final ResourceLocation TEXTURE_OUT = new ResourceLocation("planttech2:blocks/cables/connection_out");
@@ -157,7 +169,7 @@ public class CableModel implements IUnbakedModel
 	    subComponent = ModelLoaderRegistry.getModel(MODEL_SOUTH_BOTH);
 	    bakedModelSouth[3] = subComponent.bake(modelGetter, spriteGetter, state, uvlock, format);
 
-	    return new CompositeModel(bakedModelCore, bakedModelUp, bakedModelDown, bakedModelWest, bakedModelEast, bakedModelNorth, bakedModelSouth);
+	    return (IBakedModel) new CompositeModel(bakedModelCore, bakedModelUp, bakedModelDown, bakedModelWest, bakedModelEast, bakedModelNorth, bakedModelSouth);
 	}
 	catch (Exception exception)
 	{

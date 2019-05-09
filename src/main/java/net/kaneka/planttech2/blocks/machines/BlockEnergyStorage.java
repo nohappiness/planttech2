@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +23,7 @@ public class BlockEnergyStorage extends BlockMachineBase
     
     public BlockEnergyStorage()
     {
-	super("energystorage", PlantTechMain.groupmachines);
+	super("energystorage", ModCreativeTabs.groupmachines);
 	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH).with(TIER, 0));
     }
     

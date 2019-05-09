@@ -2,7 +2,7 @@ package net.kaneka.planttech2.items;
 
 import java.util.List;
 
-import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public class ItemBiomassContainer extends ItemBase
 
     public ItemBiomassContainer()
     {
-	super("biomasscontainer", new Item.Properties().group(PlantTechMain.groupmain));
+	super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain));
 	addPropertyOverride(new ResourceLocation("filled"), (stack, world, player) ->
 	{
 	    return getFillLevelModel(stack);

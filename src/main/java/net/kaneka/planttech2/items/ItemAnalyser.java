@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BlockCropBase;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,7 +19,7 @@ public class ItemAnalyser extends ItemBase
 
 	public ItemAnalyser()
 	{
-		super("analyser", new Item.Properties().maxStackSize(1).group(PlantTechMain.groupmain));
+		super("analyser", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
 	}
 
 	@Override

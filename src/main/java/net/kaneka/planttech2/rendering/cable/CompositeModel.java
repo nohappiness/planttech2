@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.annotation.Nullable;
-import net.kaneka.planttech2.blocks.machines.BlockCable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.BakedQuad;
@@ -13,7 +11,7 @@ import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.client.model.data.IModelData;
 
 public class CompositeModel implements IBakedModel
 {
@@ -30,73 +28,69 @@ public class CompositeModel implements IBakedModel
 	this.modelNorth = modelNorth;
 	this.modelSouth = modelSouth;
     }
-
+    
     @Override
-    public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, Random rand)
+    public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, Random rand, IModelData extraData)
     {
+    
 	List<BakedQuad> quadsList = new ArrayList<BakedQuad>();
 
-	quadsList.addAll(modelCore.getQuads(state, side, rand));
+	quadsList.addAll(modelCore.getQuads(state, side, rand, extraData));
 
-	if (!(state instanceof IExtendedBlockState))
-	{
-	    return quadsList;
-	}
 
-	IExtendedBlockState extState = (IExtendedBlockState) state;
 	int up = 1, down = 1, east = 1, west = 1, north = 1, south = 1;
-	if (extState.getValue(BlockCable.UP) != null)
+	if (extraData.getData(CableModel.DATA_UP) != null)
 	{
-	    up = extState.getValue(BlockCable.UP);
+	    up = extraData.getData(CableModel.DATA_UP);
 	}
 	if (0 < up && up < 6)
 	{
-	    quadsList.addAll(modelUp[up - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelUp[up - 1].getQuads(state, side, rand, extraData));
 	}
 
-	if (extState.getValue(BlockCable.DOWN) != null)
+	if (extraData.getData(CableModel.DATA_DOWN) != null)
 	{
-	    down = extState.getValue(BlockCable.DOWN);
+	    down = extraData.getData(CableModel.DATA_DOWN);
 	}
 	if (0 < down && down < 6)
 	{
-	    quadsList.addAll(modelDown[down - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelDown[down - 1].getQuads(state, side, rand, extraData));
 	}
 
-	if (extState.getValue(BlockCable.EAST) != null)
+	if (extraData.getData(CableModel.DATA_EAST) != null)
 	{
-	    east = extState.getValue(BlockCable.EAST);
+	    east = extraData.getData(CableModel.DATA_EAST);
 	}
 	if (0 < east && east < 6)
 	{
-	    quadsList.addAll(modelEast[east - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelEast[east - 1].getQuads(state, side, rand, extraData));
 	}
 
-	if (extState.getValue(BlockCable.WEST) != null)
+	if (extraData.getData(CableModel.DATA_WEST) != null)
 	{
-	    west = extState.getValue(BlockCable.WEST);
+	    west = extraData.getData(CableModel.DATA_WEST);
 	}
 	if (0 < west && west < 6)
 	{
-	    quadsList.addAll(modelWest[west - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelWest[west - 1].getQuads(state, side, rand, extraData));
 	}
 
-	if (extState.getValue(BlockCable.NORTH) != null)
+	if (extraData.getData(CableModel.DATA_NORTH) != null)
 	{
-	    north = extState.getValue(BlockCable.NORTH);
+	    north = extraData.getData(CableModel.DATA_NORTH);
 	}
 	if (0 < north && north < 6)
 	{
-	    quadsList.addAll(modelNorth[north - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelNorth[north - 1].getQuads(state, side, rand, extraData));
 	}
 
-	if (extState.getValue(BlockCable.SOUTH) != null)
+	if (extraData.getData(CableModel.DATA_SOUTH) != null)
 	{
-	    south = extState.getValue(BlockCable.SOUTH);
+	    south = extraData.getData(CableModel.DATA_SOUTH);
 	}
 	if (0 < south && south < 6)
 	{
-	    quadsList.addAll(modelSouth[south - 1].getQuads(extState, side, rand));
+	    quadsList.addAll(modelSouth[south - 1].getQuads(state, side, rand, extraData));
 	}
 
 	return quadsList;
@@ -131,4 +125,11 @@ public class CompositeModel implements IBakedModel
     {
 	return null;
     }
+
+	@Override
+	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, Random rand)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

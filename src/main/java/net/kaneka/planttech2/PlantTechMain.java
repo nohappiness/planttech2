@@ -17,14 +17,15 @@ import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.rendering.cable.CableModel;
+import net.kaneka.planttech2.rendering.cable.CompositeModel;
 import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -51,51 +52,6 @@ public class PlantTechMain
 
 	public static PlantTechMain instance;
 
-	public static final ItemGroup groupmain = new ItemGroup("planttech2_main")
-	{
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ModItems.WRENCH);
-		}
-	};
-
-	public static final ItemGroup groupmachines = new ItemGroup("planttech2_machines")
-	{
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ModBlocks.SOLARGENERATOR);
-		}
-	};
-
-	public static final ItemGroup groupseeds = new ItemGroup("planttech2_seeds")
-	{
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ModItems.SEEDS.get("diamond"));
-		}
-	};
-
-	public static final ItemGroup groupparticles = new ItemGroup("planttech2_particles")
-	{
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ModItems.COLOR_PARTICLES);
-		}
-	};
-
-	public static final ItemGroup groupToolsAndArmor = new ItemGroup("planttech2_toolsandarmor")
-	{
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon()
-		{
-			return new ItemStack(ModItems.CHESTPLATE_KANEKIUM);
-		}
-	};
-
 	public static CropList croplist = new CropList();
 
 	public PlantTechMain()
@@ -114,6 +70,7 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
+		MinecraftForge.EVENT_BUS.addListener(this::modelBake);
 	}
 
 	private void onServerStarting(FMLServerStartingEvent event)
@@ -170,4 +127,9 @@ public class PlantTechMain
 		}
 
 	}
+	
+	public void modelBake(ModelBakeEvent event)
+    {
+		 //event.getModelRegistry().put(new ModelResourceLocation("planttech2:cable"), new CompositeModel()); 
+    }
 }
