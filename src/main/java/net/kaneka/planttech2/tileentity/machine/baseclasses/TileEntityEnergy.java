@@ -20,140 +20,141 @@ import net.minecraftforge.energy.IEnergyStorage;
 abstract public class TileEntityEnergy extends TileEntity implements ITickable, IInteractionObject
 {
 
-    protected BioEnergyStorage energystorage;
-    private LazyOptional<IEnergyStorage> energyCap;
-    public String customname;
+	protected BioEnergyStorage energystorage;
+	private LazyOptional<IEnergyStorage> energyCap;
+	public String customname;
 
-    public TileEntityEnergy(TileEntityType<?> type, int energyStorage)
-    {
-	super(type);
-	energystorage = new BioEnergyStorage(energyStorage);
-	energyCap = LazyOptional.of(() -> energystorage);
-    }
-
-    @Override
-    public void tick()
-    {
-	if (this.world != null && !this.world.isRemote)
+	public TileEntityEnergy(TileEntityType<?> type, int energyStorage)
 	{
-	    doUpdate();
+		super(type);
+		energystorage = new BioEnergyStorage(energyStorage);
+		energyCap = LazyOptional.of(() -> energystorage);
 	}
-    }
 
-    public void doUpdate()
-    {
-
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
-    {
-	if (capability == CapabilityEnergy.ENERGY)
+	@Override
+	public void tick()
 	{
-	    return energyCap.cast();
+		if (this.world != null && !this.world.isRemote)
+		{
+			doUpdate();
+		}
 	}
-	return super.getCapability(capability, facing);
-    }
 
-    @Override
-    public NBTTagCompound write(NBTTagCompound compound)
-    {
-
-	compound.setTag("energy", this.energystorage.serializeNBT());
-	super.write(compound);
-	return compound;
-    }
-
-    @Override
-    public void read(NBTTagCompound compound)
-    {
-	super.read(compound);
-	this.energystorage.deserializeNBT(compound.getCompound("energy"));
-    }
-
-    public String getNameString()
-    {
-	return "default";
-    }
-
-    public int getEnergyStored()
-    {
-	return this.energystorage.getEnergyStored();
-    }
-
-    public int getMaxEnergyStored()
-    {
-	return this.energystorage.getMaxEnergyStored();
-    }
-
-    public boolean isUsableByPlayer(EntityPlayer player)
-    {
-	return this.world.getTileEntity(this.pos) != this ? false : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
-    }
-    
-    public void onSlotContentChanged()
-    {
-	
-    }
-
-    public int getField(int id)
-    {
-	switch (id)
+	public void doUpdate()
 	{
-	case 0:
-	    return this.energystorage.getEnergyStored();
-	case 1:
-	    return this.energystorage.getMaxEnergyStored();
-	default:
-	    return 0;
-	}
-    }
 
-    public void setField(int id, int value)
-    {
-	switch (id)
+	}
+
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
 	{
-	case 0:
-	    this.energystorage.setEnergyStored(value);
-	    break;
-	case 1:
-	    this.energystorage.setEnergyMaxStored(value);
-	    break;
+		if (capability == CapabilityEnergy.ENERGY)
+		{
+			return energyCap.cast();
+		}
+		return super.getCapability(capability, facing);
 	}
-    }
 
-    public int getAmountFields()
-    {
-	return 2;
-    }
+	@Override
+	public NBTTagCompound write(NBTTagCompound compound)
+	{
 
-    @Override
-    public ITextComponent getName()
-    {
-	return new TextComponentTranslation("container." + getNameString());
-    }
+		compound.setTag("energy", this.energystorage.serializeNBT());
+		super.write(compound);
+		return compound;
+	}
 
-    @Override
-    public boolean hasCustomName()
-    {
-	return false;
-    }
+	@Override
+	public void read(NBTTagCompound compound)
+	{
+		super.read(compound);
+		this.energystorage.deserializeNBT(compound.getCompound("energy"));
+	}
 
-    @Override
-    public ITextComponent getCustomName()
-    {
-	return null;
-    }
+	public String getNameString()
+	{
+		return "default";
+	}
 
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return null;
-    }
+	public int getEnergyStored()
+	{
+		return this.energystorage.getEnergyStored();
+	}
 
-    @Override
-    public String getGuiID()
-    {
-	return getType().getRegistryName().toString();
-    }
+	public int getMaxEnergyStored()
+	{
+		return this.energystorage.getMaxEnergyStored();
+	}
+
+	public boolean isUsableByPlayer(EntityPlayer player)
+	{
+		return this.world.getTileEntity(this.pos) != this ? false
+		        : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+	}
+
+	public void onSlotContentChanged()
+	{
+
+	}
+
+	public int getField(int id)
+	{
+		switch (id)
+		{
+		case 0:
+			return this.energystorage.getEnergyStored();
+		case 1:
+			return this.energystorage.getMaxEnergyStored();
+		default:
+			return 0;
+		}
+	}
+
+	public void setField(int id, int value)
+	{
+		switch (id)
+		{
+		case 0:
+			this.energystorage.setEnergyStored(value);
+			break;
+		case 1:
+			this.energystorage.setEnergyMaxStored(value);
+			break;
+		}
+	}
+
+	public int getAmountFields()
+	{
+		return 2;
+	}
+
+	@Override
+	public ITextComponent getName()
+	{
+		return new TextComponentTranslation("container." + getNameString());
+	}
+
+	@Override
+	public boolean hasCustomName()
+	{
+		return false;
+	}
+
+	@Override
+	public ITextComponent getCustomName()
+	{
+		return null;
+	}
+
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
+	{
+		return null;
+	}
+
+	@Override
+	public String getGuiID()
+	{
+		return getType().getRegistryName().toString();
+	}
 }

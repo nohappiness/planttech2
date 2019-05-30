@@ -66,7 +66,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     	{
     	    transferEnergy();
     	}
-    	updateCable();
+    	//updateCable();
     }
     
     private void updateCable()

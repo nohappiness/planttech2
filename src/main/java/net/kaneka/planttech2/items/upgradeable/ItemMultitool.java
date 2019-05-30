@@ -1,6 +1,8 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
@@ -9,23 +11,31 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableMap.Builder;
 
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 
-public class ItemMultitool extends ItemBaseUpgradeable
+public class ItemMultitool extends ItemUpgradeableHand
 {
 	private static final Set<Block> EFFECTIVE_ON_SPADE = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK,
 	        Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER,
@@ -56,26 +66,46 @@ public class ItemMultitool extends ItemBaseUpgradeable
 
 	protected static final Map<Block, IBlockState> PATH_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
 
+	protected static final Map<Block, IBlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH,
+	        Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
+
 	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK, Material.WOOD, Material.PLANTS, Material.VINE);
 
 	public ItemMultitool()
 	{
-		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
+		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 10000, 10, 2F, 2.4F);
+		addPropertyOverride(new ResourceLocation("drilling"), (stack, world, player) -> {
+
+			if (player == null)
+			{
+				return 0.0F;
+			} else
+			{
+				if (!(stack.getItem() instanceof ItemMultitool))
+				{
+					return 0.0F;
+				} else
+				{
+					return (player.ticksExisted % 4) + 1;
+				}
+			}
+		});
 	}
 
 	@Override
 	public boolean canHarvestBlock(ItemStack stack, IBlockState state)
 	{
-		if(extractEnergy(stack, getEnergyCostBreak(stack), true) < getEnergyCostBreak(stack))
+		if (extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
 		{
-    		Block block = state.getBlock();
-    		int i = getHarvestLevel();
-    		if (state.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE)
-    		{
-    			return i >= state.getHarvestLevel();
-    		}
-    		Material material = state.getMaterial();
-    		return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK || block.getBlock() == Blocks.COBWEB;
+			Block block = state.getBlock();
+			int i = getHarvestLevel(stack);
+			if (state.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE)
+			{
+				return i >= state.getHarvestLevel();
+			}
+			Material material = state.getMaterial();
+			return material == Material.ROCK || material == Material.IRON || material == Material.ANVIL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK
+			        || block.getBlock() == Blocks.COBWEB;
 		}
 		return false;
 	}
@@ -83,19 +113,19 @@ public class ItemMultitool extends ItemBaseUpgradeable
 	@Override
 	public float getDestroySpeed(ItemStack stack, IBlockState state)
 	{
-		if(extractEnergy(stack, getEnergyCostBreak(stack), true) < getEnergyCostBreak(stack))
+		if (extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
 		{
-    		Material material = state.getMaterial();
-    		if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
-    		{
-    			return getEfficiency();
-    		}
-    		
-    		if (state.getBlock() == Blocks.COBWEB) 
-    		{
-    	         return 15.0F;
-    		}
-    		return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency();
+			Material material = state.getMaterial();
+			if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
+			{
+				return getEfficiency(stack);
+			}
+
+			if (state.getBlock() == Blocks.COBWEB)
+			{
+				return 15.0F;
+			}
+			return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency(stack);
 		}
 		return super.getDestroySpeed(stack, state);
 	}
@@ -103,56 +133,121 @@ public class ItemMultitool extends ItemBaseUpgradeable
 	@Override
 	public EnumActionResult onItemUse(ItemUseContext ctx)
 	{
-		if(extractEnergy(ctx.getItem(), getEnergyCostBreak(ctx.getItem()), true) < getEnergyCostBreak(ctx.getItem()))
+		if (extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), true) >= getEnergyCost(ctx.getItem()))
 		{
-    		World world = ctx.getWorld();
-    		BlockPos blockpos = ctx.getPos();
-    		IBlockState state = world.getBlockState(blockpos);
-    		IBlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
-    		Block block = BLOCK_STRIPPING_MAP.get(state.getBlock());
-    		if (ctx.getFace() != EnumFacing.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
-    		{
-    			EntityPlayer entityplayer = ctx.getPlayer();
-    			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-    			if (!world.isRemote)
-    			{
-    				world.setBlockState(blockpos, state_for_spade, 11);
-    				if (entityplayer != null)
-    				{
-    					extractEnergy(ctx.getItem(), 1, false);
-    				}
-    			}
-    
-    			return EnumActionResult.SUCCESS;
-    		} else if (block != null)
-    		{
-    			EntityPlayer entityplayer = ctx.getPlayer();
-    			world.playSound(entityplayer, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-    			if (!world.isRemote)
-    			{
-    				world.setBlockState(blockpos, block.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
-    				if (entityplayer != null)
-    				{
-    					extractEnergy(ctx.getItem(), 1, false);
-    				}
-    			}
-    
-    			return EnumActionResult.SUCCESS;
-    		}
+			World world = ctx.getWorld();
+			BlockPos blockpos = ctx.getPos();
+			IBlockState state = world.getBlockState(blockpos);
+			IBlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
+			IBlockState state_for_hoe = FARMLAND_MAP.get(world.getBlockState(blockpos).getBlock());
+			Block block_for_strinping = BLOCK_STRIPPING_MAP.get(state.getBlock());
+			EntityPlayer entityplayer = ctx.getPlayer();
+			if (ctx.getFace() != EnumFacing.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
+			{
+				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockshovel", false))
+				{
+
+					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!world.isRemote)
+					{
+						world.setBlockState(blockpos, state_for_spade, 11);
+						if (entityplayer != null && !entityplayer.isCreative())
+						{
+							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
+						}
+					}
+				}
+
+				return EnumActionResult.SUCCESS;
+			} else if (block_for_strinping != null)
+			{
+				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockaxe", false))
+				{
+					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!world.isRemote)
+					{
+						world.setBlockState(blockpos, block_for_strinping.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
+						if (entityplayer != null && !entityplayer.isCreative())
+						{
+							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
+						}
+					}
+				}
+
+				return EnumActionResult.SUCCESS;
+			} else if (ctx.getFace() != EnumFacing.DOWN && world.isAirBlock(blockpos.up()) && state_for_hoe != null)
+			{
+				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockhoe", false))
+				{
+					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!world.isRemote)
+					{
+						world.setBlockState(blockpos, state_for_hoe, 11);
+						if (entityplayer != null && !entityplayer.isCreative())
+						{
+							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
+						}
+					}
+
+					return EnumActionResult.SUCCESS;
+				}
+			}
 		}
 
 		return EnumActionResult.PASS;
 	}
 
-	public int getHarvestLevel()
+	public int getHarvestLevel(ItemStack stack)
 	{
-		return 1;
+		return NBTHelper.getIntSave(stack, "harvestlevel", 0);
 
 	}
 
-	public float getEfficiency()
+	public float getEfficiency(ItemStack stack)
 	{
-		return 4F;
+		return Math.min(NBTHelper.getFloatSave(stack, "breakdownrate", 4), ItemUpgradeChip.getBreakdownRateMax());
+	}
+
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+	{
+
+		return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+	}
+
+	@Override
+	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand)
+	{
+
+		if (entity.world.isRemote)
+		{
+			return false;
+		}
+		if (NBTHelper.getBooleanSave(stack, "unlockshears", false))
+		{
+		
+    		if (entity instanceof IShearable)
+    		{
+    			IShearable target = (IShearable) entity;
+    			BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
+    			if (target.isShearable(stack, entity.world, pos))
+    			{
+    				List<ItemStack> drops = target.onSheared(stack, entity.world, pos,
+    				EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
+    				Random rand = new Random();
+    				for (ItemStack drop : drops)
+    				{
+    					EntityItem ent = entity.entityDropItem(drop, 1.0F);
+    					ent.motionY += rand.nextFloat() * 0.05F;
+    					ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+    					ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+    				}
+    				extractEnergy(stack, getEnergyCost(stack), false);
+    			}
+    			return true;
+    		}
+		}
+		return false;
 	}
 
 }

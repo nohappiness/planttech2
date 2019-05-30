@@ -1,0 +1,13 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "planttech2:items/multitool"
+    },
+    "overrides": [
+        { "predicate": { "drilling": 0 }, "model": "planttech2:item/multitool_0" },
+        { "predicate": { "drilling": 1 }, "model": "planttech2:item/multitool_1" },
+        { "predicate": { "drilling": 2 }, "model": "planttech2:item/multitool_2" },
+        { "predicate": { "drilling": 3 }, "model": "planttech2:item/multitool_3" },
+        { "predicate": { "drilling": 4 }, "model": "planttech2:item/multitool_4" }
+    ]
+}    

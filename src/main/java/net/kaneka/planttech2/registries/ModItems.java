@@ -19,6 +19,10 @@ import net.kaneka.planttech2.items.ItemWrench;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
 import net.kaneka.planttech2.items.armors.ItemArmorBase;
 import net.kaneka.planttech2.items.upgradeable.ItemMultitool;
+import net.kaneka.planttech2.items.upgradeable.ItemRangedWeapon;
+import net.kaneka.planttech2.items.upgradeable.ItemUpgradeChip;
+import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableArmor;
+import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableHand;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -36,6 +40,10 @@ public class ModItems
     public static ItemBase ANALYSER = new ItemAnalyser(), 
 	    		   BIOMASS = new ItemBase("biomass", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   BIOMASSCONTAINER = new ItemBiomassContainer(),
+	    		   CYBERBOW = new ItemRangedWeapon("cyberbow", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10), 
+	    		   CYBERDAGGER = new ItemUpgradeableHand("cyberdagger", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 1, -1.4F), 
+	    		   CYBERKATANA = new ItemUpgradeableHand("cyberkatana", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 8, -3.4F),
+	    		   CYBERRAPIER = new ItemUpgradeableHand("cyberrapier", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 4, -2.4F),
 	    		   CAPACITYUPGRADE_TIER_1 = new ItemWithTier("capacityupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 3),
 	    		   CAPACITYUPGRADE_TIER_2 = new ItemWithTier("capacityupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 3),
 	    		   CAPACITYUPGRADE_TIER_3 = new ItemWithTier("capacityupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 3),
@@ -87,6 +95,35 @@ public class ModItems
 	    		   SPEEDUPGRADE_TIER_4 = new ItemWithTier("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
 	    		   THERMOMETER = new ItemThermometer(), 
 	    		   WRENCH = new ItemWrench();
+    
+	public static ItemUpgradeChip CAPACITYCHIP_TIER_1 = new ItemUpgradeChip("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(10), 
+				CAPACITYCHIP_TIER_2 = new ItemUpgradeChip("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(20), 
+				CAPACITYCHIP_TIER_3 = new ItemUpgradeChip("capacitychip_tier_3").setIncreaseCapacity(10000).setEnergyCost(50), 
+				REAKTORCHIP_TIER_1 = new ItemUpgradeChip("reaktorchip_1").setEnergyProduction(1).setEnergyCost(10), 
+				REAKTORCHIP_TIER_2 = new ItemUpgradeChip("reaktorchip_2").setEnergyProduction(3).setEnergyCost(20), 
+				REAKTORCHIP_TIER_3 = new ItemUpgradeChip("reaktorchip_3").setEnergyProduction(5).setEnergyCost(50), 
+				UNLOCKCHIP_SHOVEL = new ItemUpgradeChip("unlockchip_shovel").setUnlockShovelFeat().setEnergyCost(20), 
+				UNLOCKCHIP_AXE = new ItemUpgradeChip("unlockchip_axe").setUnlockAxeFeat().setEnergyCost(20), 
+				UNLOCKCHIP_SHEARS = new ItemUpgradeChip("unlockchip_shears").setUnlockShearsFeat().setEnergyCost(20), 
+				UNLOCKCHIP_HOE = new ItemUpgradeChip("unlockchip_hoe").setUnlockHoeFeat().setEnergyCost(20), 
+				HARVESTLEVELCHIP_TIER_1 = new ItemUpgradeChip("harvestlevelchip_tier_1").setIncreaseHarvestlevel(1).setEnergyCost(20), 
+				HARVESTLEVELCHIP_TIER_2 = new ItemUpgradeChip("harvestlevelchip_tier_2").setIncreaseHarvestlevel(2).setEnergyCost(60), 
+				HARVESTLEVELCHIP_TIER_3 = new ItemUpgradeChip("harvestlevelchip_tier_3").setIncreaseHarvestlevel(4).setEnergyCost(150), 
+				ATTACKCHIP_TIER_1 = new ItemUpgradeChip("attackchip_tier_1").setIncreaseAttack(0.5F).setEnergyCost(5), 
+				ATTACKCHIP_TIER_2 = new ItemUpgradeChip("attackchip_tier_2").setIncreaseAttack(1F).setEnergyCost(15), 
+				ATTACKCHIP_TIER_3 = new ItemUpgradeChip("attackchip_tier_3").setIncreaseAttack(2F).setEnergyCost(45), 
+				ATTACKSPEEDCHIP_TIER_1 = new ItemUpgradeChip("attackspeedupgradechip_tier_1").setIncreaseAttackSpeed(0.1F).setEnergyCost(5), 
+				ATTACKSPEEDCHIP_TIER_2 = new ItemUpgradeChip("attackspeedupgradechip_tier_2").setIncreaseAttackSpeed(0.25F).setEnergyCost(15), 
+				ATTACKSPEEDCHIP_TIER_3 = new ItemUpgradeChip("attackspeedupgradechip_tier_3").setIncreaseAttackSpeed(0.5F).setEnergyCost(45), 
+				BREAKDOWNRATECHIP_TIER_1 = new ItemUpgradeChip("breakdownratechip_tier_1").setIncreaseBreakdownRate(0.5F).setEnergyCost(5), 
+				BREAKDOWNRATECHIP_TIER_2 = new ItemUpgradeChip("breakdownratechip_tier_2").setIncreaseBreakdownRate(1F).setEnergyCost(15), 
+				BREAKDOWNRATECHIP_TIER_3 = new ItemUpgradeChip("breakdownratechip_tier_3").setIncreaseBreakdownRate(2.5F).setEnergyCost(80), 
+				ARMORCHIP_TIER_1 = new ItemUpgradeChip("armorchip_tier_1").setIncreaseArmor(1).setEnergyCost(10), 
+				ARMORCHIP_TIER_2 = new ItemUpgradeChip("armorchip_tier_2").setIncreaseArmor(2).setEnergyCost(30), 
+				ARMORCHIP_TIER_3 = new ItemUpgradeChip("armorchip_tier_3").setIncreaseArmor(4).setEnergyCost(70), 
+				TOUGHNESSCHIP_TIER_1 = new ItemUpgradeChip("toughnesschip_tier_1").setIncreaseToughness(0.5F).setEnergyCost(10), 
+				TOUGHNESSCHIP_TIER_2 = new ItemUpgradeChip("toughnesschip_tier_2").setIncreaseToughness(1F).setEnergyCost(30), 
+				TOUGHNESSCHIP_TIER_3 = new ItemUpgradeChip("toughnesschip_tier_3").setIncreaseToughness(2F).setEnergyCost(70);
 	    		   
 	    		   
 
@@ -106,6 +143,11 @@ public class ModItems
 				BOOTS_KINNOIUM = new ItemArmorBase("boots_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 				HELMET_KINNOIUM = new ItemArmorBase("helmet_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 				LEGGINGS_KINNOIUM = new ItemArmorBase("leggings_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
+    
+    public static ItemUpgradeableArmor CYBERARMOR_HELMET = new ItemUpgradeableArmor("cyberarmor_helmet",EntityEquipmentSlot.HEAD, 1000, 10, 1, 0),
+    								   CYBERARMOR_CHEST = new ItemUpgradeableArmor("cyberarmor_chest",EntityEquipmentSlot.CHEST, 1000, 10, 3, 0),
+    								   CYBERARMOR_LEGGINGS = new ItemUpgradeableArmor("cyberarmor_leggings",EntityEquipmentSlot.LEGS, 1000, 10, 2, 0),
+    								   CYBERARMOR_BOOTS = new ItemUpgradeableArmor("cyberarmor_boots",EntityEquipmentSlot.FEET, 1000, 10, 1, 0);
 
     public static HashMap<String, ItemBase> SEEDS = new HashMap<String, ItemBase>();
     public static HashMap<String, ItemBase> PARTICLES = new HashMap<String, ItemBase>();

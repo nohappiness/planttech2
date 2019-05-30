@@ -50,7 +50,7 @@ public class ModCreativeTabs
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack createIcon()
 		{
-			return new ItemStack(ModItems.CHESTPLATE_KANEKIUM);
+			return new ItemStack(ModItems.CYBERARMOR_CHEST);
 		}
 	};
 	

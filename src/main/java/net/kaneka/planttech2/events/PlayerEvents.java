@@ -1,9 +1,13 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableArmor;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -16,5 +20,23 @@ public class PlayerEvents
 	{
 		EntityPlayerMP player = (EntityPlayerMP) event.getPlayer();
 		PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(PlantTechMain.croplist.getConfigs()), player);
+	}
+	
+	@SubscribeEvent
+	public static void livingDamaged(LivingDamageEvent e)
+	{
+		if(e.getEntityLiving() instanceof EntityPlayer)
+		{
+			for(ItemStack stack: e.getEntityLiving().getArmorInventoryList())
+			{
+				if(!stack.isEmpty())
+				{
+					if(stack.getItem() instanceof ItemUpgradeableArmor)
+					{
+						((ItemUpgradeableArmor)stack.getItem()).extractEnergy(stack, ItemUpgradeableArmor.getEnergyCost(stack), false); 
+					}
+				}
+			}
+		}
 	}
 }

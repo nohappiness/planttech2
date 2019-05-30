@@ -15,5 +15,5 @@ public class GUIReferences
 	public static final String GUI_COMPRESSOR = "tileentitycompressor"; 
 	public static final String GUI_ENERGYSTORAGE = "tileentityenergystorage";
 	public static final String GUI_INFUSER = "tileentityinfuser";
-	
+	public static final String GUI_ITEMUPGRADEABLE = "itemupgradeable"; 
 }

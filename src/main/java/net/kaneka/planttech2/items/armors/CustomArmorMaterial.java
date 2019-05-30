@@ -14,67 +14,72 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public enum CustomArmorMaterial implements IArmorMaterial
 {
-    KANEKIUM("kanekium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, 
-	    () -> {return Ingredient.fromItems(ModItems.KANEKIUM_INGOT);}), 
-    DANCIUM("dancium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, 
-	    () -> {return Ingredient.fromItems(ModItems.DANCIUM_INGOT);}), 
-    LENTHURIUM("lenthurium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, 
-	    () -> {return Ingredient.fromItems(ModItems.LENTHURIUM_INGOT);}), 
-    KINNOIUM("kinnoium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, 
-	    () -> {return Ingredient.fromItems(ModItems.KINNOIUM_INGOT);});
-    private static final int[] MAX_DAMAGE_ARRAY = new int[]{ 13, 15, 16, 11 };
-    private final String name;
-    private final int maxDamageFactor;
-    private final int[] damageReductionAmountArray;
-    private final int enchantability;
-    private final SoundEvent soundEvent;
-    private final float toughness;
-    private final LazyLoadBase<Ingredient> repairMaterial;
+	KANEKIUM("kanekium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.fromItems(ModItems.KANEKIUM_INGOT);
+	}), DANCIUM("dancium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.fromItems(ModItems.DANCIUM_INGOT);
+	}), LENTHURIUM("lenthurium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.fromItems(ModItems.LENTHURIUM_INGOT);
+	}), KINNOIUM("kinnoium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.fromItems(ModItems.KINNOIUM_INGOT);
+	}), UNNECESSARY("unnecessary", 0, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return null ;
+	});
 
-    private CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, Supplier<Ingredient> repairMaterial)
-    {
-	this.name = nameIn;
-	this.maxDamageFactor = maxDamageFactor;
-	this.damageReductionAmountArray = damageReductionAmountArray;
-	this.enchantability = enchantability;
-	this.soundEvent = soundEvent;
-	this.toughness = toughness;
-	this.repairMaterial = new LazyLoadBase<>(repairMaterial);
-    }
+	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
+	private final String name;
+	private final int maxDamageFactor;
+	private final int[] damageReductionAmountArray;
+	private final int enchantability;
+	private final SoundEvent soundEvent;
+	private final float toughness;
+	private final LazyLoadBase<Ingredient> repairMaterial;
 
-    public int getDurability(EntityEquipmentSlot slotIn)
-    {
-	return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
-    }
+	private CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness,
+	        Supplier<Ingredient> repairMaterial)
+	{
+		this.name = nameIn;
+		this.maxDamageFactor = maxDamageFactor;
+		this.damageReductionAmountArray = damageReductionAmountArray;
+		this.enchantability = enchantability;
+		this.soundEvent = soundEvent;
+		this.toughness = toughness;
+		this.repairMaterial = new LazyLoadBase<>(repairMaterial);
+	}
 
-    public int getDamageReductionAmount(EntityEquipmentSlot slotIn)
-    {
-	return this.damageReductionAmountArray[slotIn.getIndex()];
-    }
+	public int getDurability(EntityEquipmentSlot slotIn)
+	{
+		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
+	}
 
-    public int getEnchantability()
-    {
-	return this.enchantability;
-    }
+	public int getDamageReductionAmount(EntityEquipmentSlot slotIn)
+	{
+		return this.damageReductionAmountArray[slotIn.getIndex()];
+	}
 
-    public SoundEvent getSoundEvent()
-    {
-	return this.soundEvent;
-    }
+	public int getEnchantability()
+	{
+		return this.enchantability;
+	}
 
-    public Ingredient getRepairMaterial()
-    {
-	return this.repairMaterial.getValue();
-    }
+	public SoundEvent getSoundEvent()
+	{
+		return this.soundEvent;
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    public String getName()
-    {
-	return this.name;
-    }
+	public Ingredient getRepairMaterial()
+	{
+		return this.repairMaterial.getValue();
+	}
 
-    public float getToughness()
-    {
-	return this.toughness;
-    }
+	@OnlyIn(Dist.CLIENT)
+	public String getName()
+	{
+		return this.name;
+	}
+
+	public float getToughness()
+	{
+		return this.toughness;
+	}
 }
