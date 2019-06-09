@@ -69,7 +69,7 @@ public class ItemMultitool extends ItemUpgradeableHand
 	protected static final Map<Block, BlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH,
 	        Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
 
-	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK, Material.WOOD, Material.PLANTS, Material.VINE);
+	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK, Material.WOOD, Material.PLANTS);
 
 	public ItemMultitool()
 	{
@@ -238,7 +238,7 @@ public class ItemMultitool extends ItemUpgradeableHand
     				for (ItemStack drop : drops)
     				{
     					ItemEntity ent = entity.entityDropItem(drop, 1.0F);
-    					ent.func_213317_d(ent.func_213322_ci().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
+    					ent.setMotion(ent.getMotion().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
     				}
     				extractEnergy(stack, getEnergyCost(stack), false);
     			}

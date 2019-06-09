@@ -34,7 +34,7 @@ public class ModContainers
 	public static final ContainerType<ContainerSeedSqueezer> SEEDQUEEZER = new ContainerType<ContainerSeedSqueezer>(ContainerSeedSqueezer::new);
 	public static final ContainerType<ContainerSolarGenerator> SOLARGENERATOR = new ContainerType<ContainerSolarGenerator>(ContainerSolarGenerator::new);
 	
-	public void registerAll(final RegistryEvent.Register<ContainerType<?>> event)
+	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
 		event.getRegistry().registerAll(COMPRESSOR.setRegistryName("planttech2:compressorcontainer"), 
 										DNACLEANER.setRegistryName("planttech2:dnacleanercontainer"), 
