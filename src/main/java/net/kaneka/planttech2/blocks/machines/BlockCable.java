@@ -9,23 +9,24 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TileEntityCable;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -48,9 +49,9 @@ public class BlockCable extends BlockBase
 
     @SuppressWarnings("deprecation")
 	@Override
-    public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
     {
-	if (!worldIn.isRemote && hand.equals(EnumHand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
+	if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
 	{
 	    Integer result = getConnectionLookedOn(worldIn, pos, player.getPositionVector().add(0, player.getEyeHeight(), 0), player.getPositionVector().add(0f, player.getEyeHeight(), 0f).add(player.getLookVec().scale(5)));
 	    if (result != -1)
@@ -67,19 +68,19 @@ public class BlockCable extends BlockBase
     
     @SuppressWarnings("deprecation")
 	@Override
-    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)
+    public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
     {
 	return Item.getItemFromBlock(ModBlocks.CABLE);
     }
 
     @Override
-    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, IBlockState state)
+    public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state)
     {
 	return new ItemStack(ModBlocks.CABLE);
     }
     
     @Override
-    public void onBlockAdded(IBlockState state, World worldIn, BlockPos pos, IBlockState oldState)
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState)
     {
 	TileEntityCable te = getTECable(worldIn, pos);
 	if (te != null)
@@ -95,25 +96,25 @@ public class BlockCable extends BlockBase
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
+    public boolean hasTileEntity(BlockState state)
     {
 	return true;
     }
 
     @Override
-    public TileEntity createTileEntity(IBlockState state, IBlockReader world)
+    public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
 	return new TileEntityCable();
     }
 
     public Item createItemBlock()
     {
-	return new ItemBlock(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
+	return new BlockItem(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
     }
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
 	TileEntity te = worldIn.getTileEntity(pos);
 	if (te != null)
@@ -134,15 +135,15 @@ public class BlockCable extends BlockBase
     }
 
     @Override
-    public boolean isFullCube(IBlockState state)
+    public boolean isFullCube(BlockState state)
     {
 	return false;
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
+    public BlockRenderType getRenderType(BlockState state)
     {
-	return EnumBlockRenderType.MODEL;
+	return BlockRenderType.MODEL;
     }
 
     public int getConnectionLookedOn(World worldIn, BlockPos pos, Vec3d start, Vec3d end)
@@ -154,7 +155,7 @@ public class BlockCable extends BlockBase
 	int returnval = -1;
 	for (HashMap.Entry<Integer, RayTraceResult> entry : rayTraces.entrySet())
 	{
-	    double d0 = entry.getValue().hitVec.squareDistanceTo(end);
+	    double d0 = entry.getValue().func_216347_e().squareDistanceTo(end);
 
 	    if (d0 > d1)
 	    {
@@ -172,7 +173,7 @@ public class BlockCable extends BlockBase
 	TileEntityCable te = getTECable(world, pos);
 	if (te != null)
 	{
-	    for (EnumFacing facing : EnumFacing.values())
+	    for (Direction facing : Direction.values())
 	    {
 		if (te.getConnection(facing) > 1)
 		{
@@ -191,10 +192,10 @@ public class BlockCable extends BlockBase
 	{
 	    Vec3d vec3d = start.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
 	    Vec3d vec3d1 = end.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
-	    RayTraceResult raytraceresult = v.calculateIntercept(vec3d, vec3d1);
+	    RayTraceResult raytraceresult = v.intersects(vec3d, vec3d1);
 	    if (raytraceresult != null)
 	    {
-		list.put(k, new RayTraceResult(raytraceresult.hitVec.add((double) pos.getX(), (double) pos.getY(), (double) pos.getZ()), raytraceresult.sideHit, pos));
+		list.put(k, new RayTraceResult(raytraceresult.func_216347_e().add((double) pos.getX(), (double) pos.getY(), (double) pos.getZ()), raytraceresult.sideHit, pos));
 	    }
 	});
 	return list;
@@ -203,12 +204,12 @@ public class BlockCable extends BlockBase
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos)
+	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
     {
-	EnumFacing neighborfacing = null;
-	for (EnumFacing facing : EnumFacing.values())
+	Direction neighborfacing = null;
+	for (Direction facing : Direction.values())
 	{
-	    if (pos.offset(facing).equals(fromPos))
+	    if (pos.offset(facing).equals(neighbor))
 	    {
 		neighborfacing = facing;
 	    }
@@ -222,7 +223,7 @@ public class BlockCable extends BlockBase
 		((TileEntityCable) te).checkConnections();
 	    }
 	}
-	super.neighborChanged(state, world, pos, blockIn, fromPos);
+	super.onNeighborChange(state, world, pos, neighbor);
     }
     
 

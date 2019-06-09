@@ -3,13 +3,14 @@ package net.kaneka.planttech2.container;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.items.upgradeable.IUpgradeable;
 import net.kaneka.planttech2.items.upgradeable.ItemBaseUpgradeable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.kaneka.planttech2.registries.ModContainers;
+import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -26,8 +27,14 @@ public class ContainerItemUpgradeable extends Container
 		put(10, new Integer[] {2,			5,			20,		20}); 
 	}}; 
 	
-	public ContainerItemUpgradeable(InventoryPlayer playerInv, ItemStack itemInv)
+	public ContainerItemUpgradeable(int id, PlayerInventory inv)
+	{
+		this(id, inv, new ItemStack(ModItems.CYBERBOW)); 
+	}
+	
+	public ContainerItemUpgradeable(int id, PlayerInventory playerInv, ItemStack itemInv)
 	{ 
+		super(ModContainers.UPGRADEABLEITEM, id); 
 		LazyOptional<IItemHandler> provider = itemInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY); 
 		if (provider != null)
 		{
@@ -63,13 +70,13 @@ public class ContainerItemUpgradeable extends Container
 	}
 
 	@Override
-	public boolean canInteractWith(EntityPlayer playerIn)
+	public boolean canInteractWith(PlayerEntity playerIn)
 	{
 		return true;
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) 
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot)this.inventorySlots.get(index);

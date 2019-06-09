@@ -2,13 +2,13 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.Hand;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class ItemThermometer extends ItemBase
@@ -20,11 +20,11 @@ public class ItemThermometer extends ItemBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
 		if(worldIn.isRemote)
 		{
-			playerIn.sendMessage(new TextComponentString(new TextComponentTranslation("text.biometemperature").getUnformattedComponentText() + ": " + EnumTemperature.byValue(worldIn.getBiome(playerIn.getPosition()).getDefaultTemperature()).getDisplayString()));
+			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getUnformattedComponentText() + ": " + EnumTemperature.byValue(worldIn.getBiome(playerIn.getPosition()).getDefaultTemperature()).getDisplayString()));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

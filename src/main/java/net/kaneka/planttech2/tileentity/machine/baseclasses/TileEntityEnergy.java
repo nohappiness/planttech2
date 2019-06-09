@@ -1,23 +1,18 @@
 package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
 import net.kaneka.planttech2.energy.BioEnergyStorage;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.IInteractionObject;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-abstract public class TileEntityEnergy extends TileEntity implements ITickable, IInteractionObject
+abstract public class TileEntityEnergy extends TileEntity implements ITickableTileEntity
 {
 
 	protected BioEnergyStorage energystorage;
@@ -46,7 +41,7 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
 	}
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
 		if (capability == CapabilityEnergy.ENERGY)
 		{
@@ -56,16 +51,16 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
 	}
 
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound)
+	public CompoundNBT write(CompoundNBT compound)
 	{
 
-		compound.setTag("energy", this.energystorage.serializeNBT());
+		compound.func_218657_a("energy", this.energystorage.serializeNBT());
 		super.write(compound);
 		return compound;
 	}
 
 	@Override
-	public void read(NBTTagCompound compound)
+	public void read(CompoundNBT compound)
 	{
 		super.read(compound);
 		this.energystorage.deserializeNBT(compound.getCompound("energy"));
@@ -86,7 +81,7 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
 		return this.energystorage.getMaxEnergyStored();
 	}
 
-	public boolean isUsableByPlayer(EntityPlayer player)
+	public boolean isUsableByPlayer(PlayerEntity player)
 	{
 		return this.world.getTileEntity(this.pos) != this ? false
 		        : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
@@ -127,11 +122,18 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
 	{
 		return 2;
 	}
+	
+	/*
+	@Override
+	public ITextComponent getDisplayName()
+	{
+		return new TranslationTextComponent("container." + getNameString());
+	}
 
 	@Override
 	public ITextComponent getName()
 	{
-		return new TextComponentTranslation("container." + getNameString());
+		return new TranslationTextComponent("container." + getNameString());
 	}
 
 	@Override
@@ -157,4 +159,5 @@ abstract public class TileEntityEnergy extends TileEntity implements ITickable, 
 	{
 		return getType().getRegistryName().toString();
 	}
+	*/
 }

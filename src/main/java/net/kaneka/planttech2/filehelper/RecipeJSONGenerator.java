@@ -6,9 +6,9 @@ import java.io.FileWriter;
 
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public class RecipeJSONGenerator
 {
@@ -303,7 +303,7 @@ public class RecipeJSONGenerator
 		createShapedRecipeFileItem(" A ", "ABA", " A ", new ItemStack(ModItems.GUIDE_PLANTS), 1, new ItemStack(Items.PUMPKIN_SEEDS), new ItemStack(Items.BOOK));
 		createShapedRecipeFileItem(" A ", "ABA", " A ", new ItemStack(ModItems.GUIDE_GENETIC_ENGINEERING), 1, new ItemStack(Items.MELON_SEEDS), new ItemStack(Items.BOOK));
 		
-		
+		/*
 		createHelmetRecipe(new ItemStack(ModItems.HELMET_DANCIUM), 1, new ItemStack(ModItems.DANCIUM_INGOT));
 		createChestplateRecipe(new ItemStack(ModItems.CHESTPLATE_DANCIUM), 1, new ItemStack(ModItems.DANCIUM_INGOT));
 		createLeggingsRecipe(new ItemStack(ModItems.LEGGINGS_DANCIUM), 1, new ItemStack(ModItems.DANCIUM_INGOT));
@@ -323,5 +323,6 @@ public class RecipeJSONGenerator
 		createChestplateRecipe(new ItemStack(ModItems.CHESTPLATE_LENTHURIUM), 1, new ItemStack(ModItems.LENTHURIUM_INGOT));
 		createLeggingsRecipe(new ItemStack(ModItems.LEGGINGS_LENTHURIUM), 1, new ItemStack(ModItems.LENTHURIUM_INGOT));
 		createBootsRecipe(new ItemStack(ModItems.BOOTS_LENTHURIUM), 1, new ItemStack(ModItems.LENTHURIUM_INGOT));
+		*/
 	}
 }

@@ -25,7 +25,7 @@ import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableArmor;
 import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableHand;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -127,27 +127,27 @@ public class ModItems
 	    		   
 	    		   
 
-    public static ItemArmorBase CHESTPLATE_KANEKIUM = new ItemArmorBase("chestplate_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EntityEquipmentSlot.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_KANEKIUM = new ItemArmorBase("boots_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EntityEquipmentSlot.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_KANEKIUM = new ItemArmorBase("helmet_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_KANEKIUM = new ItemArmorBase("leggings_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_DANCIUM = new ItemArmorBase("chestplate_dancium", "dancium", CustomArmorMaterial.DANCIUM, EntityEquipmentSlot.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_DANCIUM = new ItemArmorBase("boots_dancium", "dancium", CustomArmorMaterial.DANCIUM, EntityEquipmentSlot.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_DANCIUM = new ItemArmorBase("helmet_dancium", "dancium", CustomArmorMaterial.DANCIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_DANCIUM = new ItemArmorBase("leggings_dancium", "dancium", CustomArmorMaterial.DANCIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_LENTHURIUM = new ItemArmorBase("chestplate_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EntityEquipmentSlot.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_LENTHURIUM = new ItemArmorBase("boots_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EntityEquipmentSlot.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_LENTHURIUM = new ItemArmorBase("helmet_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_LENTHURIUM = new ItemArmorBase("leggings_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_KINNOIUM = new ItemArmorBase("chestplate_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_KINNOIUM = new ItemArmorBase("boots_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_KINNOIUM = new ItemArmorBase("helmet_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_KINNOIUM = new ItemArmorBase("leggings_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
+    public static ItemArmorBase CHESTPLATE_KANEKIUM = new ItemArmorBase("chestplate_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				BOOTS_KANEKIUM = new ItemArmorBase("boots_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				HELMET_KANEKIUM = new ItemArmorBase("helmet_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				LEGGINGS_KANEKIUM = new ItemArmorBase("leggings_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				CHESTPLATE_DANCIUM = new ItemArmorBase("chestplate_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				BOOTS_DANCIUM = new ItemArmorBase("boots_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				HELMET_DANCIUM = new ItemArmorBase("helmet_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				LEGGINGS_DANCIUM = new ItemArmorBase("leggings_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				CHESTPLATE_LENTHURIUM = new ItemArmorBase("chestplate_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				BOOTS_LENTHURIUM = new ItemArmorBase("boots_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				HELMET_LENTHURIUM = new ItemArmorBase("helmet_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				LEGGINGS_LENTHURIUM = new ItemArmorBase("leggings_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				CHESTPLATE_KINNOIUM = new ItemArmorBase("chestplate_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				BOOTS_KINNOIUM = new ItemArmorBase("boots_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				HELMET_KINNOIUM = new ItemArmorBase("helmet_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				LEGGINGS_KINNOIUM = new ItemArmorBase("leggings_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
     
-    public static ItemUpgradeableArmor CYBERARMOR_HELMET = new ItemUpgradeableArmor("cyberarmor_helmet", "cyberarmor", EntityEquipmentSlot.HEAD, 1000, 10, 1, 0),
-    								   CYBERARMOR_CHEST = new ItemUpgradeableArmor("cyberarmor_chest", "cyberarmor", EntityEquipmentSlot.CHEST, 1000, 10, 3, 0),
-    								   CYBERARMOR_LEGGINGS = new ItemUpgradeableArmor("cyberarmor_leggings", "cyberarmor", EntityEquipmentSlot.LEGS, 1000, 10, 2, 0),
-    								   CYBERARMOR_BOOTS = new ItemUpgradeableArmor("cyberarmor_boots", "cyberarmor", EntityEquipmentSlot.FEET, 1000, 10, 1, 0);
+    public static ItemUpgradeableArmor CYBERARMOR_HELMET = new ItemUpgradeableArmor("cyberarmor_helmet", "cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0),
+    								   CYBERARMOR_CHEST = new ItemUpgradeableArmor("cyberarmor_chest", "cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0),
+    								   CYBERARMOR_LEGGINGS = new ItemUpgradeableArmor("cyberarmor_leggings", "cyberarmor", EquipmentSlotType.LEGS, 1000, 10, 2, 0),
+    								   CYBERARMOR_BOOTS = new ItemUpgradeableArmor("cyberarmor_boots", "cyberarmor", EquipmentSlotType.FEET, 1000, 10, 1, 0);
 
     public static HashMap<String, ItemBase> SEEDS = new HashMap<String, ItemBase>();
     public static HashMap<String, ItemBase> PARTICLES = new HashMap<String, ItemBase>();

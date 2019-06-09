@@ -1,49 +1,49 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerSeedSqueezer;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
 public class GUISeedSqueezer extends GuiContainerBase
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
 	
-	public GUISeedSqueezer(InventoryPlayer player, TileEntitySeedSqueezer te) 
+	public GUISeedSqueezer(PlayerInventory player, TileEntitySeedSqueezer te) 
 	{
-		super(new ContainerSeedSqueezer(player, te), te, player);
+		super(new ContainerSeedSqueezer(player, te), te, player, "container.seedsqueezer");
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) 
 	{
-		String tileName = this.te.getDisplayName().getUnformattedComponentText();
-		fontRenderer.drawString(tileName, (this.xSize / 2 - this.fontRenderer.getStringWidth(tileName) / 2) -5, 14, Integer.parseInt("00e803",16));
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
-		this.zLevel =+ 300; 
+		this.blitOffset =+ 300; 
 		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.mc.getTextureManager().bindTexture(TEXTURES);
+		minecraft.getTextureManager().bindTexture(TEXTURES);
 		int l = this.getCookProgressScaled(8);
-		this.drawTexturedModalRect(113, 35, 0, 202 + 8 - l, 16, l + 12);
+		blit(113, 35, 0, 202 + 8 - l, 16, l + 12);
 		
-		this.drawTexturedModalRect(113, 63 - l, 16, 202, 16, l + 12);
-		this.zLevel =- 300; 
+		blit(113, 63 - l, 16, 202, 16, l + 12);
+		this.blitOffset =- 300; 
 	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		this.mc.getTextureManager().bindTexture(TEXTURES);
-		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		minecraft.getTextureManager().bindTexture(TEXTURES);
+		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
 		int k = this.getEnergyStoredScaled(74);
-		this.drawTexturedModalRect(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
+		blit(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
 		
 		int j = this.getFluidStoredScaled(55);
-		this.drawTexturedModalRect(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);
+		blit(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);
 		
 	}
 	

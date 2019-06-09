@@ -5,11 +5,8 @@ import net.kaneka.planttech2.container.ContainerEnergyStorage;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityEnergyStorage extends TileEntityEnergyInventory
 {
@@ -46,7 +43,7 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
 			energystorage.setEnergyMaxStored(1000000);
 			break;
 		    }
-		    IBlockState state = world.getBlockState(pos);
+		    BlockState state = world.getBlockState(pos);
 		    if (state != null)
 		    {
 			if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
@@ -62,7 +59,7 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	super.read(compound);
     }
@@ -71,11 +68,5 @@ public class TileEntityEnergyStorage extends TileEntityEnergyInventory
     public String getNameString()
     {
 	return "energystorage";
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerEnergyStorage(playerInventory, this);
     }
 }

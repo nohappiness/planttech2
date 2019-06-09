@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.kaneka.planttech2.items.ItemWithTier;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-abstract public class TileEntityEnergyInventory extends TileEntityEnergy implements IInventory
+abstract public class TileEntityEnergyInventory extends TileEntityEnergy
 {
     protected ItemStackHandler itemhandler;
     private LazyOptional<IItemHandler> inventoryCap;
@@ -50,7 +49,7 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
     }
 
     @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> capability, EnumFacing facing)
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
     {
 	if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 	{
@@ -60,15 +59,15 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setTag("inventory", itemhandler.serializeNBT());
+	compound.func_218657_a("inventory", itemhandler.serializeNBT());
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	int slotamount = itemhandler.getSlots();// prevent crash
 	itemhandler.deserializeNBT(compound.getCompound("inventory"));
@@ -84,9 +83,9 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
 	    double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 	    double d1 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 	    double d2 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
-	    EntityItem entityitem = new EntityItem(worldIn, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
+	    ItemEntity entityitem = new ItemEntity(worldIn, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
 	    entityitem.setDefaultPickupDelay();
-	    worldIn.spawnEntity(entityitem);
+	    worldIn.func_217376_c(entityitem);
 	}
     }
 
@@ -107,6 +106,7 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
 	return 0;
     }
 
+    /*
     @Override
     public int getSizeInventory()
     {
@@ -186,5 +186,6 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy impleme
 	}
 	
     }
+    */
 
 }

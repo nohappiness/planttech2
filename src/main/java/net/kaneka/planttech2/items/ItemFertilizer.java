@@ -12,11 +12,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class ItemFertilizer extends ItemBase
@@ -28,7 +28,7 @@ public class ItemFertilizer extends ItemBase
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemUseContext context)
+    public ActionResultType onItemUse(ItemUseContext context)
     {
 	ItemStack stack = context.getItem();
 	BlockPos pos = context.getPos();
@@ -82,10 +82,10 @@ public class ItemFertilizer extends ItemBase
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-	tooltip.add(new TextComponentString(new TextComponentTranslation("info.fertilizer").getUnformattedComponentText() + ": " + (getIncreaseChance(stack.getItem()) * 100) + "%"));
+	tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer").getUnformattedComponentText() + ": " + (getIncreaseChance(stack.getItem()) * 100) + "%"));
 	if(stack.getItem() == ModItems.FERTILIZER_CREATIVE)
 	{
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.fertilizer_creative").getUnformattedComponentText()));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer_creative").getUnformattedComponentText()));
 		 
 	}
     

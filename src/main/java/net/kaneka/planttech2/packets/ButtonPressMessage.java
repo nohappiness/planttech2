@@ -3,7 +3,7 @@ package net.kaneka.planttech2.packets;
 import java.util.function.Supplier;
 
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -43,7 +43,7 @@ public class ButtonPressMessage
 		public static void handle(final ButtonPressMessage pkt, Supplier<NetworkEvent.Context> ctx)
 		{
 			ctx.get().enqueueWork(() -> {
-				EntityPlayerMP serverPlayer = ctx.get().getSender();
+				ServerPlayerEntity serverPlayer = ctx.get().getSender();
 				BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
 				int buttonId = pkt.buttonId;
 

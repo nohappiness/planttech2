@@ -11,12 +11,12 @@ import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityCompressor extends TileEntityEnergyInventory
 {
@@ -171,16 +171,16 @@ public class TileEntityCompressor extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("tickspassed", ticksPassed);
-	compound.setInt("selectedId", selectedId);
+	compound.putInt("tickspassed", ticksPassed);
+	compound.putInt("selectedId", selectedId);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	this.selectedId = compound.getInt("selectedId");
@@ -227,10 +227,10 @@ public class TileEntityCompressor extends TileEntityEnergyInventory
 	return 4;
     }
 
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerCompressor(playerInventory, this);
-    }
+	@Override
+	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	{
+		return new ContainerCompressor(p_createMenu_2_, this);
+	}
 
 }

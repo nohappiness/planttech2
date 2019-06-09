@@ -8,30 +8,29 @@ import com.google.common.collect.Multimap;
 import net.kaneka.planttech2.container.ContainerItemUpgradeable;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
-import net.kaneka.planttech2.gui.GUIReferences;
 import net.kaneka.planttech2.items.ItemBase;
 import net.kaneka.planttech2.utilities.NBTHelper;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.IInteractionObject;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -56,7 +55,7 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
 	{
 		return new InventoryEnergyProvider(basecapacity, maxInvSize);
 	}
@@ -110,9 +109,9 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (!((EntityPlayer) attacker).abilities.isCreativeMode)
+		if (!((PlayerEntity) attacker).abilities.isCreativeMode)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 		}
@@ -120,9 +119,9 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
-		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F && !((EntityPlayer) entityLiving).abilities.isCreativeMode)
+		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F && !((PlayerEntity) entityLiving).abilities.isCreativeMode)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 			updateEnergy(stack);
@@ -167,13 +166,13 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
 	{
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-		if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
+		if (equipmentSlot == EquipmentSlotType.MAINHAND)
 		{
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", getAttDamage(stack), 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", getAttackSpeed(stack), 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", getAttDamage(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
 		}
 
 		return multimap;
@@ -181,16 +180,16 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 
 	protected void updateEnergy(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag == null)
 		{
-			tag = new NBTTagCompound();
+			tag = new CompoundNBT();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
 		{
-			tag.setInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
-			tag.setInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
+			tag.putInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
+			tag.putInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
 		}
 		stack.setTag(tag);
 	}
@@ -198,10 +197,10 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new TextComponentString(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -220,7 +219,7 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
@@ -252,17 +251,17 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		if(Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
 		{
-			if (!world.isRemote && player instanceof EntityPlayerMP) 
+			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((EntityPlayerMP) player, new InteractionObject(stack), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
 			}
 		}
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
 	}
 	
 	@Override
@@ -299,22 +298,22 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 				}
 			}
 			
-			NBTTagCompound nbt = stack.getTag(); 
+			CompoundNBT nbt = stack.getTag(); 
 			if(nbt == null)
 			{
-				nbt = new NBTTagCompound(); 
+				nbt = new CompoundNBT(); 
 			}
 			
-			nbt.setInt("energycost", energyCost);
-			nbt.setInt("energyproduction", energyProduction);
-			nbt.setInt("harvestlevel", increaseHarvestlevel);
-			nbt.setFloat("attack", increaseAttack);
-			nbt.setFloat("attackspeed", increaseAttackSpeed);
-			nbt.setFloat("breakdownrate", increaseBreakdownRate);
-			nbt.setBoolean("unlockshovel", unlockShovelFeat);
-			nbt.setBoolean("unlockaxe", unlockAxeFeat);
-			nbt.setBoolean("unlockhoe", unlockHoeFeat);
-			nbt.setBoolean("unlockshears", unlockShearsFeat);
+			nbt.putInt("energycost", energyCost);
+			nbt.putInt("energyproduction", energyProduction);
+			nbt.putInt("harvestlevel", increaseHarvestlevel);
+			nbt.putFloat("attack", increaseAttack);
+			nbt.putFloat("attackspeed", increaseAttackSpeed);
+			nbt.putFloat("breakdownrate", increaseBreakdownRate);
+			nbt.putBoolean("unlockshovel", unlockShovelFeat);
+			nbt.putBoolean("unlockaxe", unlockAxeFeat);
+			nbt.putBoolean("unlockhoe", unlockHoeFeat);
+			nbt.putBoolean("unlockshears", unlockShearsFeat);
 			
 			stack.setTag(nbt);
 			
@@ -348,44 +347,27 @@ public class ItemBaseUpgradeable extends ItemBase implements IItemChargeable, IU
 	
 	
 	
-	public static class InteractionObject implements IInteractionObject
+	public static class NamedContainerProvider implements INamedContainerProvider
 	{
 		
 		private final ItemStack stack; 
 		
-		public InteractionObject(ItemStack stack)
+		public NamedContainerProvider(ItemStack stack)
 		{
 			this.stack = stack; 
 		}
+		
 
 		@Override
-		public ITextComponent getName()
+		public Container createMenu(int id, PlayerInventory inv, PlayerEntity entity)
 		{
-			return null;
+			return new ContainerItemUpgradeable(id, inv, stack);
 		}
 
 		@Override
-		public boolean hasCustomName()
+		public ITextComponent getDisplayName()
 		{
-			return false;
-		}
-
-		@Override
-		public ITextComponent getCustomName()
-		{
-			return null;
-		}
-
-		@Override
-		public Container createContainer(InventoryPlayer playerInv, EntityPlayer playerIn)
-		{
-			return new ContainerItemUpgradeable(playerInv, stack);
-		}
-
-		@Override
-		public String getGuiID()
-		{
-			return "planttech2:" + GUIReferences.GUI_ITEMUPGRADEABLE;
+			return new StringTextComponent("container.upgradeableitem");
 		}
 		
 	}

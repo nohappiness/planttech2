@@ -1,20 +1,20 @@
 package net.kaneka.planttech2.gui.buttons;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 
-public class CustomGuiButton extends GuiButton
+public class CustomGuiButton extends Button
 {
 	protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("planttech2:textures/gui/button.png");
 	//protected static CustomFontRenderer customFontRenderer; 
 
-	public CustomGuiButton(int id, int xPos, int yPos, int width, int height, String displayString)
+	public CustomGuiButton(int id, int xPos, int yPos, int width, int height, String displayString, IPressable pressable)
 	{
-		super(id, xPos, yPos, width, height, displayString);
+		super(xPos, yPos, width, height, displayString, pressable);
 		//this.customFontRenderer = ClientProxy.fontRenderer; 
 	}
 	
@@ -26,13 +26,13 @@ public class CustomGuiButton extends GuiButton
 	         FontRenderer fontrenderer = minecraft.fontRenderer;
 	         minecraft.getTextureManager().bindTexture(BUTTON_TEXTURES);
 	         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-	         this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-	         int i = this.getHoverState(this.hovered);
+	         this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+	         int i = isHovered ? 1 : 0;
 	         GlStateManager.enableBlend();
 	         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 	         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	         Gui.drawModalRectWithCustomSizedTexture(this.x, this.y, 0, i * 20 - 20, 50, 20, 200,40);
-	         Gui.drawModalRectWithCustomSizedTexture(this.x + 50, this.y, 150, i * 20 - 20, 50, 20, 200, 40);
+	         blit(this.x, this.y, 0, i * 20 - 20, 50, 20, 200,40);
+	         blit(this.x + 50, this.y, 150, i * 20 - 20, 50, 20, 200, 40);
 	         this.renderBg(minecraft, mouseX, mouseY);
             int j = Integer.parseInt("00e803",16);
 
@@ -41,16 +41,16 @@ public class CustomGuiButton extends GuiButton
                 j = Integer.parseInt("00e803",16);
             }
             else
-            if (!this.enabled)
+            if (!this.active)
             {
                 j = Integer.parseInt("00e803",16);
             }
-            else if (this.hovered)
+            else if (this.isHovered)
             {
                 j = Integer.parseInt("00e803",16);
             }
 
-            this.drawCenteredString(fontrenderer, this.displayString, this.x + this.width / 2 , this.y + (this.height - 8) / 2, j);
+            this.drawCenteredString(fontrenderer, getMessage(), this.x + this.width / 2 , this.y + (this.height - 8) / 2, j);
 	     }
 	 }
 

@@ -33,19 +33,19 @@ import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -61,26 +61,26 @@ public class BlockMachineBase extends BlockBase
 	super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f), name, group, true);
     }
 
-    public IItemProvider getItemDropped(IBlockState state, World worldIn, BlockPos pos, int fortune)
+    public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
     {
 	return this;
     }
 
     @Override
-    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, EntityPlayer player)
+    public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player)
     {
 	return new ItemStack(this);
     }
 
     @Override
-    public boolean onBlockActivated(IBlockState state, World world, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
     {
 	if (!world.isRemote)
 	{
 	    TileEntity te = world.getTileEntity(pos);
 	    if (te instanceof TileEntityEnergy)
 	    {
-		NetworkHooks.openGui((EntityPlayerMP) player, (TileEntityEnergy) te, extraData ->
+		NetworkHooks.openGui((ServerPlayerEntity) player, (TileEntityEnergy) te, extraData ->
 		{
 		    extraData.writeBlockPos(pos);
 		});
@@ -97,13 +97,13 @@ public class BlockMachineBase extends BlockBase
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state)
+    public boolean hasTileEntity(BlockState state)
     {
 	return true;
     }
 
     @Override
-    public TileEntity createTileEntity(IBlockState state, IBlockReader world)
+    public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
 	if (this == ModBlocks.IDENTIFIER)
 	    return new TileEntityIdentifier();
@@ -135,7 +135,7 @@ public class BlockMachineBase extends BlockBase
 	    return new TileEntityIdentifier();
     }
 
-    public Container createContainer(InventoryPlayer playerInventory, TileEntity te)
+    public Container createContainer(PlayerInventory playerInventory, TileEntity te)
     {
 	if (this == ModBlocks.IDENTIFIER && te instanceof TileEntityIdentifier)
 	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
@@ -168,9 +168,9 @@ public class BlockMachineBase extends BlockBase
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
+    public BlockRenderType getRenderType(BlockState state)
     {
-	return EnumBlockRenderType.MODEL;
+	return BlockRenderType.MODEL;
     }
 
     public String getGuiString()
@@ -207,7 +207,7 @@ public class BlockMachineBase extends BlockBase
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving)
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
 	if (state.getBlock() != newState.getBlock())
 	{
@@ -217,7 +217,7 @@ public class BlockMachineBase extends BlockBase
 		List<ItemStack> toSpawn = te.getInventoryContent();
 		for (ItemStack stack : toSpawn)
 		{
-		    worldIn.spawnEntity(new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+		    worldIn.func_217376_c(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
 		}
 	    }
 	    super.onReplaced(state, worldIn, pos, newState, isMoving);

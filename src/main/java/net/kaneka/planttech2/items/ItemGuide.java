@@ -6,13 +6,13 @@ import net.kaneka.planttech2.gui.GuiGuidePlants;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -27,11 +27,11 @@ public class ItemGuide extends ItemBase
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
 	if (worldIn.isRemote)
 	{
-	    GuiScreen guiscreen = new GuiGuideOverview(); 
+	    Screen guiscreen = new GuiGuideOverview(); 
 	    if(this == ModItems.GUIDE_PLANTS)
 	    {
 		guiscreen = new GuiGuidePlants();
@@ -64,7 +64,7 @@ public class ItemGuide extends ItemBase
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
+    public void onUsingTick(ItemStack stack, LivingEntity player, int count)
     {
 	super.onUsingTick(stack, player, count);
     }

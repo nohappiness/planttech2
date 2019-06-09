@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -18,16 +19,17 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datapack.CropListEntryConfiguration;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
-import net.minecraft.resources.IResourceManagerReloadListener;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.resource.IResourceType;
+import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
-@SuppressWarnings("deprecation")
-public class ReloadListenerCropListEntryConfiguration implements IResourceManagerReloadListener
+
+public class ReloadListenerCropListEntryConfiguration implements ISelectiveResourceReloadListener
 {
 	public static final String PATH = "pt2_crops";
 	public static final String EXTENTION = ".json";
@@ -35,7 +37,7 @@ public class ReloadListenerCropListEntryConfiguration implements IResourceManage
 	
 
 	@Override
-	public void onResourceManagerReload(IResourceManager resourceManager)
+	public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate)
 	{
 		
 		PlantTechMain.LOGGER.info("Load crop configuration from data packs");
@@ -68,7 +70,7 @@ public class ReloadListenerCropListEntryConfiguration implements IResourceManage
 		PlantTechMain.croplist.setConfigs(configs);
 		
 		//Sync all Clients
-		for(EntityPlayerMP player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
+		for(ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
 		{
 			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
 		}
@@ -79,7 +81,7 @@ public class ReloadListenerCropListEntryConfiguration implements IResourceManage
 		String name = file.getPath().replace(PATH, "").replace(EXTENTION, "").replace("/", "");
 		try (IResource iresource = resourceManager.getResource(file))
 		{
-			JsonObject jsonobject = JsonUtils.fromJson(gson, IOUtils.toString(iresource.getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
+			JsonObject jsonobject = JSONUtils.fromJson(gson, IOUtils.toString(iresource.getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
 			if (jsonobject == null)
 			{
 				PlantTechMain.LOGGER.error("Couldn't load recipe {} as it's null or empty", file);

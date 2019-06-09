@@ -11,11 +11,11 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.librarys.utils.Drop;
 import net.kaneka.planttech2.librarys.utils.Parents;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class CropListEntry implements Comparable<CropListEntry>
 {
@@ -71,7 +71,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 
     public ITextComponent getDisplayName()
     {
-	return new TextComponentTranslation("crop." + this.name);
+	return new TranslationTextComponent("crop." + this.name);
     }
 
     public int getSeedColor()

@@ -1,16 +1,12 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.container.ContainerDNAExtractor;
 import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityDNAExtractor extends TileEntityEnergyInventory
 {
@@ -45,8 +41,8 @@ public class TileEntityDNAExtractor extends TileEntityEnergyInventory
 			    if (stack3.isEmpty())
 			    {
 				ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
-				NBTTagCompound nbt = stack1.getTag().copy();
-				nbt.removeTag("analysed");
+				CompoundNBT nbt = stack1.getTag().copy();
+				nbt.remove("analysed");
 				stack.setTag(nbt);
 				itemhandler.setStackInSlot(2, stack);
 				endProcess();
@@ -91,15 +87,15 @@ public class TileEntityDNAExtractor extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("tickspassed", ticksPassed);
+	compound.putInt("tickspassed", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	super.read(compound);
@@ -141,10 +137,5 @@ public class TileEntityDNAExtractor extends TileEntityEnergyInventory
 	return 3;
     }
 
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerDNAExtractor(playerInventory, this);
-    }
 
 }

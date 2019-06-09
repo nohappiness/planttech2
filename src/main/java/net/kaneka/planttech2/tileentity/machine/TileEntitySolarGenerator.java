@@ -1,13 +1,9 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.container.ContainerSolarGenerator;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntitySolarGenerator extends TileEntityEnergyInventory
 {
@@ -21,7 +17,7 @@ public class TileEntitySolarGenerator extends TileEntityEnergyInventory
     @Override
     public void doUpdate()
     {
-	if (world.isDaytime() && world.canSeeSky(pos.up()))
+	if (world.isDaytime() && world.canBlockSeeSky(pos.up()))
 	{
 	    if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
 	    {
@@ -58,15 +54,15 @@ public class TileEntitySolarGenerator extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("workload", workload);
+	compound.putInt("workload", workload);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.workload = compound.getInt("workload");
 	super.read(compound);
@@ -112,11 +108,5 @@ public class TileEntitySolarGenerator extends TileEntityEnergyInventory
     public int getAmountFields()
     {
 	return 3;
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerSolarGenerator(playerInventory, this);
     }
 }

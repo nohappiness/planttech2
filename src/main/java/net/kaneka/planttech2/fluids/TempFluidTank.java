@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.fluids;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TempFluidTank
 {
@@ -70,17 +70,17 @@ public class TempFluidTank
 	return biomass; 
     }
     
-    public void deserializeNBT(NBTTagCompound nbt)
+    public void deserializeNBT(CompoundNBT nbt)
     {
 	capacity = nbt.getInt("tankcapacity");
 	biomass = nbt.getInt("biomass"); 
     }
 
-    public NBTTagCompound serializeNBT()
+    public CompoundNBT serializeNBT()
     {
-	NBTTagCompound nbtList = new NBTTagCompound();
-	nbtList.setInt("tankcapacity", capacity);
-	nbtList.setInt("biomass", biomass);
+    	CompoundNBT nbtList = new CompoundNBT();
+	nbtList.putInt("tankcapacity", capacity);
+	nbtList.putInt("biomass", biomass);
 	return nbtList;
     }
 }

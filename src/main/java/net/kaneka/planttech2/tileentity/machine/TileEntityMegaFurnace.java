@@ -6,13 +6,10 @@ import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class TileEntityMegaFurnace extends TileEntityEnergyInventory
@@ -133,18 +130,18 @@ public class TileEntityMegaFurnace extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
 	for (int i = 0; i < 6; i++)
 	{
-	    compound.setInt("cooktime_" + i, ticksPassed[i]);
+	    compound.putInt("cooktime_" + i, ticksPassed[i]);
 	}
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	for (int i = 0; i < 6; i++)
 	{
@@ -220,9 +217,4 @@ public class TileEntityMegaFurnace extends TileEntityEnergyInventory
 	return 8;
     }
 
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerMegaFurnace(playerInventory, this);
-    }
 }

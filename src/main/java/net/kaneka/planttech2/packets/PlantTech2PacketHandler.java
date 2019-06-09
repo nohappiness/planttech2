@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -26,7 +26,7 @@ public class PlantTech2PacketHandler
 		INSTANCE.sendToServer(msg);
 	}
 
-	public static void sendTo(Object msg, EntityPlayerMP player)
+	public static void sendTo(Object msg, ServerPlayerEntity player)
 	{
 		if (!(player instanceof FakePlayer))
 		{

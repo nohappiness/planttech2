@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import net.kaneka.planttech2.armormodels.TestModel;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
@@ -14,23 +13,21 @@ import net.kaneka.planttech2.items.armors.ItemArmorBase;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.model.ModelBiped;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -48,7 +45,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	private int basecapacity, maxInvSize, baseDamageReduction;
 	private float baseToughness; 
 
-	public ItemUpgradeableArmor(String name, String resname, EntityEquipmentSlot slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness)
+	public ItemUpgradeableArmor(String name, String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness)
 	{
 		super(name, resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
 		this.basecapacity = basecapacity;
@@ -58,7 +55,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
 	{
 		return new InventoryEnergyProvider(basecapacity, maxInvSize);
 	}
@@ -93,16 +90,16 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 
 	public void updateEnergy(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag == null)
 		{
-			tag = new NBTTagCompound();
+			tag = new CompoundNBT();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
 		{
-			tag.setInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
-			tag.setInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
+			tag.putInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
+			tag.putInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
 		}
 		stack.setTag(tag);
 
@@ -184,10 +181,10 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new TextComponentString(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -206,7 +203,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		NBTTagCompound tag = stack.getTag();
+		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
@@ -238,17 +235,17 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
 		{
-			if (!world.isRemote && player instanceof EntityPlayerMP)
+			if (!world.isRemote && player instanceof ServerPlayerEntity)
 			{
-				NetworkHooks.openGui((EntityPlayerMP) player, new ItemBaseUpgradeable.InteractionObject(stack), buffer -> buffer.writeItemStack(stack));
+				NetworkHooks.openGui((ServerPlayerEntity) player, new ItemBaseUpgradeable.NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
 			}
 		}
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
 	}
 
 	@Override
@@ -278,16 +275,16 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 				}
 			}
 
-			NBTTagCompound nbt = stack.getTag();
+			CompoundNBT nbt = stack.getTag();
 			if (nbt == null)
 			{
-				nbt = new NBTTagCompound();
+				nbt = new CompoundNBT();
 			}
 
-			nbt.setInt("energycost", energyCost);
-			nbt.setInt("energyproduction", energyProduction);
-			nbt.setInt("increasearmor", increaseArmor);
-			nbt.setFloat("increasetoughness", increaseToughness);
+			nbt.putInt("energycost", energyCost);
+			nbt.putInt("energyproduction", energyProduction);
+			nbt.putInt("increasearmor", increaseArmor);
+			nbt.putFloat("increasetoughness", increaseToughness);
 
 			stack.setTag(nbt);
 
@@ -303,13 +300,13 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot equipmentSlot, ItemStack stack)
+	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
 	{
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
 		if (equipmentSlot == this.armorType)
 		{
-			multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor modifier", (double)getDamageReduceAmount(stack), 0));
-			multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor toughness", (double)getToughness(stack), 0));
+			multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor modifier", (double)getDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor toughness", (double)getToughness(stack), AttributeModifier.Operation.ADDITION));
 		}
 
 		return multimap;
@@ -332,7 +329,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	}
 	
 	@Override
-	public void onArmorTick(ItemStack stack, World world, EntityPlayer player)
+	public void onArmorTick(ItemStack stack, World world, PlayerEntity player)
 	{
 		if(!world.isRemote)
 		{

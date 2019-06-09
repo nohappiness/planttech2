@@ -8,16 +8,16 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 
-public class TileEntityCrops extends TileEntity implements ITickable
+public class TileEntityCrops extends TileEntity implements ITickableTileEntity
 {
 	private long startTick = 0;
 	private HashMapCropTraits traits = new HashMapCropTraits();
@@ -90,44 +90,44 @@ public class TileEntityCrops extends TileEntity implements ITickable
 
 	@Override
 	@Nullable
-	public SPacketUpdateTileEntity getUpdatePacket()
+	public SUpdateTileEntityPacket getUpdatePacket()
 	{
-		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
-		return new SPacketUpdateTileEntity(this.pos, 1, nbtTagCompound);
+		return new SUpdateTileEntityPacket(this.pos, 1, nbtTagCompound);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet)
 	{
 		read(packet.getNbtCompound());
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag()
+	public CompoundNBT getUpdateTag()
 	{
-		NBTTagCompound nbtTagCompound = new NBTTagCompound();
+		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
 		return nbtTagCompound;
 	}
 
 	@Override
-	public void handleUpdateTag(NBTTagCompound tag)
+	public void handleUpdateTag(CompoundNBT tag)
 	{
 		this.read(tag);
 	}
 
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound)
+	public CompoundNBT write(CompoundNBT compound)
 	{
 		super.write(compound);
-		compound.setLong("starttick", this.startTick);
+		compound.putLong("starttick", this.startTick);
 		compound = traits.addToNBT(compound);
 		return compound;
 	}
 
 	@Override
-	public void read(NBTTagCompound compound)
+	public void read(CompoundNBT compound)
 	{
 		super.read(compound);
 		this.startTick = compound.getLong("starttick");

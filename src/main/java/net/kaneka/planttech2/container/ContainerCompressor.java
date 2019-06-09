@@ -1,10 +1,11 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -12,10 +13,15 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerCompressor extends ContainerBase
 {
+	public ContainerCompressor(int id, PlayerInventory inv)
+	{
+		this(id, inv, new TileEntityCompressor()); 
+	}
+	
 
-    public ContainerCompressor(InventoryPlayer player, TileEntityCompressor tileentity)
+    public ContainerCompressor(int id, PlayerInventory player, TileEntityCompressor tileentity)
     {
-	super(player, tileentity, 18);
+	super(id, ModContainers.COMPRESSOR, player, tileentity, 18);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
 	this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84));
@@ -32,7 +38,7 @@ public class ContainerCompressor extends ContainerBase
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
     {
 	ItemStack stack = ItemStack.EMPTY;
 	Slot slot = (Slot) this.inventorySlots.get(index);

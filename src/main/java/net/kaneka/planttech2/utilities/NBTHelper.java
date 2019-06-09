@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.utilities;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class NBTHelper
 {
@@ -10,11 +10,11 @@ public class NBTHelper
 		return getIntSave(stack.getTag(), key, value);  
 	}
 	
-	public static int getIntSave(NBTTagCompound nbt, String key,  int value)
+	public static int getIntSave(CompoundNBT nbt, String key,  int value)
 	{
 		if(nbt != null)
 		{
-			if(nbt.hasKey(key))
+			if(nbt.contains(key))
 			{
 				return nbt.getInt(key); 
 			}
@@ -28,11 +28,11 @@ public class NBTHelper
 		return getFloatSave(stack.getTag(), key, value);  
 	}
 	
-	public static float getFloatSave(NBTTagCompound nbt, String key,  float value)
+	public static float getFloatSave(CompoundNBT nbt, String key,  float value)
 	{
 		if(nbt != null)
 		{
-			if(nbt.hasKey(key))
+			if(nbt.contains(key))
 			{
 				return nbt.getFloat(key); 
 			}
@@ -46,11 +46,11 @@ public class NBTHelper
 		return getBooleanSave(stack.getTag(), key, value); 
 	}
 	
-	public static boolean getBooleanSave(NBTTagCompound nbt, String key,  boolean value)
+	public static boolean getBooleanSave(CompoundNBT nbt, String key,  boolean value)
 	{
 		if(nbt != null)
 		{
-			if(nbt.hasKey(key))
+			if(nbt.contains(key))
 			{
 				return nbt.getBoolean(key); 
 			}

@@ -1,9 +1,10 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -11,10 +12,14 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerDNACleaner extends ContainerBase
 {
+	public ContainerDNACleaner(int id, PlayerInventory inv)
+	{
+		this(id, inv, new TileEntityDNACleaner()); 
+	}
 
-    public ContainerDNACleaner(InventoryPlayer player, TileEntityDNACleaner tileentity)
+    public ContainerDNACleaner(int id, PlayerInventory player, TileEntityDNACleaner tileentity)
     {
-	super(player, tileentity, 18);
+	super(id, ModContainers.DNACLEANER, player, tileentity, 18);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
 	this.addSlot(new SlotItemHandler(handler, 0, 42, 48));
@@ -23,7 +28,7 @@ public class ContainerDNACleaner extends ContainerBase
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
     {
 	ItemStack stack = ItemStack.EMPTY;
 	Slot slot = (Slot) this.inventorySlots.get(index);

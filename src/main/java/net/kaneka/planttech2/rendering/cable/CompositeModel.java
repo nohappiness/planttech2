@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.BakedQuad;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraftforge.client.model.data.IModelData;
 
 public class CompositeModel implements IBakedModel
@@ -30,7 +30,7 @@ public class CompositeModel implements IBakedModel
     }
     
     @Override
-    public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, Random rand, IModelData extraData)
+    public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand, IModelData extraData)
     {
     
 	List<BakedQuad> quadsList = new ArrayList<BakedQuad>();
@@ -127,7 +127,7 @@ public class CompositeModel implements IBakedModel
     }
 
 	@Override
-	public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, Random rand)
+	public List<BakedQuad> getQuads(BlockState state, Direction side, Random rand)
 	{
 		// TODO Auto-generated method stub
 		return null;

@@ -2,15 +2,15 @@ package net.kaneka.planttech2.blocks.machines;
 
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockHorizontal;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
@@ -18,65 +18,65 @@ import net.minecraft.world.World;
 
 public class BlockEnergyStorage extends BlockMachineBase
 {
-    public static final DirectionProperty FACING = BlockHorizontal.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 3);
     
     public BlockEnergyStorage()
     {
 	super("energystorage", ModCreativeTabs.groupmachines);
-	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, EnumFacing.NORTH).with(TIER, 0));
+	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(TIER, 0));
     }
     
     @Override
-    public void onBlockAdded(IBlockState state, World worldIn, BlockPos pos, IBlockState oldState)
+    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState)
     {
 	if (!worldIn.isRemote)
 	{
-	    IBlockState north = worldIn.getBlockState(pos.north());
-	    IBlockState south = worldIn.getBlockState(pos.south());
-	    IBlockState west = worldIn.getBlockState(pos.west());
-	    IBlockState east = worldIn.getBlockState(pos.east());
-	    EnumFacing face = (EnumFacing) state.get(FACING);
+	    BlockState north = worldIn.getBlockState(pos.north());
+	    BlockState south = worldIn.getBlockState(pos.south());
+	    BlockState west = worldIn.getBlockState(pos.west());
+	    BlockState east = worldIn.getBlockState(pos.east());
+	    Direction face = (Direction) state.get(FACING);
 
-	    if (face == EnumFacing.NORTH && north.isFullCube() && !south.isFullCube())
-		face = EnumFacing.SOUTH;
-	    else if (face == EnumFacing.SOUTH && south.isFullCube() && !north.isFullCube())
-		face = EnumFacing.NORTH;
-	    else if (face == EnumFacing.WEST && west.isFullCube() && !east.isFullCube())
-		face = EnumFacing.EAST;
-	    else if (face == EnumFacing.EAST && east.isFullCube() && !west.isFullCube())
-		face = EnumFacing.WEST;
+	    if (face == Direction.NORTH && north.isFullCube() && !south.isFullCube())
+		face = Direction.SOUTH;
+	    else if (face == Direction.SOUTH && south.isFullCube() && !north.isFullCube())
+		face = Direction.NORTH;
+	    else if (face == Direction.WEST && west.isFullCube() && !east.isFullCube())
+		face = Direction.EAST;
+	    else if (face == Direction.EAST && east.isFullCube() && !west.isFullCube())
+		face = Direction.WEST;
 	    worldIn.setBlockState(pos, state.with(FACING, face).with(TIER, 0), 2);
 	}
     }
     
     @Override
-    public IBlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockItemUseContext context)
     {
 	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
     
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
+    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
     {
 	worldIn.setBlockState(pos, this.getDefaultState().with(FACING, placer.getHorizontalFacing().getOpposite()), 2);
     }
 
     @Override
-    public IBlockState rotate(IBlockState state, Rotation rot)
+    public BlockState rotate(BlockState state, Rotation rot)
     {
-	return state.with(FACING, rot.rotate((EnumFacing) state.get(FACING)));
+	return state.with(FACING, rot.rotate((Direction) state.get(FACING)));
     }
 
     @SuppressWarnings("deprecation")
 	@Override
-    public IBlockState mirror(IBlockState state, Mirror mirrorIn)
+    public BlockState mirror(BlockState state, Mirror mirrorIn)
     {
-	return state.rotate(mirrorIn.toRotation((EnumFacing) state.get(FACING)));
+	return state.rotate(mirrorIn.toRotation((Direction) state.get(FACING)));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, IBlockState> builder)
+    protected void fillStateContainer(Builder<Block, BlockState> builder)
     {
         builder.add(FACING).add(TIER);
     }

@@ -1,31 +1,33 @@
 package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.container.ContainerBase;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-public class GuiContainerBase extends GuiContainer
+public class GuiContainerBase extends ContainerScreen<ContainerBase>
 {
 	protected static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
-	protected final InventoryPlayer player;
+	protected final PlayerInventory player;
 	protected final TileEntityEnergy te;
     protected int xSize = 205;
     protected int ySize = 202;
 
-	public GuiContainerBase(Container inventorySlotsIn, TileEntityEnergy te, InventoryPlayer inventoryPlayer)
+	public GuiContainerBase(ContainerBase inventorySlotsIn, TileEntityEnergy te, PlayerInventory inventoryPlayer, String title)
 	{
-		super(inventorySlotsIn);
+		super(inventorySlotsIn, inventoryPlayer, new TranslationTextComponent(title));
 		this.te = te; 
 		this.player = inventoryPlayer; 
 	}
 	
 	@Override
-	public void initGui()
+	public void init()
     {
-        super.initGui();
+        super.init();
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
     }
@@ -49,7 +51,7 @@ public class GuiContainerBase extends GuiContainer
 		posY += this.guiTop; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
-            drawHoveringText(lines, mouseX, mouseY);
+        	renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
         }
     }
 
@@ -57,6 +59,14 @@ public class GuiContainerBase extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		
+	}
+	
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) 
+	{
+		String tileName = title.getUnformattedComponentText();
+		
+		font.drawString(tileName, (this.xSize / 2 - font.getStringWidth(tileName) / 2) -5, 14, Integer.parseInt("00e803",16));
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)

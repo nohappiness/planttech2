@@ -13,24 +13,24 @@ import com.google.common.collect.ImmutableMap.Builder;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRotatedPillar;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
@@ -64,9 +64,9 @@ public class ItemMultitool extends ItemUpgradeableHand
 	        .put(Blocks.BIRCH_LOG, Blocks.STRIPPED_BIRCH_LOG).put(Blocks.JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_WOOD).put(Blocks.JUNGLE_LOG, Blocks.STRIPPED_JUNGLE_LOG)
 	        .put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD).put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG).build();
 
-	protected static final Map<Block, IBlockState> PATH_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
+	protected static final Map<Block, BlockState> PATH_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.getDefaultState()));
 
-	protected static final Map<Block, IBlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH,
+	protected static final Map<Block, BlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH,
 	        Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
 
 	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK, Material.WOOD, Material.PLANTS, Material.VINE);
@@ -93,7 +93,7 @@ public class ItemMultitool extends ItemUpgradeableHand
 	}
 
 	@Override
-	public boolean canHarvestBlock(ItemStack stack, IBlockState state)
+	public boolean canHarvestBlock(ItemStack stack, BlockState state)
 	{
 		if (extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
 		{
@@ -111,7 +111,7 @@ public class ItemMultitool extends ItemUpgradeableHand
 	}
 
 	@Override
-	public float getDestroySpeed(ItemStack stack, IBlockState state)
+	public float getDestroySpeed(ItemStack stack, BlockState state)
 	{
 		if (extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
 		{
@@ -131,70 +131,70 @@ public class ItemMultitool extends ItemUpgradeableHand
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemUseContext ctx)
+	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 		if (extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), true) >= getEnergyCost(ctx.getItem()))
 		{
 			World world = ctx.getWorld();
 			BlockPos blockpos = ctx.getPos();
-			IBlockState state = world.getBlockState(blockpos);
-			IBlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
-			IBlockState state_for_hoe = FARMLAND_MAP.get(world.getBlockState(blockpos).getBlock());
+			BlockState state = world.getBlockState(blockpos);
+			BlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
+			BlockState state_for_hoe = FARMLAND_MAP.get(world.getBlockState(blockpos).getBlock());
 			Block block_for_strinping = BLOCK_STRIPPING_MAP.get(state.getBlock());
-			EntityPlayer entityplayer = ctx.getPlayer();
-			if (ctx.getFace() != EnumFacing.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
+			PlayerEntity PlayerEntity = ctx.getPlayer();
+			if (ctx.getFace() != Direction.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
 			{
 				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockshovel", false))
 				{
 
-					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					if (!world.isRemote)
 					{
 						world.setBlockState(blockpos, state_for_spade, 11);
-						if (entityplayer != null && !entityplayer.isCreative())
+						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
 						}
 					}
 				}
 
-				return EnumActionResult.SUCCESS;
+				return ActionResultType.SUCCESS;
 			} else if (block_for_strinping != null)
 			{
 				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockaxe", false))
 				{
-					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					if (!world.isRemote)
 					{
-						world.setBlockState(blockpos, block_for_strinping.getDefaultState().with(BlockRotatedPillar.AXIS, state.get(BlockRotatedPillar.AXIS)), 11);
-						if (entityplayer != null && !entityplayer.isCreative())
+						world.setBlockState(blockpos, block_for_strinping.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)), 11);
+						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
 						}
 					}
 				}
 
-				return EnumActionResult.SUCCESS;
-			} else if (ctx.getFace() != EnumFacing.DOWN && world.isAirBlock(blockpos.up()) && state_for_hoe != null)
+				return ActionResultType.SUCCESS;
+			} else if (ctx.getFace() != Direction.DOWN && world.isAirBlock(blockpos.up()) && state_for_hoe != null)
 			{
 				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockhoe", false))
 				{
-					world.playSound(entityplayer, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					if (!world.isRemote)
 					{
 						world.setBlockState(blockpos, state_for_hoe, 11);
-						if (entityplayer != null && !entityplayer.isCreative())
+						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItem(), getEnergyCost(ctx.getItem()), false);
 						}
 					}
 
-					return EnumActionResult.SUCCESS;
+					return ActionResultType.SUCCESS;
 				}
 			}
 		}
 
-		return EnumActionResult.PASS;
+		return ActionResultType.PASS;
 	}
 
 	public int getHarvestLevel(ItemStack stack)
@@ -209,16 +209,16 @@ public class ItemMultitool extends ItemUpgradeableHand
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
 
 		return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer player, EntityLivingBase entity, EnumHand hand)
+	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand)
 	{
-
 		if (entity.world.isRemote)
 		{
 			return false;
@@ -237,10 +237,8 @@ public class ItemMultitool extends ItemUpgradeableHand
     				Random rand = new Random();
     				for (ItemStack drop : drops)
     				{
-    					EntityItem ent = entity.entityDropItem(drop, 1.0F);
-    					ent.motionY += rand.nextFloat() * 0.05F;
-    					ent.motionX += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
-    					ent.motionZ += (rand.nextFloat() - rand.nextFloat()) * 0.1F;
+    					ItemEntity ent = entity.entityDropItem(drop, 1.0F);
+    					ent.func_213317_d(ent.func_213322_ci().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
     				}
     				extractEnergy(stack, getEnergyCost(stack), false);
     			}

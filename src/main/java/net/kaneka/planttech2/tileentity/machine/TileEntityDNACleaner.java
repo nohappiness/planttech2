@@ -1,15 +1,11 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.container.ContainerDNACleaner;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityDNACleaner extends TileEntityEnergyInventory
 {
@@ -75,15 +71,15 @@ public class TileEntityDNACleaner extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("tickspassed", ticksPassed);
+	compound.putInt("tickspassed", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	super.read(compound);
@@ -125,10 +121,5 @@ public class TileEntityDNACleaner extends TileEntityEnergyInventory
 	return 3;
     }
     
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerDNACleaner(playerInventory, this);
-    }
 
 }

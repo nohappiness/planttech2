@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.kaneka.planttech2.container.ContainerDNARemover;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityDNARemover extends TileEntityEnergyInventory
 {
@@ -47,8 +43,8 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
 			else
 			{
 			    Collections.shuffle(traitsList);
-			    NBTTagCompound nbt = stack1.getTag().copy();
-			    nbt.removeTag(traitsList.get(0));
+			    CompoundNBT nbt = stack1.getTag().copy();
+			    nbt.remove(traitsList.get(0));
 			    ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
 			    stack.setTag(nbt);
 			    itemhandler.setStackInSlot(1, stack);
@@ -67,10 +63,10 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
 	List<String> list = new ArrayList<String>();
 	if (stack.hasTag())
 	{
-	    NBTTagCompound nbt = stack.getTag();
+	    CompoundNBT nbt = stack.getTag();
 	    for (String key : HashMapCropTraits.getTraitsKeyList())
 	    {
-		if (nbt.hasKey(key))
+		if (nbt.contains(key))
 		    list.add(key);
 	    }
 	}
@@ -94,15 +90,15 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("tickspassed", ticksPassed);
+	compound.putInt("tickspassed", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	super.read(compound);
@@ -142,12 +138,6 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
     public int getAmountFields()
     {
 	return 3;
-    }
-    
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerDNARemover(playerInventory, this);
     }
 
 }

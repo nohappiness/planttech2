@@ -7,11 +7,8 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntitySeedconstructor extends TileEntityEnergyInventoryFluid
 {
@@ -42,16 +39,16 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventoryFluid
 					{
 						ticksPassed = 0;
 						// energystorage.extractEnergy(energyPerTick(), false);
-						NBTTagCompound nbt = stack1.getTag();
+						CompoundNBT nbt = stack1.getTag();
 						HashMapCropTraits traits = new HashMapCropTraits();
 						traits.setAnalysed(true);
-						if (nbt.hasKey("type"))
+						if (nbt.contains("type"))
 						{
 							traits.setType(nbt.getString("type"));
 						}
 						for (String key : HashMapCropTraits.getTraitsKeyList())
 						{
-							if (nbt.hasKey(key))
+							if (nbt.contains(key))
 							{
 								if (!key.equals("type"))
 								{
@@ -92,15 +89,15 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventoryFluid
 	}
 
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound)
+	public CompoundNBT write(CompoundNBT compound)
 	{
-		compound.setInt("tickspassed", ticksPassed);
+		compound.putInt("tickspassed", ticksPassed);
 		super.write(compound);
 		return compound;
 	}
 
 	@Override
-	public void read(NBTTagCompound compound)
+	public void read(CompoundNBT compound)
 	{
 		this.ticksPassed = compound.getInt("tickspassed");
 		super.read(compound);
@@ -145,12 +142,6 @@ public class TileEntitySeedconstructor extends TileEntityEnergyInventoryFluid
 	public int getAmountFields()
 	{
 		return 5;
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-	{
-		return new ContainerSeedconstructor(playerInventory, this);
 	}
 
 	@Override

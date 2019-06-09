@@ -2,16 +2,16 @@ package net.kaneka.planttech2.items.armors;
 
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.entity.Entity;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 
-public class ItemArmorBase extends ItemArmor
+public class ItemArmorBase extends ArmorItem
 {
     private String resString;
 
-    public ItemArmorBase(String name, String resString, IArmorMaterial mat, EntityEquipmentSlot equipmentSlotIn, Properties properties)
+    public ItemArmorBase(String name, String resString, IArmorMaterial mat, EquipmentSlotType equipmentSlotIn, Properties properties)
     {
 	super(mat, equipmentSlotIn, properties);
 	this.resString = resString; 
@@ -22,13 +22,13 @@ public class ItemArmorBase extends ItemArmor
 
 
     @Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type)
     {
-	if (slot == EntityEquipmentSlot.HEAD || slot == EntityEquipmentSlot.CHEST || slot == EntityEquipmentSlot.FEET)
+	if (slot == EquipmentSlotType.HEAD || slot == EquipmentSlotType.CHEST || slot == EquipmentSlotType.FEET)
 	{
 	    return "planttech2:textures/models/armor/" + resString + "_layer_1.png";
 	}
-	else if (slot == EntityEquipmentSlot.LEGS)
+	else if (slot == EquipmentSlotType.LEGS)
 	{
 	    return "planttech2:textures/models/armor/" + resString + "_layer_2.png";
 	}

@@ -11,14 +11,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class CompressorRecipe implements IRecipe
+public class CompressorRecipe<CompressorRec> implements IRecipe
 {
 	private final ResourceLocation id;
 	private final ItemStack input;
@@ -73,9 +74,10 @@ public class CompressorRecipe implements IRecipe
 	}
 
 	@Override
-	public RecipeType<? extends IRecipe> getType()
+	public IRecipeType func_222127_g()
 	{
-		return ModRecipeTypes.COMPRESSING;
+		//TODO
+		return null;
 	}
 
 	public static class Serializer implements IRecipeSerializer<CompressorRecipe>
@@ -102,7 +104,7 @@ public class CompressorRecipe implements IRecipe
 			ItemStack inputstack = null;
 			if (inputitem != null)
 			{
-				inputstack = new ItemStack(inputitem, JsonUtils.getInt(inputobject, "amount", 1));
+				inputstack = new ItemStack(inputitem, JSONUtils.getInt(inputobject, "amount", 1));
 			}
 
 			JsonObject resultobject = json.getAsJsonObject("result");
@@ -123,7 +125,7 @@ public class CompressorRecipe implements IRecipe
 			ItemStack resultstack = null;
 			if (resultitem != null)
 			{
-				resultstack = new ItemStack(resultitem, JsonUtils.getInt(resultobject, "amount", 1));
+				resultstack = new ItemStack(resultitem, JSONUtils.getInt(resultobject, "amount", 1));
 			}
 
 			if (inputstack != null && resultstack != null)
@@ -149,12 +151,14 @@ public class CompressorRecipe implements IRecipe
 			buffer.writeItemStack(recipe.input);
 			buffer.writeItemStack(recipe.output);
 		}
-
-		@Override
+		
 		public ResourceLocation getName()
 		{
 			return NAME;
 		}
+
+
+		
 
 	}
 }

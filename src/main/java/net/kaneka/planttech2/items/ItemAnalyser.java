@@ -3,15 +3,15 @@ package net.kaneka.planttech2.items;
 import net.kaneka.planttech2.blocks.BlockCropBase;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
 public class ItemAnalyser extends ItemBase
@@ -23,18 +23,18 @@ public class ItemAnalyser extends ItemBase
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
 		
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 	
 	@Override
-	public EnumActionResult onItemUse(ItemUseContext ctx)
+	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 	    World world = ctx.getWorld(); 
 	    BlockPos pos = ctx.getPos(); 
-	    EntityPlayer player = ctx.getPlayer(); 
+	    PlayerEntity player = ctx.getPlayer(); 
 		if(!world.isRemote)
 		{
 			Block targetBlock = world.getBlockState(pos).getBlock(); 
@@ -47,13 +47,13 @@ public class ItemAnalyser extends ItemBase
 				{
 					if(messages[i] != null)
 					{
-						player.sendMessage(new TextComponentString(messages[i]));
+						player.sendMessage(new StringTextComponent(messages[i]));
 						ok = false; 
 					}
 				}
 				if(ok)
 				{
-					player.sendMessage(new TextComponentString("Everything ok"));
+					player.sendMessage(new StringTextComponent("Everything ok"));
 				}
 			}
 		}

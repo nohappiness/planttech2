@@ -11,9 +11,9 @@ import java.util.Set;
 
 import net.kaneka.planttech2.datapack.CropListEntryConfiguration;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 
 public class CropList
 {
@@ -463,70 +463,6 @@ public class CropList
 		this.getEntryByName("zombie_villager");
 		this.getEntryByName("zombie");
 
-		// this.loadParents();
-		// this.loadTemperatures();
-		// this.loadSoils();
 	}
-	/*
-	 * private void loadParents() {
-	 * PlantTechMain.LOGGER.info("initiate cropparents"); ParentsFileHandler
-	 * parentsfile = new ParentsFileHandler(); List<String> list =
-	 * parentsfile.loadFile(); int i = 1; for (String input : list) { if
-	 * (!input.isEmpty()) { if (input.charAt(0) != '/') { if
-	 * (input.matches(".+[=].+[+].+[,].+[0.].+")) { String[] splitted =
-	 * input.split("[=+,]"); if (splitted.length == 4) { if (existEntry(splitted[0],
-	 * i) && existEntry(splitted[1], i) && existEntry(splitted[2], i)) {
-	 * this.getEntryByName(splitted[0]).addParents(splitted[1], splitted[2],
-	 * Float.valueOf(splitted[3])); } else { PlantTechMain.LOGGER.info("line " + i +
-	 * " not existing croptype: " + input); } } else {
-	 * PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input); }
-	 * } else { PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " +
-	 * input); } } } i++; } PlantTechMain.LOGGER.info("finish cropparents"); }
-	 * 
-	 * private void loadTemperatures() {
-	 * PlantTechMain.LOGGER.info("initiate croptemperature"); TemperatureFileHandler
-	 * temperaturesfile = new TemperatureFileHandler(); List<String> list =
-	 * temperaturesfile.loadFile(); int i = 1; for (String input : list) { if
-	 * (!input.isEmpty()) { if (input.charAt(0) != '/') { if
-	 * (input.matches(".+[=].+")) { String[] splitted = input.split("[=]"); if
-	 * (splitted.length == 2) {
-	 * 
-	 * if (existEntry(splitted[0], i)) {
-	 * this.getEntryByName(splitted[0]).alternateTemperature(EnumTemperature.byName(
-	 * splitted[1])); } else { PlantTechMain.LOGGER.info("line " + i +
-	 * " not existing croptype: " + input); } } else {
-	 * PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input); }
-	 * } else { PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " +
-	 * input); } } } i++; } PlantTechMain.LOGGER.info("finish croptemperature"); }
-	 * 
-	 * private void loadSoils() { PlantTechMain.LOGGER.info("initiate cropsoils");
-	 * SoilFileHandler soilsfile = new SoilFileHandler(); List<String> list =
-	 * soilsfile.loadFile(); int i = 1; for (String input : list) { if
-	 * (!input.isEmpty()) { if (input.charAt(0) != '/') { if
-	 * (input.matches(".+[=].+[,].+")) { String[] splitted = input.split("[=,]"); if
-	 * (splitted.length == 3) {
-	 * 
-	 * if (existEntry(splitted[0], i)) {
-	 * this.getEntryByName(splitted[0]).setSoil(new
-	 * ItemStack(ForgeRegistries.BLOCKS.getValue(new
-	 * ResourceLocation(splitted[1])))); } else { PlantTechMain.LOGGER.info("line "
-	 * + i + " not existing croptype: " + input); } } else {
-	 * PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " + input); }
-	 * } else { PlantTechMain.LOGGER.info("line " + i + " not matching pattern: " +
-	 * input); } } } i++; } PlantTechMain.LOGGER.info("finish cropsoil"); }
-	 * 
-	 * private void loadBlacklist() {
-	 * PlantTechMain.LOGGER.info("initiate blacklist"); BlacklistFileHandler
-	 * blacklistfile = new BlacklistFileHandler(); List<String> list =
-	 * blacklistfile.loadFile(); int i = 1; for (String input : list) { if
-	 * (!input.isEmpty()) { if (input.charAt(0) != '/') { if (existEntry(input, i))
-	 * { this.getEntryByName(input).setBlacklisted(true); amountBlacklisted++; }
-	 * else { PlantTechMain.LOGGER.info("line " + i + " not existing croptype: " +
-	 * input); } } } i++; } PlantTechMain.LOGGER.info("finish blacklist"); }
-	 * 
-	 * private boolean existEntry(String name, int i) { if
-	 * (this.getEntryByName(name) != null) { return true; } else {
-	 * PlantTechMain.LOGGER.info("missing croplistentry in line " + i + ": " + name
-	 * + " does not exists!"); return false; } }
-	 */
+	
 }

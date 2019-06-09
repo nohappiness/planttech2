@@ -6,19 +6,17 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
-
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.rendering.cable.CableModel;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.model.ModelDataManager;
 import net.minecraftforge.client.model.data.IModelData;
@@ -27,7 +25,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class TileEntityCable extends TileEntity implements ITickable
+public class TileEntityCable extends TileEntity implements ITickableTileEntity
 {
     private BlockPos masterPos = null;
     private boolean isMaster = false;
@@ -50,7 +48,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	}
     };
 
-    HashMap<BlockPos, EnumFacing> producer = new HashMap<BlockPos, EnumFacing>(), consumer = new HashMap<BlockPos, EnumFacing>(), storages = new HashMap<BlockPos, EnumFacing>();
+    HashMap<BlockPos, Direction> producer = new HashMap<BlockPos, Direction>(), consumer = new HashMap<BlockPos, Direction>(), storages = new HashMap<BlockPos, Direction>();
     private boolean connectionUpdate = true;
 
     public TileEntityCable()
@@ -72,7 +70,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     private void updateCable()
     {
     	ModelDataManager.requestModelDataRefresh(this);
-        world.markBlockRangeForRenderUpdate(getPos(), getPos());
+        //world.markBlockRangeForRenderUpdate(getPos(), getPos());
     }
 
     private void transferEnergy()
@@ -138,7 +136,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    this.connectionUpdate = false;
 	}
 
-	for (Entry<BlockPos, EnumFacing> entry : producer.entrySet())
+	for (Entry<BlockPos, Direction> entry : producer.entrySet())
 	{
 	    cap = getEnergyCap(entry.getKey(), entry.getValue());
 	    if (cap != null)
@@ -148,7 +146,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    }
 	}
 
-	for (Entry<BlockPos, EnumFacing> entry : consumer.entrySet())
+	for (Entry<BlockPos, Direction> entry : consumer.entrySet())
 	{
 	    cap = getEnergyCap(entry.getKey(), entry.getValue());
 	    if (cap != null)
@@ -158,7 +156,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    }
 	}
 
-	for (Entry<BlockPos, EnumFacing> entry : storages.entrySet())
+	for (Entry<BlockPos, Direction> entry : storages.entrySet())
 	{
 	    cap = getEnergyCap(entry.getKey(), entry.getValue());
 	    if (cap != null)
@@ -215,7 +213,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 		perMachineConsumer = maxTransferRate;
 	    }
 
-	    for (Entry<BlockPos, EnumFacing> entry : producer.entrySet())
+	    for (Entry<BlockPos, Direction> entry : producer.entrySet())
 	    {
 		cap = getEnergyCap(entry.getKey(), entry.getValue());
 		if (cap != null)
@@ -232,7 +230,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 		}
 	    }
 
-	    for (Entry<BlockPos, EnumFacing> entry : consumer.entrySet())
+	    for (Entry<BlockPos, Direction> entry : consumer.entrySet())
 	    {
 		cap = getEnergyCap(entry.getKey(), entry.getValue());
 		if (cap != null)
@@ -249,7 +247,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 		}
 	    }
 
-	    for (Entry<BlockPos, EnumFacing> entry : storages.entrySet())
+	    for (Entry<BlockPos, Direction> entry : storages.entrySet())
 	    {
 		cap = getEnergyCap(entry.getKey(), entry.getValue());
 		if (cap != null)
@@ -293,12 +291,12 @@ public class TileEntityCable extends TileEntity implements ITickable
 	this.masterPos = pos;
     }
 
-    public int getConnection(EnumFacing facing)
+    public int getConnection(Direction facing)
     {
 	return this.connections[facing.getIndex()];
     }
 
-    public void setConnection(EnumFacing facing, int i)
+    public void setConnection(Direction facing, int i)
     {
 	if (0 <= i && i < 5)
 	{
@@ -313,7 +311,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	}
     }
 
-    public void changeConnectionMaster(BlockPos pos, EnumFacing facing, int before, int after)
+    public void changeConnectionMaster(BlockPos pos, Direction facing, int before, int after)
     {
 	if (before > 1)
 	{
@@ -367,11 +365,11 @@ public class TileEntityCable extends TileEntity implements ITickable
 	cables.remove(pos);
     }
 
-    public void initCable(IBlockState state)
+    public void initCable(BlockState state)
     {
 	TileEntity te;
 	List<BlockPos> neighborMaster = new ArrayList<BlockPos>();
-	for (EnumFacing facing : EnumFacing.values())
+	for (Direction facing : Direction.values())
 	{
 	    te = this.getWorld().getTileEntity(this.getPos().offset(facing));
 	    if (te != null)
@@ -420,7 +418,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     {
 	TileEntity te;
 	List<BlockPos> neighborCables = new ArrayList<BlockPos>();
-	for (EnumFacing facing : EnumFacing.values())
+	for (Direction facing : Direction.values())
 	{
 	    te = this.getWorld().getTileEntity(this.getPos().offset(facing));
 	    if (te != null)
@@ -485,7 +483,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 
     public void spreadPos(BlockPos exeption)
     {
-	for (EnumFacing facing : EnumFacing.values())
+	for (Direction facing : Direction.values())
 	{
 	    BlockPos nextPos = this.pos.offset(facing);
 	    if (!nextPos.equals(exeption))
@@ -510,7 +508,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	TileEntityCable te = this.getTECable(masterPos);
 	if (te != null)
 	{
-	    for (EnumFacing facing : EnumFacing.values())
+	    for (Direction facing : Direction.values())
 	    {
 		if (connections[facing.getIndex()] > 1)
 		{
@@ -595,29 +593,29 @@ public class TileEntityCable extends TileEntity implements ITickable
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setBoolean("ismaster", this.isMaster);
+	compound.putBoolean("ismaster", this.isMaster);
 	if (this.masterPos != null)
 	{
-	    compound.setInt("masterposx", this.masterPos.getX());
-	    compound.setInt("masterposy", this.masterPos.getY());
-	    compound.setInt("masterposz", this.masterPos.getZ());
+	    compound.putInt("masterposx", this.masterPos.getX());
+	    compound.putInt("masterposy", this.masterPos.getY());
+	    compound.putInt("masterposz", this.masterPos.getZ());
 	}
 
 	if (!cables.isEmpty())
 	{
-	    NBTTagList cableList = new NBTTagList();
+	    ListNBT cableList = new ListNBT();
 	    cables.stream().forEach(x -> cableList.add(NBTUtil.writeBlockPos(x)));
-	    compound.setTag("cables", cableList);
+	    compound.func_218657_a("cables", cableList);
 	}
 
 	if (this.connections.length == 6)
 	{
-	    compound.setIntArray("connections", this.connections);
+	    compound.putIntArray("connections", this.connections);
 	}
 
-	NBTTagList connectionlist;
+	ListNBT connectionlist;
 	List<Connection> connections;
 	for (int i = 0; i < 3; i++)
 	{
@@ -625,31 +623,31 @@ public class TileEntityCable extends TileEntity implements ITickable
 	    if (connectionsMaster.get(i).size() > 0)
 	    {
 		connections = connectionsMaster.get(i);
-		connectionlist = new NBTTagList();
+		connectionlist = new ListNBT();
 		for (Connection con : connections)
 		{
 		    connectionlist.add(con.serializeConnection());
 		}
-		compound.setTag("connections_" + i, connectionlist);
+		compound.func_218657_a("connections_" + i, connectionlist);
 	    }
 	}
 	return super.write(compound);
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	super.read(compound);
-	if (compound.hasKey("ismaster"))
+	if (compound.contains("ismaster"))
 	{
 	    this.isMaster = compound.getBoolean("ismaster");
 	}
-	if (compound.hasKey("masterposx"))
+	if (compound.contains("masterposx"))
 	{
 	    this.masterPos = new BlockPos(compound.getInt("masterposx"), compound.getInt("masterposy"), compound.getInt("masterposz"));
 	}
 
-	NBTTagList cableList = compound.getList("cables", Constants.NBT.TAG_COMPOUND);
+	ListNBT cableList = compound.getList("cables", Constants.NBT.TAG_COMPOUND);
 	if (cableList.size() > 0)
 	{
 	    this.cables.clear();
@@ -658,15 +656,15 @@ public class TileEntityCable extends TileEntity implements ITickable
 		this.cables.add(NBTUtil.readBlockPos(cableList.getCompound(i)));
 	    }
 	}
-	if (compound.hasKey("connections"))
+	if (compound.contains("connections"))
 	{
 	    this.connections = compound.getIntArray("connections");
 	}
 
-	NBTTagList list;
+	ListNBT list;
 	for (int i = 0; i < 3; i++)
 	{
-	    if (compound.hasKey("connections_" + i))
+	    if (compound.contains("connections_" + i))
 	    {
 		list = compound.getList("connections_" + i, Constants.NBT.TAG_COMPOUND);
 		if (list.size() > 0)
@@ -681,7 +679,7 @@ public class TileEntityCable extends TileEntity implements ITickable
 	}
     }
 
-    private IEnergyStorage getEnergyCap(BlockPos pos, EnumFacing facing)
+    private IEnergyStorage getEnergyCap(BlockPos pos, Direction facing)
     {
 	TileEntity te = this.world.getTileEntity(pos);
 	if (te != null)
@@ -710,7 +708,7 @@ public class TileEntityCable extends TileEntity implements ITickable
     public void checkConnections()
     {
 	boolean shouldSendChanges = false;
-	for (EnumFacing facing : EnumFacing.values())
+	for (Direction facing : Direction.values())
 	{
 	    TileEntity te = world.getTileEntity(this.pos.offset(facing));
 	    if (te != null)
@@ -750,29 +748,28 @@ public class TileEntityCable extends TileEntity implements ITickable
     }
 
     @Override
-    @Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
+    public SUpdateTileEntityPacket getUpdatePacket()
     {
-	return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	return new SUpdateTileEntityPacket(this.pos, 3, this.getUpdateTag());
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
+    public CompoundNBT getUpdateTag()
     {
-	return this.write(new NBTTagCompound());
+	return this.write(new CompoundNBT());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
     {
 	super.onDataPacket(net, pkt);
 	handleUpdateTag(pkt.getNbtCompound());
-	world.markBlockRangeForRenderUpdate(pos, pos);
+	//world.markBlockRangeForRenderUpdate(pos, pos);
     }
 
     private void sendUpdates()
     {
-	world.markBlockRangeForRenderUpdate(pos, pos);
+	//world.markBlockRangeForRenderUpdate(pos, pos);
 	world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 	markDirty();
     }
@@ -784,19 +781,19 @@ public class TileEntityCable extends TileEntity implements ITickable
 	{
 	    next = 2;
 	}
-	setConnection(EnumFacing.byIndex(i), next);
+	setConnection(Direction.byIndex(i), next);
 	sendUpdates();
     }
     
     @Override
     public IModelData getModelData()
     {
-    	return new ModelDataMap.Builder().withInitial(CableModel.DATA_DOWN, connections[EnumFacing.DOWN.getIndex()])
-    			.withInitial(CableModel.DATA_EAST, connections[EnumFacing.EAST.getIndex()])
-    			.withInitial(CableModel.DATA_NORTH, connections[EnumFacing.NORTH.getIndex()])
-    			.withInitial(CableModel.DATA_WEST, connections[EnumFacing.WEST.getIndex()])
-    			.withInitial(CableModel.DATA_SOUTH, connections[EnumFacing.SOUTH.getIndex()])
-    			.withInitial(CableModel.DATA_UP, connections[EnumFacing.UP.getIndex()]).build();
+    	return new ModelDataMap.Builder().withInitial(CableModel.DATA_DOWN, connections[Direction.DOWN.getIndex()])
+    			.withInitial(CableModel.DATA_EAST, connections[Direction.EAST.getIndex()])
+    			.withInitial(CableModel.DATA_NORTH, connections[Direction.NORTH.getIndex()])
+    			.withInitial(CableModel.DATA_WEST, connections[Direction.WEST.getIndex()])
+    			.withInitial(CableModel.DATA_SOUTH, connections[Direction.SOUTH.getIndex()])
+    			.withInitial(CableModel.DATA_UP, connections[Direction.UP.getIndex()]).build();
     }
     
 }

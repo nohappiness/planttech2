@@ -15,14 +15,14 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 
     public GuiGuideGeneticEngineering()
     {
-	super(6 - 8, false);
+	super(6 - 8, false, "screen.guidegeneticentineering");
 
     }
 
     @Override
-    public void initGui()
+    public void init()
     {
-	super.initGui();
+	super.init();
 	for (int i = 0; i < 8; i++)
 	{
 	    this.addButton(new CustomGuiButton(i, this.guiLeft + 28, this.guiTop + 10 + i * 22, 100, 20, "TEST") 
@@ -51,9 +51,9 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 		    super.onClick(mouseX, mouseY);
 		}
 	    });
-	buttons.get(8).enabled = false;
+	buttons.get(8).active = false;
 	buttons.get(8).visible = false;
-	buttons.get(9).enabled = false;
+	buttons.get(9).active = false;
 	buttons.get(9).visible = false;
 	keys[0] = "ge_start";
 	keys[1] = "ge_extracting";
@@ -77,11 +77,11 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 	    if (site > 0)
 	    {
 		site--;
-		buttons.get(9).enabled = true;
+		buttons.get(9).active = true;
 		buttons.get(9).visible = true;
 		if (site == 0)
 		{
-		    buttons.get(8).enabled = false;
+		    buttons.get(8).active = false;
 		    buttons.get(8).visible = false;
 		}
 	    }
@@ -91,11 +91,11 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 	    if (site < maxSites - 1)
 	    {
 		site++;
-		buttons.get(8).enabled = true;
+		buttons.get(8).active = true;
 		buttons.get(8).visible = true;
 		if (site == maxSites)
 		{
-		    buttons.get(9).enabled = false;
+		    buttons.get(9).active = false;
 		    buttons.get(9).visible = false;
 		}
 	    }
@@ -125,7 +125,7 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 
     protected void drawLine(String text, int x, int y)
     {
-	this.fontRenderer.drawString(text, x, y, Integer.parseInt("00e803", 16));
+	font.drawString(text, x, y, Integer.parseInt("00e803", 16));
     }
 
     protected void convertString(String string)
@@ -172,16 +172,16 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 	}
 	site = 0;
 	maxSites = (int) (Math.ceil((double) lines.size() / linesPerSite));
-	buttons.get(8).enabled = false;
+	buttons.get(8).active = false;
 	buttons.get(8).visible = false;
 	if (maxSites > 1)
 	{
-	    buttons.get(9).enabled = true;
+	    buttons.get(9).active = true;
 	    buttons.get(9).visible = true;
 	}
 	else
 	{
-	    buttons.get(9).enabled = false;
+	    buttons.get(9).active = false;
 	    buttons.get(9).visible = false;
 	}
     }
@@ -194,13 +194,13 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
 	    if (keys.length > i)
 	    {
 		this.buttons.get(i).visible = true;
-		this.buttons.get(i).enabled = true;
-		this.buttons.get(i).displayString = translateUnformated("guide." + keys[scrollPos + i] + ".header");
+		this.buttons.get(i).active = true;
+		this.buttons.get(i).setMessage( translateUnformated("guide." + keys[scrollPos + i] + ".header"));
 	    }
 	    else
 	    {
 		this.buttons.get(i).visible = false;
-		this.buttons.get(i).enabled = false;
+		this.buttons.get(i).active = false;
 	    }
 	}
     }
@@ -208,6 +208,6 @@ public class GuiGuideGeneticEngineering extends GuiGuideBase
     @Override
     protected void drawCenteredString(String string, int posX, int posY)
     {
-	this.fontRenderer.drawString(string, posX - (fontRenderer.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
+		font.drawString(string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
     }
 }

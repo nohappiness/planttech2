@@ -11,7 +11,7 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class HashMapCropTraits
 {
@@ -97,33 +97,33 @@ public class HashMapCropTraits
     public ItemStack createItemStackwithTraits(Item item)
     {
 	ItemStack stack = new ItemStack(item);
-	NBTTagCompound nbt = this.toNBT();
+	CompoundNBT nbt = this.toNBT();
 	stack.setTag(nbt);
 	return stack;
     }
 
     public ItemStack addToItemStack(ItemStack stack)
     {
-	NBTTagCompound nbt = this.toNBT();
+	CompoundNBT nbt = this.toNBT();
 	stack.setTag(nbt);
 	return stack;
     }
 
-    public NBTTagCompound toNBT()
+    public CompoundNBT toNBT()
     {
-	NBTTagCompound nbt = new NBTTagCompound();
+	CompoundNBT nbt = new CompoundNBT();
 	return this.addToNBT(nbt);
     }
 
-    public NBTTagCompound addToNBT(NBTTagCompound nbt)
+    public CompoundNBT addToNBT(CompoundNBT nbt)
     {
 	Set<EnumTraitsInt> keyset = this.getTraitsList();
 	for (EnumTraitsInt key : keyset)
 	{
-	    nbt.setInt(key.getName(), this.getTrait(key));
+	    nbt.putInt(key.getName(), this.getTrait(key));
 	}
-	nbt.setString("type", this.type);
-	nbt.setBoolean("analysed", this.isAnalysed());
+	nbt.putString("type", this.type);
+	nbt.putBoolean("analysed", this.isAnalysed());
 	return nbt;
     }
 
@@ -132,14 +132,14 @@ public class HashMapCropTraits
 	this.fromNBT(stack.getTag());
     }
 
-    public void fromNBT(NBTTagCompound nbt)
+    public void fromNBT(CompoundNBT nbt)
     {
 	Set<EnumTraitsInt> keyset = this.getTraitsList();
 	if (nbt != null)
 	{
 	    for (EnumTraitsInt key : keyset)
 	    {
-		if (nbt.hasKey(key.getName()))
+		if (nbt.contains(key.getName()))
 		{
 		    this.setTrait(key, nbt.getInt(key.getName()));
 		}

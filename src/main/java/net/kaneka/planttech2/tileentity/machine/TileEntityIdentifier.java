@@ -4,11 +4,8 @@ import net.kaneka.planttech2.container.ContainerIdentifier;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityIdentifier extends TileEntityEnergyInventory
 {
@@ -61,10 +58,10 @@ public class TileEntityIdentifier extends TileEntityEnergyInventory
 	    ItemStack stack = this.itemhandler.getStackInSlot(i);
 	    if (!stack.isEmpty())
 	    {
-		NBTTagCompound nbt = stack.getTag();
+		CompoundNBT nbt = stack.getTag();
 		if (nbt != null)
 		{
-		    if (nbt.hasKey("analysed"))
+		    if (nbt.contains("analysed"))
 		    {
 			if (!nbt.getBoolean("analysed"))
 			{
@@ -86,15 +83,15 @@ public class TileEntityIdentifier extends TileEntityEnergyInventory
 		ItemStack stack = this.itemhandler.getStackInSlot(i);
 		if (!stack.isEmpty())
 		{
-		    NBTTagCompound nbt = stack.getTag();
+		    CompoundNBT nbt = stack.getTag();
 
 		    if (nbt != null)
 		    {
-			if (nbt.hasKey("analysed"))
+			if (nbt.contains("analysed"))
 			{
 			    if (!nbt.getBoolean("analysed"))
 			    {
-				nbt.setBoolean("analysed", true);
+				nbt.putBoolean("analysed", true);
 				stack.setTag(nbt);
 				this.itemhandler.setStackInSlot(this.getFreeOutputSlot(), stack);
 				this.itemhandler.setStackInSlot(i, ItemStack.EMPTY);
@@ -144,15 +141,15 @@ public class TileEntityIdentifier extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("cooktime", ticksPassed);
+	compound.putInt("cooktime", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("cooktime");
 	super.read(compound);
@@ -198,11 +195,5 @@ public class TileEntityIdentifier extends TileEntityEnergyInventory
     public int getAmountFields()
     {
 	return 3;
-    }
-
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerIdentifier(playerInventory, this);
     }
 }

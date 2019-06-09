@@ -5,13 +5,13 @@ import net.kaneka.planttech2.items.ItemCropSeed;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemSeeds;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
 
 public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 {
@@ -43,7 +43,7 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 	    if (this.energystorage.getEnergyStored() <= energystorage.getMaxEnergyStored() - this.getEnergyPerItem() && !itemhandler.getStackInSlot(9).isEmpty())
 	    {
 		ItemStack stack = itemhandler.getStackInSlot(9);
-		if (stack.getCount() == 1 && (stack.getItem() instanceof ItemSeeds || stack.getItem() instanceof ItemCropSeed))
+		if (stack.getCount() == 1 && (stack.getItem() instanceof ItemCropSeed))
 		{
 		    ticksPassed += getUpgradeTier(11, Constants.SPEEDUPGRADE_TYPE) + 1;
 		    if (ticksPassed >= this.getTicksPerItem())
@@ -57,7 +57,7 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 		{
 		    if (!world.isRemote)
 		    {
-			world.spawnEntity(new EntityItem(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
+			world.func_217376_c(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
 			itemhandler.setStackInSlot(9, ItemStack.EMPTY);
 		    }
 		}
@@ -78,7 +78,7 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 	    ItemStack stack = this.itemhandler.getStackInSlot(i);
 	    if (!stack.isEmpty())
 	    {
-		if (stack.getItem() instanceof ItemSeeds || stack.getItem() instanceof ItemCropSeed)
+		if (stack.getItem() instanceof ItemCropSeed)
 		{
 		    return i;
 		}
@@ -105,10 +105,10 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 	{
 	    if (stack.getItem() instanceof ItemCropSeed)
 	    {
-		NBTTagCompound nbt = stack.getTag();
+		CompoundNBT nbt = stack.getTag();
 		if (nbt != null)
 		{
-		    if (nbt.hasKey("energyvalue"))
+		    if (nbt.contains("energyvalue"))
 		    {
 			return nbt.getInt("energyvalue") * 20;
 		    }
@@ -119,15 +119,15 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("cooktime", ticksPassed);
+	compound.putInt("cooktime", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("cooktime");
 	super.read(compound);
@@ -183,12 +183,6 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
     }
 
     @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerSeedSqueezer(playerInventory, this);
-    }
-
-    @Override
     protected int getFluidInSlot()
     {
 	return 12;
@@ -199,4 +193,5 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
     {
 	return 13;
     }
+
 }

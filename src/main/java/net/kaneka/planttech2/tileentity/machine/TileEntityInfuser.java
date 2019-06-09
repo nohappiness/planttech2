@@ -6,12 +6,9 @@ import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
@@ -109,24 +106,18 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 	}
 
 	@Override
-	public NBTTagCompound write(NBTTagCompound compound)
+	public CompoundNBT write(CompoundNBT compound)
 	{
-		compound.setInt("tickspassed", fluidInfused);
+		compound.putInt("tickspassed", fluidInfused);
 		super.write(compound);
 		return compound;
 	}
 
 	@Override
-	public void read(NBTTagCompound compound)
+	public void read(CompoundNBT compound)
 	{
 		this.fluidInfused = compound.getInt("tickspassed");
 		super.read(compound);
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-	{
-		return new ContainerInfuser(playerInventory, this);
 	}
 
 	@Override

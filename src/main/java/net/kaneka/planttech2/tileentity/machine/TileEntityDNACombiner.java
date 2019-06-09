@@ -2,17 +2,13 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import java.util.Random;
 
-import net.kaneka.planttech2.container.ContainerDNACombiner;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TileEntityDNACombiner extends TileEntityEnergyInventory
 {
@@ -45,7 +41,7 @@ public class TileEntityDNACombiner extends TileEntityEnergyInventory
 		    {
 			ticksPassed = 0; 
 			//energystorage.extractEnergy(energyPerTick(), false);
-			NBTTagCompound nbt = getCombinedNBT(stack1.getTag(), stack2.getTag());
+			CompoundNBT nbt = getCombinedNBT(stack1.getTag(), stack2.getTag());
 			ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER); 
 			stack.setTag(nbt);
 			itemhandler.setStackInSlot(3, stack);
@@ -56,47 +52,47 @@ public class TileEntityDNACombiner extends TileEntityEnergyInventory
 	}
     }
     
-    private NBTTagCompound getCombinedNBT(NBTTagCompound nbt1, NBTTagCompound nbt2)
+    private CompoundNBT getCombinedNBT(CompoundNBT nbt1, CompoundNBT nbt2)
     {
-	NBTTagCompound newNBT = new NBTTagCompound(); 
+	CompoundNBT newNBT = new CompoundNBT(); 
 	Random rand = new Random(); 
 	for(String key: HashMapCropTraits.getTraitsKeyList())
 	{
 	    if(key.equals("type"))
 	    {
-		if(nbt1.hasKey(key) && !nbt2.hasKey(key))
+		if(nbt1.contains(key) && !nbt2.contains(key))
 		{
-		    newNBT.setString(key, nbt1.getString(key));
+		    newNBT.putString(key, nbt1.getString(key));
 		}
-		else if(!nbt1.hasKey(key) && nbt2.hasKey(key))
+		else if(!nbt1.contains(key) && nbt2.contains(key))
 		{
-		    newNBT.setString(key, nbt2.getString(key));
+		    newNBT.putString(key, nbt2.getString(key));
 		}
-		else if(nbt1.hasKey(key) && nbt2.hasKey(key))
+		else if(nbt1.contains(key) && nbt2.contains(key))
 		{
 		    if(rand.nextBoolean())
 		    {
-			newNBT.setString(key, nbt1.getString(key));
+			newNBT.putString(key, nbt1.getString(key));
 		    }
 		    else
 		    {
-			newNBT.setString(key, nbt2.getString(key));
+			newNBT.putString(key, nbt2.getString(key));
 		    }
 		}
 	    }
 	    else
 	    {
-		if(nbt1.hasKey(key) && !nbt2.hasKey(key))
+		if(nbt1.contains(key) && !nbt2.contains(key))
 		{
-		    newNBT.setInt(key, nbt1.getInt(key));
+		    newNBT.putInt(key, nbt1.getInt(key));
 		}
-		else if(!nbt1.hasKey(key) && nbt2.hasKey(key))
+		else if(!nbt1.contains(key) && nbt2.contains(key))
 		{
-		    newNBT.setInt(key, nbt2.getInt(key));
+		    newNBT.putInt(key, nbt2.getInt(key));
 		}
-		else if(nbt1.hasKey(key) && nbt2.hasKey(key))
+		else if(nbt1.contains(key) && nbt2.contains(key))
 		{
-		    newNBT.setInt(key, Math.min(nbt1.getInt(key), nbt2.getInt(key)));
+		    newNBT.putInt(key, Math.min(nbt1.getInt(key), nbt2.getInt(key)));
 		}
 	    }
 	}
@@ -120,15 +116,15 @@ public class TileEntityDNACombiner extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("tickspassed", ticksPassed);
+	compound.putInt("tickspassed", ticksPassed);
 	super.write(compound);
 	return compound;
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	super.read(compound);
@@ -170,10 +166,5 @@ public class TileEntityDNACombiner extends TileEntityEnergyInventory
 	return 3;
     }
     
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerDNACombiner(playerInventory, this);
-    }
 
 }

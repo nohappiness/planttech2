@@ -24,6 +24,7 @@
     "container.compressor": "Compressor",
     "container.energystorage": "Energystorage",
     "container.infuser": "Infuser", 
+    "container.upgradeableitem": "Upgrade Item",
 
     "item.planttech2.guide_overview": "Tablet: Planttech 2 Overview",
     "item.planttech2.guide_plants": "Tablet: Plant Encyclopedia",

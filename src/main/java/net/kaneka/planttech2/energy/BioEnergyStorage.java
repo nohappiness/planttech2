@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.energy;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class BioEnergyStorage extends EnergyStorage
@@ -30,7 +30,7 @@ public class BioEnergyStorage extends EnergyStorage
 	return super.extractEnergy(maxExtract, false);
     }
 
-    public void deserializeNBT(NBTTagCompound nbt)
+    public void deserializeNBT(CompoundNBT nbt)
     {
 	energy = nbt.getInt("energy");
 	capacity = nbt.getInt("capacity");
@@ -38,13 +38,13 @@ public class BioEnergyStorage extends EnergyStorage
 	maxExtract = nbt.getInt("maxextract");
     }
 
-    public NBTTagCompound serializeNBT()
+    public CompoundNBT serializeNBT()
     {
-	NBTTagCompound nbtList = new NBTTagCompound();
-	nbtList.setInt("energy", energy);
-	nbtList.setInt("capacity", capacity);
-	nbtList.setInt("maxreceive", maxReceive);
-	nbtList.setInt("maxextract", maxExtract);
+    	CompoundNBT nbtList = new CompoundNBT();
+	nbtList.putInt("energy", energy);
+	nbtList.putInt("capacity", capacity);
+	nbtList.putInt("maxreceive", maxReceive);
+	nbtList.putInt("maxextract", maxExtract);
 	return nbtList;
     }
 

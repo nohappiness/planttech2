@@ -1,22 +1,22 @@
 package net.kaneka.planttech2.items.upgradeable;
 
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.init.Enchantments;
-import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemArrow;
-import net.minecraft.item.ItemBow;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.item.ArrowItem;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatList;
+import net.minecraft.item.Items;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -32,7 +32,7 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 				return 0.0F;
 			} else
 			{
-				return !(entity.getActiveItemStack().getItem() instanceof ItemBow) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
+				return !(entity.getActiveItemStack().getItem() instanceof BowItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
 			}
 		});
 		this.addPropertyOverride(new ResourceLocation("pulling"), (stack, world, entity) -> {
@@ -40,15 +40,15 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 		});
 	}
 
-	protected ItemStack findAmmo(EntityPlayer player)
+	protected ItemStack findAmmo(PlayerEntity player)
 	{
-		if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
+		if (this.isArrow(player.getHeldItem(Hand.OFF_HAND)))
 		{
-			return player.getHeldItem(EnumHand.OFF_HAND);
+			return player.getHeldItem(Hand.OFF_HAND);
 		} 
-		else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
+		else if (this.isArrow(player.getHeldItem(Hand.MAIN_HAND)))
 		{
-			return player.getHeldItem(EnumHand.MAIN_HAND);
+			return player.getHeldItem(Hand.MAIN_HAND);
 		} 
 		else
 		{
@@ -67,20 +67,21 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 
 	protected boolean isArrow(ItemStack stack)
 	{
-		return stack.getItem() instanceof ItemArrow;
+		return stack.getItem() instanceof ArrowItem;
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
+	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
 	{
-		if (entityLiving instanceof EntityPlayer)
+		
+		if (entityLiving instanceof PlayerEntity)
 		{
-			EntityPlayer entityplayer = (EntityPlayer) entityLiving;
-			boolean flag = entityplayer.abilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-			ItemStack itemstack = this.findAmmo(entityplayer);
+			PlayerEntity PlayerEntity = (PlayerEntity) entityLiving;
+			boolean flag = PlayerEntity.abilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+			ItemStack itemstack = this.findAmmo(PlayerEntity);
 
 			int i = this.getUseDuration(stack) - timeLeft;
-			i = ForgeEventFactory.onArrowLoose(stack, worldIn, entityplayer, i, !itemstack.isEmpty() || flag);
+			i = ForgeEventFactory.onArrowLoose(stack, worldIn, PlayerEntity, i, !itemstack.isEmpty() || flag);
 			if (i < 0)
 				return;
 
@@ -94,14 +95,14 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 				float f = getArrowVelocity(i);
 				if (!((double) f < 0.1D))
 				{
-					boolean flag1 = entityplayer.abilities.isCreativeMode
-					        || (itemstack.getItem() instanceof ItemArrow && ((ItemArrow) itemstack.getItem()).isInfinite(itemstack, stack, entityplayer));
+					boolean flag1 = PlayerEntity.abilities.isCreativeMode
+					        || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, PlayerEntity));
 					if (!worldIn.isRemote)
 					{
-						ItemArrow itemarrow = (ItemArrow) (itemstack.getItem() instanceof ItemArrow ? itemstack.getItem() : Items.ARROW);
-						EntityArrow entityarrow = itemarrow.createArrow(worldIn, itemstack, entityplayer);
-						entityarrow = this.customizeArrow(entityarrow);
-						entityarrow.shoot(entityplayer, entityplayer.rotationPitch, entityplayer.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+						ArrowItem itemarrow = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
+						AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, itemstack, PlayerEntity);
+						entityarrow = customizeArrow(entityarrow);
+						entityarrow.shoot(PlayerEntity, PlayerEntity.rotationPitch, PlayerEntity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F)
 						{
 							entityarrow.setIsCritical(true);
@@ -124,27 +125,25 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 							entityarrow.setFire(100);
 						}
 
-						if(!entityplayer.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
-						if (flag1 || entityplayer.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
+						if(!PlayerEntity.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
+						if (flag1 || PlayerEntity.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
 						{
-							entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+							entityarrow.pickupStatus = ArrowEntity.PickupStatus.CREATIVE_ONLY;
 						}
 
-						worldIn.spawnEntity(entityarrow);
+						worldIn.func_217376_c(entityarrow);
 					}
 
-					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
+					worldIn.playSound((PlayerEntity) null, PlayerEntity.posX, PlayerEntity.posY, PlayerEntity.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 					        1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !entityplayer.abilities.isCreativeMode)
+					if (!flag1 && !PlayerEntity.abilities.isCreativeMode)
 					{
 						itemstack.shrink(1);
 						if (itemstack.isEmpty())
 						{
-							entityplayer.inventory.deleteStack(itemstack);
+							PlayerEntity.inventory.deleteStack(itemstack);
 						}
 					}
-
-					entityplayer.addStat(StatList.ITEM_USED.get(this));
 				}
 			}
 		}
@@ -169,13 +168,13 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 	}
 
 	@Override
-	public EnumAction getUseAction(ItemStack stack)
+	public UseAction getUseAction(ItemStack stack)
 	{
-		return EnumAction.BOW;
+		return UseAction.BOW;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand)
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		if(extractEnergy(stack, getEnergyCost(player.getActiveItemStack()), true) >= getEnergyCost(stack))
@@ -189,17 +188,17 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
     
     		if (!player.abilities.isCreativeMode && !flag)
     		{
-    			return flag ? new ActionResult<>(EnumActionResult.PASS, stack) : new ActionResult<>(EnumActionResult.FAIL, stack);
+    			return flag ? new ActionResult<>(ActionResultType.PASS, stack) : new ActionResult<>(ActionResultType.FAIL, stack);
     		} else
     		{
     			player.setActiveHand(hand);
-    			return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+    			return new ActionResult<>(ActionResultType.SUCCESS, stack);
     		}
 		}
-		return new ActionResult<>(EnumActionResult.FAIL, stack);
+		return new ActionResult<>(ActionResultType.FAIL, stack);
 	}
 
-	public EntityArrow customizeArrow(EntityArrow arrow)
+	public AbstractArrowEntity customizeArrow(AbstractArrowEntity arrow)
 	{
 		return arrow;
 	}

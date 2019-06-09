@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.enums;
 
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public enum EnumTemperature
 {
@@ -54,7 +54,7 @@ public enum EnumTemperature
 
     public String getDisplayString()
     {
-	return new TextComponentTranslation("temp." + this.name()).getUnformattedComponentText();
+	return new TranslationTextComponent("temp." + this.name()).getUnformattedComponentText();
     }
 
     public boolean inRange(float value, int tolerance)

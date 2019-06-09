@@ -2,15 +2,15 @@ package net.kaneka.planttech2.items.armors;
 
 import java.util.function.Supplier;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadBase;
 import net.minecraft.util.SoundEvent;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.init.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.util.SoundEvents; 
+import net.minecraft.inventory.EquipmentSlotType;
 
 public enum CustomArmorMaterial implements IArmorMaterial
 {
@@ -47,16 +47,6 @@ public enum CustomArmorMaterial implements IArmorMaterial
 		this.repairMaterial = new LazyLoadBase<>(repairMaterial);
 	}
 
-	public int getDurability(EntityEquipmentSlot slotIn)
-	{
-		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
-	}
-
-	public int getDamageReductionAmount(EntityEquipmentSlot slotIn)
-	{
-		return this.damageReductionAmountArray[slotIn.getIndex()];
-	}
-
 	public int getEnchantability()
 	{
 		return this.enchantability;
@@ -81,5 +71,17 @@ public enum CustomArmorMaterial implements IArmorMaterial
 	public float getToughness()
 	{
 		return this.toughness;
+	}
+
+	@Override
+	public int getDurability(EquipmentSlotType slotIn)
+	{
+		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
+	}
+
+	@Override
+	public int getDamageReductionAmount(EquipmentSlotType slotIn)
+	{
+		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}
 }

@@ -3,8 +3,9 @@ package net.kaneka.planttech2.filehelper;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 
 public class RecipesCompressorFileHandler 
 {
@@ -124,8 +125,8 @@ public class RecipesCompressorFileHandler
 	createCompressorFile("planttech2:zombie_villager_particles",8,"minecraft:iron_ingot",1);
 	createCompressorFile("planttech2:zombie_particles",8,"minecraft:rotten_flesh",1);
 	createCompressorFile("planttech2:color_particles",8,Items.INK_SAC.getRegistryName().toString(),1);
-	createCompressorFile("planttech2:color_particles",8,Items.ROSE_RED.getRegistryName().toString(),1);
-	createCompressorFile("planttech2:color_particles",8,Items.CACTUS_GREEN.getRegistryName().toString(),1);
+	//createCompressorFile("planttech2:color_particles",8,Items.ROSE_RED.getRegistryName().toString(),1);
+	//createCompressorFile("planttech2:color_particles",8,Items.CACTUS_GREEN.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.COCOA_BEANS.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.LAPIS_LAZULI.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.PURPLE_DYE.getRegistryName().toString(),1);
@@ -134,7 +135,7 @@ public class RecipesCompressorFileHandler
 	createCompressorFile("planttech2:color_particles",8,Items.GRAY_DYE.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.PINK_DYE.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.LIME_DYE.getRegistryName().toString(),1);
-	createCompressorFile("planttech2:color_particles",8,Items.DANDELION_YELLOW.getRegistryName().toString(),1);
+	//createCompressorFile("planttech2:color_particles",8,Items.DANDELION_YELLOW.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.LIGHT_BLUE_DYE.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.MAGENTA_DYE.getRegistryName().toString(),1);
 	createCompressorFile("planttech2:color_particles",8,Items.ORANGE_DYE.getRegistryName().toString(),1);

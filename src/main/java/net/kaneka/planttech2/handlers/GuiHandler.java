@@ -32,8 +32,8 @@ import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedconstructor;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -41,9 +41,9 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 
 public class GuiHandler
 {
-	public static GuiScreen openGui(FMLPlayMessages.OpenContainer msg)
+	public static Screen openGui(FMLPlayMessages.OpenContainer msg)
 	{
-		EntityPlayer player = Minecraft.getInstance().player;
+		PlayerEntity player = Minecraft.getInstance().player;
 		String path = msg.getId().getPath();
 		if (path.equals(GUIReferences.GUI_COMPRESSOR))
 		{

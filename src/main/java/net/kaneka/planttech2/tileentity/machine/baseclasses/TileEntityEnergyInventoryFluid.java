@@ -3,7 +3,7 @@ package net.kaneka.planttech2.tileentity.machine.baseclasses;
 import net.kaneka.planttech2.fluids.TempFluidTank;
 import net.kaneka.planttech2.items.ItemBiomassContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 
 public abstract class TileEntityEnergyInventoryFluid extends TileEntityEnergyInventory
@@ -39,15 +39,15 @@ public abstract class TileEntityEnergyInventoryFluid extends TileEntityEnergyInv
     }
     
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setTag("fluidtank", fluidtank.serializeNBT());
+	compound.func_218657_a("fluidtank", fluidtank.serializeNBT());
 	super.write(compound);
 	return compound;
     }
     
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	fluidtank.deserializeNBT(compound.getCompound("fluidtank"));
 	super.read(compound);

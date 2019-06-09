@@ -10,10 +10,10 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -36,55 +36,55 @@ public class ItemCropSeed extends ItemBase
     @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-	NBTTagCompound nbt = stack.getTag();
+	CompoundNBT nbt = stack.getTag();
 	if (nbt != null)
 	{
 	    if (nbt.getBoolean("analysed"))
 	    {
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.type").getUnformattedComponentText() + ": " + nbt.getString("type")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(nbt.getString("type"))));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.growspeed").getUnformattedComponentText() + ": " + nbt.getInt("growspeed")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.sensitivity").getUnformattedComponentText() + ": " + nbt.getInt("sensitivity")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.needed_lightlevel").getUnformattedComponentText() + ": " + (14 - nbt.getInt("lightsensitivity"))));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.waterrange").getUnformattedComponentText() + ": " + (1 + nbt.getInt("watersensitivity"))));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.temperature").getUnformattedComponentText() + ": " + temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.productivity").getUnformattedComponentText() + ": " + nbt.getInt("productivity")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.fertility").getUnformattedComponentText() + ": " + nbt.getInt("fertility")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.spreedingspeed").getUnformattedComponentText() + ": " + nbt.getInt("spreedingspeed")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrength")));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.energyvalue").getUnformattedComponentText() + ": " + nbt.getInt("energyvalue") * 20));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + nbt.getString("type")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(nbt.getString("type"))));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + nbt.getInt("growspeed")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + nbt.getInt("sensitivity")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + (14 - nbt.getInt("lightsensitivity"))));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.waterrange").getUnformattedComponentText() + ": " + (1 + nbt.getInt("watersensitivity"))));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperature").getUnformattedComponentText() + ": " + temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + nbt.getInt("productivity")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + nbt.getInt("fertility")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + nbt.getInt("spreedingspeed")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrength")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + nbt.getInt("energyvalue") * 20));
 
 	    }
 	    else
 	    {
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.type").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.soil").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.growspeed").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.sensitivity").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.needed_lightlevel").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.waterrange").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.temperaturetolerance").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.productivity").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.fertility").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.spreedingspeed").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.genestrength").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
-		tooltip.add(new TextComponentString(new TextComponentTranslation("info.energyvalue").getUnformattedComponentText() + ": " + new TextComponentTranslation("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.waterrange").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + new TranslationTextComponent("info.unknown").getUnformattedComponentText()));
 	    }
 	}
 	else
 	{
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.type").getUnformattedComponentText() + ": " + entryName));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(entryName)));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.growspeed").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.sensitivity").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.needed_lightlevel").getUnformattedComponentText() + ": " + 14));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.waterrange").getUnformattedComponentText() + ": " + 1));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.temperaturetolerance").getUnformattedComponentText() + ": " + temperatureString(entryName, 0)));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.productivity").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.fertility").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.spreedingspeed").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.genestrength").getUnformattedComponentText() + ": " + 0));
-	    tooltip.add(new TextComponentString(new TextComponentTranslation("info.energyvalue").getUnformattedComponentText() + ": " + 20));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + entryName));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(entryName)));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + 14));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.waterrange").getUnformattedComponentText() + ": " + 1));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getUnformattedComponentText() + ": " + temperatureString(entryName, 0)));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + 0));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + 20));
 	}
     }
 

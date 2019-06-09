@@ -7,12 +7,9 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -49,7 +46,7 @@ public class TileEntityPlantFarm extends TileEntityEnergyInventory
 
 		BlockPos actualPos = this.pos.add(actualX - range, 0, actualY - range);
 
-		IBlockState state = world.getBlockState(actualPos);
+		BlockState state = world.getBlockState(actualPos);
 		if (world.getBlockState(actualPos).getBlock() instanceof BlockCropBase)
 		{
 		    if (state.get(BlockCropBase.GROWSTATE) > 6)
@@ -123,15 +120,15 @@ public class TileEntityPlantFarm extends TileEntityEnergyInventory
     }
 
     @Override
-    public NBTTagCompound write(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-	compound.setInt("actualx", actualX);
-	compound.setInt("actualY", actualY);
+	compound.putInt("actualx", actualX);
+	compound.putInt("actualY", actualY);
 	return super.write(compound);
     }
 
     @Override
-    public void read(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
 	actualX = compound.getInt("actualx");
 	actualY = compound.getInt("actualy");
@@ -144,9 +141,4 @@ public class TileEntityPlantFarm extends TileEntityEnergyInventory
 	return "plantfarm";
     }
     
-    @Override
-    public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-    {
-	return new ContainerPlantFarm(playerInventory, this);
-    }
 }

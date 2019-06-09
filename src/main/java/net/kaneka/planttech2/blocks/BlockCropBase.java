@@ -12,31 +12,31 @@ import net.kaneka.planttech2.items.ItemAnalyser;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.TileEntityCrops;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReaderBase;
+import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
 
-public class BlockCropBase extends BlockContainer
+public class BlockCropBase extends ContainerBlock
 {
 	public static final IntegerProperty GROWSTATE = IntegerProperty.create("growstate", 0, 7);
 	private String entryName;
@@ -49,7 +49,7 @@ public class BlockCropBase extends BlockContainer
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state)
+	public boolean hasTileEntity(BlockState state)
 	{
 		return true;
 	}
@@ -62,7 +62,7 @@ public class BlockCropBase extends BlockContainer
 
 	public void updateCrop(World world, BlockPos pos, HashMapCropTraits traits)
 	{
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		int growstate = state.get(GROWSTATE).intValue();
 		if (growstate < 7)
 		{
@@ -119,7 +119,7 @@ public class BlockCropBase extends BlockContainer
 
 	public void updateCreative(World world, BlockPos pos)
 	{
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		int growstate = state.get(GROWSTATE).intValue();
 		if (growstate < 7)
 		{
@@ -195,7 +195,7 @@ public class BlockCropBase extends BlockContainer
 
 	public boolean enoughtWater(World world, BlockPos pos, int waterSensitivity)
 	{
-		for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
+		for (BlockPos blockpos$mutableblockpos : BlockPos.func_218278_a(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
 		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
 		{
 			if (world.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER)
@@ -213,10 +213,10 @@ public class BlockCropBase extends BlockContainer
 		if (stack.isEmpty())
 		{
 			return true;
-		} else if (stack.getItem() instanceof ItemBlock)
+		} else if (stack.getItem() instanceof BlockItem)
 		{
-			Block block = ((ItemBlock) stack.getItem()).getBlock();
-			IBlockState state = world.getBlockState(pos.down());
+			Block block = ((BlockItem) stack.getItem()).getBlock();
+			BlockState state = world.getBlockState(pos.down());
 			if (state.getBlock() == block)
 			{
 				return true;
@@ -238,15 +238,16 @@ public class BlockCropBase extends BlockContainer
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, IBlockState> builder)
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(GROWSTATE);
 	}
 
 	/*----------------------DROPS---------------------------*/
 
+	
 	@Override
-	public void getDrops(IBlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune)
+	public void getDrops(BlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune)
 	{
 		int growstate = state.get(GROWSTATE).intValue();
 		TileEntity te = world.getTileEntity(pos);
@@ -262,7 +263,7 @@ public class BlockCropBase extends BlockContainer
 	}
 
 	@Override
-	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest, IFluidState fluid)
+	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
 	{
 		if (willHarvest && !player.isCreative())
 		{
@@ -272,7 +273,7 @@ public class BlockCropBase extends BlockContainer
 	}
 
 	@Override
-	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te, ItemStack stack)
+	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
 	{
 		super.harvestBlock(world, player, pos, state, te, stack);
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
@@ -280,12 +281,12 @@ public class BlockCropBase extends BlockContainer
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
 	{
 		int growstate = state.get(GROWSTATE).intValue();
-		if (growstate > 6 && hand.equals(EnumHand.MAIN_HAND) && !worldIn.isRemote)
+		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
 		{
-			ItemStack holdItem = player.getHeldItem(EnumHand.MAIN_HAND);
+			ItemStack holdItem = player.getHeldItem(Hand.MAIN_HAND);
 			if (!holdItem.isEmpty())
 			{
 				if (holdItem.getItem() instanceof ItemAnalyser)
@@ -310,19 +311,19 @@ public class BlockCropBase extends BlockContainer
 
 	/*----------------------RENDERING------------------*/
 	@Override
-	public boolean isFullCube(IBlockState state)
+	public boolean isFullCube(BlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isSolid(IBlockState state)
+	public boolean isSolid(BlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockReader world, IBlockState state, BlockPos pos, EnumFacing face)
+	public BlockFaceShape getBlockFaceShape(IBlockReader world, BlockState state, BlockPos pos, Direction face)
 	{
 		return BlockFaceShape.UNDEFINED;
 	}
@@ -334,12 +335,12 @@ public class BlockCropBase extends BlockContainer
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState iBlockState)
+	public BlockRenderType getRenderType(BlockState iBlockState)
 	{
-		return EnumBlockRenderType.MODEL;
+		return BlockRenderType.MODEL;
 	}
 
-	public int getOpacity(IBlockState state, IBlockReader worldIn, BlockPos pos)
+	public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
 		return 0;
 	}
@@ -358,7 +359,7 @@ public class BlockCropBase extends BlockContainer
 	{
 
 		@Override
-		public int getColor(IBlockState state, IWorldReaderBase world, BlockPos pos, int tintindex)
+		public int getColor(BlockState state, IEnviromentBlockReader world, BlockPos pos, int tintindex)
 		{
 			if (tintindex == 0)
 			{

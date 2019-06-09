@@ -1,2 +1,0 @@
-- remove IInventory in TileEntityEnergyInventory
-- cropparents have seperate mutatechances, but is not used in calculation

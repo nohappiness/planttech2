@@ -1,10 +1,11 @@
 package net.kaneka.planttech2.container;
 
 import net.kaneka.planttech2.items.ItemCropSeed;
+import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedconstructor;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -12,10 +13,14 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerSeedconstructor extends ContainerBase
 {
-	
-	public ContainerSeedconstructor(InventoryPlayer player, TileEntitySeedconstructor tileentity) 
+	public ContainerSeedconstructor(int id, PlayerInventory inv)
 	{
-		super(player, tileentity, 18);
+		this(id, inv, new TileEntitySeedconstructor()); 
+	}
+	
+	public ContainerSeedconstructor(int id, PlayerInventory player, TileEntitySeedconstructor tileentity) 
+	{
+		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 18);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 96, 30));
@@ -29,7 +34,7 @@ public class ContainerSeedconstructor extends ContainerBase
 	
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) 
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot)this.inventorySlots.get(index);

@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -84,9 +85,10 @@ public class InfuserRecipe implements IRecipe
 	}
 	
 	@Override
-	public RecipeType<? extends IRecipe> getType()
+	public IRecipeType func_222127_g()
 	{
-		return ModRecipeTypes.INFUSING;
+		//TODO
+		return null;
 	}
 	
 	public static class Serializer implements IRecipeSerializer<InfuserRecipe>
@@ -151,7 +153,6 @@ public class InfuserRecipe implements IRecipe
 			buffer.writeInt(recipe.biomass);
 		}
 
-		@Override
 		public ResourceLocation getName()
 		{
 			return NAME;

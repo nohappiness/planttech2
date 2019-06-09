@@ -1,166 +1,166 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.kaneka.planttech2.items.ItemGuide;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiLabel;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
-public class GuiGuideBase extends GuiScreen
+public class GuiGuideBase extends Screen
 {
-    protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/plantencyclopeadia_big.png");
-    protected int xSize = 512;
-    protected int ySize = 196;
-    protected int guiLeft;
-    protected int guiTop;
-    protected int scrollMax;
-    protected int scrollPos = 0;
-    protected int fadeInTimer = 50;
-    protected int selectedId;
-    protected boolean canscroll; 
+	protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/plantencyclopeadia_big.png");
+	protected int xSize = 512;
+	protected int ySize = 196;
+	protected int guiLeft;
+	protected int guiTop;
+	protected int scrollMax;
+	protected int scrollPos = 0;
+	protected int fadeInTimer = 50;
+	protected int selectedId;
+	protected boolean canscroll;
 
-    public GuiGuideBase(int scrollMax, boolean canscroll)
-    {
-	this.scrollMax = scrollMax;
-	this.canscroll = canscroll; 
-    }
-
-    @Override
-    public void initGui()
-    {
-	super.initGui();
-	if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+	public GuiGuideBase(int scrollMax, boolean canscroll, String title)
 	{
-	    Minecraft.getInstance().player.getHeldItemMainhand().setDamage(1);
-	}
-	selectedId = -1;
-	this.guiLeft = (this.width - 400) / 2;
-	this.guiTop = (this.height - this.ySize) / 2;
-    }
-
-    protected void updateButtons()
-    {
-
-    }
-
-    @Override
-    public void render(int mouseX, int mouseY, float partialTicks)
-    {
-	GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-	this.mc.getTextureManager().bindTexture(BACKGROUND);
-	if (fadeInTimer > 0)
-	{
-	    fadeInTimer--;
-	    drawFadeInEffect();
-	}
-	else
-	{
-	    this.drawBackground();
-	    this.drawForeground();
-	    this.drawButtons(mouseX, mouseY, partialTicks);
-	    this.drawStrings();
-	    this.drawTooltips(mouseX, mouseY);
-	}
-    }
-
-    private void drawButtons(int mouseX, int mouseY, float partialTicks)
-    {
-	for (int i = 0; i < this.buttons.size(); ++i)
-	{
-	   this.buttons.get(i).render(mouseX, mouseY, partialTicks);
+		super(new TranslationTextComponent(title));
+		this.scrollMax = scrollMax;
+		this.canscroll = canscroll;
 	}
 
-	for (int j = 0; j < this.labels.size(); ++j)
+	@Override
+	public void init()
 	{
-	    ((GuiLabel) this.labels.get(j)).render(mouseX, mouseY, partialTicks);
+		super.init();
+		if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+		{
+			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(1);
+		}
+		selectedId = -1;
+		this.guiLeft = (this.width - 400) / 2;
+		this.guiTop = (this.height - this.ySize) / 2;
 	}
-    }
 
-    protected void drawBackground()
-    {
-	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
-	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
-    }
-
-    protected void drawForeground()
-    {
-
-    }
-
-    private void drawFadeInEffect()
-    {
-	float percentage = 1f - ((float) fadeInTimer / 50f);
-	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
-
-	Gui.drawModalRectWithCustomSizedTexture(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
-    }
-
-    @Override
-    public boolean mouseScrolled(double p_mouseScrolled_1_)
-    {
-	if(canscroll)
+	protected void updateButtons()
 	{
-	    if (p_mouseScrolled_1_ != 0)
-	    {
-		scrollPos += p_mouseScrolled_1_ > 0 ? -1 : 1;
-		scrollPos = Math.max(0, scrollPos);
-		scrollPos = Math.min(scrollMax, scrollPos);
-		updateButtons();
-	    }
+
 	}
-        return super.mouseScrolled(p_mouseScrolled_1_);
-    }
 
-    protected void drawStrings()
-    {
-
-    }
-
-    protected String translateUnformated(String name)
-    {
-	return new TextComponentTranslation(name).getUnformattedComponentText();
-    }
-
-    protected void drawCenteredString(String string, int posX, int posY)
-    {
-	fontRenderer.drawString(string, posX - (fontRenderer.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
-    }
-
-    public void renderItem(ItemStack itemstack, int x, int y)
-    {
-	this.itemRender.renderItemAndEffectIntoGUI(itemstack, this.guiLeft + x, this.guiTop + y);
-    }
-
-    public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY)
-    {
-	drawTooltip(lines, mouseX, mouseY, posX, posY, 16, 16);
-    }
-
-    public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
-    {
-	posX += this.guiLeft;
-	posY += this.guiTop;
-	if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
+	@Override
+	public void render(int mouseX, int mouseY, float partialTicks)
 	{
-	    drawHoveringText(lines, mouseX, mouseY);
+		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		minecraft.getTextureManager().bindTexture(BACKGROUND);
+		if (fadeInTimer > 0)
+		{
+			fadeInTimer--;
+			drawFadeInEffect();
+		} else
+		{
+			this.drawBackground();
+			this.drawForeground();
+			this.drawButtons(mouseX, mouseY, partialTicks);
+			this.drawStrings();
+			this.drawTooltips(mouseX, mouseY);
+		}
 	}
-    }
 
-    protected void drawTooltips(int mouseX, int mouseY)
-    {
-
-    }
-
-    @Override
-    public void onGuiClosed()
-    {
-	if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+	private void drawButtons(int mouseX, int mouseY, float partialTicks)
 	{
-	    Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
+		for (int i = 0; i < this.buttons.size(); ++i)
+		{
+			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
+		}
+
+		for (int j = 0; j < this.labels.size(); ++j)
+		{
+			((GuiLabel) this.labels.get(j)).render(mouseX, mouseY, partialTicks);
+		}
 	}
-    }
+
+	protected void drawBackground()
+	{
+		blit(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
+		blit(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+	}
+
+	protected void drawForeground()
+	{
+
+	}
+
+	private void drawFadeInEffect()
+	{
+		float percentage = 1f - ((float) fadeInTimer / 50f);
+		blit(this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
+
+		blit(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+	}
+
+	@Override
+	public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) 
+	{
+		if (canscroll)
+		{
+			if (p_mouseScrolled_1_ != 0)
+			{
+				scrollPos += p_mouseScrolled_1_ > 0 ? -1 : 1;
+				scrollPos = Math.max(0, scrollPos);
+				scrollPos = Math.min(scrollMax, scrollPos);
+				updateButtons();
+			}
+		}
+		return super.mouseScrolled(p_mouseScrolled_1_, p_mouseScrolled_3_, p_mouseScrolled_5_);
+	}
+
+	protected void drawStrings()
+	{
+
+	}
+
+	protected String translateUnformated(String name)
+	{
+		return new TranslationTextComponent(name).getUnformattedComponentText();
+	}
+
+	protected void drawCenteredString(String string, int posX, int posY)
+	{
+		font.drawString(string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
+	}
+
+	public void renderItem(ItemStack itemstack, int x, int y)
+	{
+		itemRenderer.renderItemAndEffectIntoGUI(itemstack, this.guiLeft + x, this.guiTop + y);
+	}
+
+	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY)
+	{
+		drawTooltip(lines, mouseX, mouseY, posX, posY, 16, 16);
+	}
+
+	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	{
+		posX += this.guiLeft;
+		posY += this.guiTop;
+		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
+		{
+			renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
+		}
+	}
+
+	protected void drawTooltips(int mouseX, int mouseY)
+	{
+
+	}
+
+	@Override
+	public void onClose()
+	{
+		if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemGuide)
+		{
+			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
+		}
+	}
 }
