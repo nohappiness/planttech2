@@ -144,10 +144,10 @@ public class ModItems
 				HELMET_KINNOIUM = new ItemArmorBase("helmet_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 				LEGGINGS_KINNOIUM = new ItemArmorBase("leggings_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EntityEquipmentSlot.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
     
-    public static ItemUpgradeableArmor CYBERARMOR_HELMET = new ItemUpgradeableArmor("cyberarmor_helmet",EntityEquipmentSlot.HEAD, 1000, 10, 1, 0),
-    								   CYBERARMOR_CHEST = new ItemUpgradeableArmor("cyberarmor_chest",EntityEquipmentSlot.CHEST, 1000, 10, 3, 0),
-    								   CYBERARMOR_LEGGINGS = new ItemUpgradeableArmor("cyberarmor_leggings",EntityEquipmentSlot.LEGS, 1000, 10, 2, 0),
-    								   CYBERARMOR_BOOTS = new ItemUpgradeableArmor("cyberarmor_boots",EntityEquipmentSlot.FEET, 1000, 10, 1, 0);
+    public static ItemUpgradeableArmor CYBERARMOR_HELMET = new ItemUpgradeableArmor("cyberarmor_helmet", "cyberarmor", EntityEquipmentSlot.HEAD, 1000, 10, 1, 0),
+    								   CYBERARMOR_CHEST = new ItemUpgradeableArmor("cyberarmor_chest", "cyberarmor", EntityEquipmentSlot.CHEST, 1000, 10, 3, 0),
+    								   CYBERARMOR_LEGGINGS = new ItemUpgradeableArmor("cyberarmor_leggings", "cyberarmor", EntityEquipmentSlot.LEGS, 1000, 10, 2, 0),
+    								   CYBERARMOR_BOOTS = new ItemUpgradeableArmor("cyberarmor_boots", "cyberarmor", EntityEquipmentSlot.FEET, 1000, 10, 1, 0);
 
     public static HashMap<String, ItemBase> SEEDS = new HashMap<String, ItemBase>();
     public static HashMap<String, ItemBase> PARTICLES = new HashMap<String, ItemBase>();

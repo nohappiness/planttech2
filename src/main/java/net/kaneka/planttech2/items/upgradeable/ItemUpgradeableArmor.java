@@ -48,9 +48,9 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	private int basecapacity, maxInvSize, baseDamageReduction;
 	private float baseToughness; 
 
-	public ItemUpgradeableArmor(String name, EntityEquipmentSlot slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness)
+	public ItemUpgradeableArmor(String name, String resname, EntityEquipmentSlot slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness)
 	{
-		super(name, name, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
+		super(name, resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize;
 		this.baseDamageReduction = baseDamageReduction; 
@@ -63,12 +63,8 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 		return new InventoryEnergyProvider(basecapacity, maxInvSize);
 	}
 
-	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
-	{
-		return super.getArmorTexture(stack, entity, slot, type);
-	}
 
+	/*
 	@Override
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped _default)
 	{
@@ -93,6 +89,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 		}
 		return null;
 	}
+	*/
 
 	public void updateEnergy(ItemStack stack)
 	{
