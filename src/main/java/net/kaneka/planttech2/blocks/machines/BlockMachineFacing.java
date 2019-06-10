@@ -10,8 +10,6 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
 public class BlockMachineFacing extends BlockMachineBase
 {
@@ -23,29 +21,7 @@ public class BlockMachineFacing extends BlockMachineBase
 	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
     }
 
-    
-    @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState)
-    {
-	if (!worldIn.isRemote)
-	{
-	    BlockState north = worldIn.getBlockState(pos.north());
-	    BlockState south = worldIn.getBlockState(pos.south());
-	    BlockState west = worldIn.getBlockState(pos.west());
-	    BlockState east = worldIn.getBlockState(pos.east());
-	    Direction face = (Direction) state.get(FACING);
-
-	    if (face == Direction.NORTH && north.isFullCube() && !south.isFullCube())
-		face = Direction.SOUTH;
-	    else if (face == Direction.SOUTH && south.isFullCube() && !north.isFullCube())
-		face = Direction.NORTH;
-	    else if (face == Direction.WEST && west.isFullCube() && !east.isFullCube())
-		face = Direction.EAST;
-	    else if (face == Direction.EAST && east.isFullCube() && !west.isFullCube())
-		face = Direction.WEST;
-	    worldIn.setBlockState(pos, state.with(FACING, face), 2);
-	}
-    }
+   
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
@@ -53,13 +29,7 @@ public class BlockMachineFacing extends BlockMachineBase
 	return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
     }
     
-    /*
-    @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-	worldIn.setBlockState(pos, this.getDefaultState().with(FACING, placer.getHorizontalFacing().getOpposite()), 2);
-    }
-    */
+    
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot)
@@ -67,7 +37,6 @@ public class BlockMachineFacing extends BlockMachineBase
 	return state.with(FACING, rot.rotate((Direction) state.get(FACING)));
     }
 
-    @SuppressWarnings("deprecation")
 	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn)
     {

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class CompressorRecipe<CompressorRec> implements IRecipe
+public class CompressorRecipe implements IRecipe<IInventory>
 {
 	private final ResourceLocation id;
 	private final ItemStack input;
@@ -74,7 +74,7 @@ public class CompressorRecipe<CompressorRec> implements IRecipe
 	}
 
 	@Override
-	public IRecipeType func_222127_g()
+	public IRecipeType getType()
 	{
 		//TODO
 		return null;
@@ -155,6 +155,27 @@ public class CompressorRecipe<CompressorRec> implements IRecipe
 		public ResourceLocation getName()
 		{
 			return NAME;
+		}
+
+		@Override
+		public IRecipeSerializer<?> setRegistryName(ResourceLocation name)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public ResourceLocation getRegistryName()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Class<IRecipeSerializer<?>> getRegistryType()
+		{
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 

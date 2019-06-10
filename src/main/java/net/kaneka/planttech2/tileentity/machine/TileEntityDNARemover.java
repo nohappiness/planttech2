@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.kaneka.planttech2.container.ContainerDNARemover;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -140,4 +144,9 @@ public class TileEntityDNARemover extends TileEntityEnergyInventory
 	return 3;
     }
 
+    @Override
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
+	{
+		return new ContainerDNARemover(id, inv, this);
+	}
 }

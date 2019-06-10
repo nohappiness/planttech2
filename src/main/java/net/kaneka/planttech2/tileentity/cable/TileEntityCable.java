@@ -607,7 +607,7 @@ public class TileEntityCable extends TileEntity implements ITickableTileEntity
 	{
 	    ListNBT cableList = new ListNBT();
 	    cables.stream().forEach(x -> cableList.add(NBTUtil.writeBlockPos(x)));
-	    compound.func_218657_a("cables", cableList);
+	    compound.put("cables", cableList);
 	}
 
 	if (this.connections.length == 6)
@@ -628,7 +628,7 @@ public class TileEntityCable extends TileEntity implements ITickableTileEntity
 		{
 		    connectionlist.add(con.serializeConnection());
 		}
-		compound.func_218657_a("connections_" + i, connectionlist);
+		compound.put("connections_" + i, connectionlist);
 	    }
 	}
 	return super.write(compound);

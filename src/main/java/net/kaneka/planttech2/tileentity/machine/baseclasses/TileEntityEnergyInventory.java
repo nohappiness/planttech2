@@ -61,7 +61,7 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy
     @Override
     public CompoundNBT write(CompoundNBT compound)
     {
-	compound.func_218657_a("inventory", itemhandler.serializeNBT());
+	compound.put("inventory", itemhandler.serializeNBT());
 	super.write(compound);
 	return compound;
     }
@@ -85,7 +85,7 @@ abstract public class TileEntityEnergyInventory extends TileEntityEnergy
 	    double d2 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 	    ItemEntity entityitem = new ItemEntity(worldIn, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
 	    entityitem.setDefaultPickupDelay();
-	    worldIn.func_217376_c(entityitem);
+	    worldIn.addEntity(entityitem);
 	}
     }
 

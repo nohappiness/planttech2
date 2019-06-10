@@ -41,6 +41,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -48,6 +49,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -73,17 +75,14 @@ public class BlockMachineBase extends BlockBase
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
     {
 	if (!world.isRemote)
 	{
 	    TileEntity te = world.getTileEntity(pos);
 	    if (te instanceof TileEntityEnergy)
 	    {
-		NetworkHooks.openGui((ServerPlayerEntity) player, (TileEntityEnergy) te, extraData ->
-		{
-		    extraData.writeBlockPos(pos);
-		});
+	    	((ServerPlayerEntity) player).openContainer((TileEntityEnergy) te);
 	    }
 	}
 
@@ -135,6 +134,7 @@ public class BlockMachineBase extends BlockBase
 	    return new TileEntityIdentifier();
     }
 
+    /*
     public Container createContainer(PlayerInventory playerInventory, TileEntity te)
     {
 	if (this == ModBlocks.IDENTIFIER && te instanceof TileEntityIdentifier)
@@ -166,6 +166,7 @@ public class BlockMachineBase extends BlockBase
 	else
 	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
     }
+    */
 
     @Override
     public BlockRenderType getRenderType(BlockState state)
@@ -217,7 +218,7 @@ public class BlockMachineBase extends BlockBase
 		List<ItemStack> toSpawn = te.getInventoryContent();
 		for (ItemStack stack : toSpawn)
 		{
-		    worldIn.func_217376_c(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+		    worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
 		}
 	    }
 	    super.onReplaced(state, worldIn, pos, newState, isMoving);

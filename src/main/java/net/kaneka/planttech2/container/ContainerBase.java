@@ -48,6 +48,7 @@ public class ContainerBase extends Container
 	public void detectAndSendChanges()
 	{
 		super.detectAndSendChanges();
+		/*
 		for (IContainerListener listener : listeners)
 		{
 			for (int i = 0; i < tileentity.getAmountFields(); i++)
@@ -59,11 +60,17 @@ public class ContainerBase extends Container
 				}
 			}
 		}
+		*/
 	}
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn)
 	{
-		return this.tileentity.isUsableByPlayer(playerIn);
+		return tileentity.isUsableByPlayer(playerIn);
+	}
+	
+	public TileEntityEnergy getTE()
+	{
+		return tileentity; 
 	}
 }

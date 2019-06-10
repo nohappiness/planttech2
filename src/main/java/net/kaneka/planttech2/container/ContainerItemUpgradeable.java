@@ -27,6 +27,8 @@ public class ContainerItemUpgradeable extends Container
 		put(10, new Integer[] {2,			5,			20,		20}); 
 	}}; 
 	
+	private ItemStack stack; 
+	
 	public ContainerItemUpgradeable(int id, PlayerInventory inv)
 	{
 		this(id, inv, new ItemStack(ModItems.CYBERBOW)); 
@@ -35,6 +37,7 @@ public class ContainerItemUpgradeable extends Container
 	public ContainerItemUpgradeable(int id, PlayerInventory playerInv, ItemStack itemInv)
 	{ 
 		super(ModContainers.UPGRADEABLEITEM, id); 
+		stack = itemInv; 
 		LazyOptional<IItemHandler> provider = itemInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY); 
 		if (provider != null)
 		{
@@ -145,5 +148,10 @@ public class ContainerItemUpgradeable extends Container
 	    	if(stack.getItem() instanceof IUpgradeable)((IUpgradeable) stack.getItem()).updateNBTValues(stack);
 	    	super.onSlotChanged();
 	    }
+	}
+	
+	public ItemStack getStack()
+	{
+		return stack; 
 	}
 }

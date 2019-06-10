@@ -27,28 +27,6 @@ public class BlockEnergyStorage extends BlockMachineBase
 	this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(TIER, 0));
     }
     
-    @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState)
-    {
-	if (!worldIn.isRemote)
-	{
-	    BlockState north = worldIn.getBlockState(pos.north());
-	    BlockState south = worldIn.getBlockState(pos.south());
-	    BlockState west = worldIn.getBlockState(pos.west());
-	    BlockState east = worldIn.getBlockState(pos.east());
-	    Direction face = (Direction) state.get(FACING);
-
-	    if (face == Direction.NORTH && north.isFullCube() && !south.isFullCube())
-		face = Direction.SOUTH;
-	    else if (face == Direction.SOUTH && south.isFullCube() && !north.isFullCube())
-		face = Direction.NORTH;
-	    else if (face == Direction.WEST && west.isFullCube() && !east.isFullCube())
-		face = Direction.EAST;
-	    else if (face == Direction.EAST && east.isFullCube() && !west.isFullCube())
-		face = Direction.WEST;
-	    worldIn.setBlockState(pos, state.with(FACING, face).with(TIER, 0), 2);
-	}
-    }
     
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)

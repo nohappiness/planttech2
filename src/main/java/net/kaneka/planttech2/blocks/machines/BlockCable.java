@@ -20,9 +20,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockReader;
@@ -47,9 +47,10 @@ public class BlockCable extends BlockBase
 	super(Block.Properties.create(Material.IRON), "cable", ModCreativeTabs.groupmachines, true);
     }
 
-    @SuppressWarnings("deprecation")
+    
+	@SuppressWarnings("deprecation")
 	@Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
+    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
     {
 	if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
 	{
@@ -63,15 +64,9 @@ public class BlockCable extends BlockBase
 		}
 	    }
 	}
-        return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+        return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
     }
     
-    @SuppressWarnings("deprecation")
-	@Override
-    public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
-    {
-	return Item.getItemFromBlock(ModBlocks.CABLE);
-    }
 
     @Override
     public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state)
@@ -80,9 +75,9 @@ public class BlockCable extends BlockBase
     }
     
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState)
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
     {
-	TileEntityCable te = getTECable(worldIn, pos);
+	TileEntityCable te = getTECable(world, pos);
 	if (te != null)
 	{
 	    te.initCable(state);
@@ -134,11 +129,6 @@ public class BlockCable extends BlockBase
 	return BlockRenderLayer.SOLID;
     }
 
-    @Override
-    public boolean isFullCube(BlockState state)
-    {
-	return false;
-    }
 
     @Override
     public BlockRenderType getRenderType(BlockState state)
@@ -155,7 +145,7 @@ public class BlockCable extends BlockBase
 	int returnval = -1;
 	for (HashMap.Entry<Integer, RayTraceResult> entry : rayTraces.entrySet())
 	{
-	    double d0 = entry.getValue().func_216347_e().squareDistanceTo(end);
+	    double d0 = entry.getValue().getHitVec().squareDistanceTo(end);
 
 	    if (d0 > d1)
 	    {
@@ -188,21 +178,22 @@ public class BlockCable extends BlockBase
     protected HashMap<Integer, RayTraceResult> rayTraceList(BlockPos pos, Vec3d start, Vec3d end, HashMap<Integer, AxisAlignedBB> boxes)
     {
 	HashMap<Integer, RayTraceResult> list = new HashMap<Integer, RayTraceResult>();
-	boxes.forEach((k, v) ->
-	{
-	    Vec3d vec3d = start.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
-	    Vec3d vec3d1 = end.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
-	    RayTraceResult raytraceresult = v.intersects(vec3d, vec3d1);
-	    if (raytraceresult != null)
-	    {
-		list.put(k, new RayTraceResult(raytraceresult.func_216347_e().add((double) pos.getX(), (double) pos.getY(), (double) pos.getZ()), raytraceresult.sideHit, pos));
-	    }
-	});
+	/*
+    	boxes.forEach((k, v) ->
+    	{
+    	    Vec3d vec3d = start.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
+    	    Vec3d vec3d1 = end.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
+    	    RayTraceResult raytraceresult = v.intersects(vec3d, vec3d1);
+    	    if (raytraceresult != null)
+    	    {
+    		list.put(k, new RayTraceResult(raytraceresult.getHitVec().add((double) pos.getX(), (double) pos.getY(), (double) pos.getZ()), raytraceresult, pos));
+    	    }
+    	});
+    	*/
 	return list;
     }
 
 
-    @SuppressWarnings("deprecation")
 	@Override
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
     {

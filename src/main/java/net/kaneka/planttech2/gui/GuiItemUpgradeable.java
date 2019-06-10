@@ -12,8 +12,8 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class GuiItemUpgradeable extends ContainerScreen<ContainerItemUpgradeable>
@@ -31,14 +31,14 @@ public class GuiItemUpgradeable extends ContainerScreen<ContainerItemUpgradeable
     protected int invsize; 
     protected IEnergyStorage energystorage; 
 
-	public GuiItemUpgradeable(PlayerInventory inventoryPlayer, ItemStack stack)
-	{
-		super(new ContainerItemUpgradeable(inventoryPlayer, stack), inventoryPlayer, new TranslationTextComponent("container.upgradeableitems"));
-		this.stack = stack;
-		this.invsize = ItemBaseUpgradeable.getInventorySize(stack); 
-		this.player = inventoryPlayer; 
+    public GuiItemUpgradeable(ContainerItemUpgradeable container, PlayerInventory inv, ITextComponent name)
+    {
+    	super(container, inv, name); 
+    	this.player = inv; 
+    	stack = container.getStack(); 
+    	this.invsize = ItemBaseUpgradeable.getInventorySize(stack); 
 		energystorage = ItemBaseUpgradeable.getEnergyCap(stack); 
-	}
+    }
 	
 	@Override
 	public void init()

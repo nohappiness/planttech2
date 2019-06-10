@@ -6,6 +6,9 @@ import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -84,9 +87,9 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 
 	private InfuserRecipe getOutputRecipe()
 	{
-		RecipeWrapper wrapper = new RecipeWrapper(itemhandler, 1, 1);
-		InfuserRecipe recipe = world.getRecipeManager().getRecipe(wrapper, world, ModRecipeTypes.INFUSING);
-		return recipe;
+		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
+		//InfuserRecipe recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
+		return null;
 	}
 
 	public int energyPerTick()
@@ -176,5 +179,10 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 	{
 		return 4;
 	}
-
+	
+	@Override
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
+	{
+		return new ContainerInfuser(id, inv, this);
+	}
 }

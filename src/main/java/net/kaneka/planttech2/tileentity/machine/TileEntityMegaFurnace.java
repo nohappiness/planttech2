@@ -6,6 +6,9 @@ import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
@@ -216,5 +219,11 @@ public class TileEntityMegaFurnace extends TileEntityEnergyInventory
     {
 	return 8;
     }
+    
+    @Override
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
+	{
+		return new ContainerMegaFurnace(id, inv, this);
+	}
 
 }

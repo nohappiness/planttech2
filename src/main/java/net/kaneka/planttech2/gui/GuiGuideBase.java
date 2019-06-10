@@ -73,11 +73,6 @@ public class GuiGuideBase extends Screen
 		{
 			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
 		}
-
-		for (int j = 0; j < this.labels.size(); ++j)
-		{
-			((GuiLabel) this.labels.get(j)).render(mouseX, mouseY, partialTicks);
-		}
 	}
 
 	protected void drawBackground()

@@ -17,6 +17,8 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class TileEntityCompressor extends TileEntityEnergyInventory
 {
@@ -123,14 +125,18 @@ public class TileEntityCompressor extends TileEntityEnergyInventory
 	List<Integer> keys = new ArrayList<Integer>();
 	recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
 
+	/*
 	for (CompressorRecipe recipe : this.world.getRecipeManager().getRecipes(ModRecipeTypes.COMPRESSING))
 	{
+		
 	    if (recipe.matches(this, world))
 	    {
 		temprecipeList.put(Item.getIdFromItem(recipe.getRecipeOutput().getItem()), Pair.of(recipe.getRecipeOutput(), recipe.getAmountInput()));
 		keys.add(Item.getIdFromItem(recipe.getRecipeOutput().getItem()));
 	    }
+	    
 	}
+	*/
 
 	Collections.sort(keys);
 
@@ -228,9 +234,9 @@ public class TileEntityCompressor extends TileEntityEnergyInventory
     }
 
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
-		return new ContainerCompressor(p_createMenu_2_, this);
+		return new ContainerCompressor(id, inv, this);
 	}
 
 }

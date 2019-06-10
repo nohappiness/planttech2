@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerDNACombiner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACombiner;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIDNACombiner extends GuiContainerBase
+public class GUIDNACombiner extends GuiContainerBase<ContainerDNACombiner>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_combiner.png");
 	
 	
-	public GUIDNACombiner(PlayerInventory player, TileEntityDNACombiner te) 
-	{
-		super(new ContainerDNACombiner(player, te), te, player, "container.dnacombiner");
-		
-	}
+	public GUIDNACombiner(ContainerDNACombiner container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

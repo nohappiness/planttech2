@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerDNACleaner;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNACleaner;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIDNACleaner extends GuiContainerBase
+public class GUIDNACleaner extends GuiContainerBase<ContainerDNACleaner>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
 	
-	
-	public GUIDNACleaner(PlayerInventory player, TileEntityDNACleaner te) 
-	{
-		super(new ContainerDNACleaner(player, te), te, player, "container.dnaextractor");
-		
-	}
+	public GUIDNACleaner(ContainerDNACleaner container, PlayerInventory player, ITextComponent string)
+    {
+    	super(container, player, string);
+
+    }
 	
 	
 	@Override

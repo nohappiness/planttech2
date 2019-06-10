@@ -303,7 +303,7 @@ public class ItemUpgradeableArmor extends ItemArmorBase implements IItemChargeab
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
 	{
 		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
-		if (equipmentSlot == this.armorType)
+		if (equipmentSlot == this.field_77881_a)
 		{
 			multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor modifier", (double)getDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor toughness", (double)getToughness(stack), AttributeModifier.Operation.ADDITION));

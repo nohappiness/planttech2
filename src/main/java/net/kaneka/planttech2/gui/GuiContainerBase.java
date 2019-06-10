@@ -6,10 +6,10 @@ import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergy;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
-public class GuiContainerBase extends ContainerScreen<ContainerBase>
+public class GuiContainerBase<T extends ContainerBase> extends ContainerScreen<T>
 {
 	protected static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 	protected final PlayerInventory player;
@@ -17,10 +17,11 @@ public class GuiContainerBase extends ContainerScreen<ContainerBase>
     protected int xSize = 205;
     protected int ySize = 202;
 
-	public GuiContainerBase(ContainerBase inventorySlotsIn, TileEntityEnergy te, PlayerInventory inventoryPlayer, String title)
+	@SuppressWarnings("unchecked")
+	public GuiContainerBase(ContainerBase inventorySlotsIn, PlayerInventory inventoryPlayer, ITextComponent title)
 	{
-		super(inventorySlotsIn, inventoryPlayer, new TranslationTextComponent(title));
-		this.te = te; 
+		super((T) inventorySlotsIn, inventoryPlayer, title);
+		this.te = inventorySlotsIn.getTE(); 
 		this.player = inventoryPlayer; 
 	}
 	

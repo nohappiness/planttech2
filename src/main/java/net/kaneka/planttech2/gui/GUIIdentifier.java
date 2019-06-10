@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerIdentifier;
 import net.kaneka.planttech2.tileentity.machine.TileEntityIdentifier;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIIdentifier extends GuiContainerBase
+public class GUIIdentifier extends GuiContainerBase<ContainerIdentifier>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/identifier.png");
 	
 	
-	public GUIIdentifier(PlayerInventory player, TileEntityIdentifier te) 
-	{
-		super(new ContainerIdentifier(player, te), te, player, "container.identifier");
-		
-	}
+	public GUIIdentifier(ContainerIdentifier container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

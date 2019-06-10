@@ -31,6 +31,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
@@ -195,7 +196,7 @@ public class BlockCropBase extends ContainerBlock
 
 	public boolean enoughtWater(World world, BlockPos pos, int waterSensitivity)
 	{
-		for (BlockPos blockpos$mutableblockpos : BlockPos.func_218278_a(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
+		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
 		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
 		{
 			if (world.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER)
@@ -243,25 +244,6 @@ public class BlockCropBase extends ContainerBlock
 		builder.add(GROWSTATE);
 	}
 
-	/*----------------------DROPS---------------------------*/
-
-	
-	@Override
-	public void getDrops(BlockState state, NonNullList<ItemStack> drops, World world, BlockPos pos, int fortune)
-	{
-		int growstate = state.get(GROWSTATE).intValue();
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileEntityCrops)
-		{
-			((TileEntityCrops) te).addDrops(drops, growstate);
-			drops.add(new ItemStack(ModBlocks.CROPBARS));
-		} else
-		{
-			super.getDrops(state, drops, world, pos, fortune);
-		}
-
-	}
-
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
 	{
@@ -279,9 +261,10 @@ public class BlockCropBase extends ContainerBlock
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
 	}
 
+	
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, Direction side, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		int growstate = state.get(GROWSTATE).intValue();
 		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
@@ -291,7 +274,7 @@ public class BlockCropBase extends ContainerBlock
 			{
 				if (holdItem.getItem() instanceof ItemAnalyser)
 				{
-					return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+					return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 				}
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
@@ -306,26 +289,16 @@ public class BlockCropBase extends ContainerBlock
 				worldIn.setBlockState(pos, state.with(GROWSTATE, 0));
 			}
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, hand, side, hitX, hitY, hitZ);
+		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 	}
+	
 
 	/*----------------------RENDERING------------------*/
-	@Override
-	public boolean isFullCube(BlockState state)
-	{
-		return false;
-	}
 
 	@Override
 	public boolean isSolid(BlockState state)
 	{
 		return false;
-	}
-
-	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockReader world, BlockState state, BlockPos pos, Direction face)
-	{
-		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override

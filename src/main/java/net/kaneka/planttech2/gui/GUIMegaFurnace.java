@@ -7,15 +7,16 @@ import net.kaneka.planttech2.container.ContainerMegaFurnace;
 import net.kaneka.planttech2.tileentity.machine.TileEntityMegaFurnace;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIMegaFurnace extends GuiContainerBase
+public class GUIMegaFurnace extends GuiContainerBase<ContainerMegaFurnace>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/megafurnace.png");
 	
-	public GUIMegaFurnace(PlayerInventory player, TileEntityMegaFurnace te) 
-	{
-		super(new ContainerMegaFurnace(player, te), te, player, "container.megafurnace");
-	}
+	public GUIMegaFurnace(ContainerMegaFurnace container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

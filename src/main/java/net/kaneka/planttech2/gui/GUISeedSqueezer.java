@@ -7,15 +7,16 @@ import net.kaneka.planttech2.container.ContainerSeedSqueezer;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUISeedSqueezer extends GuiContainerBase
+public class GUISeedSqueezer extends GuiContainerBase<ContainerSeedSqueezer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
 	
-	public GUISeedSqueezer(PlayerInventory player, TileEntitySeedSqueezer te) 
-	{
-		super(new ContainerSeedSqueezer(player, te), te, player, "container.seedsqueezer");
-	}
+	public GUISeedSqueezer(ContainerSeedSqueezer container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) 

@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerDNARemover;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNARemover;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIDNARemover extends GuiContainerBase
+public class GUIDNARemover extends GuiContainerBase<ContainerDNARemover>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_remover.png");
 	
 	
-	public GUIDNARemover(PlayerInventory player, TileEntityDNARemover te) 
-	{
-		super(new ContainerDNARemover(player, te), te, player, "container.dnaremover");
-		
-	}
+	public GUIDNARemover(ContainerDNARemover container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

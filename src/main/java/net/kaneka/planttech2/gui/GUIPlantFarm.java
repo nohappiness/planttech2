@@ -4,18 +4,18 @@ import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ContainerPlantFarm;
-import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIPlantFarm extends GuiContainerBase
+public class GUIPlantFarm extends GuiContainerBase<ContainerPlantFarm>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/plantfarm.png");
 	
-	public GUIPlantFarm(PlayerInventory player, TileEntityPlantFarm te) 
-	{
-		super(new ContainerPlantFarm(player, te), te, player, "container.plantfarm");
-	}
+	public GUIPlantFarm(ContainerPlantFarm container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

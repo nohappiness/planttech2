@@ -47,19 +47,17 @@ public class ButtonPressMessage
 				BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
 				int buttonId = pkt.buttonId;
 
-				serverPlayer.getServerWorld().addScheduledTask(() -> {
-					if (serverPlayer.world.isBlockLoaded(pos))
+				if (serverPlayer.world.isBlockLoaded(pos))
+				{
+					TileEntity te = serverPlayer.world.getTileEntity(pos);
+					if (te != null)
 					{
-						TileEntity te = serverPlayer.world.getTileEntity(pos);
-						if (te != null)
+						if (te instanceof TileEntityCompressor)
 						{
-							if (te instanceof TileEntityCompressor)
-							{
-								((TileEntityCompressor) te).setSelectedId(buttonId);
-							}
+							((TileEntityCompressor) te).setSelectedId(buttonId);
 						}
 					}
-				});
+				}
 			});
 			ctx.get().setPacketHandled(true);
 		}

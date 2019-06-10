@@ -16,6 +16,7 @@ import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModScreens;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.block.Block;
@@ -73,7 +74,7 @@ public class PlantTechMain
 
 	private void onServerStarting(FMLServerStartingEvent event)
 	{
-		event.getServer().getResourceManager().func_219534_a(new ReloadListenerCropListEntryConfiguration());
+		//event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -82,6 +83,7 @@ public class PlantTechMain
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
+		ModScreens.registerGUI();
 	}
 
 	private void doClientStuff(final FMLClientSetupEvent event)

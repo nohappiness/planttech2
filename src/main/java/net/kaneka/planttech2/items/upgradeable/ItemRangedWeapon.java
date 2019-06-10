@@ -131,7 +131,7 @@ public class ItemRangedWeapon extends ItemUpgradeableHand
 							entityarrow.pickupStatus = ArrowEntity.PickupStatus.CREATIVE_ONLY;
 						}
 
-						worldIn.func_217376_c(entityarrow);
+						worldIn.addEntity(entityarrow);
 					}
 
 					worldIn.playSound((PlayerEntity) null, PlayerEntity.posX, PlayerEntity.posY, PlayerEntity.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,

@@ -8,15 +8,16 @@ import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
 import net.kaneka.planttech2.utilities.Constants;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUISolarGenerator extends GuiContainerBase
+public class GUISolarGenerator extends GuiContainerBase<ContainerSolarGenerator>
 {
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
     
-	public GUISolarGenerator(PlayerInventory inventoryPlayer, TileEntitySolarGenerator te)
-	{
-		super(new ContainerSolarGenerator(inventoryPlayer, te), te, inventoryPlayer, "container.solargenerator");
-	}
+	public GUISolarGenerator(ContainerSolarGenerator container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

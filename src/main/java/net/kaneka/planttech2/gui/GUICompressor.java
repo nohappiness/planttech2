@@ -9,15 +9,15 @@ import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUICompressor extends GuiContainerBase
+public class GUICompressor extends GuiContainerBase<ContainerCompressor>
 {
     private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
 
-    public GUICompressor(PlayerInventory player, TileEntityCompressor te)
+    public GUICompressor(ContainerCompressor container, PlayerInventory player, ITextComponent name)
     {
-    	super(new ContainerCompressor(player, te), te, player, "container.compressor");
-
+    	super(container, player, name);
     }
     
     @Override

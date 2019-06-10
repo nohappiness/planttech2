@@ -7,7 +7,7 @@ import net.minecraftforge.common.crafting.RecipeType;
 
 public final class ModRecipeTypes
 {
-    public static final RecipeType<CompressorRecipe> COMPRESSING = RecipeType.get(new ResourceLocation("compressing"), CompressorRecipe.class);
-    public static final RecipeType<InfuserRecipe> INFUSING = RecipeType.get(new ResourceLocation("infusing"), InfuserRecipe.class);
+    //public static final RecipeType<CompressorRecipe> COMPRESSING = RecipeType.get(new ResourceLocation("compressing"), CompressorRecipe.class);
+    //public static final RecipeType<InfuserRecipe> INFUSING = RecipeType.get(new ResourceLocation("infusing"), InfuserRecipe.class);
     
 }

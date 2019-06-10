@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerDNAExtractor;
 import net.kaneka.planttech2.tileentity.machine.TileEntityDNAExtractor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUIDNAExtractor extends GuiContainerBase
+public class GUIDNAExtractor extends GuiContainerBase<ContainerDNAExtractor>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_extractor.png");
 	
 	
-	public GUIDNAExtractor(PlayerInventory player, TileEntityDNAExtractor te) 
-	{
-		super(new ContainerDNAExtractor(player, te), te, player, "container.dnaextractor");
-		
-	}
+	public GUIDNAExtractor(ContainerDNAExtractor container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

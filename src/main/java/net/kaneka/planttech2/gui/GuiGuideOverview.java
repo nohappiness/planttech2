@@ -24,34 +24,47 @@ public class GuiGuideOverview extends GuiGuideBase
 	public void init()
 	{
 		super.init();
-		for (int i = 0; i < 8; i++)
+		addButton(new CustomGuiButton(0, this.guiLeft + 28, this.guiTop + 10 + 0 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(0); 
+	    }));
+		addButton(new CustomGuiButton(1, this.guiLeft + 28, this.guiTop + 10 + 1 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(1); 
+	    }));
+		addButton(new CustomGuiButton(2, this.guiLeft + 28, this.guiTop + 10 + 2 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(2); 
+	    }));
+		addButton(new CustomGuiButton(3, this.guiLeft + 28, this.guiTop + 10 + 3 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(3); 
+	    }));
+		addButton(new CustomGuiButton(4, this.guiLeft + 28, this.guiTop + 10 + 4 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(4); 
+	    }));
+		addButton(new CustomGuiButton(5, this.guiLeft + 28, this.guiTop + 10 + 5 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(5); 
+	    }));
+		addButton(new CustomGuiButton(6, this.guiLeft + 28, this.guiTop + 10 + 6 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(6); 
+	    }));
+		addButton(new CustomGuiButton(7, this.guiLeft + 28, this.guiTop + 10 + 7 * 22, 100, 20, "TEST", (button)->
+	    { 
+	    	GuiGuideOverview.this.buttonClicked(7); 
+	    }));
+		
+		buttons.add(new CustomGuiButton(8, this.guiLeft + 150, this.guiTop + 170, 100, 20, translateUnformated("gui.last"), (button)->
 		{
-		    addButton(new CustomGuiButton(i, this.guiLeft + 28, this.guiTop + 10 + i * 22, 100, 20, "TEST") 
-		    {
-			@Override
-			public void onClick(double mouseX, double mouseY)
-			{
-			    GuiGuideOverview.this.buttonClicked(id); 
-			    super.onClick(mouseX, mouseY);
-			}
-		    });
-		}
-		addButton(new CustomGuiButton(8, this.guiLeft + 150 , this.guiTop + 170,  100, 20, translateUnformated("gui.last")){
-			@Override
-			public void onClick(double mouseX, double mouseY)
-			{
-			    GuiGuideOverview.this.buttonClicked(id); 
-			    super.onClick(mouseX, mouseY);
-			}
-		    });
-		addButton(new CustomGuiButton(9, this.guiLeft + 285 , this.guiTop + 170,  100, 20, translateUnformated("gui.next")){
-			@Override
-			public void onClick(double mouseX, double mouseY)
-			{
-			    GuiGuideOverview.this.buttonClicked(id); 
-			    super.onClick(mouseX, mouseY);
-			}
-		    });
+			GuiGuideOverview.this.buttonClicked(8); 
+		}));
+		buttons.add(new CustomGuiButton(9, this.guiLeft + 285, this.guiTop + 170, 100, 20, translateUnformated("gui.next"), (button)->
+		{
+			GuiGuideOverview.this.buttonClicked(9);
+		})); 
 		buttons.get(8).active = false; 
 		buttons.get(8).visible = false;
 		buttons.get(9).active = false;

@@ -57,7 +57,7 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
 		{
 		    if (!world.isRemote)
 		    {
-			world.func_217376_c(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
+			world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
 			itemhandler.setStackInSlot(9, ItemStack.EMPTY);
 		    }
 		}
@@ -193,5 +193,11 @@ public class TileEntitySeedSqueezer extends TileEntityEnergyInventoryFluid
     {
 	return 13;
     }
+    
+    @Override
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
+	{
+		return new ContainerSeedSqueezer(id, inv, this);
+	}
 
 }

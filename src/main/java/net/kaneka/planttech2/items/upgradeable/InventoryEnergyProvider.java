@@ -47,8 +47,8 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<Compound
 	public CompoundNBT serializeNBT()
 	{
 		CompoundNBT compound = new CompoundNBT();
-		compound.func_218657_a("inventory", itemhandler.serializeNBT());
-		compound.func_218657_a("energy", energystorage.serializeNBT());
+		compound.put("inventory", itemhandler.serializeNBT());
+		compound.put("energy", energystorage.serializeNBT());
 		return compound;
 	}
 

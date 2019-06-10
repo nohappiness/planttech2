@@ -7,17 +7,17 @@ import net.kaneka.planttech2.container.ContainerSeedconstructor;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedconstructor;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
-public class GUISeedconstructor extends GuiContainerBase
+public class GUISeedconstructor extends GuiContainerBase<ContainerSeedconstructor>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
 	
 	
-	public GUISeedconstructor(PlayerInventory player, TileEntitySeedconstructor te) 
-	{
-		super(new ContainerSeedconstructor(player, te), te, player, "container.seedconstructor");
-		
-	}
+	public GUISeedconstructor(ContainerSeedconstructor container, PlayerInventory player, ITextComponent name)
+    {
+    	super(container, player, name);
+    }
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)

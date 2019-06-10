@@ -48,7 +48,7 @@ public class ModContainers
 										MEGAFURNACE.setRegistryName("planttech2:megafurnacecontainer"),
 										PLANTFARM.setRegistryName("planttech2:plantfarmcontainer"),
 										SEEDCONSTRUCTOR.setRegistryName("planttech2:seedconstructorcontainer"),
-										SEEDQUEEZER.setRegistryName("planttech2:seedconstructorcontainer"),
+										SEEDQUEEZER.setRegistryName("planttech2:seedsqueezercontainer"),
 										SOLARGENERATOR.setRegistryName("planttech2:solargeneratorcontainer"));
 	}
 }

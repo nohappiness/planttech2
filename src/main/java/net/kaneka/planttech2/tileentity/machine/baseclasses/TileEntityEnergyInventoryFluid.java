@@ -41,7 +41,7 @@ public abstract class TileEntityEnergyInventoryFluid extends TileEntityEnergyInv
     @Override
     public CompoundNBT write(CompoundNBT compound)
     {
-	compound.func_218657_a("fluidtank", fluidtank.serializeNBT());
+	compound.put("fluidtank", fluidtank.serializeNBT());
 	super.write(compound);
 	return compound;
     }
