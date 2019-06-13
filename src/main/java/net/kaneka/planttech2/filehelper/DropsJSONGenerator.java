@@ -4,8 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
+import net.kaneka.planttech2.blocks.BlockBase;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 
 public class DropsJSONGenerator
 {
@@ -43,17 +44,18 @@ public class DropsJSONGenerator
 		this.nextLine++;
 	}
 
-	private void createFile(BlockItem block)
+	private void createFile(Item item)
 	{
 		addLine("{");
 		addLine("	  \"type\": \"minecraft:block\",");
 		addLine("	  \"pools\": [");
 		addLine("	    {");
+		addLine("		  \"name\": \""+item.getRegistryName()+"\","); 
 		addLine("	      \"rolls\": 1,");
 		addLine("	      \"entries\": [");
 		addLine("	        {");
 		addLine("	          \"type\": \"minecraft:item\",");
-		addLine("	          \"name\": \"minecraft:torch\"");
+		addLine("	          \"name\": \""+ item.getRegistryName()+"\"");
 		addLine("	        }");
 		addLine("	      ],");
 		addLine("	      \"conditions\": [");
@@ -65,10 +67,19 @@ public class DropsJSONGenerator
 		addLine("	  ]");
 		addLine("	}");
 
-		saveFile(block.getRegistryName().toString().replace("minecraft:", "").replace("planttech2:", ""));
+		saveFile(item.getRegistryName().toString().replace("minecraft:", "").replace("planttech2:", ""));
 	}
 
 	public void defaultValues()
 	{
+		for(BlockBase block:ModBlocks.BLOCKITEMS)
+		{
+			@SuppressWarnings("deprecation")
+			Item item = Item.getItemFromBlock(block); 
+			if(item != null)
+			{
+				createFile(item);
+			}
+		}
 	}
 }

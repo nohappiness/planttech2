@@ -1,0 +1,20 @@
+{
+	  "type": "minecraft:block",
+	  "pools": [
+	    {
+		  "name": "planttech2:identifier",
+	      "rolls": 1,
+	      "entries": [
+	        {
+	          "type": "minecraft:item",
+	          "name": "planttech2:identifier"
+	        }
+	      ],
+	      "conditions": [
+	        {
+	          "condition": "minecraft:survives_explosion"
+	        }
+	      ]
+	    }
+	  ]
+	}

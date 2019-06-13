@@ -191,7 +191,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 	return this.drops;
     }
 
-    public NonNullList<ItemStack> calculateDrops(NonNullList<ItemStack> returndrops, HashMapCropTraits traits, int growstate)
+    public List<ItemStack> calculateDrops(List<ItemStack> returndrops, HashMapCropTraits traits, int growstate)
     {
 	Random rand = new Random();
 	ItemStack seeddrop = this.mainSeedDrop.getDroppedStack(traits.getTrait(EnumTraitsInt.FERTILITY), EnumTraitsInt.FERTILITY.getMax(), rand);

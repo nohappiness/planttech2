@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
+import net.kaneka.planttech2.filehelper.DropsJSONGenerator;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
@@ -111,6 +112,7 @@ public class PlantTechMain
 		{
 			ModItems.register(event.getRegistry());
 			ModBlocks.registerItemBlocks(event.getRegistry());
+			//new DropsJSONGenerator().defaultValues();
 		}
 
 		@SubscribeEvent

@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
+
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -8,25 +9,25 @@ import net.minecraft.item.ItemGroup;
 
 public class BlockBase extends Block
 {
-    private String name; 
-    private ItemGroup group;
+	private String name;
+	private ItemGroup group;
 
-    public BlockBase(Properties property, String name, ItemGroup group, boolean hasItem)
-    {
-	super(property);
-	this.group = group;
-	this.name = name; 
-	setRegistryName(name);
-	
-	ModBlocks.BLOCKS.add(this); 
-	if(hasItem)
+	public BlockBase(Properties property, String name, ItemGroup group, boolean hasItem)
 	{
-	    ModBlocks.BLOCKITEMS.add(this); 
-	}
-    }
+		super(property);
+		this.group = group;
+		this.name = name;
+		setRegistryName(name);
 
-    public Item createItemBlock()
-    {
-	return new BlockItem(this, new Item.Properties().group(group)).setRegistryName(name);
-    }
+		ModBlocks.BLOCKS.add(this);
+		if (hasItem)
+		{
+			ModBlocks.BLOCKITEMS.add(this);
+		}
+	}
+
+	public Item createItemBlock()
+	{
+		return new BlockItem(this, new Item.Properties().group(group)).setRegistryName(name);
+	}
 }

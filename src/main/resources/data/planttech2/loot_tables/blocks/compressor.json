@@ -1,0 +1,20 @@
+{
+	  "type": "minecraft:block",
+	  "pools": [
+	    {
+		  "name": "planttech2:compressor",
+	      "rolls": 1,
+	      "entries": [
+	        {
+	          "type": "minecraft:item",
+	          "name": "planttech2:compressor"
+	        }
+	      ],
+	      "conditions": [
+	        {
+	          "condition": "minecraft:survives_explosion"
+	        }
+	      ]
+	    }
+	  ]
+	}

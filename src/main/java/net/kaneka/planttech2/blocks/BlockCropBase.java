@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
@@ -24,10 +26,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +36,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IEnviromentBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootParameters;
 
 public class BlockCropBase extends ContainerBlock
 {
@@ -261,7 +263,6 @@ public class BlockCropBase extends ContainerBlock
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
 	}
 
-	
 	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
@@ -291,7 +292,22 @@ public class BlockCropBase extends ContainerBlock
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 	}
-	
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
+	{
+		List<ItemStack> drops = Lists.newArrayList();
+		int growstate = state.get(GROWSTATE).intValue();
+		BlockPos pos = builder.get(LootParameters.POSITION); 
+		TileEntity te = builder.func_216018_a().getTileEntity(pos);
+		if (te instanceof TileEntityCrops)
+		{
+			((TileEntityCrops) te).addDrops(drops, growstate);
+			drops.add(new ItemStack(ModBlocks.CROPBARS));
+		}
+		
+		return drops; 
+	}
 
 	/*----------------------RENDERING------------------*/
 

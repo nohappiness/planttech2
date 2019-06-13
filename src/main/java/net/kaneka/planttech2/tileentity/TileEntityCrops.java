@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.tileentity;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -77,7 +79,7 @@ public class TileEntityCrops extends TileEntity implements ITickableTileEntity
 
 	}
 
-	public NonNullList<ItemStack> addDrops(NonNullList<ItemStack> drops, int growstate)
+	public List<ItemStack> addDrops(List<ItemStack> drops, int growstate)
 	{
 		PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
 		return drops;

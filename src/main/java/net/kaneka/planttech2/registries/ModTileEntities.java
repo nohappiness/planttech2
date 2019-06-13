@@ -21,41 +21,41 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModTileEntities 
 {
-    public static final TileEntityType<?> CROPS_TE = TileEntityType.Builder.create(TileEntityCrops::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitycrops"); 
-    public static final TileEntityType<?> MEGAFURNACE_TE= TileEntityType.Builder.create(TileEntityMegaFurnace::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitymegafurnace"); 
-    public static final TileEntityType<?> IDENTIFIER_TE = TileEntityType.Builder.create(TileEntityIdentifier::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityidentifier"); 
-    public static final TileEntityType<?> SEEDSQUEEZER_TE = TileEntityType.Builder.create(TileEntitySeedSqueezer::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityseedsqueezer"); 
-    public static final TileEntityType<?> SOLARGENERATOR_TE = TileEntityType.Builder.create(TileEntitySolarGenerator::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitysolargenerator"); 
-    public static final TileEntityType<?> PLANTFARM_TE = TileEntityType.Builder.create(TileEntityPlantFarm::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityplantfarm"); 
-    public static final TileEntityType<?> CABLE_TE = TileEntityType.Builder.create(TileEntityCable::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitycable"); 
-    public static final TileEntityType<?> DNAEXTRACTOR_TE = TileEntityType.Builder.create(TileEntityDNAExtractor::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitydnaextractor"); 
-    public static final TileEntityType<?> DNAREMOVER_TE = TileEntityType.Builder.create(TileEntityDNARemover::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitydnaremover"); 
-    public static final TileEntityType<?> DNACLEANER_TE = TileEntityType.Builder.create(TileEntityDNACleaner::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitydnacleaner"); 
-    public static final TileEntityType<?> DNACOMBINER_TE = TileEntityType.Builder.create(TileEntityDNACombiner::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitydnacombiner"); 
-    public static final TileEntityType<?> SEEDCONSTRUCTOR_TE = TileEntityType.Builder.create(TileEntitySeedconstructor::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityseedconstructor"); 
-    public static final TileEntityType<?> COMPRESSOR_TE = TileEntityType.Builder.create(TileEntityCompressor::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentitycompressor"); 
-    public static final TileEntityType<?> ENERGYSTORAGE_TE = TileEntityType.Builder.create(TileEntityEnergyStorage::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"); 
-    public static final TileEntityType<?> INFUSER_TE = TileEntityType.Builder.create(TileEntityInfuser::new).build(null).setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"); 
+    public static final TileEntityType<TileEntityCrops> CROPS_TE = TileEntityType.Builder.create(TileEntityCrops::new).build(null); 
+    public static final TileEntityType<TileEntityMegaFurnace> MEGAFURNACE_TE= TileEntityType.Builder.create(TileEntityMegaFurnace::new).build(null); 
+    public static final TileEntityType<TileEntityIdentifier> IDENTIFIER_TE = TileEntityType.Builder.create(TileEntityIdentifier::new).build(null); 
+    public static final TileEntityType<TileEntitySeedSqueezer> SEEDSQUEEZER_TE = TileEntityType.Builder.create(TileEntitySeedSqueezer::new).build(null); 
+    public static final TileEntityType<TileEntitySolarGenerator> SOLARGENERATOR_TE = TileEntityType.Builder.create(TileEntitySolarGenerator::new).build(null); 
+    public static final TileEntityType<TileEntityPlantFarm> PLANTFARM_TE = TileEntityType.Builder.create(TileEntityPlantFarm::new).build(null); 
+    public static final TileEntityType<TileEntityCable> CABLE_TE = TileEntityType.Builder.create(TileEntityCable::new).build(null); 
+    public static final TileEntityType<TileEntityDNAExtractor> DNAEXTRACTOR_TE = TileEntityType.Builder.create(TileEntityDNAExtractor::new).build(null); 
+    public static final TileEntityType<TileEntityDNARemover> DNAREMOVER_TE = TileEntityType.Builder.create(TileEntityDNARemover::new).build(null); 
+    public static final TileEntityType<TileEntityDNACleaner> DNACLEANER_TE = TileEntityType.Builder.create(TileEntityDNACleaner::new).build(null); 
+    public static final TileEntityType<TileEntityDNACombiner> DNACOMBINER_TE = TileEntityType.Builder.create(TileEntityDNACombiner::new).build(null); 
+    public static final TileEntityType<TileEntitySeedconstructor> SEEDCONSTRUCTOR_TE = TileEntityType.Builder.create(TileEntitySeedconstructor::new).build(null); 
+    public static final TileEntityType<TileEntityCompressor> COMPRESSOR_TE = TileEntityType.Builder.create(TileEntityCompressor::new).build(null); 
+    public static final TileEntityType<TileEntityEnergyStorage> ENERGYSTORAGE_TE = TileEntityType.Builder.create(TileEntityEnergyStorage::new).build(null); 
+    public static final TileEntityType<TileEntityInfuser> INFUSER_TE = TileEntityType.Builder.create(TileEntityInfuser::new).build(null); 
     
     
     
 	public static final void register(IForgeRegistry<TileEntityType<?>> registry)
 	{
-	    registry.registerAll(CROPS_TE, 
-		    		 MEGAFURNACE_TE, 
-		    		 IDENTIFIER_TE, 
-		    		 SEEDSQUEEZER_TE, 
-		    		 SOLARGENERATOR_TE, 
-		    		 PLANTFARM_TE, 
-		    		 CABLE_TE, 
-		    		 DNAEXTRACTOR_TE, 
-		    		 DNAREMOVER_TE, 
-		    		 DNACLEANER_TE, 
-		    		 DNACOMBINER_TE, 
-		    		 SEEDCONSTRUCTOR_TE, 
-		    		 COMPRESSOR_TE, 
-		    		 ENERGYSTORAGE_TE, 
-		    		 INFUSER_TE);
+	    registry.registerAll(CROPS_TE.setRegistryName(PlantTechMain.MODID,  "tileentitycrops"), 
+		    		 MEGAFURNACE_TE.setRegistryName(PlantTechMain.MODID,  "tileentitymegafurnace"), 
+		    		 IDENTIFIER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityidentifier"), 
+		    		 SEEDSQUEEZER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityseedsqueezer"), 
+		    		 SOLARGENERATOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitysolargenerator"), 
+		    		 PLANTFARM_TE.setRegistryName(PlantTechMain.MODID,  "tileentityplantfarm"), 
+		    		 CABLE_TE.setRegistryName(PlantTechMain.MODID,  "tileentitycable"), 
+		    		 DNAEXTRACTOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitydnaextractor"), 
+		    		 DNAREMOVER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitydnaremover"), 
+		    		 DNACLEANER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitydnacleaner"), 
+		    		 DNACOMBINER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitydnacombiner"), 
+		    		 SEEDCONSTRUCTOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentityseedconstructor"), 
+		    		 COMPRESSOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitycompressor"), 
+		    		 ENERGYSTORAGE_TE.setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"), 
+		    		 INFUSER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"));
 		
 	}
 
