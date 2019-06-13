@@ -23,6 +23,7 @@ import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelBakeEvent;
@@ -58,7 +59,8 @@ public class PlantTechMain
 	{
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			//ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::openGui);
+			// ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, ()
+			// -> GuiHandler::openGui);
 			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
 			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
 		});
@@ -80,7 +82,7 @@ public class PlantTechMain
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-		ModRecipeSerializers.registerAll();
+
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
@@ -112,7 +114,7 @@ public class PlantTechMain
 		{
 			ModItems.register(event.getRegistry());
 			ModBlocks.registerItemBlocks(event.getRegistry());
-			//new DropsJSONGenerator().defaultValues();
+			// new DropsJSONGenerator().defaultValues();
 		}
 
 		@SubscribeEvent
@@ -127,17 +129,25 @@ public class PlantTechMain
 		{
 			ModTileEntities.register(event.getRegistry());
 		}
-		
+
 		@SubscribeEvent
 		public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
 		{
 			ModContainers.registerAll(event);
 		}
 
+		@SubscribeEvent
+		public void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
+		{
+
+			ModRecipeSerializers.registerAll(event);
+		}
+
 	}
-	
+
 	public void modelBake(ModelBakeEvent event)
-    {
-		 //event.getModelRegistry().put(new ModelResourceLocation("planttech2:cable"), new CompositeModel()); 
-    }
+	{
+		// event.getModelRegistry().put(new ModelResourceLocation("planttech2:cable"),
+		// new CompositeModel());
+	}
 }
