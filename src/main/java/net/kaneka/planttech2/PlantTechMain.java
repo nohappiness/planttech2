@@ -137,9 +137,8 @@ public class PlantTechMain
 		}
 
 		@SubscribeEvent
-		public void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
+		public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
 		{
-
 			ModRecipeSerializers.registerAll(event);
 		}
 

@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import java.util.Optional;
+
 import net.kaneka.planttech2.container.ContainerInfuser;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
@@ -88,7 +90,8 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 	private InfuserRecipe getOutputRecipe()
 	{
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
-		//InfuserRecipe recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
+		Optional<InfuserRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
+		System.out.println(recipe);
 		return null;
 	}
 
