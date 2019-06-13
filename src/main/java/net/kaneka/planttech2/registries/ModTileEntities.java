@@ -16,26 +16,27 @@ import net.kaneka.planttech2.tileentity.machine.TileEntityPlantFarm;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedSqueezer;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySeedconstructor;
 import net.kaneka.planttech2.tileentity.machine.TileEntitySolarGenerator;
+import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModTileEntities 
 {
-    public static final TileEntityType<TileEntityCrops> CROPS_TE = TileEntityType.Builder.create(TileEntityCrops::new).build(null); 
-    public static final TileEntityType<TileEntityMegaFurnace> MEGAFURNACE_TE= TileEntityType.Builder.create(TileEntityMegaFurnace::new).build(null); 
-    public static final TileEntityType<TileEntityIdentifier> IDENTIFIER_TE = TileEntityType.Builder.create(TileEntityIdentifier::new).build(null); 
-    public static final TileEntityType<TileEntitySeedSqueezer> SEEDSQUEEZER_TE = TileEntityType.Builder.create(TileEntitySeedSqueezer::new).build(null); 
-    public static final TileEntityType<TileEntitySolarGenerator> SOLARGENERATOR_TE = TileEntityType.Builder.create(TileEntitySolarGenerator::new).build(null); 
-    public static final TileEntityType<TileEntityPlantFarm> PLANTFARM_TE = TileEntityType.Builder.create(TileEntityPlantFarm::new).build(null); 
-    public static final TileEntityType<TileEntityCable> CABLE_TE = TileEntityType.Builder.create(TileEntityCable::new).build(null); 
-    public static final TileEntityType<TileEntityDNAExtractor> DNAEXTRACTOR_TE = TileEntityType.Builder.create(TileEntityDNAExtractor::new).build(null); 
-    public static final TileEntityType<TileEntityDNARemover> DNAREMOVER_TE = TileEntityType.Builder.create(TileEntityDNARemover::new).build(null); 
-    public static final TileEntityType<TileEntityDNACleaner> DNACLEANER_TE = TileEntityType.Builder.create(TileEntityDNACleaner::new).build(null); 
-    public static final TileEntityType<TileEntityDNACombiner> DNACOMBINER_TE = TileEntityType.Builder.create(TileEntityDNACombiner::new).build(null); 
-    public static final TileEntityType<TileEntitySeedconstructor> SEEDCONSTRUCTOR_TE = TileEntityType.Builder.create(TileEntitySeedconstructor::new).build(null); 
-    public static final TileEntityType<TileEntityCompressor> COMPRESSOR_TE = TileEntityType.Builder.create(TileEntityCompressor::new).build(null); 
-    public static final TileEntityType<TileEntityEnergyStorage> ENERGYSTORAGE_TE = TileEntityType.Builder.create(TileEntityEnergyStorage::new).build(null); 
-    public static final TileEntityType<TileEntityInfuser> INFUSER_TE = TileEntityType.Builder.create(TileEntityInfuser::new).build(null); 
+    public static final TileEntityType<TileEntityCrops> CROPS_TE = TileEntityType.Builder.create(TileEntityCrops::new, ModBlocks.CROPS.values().stream().toArray(Block[]::new)).build(null); 
+    public static final TileEntityType<TileEntityMegaFurnace> MEGAFURNACE_TE= TileEntityType.Builder.create(TileEntityMegaFurnace::new, ModBlocks.MEGAFURNACE).build(null); 
+    public static final TileEntityType<TileEntityIdentifier> IDENTIFIER_TE = TileEntityType.Builder.create(TileEntityIdentifier::new, ModBlocks.IDENTIFIER).build(null); 
+    public static final TileEntityType<TileEntitySeedSqueezer> SEEDSQUEEZER_TE = TileEntityType.Builder.create(TileEntitySeedSqueezer::new, ModBlocks.SEEDSQUEEZER).build(null); 
+    public static final TileEntityType<TileEntitySolarGenerator> SOLARGENERATOR_TE = TileEntityType.Builder.create(TileEntitySolarGenerator::new, ModBlocks.SOLARGENERATOR).build(null); 
+    public static final TileEntityType<TileEntityPlantFarm> PLANTFARM_TE = TileEntityType.Builder.create(TileEntityPlantFarm::new, ModBlocks.PLANTFARM).build(null); 
+    public static final TileEntityType<TileEntityCable> CABLE_TE = TileEntityType.Builder.create(TileEntityCable::new, ModBlocks.CABLE).build(null); 
+    public static final TileEntityType<TileEntityDNAExtractor> DNAEXTRACTOR_TE = TileEntityType.Builder.create(TileEntityDNAExtractor::new, ModBlocks.DNA_EXTRACTOR).build(null); 
+    public static final TileEntityType<TileEntityDNARemover> DNAREMOVER_TE = TileEntityType.Builder.create(TileEntityDNARemover::new, ModBlocks.DNA_REMOVER).build(null); 
+    public static final TileEntityType<TileEntityDNACleaner> DNACLEANER_TE = TileEntityType.Builder.create(TileEntityDNACleaner::new, ModBlocks.DNA_CLEANER).build(null); 
+    public static final TileEntityType<TileEntityDNACombiner> DNACOMBINER_TE = TileEntityType.Builder.create(TileEntityDNACombiner::new, ModBlocks.DNA_COMBINER).build(null); 
+    public static final TileEntityType<TileEntitySeedconstructor> SEEDCONSTRUCTOR_TE = TileEntityType.Builder.create(TileEntitySeedconstructor::new, ModBlocks.SEEDCONSTRUCTOR).build(null); 
+    public static final TileEntityType<TileEntityCompressor> COMPRESSOR_TE = TileEntityType.Builder.create(TileEntityCompressor::new, ModBlocks.COMPRESSOR).build(null); 
+    public static final TileEntityType<TileEntityEnergyStorage> ENERGYSTORAGE_TE = TileEntityType.Builder.create(TileEntityEnergyStorage::new, ModBlocks.ENERGYSTORAGE).build(null); 
+    public static final TileEntityType<TileEntityInfuser> INFUSER_TE = TileEntityType.Builder.create(TileEntityInfuser::new, ModBlocks.INFUSER).build(null); 
     
     
     
