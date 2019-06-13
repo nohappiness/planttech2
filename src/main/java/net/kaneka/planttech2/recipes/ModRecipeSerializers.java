@@ -12,7 +12,7 @@ public class ModRecipeSerializers
     
     public static void registerAll()
     {
-    	//COMPRESSING = IRecipeSerializer.register("compressing", new CompressorRecipe.Serializer());
-    	//INFUSING = IRecipeSerializer.register("infusing", new InfuserRecipe.Serializer()); 
+    	COMPRESSING = IRecipeSerializer.register("compressing", new CompressorRecipe.Serializer());
+    	INFUSING = IRecipeSerializer.register("infusing", new InfuserRecipe.Serializer()); 
     }
 }

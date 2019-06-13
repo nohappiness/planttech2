@@ -3,6 +3,7 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
@@ -16,8 +17,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class InfuserRecipe implements IRecipe
+public class InfuserRecipe implements IRecipe<IInventory>
 {
 	private final ResourceLocation id; 
 	private final Item input; 
@@ -81,19 +83,19 @@ public class InfuserRecipe implements IRecipe
 	@Override
 	public IRecipeSerializer<?> getSerializer()
 	{
-		return null;
+		return ModRecipeSerializers.INFUSING;
 	}
-	
+
 	@Override
-	public IRecipeType getType()
+	public IRecipeType<?> getType()
 	{
-		//TODO
-		return null;
+		return ModRecipeTypes.INFUSING;
 	}
+
 	
-	public static class Serializer implements IRecipeSerializer<InfuserRecipe>
+	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<InfuserRecipe>
 	{
-		private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "infusing");
+		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "infusing");
 
 		@Override
 		public InfuserRecipe read(ResourceLocation recipeId, JsonObject json)
@@ -151,32 +153,6 @@ public class InfuserRecipe implements IRecipe
 			buffer.writeItemStack(new ItemStack(recipe.input));
 			buffer.writeItemStack(new ItemStack(recipe.output));
 			buffer.writeInt(recipe.biomass);
-		}
-
-		public ResourceLocation getName()
-		{
-			return NAME;
-		}
-
-		@Override
-		public IRecipeSerializer<?> setRegistryName(ResourceLocation name)
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public ResourceLocation getRegistryName()
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Class<IRecipeSerializer<?>> getRegistryType()
-		{
-			// TODO Auto-generated method stub
-			return null;
 		}
 
 	}

@@ -2,7 +2,6 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 
 import com.google.gson.JsonObject;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
@@ -16,8 +15,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class CompressorRecipe implements IRecipe<IInventory>
 {
@@ -72,17 +71,18 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	{
 		return ModRecipeSerializers.COMPRESSING;
 	}
-
+	
 	@Override
-	public IRecipeType getType()
+	public IRecipeType<?> getType()
 	{
-		//TODO
-		return null;
+		return ModRecipeTypes.COMPRESSING;
 	}
 
-	public static class Serializer implements IRecipeSerializer<CompressorRecipe>
+	
+
+	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CompressorRecipe>
 	{
-		private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "compressing");
+		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "compressing");
 
 		@Override
 		public CompressorRecipe read(ResourceLocation recipeId, JsonObject json)
@@ -151,35 +151,5 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			buffer.writeItemStack(recipe.input);
 			buffer.writeItemStack(recipe.output);
 		}
-		
-		public ResourceLocation getName()
-		{
-			return NAME;
-		}
-
-		@Override
-		public IRecipeSerializer<?> setRegistryName(ResourceLocation name)
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public ResourceLocation getRegistryName()
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public Class<IRecipeSerializer<?>> getRegistryType()
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-
-		
-
 	}
 }

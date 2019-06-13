@@ -2,12 +2,11 @@ package net.kaneka.planttech2.recipes;
 
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.RecipeType;
+import net.minecraft.item.crafting.IRecipeType;
 
 public final class ModRecipeTypes
 {
-    //public static final RecipeType<CompressorRecipe> COMPRESSING = RecipeType.get(new ResourceLocation("compressing"), CompressorRecipe.class);
-    //public static final RecipeType<InfuserRecipe> INFUSING = RecipeType.get(new ResourceLocation("infusing"), InfuserRecipe.class);
+    public static final IRecipeType<CompressorRecipe> COMPRESSING = IRecipeType.register("compressing");
+    public static final IRecipeType<InfuserRecipe> INFUSING = IRecipeType.register("infusing");
     
 }

@@ -75,7 +75,7 @@ public class PlantTechMain
 
 	private void onServerStarting(FMLServerStartingEvent event)
 	{
-		//event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
