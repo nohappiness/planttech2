@@ -131,7 +131,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 
 			if (input != null && result != null)
 			{
-				System.out.println(recipeId);
+				//System.out.println(recipeId);
 				return new InfuserRecipe(recipeId, input, result, biomass);
 			} else
 			{

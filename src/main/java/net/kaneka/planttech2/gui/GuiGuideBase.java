@@ -157,5 +157,6 @@ public class GuiGuideBase extends Screen
 		{
 			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
 		}
+		super.onClose(); 
 	}
 }

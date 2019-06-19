@@ -132,7 +132,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 
 			if (inputstack != null && resultstack != null)
 			{
-				System.out.println(recipeId);
+				//System.out.println(recipeId);
 				return new CompressorRecipe(recipeId, inputstack, resultstack);
 			} else
 			{

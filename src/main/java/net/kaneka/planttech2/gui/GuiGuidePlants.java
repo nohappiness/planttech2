@@ -35,35 +35,35 @@ public class GuiGuidePlants extends GuiGuideBase
 	{
 		super.init();
 		
-		addButton(new CustomGuiButton(1, this.guiLeft + 28, this.guiTop + 10 + 1 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(1, this.guiLeft + 28, this.guiTop + 10 + 0 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(1);
 		})); 
-		addButton(new CustomGuiButton(2, this.guiLeft + 28, this.guiTop + 10 + 2 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(2, this.guiLeft + 28, this.guiTop + 10 + 1 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(2);
 		})); 
-		addButton(new CustomGuiButton(3, this.guiLeft + 28, this.guiTop + 10 + 3 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(3, this.guiLeft + 28, this.guiTop + 10 + 2 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(3);
 		})); 
-		addButton(new CustomGuiButton(4, this.guiLeft + 28, this.guiTop + 10 + 4 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(4, this.guiLeft + 28, this.guiTop + 10 + 3 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(4);
 		})); 
-		addButton(new CustomGuiButton(5, this.guiLeft + 28, this.guiTop + 10 + 5 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(5, this.guiLeft + 28, this.guiTop + 10 + 4 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(5);
 		})); 
-		addButton(new CustomGuiButton(6, this.guiLeft + 28, this.guiTop + 10 + 6 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(6, this.guiLeft + 28, this.guiTop + 10 + 5 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(6);
 		})); 
-		addButton(new CustomGuiButton(7, this.guiLeft + 28, this.guiTop + 10 + 7 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(7, this.guiLeft + 28, this.guiTop + 10 + 6 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(7);
 		})); 
-		addButton(new CustomGuiButton(8, this.guiLeft + 28, this.guiTop + 10 + 8 * 22, 100, 20, "TEST", (button) -> 
+		addButton(new CustomGuiButton(8, this.guiLeft + 28, this.guiTop + 10 + 7 * 22, 100, 20, "TEST", (button) -> 
 		{
 			GuiGuidePlants.this.buttonClicked(8);
 		})); 

@@ -57,13 +57,14 @@ public class GuiGuideOverview extends GuiGuideBase
 	    	GuiGuideOverview.this.buttonClicked(7); 
 	    }));
 		
-		buttons.add(new CustomGuiButton(8, this.guiLeft + 150, this.guiTop + 170, 100, 20, translateUnformated("gui.last"), (button)->
+		addButton(new CustomGuiButton(8, this.guiLeft + 150, this.guiTop + 170, 100, 20, translateUnformated("gui.last"), (button)->
 		{
 			GuiGuideOverview.this.buttonClicked(8); 
 		}));
-		buttons.add(new CustomGuiButton(9, this.guiLeft + 285, this.guiTop + 170, 100, 20, translateUnformated("gui.next"), (button)->
+		addButton(new CustomGuiButton(9, this.guiLeft + 285, this.guiTop + 170, 100, 20, translateUnformated("gui.next"), (button)->
 		{
 			GuiGuideOverview.this.buttonClicked(9);
+			
 		})); 
 		buttons.get(8).active = false; 
 		buttons.get(8).visible = false;
@@ -83,6 +84,7 @@ public class GuiGuideOverview extends GuiGuideBase
 		keys[11] = "genetic_engineering";
 		keys[11] = "armor";
 		updateButtons();
+		System.out.println(buttons.size()); 
 	}
 	
 	protected void buttonClicked(int button)
@@ -97,12 +99,12 @@ public class GuiGuideOverview extends GuiGuideBase
 			if(site > 0)
 			{
 				site--;
-				buttons.get(9).active = true; 
-				buttons.get(9).visible = true;
+				buttons.get(8).active = true; 
+				buttons.get(8).visible = true;
 				if(site == 0)
 				{
-					buttons.get(8).active = false; 
-					buttons.get(8).visible = false;
+					buttons.get(9).active = false; 
+					buttons.get(9).visible = false;
 				}
 			}
 		}

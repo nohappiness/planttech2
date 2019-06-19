@@ -299,7 +299,7 @@ public class BlockCropBase extends ContainerBlock
 		List<ItemStack> drops = Lists.newArrayList();
 		int growstate = state.get(GROWSTATE).intValue();
 		BlockPos pos = builder.get(LootParameters.POSITION); 
-		TileEntity te = builder.func_216018_a().getTileEntity(pos);
+		TileEntity te = builder.getWorld().getTileEntity(pos);
 		if (te instanceof TileEntityCrops)
 		{
 			((TileEntityCrops) te).addDrops(drops, growstate);
