@@ -2,7 +2,6 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.ContainerMegaFurnace;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventory;
 import net.kaneka.planttech2.utilities.Constants;

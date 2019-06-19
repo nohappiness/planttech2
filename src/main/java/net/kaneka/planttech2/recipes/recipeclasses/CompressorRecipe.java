@@ -2,8 +2,10 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 
 import com.google.gson.JsonObject;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -69,7 +71,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	@Override
 	public IRecipeSerializer<?> getSerializer()
 	{
-		return ModRecipeSerializers.COMPRESSING;
+		return ForgeRegistries.RECIPE_SERIALIZERS.getValue(new ResourceLocation(PlantTechMain.MODID, "compressing"));
 	}
 	
 	@Override
@@ -87,7 +89,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 		@Override
 		public CompressorRecipe read(ResourceLocation recipeId, JsonObject json)
 		{
-
+			
 			JsonObject inputobject = json.getAsJsonObject("input");
 			Item inputitem = null;
 			if (inputobject.has("item"))
@@ -130,6 +132,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 
 			if (inputstack != null && resultstack != null)
 			{
+				System.out.println(recipeId);
 				return new CompressorRecipe(recipeId, inputstack, resultstack);
 			} else
 			{

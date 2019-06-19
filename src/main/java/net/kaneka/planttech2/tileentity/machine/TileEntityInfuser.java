@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import net.kaneka.planttech2.container.ContainerInfuser;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.TileEntityEnergyInventoryFluid;
 import net.kaneka.planttech2.utilities.Constants;
@@ -37,7 +36,7 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 
 			if (!stack1.isEmpty())
 			{
-				InfuserRecipe recipe = getOutputRecipe();
+				/*InfuserRecipe recipe = getOutputRecipe();
 				if (recipe != null)
 				{
 					if (recipe.getOutput() == output || output == null)
@@ -81,19 +80,21 @@ public class TileEntityInfuser extends TileEntityEnergyInventoryFluid
 						output = recipe.getOutput();
 					}
 				}
+				*/
 			}
 		}
 
 		doFluidLoop();
 	}
 
+	/*
 	private InfuserRecipe getOutputRecipe()
 	{
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
 		Optional<InfuserRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
-		System.out.println(recipe);
-		return null;
+		return recipe.orElse(null);
 	}
+	*/
 
 	public int energyPerTick()
 	{

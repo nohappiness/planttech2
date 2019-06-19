@@ -2,7 +2,7 @@ modLoader="javafml" #mandatory
 loaderVersion="[24,)" 
 issueTrackerURL="http://my.issue.tracker/" #optional
 logoFile="examplemod.png" 
-credits="Artists: veyezx, BeerCav and andrew0030"
+credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka" 
 [[mods]] #mandatory
 modId="planttech2" 

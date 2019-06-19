@@ -83,7 +83,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 	@Override
 	public IRecipeSerializer<?> getSerializer()
 	{
-		return ModRecipeSerializers.INFUSING;
+		return ForgeRegistries.RECIPE_SERIALIZERS.getValue(new ResourceLocation(PlantTechMain.MODID, "infusing"));
 	}
 
 	@Override
@@ -131,6 +131,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 
 			if (input != null && result != null)
 			{
+				System.out.println(recipeId);
 				return new InfuserRecipe(recipeId, input, result, biomass);
 			} else
 			{
