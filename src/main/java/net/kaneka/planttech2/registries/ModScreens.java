@@ -1,38 +1,38 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.gui.GUICompressor;
-import net.kaneka.planttech2.gui.GUIDNACleaner;
-import net.kaneka.planttech2.gui.GUIDNACombiner;
-import net.kaneka.planttech2.gui.GUIDNAExtractor;
-import net.kaneka.planttech2.gui.GUIDNARemover;
-import net.kaneka.planttech2.gui.GUIEnergyStorage;
-import net.kaneka.planttech2.gui.GUIIdentifier;
-import net.kaneka.planttech2.gui.GUIInfuser;
-import net.kaneka.planttech2.gui.GUIMegaFurnace;
-import net.kaneka.planttech2.gui.GUIPlantFarm;
-import net.kaneka.planttech2.gui.GUISeedSqueezer;
-import net.kaneka.planttech2.gui.GUISeedconstructor;
-import net.kaneka.planttech2.gui.GUISolarGenerator;
-import net.kaneka.planttech2.gui.GuiItemUpgradeable;
+import net.kaneka.planttech2.gui.CompressorScreen;
+import net.kaneka.planttech2.gui.DNACleanerScreen;
+import net.kaneka.planttech2.gui.DNACombinerScreen;
+import net.kaneka.planttech2.gui.DNAExtractorScreen;
+import net.kaneka.planttech2.gui.DNARemoverScreen;
+import net.kaneka.planttech2.gui.EnergyStorageScreen;
+import net.kaneka.planttech2.gui.IdentifierScreen;
+import net.kaneka.planttech2.gui.InfuserScreen;
+import net.kaneka.planttech2.gui.MegaFurnaceScreen;
+import net.kaneka.planttech2.gui.PlantFarmScreen;
+import net.kaneka.planttech2.gui.SeedSqueezerScreen;
+import net.kaneka.planttech2.gui.SeedconstructorScreen;
+import net.kaneka.planttech2.gui.SolarGeneratorScreen;
+import net.kaneka.planttech2.gui.ItemUpgradeableScreen;
 import net.minecraft.client.gui.ScreenManager;
 
 public class ModScreens
 {
 	public static final void registerGUI()
 	{
-		ScreenManager.registerFactory(ModContainers.COMPRESSOR, GUICompressor::new);
-		ScreenManager.registerFactory(ModContainers.DNACLEANER, GUIDNACleaner::new);
-		ScreenManager.registerFactory(ModContainers.DNACOMBINER, GUIDNACombiner::new);
-		ScreenManager.registerFactory(ModContainers.DNAEXTRACTOR, GUIDNAExtractor::new);
-		ScreenManager.registerFactory(ModContainers.DNAREMOVER, GUIDNARemover::new);
-		ScreenManager.registerFactory(ModContainers.ENERGYSTORAGE, GUIEnergyStorage::new);
-		ScreenManager.registerFactory(ModContainers.IDENTIFIER, GUIIdentifier::new);
-		ScreenManager.registerFactory(ModContainers.INFUSER, GUIInfuser::new);
-		ScreenManager.registerFactory(ModContainers.UPGRADEABLEITEM, GuiItemUpgradeable::new);
-		ScreenManager.registerFactory(ModContainers.MEGAFURNACE, GUIMegaFurnace::new);
-		ScreenManager.registerFactory(ModContainers.PLANTFARM, GUIPlantFarm::new);
-		ScreenManager.registerFactory(ModContainers.SEEDCONSTRUCTOR, GUISeedconstructor::new);
-		ScreenManager.registerFactory(ModContainers.SEEDQUEEZER, GUISeedSqueezer::new);
-		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, GUISolarGenerator::new);
+		ScreenManager.registerFactory(ModContainers.COMPRESSOR, CompressorScreen::new);
+		ScreenManager.registerFactory(ModContainers.DNACLEANER, DNACleanerScreen::new);
+		ScreenManager.registerFactory(ModContainers.DNACOMBINER, DNACombinerScreen::new);
+		ScreenManager.registerFactory(ModContainers.DNAEXTRACTOR, DNAExtractorScreen::new);
+		ScreenManager.registerFactory(ModContainers.DNAREMOVER, DNARemoverScreen::new);
+		ScreenManager.registerFactory(ModContainers.ENERGYSTORAGE, EnergyStorageScreen::new);
+		ScreenManager.registerFactory(ModContainers.IDENTIFIER, IdentifierScreen::new);
+		ScreenManager.registerFactory(ModContainers.INFUSER, InfuserScreen::new);
+		ScreenManager.registerFactory(ModContainers.UPGRADEABLEITEM, ItemUpgradeableScreen::new);
+		ScreenManager.registerFactory(ModContainers.MEGAFURNACE, MegaFurnaceScreen::new);
+		ScreenManager.registerFactory(ModContainers.PLANTFARM, PlantFarmScreen::new);
+		ScreenManager.registerFactory(ModContainers.SEEDCONSTRUCTOR, SeedconstructorScreen::new);
+		ScreenManager.registerFactory(ModContainers.SEEDQUEEZER, SeedSqueezerScreen::new);
+		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
 	}
 }

@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.upgradeable.ItemUpgradeableArmor;
+import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,9 +31,9 @@ public class PlayerEvents
 			{
 				if(!stack.isEmpty())
 				{
-					if(stack.getItem() instanceof ItemUpgradeableArmor)
+					if(stack.getItem() instanceof UpgradeableArmorItem)
 					{
-						((ItemUpgradeableArmor)stack.getItem()).extractEnergy(stack, ItemUpgradeableArmor.getEnergyCost(stack), false); 
+						((UpgradeableArmorItem)stack.getItem()).extractEnergy(stack, UpgradeableArmorItem.getEnergyCost(stack), false); 
 					}
 				}
 			}

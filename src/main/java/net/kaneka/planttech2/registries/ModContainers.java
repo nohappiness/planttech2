@@ -1,38 +1,38 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.container.ContainerCompressor;
-import net.kaneka.planttech2.container.ContainerDNACleaner;
-import net.kaneka.planttech2.container.ContainerDNACombiner;
-import net.kaneka.planttech2.container.ContainerDNAExtractor;
-import net.kaneka.planttech2.container.ContainerDNARemover;
-import net.kaneka.planttech2.container.ContainerEnergyStorage;
-import net.kaneka.planttech2.container.ContainerIdentifier;
-import net.kaneka.planttech2.container.ContainerInfuser;
-import net.kaneka.planttech2.container.ContainerItemUpgradeable;
-import net.kaneka.planttech2.container.ContainerMegaFurnace;
-import net.kaneka.planttech2.container.ContainerPlantFarm;
-import net.kaneka.planttech2.container.ContainerSeedSqueezer;
-import net.kaneka.planttech2.container.ContainerSeedconstructor;
-import net.kaneka.planttech2.container.ContainerSolarGenerator;
+import net.kaneka.planttech2.container.CompressorContainer;
+import net.kaneka.planttech2.container.DNACleanerContainer;
+import net.kaneka.planttech2.container.DNACombinerContainer;
+import net.kaneka.planttech2.container.DNAExtractorContainer;
+import net.kaneka.planttech2.container.DNARemoverContainer;
+import net.kaneka.planttech2.container.EnergyStorageContainer;
+import net.kaneka.planttech2.container.IdentifierContainer;
+import net.kaneka.planttech2.container.InfuserContainer;
+import net.kaneka.planttech2.container.ItemUpgradeableContainer;
+import net.kaneka.planttech2.container.MegaFurnaceContainer;
+import net.kaneka.planttech2.container.PlantFarmContainer;
+import net.kaneka.planttech2.container.SeedSqueezerContainer;
+import net.kaneka.planttech2.container.SeedconstructorContainer;
+import net.kaneka.planttech2.container.SolarGeneratorContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.event.RegistryEvent;
 
 public class ModContainers
 {
-	public static final ContainerType<ContainerCompressor> COMPRESSOR = new ContainerType<ContainerCompressor>(ContainerCompressor::new);
-	public static final ContainerType<ContainerDNACleaner> DNACLEANER = new ContainerType<ContainerDNACleaner>(ContainerDNACleaner::new);
-	public static final ContainerType<ContainerDNACombiner> DNACOMBINER = new ContainerType<ContainerDNACombiner>(ContainerDNACombiner::new);
-	public static final ContainerType<ContainerDNAExtractor> DNAEXTRACTOR = new ContainerType<ContainerDNAExtractor>(ContainerDNAExtractor::new);
-	public static final ContainerType<ContainerDNARemover> DNAREMOVER = new ContainerType<ContainerDNARemover>(ContainerDNARemover::new);
-	public static final ContainerType<ContainerEnergyStorage> ENERGYSTORAGE = new ContainerType<ContainerEnergyStorage>(ContainerEnergyStorage::new);
-	public static final ContainerType<ContainerIdentifier> IDENTIFIER = new ContainerType<ContainerIdentifier>(ContainerIdentifier::new);
-	public static final ContainerType<ContainerInfuser> INFUSER = new ContainerType<ContainerInfuser>(ContainerInfuser::new);
-	public static final ContainerType<ContainerItemUpgradeable> UPGRADEABLEITEM = new ContainerType<ContainerItemUpgradeable>(ContainerItemUpgradeable::new);
-	public static final ContainerType<ContainerMegaFurnace> MEGAFURNACE = new ContainerType<ContainerMegaFurnace>(ContainerMegaFurnace::new);
-	public static final ContainerType<ContainerPlantFarm> PLANTFARM = new ContainerType<ContainerPlantFarm>(ContainerPlantFarm::new);
-	public static final ContainerType<ContainerSeedconstructor> SEEDCONSTRUCTOR = new ContainerType<ContainerSeedconstructor>(ContainerSeedconstructor::new);
-	public static final ContainerType<ContainerSeedSqueezer> SEEDQUEEZER = new ContainerType<ContainerSeedSqueezer>(ContainerSeedSqueezer::new);
-	public static final ContainerType<ContainerSolarGenerator> SOLARGENERATOR = new ContainerType<ContainerSolarGenerator>(ContainerSolarGenerator::new);
+	public static final ContainerType<CompressorContainer> COMPRESSOR = new ContainerType<CompressorContainer>(CompressorContainer::new);
+	public static final ContainerType<DNACleanerContainer> DNACLEANER = new ContainerType<DNACleanerContainer>(DNACleanerContainer::new);
+	public static final ContainerType<DNACombinerContainer> DNACOMBINER = new ContainerType<DNACombinerContainer>(DNACombinerContainer::new);
+	public static final ContainerType<DNAExtractorContainer> DNAEXTRACTOR = new ContainerType<DNAExtractorContainer>(DNAExtractorContainer::new);
+	public static final ContainerType<DNARemoverContainer> DNAREMOVER = new ContainerType<DNARemoverContainer>(DNARemoverContainer::new);
+	public static final ContainerType<EnergyStorageContainer> ENERGYSTORAGE = new ContainerType<EnergyStorageContainer>(EnergyStorageContainer::new);
+	public static final ContainerType<IdentifierContainer> IDENTIFIER = new ContainerType<IdentifierContainer>(IdentifierContainer::new);
+	public static final ContainerType<InfuserContainer> INFUSER = new ContainerType<InfuserContainer>(InfuserContainer::new);
+	public static final ContainerType<ItemUpgradeableContainer> UPGRADEABLEITEM = new ContainerType<ItemUpgradeableContainer>(ItemUpgradeableContainer::new);
+	public static final ContainerType<MegaFurnaceContainer> MEGAFURNACE = new ContainerType<MegaFurnaceContainer>(MegaFurnaceContainer::new);
+	public static final ContainerType<PlantFarmContainer> PLANTFARM = new ContainerType<PlantFarmContainer>(PlantFarmContainer::new);
+	public static final ContainerType<SeedconstructorContainer> SEEDCONSTRUCTOR = new ContainerType<SeedconstructorContainer>(SeedconstructorContainer::new);
+	public static final ContainerType<SeedSqueezerContainer> SEEDQUEEZER = new ContainerType<SeedSqueezerContainer>(SeedSqueezerContainer::new);
+	public static final ContainerType<SolarGeneratorContainer> SOLARGENERATOR = new ContainerType<SolarGeneratorContainer>(SolarGeneratorContainer::new);
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{

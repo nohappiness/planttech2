@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-import net.kaneka.planttech2.blocks.BlockBase;
+import net.kaneka.planttech2.blocks.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.item.Item;
 
@@ -72,7 +72,7 @@ public class DropsJSONGenerator
 
 	public void defaultValues()
 	{
-		for(BlockBase block:ModBlocks.BLOCKITEMS)
+		for(BaseBlock block:ModBlocks.BLOCKITEMS)
 		{
 			@SuppressWarnings("deprecation")
 			Item item = Item.getItemFromBlock(block); 

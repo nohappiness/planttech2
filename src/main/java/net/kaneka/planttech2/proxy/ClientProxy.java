@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.proxy;
 
-import net.kaneka.planttech2.items.ItemBase;
-import net.kaneka.planttech2.items.ItemCropSeed;
+import net.kaneka.planttech2.items.BaseItem;
+import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.client.Minecraft;
@@ -23,9 +23,9 @@ public class ClientProxy implements IProxy
 	//fontRenderer = new CustomFontRenderer(Minecraft.getInstance().gameSettings, new ResourceLocation("planttech2:textures/font/font.png"), Minecraft.getInstance().textureManager, true);
 	
 	
-	for (ItemBase item : ModItems.SEEDS.values())
+	for (BaseItem item : ModItems.SEEDS.values())
 	{
-	    Minecraft.getInstance().getItemColors().register(new ItemCropSeed.ColorHandler(), item);
+	    Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
 	}
     }
 }

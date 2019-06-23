@@ -2,7 +2,7 @@ package net.kaneka.planttech2.packets;
 
 import java.util.function.Supplier;
 
-import net.kaneka.planttech2.tileentity.machine.TileEntityCompressor;
+import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -52,9 +52,9 @@ public class ButtonPressMessage
 					TileEntity te = serverPlayer.world.getTileEntity(pos);
 					if (te != null)
 					{
-						if (te instanceof TileEntityCompressor)
+						if (te instanceof CompressorTileEntity)
 						{
-							((TileEntityCompressor) te).setSelectedId(buttonId);
+							((CompressorTileEntity) te).setSelectedId(buttonId);
 						}
 					}
 				}

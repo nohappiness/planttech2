@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.BlockBase;
-import net.kaneka.planttech2.blocks.BlockCropBars;
-import net.kaneka.planttech2.blocks.BlockCropBase;
-import net.kaneka.planttech2.blocks.machines.BlockCable;
-import net.kaneka.planttech2.blocks.machines.BlockEnergyStorage;
-import net.kaneka.planttech2.blocks.machines.BlockMachineBase;
-import net.kaneka.planttech2.blocks.machines.BlockMachineFacing;
+import net.kaneka.planttech2.blocks.BaseBlock;
+import net.kaneka.planttech2.blocks.CropBarsBlock;
+import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.machines.CableBlock;
+import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
+import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
+import net.kaneka.planttech2.blocks.machines.MachineFacingBlock;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -25,48 +25,48 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlocks
 {
-	public static List<BlockBase> BLOCKS = new ArrayList<BlockBase>();
-	public static List<BlockBase> BLOCKITEMS = new ArrayList<BlockBase>();
+	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
+	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
 
-	public static BlockBase 
-			CABLE = new BlockCable(), 
-			COMPRESSOR = new BlockMachineFacing("compressor", ModCreativeTabs.groupmachines), 
-			CROPBARS = new BlockCropBars(),
-	        DANCIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "dancium_block", ModCreativeTabs.groupmain, true),
-	        DNA_CLEANER = new BlockMachineFacing("dna_cleaner", ModCreativeTabs.groupmachines), 
-	        DNA_COMBINER = new BlockMachineFacing("dna_combiner", ModCreativeTabs.groupmachines),
-	        DNA_EXTRACTOR = new BlockMachineFacing("dna_extractor", ModCreativeTabs.groupmachines), 
-	        DNA_REMOVER = new BlockMachineFacing("dna_remover", ModCreativeTabs.groupmachines),
-	        ENERGYSTORAGE = new BlockEnergyStorage(), 
-	        IDENTIFIER = new BlockMachineFacing("identifier", ModCreativeTabs.groupmachines),
-	        INFUSER = new BlockMachineFacing("infuser", ModCreativeTabs.groupmachines),
-	        KANEKIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kanekium_block", ModCreativeTabs.groupmain, true),
-	        KINNOIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kinnoium_block", ModCreativeTabs.groupmain, true),
-	        LENTHURIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "lenthurium_block", ModCreativeTabs.groupmain, true),
-		    MACHINESHELL = new BlockBase(Block.Properties.create(Material.IRON), "machineshell", ModCreativeTabs.groupmain, true),  
-		    MACHINESHELL_INFUSED = new BlockBase(Block.Properties.create(Material.IRON), "machineshell_infused", ModCreativeTabs.groupmain, true),  
-	        MEGAFURNACE = new BlockMachineFacing("mega_furnace", ModCreativeTabs.groupmachines), 
-	        PLANTFARM = new BlockMachineBase("plantfarm", ModCreativeTabs.groupmachines),
-	        PLANTIUM_BLOCK = new BlockBase(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "plantium_block", ModCreativeTabs.groupmain, true),
-	        SEEDCONSTRUCTOR = new BlockMachineFacing("seedconstructor", ModCreativeTabs.groupmachines),
-	        SEEDSQUEEZER = new BlockMachineFacing("seedsqueezer", ModCreativeTabs.groupmachines),
-	        SOLARGENERATOR = new BlockMachineBase("solargenerator", ModCreativeTabs.groupmachines);
+	public static BaseBlock 
+			CABLE = new CableBlock(), 
+			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
+			CROPBARS = new CropBarsBlock(),
+	        DANCIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "dancium_block", ModCreativeTabs.groupmain, true),
+	        DNA_CLEANER = new MachineFacingBlock("dna_cleaner", ModCreativeTabs.groupmachines), 
+	        DNA_COMBINER = new MachineFacingBlock("dna_combiner", ModCreativeTabs.groupmachines),
+	        DNA_EXTRACTOR = new MachineFacingBlock("dna_extractor", ModCreativeTabs.groupmachines), 
+	        DNA_REMOVER = new MachineFacingBlock("dna_remover", ModCreativeTabs.groupmachines),
+	        ENERGYSTORAGE = new EnergyStorageBlock(), 
+	        IDENTIFIER = new MachineFacingBlock("identifier", ModCreativeTabs.groupmachines),
+	        INFUSER = new MachineFacingBlock("infuser", ModCreativeTabs.groupmachines),
+	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kanekium_block", ModCreativeTabs.groupmain, true),
+	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kinnoium_block", ModCreativeTabs.groupmain, true),
+	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "lenthurium_block", ModCreativeTabs.groupmain, true),
+		    MACHINESHELL = new BaseBlock(Block.Properties.create(Material.IRON), "machineshell", ModCreativeTabs.groupmain, true),  
+		    MACHINESHELL_INFUSED = new BaseBlock(Block.Properties.create(Material.IRON), "machineshell_infused", ModCreativeTabs.groupmain, true),  
+	        MEGAFURNACE = new MachineFacingBlock("mega_furnace", ModCreativeTabs.groupmachines), 
+	        PLANTFARM = new MachineBaseBlock("plantfarm", ModCreativeTabs.groupmachines),
+	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "plantium_block", ModCreativeTabs.groupmain, true),
+	        SEEDCONSTRUCTOR = new MachineFacingBlock("seedconstructor", ModCreativeTabs.groupmachines),
+	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
+	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines);
 
-	public static HashMap<String, BlockCropBase> CROPS = new HashMap<String, BlockCropBase>();
+	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 
 	public static void register(IForgeRegistry<Block> registry)
 	{
-		for (BlockBase block : BLOCKS)
+		for (BaseBlock block : BLOCKS)
 		{
 			registry.register(block);
 		}
 
-		BlockCropBase tempcrop;
+		CropBaseBlock tempcrop;
 		String name;
 		for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
 		{
 			name = entry.getString();
-			tempcrop = new BlockCropBase(name);
+			tempcrop = new CropBaseBlock(name);
 			CROPS.put(name, tempcrop);
 			registry.register(tempcrop);
 		}
@@ -75,7 +75,7 @@ public class ModBlocks
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
 
-		for (BlockBase block : BLOCKITEMS)
+		for (BaseBlock block : BLOCKITEMS)
 		{
 			registry.register(block.createItemBlock());
 		}
@@ -85,9 +85,9 @@ public class ModBlocks
 	@OnlyIn(Dist.CLIENT)
 	public static void registerBlockColorHandler(ColorHandlerEvent.Block event)
 	{
-		for (BlockCropBase block : CROPS.values())
+		for (CropBaseBlock block : CROPS.values())
 		{
-			event.getBlockColors().register(new BlockCropBase.ColorHandler(), block);
+			event.getBlockColors().register(new CropBaseBlock.ColorHandler(), block);
 		}
 	}
 }
