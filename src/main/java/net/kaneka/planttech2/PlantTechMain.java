@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
-import net.kaneka.planttech2.filehelper.DropsJSONGenerator;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
@@ -14,6 +13,7 @@ import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
+import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
@@ -32,8 +32,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -61,8 +59,8 @@ public class PlantTechMain
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			// ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, ()
 			// -> GuiHandler::openGui);
-			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
-			MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
 		});
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -82,7 +80,7 @@ public class PlantTechMain
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-
+		new ModRecipeTypes();  
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();

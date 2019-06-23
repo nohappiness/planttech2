@@ -3,7 +3,6 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
@@ -15,7 +14,6 @@ import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 

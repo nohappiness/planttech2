@@ -3,9 +3,7 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
