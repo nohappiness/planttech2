@@ -12,10 +12,61 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 {
 	private int ticksPassed = 0;
+	protected final IIntArray field_array = new IIntArray()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return SeedconstructorTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return SeedconstructorTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+			    return SeedconstructorTileEntity.this.fluidtank.getBiomass();
+			case 3:
+			    return SeedconstructorTileEntity.this.fluidtank.getCapacity(); 
+			case 4: 
+				return SeedconstructorTileEntity.this.ticksPassed; 
+				
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				SeedconstructorTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				SeedconstructorTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				SeedconstructorTileEntity.this.fluidtank.setBiomass(value);
+			    break; 
+			case 3: 
+				SeedconstructorTileEntity.this.fluidtank.setCapacity(value);
+				break;
+			case 4: 
+				SeedconstructorTileEntity.this.ticksPassed = value; 
+				break; 
+			}
+
+		}
+
+		public int size()
+		{
+			return 5;
+		}
+	};
 
 	public SeedconstructorTileEntity()
 	{
@@ -69,6 +120,12 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 
 		doFluidLoop();
 	}
+	
+	@Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 
 	public int fluidPerItem()
 	{
@@ -104,47 +161,6 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	{
 		this.ticksPassed = compound.getInt("tickspassed");
 		super.read(compound);
-	}
-
-	@Override
-	public int getField(int id)
-	{
-		if (id < 4)
-		{
-			return super.getField(id);
-		} else
-		{
-			switch (id)
-			{
-			case 4:
-				return this.ticksPassed;
-			default:
-				return 0;
-			}
-		}
-	}
-
-	@Override
-	public void setField(int id, int value)
-	{
-		if (id < 4)
-		{
-			super.setField(id, value);
-		} else
-		{
-			switch (id)
-			{
-			case 4:
-				ticksPassed = value;
-				break;
-			}
-		}
-	}
-
-	@Override
-	public int getAmountFields()
-	{
-		return 5;
 	}
 
 	@Override

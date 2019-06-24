@@ -50,14 +50,14 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = this.te.getField(4);
+		int i = container.getValue(4);
 		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).getTicksPerItem() : 0;
 	}
 	
 	@Override
 	protected void drawTooltips(int mouseX, int mouseY)
 	{
-	    drawTooltip( te.getField(2) + "/" + te.getField(3), mouseX, mouseY, 27, 28, 16, 55);
+	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
 	}

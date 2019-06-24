@@ -35,7 +35,7 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = this.te.getField(2);
+		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((DNACombinerTileEntity) this.te).ticksPerItem() : 0;
 	}
 }

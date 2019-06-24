@@ -12,214 +12,216 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {
-    public int[] ticksPassed = new int[6];
-    boolean isSmelting;
-
-    public MegaFurnaceTileEntity()
-    {
-	super(ModTileEntities.MEGAFURNACE_TE, 10000, 13);
-    }
-
-    @Override
-    public void doUpdate()
-    {
-	isSmelting = false;
-	for (int i = 0; i < 6; i++)
+	public int[] ticksPassed = new int[6];
+	boolean isSmelting;
+	protected final IIntArray field_array = new IIntArray()
 	{
-	    if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem() || true)
-	    {
-		if (this.canSmelt(i))
+		public int get(int index)
 		{
-		    isSmelting = true;
-		    ticksPassed[i]++;
-		    if (ticksPassed[i] >= this.getTicksPerItem())
-		    {
-			this.smeltItem(i);
-			ticksPassed[i] = 0;
-		    }
-		}
-		else if (ticksPassed[i] > 0)
-		{
-		    ticksPassed[i] = 0;
-		}
-	    }
-	    else
-	    {
-		if (!this.canSmelt(i) && ticksPassed[i] > 0)
-		{
-		    ticksPassed[i] = 0;
-		}
-		break;
-	    }
-	}
-	if (isSmelting)
-	{
-	    //this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
-	}
-    }
-
-    private boolean canSmelt(int slot)
-    {
-	ItemStack itemstack = itemhandler.getStackInSlot(slot);
-	if (itemstack.isEmpty())
-	{
-	    return false;
-	}
-	else
-	{
-		//RecipeWrapper wrapper = new RecipeWrapper(itemhandler, 1, 1);
-	    ItemStack output = new ItemStack(Items.COAL);
-	    if (output.isEmpty())
-	    {
-		return false;
-	    }
-	    else
-	    {
-		ItemStack outputslot = itemhandler.getStackInSlot(slot + 6);
-		if (outputslot.isEmpty())
-		{
-		    return true;
-		}
-		else if (!output.isItemEqual(outputslot))
-		{
-		    return false;
-		}
-		else if (outputslot.getCount() + output.getCount() <= 64 && outputslot.getCount() + output.getCount() <= outputslot.getMaxStackSize())
-		{
-		    return true;
-		}
-		else
-		{
-		    return outputslot.getCount() + output.getCount() <= output.getMaxStackSize();
+			switch (index)
+			{
+			case 0:
+				return MegaFurnaceTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return MegaFurnaceTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+				return MegaFurnaceTileEntity.this.ticksPassed[0];
+			case 3:
+				return MegaFurnaceTileEntity.this.ticksPassed[1];
+			case 4:
+				return MegaFurnaceTileEntity.this.ticksPassed[2];
+			case 5:
+				return MegaFurnaceTileEntity.this.ticksPassed[3];
+			case 6:
+				return MegaFurnaceTileEntity.this.ticksPassed[4];
+			case 7:
+				return MegaFurnaceTileEntity.this.ticksPassed[5];
+			default:
+				return 0;
+			}
 		}
 
-	    }
-	}
-    }
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				MegaFurnaceTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				MegaFurnaceTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				MegaFurnaceTileEntity.this.ticksPassed[0] = value;
+				break;
+			case 3:
+				MegaFurnaceTileEntity.this.ticksPassed[1] = value;
+				break;
+			case 4:
+				MegaFurnaceTileEntity.this.ticksPassed[2] = value;
+				break;
+			case 5:
+				MegaFurnaceTileEntity.this.ticksPassed[3] = value;
+				break;
+			case 6:
+				MegaFurnaceTileEntity.this.ticksPassed[4] = value;
+				break;
+			case 7:
+				MegaFurnaceTileEntity.this.ticksPassed[5] = value;
+				break;
+			}
 
-    public void smeltItem(int slot)
-    {
-	if (this.canSmelt(slot))
+		}
+
+		public int size()
+		{
+			return 8;
+		}
+	};
+
+	public MegaFurnaceTileEntity()
 	{
-	    ItemStack itemstack = this.itemhandler.getStackInSlot(slot);
-	    ItemStack itemstack1 = new ItemStack(Items.COAL);
-	    ItemStack itemstack2 = this.itemhandler.getStackInSlot(slot + 6);
-
-	    if (itemstack2.isEmpty())
-	    {
-		this.itemhandler.setStackInSlot(slot + 6, itemstack1.copy());
-	    }
-	    else if (itemstack2.getItem() == itemstack1.getItem())
-	    {
-		itemstack2.grow(itemstack1.getCount());
-	    }
-	    itemstack.shrink(1);
+		super(ModTileEntities.MEGAFURNACE_TE, 10000, 13);
 	}
-    }
 
-    public int getEnergyPerTickPerItem()
-    {
-	return 4 + (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
-    }
-
-    public int getTicksPerItem()
-    {
-	return 200 - (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT compound)
-    {
-	for (int i = 0; i < 6; i++)
+	@Override
+	public void doUpdate()
 	{
-	    compound.putInt("cooktime_" + i, ticksPassed[i]);
+		isSmelting = false;
+		for (int i = 0; i < 6; i++)
+		{
+			if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem() || true)
+			{
+				if (this.canSmelt(i))
+				{
+					isSmelting = true;
+					ticksPassed[i]++;
+					if (ticksPassed[i] >= this.getTicksPerItem())
+					{
+						this.smeltItem(i);
+						ticksPassed[i] = 0;
+					}
+				} else if (ticksPassed[i] > 0)
+				{
+					ticksPassed[i] = 0;
+				}
+			} else
+			{
+				if (!this.canSmelt(i) && ticksPassed[i] > 0)
+				{
+					ticksPassed[i] = 0;
+				}
+				break;
+			}
+		}
+		if (isSmelting)
+		{
+			// this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
+		}
 	}
-	super.write(compound);
-	return compound;
-    }
-
-    @Override
-    public void read(CompoundNBT compound)
-    {
-	for (int i = 0; i < 6; i++)
+	
+	@Override
+	public IIntArray getIntArray()
 	{
-	    this.ticksPassed[i] = compound.getInt("cooktime_" + i);
+		return field_array;
 	}
-	super.read(compound);
-    }
 
-    @Override
-    public String getNameString()
-    {
-	return "megafurnace";
-    }
-
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
+	private boolean canSmelt(int slot)
 	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return this.ticksPassed[0];
-	case 3:
-	    return this.ticksPassed[1];
-	case 4:
-	    return this.ticksPassed[2];
-	case 5:
-	    return this.ticksPassed[3];
-	case 6:
-	    return this.ticksPassed[4];
-	case 7:
-	    return this.ticksPassed[5];
-	default:
-	    return 0;
-	}
-    }
+		ItemStack itemstack = itemhandler.getStackInSlot(slot);
+		if (itemstack.isEmpty())
+		{
+			return false;
+		} else
+		{
+			// RecipeWrapper wrapper = new RecipeWrapper(itemhandler, 1, 1);
+			ItemStack output = new ItemStack(Items.COAL);
+			if (output.isEmpty())
+			{
+				return false;
+			} else
+			{
+				ItemStack outputslot = itemhandler.getStackInSlot(slot + 6);
+				if (outputslot.isEmpty())
+				{
+					return true;
+				} else if (!output.isItemEqual(outputslot))
+				{
+					return false;
+				} else if (outputslot.getCount() + output.getCount() <= 64 && outputslot.getCount() + output.getCount() <= outputslot.getMaxStackSize())
+				{
+					return true;
+				} else
+				{
+					return outputslot.getCount() + output.getCount() <= output.getMaxStackSize();
+				}
 
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
+			}
+		}
+	}
+
+	public void smeltItem(int slot)
 	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    this.ticksPassed[0] = value;
-	    break;
-	case 3:
-	    this.ticksPassed[1] = value;
-	    break;
-	case 4:
-	    this.ticksPassed[2] = value;
-	    break;
-	case 5:
-	    this.ticksPassed[3] = value;
-	    break;
-	case 6:
-	    this.ticksPassed[4] = value;
-	    break;
-	case 7:
-	    this.ticksPassed[5] = value;
-	    break;
-	}
-    }
+		if (this.canSmelt(slot))
+		{
+			ItemStack itemstack = this.itemhandler.getStackInSlot(slot);
+			ItemStack itemstack1 = new ItemStack(Items.COAL);
+			ItemStack itemstack2 = this.itemhandler.getStackInSlot(slot + 6);
 
-    @Override
-    public int getAmountFields()
-    {
-	return 8;
-    }
-    
-    @Override
+			if (itemstack2.isEmpty())
+			{
+				this.itemhandler.setStackInSlot(slot + 6, itemstack1.copy());
+			} else if (itemstack2.getItem() == itemstack1.getItem())
+			{
+				itemstack2.grow(itemstack1.getCount());
+			}
+			itemstack.shrink(1);
+		}
+	}
+
+	public int getEnergyPerTickPerItem()
+	{
+		return 4 + (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+	}
+
+	public int getTicksPerItem()
+	{
+		return 200 - (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT compound)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			compound.putInt("cooktime_" + i, ticksPassed[i]);
+		}
+		super.write(compound);
+		return compound;
+	}
+
+	@Override
+	public void read(CompoundNBT compound)
+	{
+		for (int i = 0; i < 6; i++)
+		{
+			this.ticksPassed[i] = compound.getInt("cooktime_" + i);
+		}
+		super.read(compound);
+	}
+
+	@Override
+	public String getNameString()
+	{
+		return "megafurnace";
+	}
+
+	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new MegaFurnaceContainer(id, inv, this);

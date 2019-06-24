@@ -7,11 +7,12 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.util.IIntArray;
 
 public class BaseContainer extends Container
 {
 	protected final EnergyTileEntity tileentity;
-	protected int[] fields;
+	protected final IIntArray field_array;
 	
 	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyTileEntity tileentity, int slots)
 	{
@@ -30,17 +31,8 @@ public class BaseContainer extends Container
 		}
 
 		this.tileentity = tileentity;
-		this.fields = new int[this.tileentity.getAmountFields()];
-		for (int i = 0; i < this.tileentity.getAmountFields(); i++)// forcing sync on opening GUI
-		{
-			this.fields[i] = -1;
-		}
-	}
-
-	@Override
-	public void updateProgressBar(int id, int data)
-	{
-		this.tileentity.setField(id, data);
+		field_array = tileentity.getIntArray();
+		func_216961_a(field_array);
 	}
 
 	@Override
@@ -71,5 +63,10 @@ public class BaseContainer extends Container
 	public EnergyTileEntity getTE()
 	{
 		return tileentity; 
+	}
+	
+	public int getValue(int id)
+	{
+		return field_array.get(id); 
 	}
 }

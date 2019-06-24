@@ -8,6 +8,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.IIntArray;
+import net.minecraft.util.IntArray;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -94,79 +96,12 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	{
 
 	}
-
-	public int getField(int id)
-	{
-		switch (id)
-		{
-		case 0:
-			return this.energystorage.getEnergyStored();
-		case 1:
-			return this.energystorage.getMaxEnergyStored();
-		default:
-			return 0;
-		}
-	}
-
-	public void setField(int id, int value)
-	{
-		switch (id)
-		{
-		case 0:
-			this.energystorage.setEnergyStored(value);
-			break;
-		case 1:
-			this.energystorage.setEnergyMaxStored(value);
-			break;
-		}
-	}
-
-	public int getAmountFields()
-	{
-		return 2;
-	}
+	
+	public abstract IIntArray getIntArray(); 
 	
 	@Override
 	public ITextComponent getDisplayName()
 	{
 		return new TranslationTextComponent("container." + getNameString());
 	}
-	
-	/*
-	@Override
-	public ITextComponent getDisplayName()
-	{
-		return new TranslationTextComponent("container." + getNameString());
-	}
-
-	@Override
-	public ITextComponent getName()
-	{
-		return new TranslationTextComponent("container." + getNameString());
-	}
-
-	@Override
-	public boolean hasCustomName()
-	{
-		return false;
-	}
-
-	@Override
-	public ITextComponent getCustomName()
-	{
-		return null;
-	}
-
-	@Override
-	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn)
-	{
-		return null;
-	}
-
-	@Override
-	public String getGuiID()
-	{
-		return getType().getRegistryName().toString();
-	}
-	*/
 }

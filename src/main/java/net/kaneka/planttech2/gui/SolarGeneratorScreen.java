@@ -46,7 +46,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 	
 	private int getWorkLoadScaled(int pixels)
 	{
-		int i = this.te.getField(2);
+		int i = container.getValue(2);
 		int j = ((SolarGeneratorTileEntity) this.te).getTicksPerAmount();
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}

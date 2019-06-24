@@ -15,136 +15,146 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 {
-    private int ticksPassed = 0;
-
-    public DNARemoverTileEntity()
-    {
-	super(ModTileEntities.DNAREMOVER_TE, 1000, 3);
-    }
-
-    @Override
-    public void doUpdate()
-    {
-	if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+	private int ticksPassed = 0;
+	protected final IIntArray field_array = new IIntArray()
 	{
-	    ItemStack stack1 = itemhandler.getStackInSlot(0);
-	    ItemStack stack2 = itemhandler.getStackInSlot(1);
-	    if (!stack1.isEmpty() && stack2.isEmpty())
-	    {
-		if (stack1.getItem() == ModItems.DNA_CONTAINER)
+		public int get(int index)
 		{
-		    List<String> traitsList = getAvailableTraits(stack1);
-		    if (traitsList.size() > 1)
-		    {
-			if (ticksPassed < ticksPerItem())
+			switch (index)
 			{
-			    ticksPassed++;
-			    //energystorage.extractEnergy(energyPerTick(), false);
+			case 0:
+				return DNARemoverTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return DNARemoverTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+				return DNARemoverTileEntity.this.ticksPassed;
+			default:
+				return 0;
 			}
-			else
-			{
-			    Collections.shuffle(traitsList);
-			    CompoundNBT nbt = stack1.getTag().copy();
-			    nbt.remove(traitsList.get(0));
-			    ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
-			    stack.setTag(nbt);
-			    itemhandler.setStackInSlot(1, stack);
-			    stack1.shrink(1);
-			    //energystorage.extractEnergy(energyPerTick(), false);
-			    ticksPassed = 0;
-			}
-		    }
 		}
-	    }
-	}
-    }
 
-    private List<String> getAvailableTraits(ItemStack stack)
-    {
-	List<String> list = new ArrayList<String>();
-	if (stack.hasTag())
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				DNARemoverTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				DNARemoverTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				DNARemoverTileEntity.this.ticksPassed = value;
+				;
+				break;
+			}
+
+		}
+
+		public int size()
+		{
+			return 3;
+		}
+	};
+
+	public DNARemoverTileEntity()
 	{
-	    CompoundNBT nbt = stack.getTag();
-	    for (String key : HashMapCropTraits.getTraitsKeyList())
-	    {
-		if (nbt.contains(key))
-		    list.add(key);
-	    }
+		super(ModTileEntities.DNAREMOVER_TE, 1000, 3);
 	}
-	return list;
-    }
 
-    public int energyPerTick()
-    {
-	return 4 + (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
-    }
-
-    public int ticksPerItem()
-    {
-	return 200 - (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
-    }
-
-    @Override
-    public String getNameString()
-    {
-	return "dnayremover";
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT compound)
-    {
-	compound.putInt("tickspassed", ticksPassed);
-	super.write(compound);
-	return compound;
-    }
-
-    @Override
-    public void read(CompoundNBT compound)
-    {
-	this.ticksPassed = compound.getInt("tickspassed");
-	super.read(compound);
-    }
-
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
+	@Override
+	public void doUpdate()
 	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return this.ticksPassed;
-	default:
-	    return 0;
+		if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+		{
+			ItemStack stack1 = itemhandler.getStackInSlot(0);
+			ItemStack stack2 = itemhandler.getStackInSlot(1);
+			if (!stack1.isEmpty() && stack2.isEmpty())
+			{
+				if (stack1.getItem() == ModItems.DNA_CONTAINER)
+				{
+					List<String> traitsList = getAvailableTraits(stack1);
+					if (traitsList.size() > 1)
+					{
+						if (ticksPassed < ticksPerItem())
+						{
+							ticksPassed++;
+							// energystorage.extractEnergy(energyPerTick(), false);
+						} else
+						{
+							Collections.shuffle(traitsList);
+							CompoundNBT nbt = stack1.getTag().copy();
+							nbt.remove(traitsList.get(0));
+							ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
+							stack.setTag(nbt);
+							itemhandler.setStackInSlot(1, stack);
+							stack1.shrink(1);
+							// energystorage.extractEnergy(energyPerTick(), false);
+							ticksPassed = 0;
+						}
+					}
+				}
+			}
+		}
 	}
-    }
-
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
+	
+	@Override
+	public IIntArray getIntArray()
 	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    this.ticksPassed = value;
-	    break;
+		return field_array;
 	}
-    }
 
-    @Override
-    public int getAmountFields()
-    {
-	return 3;
-    }
+	private List<String> getAvailableTraits(ItemStack stack)
+	{
+		List<String> list = new ArrayList<String>();
+		if (stack.hasTag())
+		{
+			CompoundNBT nbt = stack.getTag();
+			for (String key : HashMapCropTraits.getTraitsKeyList())
+			{
+				if (nbt.contains(key))
+					list.add(key);
+			}
+		}
+		return list;
+	}
 
-    @Override
+	public int energyPerTick()
+	{
+		return 4 + (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+	}
+
+	public int ticksPerItem()
+	{
+		return 200 - (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
+	}
+
+	@Override
+	public String getNameString()
+	{
+		return "dnayremover";
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT compound)
+	{
+		compound.putInt("tickspassed", ticksPassed);
+		super.write(compound);
+		return compound;
+	}
+
+	@Override
+	public void read(CompoundNBT compound)
+	{
+		this.ticksPassed = compound.getInt("tickspassed");
+		super.read(compound);
+	}
+
+	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNARemoverContainer(id, inv, this);

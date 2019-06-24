@@ -10,10 +10,44 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 {
     private int ticksPassed = 0;
+    protected final IIntArray field_array = new IIntArray() {
+        public int get(int index) {
+           switch(index) {
+           case 0:
+              return DNACleanerTileEntity.this.energystorage.getEnergyStored();
+           case 1:
+              return DNACleanerTileEntity.this.energystorage.getMaxEnergyStored();
+           case 2:
+              return DNACleanerTileEntity.this.ticksPassed;
+           default:
+              return 0;
+           }
+        }
+
+        public void set(int index, int value) {
+           switch(index) {
+           case 0:
+        	   DNACleanerTileEntity.this.energystorage.setEnergyStored(value);
+              break;
+           case 1:
+        	   DNACleanerTileEntity.this.energystorage.setEnergyMaxStored(value);
+              break;
+           case 2:
+        	   DNACleanerTileEntity.this.ticksPassed = value;;
+              break;
+           }
+
+        }
+
+        public int size() {
+           return 3;
+        }
+     };
 
     public DNACleanerTileEntity()
     {
@@ -57,6 +91,12 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 	    }
 	}
     }
+    
+    @Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 
     public int energyPerTick()
     {
@@ -87,42 +127,6 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
     {
 	this.ticksPassed = compound.getInt("tickspassed");
 	super.read(compound);
-    }
-
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return ticksPassed;
-	default:
-	    return 0;
-	}
-    }
-
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    ticksPassed = value;
-	    break;
-	}
-    }
-
-    @Override
-    public int getAmountFields()
-    {
-	return 3;
     }
     
     @Override

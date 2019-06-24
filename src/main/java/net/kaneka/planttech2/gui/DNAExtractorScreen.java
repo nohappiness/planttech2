@@ -35,7 +35,7 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = this.te.getField(2);
+		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((DNAExtractorTileEntity) this.te).ticksPerItem() : 0;
 	}
 }

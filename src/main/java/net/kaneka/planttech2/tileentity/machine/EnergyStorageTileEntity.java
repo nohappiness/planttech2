@@ -10,16 +10,58 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 {
 
     private int currentTier = -1; // Always forcing a update when loaded
+    protected final IIntArray field_array = new IIntArray()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return EnergyStorageTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return EnergyStorageTileEntity.this.energystorage.getMaxEnergyStored();
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				EnergyStorageTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				EnergyStorageTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			}
+
+		}
+
+		public int size()
+		{
+			return 2;
+		}
+	};
+
 
     public EnergyStorageTileEntity()
     {
 	super(ModTileEntities.ENERGYSTORAGE_TE, 10, 1);
     }
+    
+    @Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 
     @Override
     public void onSlotContentChanged()

@@ -52,47 +52,6 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 	fluidtank.deserializeNBT(compound.getCompound("fluidtank"));
 	super.read(compound);
     }
-
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return fluidtank.getBiomass();
-	case 3:
-	    return fluidtank.getCapacity();
-	default:
-	    return 0;
-	}
-    }
-
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    fluidtank.setBiomass(value);
-	    break; 
-	case 3: 
-	    fluidtank.setCapacity(value);
-	    break;
-	}
-    }
-
-    @Override
-    public int getAmountFields()
-    {
-	return 4;
-    }
     
     protected abstract int getFluidInSlot();
     

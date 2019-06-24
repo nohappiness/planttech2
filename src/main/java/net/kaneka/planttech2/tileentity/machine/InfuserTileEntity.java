@@ -14,6 +14,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
@@ -21,6 +22,62 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	private int fluidInfused = 0;
 	private int fluidTotal = 0; 
 	private Item output = null;
+	
+	protected final IIntArray field_array = new IIntArray()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return InfuserTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return InfuserTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+			    return InfuserTileEntity.this.fluidtank.getBiomass();
+			case 3:
+			    return InfuserTileEntity.this.fluidtank.getCapacity(); 
+			case 4: 
+				return InfuserTileEntity.this.fluidInfused; 
+			case 5: 
+				return InfuserTileEntity.this.fluidTotal; 
+				
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				InfuserTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				InfuserTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				InfuserTileEntity.this.fluidtank.setBiomass(value);
+			    break; 
+			case 3: 
+				InfuserTileEntity.this.fluidtank.setCapacity(value);
+				break;
+			case 4: 
+				InfuserTileEntity.this.fluidInfused = value; 
+				break; 
+			case 5: 
+				InfuserTileEntity.this.fluidTotal = value; 
+				break; 
+			}
+
+		}
+
+		public int size()
+		{
+			return 6;
+		}
+	};
 
 	public InfuserTileEntity()
 	{
@@ -87,7 +144,12 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 
 		doFluidLoop();
 	}
-
+	
+	@Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 	
 	private InfuserRecipe getOutputRecipe()
 	{
@@ -126,51 +188,6 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	{
 		this.fluidInfused = compound.getInt("tickspassed");
 		super.read(compound);
-	}
-
-	@Override
-	public int getField(int id)
-	{
-		if (id < 4)
-		{
-			return super.getField(id);
-		} else
-		{
-			switch (id)
-			{
-			case 4:
-				return fluidInfused;
-			case 5: 
-				return fluidTotal;
-			default:
-				return 0;
-			}
-		}
-	}
-
-	@Override
-	public void setField(int id, int value)
-	{
-		if (id < 4)
-		{
-			super.setField(id, value);
-		} else
-		{
-			switch (id)
-			{
-			case 4:
-				fluidInfused = value;
-				break;
-			case 5: 
-				fluidTotal = value; 
-			}
-		}
-	}
-
-	@Override
-	public int getAmountFields()
-	{
-		return 6;
 	}
 
 	@Override

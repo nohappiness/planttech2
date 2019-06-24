@@ -11,10 +11,51 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 {
     private int ticksPassed = 0;
+    protected final IIntArray field_array = new IIntArray()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return DNAExtractorTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return DNAExtractorTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+				return DNAExtractorTileEntity.this.ticksPassed;
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				DNAExtractorTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				DNAExtractorTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				DNAExtractorTileEntity.this.ticksPassed = value;
+				;
+				break;
+			}
+
+		}
+
+		public int size()
+		{
+			return 3;
+		}
+	};
 
     public DNAExtractorTileEntity()
     {
@@ -65,6 +106,12 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 	    }
 	}
     }
+    
+    @Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 
     private void endProcess()
     {
@@ -105,41 +152,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 	super.read(compound);
     }
 
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return this.ticksPassed;
-	default:
-	    return 0;
-	}
-    }
 
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    this.ticksPassed = value;
-	    break;
-	}
-    }
-
-    @Override
-    public int getAmountFields()
-    {
-	return 3;
-    }
 
     @Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)

@@ -72,15 +72,15 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	
 	protected int getEnergyStoredScaled(int pixels)
 	{
-		int i = this.te.getEnergyStored();
-		int j = this.te.getMaxEnergyStored();
+		int i = container.getValue(2);
+		int j = container.getValue(3);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 	
 	protected int getFluidStoredScaled(int pixels)
 	{
-		int i = te.getField(2);
-		int j = te.getField(3);
+		int i = container.getValue(2);
+		int j = container.getValue(3);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 

@@ -8,10 +8,51 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.IIntArray;
 
 public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 {
     int workload = 0;
+    protected final IIntArray field_array = new IIntArray()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return SolarGeneratorTileEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return SolarGeneratorTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+				return SolarGeneratorTileEntity.this.workload;
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				SolarGeneratorTileEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				SolarGeneratorTileEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				SolarGeneratorTileEntity.this.workload = value;
+				;
+				break;
+			}
+
+		}
+
+		public int size()
+		{
+			return 3;
+		}
+	};
 
     public SolarGeneratorTileEntity()
     {
@@ -34,6 +75,12 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	    }
 	}
     }
+    
+    @Override
+	public IIntArray getIntArray()
+	{
+		return field_array;
+	}
 
     private int getEnergyPerTick(int focusLevel)
     {
@@ -76,42 +123,6 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
     public String getNameString()
     {
 	return "solargenerator";
-    }
-
-    @Override
-    public int getField(int id)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    return super.getField(id);
-	case 2:
-	    return this.workload;
-	default:
-	    return 0;
-	}
-    }
-
-    @Override
-    public void setField(int id, int value)
-    {
-	switch (id)
-	{
-	case 0:
-	case 1:
-	    super.setField(id, value);
-	    break;
-	case 2:
-	    this.workload = value;
-	    break;
-	}
-    }
-
-    @Override
-    public int getAmountFields()
-    {
-	return 3;
     }
     
     @Override

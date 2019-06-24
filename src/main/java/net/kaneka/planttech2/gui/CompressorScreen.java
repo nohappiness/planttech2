@@ -50,7 +50,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	int k = this.getEnergyStoredScaled(74);
 	blit(this.guiLeft + 162, this.guiTop + 28 + (74 - k), 205, 74 - k, 16, 0 + k);
 	
-	int i = this.te.getField(3);
+	int i = container.getValue(3);
 	if(i >= 0)
 	{
 	    blit(this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
@@ -59,7 +59,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 
     private int getCookProgressScaled(int pixels)
     {
-	int i = this.te.getField(2);
+	int i = container.getValue(2);
 	return i != 0 ? i * pixels / ((CompressorTileEntity) this.te).ticksPerItem() : 0;
     }
     
