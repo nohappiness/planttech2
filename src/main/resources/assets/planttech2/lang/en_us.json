@@ -5,6 +5,10 @@
     "itemGroup.planttech2_particles": "Particles",
     "itemGroup.planttech2_toolsandarmor": "Tools and Armor",
     "itemGroup.planttech2_chips": "Chips and Upgrades",
+    
+    "planttech2.crossbreeding": "Crossbreeding", 
+    "planttech2.infuser": "Infuser", 
+    "planttech2.compressor": "Compressor", 
 
     "config.test": "TEST",
 

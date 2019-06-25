@@ -2,19 +2,6 @@ package net.kaneka.planttech2.blocks.machines;
 
 import java.util.List;
 import net.kaneka.planttech2.blocks.BaseBlock;
-import net.kaneka.planttech2.container.CompressorContainer;
-import net.kaneka.planttech2.container.DNACleanerContainer;
-import net.kaneka.planttech2.container.DNACombinerContainer;
-import net.kaneka.planttech2.container.DNAExtractorContainer;
-import net.kaneka.planttech2.container.DNARemoverContainer;
-import net.kaneka.planttech2.container.EnergyStorageContainer;
-import net.kaneka.planttech2.container.IdentifierContainer;
-import net.kaneka.planttech2.container.InfuserContainer;
-import net.kaneka.planttech2.container.MegaFurnaceContainer;
-import net.kaneka.planttech2.container.PlantFarmContainer;
-import net.kaneka.planttech2.container.SeedSqueezerContainer;
-import net.kaneka.planttech2.container.SeedconstructorContainer;
-import net.kaneka.planttech2.container.SolarGeneratorContainer;
 import net.kaneka.planttech2.gui.ScreenReferences;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
@@ -38,14 +25,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
@@ -53,7 +36,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 public class MachineBaseBlock extends BaseBlock
 {

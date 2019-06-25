@@ -39,7 +39,6 @@ public class ReloadListenerCropListEntryConfiguration implements ISelectiveResou
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate)
 	{
-		
 		PlantTechMain.LOGGER.info("Load crop configuration from data packs");
 		Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
 		Map<String, CropListEntryConfiguration> configs = new HashMap<String, CropListEntryConfiguration>();
@@ -68,7 +67,6 @@ public class ReloadListenerCropListEntryConfiguration implements ISelectiveResou
 		
 		//save on server
 		PlantTechMain.croplist.setConfigs(configs);
-		
 		//Sync all Clients
 		for(ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
 		{

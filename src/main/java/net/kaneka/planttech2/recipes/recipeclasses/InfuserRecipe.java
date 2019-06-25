@@ -37,6 +37,11 @@ public class InfuserRecipe implements IRecipe<IInventory>
 		return input; 
 	}
 	
+	public ItemStack getInputStack()
+	{
+		return new ItemStack(input); 
+	}
+	
 	public Item getOutput()
 	{
 		return output; 

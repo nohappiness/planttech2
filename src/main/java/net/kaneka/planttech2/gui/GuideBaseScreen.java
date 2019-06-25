@@ -97,13 +97,15 @@ public class GuideBaseScreen extends Screen
 	@Override
 	public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) 
 	{
+		
 		if (canscroll)
 		{
 			if (p_mouseScrolled_1_ != 0)
 			{
-				scrollPos += p_mouseScrolled_1_ > 0 ? -1 : 1;
+				scrollPos += p_mouseScrolled_5_ > 0 ? -1 : 1;
 				scrollPos = Math.max(0, scrollPos);
 				scrollPos = Math.min(scrollMax, scrollPos);
+				
 				updateButtons();
 			}
 		}

@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
-import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -10,10 +9,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {

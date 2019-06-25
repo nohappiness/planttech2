@@ -76,7 +76,8 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 
 	public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)
 	{
-		if (!worldIn.isRemote && !stack.isEmpty() && worldIn.getGameRules().getBoolean("doTileDrops") && !worldIn.restoringBlockSnapshots) // do not drop items while restoring
+		//TODO Implement Gamerule "doTileDrops"
+		if (!worldIn.isRemote && !stack.isEmpty() && !worldIn.restoringBlockSnapshots) // do not drop items while restoring
 		                                                                                                                                   // blockstates, prevents item dupe
 		{
 			double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
