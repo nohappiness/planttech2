@@ -61,13 +61,13 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 
 	public DNACombinerTileEntity()
 	{
-		super(ModTileEntities.DNACOMBINER_TE, 1000, 5);
+		super(ModTileEntities.DNACOMBINER_TE, 1000, 7);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -81,11 +81,11 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 					if (ticksPassed < ticksPerItem())
 					{
 						ticksPassed++;
-						// energystorage.extractEnergy(energyPerTick(), false);
+						energystorage.extractEnergy(energyPerTick(), false);
 					} else
 					{
 						ticksPassed = 0;
-						// energystorage.extractEnergy(energyPerTick(), false);
+						energystorage.extractEnergy(energyPerTick(), false);
 						CompoundNBT nbt = getCombinedNBT(stack1.getTag(), stack2.getTag());
 						ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
 						stack.setTag(nbt);
@@ -95,6 +95,7 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 				}
 			}
 		}
+		doEnergyLoop();
 	}
 	
 	@Override
@@ -179,5 +180,17 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNACombinerContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 6;
 	}
 }

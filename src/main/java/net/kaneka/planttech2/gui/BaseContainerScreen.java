@@ -43,16 +43,17 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	
 	protected void drawTooltips(int mouseX, int mouseY)
 	{
-		drawTooltip( te.getEnergyStored() + "/" + te.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
+		drawTooltip( te.getEnergyStored() + "/" + te.getMaxEnergyStored(), mouseX, mouseY, 158, 28, 16, 55);
 	}
 	
 	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
+		
 		posX += this.guiLeft;
 		posY += this.guiTop; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
-        	renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
+        	renderTooltip(lines, mouseX, mouseY);
         }
     }
 
@@ -72,8 +73,8 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	
 	protected int getEnergyStoredScaled(int pixels)
 	{
-		int i = container.getValue(2);
-		int j = container.getValue(3);
+		int i = container.getValue(0);
+		int j = container.getValue(1);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 	

@@ -20,11 +20,13 @@ public class SolarGeneratorContainer extends BaseContainer
 	
 	public SolarGeneratorContainer(int id, PlayerInventory player, SolarGeneratorTileEntity tileentity) 
 	{
-		super(id, ModContainers.SOLARGENERATOR, player, tileentity, 2);
+		super(id, ModContainers.SOLARGENERATOR, player, tileentity, 4);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 84, 71));
 		this.addSlot(new SlotItemHandler(handler, 1, 45, 33));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 	}
 	
 	

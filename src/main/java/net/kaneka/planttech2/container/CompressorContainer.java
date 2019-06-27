@@ -21,7 +21,7 @@ public class CompressorContainer extends BaseContainer
 
     public CompressorContainer(int id, PlayerInventory player, CompressorTileEntity tileentity)
     {
-	super(id, ModContainers.COMPRESSOR, player, tileentity, 18);
+	super(id, ModContainers.COMPRESSOR, player, tileentity, 25);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
 	this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84));
@@ -35,6 +35,9 @@ public class CompressorContainer extends BaseContainer
 		addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 36 + x * 18, 27 + y * 18));
 	    }
 	}
+	
+	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
     }
 
     @Override

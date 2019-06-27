@@ -12,8 +12,8 @@ import net.minecraft.util.IIntArray;
 
 public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 {
-    int workload = 0;
-    protected final IIntArray field_array = new IIntArray()
+	int workload = 0;
+	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
 		{
@@ -54,80 +54,93 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 		}
 	};
 
-    public SolarGeneratorTileEntity()
-    {
-	super(ModTileEntities.SOLARGENERATOR_TE, 100000, 2);
-    }
-
-    @Override
-    public void doUpdate()
-    {
-	if (world.isDaytime() && world.canBlockSeeSky(pos.up()))
+	public SolarGeneratorTileEntity()
 	{
-	    if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
-	    {
-		workload++;
-		if (workload >= getTicksPerAmount())
-		{
-		    energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE)));
-		    workload = 0;
-		}
-	    }
+		super(ModTileEntities.SOLARGENERATOR_TE, 100000, 4);
 	}
-    }
-    
-    @Override
+
+	@Override
+	public void doUpdate()
+	{
+		if (world.isDaytime() && world.canBlockSeeSky(pos.up()))
+		{
+			if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
+			{
+				workload++;
+				if (workload >= getTicksPerAmount())
+				{
+					energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE)));
+					workload = 0;
+				}
+			}
+		}
+		doEnergyLoop();
+	}
+
+	@Override
 	public IIntArray getIntArray()
 	{
 		return field_array;
 	}
 
-    private int getEnergyPerTick(int focusLevel)
-    {
-	switch (focusLevel)
+	private int getEnergyPerTick(int focusLevel)
 	{
-	case 1:
-	    return 20;
-	case 2:
-	    return 60;
-	case 3:
-	    return 180;
-	case 4:
-	    return 540;
+		switch (focusLevel)
+		{
+		case 1:
+			return 20;
+		case 2:
+			return 60;
+		case 3:
+			return 180;
+		case 4:
+			return 540;
+		}
+
+		return 0;
 	}
 
-	return 0;
-    }
+	public int getTicksPerAmount()
+	{
+		return 80 - (getUpgradeTier(1, PlantTechConstants.SPEEDUPGRADE_TYPE) * 15);
+	}
 
-    public int getTicksPerAmount()
-    {
-	return 80 - (getUpgradeTier(1, PlantTechConstants.SPEEDUPGRADE_TYPE) * 15);
-    }
+	@Override
+	public CompoundNBT write(CompoundNBT compound)
+	{
+		compound.putInt("workload", workload);
+		super.write(compound);
+		return compound;
+	}
 
-    @Override
-    public CompoundNBT write(CompoundNBT compound)
-    {
-	compound.putInt("workload", workload);
-	super.write(compound);
-	return compound;
-    }
+	@Override
+	public void read(CompoundNBT compound)
+	{
+		this.workload = compound.getInt("workload");
+		super.read(compound);
+	}
 
-    @Override
-    public void read(CompoundNBT compound)
-    {
-	this.workload = compound.getInt("workload");
-	super.read(compound);
-    }
+	@Override
+	public String getNameString()
+	{
+		return "solargenerator";
+	}
 
-    @Override
-    public String getNameString()
-    {
-	return "solargenerator";
-    }
-    
-    @Override
+	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new SolarGeneratorContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 2;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 3;
 	}
 }

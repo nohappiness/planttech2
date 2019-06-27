@@ -3,6 +3,7 @@ package net.kaneka.planttech2.tileentity.machine.baseclasses;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.TierItem;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -46,6 +47,33 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		return stack;
 	}
 
+	public void doEnergyLoop()
+	{
+		ItemStack stack = itemhandler.getStackInSlot(getEnergyInSlot());
+		ItemStack stack2 = itemhandler.getStackInSlot(getEnergyOutSlot());
+		if (stack != null)
+		{
+			if (stack.getItem() instanceof IItemChargeable)
+			{
+				if(energystorage.getEnergyStored() < energystorage.getMaxEnergyStored())
+				{
+					energystorage.receiveEnergy(((IItemChargeable) stack.getItem()).extractEnergy(stack, 1, false));
+				}
+			}
+		}
+
+		if (stack2 != null)
+		{
+			if (stack2.getItem() instanceof IItemChargeable)
+			{
+				if(energystorage.getEnergyStored() >= 1)
+				{
+					energystorage.extractEnergy(((IItemChargeable) stack2.getItem()).receiveEnergy(stack2, 1, false));
+				}
+			}
+		}
+	}
+
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
@@ -76,9 +104,9 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 
 	public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)
 	{
-		//TODO Implement Gamerule "doTileDrops"
+		// TODO Implement Gamerule "doTileDrops"
 		if (!worldIn.isRemote && !stack.isEmpty() && !worldIn.restoringBlockSnapshots) // do not drop items while restoring
-		                                                                                                                                   // blockstates, prevents item dupe
+		                                                                               // blockstates, prevents item dupe
 		{
 			double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
 			double d1 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
@@ -105,4 +133,8 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		}
 		return 0;
 	}
+
+	protected abstract int getEnergyInSlot();
+
+	protected abstract int getEnergyOutSlot();
 }

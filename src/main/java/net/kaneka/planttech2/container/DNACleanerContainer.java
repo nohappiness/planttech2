@@ -19,12 +19,14 @@ public class DNACleanerContainer extends BaseContainer
 
     public DNACleanerContainer(int id, PlayerInventory player, DNACleanerTileEntity tileentity)
     {
-	super(id, ModContainers.DNACLEANER, player, tileentity, 18);
+	super(id, ModContainers.DNACLEANER, player, tileentity, 5);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
 	this.addSlot(new SlotItemHandler(handler, 0, 42, 48));
 	this.addSlot(new SlotItemHandler(handler, 1, 96, 48));
 	this.addSlot(new SlotItemHandler(handler, 2, 69, 70));
+	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
     }
 
     @Override

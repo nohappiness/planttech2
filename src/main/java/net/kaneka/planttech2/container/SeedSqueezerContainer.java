@@ -20,7 +20,7 @@ public class SeedSqueezerContainer extends BaseContainer
 	
 	public SeedSqueezerContainer(int id, PlayerInventory player, SeedSqueezerTileEntity tileentity) 
 	{
-		super(id, ModContainers.SEEDQUEEZER, player, tileentity, 14);
+		super(id, ModContainers.SEEDQUEEZER, player, tileentity, 16);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int y = 0; y < 3; y++)
@@ -31,11 +31,12 @@ public class SeedSqueezerContainer extends BaseContainer
 			}
 		}
 		
-		this.addSlot(new NoAccessSlot(handler, 9, 113, 47));
-		this.addSlot(new SlotItemHandler(handler, 10, 88, 65));
-		this.addSlot(new SlotItemHandler(handler, 11, 138, 47));
-		this.addSlot(new SlotItemHandler(handler, 12, 18, 86));
-		this.addSlot(new SlotItemHandler(handler, 13, 36, 86));
+		this.addSlot(new NoAccessSlot(handler, 9, 108, 47));
+		this.addSlot(new SlotItemHandler(handler, 10, 133, 47));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getFluidInSlot(), 18, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getFluidOutSlot(), 36, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	

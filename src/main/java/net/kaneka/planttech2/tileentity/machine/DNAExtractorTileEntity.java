@@ -59,13 +59,13 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 
     public DNAExtractorTileEntity()
     {
-	super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 4);
+	super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 6);
     }
 
     @Override
     public void doUpdate()
     {
-	if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+	if (this.energystorage.getEnergyStored() > energyPerTick())
 	{
 	    ItemStack stack1 = itemhandler.getStackInSlot(0);
 	    ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -79,7 +79,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 			if (ticksPassed < ticksPerItem())
 			{
 			    ticksPassed++;
-			    //energystorage.extractEnergy(energyPerTick(), false);
+			    energystorage.extractEnergy(energyPerTick(), false);
 			}
 			else
 			{
@@ -105,6 +105,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 		}
 	    }
 	}
+	doEnergyLoop();
     }
     
     @Override
@@ -158,5 +159,17 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNAExtractorContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 4;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 5;
 	}
 }

@@ -51,13 +51,13 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 
     public DNACleanerTileEntity()
     {
-	super(ModTileEntities.DNACLEANER_TE,1000, 3);
+	super(ModTileEntities.DNACLEANER_TE,1000, 5);
     }
 
     @Override
     public void doUpdate()
     {
-	if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+	if (this.energystorage.getEnergyStored() > energyPerTick())
 	{
 	    ItemStack stack1 = itemhandler.getStackInSlot(0);
 	    ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -68,21 +68,21 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 		    if (ticksPassed < ticksPerItem())
 		    {
 			ticksPassed++;
-			//energystorage.extractEnergy(energyPerTick(), false);
+			energystorage.extractEnergy(energyPerTick(), false);
 		    }
 		    else
 		    {
 			if (stack2.isEmpty())
 			{
 			    itemhandler.setStackInSlot(1, new ItemStack(ModItems.DNA_CONTAINER_EMPTY));
-			    //energystorage.extractEnergy(energyPerTick(), false);
+			    energystorage.extractEnergy(energyPerTick(), false);
 			    stack1.shrink(1);
 			    ticksPassed = 0;
 			}
 			else if (stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
 			{
 			    stack2.grow(1);
-			    //energystorage.extractEnergy(energyPerTick(), false);
+			    energystorage.extractEnergy(energyPerTick(), false);
 			    stack1.shrink(1);
 			    ticksPassed = 0;
 			}
@@ -90,6 +90,7 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 		}
 	    }
 	}
+	doEnergyLoop();
     }
     
     @Override
@@ -133,5 +134,17 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNACleanerContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 3;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 4;
 	}
 }

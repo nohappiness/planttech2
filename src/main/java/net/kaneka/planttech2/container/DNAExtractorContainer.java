@@ -20,13 +20,15 @@ public class DNAExtractorContainer extends BaseContainer
 	
 	public DNAExtractorContainer(int id,PlayerInventory player, DNAExtractorTileEntity tileentity) 
 	{
-		super(id, ModContainers.DNAEXTRACTOR, player, tileentity, 18);
+		super(id, ModContainers.DNAEXTRACTOR, player, tileentity, 6);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 41, 37));
 		this.addSlot(new SlotItemHandler(handler, 1, 111, 37));
 		this.addSlot(new SlotItemHandler(handler, 2, 111, 79));
 		this.addSlot(new SlotItemHandler(handler, 3, 74, 60));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	

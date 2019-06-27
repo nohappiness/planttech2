@@ -25,7 +25,10 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 	{
 	    if(stack.getItem() instanceof BiomassContainerItem)
 	    {
-		fluidtank.receive(((BiomassContainerItem) stack.getItem()).extractFillLevel(stack, 4));
+	    	if(fluidtank.getBiomass() < fluidtank.getCapacity())
+	    	{
+	    		fluidtank.receive(((BiomassContainerItem) stack.getItem()).extractFillLevel(stack, 4));
+	    	}
 	    }
 	}
 	
@@ -33,7 +36,10 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 	{
 	    if(stack2.getItem() instanceof BiomassContainerItem)
 	    {
-		fluidtank.extract(((BiomassContainerItem) stack2.getItem()).receiveFillLevel(stack2, 4));
+	    	if(fluidtank.getBiomass() >= 4)
+	    	{
+	    		fluidtank.extract(((BiomassContainerItem) stack2.getItem()).receiveFillLevel(stack2, 4));
+	    	}
 	    }
 	}
     }

@@ -43,6 +43,8 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	{
 
 	}
+	
+	
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
@@ -103,4 +105,6 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	{
 		return new TranslationTextComponent("container." + getNameString());
 	}
+	
+	 
 }

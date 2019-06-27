@@ -20,7 +20,7 @@ public class IdentifierContainer extends BaseContainer
 	
 	public IdentifierContainer(int id, PlayerInventory player, IdentifierTileEntity tileentity) 
 	{
-		super(id, ModContainers.IDENTIFIER, player, tileentity, 18);
+		super(id, ModContainers.IDENTIFIER, player, tileentity, 21);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int x = 0; x < 3; x++)
@@ -39,6 +39,8 @@ public class IdentifierContainer extends BaseContainer
 			}
 		}
 		this.addSlot(new SlotItemHandler(handler, 18, 80, 84));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	

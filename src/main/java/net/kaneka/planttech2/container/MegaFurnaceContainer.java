@@ -18,7 +18,7 @@ public class MegaFurnaceContainer extends BaseContainer
 	}
 	public MegaFurnaceContainer(int id, PlayerInventory player, MegaFurnaceTileEntity tileentity) 
 	{
-		super(id, ModContainers.MEGAFURNACE, player, tileentity, 12);
+		super(id, ModContainers.MEGAFURNACE, player, tileentity, 15);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int y = 0; y < 2; y++)
@@ -28,7 +28,9 @@ public class MegaFurnaceContainer extends BaseContainer
 				this.addSlot(new SlotItemHandler(handler, x + y * 6, 26 + x * 22 , 26 + y * 37));
 			}
 		}
-		this.addSlot(new SlotItemHandler(handler, 12, 135, 85));
+		this.addSlot(new SlotItemHandler(handler, 12, 113, 85));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 	}
 	
 	@Override

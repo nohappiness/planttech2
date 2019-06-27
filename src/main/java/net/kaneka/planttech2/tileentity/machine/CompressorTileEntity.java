@@ -69,14 +69,14 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 
 	public CompressorTileEntity()
 	{
-		super(ModTileEntities.COMPRESSOR_TE, 1000, 23);
+		super(ModTileEntities.COMPRESSOR_TE, 1000, 25);
 	}
 
 	@Override
 	public void doUpdate()
 	{
 
-		if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -94,13 +94,13 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 							if (ticksPassed < ticksPerItem())
 							{
 								ticksPassed++;
-								// energystorage.extractEnergy(energyPerTick(), false);
+								energystorage.extractEnergy(energyPerTick(), false);
 							} else
 							{
 								if (stack2.isEmpty())
 								{
 									itemhandler.setStackInSlot(1, stackOutput);
-									// energystorage.extractEnergy(energyPerTick(), false);
+									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(neededInput);
 									ticksPassed = 0;
 								} else if (stack2.getItem() == stackOutput.getItem())
@@ -108,7 +108,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 									if (stack2.getMaxStackSize() >= stack2.getCount() + stackOutput.getCount())
 									{
 										stack2.grow(stackOutput.getCount());
-										// energystorage.extractEnergy(energyPerTick(), false);
+										energystorage.extractEnergy(energyPerTick(), false);
 										stack1.shrink(neededInput);
 										ticksPassed = 0;
 									}
@@ -125,6 +125,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 				}
 			}
 		}
+		doEnergyLoop(); 
 	}
 	
 	@Override
@@ -237,6 +238,18 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new CompressorContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 23;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 24;
 	}
 
 }

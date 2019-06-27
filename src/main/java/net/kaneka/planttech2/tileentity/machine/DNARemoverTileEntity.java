@@ -63,13 +63,13 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 
 	public DNARemoverTileEntity()
 	{
-		super(ModTileEntities.DNAREMOVER_TE, 1000, 3);
+		super(ModTileEntities.DNAREMOVER_TE, 1000, 5);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (this.energystorage.getEnergyStored() > energyPerTick() || true)
+		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -83,7 +83,7 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 						if (ticksPassed < ticksPerItem())
 						{
 							ticksPassed++;
-							// energystorage.extractEnergy(energyPerTick(), false);
+							energystorage.extractEnergy(energyPerTick(), false);
 						} else
 						{
 							Collections.shuffle(traitsList);
@@ -93,13 +93,14 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 							stack.setTag(nbt);
 							itemhandler.setStackInSlot(1, stack);
 							stack1.shrink(1);
-							// energystorage.extractEnergy(energyPerTick(), false);
+							energystorage.extractEnergy(energyPerTick(), false);
 							ticksPassed = 0;
 						}
 					}
 				}
 			}
 		}
+		doEnergyLoop();
 	}
 	
 	@Override
@@ -136,7 +137,7 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public String getNameString()
 	{
-		return "dnayremover";
+		return "dnaremover";
 	}
 
 	@Override
@@ -158,5 +159,17 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNARemoverContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 3;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 4;
 	}
 }

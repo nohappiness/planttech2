@@ -29,8 +29,8 @@ public class DNARemoverScreen extends BaseContainerScreen<DNARemoverContainer>
 		int l = this.getCookProgressScaled(32);
 		blit(this.guiLeft + 62, this.guiTop + 50, 0, 202, l, 12);
 		
-		int k = this.getEnergyStoredScaled(74);
-		blit(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
+		int k = this.getEnergyStoredScaled(55);
+		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 	}
 	
 	private int getCookProgressScaled(int pixels)

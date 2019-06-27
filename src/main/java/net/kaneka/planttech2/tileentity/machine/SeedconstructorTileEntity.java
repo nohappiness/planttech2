@@ -70,13 +70,13 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedconstructorTileEntity()
 	{
-		super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 5, 5000);
+		super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 7, 5000);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (energystorage.getEnergyStored() > energyPerTick() || true)
+		if (energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -88,11 +88,11 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 					if (ticksPassed < ticksPerItem())
 					{
 						ticksPassed++;
-						// energystorage.extractEnergy(energyPerTick(), false);
+						energystorage.extractEnergy(energyPerTick(), false);
 					} else
 					{
 						ticksPassed = 0;
-						// energystorage.extractEnergy(energyPerTick(), false);
+						energystorage.extractEnergy(energyPerTick(), false);
 						CompoundNBT nbt = stack1.getTag();
 						HashMapCropTraits traits = new HashMapCropTraits();
 						traits.setAnalysed(true);
@@ -117,7 +117,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 				}
 			}
 		}
-
+		doEnergyLoop();
 		doFluidLoop();
 	}
 	
@@ -179,6 +179,18 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new SeedconstructorContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 6;
 	}
 
 }

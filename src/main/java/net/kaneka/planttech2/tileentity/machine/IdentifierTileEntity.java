@@ -56,17 +56,17 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 
 	public IdentifierTileEntity()
 	{
-		super(ModTileEntities.IDENTIFIER_TE, 10000, 19);
+		super(ModTileEntities.IDENTIFIER_TE, 10000, 21);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem() || true)
+		if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem())
 		{
 			if (this.canIdentify())
 			{
-				// this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
+				this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
 				ticksPassed++;
 				if (ticksPassed >= this.getTicksPerItem())
 				{
@@ -84,7 +84,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				ticksPassed = 0;
 			}
 		}
-
+		doEnergyLoop();
 	}
 
 	@Override
@@ -212,5 +212,17 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new IdentifierContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 19;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 20;
 	}
 }

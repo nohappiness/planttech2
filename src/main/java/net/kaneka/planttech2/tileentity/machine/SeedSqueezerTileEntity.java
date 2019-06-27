@@ -69,7 +69,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedSqueezerTileEntity()
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 100000, 14, 5000);
+		super(ModTileEntities.SEEDSQUEEZER_TE, 100000, 15, 5000);
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				}
 			}
 		}
-
+		doEnergyLoop();
 		doFluidLoop();
 	}
 	
@@ -194,21 +194,33 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	protected int getFluidInSlot()
+	public int getFluidInSlot()
 	{
-		return 12;
+		return 11;
 	}
 
 	@Override
-	protected int getFluidOutSlot()
+	public int getFluidOutSlot()
 	{
-		return 13;
+		return 12;
 	}
 
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new SeedSqueezerContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 13;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 14;
 	}
 
 }

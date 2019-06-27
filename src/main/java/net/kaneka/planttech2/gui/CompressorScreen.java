@@ -47,8 +47,8 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	int l = this.getCookProgressScaled(68);
 	blit(this.guiLeft + 55, this.guiTop + 84, 0, 202, l, 12);
 
-	int k = this.getEnergyStoredScaled(74);
-	blit(this.guiLeft + 162, this.guiTop + 28 + (74 - k), 205, 74 - k, 16, 0 + k);
+	int k = this.getEnergyStoredScaled(55);
+	blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 	
 	int i = container.getValue(3);
 	if(i >= 0)

@@ -20,7 +20,7 @@ public class DNACombinerContainer extends BaseContainer
 	
 	public DNACombinerContainer(int id, PlayerInventory player, DNACombinerTileEntity tileentity) 
 	{
-		super(id, ModContainers.DNACOMBINER, player, tileentity, 18);
+		super(id, ModContainers.DNACOMBINER, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 78, 31));
@@ -28,6 +28,8 @@ public class DNACombinerContainer extends BaseContainer
 		this.addSlot(new SlotItemHandler(handler, 2, 122, 50));
 		this.addSlot(new SlotItemHandler(handler, 3, 96, 67));
 		this.addSlot(new SlotItemHandler(handler, 4, 55, 44));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 	}
 	
 	

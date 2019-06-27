@@ -54,7 +54,13 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 
     public EnergyStorageTileEntity()
     {
-	super(ModTileEntities.ENERGYSTORAGE_TE, 10, 1);
+	super(ModTileEntities.ENERGYSTORAGE_TE, 1000, 3);
+    }
+    
+    @Override
+    public void doUpdate()
+    {
+    	doEnergyLoop();
     }
     
     @Override
@@ -119,5 +125,17 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new EnergyStorageContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 2;
 	}
 }

@@ -81,13 +81,13 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 
 	public InfuserTileEntity()
 	{
-		super(ModTileEntities.INFUSER_TE, 1000, 5, 5000);
+		super(ModTileEntities.INFUSER_TE, 1000, 7, 5000);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (energystorage.getEnergyStored() > energyPerTick() || true)
+		if (energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -111,20 +111,20 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 							{
 								fluidInfused += fluidpertick;
 								fluidtank.extract(fluidpertick);
-								// energystorage.extractEnergy(energyPerTick(), false);
+								energystorage.extractEnergy(energyPerTick(), false);
 							} else
 							{
 								if (stack2.isEmpty())
 								{
 									itemhandler.setStackInSlot(1, recipe.getRecipeOutput());
-									// energystorage.extractEnergy(energyPerTick(), false);
+									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
 									fluidtank.extract(fluidTotal - fluidInfused);
 								} else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
 								{
 									stack2.grow(1);
-									// energystorage.extractEnergy(energyPerTick(), false);
+									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
 									fluidtank.extract(fluidTotal - fluidInfused);
@@ -141,7 +141,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 				
 			}
 		}
-
+		doEnergyLoop();
 		doFluidLoop();
 	}
 	
@@ -206,5 +206,17 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new InfuserContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 6;
 	}
 }

@@ -19,7 +19,7 @@ public class PlantFarmContainer extends BaseContainer
 	
 	public PlantFarmContainer(int id, PlayerInventory player, PlantFarmTileEntity tileentity) 
 	{
-		super(id, ModContainers.PLANTFARM, player, tileentity, 10);
+		super(id, ModContainers.PLANTFARM, player, tileentity, 19);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int y = 0; y < 3; y++)
@@ -32,6 +32,8 @@ public class PlantFarmContainer extends BaseContainer
 		
 		this.addSlot(new SlotItemHandler(handler, 15, 129, 38));
 		this.addSlot(new SlotItemHandler(handler, 16, 129, 56));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	

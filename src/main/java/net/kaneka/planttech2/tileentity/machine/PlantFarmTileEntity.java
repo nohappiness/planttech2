@@ -58,7 +58,7 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 
 	public PlantFarmTileEntity()
 	{
-		super(ModTileEntities.PLANTFARM_TE, 100000, 17);
+		super(ModTileEntities.PLANTFARM_TE, 100000, 19);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 				}
 			}
 
-			if (energystorage.getEnergyStored() >= getEnergyPerAction() || true)
+			if (energystorage.getEnergyStored() >= getEnergyPerAction())
 			{
 
 				BlockPos actualPos = this.pos.add(actualX - range, 0, actualY - range);
@@ -109,12 +109,13 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 								}
 							}
 							world.setBlockState(actualPos, state.with(CropBaseBlock.GROWSTATE, 0));
-							// energystorage.extractEnergy(getEnergyPerAction());
+							energystorage.extractEnergy(getEnergyPerAction());
 						}
 					}
 				}
 			}
 		}
+		doEnergyLoop();
 	}
 	
 	@Override
@@ -189,5 +190,17 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new PlantFarmContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 17;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 18;
 	}
 }

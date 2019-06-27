@@ -20,7 +20,7 @@ public class InfuserContainer extends BaseContainer
 	
 	public InfuserContainer(int id, PlayerInventory player, InfuserTileEntity tileentity) 
 	{
-		super(id, ModContainers.INFUSER, player, tileentity, 5);
+		super(id, ModContainers.INFUSER, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 69, 48));
@@ -29,6 +29,9 @@ public class InfuserContainer extends BaseContainer
 
 		this.addSlot(new SlotItemHandler(handler, 3, 18, 86));
 		this.addSlot(new SlotItemHandler(handler, 4, 36, 86));
+		
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	

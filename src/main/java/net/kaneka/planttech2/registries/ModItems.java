@@ -10,6 +10,7 @@ import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.DNAContainerItem;
+import net.kaneka.planttech2.items.EnergyStorageItem;
 import net.kaneka.planttech2.items.FertilizerItem;
 import net.kaneka.planttech2.items.GuideItem;
 import net.kaneka.planttech2.items.ParticleItem;
@@ -52,6 +53,9 @@ public class ModItems
 	    		   DNA_CONTAINER = new DNAContainerItem(), 
 	    		   DANCIUM_INGOT = new BaseItem("dancium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   DANCIUM_NUGGET = new BaseItem("dancium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)), 
+	    		   ENERGYSTORAGE_TIER_1 = new EnergyStorageItem("energystorage_tier_1", new Item.Properties().group(ModCreativeTabs.groupmain), 500), 
+	    		   ENERGYSTORAGE_TIER_2 = new EnergyStorageItem("energystorage_tier_2", new Item.Properties().group(ModCreativeTabs.groupmain), 5000), 
+	    		   ENERGYSTORAGE_TIER_3 = new EnergyStorageItem("energystorage_tier_3", new Item.Properties().group(ModCreativeTabs.groupmain), 50000), 
 	    		   FERTILIZER_TIER_1 = new FertilizerItem("fertilizer_tier_1", ModCreativeTabs.groupmain),
 	    		   FERTILIZER_TIER_2 = new FertilizerItem("fertilizer_tier_2", ModCreativeTabs.groupmain),
 	    		   FERTILIZER_TIER_3 = new FertilizerItem("fertilizer_tier_3", ModCreativeTabs.groupmain),

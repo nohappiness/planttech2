@@ -27,9 +27,9 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURES);
 		int l = this.getCookProgressScaled(8);
-		blit(113, 35, 0, 202 + 8 - l, 16, l + 12);
+		blit(108, 35, 0, 202 + 8 - l, 16, l + 12);
 		
-		blit(113, 63 - l, 16, 202, 16, l + 12);
+		blit(108, 63 - l, 16, 202, 16, l + 12);
 		this.blitOffset =- 300; 
 	}
 	
@@ -40,8 +40,8 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		minecraft.getTextureManager().bindTexture(TEXTURES);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
-		int k = this.getEnergyStoredScaled(74);
-		blit(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
+		int k = this.getEnergyStoredScaled(55);
+		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 		
 		int j = this.getFluidStoredScaled(55);
 		blit(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);

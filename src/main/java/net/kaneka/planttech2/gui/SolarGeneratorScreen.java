@@ -27,8 +27,8 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 		//this.drawScaledCustomSizeModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, tileWidth, tileHeight);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
-		int k = this.getEnergyStoredScaled(74);
-		blit(this.guiLeft + 162, this.guiTop + 28 + (74-k), 205, 74-k, 16, 0 + k);
+		int k = this.getEnergyStoredScaled(55);
+		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 		
 		int l = 0; 
 		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE))
@@ -41,7 +41,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 		}
 		
 		int j = getWorkLoadScaled(17); 
-		blit(this.guiLeft + 139, this.guiTop + 61, 205, 75, j, l);
+		blit(this.guiLeft + 136, this.guiTop + 45, 205, 75, j, l);
 	}
 	
 	private int getWorkLoadScaled(int pixels)

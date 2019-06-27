@@ -81,8 +81,8 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 		minecraft.getTextureManager().bindTexture(TEXTURES.get(invsize));
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
-		int k = this.getEnergyStoredScaled(74);
-		blit(this.guiLeft + 162, this.guiTop + 28 + (74 - k), 205, 74 - k, 16, 0 + k);
+		int k = this.getEnergyStoredScaled(55);
+		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)

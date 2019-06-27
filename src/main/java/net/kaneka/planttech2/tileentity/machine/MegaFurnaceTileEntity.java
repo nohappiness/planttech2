@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import java.util.Optional;
+
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
@@ -11,11 +13,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {
 	public int[] ticksPassed = new int[6];
 	boolean isSmelting;
+	protected ItemStackHandler dummyitemhandler = new ItemStackHandler(1);
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -83,16 +88,17 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 
 	public MegaFurnaceTileEntity()
 	{
-		super(ModTileEntities.MEGAFURNACE_TE, 10000, 13);
+		super(ModTileEntities.MEGAFURNACE_TE, 10000, 15);
 	}
 
 	@Override
 	public void doUpdate()
 	{
+		/*
 		isSmelting = false;
 		for (int i = 0; i < 6; i++)
 		{
-			if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem() || true)
+			if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem())
 			{
 				if (this.canSmelt(i))
 				{
@@ -118,8 +124,10 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		}
 		if (isSmelting)
 		{
-			// this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
+			this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
 		}
+		*/
+		doEnergyLoop();
 	}
 	
 	@Override
@@ -136,7 +144,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 			return false;
 		} else
 		{
-			// RecipeWrapper wrapper = new RecipeWrapper(itemhandler, 1, 1);
+			
 			ItemStack output = new ItemStack(Items.COAL);
 			if (output.isEmpty())
 			{
@@ -160,6 +168,12 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 
 			}
 		}
+	}
+	
+	public void getOutput(int slot)
+	{
+		dummyitemhandler.setStackInSlot(0, itemhandler.getStackInSlot(slot));
+		RecipeWrapper wrapper = new RecipeWrapper(dummyitemhandler);
 	}
 
 	public void smeltItem(int slot)
@@ -222,6 +236,18 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new MegaFurnaceContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 13;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 14;
 	}
 
 }

@@ -20,7 +20,7 @@ public class SeedconstructorContainer extends BaseContainer
 	
 	public SeedconstructorContainer(int id, PlayerInventory player, SeedconstructorTileEntity tileentity) 
 	{
-		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 18);
+		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandler(handler, 0, 96, 30));
@@ -29,6 +29,9 @@ public class SeedconstructorContainer extends BaseContainer
 
 		this.addSlot(new SlotItemHandler(handler, 3, 18, 86));
 		this.addSlot(new SlotItemHandler(handler, 4, 36, 86));
+		
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
+		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
 		
 	}
 	
