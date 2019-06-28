@@ -7,15 +7,12 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 public class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
 {
 	protected static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 	protected final PlayerInventory player;
 	protected final EnergyTileEntity te;
-    protected int xSize = 205;
-    protected int ySize = 202;
 
 	@SuppressWarnings("unchecked")
 	public BaseContainerScreen(BaseContainer inventorySlotsIn, PlayerInventory inventoryPlayer, ITextComponent title)
@@ -29,6 +26,8 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	public void init()
     {
         super.init();
+        this.xSize = 205; 
+        this.ySize = 202; 
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
     }
@@ -36,6 +35,7 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
+			this.renderBackground();
 			super.render(mouseX, mouseY, partialTicks);
 			this.drawTooltips(mouseX, mouseY);
 	        this.renderHoveredToolTip(mouseX, mouseY);

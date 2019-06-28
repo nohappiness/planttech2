@@ -1,2 +1,1 @@
 - cropparents have seperate mutatechances, but is not used in calculation
-- sync TE Values. 
