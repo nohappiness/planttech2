@@ -2,11 +2,14 @@ package net.kaneka.planttech2.items;
 
 import java.util.List;
 
+import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -138,6 +141,18 @@ public class BiomassContainerItem extends BaseItem
 			tooltip.add(new StringTextComponent("0/" + capacity));
 		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+	
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) 
+	{
+		if(group == this.group)
+		{
+			items.add(new ItemStack(ModItems.BIOMASSCONTAINER)); 
+			ItemStack full = new ItemStack(ModItems.BIOMASSCONTAINER);
+			setFillLevel(full, capacity);
+			items.add(full); 
+		}
 	}
 
 }
