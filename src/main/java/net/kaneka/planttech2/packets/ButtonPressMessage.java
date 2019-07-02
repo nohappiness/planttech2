@@ -46,7 +46,6 @@ public class ButtonPressMessage
 				ServerPlayerEntity serverPlayer = ctx.get().getSender();
 				BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
 				int buttonId = pkt.buttonId;
-
 				if (serverPlayer.world.isBlockLoaded(pos))
 				{
 					TileEntity te = serverPlayer.world.getTileEntity(pos);
@@ -54,6 +53,7 @@ public class ButtonPressMessage
 					{
 						if (te instanceof CompressorTileEntity)
 						{
+							
 							((CompressorTileEntity) te).setSelectedId(buttonId);
 						}
 					}

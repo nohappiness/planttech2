@@ -22,7 +22,7 @@ public class BiomassContainerItem extends BaseItem
 
 	public BiomassContainerItem()
 	{
-		super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain));
+		super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1));
 		addPropertyOverride(new ResourceLocation("filled"), (stack, world, player) -> {
 			return getFillLevelModel(stack);
 		});

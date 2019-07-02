@@ -37,35 +37,35 @@ public class GuidePlantsScreen extends GuideBaseScreen
 		
 		addButton(new CustomButton(1, this.guiLeft + 28, this.guiTop + 10 + 0 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(1);
+			GuidePlantsScreen.this.buttonClicked(0);
 		})); 
 		addButton(new CustomButton(2, this.guiLeft + 28, this.guiTop + 10 + 1 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(2);
+			GuidePlantsScreen.this.buttonClicked(1);
 		})); 
 		addButton(new CustomButton(3, this.guiLeft + 28, this.guiTop + 10 + 2 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(3);
+			GuidePlantsScreen.this.buttonClicked(2);
 		})); 
 		addButton(new CustomButton(4, this.guiLeft + 28, this.guiTop + 10 + 3 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(4);
+			GuidePlantsScreen.this.buttonClicked(3);
 		})); 
 		addButton(new CustomButton(5, this.guiLeft + 28, this.guiTop + 10 + 4 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(5);
+			GuidePlantsScreen.this.buttonClicked(4);
 		})); 
 		addButton(new CustomButton(6, this.guiLeft + 28, this.guiTop + 10 + 5 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(6);
+			GuidePlantsScreen.this.buttonClicked(5);
 		})); 
 		addButton(new CustomButton(7, this.guiLeft + 28, this.guiTop + 10 + 6 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(7);
+			GuidePlantsScreen.this.buttonClicked(6);
 		})); 
 		addButton(new CustomButton(8, this.guiLeft + 28, this.guiTop + 10 + 7 * 22, 100, 20, "TEST", (button) -> 
 		{
-			GuidePlantsScreen.this.buttonClicked(8);
+			GuidePlantsScreen.this.buttonClicked(7);
 		})); 
 
 		updateButtons();

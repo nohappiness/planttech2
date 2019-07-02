@@ -51,6 +51,7 @@ public class GuideBaseScreen extends Screen
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
+		this.renderBackground();
 		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		if (fadeInTimer > 0)
@@ -143,7 +144,7 @@ public class GuideBaseScreen extends Screen
 		posY += this.guiTop;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 		{
-			renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
+			renderTooltip(lines, mouseX, mouseY);
 		}
 	}
 

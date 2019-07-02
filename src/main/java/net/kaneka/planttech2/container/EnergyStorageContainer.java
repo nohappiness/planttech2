@@ -22,6 +22,24 @@ public class EnergyStorageContainer extends BaseContainer
 	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
 	this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
     }
+    
+    class ChangeCheckSlot extends SlotItemHandler
+    {
+        private EnergyStorageTileEntity te; 
+
+        public ChangeCheckSlot(EnergyStorageTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
+        {
+    	super(itemHandler, index, xPosition, yPosition);
+    	this.te = te; 
+        }
+
+        @Override
+        public void onSlotChanged()
+        {
+    	te.onSlotContentChanged();
+    	super.onSlotChanged();
+        }
+    }
 
 }
 

@@ -2,7 +2,8 @@
     "enabled": true,
     "temperature": 4,
     "seeds": [
-        "planttech2:nether_wart_seeds"
+        "planttech2:nether_wart_seeds", 
+        "minecraft:nether_wart"
     ],
     "drops":[
     ],

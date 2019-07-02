@@ -6,15 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import net.kaneka.planttech2.container.CompressorContainer;
+import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
+import net.minecraft.util.math.BlockPos;
 
 public class CompressorTileEntity extends EnergyInventoryTileEntity
 {
@@ -36,6 +42,12 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 				return CompressorTileEntity.this.ticksPassed;
 			case 3:
 				return CompressorTileEntity.this.selectedId;
+			case 4: 
+				return CompressorTileEntity.this.pos.getX(); 
+			case 5: 
+				return CompressorTileEntity.this.pos.getY(); 
+			case 6: 
+				return CompressorTileEntity.this.pos.getZ(); 
 			default:
 				return 0;
 			}
@@ -53,17 +65,29 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 				break;
 			case 2:
 				CompressorTileEntity.this.ticksPassed = value;
-				;
 				break;
 			case 3:
 				CompressorTileEntity.this.selectedId = value;
+				break; 
+			case 4:
+				BlockPos newPos = new BlockPos(value, CompressorTileEntity.this.pos.getY(), CompressorTileEntity.this.pos.getZ()); 
+				CompressorTileEntity.this.pos = newPos;
+				break;
+			case 5:
+				BlockPos newPos2 = new BlockPos(CompressorTileEntity.this.pos.getX(), value, CompressorTileEntity.this.pos.getZ()); 
+				CompressorTileEntity.this.pos = newPos2;
+				break;
+			case 6:
+				BlockPos newPos3 = new BlockPos(CompressorTileEntity.this.pos.getX(), CompressorTileEntity.this.pos.getY(), value); 
+				CompressorTileEntity.this.pos = newPos3;
+				break;
 			}
 
 		}
 
 		public int size()
 		{
-			return 4;
+			return 7;
 		}
 	};
 
@@ -141,16 +165,15 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 
 	public void setRecipe()
 	{
-
-		if (previousInput == null)
-		{
-			this.selectedId = -2;
-			initRecipeList();
-		} else if (previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
-		{
-			this.selectedId = -2;
-			initRecipeList();
-		}
+        		if (previousInput == null)
+        		{
+        			this.selectedId = -2;
+        			initRecipeList();
+        		} else if (previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
+        		{
+        			this.selectedId = -2;
+        			initRecipeList();
+        		}
 
 	}
 
@@ -167,17 +190,49 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 		List<Integer> keys = new ArrayList<Integer>();
 		recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
 
-		/*
-		 * for (CompressorRecipe recipe :
-		 * this.world.getRecipeManager().getRecipes(ModRecipeTypes.COMPRESSING)) {
-		 * 
-		 * if (recipe.matches(this, world)) {
-		 * temprecipeList.put(Item.getIdFromItem(recipe.getRecipeOutput().getItem()),
-		 * Pair.of(recipe.getRecipeOutput(), recipe.getAmountInput()));
-		 * keys.add(Item.getIdFromItem(recipe.getRecipeOutput().getItem())); }
-		 * 
-		 * }
-		 */
+		ItemStack particleStack = itemhandler.getStackInSlot(0); 
+		
+		if(!particleStack.isEmpty())
+		{
+			Item particle = particleStack.getItem(); 
+			if(world != null)
+			{
+        		 for (IRecipe<?> recipe :this.world.getRecipeManager().getRecipes()) 
+        		 {
+        			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING)
+        			 {
+        				 CompressorRecipe compRecipe = (CompressorRecipe) recipe; 
+                		 if (compRecipe.getInput().getItem() == particle) 
+                		 {
+                    		 temprecipeList.put(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()),
+                    		 Pair.of(compRecipe.getRecipeOutput(), compRecipe.getAmountInput()));
+                    		 keys.add(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem())); 
+                		 }
+        			 }
+        		 
+        		 }
+			}
+			else
+			{
+				for (IRecipe<?> recipe :Minecraft.getInstance().world.getRecipeManager().getRecipes()) 
+       		 {
+       			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING)
+       			 {
+       				 CompressorRecipe compRecipe = (CompressorRecipe) recipe; 
+               		 if (compRecipe.getInput().getItem() == particle) 
+               		 {
+                   		 temprecipeList.put(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()),
+                   		 Pair.of(compRecipe.getRecipeOutput(), compRecipe.getAmountInput()));
+                   		 keys.add(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem())); 
+               		 }
+       			 }
+       		 
+       		 }
+			}
+    		 
+    		 
+		}
+		 
 
 		Collections.sort(keys);
 

@@ -2,7 +2,6 @@ package net.kaneka.planttech2.container;
 
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -99,9 +98,9 @@ public class CompressorContainer extends BaseContainer
 
 class ChangeCheckSlot extends SlotItemHandler
 {
-    private EnergyTileEntity te; 
+    private CompressorTileEntity te; 
 
-    public ChangeCheckSlot(EnergyTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
+    public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
     {
 	super(itemHandler, index, xPosition, yPosition);
 	this.te = te; 
@@ -110,7 +109,7 @@ class ChangeCheckSlot extends SlotItemHandler
     @Override
     public void onSlotChanged()
     {
-	te.onSlotContentChanged();
+	te.setRecipe();
 	super.onSlotChanged();
     }
 }

@@ -22,7 +22,7 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 
 	public EnergyStorageItem(String name, Properties property, int basecapacity)
 	{
-		super(name, property);
+		super(name, property.maxStackSize(1));
 		this.basecapacity = basecapacity;
 	}
 	

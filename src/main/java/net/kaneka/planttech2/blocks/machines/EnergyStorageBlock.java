@@ -46,7 +46,6 @@ public class EnergyStorageBlock extends MachineBaseBlock
 	return state.with(FACING, rot.rotate((Direction) state.get(FACING)));
     }
 
-    @SuppressWarnings("deprecation")
 	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn)
     {
