@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import java.util.Optional;
 
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;

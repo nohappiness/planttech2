@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.registries;
 
+import net.kaneka.planttech2.gui.ChipalyzerScreen;
 import net.kaneka.planttech2.gui.CompressorScreen;
 import net.kaneka.planttech2.gui.DNACleanerScreen;
 import net.kaneka.planttech2.gui.DNACombinerScreen;
@@ -13,11 +14,15 @@ import net.kaneka.planttech2.gui.PlantFarmScreen;
 import net.kaneka.planttech2.gui.SeedSqueezerScreen;
 import net.kaneka.planttech2.gui.SeedconstructorScreen;
 import net.kaneka.planttech2.gui.SolarGeneratorScreen;
+import net.kaneka.planttech2.gui.TeleporterScreen;
 import net.kaneka.planttech2.gui.ItemUpgradeableScreen;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModScreens
 {
+	@OnlyIn(Dist.CLIENT)
 	public static final void registerGUI()
 	{
 		ScreenManager.registerFactory(ModContainers.COMPRESSOR, CompressorScreen::new);
@@ -34,5 +39,7 @@ public class ModScreens
 		ScreenManager.registerFactory(ModContainers.SEEDCONSTRUCTOR, SeedconstructorScreen::new);
 		ScreenManager.registerFactory(ModContainers.SEEDQUEEZER, SeedSqueezerScreen::new);
 		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
+		ScreenManager.registerFactory(ModContainers.CHIPALYZER, ChipalyzerScreen::new);
+		ScreenManager.registerFactory(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
 	}
 }

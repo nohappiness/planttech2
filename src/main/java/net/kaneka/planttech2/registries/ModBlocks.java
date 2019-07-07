@@ -30,6 +30,7 @@ public class ModBlocks
 
 	public static BaseBlock 
 			CABLE = new CableBlock(), 
+			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
 			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
 			CROPBARS = new CropBarsBlock(),
 	        DANCIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "dancium_block", ModCreativeTabs.groupmain, true),

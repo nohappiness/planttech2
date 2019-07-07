@@ -31,8 +31,8 @@ public class CustomButton extends Button
 	         GlStateManager.enableBlend();
 	         GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 	         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-	         blit(this.x, this.y, 0, i * 20 - 20, 50, 20, 200,40);
-	         blit(this.x + 50, this.y, 150, i * 20 - 20, 50, 20, 200, 40);
+	         blit(this.x, this.y, 0, i * 20, this.width / 2, this.height, 200, 80);
+	         blit(this.x + this.width / 2, this.y, 200 - this.width / 2, i * 20, this.width / 2, this.height, 200, 80);
 	         this.renderBg(minecraft, mouseX, mouseY);
             int j = Integer.parseInt("00e803",16);
 

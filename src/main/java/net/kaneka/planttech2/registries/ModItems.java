@@ -14,6 +14,7 @@ import net.kaneka.planttech2.items.EnergyStorageItem;
 import net.kaneka.planttech2.items.FertilizerItem;
 import net.kaneka.planttech2.items.GuideItem;
 import net.kaneka.planttech2.items.ParticleItem;
+import net.kaneka.planttech2.items.TeleporterItem;
 import net.kaneka.planttech2.items.ThermometerItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.items.WrenchItem;
@@ -53,6 +54,9 @@ public class ModItems
 	    		   DNA_CONTAINER = new DNAContainerItem(), 
 	    		   DANCIUM_INGOT = new BaseItem("dancium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   DANCIUM_NUGGET = new BaseItem("dancium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)), 
+	    		   EMPTY_UPGRADECHIP_TIER_1 = new TierItem("empty_upgradechip_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 1, 3),
+	    		   EMPTY_UPGRADECHIP_TIER_2 = new TierItem("empty_upgradechip_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
+	    		   EMPTY_UPGRADECHIP_TIER_3 = new TierItem("empty_upgradechip_3",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
 	    		   ENERGYSTORAGE_TIER_1 = new EnergyStorageItem("energystorage_tier_1", new Item.Properties().group(ModCreativeTabs.groupmain), 500), 
 	    		   ENERGYSTORAGE_TIER_2 = new EnergyStorageItem("energystorage_tier_2", new Item.Properties().group(ModCreativeTabs.groupmain), 5000), 
 	    		   ENERGYSTORAGE_TIER_3 = new EnergyStorageItem("energystorage_tier_3", new Item.Properties().group(ModCreativeTabs.groupmain), 50000), 
@@ -97,6 +101,7 @@ public class ModItems
 	    		   SPEEDUPGRADE_TIER_2 = new TierItem("speedupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 2),
 	    		   SPEEDUPGRADE_TIER_3 = new TierItem("speedupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 2),
 	    		   SPEEDUPGRADE_TIER_4 = new TierItem("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
+	    		   TELEPORTER = new TeleporterItem("teleporter", new Item.Properties().group(ModCreativeTabs.groupmain), 1000), 
 	    		   THERMOMETER = new ThermometerItem(), 
 	    		   WRENCH = new WrenchItem();
     

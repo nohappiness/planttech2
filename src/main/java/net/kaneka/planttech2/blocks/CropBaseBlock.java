@@ -343,6 +343,8 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		return true;
 	}
+	
+	
 
 	public static class ColorHandler implements IBlockColor
 	{

@@ -19,15 +19,12 @@ import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModScreens;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -38,8 +35,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -71,12 +68,11 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
-		MinecraftForge.EVENT_BUS.addListener(this::modelBake);
 	}
 
 	private void onServerStarting(FMLServerAboutToStartEvent event)
 	{
-		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+		//event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -85,12 +81,12 @@ public class PlantTechMain
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
-		ModScreens.registerGUI();
+		
 	}
 
 	private void doClientStuff(final FMLClientSetupEvent event)
 	{
-		ModelLoaderRegistry.registerLoader(new ModelLoaderCable());
+		ModScreens.registerGUI();
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
@@ -141,11 +137,5 @@ public class PlantTechMain
 			ModRecipeSerializers.registerAll(event);
 		}
 
-	}
-
-	public void modelBake(ModelBakeEvent event)
-	{
-		// event.getModelRegistry().put(new ModelResourceLocation("planttech2:cable"),
-		// new CompositeModel());
 	}
 }

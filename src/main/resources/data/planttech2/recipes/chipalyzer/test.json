@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 1, 
+    "input": {
+      "item": "planttech2:wood_particles"
+    },
+    "result": {
+      "item": "minecraft:acacia_log"
+    }
+  }

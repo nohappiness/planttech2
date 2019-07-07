@@ -16,6 +16,7 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class CropBarsBlock extends BaseBlock
@@ -68,6 +69,12 @@ public class CropBarsBlock extends BaseBlock
 	public BlockRenderType getRenderType(BlockState iBlockState)
 	{
 		return BlockRenderType.MODEL;
+	}
+	
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
+	{
+		return true; 
 	}
 
 }

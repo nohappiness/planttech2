@@ -16,4 +16,5 @@ public class ScreenReferences
 	public static final String GUI_ENERGYSTORAGE = "planttech2:energystoragecontainer";
 	public static final String GUI_INFUSER = "planttech2:infusercontainer";
 	public static final String GUI_ITEMUPGRADEABLE = "planttech2:itemupgradeablecontainer"; 
+	public static final String GUI_CHIPALYZER = "planttech2:chipalyzercontainer";
 }

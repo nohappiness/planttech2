@@ -3,9 +3,7 @@ package net.kaneka.planttech2.proxy;
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.rendering.cable.ModelLoaderCable;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,7 +17,6 @@ public class ClientProxy implements IProxy
     @Override
     public void setup(FMLCommonSetupEvent event)
     {
-	ModelLoaderRegistry.registerLoader(new ModelLoaderCable());
 	//fontRenderer = new CustomFontRenderer(Minecraft.getInstance().gameSettings, new ResourceLocation("planttech2:textures/font/font.png"), Minecraft.getInstance().textureManager, true);
 	
 	

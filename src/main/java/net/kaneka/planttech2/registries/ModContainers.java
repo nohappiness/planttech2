@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.registries;
 
+import net.kaneka.planttech2.container.ChipalyzerContainer;
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.container.DNACleanerContainer;
 import net.kaneka.planttech2.container.DNACombinerContainer;
@@ -14,6 +15,7 @@ import net.kaneka.planttech2.container.PlantFarmContainer;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
 import net.kaneka.planttech2.container.SeedconstructorContainer;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
+import net.kaneka.planttech2.container.TeleporterContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.event.RegistryEvent;
 
@@ -33,6 +35,8 @@ public class ModContainers
 	public static final ContainerType<SeedconstructorContainer> SEEDCONSTRUCTOR = new ContainerType<SeedconstructorContainer>(SeedconstructorContainer::new);
 	public static final ContainerType<SeedSqueezerContainer> SEEDQUEEZER = new ContainerType<SeedSqueezerContainer>(SeedSqueezerContainer::new);
 	public static final ContainerType<SolarGeneratorContainer> SOLARGENERATOR = new ContainerType<SolarGeneratorContainer>(SolarGeneratorContainer::new);
+	public static final ContainerType<ChipalyzerContainer> CHIPALYZER = new ContainerType<ChipalyzerContainer>(ChipalyzerContainer::new);
+	public static final ContainerType<TeleporterContainer> TELEPORTERITEM = new ContainerType<TeleporterContainer>(TeleporterContainer::new);
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
@@ -49,6 +53,8 @@ public class ModContainers
 										PLANTFARM.setRegistryName("planttech2:plantfarmcontainer"),
 										SEEDCONSTRUCTOR.setRegistryName("planttech2:seedconstructorcontainer"),
 										SEEDQUEEZER.setRegistryName("planttech2:seedsqueezercontainer"),
-										SOLARGENERATOR.setRegistryName("planttech2:solargeneratorcontainer"));
+										SOLARGENERATOR.setRegistryName("planttech2:solargeneratorcontainer"), 
+										CHIPALYZER.setRegistryName("planttech2:chipalyzercontainer"), 
+										TELEPORTERITEM.setRegistryName("planttech2:teleporteritem"));
 	}
 }

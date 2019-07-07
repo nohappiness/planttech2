@@ -1,5 +1,59 @@
 {
-    "variants": {
-        "": { "model": "planttech2:cable/cablemodel" }
-    }
+   "multipart": [
+       {   "apply": { "model": "planttech2:block/cable/cable_core" }},
+       {   "when": { "north": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north"}
+       },
+       {   "when": { "east": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north", "y": 90}
+       },
+       {   "when": { "south": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north", "y": 180}
+       },
+       {   "when": { "west": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north", "y": 270}
+       }, 
+       {   "when": { "up": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north", "x": 270}
+       }, 
+       {   "when": { "down": 1 },
+           "apply": { "model": "planttech2:block/cable/cable_north", "x": 90}
+       }, 
+       {   "when": { "north": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in"}
+       },
+       {   "when": { "east": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in", "y": 90}
+       },
+       {   "when": { "south": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in", "y": 180}
+       },
+       {   "when": { "west": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in", "y": 270}
+       }, 
+       {   "when": { "up": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in", "x": 270}
+       }, 
+       {   "when": { "down": 2 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_in", "x": 90}
+       },
+       {   "when": { "north": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out"}
+       },
+       {   "when": { "east": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out", "y": 90}
+       },
+       {   "when": { "south": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out", "y": 180}
+       },
+       {   "when": { "west": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out", "y": 270}
+       }, 
+       {   "when": { "up": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out", "x": 270}
+       }, 
+       {   "when": { "down": 3 },
+           "apply": { "model": "planttech2:block/cable/cable_connection_north_out", "x": 90}
+       }
+   ]
 }

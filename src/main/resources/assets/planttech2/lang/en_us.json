@@ -29,6 +29,7 @@
     "container.energystorage": "Energystorage",
     "container.infuser": "Infuser", 
     "container.upgradeableitem": "Upgrade Item",
+    "container.chipalyzer": "Chipalyzer",
 
     "item.planttech2.guide_overview": "Tablet: Planttech 2 Overview",
     "item.planttech2.guide_plants": "Tablet: Plant Encyclopedia",
@@ -493,7 +494,7 @@
     "block.planttech2.kanekium_block": "Kanekium Block",
     "block.planttech2.kinnoium_block": "Kinnoium Block",
     "block.planttech2.lenthurium_block": "Lenthurium Block",
-    "block.planttech2.cable": "Cable (DO NOT USE!! Only for crafting)",
+    "block.planttech2.cable": "Cable",
     "block.planttech2.dna_extractor": "DNA Extractor",
     "block.planttech2.dna_combiner": "DNA Combiner",
     "block.planttech2.dna_remover": "DNA Remover",

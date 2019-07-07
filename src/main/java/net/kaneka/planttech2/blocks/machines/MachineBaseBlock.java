@@ -4,6 +4,7 @@ import java.util.List;
 import net.kaneka.planttech2.blocks.BaseBlock;
 import net.kaneka.planttech2.gui.ScreenReferences;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
@@ -112,43 +113,11 @@ public class MachineBaseBlock extends BaseBlock
 	    return new EnergyStorageTileEntity();
 	else if (this == ModBlocks.INFUSER)
 		return new InfuserTileEntity(); 
+	else if (this == ModBlocks.CHIPALYZER)
+		return new ChipalyzerTileEntity(); 
 	else
 	    return new IdentifierTileEntity();
     }
-
-    /*
-    public Container createContainer(PlayerInventory playerInventory, TileEntity te)
-    {
-	if (this == ModBlocks.IDENTIFIER && te instanceof TileEntityIdentifier)
-	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
-	else if (this == ModBlocks.MEGAFURNACE && te instanceof TileEntityMegaFurnace)
-	    return new ContainerMegaFurnace(playerInventory, (TileEntityMegaFurnace) te);
-	else if (this == ModBlocks.PLANTFARM && te instanceof TileEntityPlantFarm)
-	    return new ContainerPlantFarm(playerInventory, (TileEntityPlantFarm) te);
-	else if (this == ModBlocks.SOLARGENERATOR && te instanceof TileEntitySolarGenerator)
-	    return new ContainerSolarGenerator(playerInventory, (TileEntitySolarGenerator) te);
-	else if (this == ModBlocks.SEEDSQUEEZER && te instanceof TileEntitySeedSqueezer)
-	    return new ContainerSeedSqueezer(playerInventory, (TileEntitySeedSqueezer) te);
-	else if (this == ModBlocks.DNA_COMBINER && te instanceof TileEntityDNACombiner)
-	    return new ContainerDNACombiner(playerInventory, (TileEntityDNACombiner) te);
-	else if (this == ModBlocks.DNA_EXTRACTOR && te instanceof TileEntityDNAExtractor)
-	    return new ContainerDNAExtractor(playerInventory, (TileEntityDNAExtractor) te);
-	else if (this == ModBlocks.DNA_REMOVER && te instanceof TileEntityDNARemover)
-	    return new ContainerDNARemover(playerInventory, (TileEntityDNARemover) te);
-	else if (this == ModBlocks.SEEDCONSTRUCTOR && te instanceof TileEntitySeedconstructor)
-	    return new ContainerSeedconstructor(playerInventory, (TileEntitySeedconstructor) te);
-	else if (this == ModBlocks.DNA_CLEANER && te instanceof TileEntityDNACleaner)
-	    return new ContainerDNACleaner(playerInventory, (TileEntityDNACleaner) te);
-	else if (this == ModBlocks.COMPRESSOR && te instanceof TileEntityCompressor)
-	    return new ContainerCompressor(playerInventory, (TileEntityCompressor) te);
-	else if (this == ModBlocks.ENERGYSTORAGE && te instanceof TileEntityEnergyStorage)
-	    return new ContainerEnergyStorage(playerInventory, (TileEntityEnergyStorage) te);
-	else if (this == ModBlocks.INFUSER && te instanceof TileEntityInfuser)
-    	return new ContainerInfuser(playerInventory, (TileEntityInfuser) te);
-	else
-	    return new ContainerIdentifier(playerInventory, (TileEntityIdentifier) te);
-    }
-    */
 
     @Override
     public BlockRenderType getRenderType(BlockState state)
@@ -184,6 +153,8 @@ public class MachineBaseBlock extends BaseBlock
 	    return ScreenReferences.GUI_ENERGYSTORAGE;
 	else if (this == ModBlocks.INFUSER)
 	    return ScreenReferences.GUI_INFUSER;
+	else if (this == ModBlocks.CHIPALYZER)
+	    return ScreenReferences.GUI_CHIPALYZER;
 	else
 	    return ScreenReferences.GUI_IDENTIFIER;
     }
