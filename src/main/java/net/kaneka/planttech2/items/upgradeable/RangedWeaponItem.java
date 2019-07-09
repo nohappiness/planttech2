@@ -32,7 +32,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 				return 0.0F;
 			} else
 			{
-				return !(entity.getActiveItemStack().getItem() instanceof BowItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
+				return !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
 			}
 		});
 		this.addPropertyOverride(new ResourceLocation("pulling"), (stack, world, entity) -> {

@@ -92,7 +92,7 @@ public class CableBlock extends BaseBlock
 
 	public CableBlock()
 	{
-		super(Block.Properties.create(Material.IRON), "cable", ModCreativeTabs.groupmachines, true);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupmachines, true);
 		this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
 	}
 
@@ -245,19 +245,11 @@ public class CableBlock extends BaseBlock
 	@Override
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
 	{
-		Direction neighborfacing = null;
-		for (Direction facing : Direction.values())
-		{
-			if (pos.offset(facing).equals(neighbor))
-			{
-				neighborfacing = facing;
-			}
-		}
 
 		TileEntity te = world.getTileEntity(pos);
-		if (te != null && neighborfacing != null)
+		if (te != null)
 		{
-			if (te instanceof CableTileEntity || te.getCapability(CapabilityEnergy.ENERGY, neighborfacing).isPresent())
+			if (te instanceof CableTileEntity || te.getCapability(CapabilityEnergy.ENERGY).isPresent())
 			{
 				((CableTileEntity) te).checkConnections();
 			}
@@ -321,6 +313,7 @@ public class CableBlock extends BaseBlock
 		if (te instanceof CableTileEntity)
 		{
 			CableTileEntity tec = (CableTileEntity) te;
+			((CableTileEntity) te).checkConnections();
 			return state.with(UP, tec.getConnection(Direction.UP)).with(DOWN, tec.getConnection(Direction.DOWN)).with(EAST, tec.getConnection(Direction.EAST))
 			        .with(WEST, tec.getConnection(Direction.WEST)).with(NORTH, tec.getConnection(Direction.NORTH)).with(SOUTH, tec.getConnection(Direction.SOUTH));
 		}

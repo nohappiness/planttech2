@@ -1,7 +1,11 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 
+import java.util.Optional;
+
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
+import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -10,6 +14,8 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.FurnaceRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.ItemStackHandler;
@@ -93,7 +99,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
-		/*
+		
 		isSmelting = false;
 		for (int i = 0; i < 6; i++)
 		{
@@ -125,7 +131,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		{
 			this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
 		}
-		*/
+		
 		doEnergyLoop();
 	}
 	
@@ -144,7 +150,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		} else
 		{
 			
-			ItemStack output = new ItemStack(Items.COAL);
+			ItemStack output = getOutput(slot);
 			if (output.isEmpty())
 			{
 				return false;
@@ -169,10 +175,17 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		}
 	}
 	
-	public void getOutput(int slot)
+	public ItemStack getOutput(int slot)
 	{
 		dummyitemhandler.setStackInSlot(0, itemhandler.getStackInSlot(slot));
 		RecipeWrapper wrapper = new RecipeWrapper(dummyitemhandler);
+		Optional<FurnaceRecipe> recipeopt = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, wrapper, world);
+		FurnaceRecipe recipe = recipeopt.orElse(null); 
+		if(recipe != null)
+		{
+			return recipe.getRecipeOutput(); 
+		}
+		return null; 
 	}
 
 	public void smeltItem(int slot)
@@ -180,7 +193,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		if (this.canSmelt(slot))
 		{
 			ItemStack itemstack = this.itemhandler.getStackInSlot(slot);
-			ItemStack itemstack1 = new ItemStack(Items.COAL);
+			ItemStack itemstack1 = getOutput(slot); 
 			ItemStack itemstack2 = this.itemhandler.getStackInSlot(slot + 6);
 
 			if (itemstack2.isEmpty())

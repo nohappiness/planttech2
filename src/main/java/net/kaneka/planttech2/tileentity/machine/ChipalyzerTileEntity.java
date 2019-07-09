@@ -9,7 +9,6 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
@@ -77,7 +76,7 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 			if (!stackChip.isEmpty() && !stackInput.isEmpty())
 			{
 				
-				ChipalyzerRecipe recipe = getRecipe(stackInput);
+				ChipalyzerRecipe recipe = getRecipe(stackChip, stackInput);
 				if (recipe != null)
 				{
 					if (recipe.getOutput() == output || output == null)
@@ -123,13 +122,10 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 		doEnergyLoop();
 	}
 
-	private ChipalyzerRecipe getRecipe(ItemStack stack)
+	private ChipalyzerRecipe getRecipe(ItemStack chip, ItemStack stack)
 	{
-		ChipalyzerRecipe recipeench = null;
-		ChipalyzerRecipe recipeitem = null;
 		if (!stack.isEmpty())
 		{
-			
 			if (world != null)
 			{
 				for (IRecipe<?> recipe : world.getRecipeManager().getRecipes())
@@ -139,32 +135,14 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 						ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
 						if (chipRecipe.getTier() == getUpgradeTier(0, PlantTechConstants.UPGRADECHIP_TYPE))
 						{
-							if(stack.getItem() instanceof EnchantedBookItem && chipRecipe.getEnchantment() != null)	
+							if(chipRecipe.compare(chip, stack))
 							{
-								if (chipRecipe.compareEnchantment(EnchantedBookItem.getEnchantments(stack)))
-								{
-									recipeench = chipRecipe;
-								}
-							}
-							if (chipRecipe.getInput() != null)
-							{
-								if (chipRecipe.getInput().getItem() == stack.getItem())
-								{
-									recipeitem = chipRecipe;
-								}
+								return chipRecipe; 
 							}
 						}
 					}
 				}
 			}
-		}
-
-		if (recipeench != null)
-		{
-			return recipeench;
-		} else if (recipeitem != null)
-		{
-			return recipeitem;
 		}
 		return null;
 	}

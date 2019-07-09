@@ -199,7 +199,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			{
         		 for (IRecipe<?> recipe :this.world.getRecipeManager().getRecipes()) 
         		 {
-        			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING)
+        			 if(recipe.getType()  == null)//ModRecipeTypes.COMPRESSING
         			 {
         				 CompressorRecipe compRecipe = (CompressorRecipe) recipe; 
                 		 if (compRecipe.getInput().getItem() == particle) 
@@ -216,7 +216,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			{
 				for (IRecipe<?> recipe :Minecraft.getInstance().world.getRecipeManager().getRecipes()) 
        		 {
-       			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING)
+       			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING) 
        			 {
        				 CompressorRecipe compRecipe = (CompressorRecipe) recipe; 
                		 if (compRecipe.getInput().getItem() == particle) 

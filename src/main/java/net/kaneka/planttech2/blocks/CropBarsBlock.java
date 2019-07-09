@@ -17,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class CropBarsBlock extends BaseBlock
@@ -75,6 +76,19 @@ public class CropBarsBlock extends BaseBlock
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
 	{
 		return true; 
+	}
+	
+	@Override
+	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos)
+	{
+		if(world.getBlockState(pos.down()).isSolid())
+		{
+			return true; 
+		}
+		else
+		{
+			return false; 
+		}
 	}
 
 }

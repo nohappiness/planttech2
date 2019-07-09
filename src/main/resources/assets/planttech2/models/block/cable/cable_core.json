@@ -1,6 +1,7 @@
 {
     "textures": {
-        "cable_texture": "planttech2:blocks/cables/cable"
+        "cable_texture": "planttech2:blocks/cables/cable", 
+        "particle": "planttech2:blocks/cables/cable"
     },
 	"elements": [
 		{

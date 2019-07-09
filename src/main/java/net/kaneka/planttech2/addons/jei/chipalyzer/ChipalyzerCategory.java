@@ -38,7 +38,7 @@ public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe>
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>(); 
 		list.add(recipe.getChip());
-		list.add(recipe.getJeiInput()); 
+		list.add(recipe.getInput()); 
 		ingredients.setInputs(VanillaTypes.ITEM, list);
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 	}

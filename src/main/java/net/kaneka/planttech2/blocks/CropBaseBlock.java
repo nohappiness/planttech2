@@ -18,6 +18,7 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,6 +27,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
@@ -169,9 +171,9 @@ public class CropBaseBlock extends ContainerBlock
 		{
 			HashMapCropTraits traits = ((CropsTileEntity) te).getTraits();
 			if (!enoughtLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
-				messages[1] = "Not enought light";
+				messages[1] = "Not enough light";
 			if (!enoughtWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
-				messages[2] = "Not enought water";
+				messages[2] = "Not enough water";
 			if (!rightSoil(world, pos, traits.getType()))
 				messages[3] = "Not right soil";
 			if (!rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE)))
@@ -201,9 +203,17 @@ public class CropBaseBlock extends ContainerBlock
 		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
 		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
 		{
-			if (world.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER)
+			if (world.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER )
 			{
 				return true;
+			}
+			
+			if(world.getBlockState(blockpos$mutableblockpos).has(BlockStateProperties.WATERLOGGED))
+			{
+				if(world.getBlockState(blockpos$mutableblockpos).get(BlockStateProperties.WATERLOGGED))
+				{
+					return true; 
+				}
 			}
 		}
 
@@ -329,10 +339,6 @@ public class CropBaseBlock extends ContainerBlock
 		return BlockRenderType.MODEL;
 	}
 
-	public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos)
-	{
-		return 0;
-	}
 
 	public String getEntryName()
 	{
