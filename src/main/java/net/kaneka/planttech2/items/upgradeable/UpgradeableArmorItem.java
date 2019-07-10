@@ -27,6 +27,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -175,18 +176,6 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	public static int getEnergyCost(ItemStack stack)
 	{
 		return 20 + NBTHelper.getIntSave(stack, "energycost", 0);
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
-	{
-		CompoundNBT tag = stack.getTag();
-		if (tag != null)
-		{
-			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
-		}
-
-		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -340,6 +329,20 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	{
+		CompoundNBT tag = stack.getTag();
+		if (tag != null)
+		{
+			tooltip.add(new TranslationTextComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new TranslationTextComponent("info.energycosts", getEnergyCost(stack))); 
+			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
+		}
+
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 }

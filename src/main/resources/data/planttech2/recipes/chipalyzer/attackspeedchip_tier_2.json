@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+      "item": "minecraft:golden_sword"
+    },
+    "result": {
+      "item": "planttech2:attackspeedchip_tier_2"
+    }
+  }

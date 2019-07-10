@@ -414,7 +414,7 @@ public class CropList
 		        .addDrop(new ItemStack(Blocks.BROWN_MUSHROOM), 0, 4);
 		this.getEntryByName("mycelium");
 		this.getEntryByName("netherrack");
-		this.getEntryByName("nether_wart");
+		this.getEntryByName("nether_wart").addSeeds(new ItemStack(Items.NETHER_WART));
 		this.getEntryByName("orange_tulip").addSeeds(new ItemStack(Blocks.ORANGE_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
 		        .addDrop(new ItemStack(Blocks.ORANGE_TULIP), 0, 4);
 		this.getEntryByName("oxeye_daisy").addSeeds(new ItemStack(Blocks.OXEYE_DAISY)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)

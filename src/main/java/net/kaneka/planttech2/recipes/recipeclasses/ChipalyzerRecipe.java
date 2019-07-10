@@ -68,10 +68,8 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			{
 				Map<Enchantment, Integer> inputench = getEnchList(input), 
 										  stackench = getEnchList(stack); 
-				System.out.println(stackench);
 				if(inputench.size() == stackench.size())
 				{
-					System.out.println("test");
 					boolean bool = true; 
 					for(Enchantment ench: inputench.keySet())
 					{

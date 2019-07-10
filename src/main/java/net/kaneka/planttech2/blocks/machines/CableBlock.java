@@ -149,7 +149,9 @@ public class CableBlock extends BaseBlock
 		if (te != null)
 		{
 			te.initCable(state);
+			world.setBlockState(pos, getCurrentState(state, world, pos)); 
 		}
+		
 	}
 
 	@Override

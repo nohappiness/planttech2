@@ -6,6 +6,11 @@
         "minecraft:nether_wart"
     ],
     "drops":[
+    	{
+            "item": "minecraft:nether_wart",
+            "min": 0, 
+            "max": 4
+        }
     ],
     "parents": [
     ],

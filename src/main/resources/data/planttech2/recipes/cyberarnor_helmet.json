@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "A A"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:cyberarmor_helmet",
+        "count": 1
+    }
+}

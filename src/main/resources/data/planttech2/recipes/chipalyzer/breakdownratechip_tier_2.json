@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+      "item": "minecraft:golden_pickaxe"
+    },
+    "result": {
+      "item": "planttech2:breakdownratechip_tier_2"
+    }
+  }

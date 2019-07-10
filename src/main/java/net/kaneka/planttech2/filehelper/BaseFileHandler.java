@@ -9,16 +9,16 @@ import java.util.Scanner;
 
 public class BaseFileHandler
 {
-    	String dir; 
-    	String path; 
+	String dir;
+	String path;
 	File file;
 
 	public List<String> loadFile()
 	{
-	    this.dir = getDirection(); 
-	    this.path = getPath(); 
-	    this.file = new File(path); 
-	    
+		this.dir = getDirection();
+		this.path = getPath();
+		this.file = new File(path);
+
 		try
 		{
 			if (!pathExists())
@@ -77,15 +77,15 @@ public class BaseFileHandler
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getDirection()
 	{
-	    return "config/planttech2";
+		return "config/planttech2";
 	}
-	
+
 	public String getPath()
 	{
-	    return "";
+		return "";
 	}
 
 	protected List<String> defaultValues()

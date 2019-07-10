@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 3, 
+    "input": {
+      "item": "planttech2:energystorage_tier_3"
+    },
+    "result": {
+      "item": "planttech2:capacitychip_tier_3"
+    }
+  }

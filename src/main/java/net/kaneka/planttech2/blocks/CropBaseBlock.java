@@ -18,7 +18,6 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ContainerBlock;
-import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.player.PlayerEntity;

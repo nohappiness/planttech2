@@ -31,6 +31,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -200,7 +201,9 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new TranslationTextComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new TranslationTextComponent("info.energycosts", getEnergyCost(stack))); 
+			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
