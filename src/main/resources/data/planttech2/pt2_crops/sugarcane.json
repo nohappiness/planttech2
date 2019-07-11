@@ -6,6 +6,11 @@
         "minecraft:sugar_cane"
     ],
     "drops":[
+    	{
+            "item": "planttech2:sugarcane_particles",
+            "min": 0, 
+            "max": 4
+        }
     ],
     "parents": [
     ],

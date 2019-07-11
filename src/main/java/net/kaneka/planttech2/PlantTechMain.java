@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
-import net.kaneka.planttech2.filehelper.JsonGenerator;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
@@ -37,7 +36,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -73,7 +71,7 @@ public class PlantTechMain
 
 	private void onServerStarting(FMLServerAboutToStartEvent event)
 	{
-		//event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)

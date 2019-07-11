@@ -6,6 +6,11 @@
         "minecraft:vine"
     ],
     "drops":[
+    	{
+            "item": "planttech2:vine_particles",
+            "min": 0, 
+            "max": 4
+        }
     ],
     "parents": [
     ],
