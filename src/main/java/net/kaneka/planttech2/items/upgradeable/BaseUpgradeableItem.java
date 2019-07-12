@@ -257,7 +257,7 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		if(Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
+		if(player.isSneaking())
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{

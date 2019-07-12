@@ -56,7 +56,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 
 	public SolarGeneratorTileEntity()
 	{
-		super(ModTileEntities.SOLARGENERATOR_TE, 100000, 4);
+		super(ModTileEntities.SOLARGENERATOR_TE, 10000, 4);
 	}
 
 	@Override

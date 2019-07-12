@@ -69,7 +69,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedSqueezerTileEntity()
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 100000, 15, 5000);
+		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 15, 5000);
 	}
 
 	@Override
