@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -22,14 +21,14 @@ import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.resources.IResourceManagerReloadListener;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
-import net.minecraftforge.resource.IResourceType;
-import net.minecraftforge.resource.ISelectiveResourceReloadListener;
 
 
-public class ReloadListenerCropListEntryConfiguration implements ISelectiveResourceReloadListener
+@SuppressWarnings("deprecation")
+public class ReloadListenerCropListEntryConfiguration implements IResourceManagerReloadListener
 {
 	public static final String PATH = "pt2_crops";
 	public static final String EXTENTION = ".json";
@@ -37,7 +36,7 @@ public class ReloadListenerCropListEntryConfiguration implements ISelectiveResou
 	
 
 	@Override
-	public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate)
+	public void onResourceManagerReload(IResourceManager resourceManager)
 	{
 		PlantTechMain.LOGGER.info("Load crop configuration from data packs");
 		Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();

@@ -81,7 +81,7 @@ public class PlantTechMain
 
 	private void onServerStarting(FMLServerAboutToStartEvent event)
 	{
-		//event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -119,6 +119,7 @@ public class PlantTechMain
 			ModItems.register(event.getRegistry());
 			ModBlocks.registerItemBlocks(event.getRegistry());
 			// new DropsJSONGenerator().defaultValues();
+			//new JsonGenerator().create();
 		}
 
 		@SubscribeEvent

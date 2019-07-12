@@ -87,6 +87,49 @@
     "item.planttech2.energystorage_tier_2": "Energystorage Tier 2",
     "item.planttech2.energystorage_tier_3": "Energystorage Tier 3",
     
+    "item.planttech2.cyberbow": "Cyberbow",
+    "item.planttech2.cyberdagger": "Cyberdagger",
+    "item.planttech2.cyberkatana": "Cyberkatana",
+    "item.planttech2.cyberrapier": "Cyberrapier", 
+    "item.planttech2.multitool": "Multitool",
+    
+    "item.planttech2.cyberarmor_helmet": "Cyberarmor Helmet",
+    "item.planttech2.cyberarmor_chest": "Cyberarmor Chest",
+    "item.planttech2.cyberarmor_leggings": "Cyberarmor Leggings",
+    "item.planttech2.cyberarmor_boots": "Cyberarmor Boots",
+    
+    "item.planttech2.empty_upgradechip_1": "Empty Chip Tier 1", 
+    "item.planttech2.empty_upgradechip_2": "Empty Chip Tier 2",
+    "item.planttech2.empty_upgradechip_3": "Empty Chip Tier 3",  
+    
+    "item.planttech2.capacitychip_tier_1": "Capacitychip Tier 1",    
+    "item.planttech2.capacitychip_tier_2": "Capacitychip Tier 2",
+    "item.planttech2.capacitychip_tier_3": "Capacitychip Tier 3",
+    "item.planttech2.harvestlevelchip_tier_1": "Harvestlevelchip Tier 1",    
+    "item.planttech2.harvestlevelchip_tier_2": "Harvestlevelchip Tier 2",
+    "item.planttech2.harvestlevelchip_tier_3": "Harvestlevelchip Tier 3",
+    "item.planttech2.attackchip_tier_1": "Attackchip Tier 1",    
+    "item.planttech2.attackchip_tier_2": "Attackchip Tier 2",
+    "item.planttech2.attackchip_tier_3": "Attackchip Tier 3",
+    "item.planttech2.breakdownratechip_tier_1": "Breakdownratechip Tier 1",    
+    "item.planttech2.breakdownratechip_tier_2": "Breakdownratechip Tier 2",
+    "item.planttech2.breakdownratechip_tier_3": "Breakdownratechip Tier 3",
+    "item.planttech2.armorchip_tier_1": "Armorchip Tier 1",    
+    "item.planttech2.armorchip_tier_2": "Armorchip Tier 2",
+    "item.planttech2.armorchip_tier_3": "Armorchip Tier 3",
+    "item.planttech2.toughnesschip_tier_1": "Tougnesship Tier 1",    
+    "item.planttech2.toughnesschip_tier_2": "Toughnesship Tier 2",
+    "item.planttech2.toughnesschip_tier_3": "Toughnesship Tier 3",
+    "item.planttech2.attackspeedchip_tier_1": "Attackspeedchip Tier 1",    
+    "item.planttech2.attackspeedchip_tier_2": "Attackspeedchip Tier 2",
+    "item.planttech2.attackspeedchip_tier_3": "Attackspeedchip Tier 3",
+    "item.planttech2.reactorchip_tier_1": "Reactorhip Tier 1",    
+    "item.planttech2.reactorchip_tier_2": "Reactorchip Tier 2",
+    "item.planttech2.reactorchip_tier_3": "Reactorhip Tier 3",
+    "item.planttech2.unlockchip_shovel": "Unlockchip Shovel",
+    "item.planttech2.unlockchip_axe": "Unlockchip Axe",
+    "item.planttech2.unlockchip_shears": "Unlockchip Shears",
+    "item.planttech2.unlockchip_hoe": "Unlockchip Hoe",
 
     "item.planttech2.chestplate_dancium": "Dancium Chestplate",
     "item.planttech2.boots_dancium": "Dancium Boots",
@@ -505,8 +548,12 @@
     "block.planttech2.infuser": "Infuser",
     "block.planttech2.machineshell": "Machineshell",
     "block.planttech2.machineshell_infused": "Infused Machineshell",
+<<<<<<< HEAD
     
     "block.planttech2.planttopia_portal": "PlantTopia Portal"
+=======
+    "block.planttech2.chipalyzer": "Chipalyzer", 
+>>>>>>> 84288bcb2351bc4da6bcd46fb8181f201fcdabed
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",
@@ -540,9 +587,33 @@
     
     "info.fertilizer": "Chance", 
     "info.fertilizer_creative": "Ignores requirements", 
+    
+    "info.energy": "energy: %s", 
+     "info.energycosts": "energycosts per action: %s", 
+    "info.openwithshift": "Shift-rightclick to open inventory", 
+    
+   	"info.upgradechip.increasecapacity": "%s more energy capacity per chip",
+	"info.upgradechip.increasecapacitymax": "Max energy capacity: %s", 
+	"info.upgradechip.energyproduction": "%s more energy production per chip",
+	"info.upgradechip.increaseharvestlevel": "Max energy production: %s",
+	"info.upgradechip.increasearmor": "%s more armor per chip",
+	"info.upgradechip.increaseattack": "%s more attack per chip",
+	"info.upgradechip.increaseattackmax": "Max attack: %s ",
+	"info.upgradechip.increaseattackspeed": "%s more attackspeed per chip",
+	"info.upgradechip.increaseattackspeedmax": "Max attackspeed: %s",
+	"info.upgradechip.increasebreakdownrate": "%s more breakdownrate per chip",
+	"info.upgradechip.increasebreakdownratemax": "Max breakdownrate: %s",
+	"info.upgradechip.increasetougness": "%s more toughness per chip",
+	"info.upgradechip.increasetougnessmax": "Max toughness: %s",
+	"info.upgradechip.unlockaxefeat": "Unlocks axe features",
+	"info.upgradechip.unlockshovelfeat": "Unlocks shovel features",
+	"info.upgradechip.unlockshearsfeat": "Unlocks shears features",
+	"info.upgradechip.unlockhoefeat": "Unlocks hoe features",
+	"info.upgradechip.energycosts": "%s more energycosts per chip",
+    
 
     "guide.start.header": "Start",
-    "guide.plantium.header": "Plantium",
+	"guide.plantium.header": "Plantium",
     "guide.crops.header": "Crops",
     "guide.traits.header": "Traits",
     "guide.crossbreeding.header": "Crossbreeding",

@@ -40,21 +40,21 @@ public class ModContainers
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
-		event.getRegistry().registerAll(COMPRESSOR.setRegistryName("planttech2:compressorcontainer"), 
-										DNACLEANER.setRegistryName("planttech2:dnacleanercontainer"), 
-										DNACOMBINER.setRegistryName("planttech2:dnacombinercontainer"), 
-										DNAEXTRACTOR.setRegistryName("planttech2:dnaextractorcontainer"),
-										DNAREMOVER.setRegistryName("planttech2:dnaremovercontainer"),
-										ENERGYSTORAGE.setRegistryName("planttech2:energystoragecontainer"),
-										IDENTIFIER.setRegistryName("planttech2:identifiercontainer"),
-										INFUSER.setRegistryName("planttech2:infusercontainer"),
-										UPGRADEABLEITEM.setRegistryName("planttech2:upgradeableitemcontainer"),
-										MEGAFURNACE.setRegistryName("planttech2:megafurnacecontainer"),
-										PLANTFARM.setRegistryName("planttech2:plantfarmcontainer"),
-										SEEDCONSTRUCTOR.setRegistryName("planttech2:seedconstructorcontainer"),
-										SEEDQUEEZER.setRegistryName("planttech2:seedsqueezercontainer"),
-										SOLARGENERATOR.setRegistryName("planttech2:solargeneratorcontainer"), 
-										CHIPALYZER.setRegistryName("planttech2:chipalyzercontainer"), 
-										TELEPORTERITEM.setRegistryName("planttech2:teleporteritem"));
+		event.getRegistry().registerAll(COMPRESSOR.setRegistryName(ModReferences.COMPRESSORCONTAINER), 
+										DNACLEANER.setRegistryName(ModReferences.DNACLEANERCONTAINER), 
+										DNACOMBINER.setRegistryName(ModReferences.DNACOMBINERCONTAINER), 
+										DNAEXTRACTOR.setRegistryName(ModReferences.DNAEXTRACTORCONTAINER),
+										DNAREMOVER.setRegistryName(ModReferences.DNAREMOVERCONTAINER),
+										ENERGYSTORAGE.setRegistryName(ModReferences.ENERGYSTORAGECONTAINER),
+										IDENTIFIER.setRegistryName(ModReferences.IDENTIFIERCONTAINER),
+										INFUSER.setRegistryName(ModReferences.INFUSERCONTAINER),
+										UPGRADEABLEITEM.setRegistryName(ModReferences.UPGRADEABLEITEMCONTAINER),
+										MEGAFURNACE.setRegistryName(ModReferences.MEGAFURNACECONTAINER),
+										PLANTFARM.setRegistryName(ModReferences.PLANTFARMCONTAINER),
+										SEEDCONSTRUCTOR.setRegistryName(ModReferences.SEEDCONSTRUCTORCONTAINER),
+										SEEDQUEEZER.setRegistryName(ModReferences.SEEDQUEEZERCONTAINER),
+										SOLARGENERATOR.setRegistryName(ModReferences.SOLARGENERATORCONTAINER), 
+										CHIPALYZER.setRegistryName(ModReferences.CHIPALYZERCONTAINER), 
+										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER));
 	}
 }

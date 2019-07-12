@@ -2,7 +2,6 @@ package net.kaneka.planttech2.blocks.machines;
 
 import java.util.List;
 import net.kaneka.planttech2.blocks.BaseBlock;
-import net.kaneka.planttech2.gui.ScreenReferences;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
@@ -123,40 +122,6 @@ public class MachineBaseBlock extends BaseBlock
     public BlockRenderType getRenderType(BlockState state)
     {
 	return BlockRenderType.MODEL;
-    }
-
-    public String getGuiString()
-    {
-	if (this == ModBlocks.IDENTIFIER)
-	    return ScreenReferences.GUI_IDENTIFIER;
-	else if (this == ModBlocks.MEGAFURNACE)
-	    return ScreenReferences.GUI_MEGA_FURNACE;
-	else if (this == ModBlocks.PLANTFARM)
-	    return ScreenReferences.GUI_PLANTFARM;
-	else if (this == ModBlocks.SOLARGENERATOR)
-	    return ScreenReferences.GUI_SOLARGENERATOR;
-	else if (this == ModBlocks.SEEDSQUEEZER)
-	    return ScreenReferences.GUI_SEEDSQUEEZER;
-	else if (this == ModBlocks.DNA_COMBINER)
-	    return ScreenReferences.GUI_DNA_COMBINER;
-	else if (this == ModBlocks.DNA_EXTRACTOR)
-	    return ScreenReferences.GUI_DNA_EXTRACTOR;
-	else if (this == ModBlocks.DNA_REMOVER)
-	    return ScreenReferences.GUI_DNA_REMOVER;
-	else if (this == ModBlocks.SEEDCONSTRUCTOR)
-	    return ScreenReferences.GUI_SEEDCONSTRUCTOR;
-	else if (this == ModBlocks.DNA_CLEANER)
-	    return ScreenReferences.GUI_DNA_CLEANER;
-	else if (this == ModBlocks.COMPRESSOR)
-	    return ScreenReferences.GUI_COMPRESSOR;
-	else if (this == ModBlocks.ENERGYSTORAGE)
-	    return ScreenReferences.GUI_ENERGYSTORAGE;
-	else if (this == ModBlocks.INFUSER)
-	    return ScreenReferences.GUI_INFUSER;
-	else if (this == ModBlocks.CHIPALYZER)
-	    return ScreenReferences.GUI_CHIPALYZER;
-	else
-	    return ScreenReferences.GUI_IDENTIFIER;
     }
 
     @SuppressWarnings("deprecation")

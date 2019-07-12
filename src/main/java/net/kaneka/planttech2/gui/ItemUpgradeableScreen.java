@@ -44,6 +44,8 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	public void init()
     {
         super.init();
+        this.xSize = 205; 
+        this.ySize = 202;     
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
     }
@@ -51,6 +53,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
+			this.renderBackground();
 			super.render(mouseX, mouseY, partialTicks);
 			this.drawTooltips(mouseX, mouseY);
 	        this.renderHoveredToolTip(mouseX, mouseY);

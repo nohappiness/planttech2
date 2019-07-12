@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 3, 
+    "input": {
+      "item": "minecraft:diamond_chestplate"
+    },
+    "result": {
+      "item": "planttech2:toughnesschip_tier_3"
+    }
+  }

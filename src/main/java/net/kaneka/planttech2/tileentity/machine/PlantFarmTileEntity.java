@@ -58,7 +58,7 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 
 	public PlantFarmTileEntity()
 	{
-		super(ModTileEntities.PLANTFARM_TE, 100000, 19);
+		super(ModTileEntities.PLANTFARM_TE, 1000, 19);
 	}
 
 	@Override

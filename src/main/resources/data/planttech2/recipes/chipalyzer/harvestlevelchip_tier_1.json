@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 1, 
+    "input": {
+      "item": "minecraft:diamond_pickaxe"
+    },
+    "result": {
+      "item": "planttech2:harvestlevelchip_tier_1"
+    }
+  }

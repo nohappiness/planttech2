@@ -6,6 +6,11 @@
         "minecraft:nether_wart"
     ],
     "drops":[
+    	{
+            "item": "planttech2:nether_wart_particles",
+            "min": 0, 
+            "max": 4
+        }
     ],
     "parents": [
     ],

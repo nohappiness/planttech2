@@ -185,7 +185,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		{
 			return recipe.getRecipeOutput(); 
 		}
-		return null; 
+		return ItemStack.EMPTY; 
 	}
 
 	public void smeltItem(int slot)

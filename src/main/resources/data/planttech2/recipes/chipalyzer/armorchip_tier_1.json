@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 1, 
+    "input": {
+      "item": "minecraft:iron_chestplate"
+    },
+    "result": {
+      "item": "planttech2:armorchip_tier_1"
+    }
+  }

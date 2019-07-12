@@ -82,7 +82,20 @@
 		"planttech2:speedupgrade3",
 		"planttech2:speedupgrade4",
 		"planttech2:thermometer",
-		"planttech2:wrench"
+		"planttech2:wrench", 
+		"planttech2:cyberarmor_helmet", 
+		"planttech2:cyberarmor_chest", 
+		"planttech2:cyberarmor_leggings", 
+		"planttech2:cyberarmor_boots", 
+		"planttech2:cyberbow", 
+		"planttech2:cyberkatana", 
+		"planttech2:cyberdagger", 
+		"planttech2:cyberrapier", 
+		"planttech2:multitool", 
+		"planttech2:empty_upgradechip_1",
+		"planttech2:empty_upgradechip_2", 
+		"planttech2:empty_upgradechip_3", 
+		"planttech2:chipalyzer"  
     ],
     "loot": ["planttech2:guide"]
   },

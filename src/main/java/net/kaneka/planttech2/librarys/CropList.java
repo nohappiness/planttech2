@@ -269,7 +269,7 @@ public class CropList
 		addEntry("mooshroom", Integer.parseInt("a81012", 16), true);
 		addEntry("mushroom", Integer.parseInt("e21212", 16), false);
 		addEntry("mycelium", Integer.parseInt("736162", 16), true);
-		addEntry("nether_wart", Integer.parseInt("831c20", 16), false);
+		addEntry("nether_wart", Integer.parseInt("831c20", 16), true);
 		addEntry("netherrack", Integer.parseInt("652828", 16), true);
 		addEntry("neutronium", Integer.parseInt("585858", 16), true);
 		addEntry("nickel", Integer.parseInt("9f998c", 16), true);
@@ -323,7 +323,7 @@ public class CropList
 		addEntry("steel", Integer.parseInt("686868", 16), true);
 		addEntry("stone", Integer.parseInt("616161", 16), true);
 		addEntry("stray", Integer.parseInt("acbabd", 16), true);
-		addEntry("sugarcane", Integer.parseInt("82a859", 16), false);
+		addEntry("sugarcane", Integer.parseInt("82a859", 16), true);
 		addEntry("sulfur", Integer.parseInt("b1ac27", 16), true);
 		addEntry("sunstone", Integer.parseInt("c13b00", 16), true);
 		addEntry("syrmorite", Integer.parseInt("c71eff", 16), true);
@@ -339,7 +339,7 @@ public class CropList
 		addEntry("valonite", Integer.parseInt("cfa5d5", 16), true);
 		addEntry("vibrant_alloy", Integer.parseInt("bf7e00", 16), true);
 		addEntry("villager", Integer.parseInt("b57b67", 16), true);
-		addEntry("vine", Integer.parseInt("1b5011", 16), false);
+		addEntry("vine", Integer.parseInt("1b5011", 16), true);
 		addEntry("vinteum", Integer.parseInt("5a81ff", 16), true);
 		addEntry("void_metal", Integer.parseInt("000000", 16), true);
 		addEntry("water", Integer.parseInt("2b5fff", 16), true);
@@ -414,7 +414,7 @@ public class CropList
 		        .addDrop(new ItemStack(Blocks.BROWN_MUSHROOM), 0, 4);
 		this.getEntryByName("mycelium");
 		this.getEntryByName("netherrack");
-		this.getEntryByName("nether_wart");
+		this.getEntryByName("nether_wart").addSeeds(new ItemStack(Items.NETHER_WART));
 		this.getEntryByName("orange_tulip").addSeeds(new ItemStack(Blocks.ORANGE_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
 		        .addDrop(new ItemStack(Blocks.ORANGE_TULIP), 0, 4);
 		this.getEntryByName("oxeye_daisy").addSeeds(new ItemStack(Blocks.OXEYE_DAISY)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
