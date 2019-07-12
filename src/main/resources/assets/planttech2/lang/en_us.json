@@ -505,6 +505,8 @@
     "block.planttech2.infuser": "Infuser",
     "block.planttech2.machineshell": "Machineshell",
     "block.planttech2.machineshell_infused": "Infused Machineshell",
+    
+    "block.planttech2.planttopia_portal": "PlantTopia Portal"
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",
