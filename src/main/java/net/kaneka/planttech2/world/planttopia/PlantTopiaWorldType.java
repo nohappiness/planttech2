@@ -15,7 +15,7 @@ import net.minecraft.world.gen.layer.ZoomLayer;
 public class PlantTopiaWorldType extends WorldType {
 
 	public PlantTopiaWorldType() {
-		super("fantasia");
+		super("planttopia");
 	}
 
 	@Override

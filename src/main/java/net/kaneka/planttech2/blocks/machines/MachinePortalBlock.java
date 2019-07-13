@@ -2,13 +2,12 @@ package net.kaneka.planttech2.blocks.machines;
 
 import net.kaneka.planttech2.blocks.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.world.planttopia.ModDimensionPlantTopia;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.network.play.server.SPlayEntityEffectPacket;
 import net.minecraft.network.play.server.SPlaySoundEventPacket;
 import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
@@ -30,9 +29,9 @@ import net.minecraftforge.fml.hooks.BasicEventHooks;
 public class MachinePortalBlock extends BaseBlock
 {
 
-	public MachinePortalBlock()
+	public MachinePortalBlock(String name, Block.Properties builder, ItemGroup tab)
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(100f, 100f), "planttopia_portal", ModCreativeTabs.groupmachines, true);
+		super(builder, name, tab, true);
 	}
 
 	@Override
@@ -47,7 +46,7 @@ public class MachinePortalBlock extends BaseBlock
 				BlockPos surfacePos = trySpawnPortal(destination, pos);
 				changeDim(((ServerPlayerEntity) playerIn), surfacePos, DimensionType.OVERWORLD);
 			}
-			else //to PlantTopia
+			else if(worldIn.getDimension().getType() == DimensionType.OVERWORLD)//to PlantTopia
 			{
 				World destination = worldIn.getServer().getWorld(ModDimensionPlantTopia.getDimensionType());
 				BlockPos surfacePos = trySpawnPortal(destination, pos);

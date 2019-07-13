@@ -53,7 +53,7 @@ public class ModBlocks
 	        SEEDCONSTRUCTOR = new MachineFacingBlock("seedconstructor", ModCreativeTabs.groupmachines),
 	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
 	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
-	        PLANTTOPIA_PORTAL = new MachinePortalBlock();
+	        PLANTTOPIA_PORTAL = new MachinePortalBlock("planttopia_portal", Block.Properties.create(Material.IRON).hardnessAndResistance(100f, 100f), ModCreativeTabs.groupmachines);
 
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 
