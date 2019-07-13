@@ -3,7 +3,7 @@ package net.kaneka.planttech2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
+import io.netty.buffer.Unpooled;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.LootTableHandler;
@@ -14,8 +14,10 @@ import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.registries.ModBiomes;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModScreens;
 import net.kaneka.planttech2.registries.ModTileEntities;
@@ -23,9 +25,14 @@ import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -47,6 +54,8 @@ public class PlantTechMain
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
 	public static PlantTechMain instance;
+	
+	public static final DimensionType PLANTTOPIA = DimensionManager.registerDimension(new ResourceLocation(MODID,"planttopia"), ModDimensions.PLANTTOPIA, new PacketBuffer(Unpooled.buffer(16)), true);
 
 	public static CropList croplist = new CropList();
 
@@ -67,6 +76,7 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
+		ModBiomes.registerBiomes();
 	}
 
 	private void onServerStarting(FMLServerAboutToStartEvent event)
@@ -135,6 +145,18 @@ public class PlantTechMain
 		public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
 		{
 			ModRecipeSerializers.registerAll(event);
+		}
+		
+		@SubscribeEvent
+		public static void registerDimensionTypes(RegistryEvent.Register<DimensionType> event)
+		{
+			event.getRegistry().register(PLANTTOPIA);
+		}
+		
+		@SubscribeEvent
+		public static void registerDimensions(RegistryEvent.Register<ModDimension> event)
+		{
+			event.getRegistry().register(ModDimensions.PLANTTOPIA);
 		}
 
 	}

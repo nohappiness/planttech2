@@ -31,7 +31,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+<<<<<<< .merge_file_a02572
+=======
 import net.minecraft.util.text.TranslationTextComponent;
+>>>>>>> .merge_file_a06796
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -201,9 +204,13 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
+<<<<<<< .merge_file_a02572
+			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+=======
 			tooltip.add(new TranslationTextComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
 			tooltip.add(new TranslationTextComponent("info.energycosts", getEnergyCost(stack))); 
 			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
+>>>>>>> .merge_file_a06796
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -257,7 +264,11 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
+<<<<<<< .merge_file_a02572
+		if(Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
+=======
 		if(player.isSneaking())
+>>>>>>> .merge_file_a06796
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{

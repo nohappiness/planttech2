@@ -548,7 +548,12 @@
     "block.planttech2.infuser": "Infuser",
     "block.planttech2.machineshell": "Machineshell",
     "block.planttech2.machineshell_infused": "Infused Machineshell",
+<<<<<<< HEAD
+    
+    "block.planttech2.planttopia_portal": "PlantTopia Portal"
+=======
     "block.planttech2.chipalyzer": "Chipalyzer", 
+>>>>>>> 84288bcb2351bc4da6bcd46fb8181f201fcdabed
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",

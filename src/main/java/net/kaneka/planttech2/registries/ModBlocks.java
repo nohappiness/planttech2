@@ -12,6 +12,7 @@ import net.kaneka.planttech2.blocks.machines.CableBlock;
 import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.blocks.machines.MachineFacingBlock;
+import net.kaneka.planttech2.blocks.machines.MachinePortalBlock;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -51,7 +52,8 @@ public class ModBlocks
 	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "plantium_block", ModCreativeTabs.groupmain, true),
 	        SEEDCONSTRUCTOR = new MachineFacingBlock("seedconstructor", ModCreativeTabs.groupmachines),
 	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
-	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines);
+	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
+	        PLANTTOPIA_PORTAL = new MachinePortalBlock();
 
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 
