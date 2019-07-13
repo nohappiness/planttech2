@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import io.netty.buffer.Unpooled;
+import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.LootTableHandler;
@@ -55,8 +56,6 @@ public class PlantTechMain
 
 	public static PlantTechMain instance;
 	
-	public static final DimensionType PLANTTOPIA = DimensionManager.registerDimension(new ResourceLocation(MODID,"planttopia"), ModDimensions.PLANTTOPIA, new PacketBuffer(Unpooled.buffer(16)), true);
-
 	public static CropList croplist = new CropList();
 
 	public PlantTechMain()
@@ -148,15 +147,9 @@ public class PlantTechMain
 		}
 		
 		@SubscribeEvent
-		public static void registerDimensionTypes(RegistryEvent.Register<DimensionType> event)
-		{
-			event.getRegistry().register(PLANTTOPIA);
-		}
-		
-		@SubscribeEvent
 		public static void registerDimensions(RegistryEvent.Register<ModDimension> event)
 		{
-			event.getRegistry().register(ModDimensions.PLANTTOPIA);
+			ModDimensions.registerAll(event);
 		}
 
 	}

@@ -27,117 +27,109 @@ import net.minecraft.world.storage.WorldInfo;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 
-public class MachinePortalBlock extends BaseBlock {
+public class MachinePortalBlock extends BaseBlock
+{
 
-	public MachinePortalBlock() {
+	public MachinePortalBlock()
+	{
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(100f, 100f), "planttopia_portal", ModCreativeTabs.groupmachines, true);
 	}
-	
+
 	@Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts) {
-        if(!worldIn.isRemote) {
-            //FROM OVERWORLD TO MINING DIM
-            if (worldIn.getDimension().getType().getId() == DimensionType.OVERWORLD.getId()) {
-                World otherWorld = worldIn.getServer().getWorld(ModDimensionPlantTopia.getDimensionType());
-                otherWorld.getBlockState(pos);
-                BlockPos otherWorldPos = otherWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos);
-                boolean foundBlock = false;
-                BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(0, 0, 0);
+	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts)
+	{
+		if (!worldIn.isRemote)
+		{
+			//from PlantTopia
+			if (worldIn.getDimension().getType() == ModDimensionPlantTopia.getDimensionType())
+			{
+				World destination = worldIn.getServer().getWorld(DimensionType.OVERWORLD);
+				BlockPos surfacePos = trySpawnPortal(destination, pos);
+				changeDim(((ServerPlayerEntity) playerIn), surfacePos, DimensionType.OVERWORLD);
+			}
+			else //to PlantTopia
+			{
+				World destination = worldIn.getServer().getWorld(ModDimensionPlantTopia.getDimensionType());
+				BlockPos surfacePos = trySpawnPortal(destination, pos);
+				changeDim(((ServerPlayerEntity) playerIn), surfacePos, ModDimensionPlantTopia.getDimensionType());
+			}
 
-                for (int y = 0; y < 256; y++) {
-                    for (int x = pos.getX() - 6; x < pos.getX() + 6; x++) {
-                        for (int z = pos.getZ() - 6; z < pos.getZ() + 6; z++) {
-                            mutableBlockPos.setPos(x,y,z);
-                            if (otherWorld.getBlockState(mutableBlockPos).getBlock() == ModBlocks.PLANTTOPIA_PORTAL) {
-                                otherWorldPos = new BlockPos(x, y + 1, z);
-                                foundBlock = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (foundBlock){
-                    changeDim(((ServerPlayerEntity) playerIn), otherWorldPos, ModDimensionPlantTopia.getDimensionType());
-                }
-                if (!foundBlock){
-                    otherWorld.setBlockState(otherWorldPos.down(), ModBlocks.PLANTTOPIA_PORTAL.getDefaultState());
-                    changeDim(((ServerPlayerEntity) playerIn), otherWorldPos, ModDimensionPlantTopia.getDimensionType());
-                }
-            }
+			return true;
+		}
+		return false;
+	}
+	
+	private BlockPos trySpawnPortal(World world, BlockPos pos)
+	{
+		BlockPos surfacePos = world.getHeight(Heightmap.Type.WORLD_SURFACE, pos);
+		
+		boolean foundBlock = false;
+		BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(0, 0, 0);
 
-            //FROM MINING DIM TO OVERWORLD
-            if (worldIn.getDimension().getType() == ModDimensionPlantTopia.getDimensionType()) {
-                World overWorld = worldIn.getServer().getWorld(DimensionType.OVERWORLD);
-                overWorld.getBlockState(pos);
-                BlockPos overWorldPos = overWorld.getHeight(Heightmap.Type.WORLD_SURFACE, pos);
-                boolean foundBlock = false;
-                BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos(0, 0, 0);
+		for (int y = 0; y < 256; y++)
+		{
+			for (int x = pos.getX() - 6; x < pos.getX() + 6; x++)
+			{
+				for (int z = pos.getZ() - 6; z < pos.getZ() + 6; z++)
+				{
+					mutableBlockPos.setPos(x, y, z);
+					if (world.getBlockState(mutableBlockPos).getBlock() == ModBlocks.PLANTTOPIA_PORTAL)
+					{
+						surfacePos = new BlockPos(x, y + 1, z);
+						foundBlock = true;
+						break;
+					}
+				}
+			}
+		}
+		if (!foundBlock)
+		{
+			world.setBlockState(surfacePos.down(), ModBlocks.PLANTTOPIA_PORTAL.getDefaultState());
+		}
+		return surfacePos; 
+	}
 
-                for (int y = 0; y < 256; y++) {
-                    for (int x = pos.getX() - 6; x < pos.getX() + 6; x++) {
-                        for (int z = pos.getZ() - 6; z < pos.getZ() + 6; z++) {
-                            mutableBlockPos.setPos(x, y, z);
-                            if (overWorld.getBlockState(mutableBlockPos).getBlock() == ModBlocks.PLANTTOPIA_PORTAL) {
-                                overWorldPos = new BlockPos(x, y + 1, z);
-                                foundBlock = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if (foundBlock){
-                    changeDim(((ServerPlayerEntity) playerIn), overWorldPos, DimensionType.OVERWORLD);
-                }
-                if (!foundBlock){
-                    overWorld.setBlockState(overWorldPos.down(), ModBlocks.PLANTTOPIA_PORTAL.getDefaultState());
-                    changeDim(((ServerPlayerEntity) playerIn), overWorldPos, DimensionType.OVERWORLD);
-                }
-            }
+	private void changeDim(ServerPlayerEntity player, BlockPos pos, DimensionType type)
+	{ // copy from ServerPlayerEntity#changeDimension
+		if (!ForgeHooks.onTravelToDimension(player, type))
+			return;
 
-            return true;
-        }
-        return false;
-    }
+		DimensionType dimensiontype = player.dimension;
 
+		ServerWorld serverworld = player.server.getWorld(dimensiontype);
+		player.dimension = type;
+		ServerWorld serverworld1 = player.server.getWorld(type);
+		WorldInfo worldinfo = player.world.getWorldInfo();
+		player.connection.sendPacket(new SRespawnPacket(type, worldinfo.getGenerator(), player.interactionManager.getGameType()));
+		player.connection.sendPacket(new SServerDifficultyPacket(worldinfo.getDifficulty(), worldinfo.isDifficultyLocked()));
+		PlayerList playerlist = player.server.getPlayerList();
+		playerlist.updatePermissionLevel(player);
+		serverworld.removeEntity(player, true);
+		player.revive();
+		float f = player.rotationPitch;
+		float f1 = player.rotationYaw;
 
-    public static void changeDim(ServerPlayerEntity player, BlockPos pos, DimensionType type) { // copy from ServerPlayerEntity#changeDimension
-        if (!ForgeHooks.onTravelToDimension(player, type)) return;
+		player.setLocationAndAngles(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
+		serverworld.getProfiler().endSection();
+		serverworld.getProfiler().startSection("placing");
+		player.setLocationAndAngles(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
 
-        DimensionType dimensiontype = player.dimension;
+		serverworld.getProfiler().endSection();
+		player.setWorld(serverworld1);
+		serverworld1.func_217447_b(player);
+		player.connection.setPlayerLocation(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
+		player.interactionManager.setWorld(serverworld1);
+		player.connection.sendPacket(new SPlayerAbilitiesPacket(player.abilities));
+		playerlist.sendWorldInfo(player, serverworld1);
+		playerlist.sendInventory(player);
 
-        ServerWorld serverworld = player.server.getWorld(dimensiontype);
-        player.dimension = type;
-        ServerWorld serverworld1 = player.server.getWorld(type);
-        WorldInfo worldinfo = player.world.getWorldInfo();
-        player.connection.sendPacket(new SRespawnPacket(type, worldinfo.getGenerator(), player.interactionManager.getGameType()));
-        player.connection.sendPacket(new SServerDifficultyPacket(worldinfo.getDifficulty(), worldinfo.isDifficultyLocked()));
-        PlayerList playerlist = player.server.getPlayerList();
-        playerlist.updatePermissionLevel(player);
-        serverworld.removeEntity(player, true);
-        player.revive();
-        float f = player.rotationPitch;
-        float f1 = player.rotationYaw;
+		for (EffectInstance effectinstance : player.getActivePotionEffects())
+		{
+			player.connection.sendPacket(new SPlayEntityEffectPacket(player.getEntityId(), effectinstance));
+		}
 
-        player.setLocationAndAngles(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
-        serverworld.getProfiler().endSection();
-        serverworld.getProfiler().startSection("placing");
-        player.setLocationAndAngles(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
-
-        serverworld.getProfiler().endSection();
-        player.setWorld(serverworld1);
-        serverworld1.func_217447_b(player);
-        player.connection.setPlayerLocation(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5, f1, f);
-        player.interactionManager.setWorld(serverworld1);
-        player.connection.sendPacket(new SPlayerAbilitiesPacket(player.abilities));
-        playerlist.sendWorldInfo(player, serverworld1);
-        playerlist.sendInventory(player);
-
-        for(EffectInstance effectinstance : player.getActivePotionEffects()) {
-            player.connection.sendPacket(new SPlayEntityEffectPacket(player.getEntityId(), effectinstance));
-        }
-
-        player.connection.sendPacket(new SPlaySoundEventPacket(1032, BlockPos.ZERO, 0, false));
-        BasicEventHooks.firePlayerChangedDimensionEvent(player, dimensiontype, type);
-    }
+		player.connection.sendPacket(new SPlaySoundEventPacket(1032, BlockPos.ZERO, 0, false));
+		BasicEventHooks.firePlayerChangedDimensionEvent(player, dimensiontype, type);
+	}
 
 }

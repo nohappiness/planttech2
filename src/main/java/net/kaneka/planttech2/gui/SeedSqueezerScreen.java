@@ -53,15 +53,4 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		int i = container.getValue(4);
 		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).getTicksPerItem() : 0;
 	}
-<<<<<<< .merge_file_a09312
-	
-	@Override
-	protected void drawTooltips(int mouseX, int mouseY)
-	{
-	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
-
-	    super.drawTooltips(mouseX,mouseY);
-	}
-=======
->>>>>>> .merge_file_a10388
 }

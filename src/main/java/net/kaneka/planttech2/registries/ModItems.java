@@ -102,7 +102,7 @@ public class ModItems
 	    		   SPEEDUPGRADE_TIER_3 = new TierItem("speedupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 2),
 	    		   SPEEDUPGRADE_TIER_4 = new TierItem("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
 	    		   TELEPORTER = new TeleporterItem("teleporter", new Item.Properties().group(ModCreativeTabs.groupmain), 1000), 
-	    		   THERMOMETER = new ThermometerItem(), 
+	    		   THERMOMETER = new ThermometerItem(),  
 	    		   WRENCH = new WrenchItem();
     
 	public static UpgradeChipItem CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(10), 

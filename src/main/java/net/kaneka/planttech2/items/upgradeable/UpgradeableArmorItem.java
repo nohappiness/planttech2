@@ -26,11 +26,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-<<<<<<< .merge_file_a03304
-=======
 import net.minecraft.util.text.TranslationTextComponent;
->>>>>>> .merge_file_a03884
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -182,21 +178,6 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-<<<<<<< .merge_file_a03304
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
-	{
-		CompoundNBT tag = stack.getTag();
-		if (tag != null)
-		{
-			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
-		}
-
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-	}
-
-	@Override
-=======
->>>>>>> .merge_file_a03884
 	public boolean showDurabilityBar(ItemStack stack)
 	{
 		if (getDurabilityForDisplay(stack) >= 1)
@@ -348,9 +329,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 			}
 		}
 	}
-<<<<<<< .merge_file_a03304
-=======
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
@@ -364,6 +343,5 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
->>>>>>> .merge_file_a03884
 
 }
