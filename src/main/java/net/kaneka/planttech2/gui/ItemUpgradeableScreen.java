@@ -25,8 +25,6 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 			put(10, new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/itemupgradeable_10.png"));
 	}}; 
 	protected final PlayerInventory player;
-    protected int xSize = 205;
-    protected int ySize = 202;
     protected ItemStack stack; 
     protected int invsize; 
     protected IEnergyStorage energystorage; 

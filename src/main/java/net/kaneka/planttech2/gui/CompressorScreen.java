@@ -27,11 +27,10 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	{
 	    for(int x = 0; x < 6; x++)
 	    {
-		if(inArea(mouseX, mouseY, 35 + x * 18, 26 + y * 18))
-		{ 
-			System.out.println(te.getPos());
-		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 6));
-		}
+    		if(inArea(mouseX, mouseY, 35 + x * 18, 26 + y * 18))
+    		{ 
+    		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 6));
+    		}
 	    }
 	}
         return super.mouseClicked(mouseX, mouseY, p_mouseClicked_5_);

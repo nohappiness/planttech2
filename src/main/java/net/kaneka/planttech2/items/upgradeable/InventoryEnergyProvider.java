@@ -40,7 +40,7 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<Compound
 		{
 		    return inventoryCap.cast();
 		}
-		return null;
+		return LazyOptional.empty();
 	}
 
 	@Override

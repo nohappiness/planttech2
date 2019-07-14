@@ -147,7 +147,7 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 	public static IEnergyStorage getEnergyCap(ItemStack stack)
 	{
 		LazyOptional<IEnergyStorage> provider = stack.getCapability(CapabilityEnergy.ENERGY);
-		if (provider != null)
+		if (provider.isPresent())
 		{
 			return provider.orElse(null);
 		}
@@ -157,7 +157,7 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 	public static IItemHandler getInvCap(ItemStack stack)
 	{
 		LazyOptional<IItemHandler> provider = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-		if (provider != null)
+		if (provider.isPresent())
 		{
 			return provider.orElse(null);
 		}

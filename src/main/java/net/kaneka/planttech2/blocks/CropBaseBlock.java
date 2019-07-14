@@ -73,9 +73,6 @@ public class CropBaseBlock extends ContainerBlock
 			if (canGrow(world, pos, traits))
 			{
 				world.setBlockState(pos, state.with(GROWSTATE, Integer.valueOf(growstate) + 1));
-				// world.setBlockState(pos, state.withProperty(GROWSTATE,
-				// 7).withProperty(PLANTTYPE,
-				// PlanttechMain.instance.croplist.getEntryByName(traits.getType())));
 			}
 		} else
 		{
@@ -113,12 +110,7 @@ public class CropBaseBlock extends ContainerBlock
 					break;
 				}
 			}
-
 		}
-		// world.setBlockState(pos, state.withProperty(GROWSTATE,
-		// 7).withProperty(PLANTTYPE,
-		// PlanttechMain.instance.croplist.getEntryByName(traits.getType())));
-
 	}
 
 	public void updateCreative(World world, BlockPos pos)

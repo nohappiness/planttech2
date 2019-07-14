@@ -34,7 +34,7 @@ public class ModBlocks
 			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
 			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
 			CROPBARS = new CropBarsBlock(),
-	        DANCIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "dancium_block", ModCreativeTabs.groupmain, true),
+	        DANCIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "dancium_block", ModCreativeTabs.groupmain, true),
 	        DNA_CLEANER = new MachineFacingBlock("dna_cleaner", ModCreativeTabs.groupmachines), 
 	        DNA_COMBINER = new MachineFacingBlock("dna_combiner", ModCreativeTabs.groupmachines),
 	        DNA_EXTRACTOR = new MachineFacingBlock("dna_extractor", ModCreativeTabs.groupmachines), 
@@ -42,18 +42,18 @@ public class ModBlocks
 	        ENERGYSTORAGE = new EnergyStorageBlock(), 
 	        IDENTIFIER = new MachineFacingBlock("identifier", ModCreativeTabs.groupmachines),
 	        INFUSER = new MachineFacingBlock("infuser", ModCreativeTabs.groupmachines),
-	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kanekium_block", ModCreativeTabs.groupmain, true),
-	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "kinnoium_block", ModCreativeTabs.groupmain, true),
-	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "lenthurium_block", ModCreativeTabs.groupmain, true),
-		    MACHINESHELL = new BaseBlock(Block.Properties.create(Material.IRON), "machineshell", ModCreativeTabs.groupmain, true),  
-		    MACHINESHELL_INFUSED = new BaseBlock(Block.Properties.create(Material.IRON), "machineshell_infused", ModCreativeTabs.groupmain, true),  
+	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kanekium_block", ModCreativeTabs.groupmain, true),
+	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kinnoium_block", ModCreativeTabs.groupmain, true),
+	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "lenthurium_block", ModCreativeTabs.groupmain, true),
+		    MACHINESHELL = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F), "machineshell", ModCreativeTabs.groupmain, true),  
+		    MACHINESHELL_INFUSED = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F), "machineshell_infused", ModCreativeTabs.groupmain, true),  
 	        MEGAFURNACE = new MachineFacingBlock("mega_furnace", ModCreativeTabs.groupmachines), 
 	        PLANTFARM = new MachineBaseBlock("plantfarm", ModCreativeTabs.groupmachines),
-	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL), "plantium_block", ModCreativeTabs.groupmain, true),
+	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "plantium_block", ModCreativeTabs.groupmain, true),
 	        SEEDCONSTRUCTOR = new MachineFacingBlock("seedconstructor", ModCreativeTabs.groupmachines),
 	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
 	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
-	        PLANTTOPIA_PORTAL = new MachinePortalBlock("planttopia_portal", Block.Properties.create(Material.IRON).hardnessAndResistance(100f, 100f), ModCreativeTabs.groupmachines);
+	        PLANTTOPIA_PORTAL = new MachinePortalBlock("planttopia_portal", Block.Properties.create(Material.IRON).hardnessAndResistance(0.5f), ModCreativeTabs.groupmachines);
 
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 

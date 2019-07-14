@@ -26,7 +26,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 {
 	private int ticksPassed = 0;
 	private int selectedId = -1;
-	private HashMap<Integer, Pair<ItemStack, Integer>> recipeList = null;
+	private HashMap<Integer, Pair<ItemStack, Integer>> recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
 	private ItemStack previousInput = null;
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -106,6 +106,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
 			if (!stack1.isEmpty() && selectedId >= 0)
 			{
+				
 				if (recipeList != null)
 				{
 					if (!recipeList.isEmpty() && recipeList.size() > selectedId)
@@ -143,7 +144,8 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 					{
 						selectedId = -3;
 					}
-				} else if (selectedId >= 0)
+				} 
+				else if (selectedId >= 0)
 				{
 					initRecipeList();
 				}
@@ -159,7 +161,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	}
 
 	public void setSelectedId(int selectedId)
-	{
+	{ 
 		this.selectedId = selectedId;
 	}
 
@@ -199,7 +201,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			{
         		 for (IRecipe<?> recipe :this.world.getRecipeManager().getRecipes()) 
         		 {
-        			 if(recipe.getType()  == null)//ModRecipeTypes.COMPRESSING
+        			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING)
         			 {
         				 CompressorRecipe compRecipe = (CompressorRecipe) recipe; 
                 		 if (compRecipe.getInput().getItem() == particle) 

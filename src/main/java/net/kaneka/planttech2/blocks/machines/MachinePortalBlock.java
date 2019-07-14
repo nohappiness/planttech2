@@ -37,6 +37,7 @@ public class MachinePortalBlock extends BaseBlock
 	@Override
 	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts)
 	{
+		/*
 		if (!worldIn.isRemote)
 		{
 			//from PlantTopia
@@ -55,6 +56,7 @@ public class MachinePortalBlock extends BaseBlock
 
 			return true;
 		}
+		*/
 		return false;
 	}
 	
