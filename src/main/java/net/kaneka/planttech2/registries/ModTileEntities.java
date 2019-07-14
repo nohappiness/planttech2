@@ -14,6 +14,7 @@ import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
+import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
@@ -39,7 +40,8 @@ public class ModTileEntities
     public static final TileEntityType<EnergyStorageTileEntity> ENERGYSTORAGE_TE = TileEntityType.Builder.create(EnergyStorageTileEntity::new, ModBlocks.ENERGYSTORAGE).build(null); 
     public static final TileEntityType<InfuserTileEntity> INFUSER_TE = TileEntityType.Builder.create(InfuserTileEntity::new, ModBlocks.INFUSER).build(null); 
     public static final TileEntityType<ChipalyzerTileEntity> CHIPALYZER_TE = TileEntityType.Builder.create(ChipalyzerTileEntity::new, ModBlocks.CHIPALYZER).build(null); 
-     
+    public static final TileEntityType<PlantTopiaTeleporterTileEntity> PLANTTOPIATELEPORTER_TE = TileEntityType.Builder.create(PlantTopiaTeleporterTileEntity::new, ModBlocks.PLANTTOPIA_TELEPORTER).build(null); 
+      
     
     
 	public static final void register(IForgeRegistry<TileEntityType<?>> registry)
@@ -59,7 +61,8 @@ public class ModTileEntities
 		    		 COMPRESSOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitycompressor"), 
 		    		 ENERGYSTORAGE_TE.setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"), 
 		    		 INFUSER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"), 
-	    			 CHIPALYZER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitychipalyzer"));
+	    			 CHIPALYZER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitychipalyzer"), 
+	    			 PLANTTOPIATELEPORTER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityplanttopiateleporter"));
 		
 	}
 

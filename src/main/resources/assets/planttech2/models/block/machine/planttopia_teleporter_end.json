@@ -1,0 +1,13 @@
+{
+    "parent": "block/cube",
+    "textures": 
+    {
+    	"particle": "planttech2:blocks/machines/machines_side_top",
+        "up": "planttech2:blocks/machines/planttopia_portal_top",
+        "down": "planttech2:blocks/machines/machines_side_top",
+        "north": "planttech2:blocks/machines/teleporter_end_side",
+        "east": "planttech2:blocks/machines/teleporter_end_side",
+        "west": "planttech2:blocks/machines/teleporter_end_side",
+        "south": "planttech2:blocks/machines/teleporter_end_side"
+    }
+}

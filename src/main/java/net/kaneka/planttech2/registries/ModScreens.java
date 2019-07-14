@@ -11,6 +11,7 @@ import net.kaneka.planttech2.gui.IdentifierScreen;
 import net.kaneka.planttech2.gui.InfuserScreen;
 import net.kaneka.planttech2.gui.MegaFurnaceScreen;
 import net.kaneka.planttech2.gui.PlantFarmScreen;
+import net.kaneka.planttech2.gui.PlantTopiaTeleporterScreen;
 import net.kaneka.planttech2.gui.SeedSqueezerScreen;
 import net.kaneka.planttech2.gui.SeedconstructorScreen;
 import net.kaneka.planttech2.gui.SolarGeneratorScreen;
@@ -41,5 +42,6 @@ public class ModScreens
 		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainers.CHIPALYZER, ChipalyzerScreen::new);
 		ScreenManager.registerFactory(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
+		ScreenManager.registerFactory(ModContainers.PLANTTOPIATELEPORTER, PlantTopiaTeleporterScreen::new);
 	}
 }

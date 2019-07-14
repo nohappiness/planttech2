@@ -12,6 +12,7 @@ import net.kaneka.planttech2.container.InfuserContainer;
 import net.kaneka.planttech2.container.ItemUpgradeableContainer;
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.container.PlantFarmContainer;
+import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
 import net.kaneka.planttech2.container.SeedconstructorContainer;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
@@ -36,6 +37,7 @@ public class ModContainers
 	public static final ContainerType<SeedSqueezerContainer> SEEDQUEEZER = new ContainerType<SeedSqueezerContainer>(SeedSqueezerContainer::new);
 	public static final ContainerType<SolarGeneratorContainer> SOLARGENERATOR = new ContainerType<SolarGeneratorContainer>(SolarGeneratorContainer::new);
 	public static final ContainerType<ChipalyzerContainer> CHIPALYZER = new ContainerType<ChipalyzerContainer>(ChipalyzerContainer::new);
+	public static final ContainerType<PlantTopiaTeleporterContainer> PLANTTOPIATELEPORTER = new ContainerType<PlantTopiaTeleporterContainer>(PlantTopiaTeleporterContainer::new);
 	public static final ContainerType<TeleporterContainer> TELEPORTERITEM = new ContainerType<TeleporterContainer>(TeleporterContainer::new);
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
@@ -55,6 +57,7 @@ public class ModContainers
 										SEEDQUEEZER.setRegistryName(ModReferences.SEEDQUEEZERCONTAINER),
 										SOLARGENERATOR.setRegistryName(ModReferences.SOLARGENERATORCONTAINER), 
 										CHIPALYZER.setRegistryName(ModReferences.CHIPALYZERCONTAINER), 
-										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER));
+										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER), 
+										PLANTTOPIATELEPORTER.setRegistryName(ModReferences.TELEPORTERBLOCKCONTAINER));
 	}
 }

@@ -14,6 +14,7 @@ import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
+import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
@@ -114,6 +115,8 @@ public class MachineBaseBlock extends BaseBlock
 		return new InfuserTileEntity(); 
 	else if (this == ModBlocks.CHIPALYZER)
 		return new ChipalyzerTileEntity(); 
+	else if (this == ModBlocks.PLANTTOPIA_TELEPORTER)
+		return new PlantTopiaTeleporterTileEntity(); 
 	else
 	    return new IdentifierTileEntity();
     }

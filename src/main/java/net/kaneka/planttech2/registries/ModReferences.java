@@ -20,7 +20,8 @@ public class ModReferences
 	public static final String SEEDQUEEZERCONTAINER = MODID + ":seedsqueezercontainer";
 	public static final String SOLARGENERATORCONTAINER = MODID + ":solargeneratorcontainer"; 
 	public static final String CHIPALYZERCONTAINER = MODID + ":chipalyzercontainer"; 
-	public static final String TELEPORTERITEMCONTAINER = MODID + ":teleporteritem";
+	public static final String TELEPORTERBLOCKCONTAINER = MODID + ":teleporterblockcontainer";
+	public static final String TELEPORTERITEMCONTAINER = MODID + ":teleporteritemcontainer";
 	
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 }
