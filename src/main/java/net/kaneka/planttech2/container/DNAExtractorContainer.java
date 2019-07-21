@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class DNAExtractorContainer extends BaseContainer
 {
@@ -23,12 +22,12 @@ public class DNAExtractorContainer extends BaseContainer
 		super(id, ModContainers.DNAEXTRACTOR, player, tileentity, 6);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 41, 37));
-		this.addSlot(new SlotItemHandler(handler, 1, 111, 37));
-		this.addSlot(new SlotItemHandler(handler, 2, 111, 79));
-		this.addSlot(new SlotItemHandler(handler, 3, 74, 60));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 37, "slot.dnaextractor.seeds"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 111, 37, "slot.dnaextractor.empty_container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 111, 79, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 74, 60, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 		
 	}
 	

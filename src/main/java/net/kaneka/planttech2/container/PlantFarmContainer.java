@@ -8,7 +8,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class PlantFarmContainer extends BaseContainer
 {
@@ -26,14 +25,14 @@ public class PlantFarmContainer extends BaseContainer
 		{
 			for(int x = 0; x < 5; x++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 5, 24 + x * 18, 29 + y * 18));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 5, 24 + x * 18, 29 + y * 18, "slot.plantfarm.storage"));
 			}
 		}
 		
-		this.addSlot(new SlotItemHandler(handler, 15, 129, 38));
-		this.addSlot(new SlotItemHandler(handler, 16, 129, 56));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 15, 129, 38, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 16, 129, 56, "slot.util.rangeupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 		
 	}
 	

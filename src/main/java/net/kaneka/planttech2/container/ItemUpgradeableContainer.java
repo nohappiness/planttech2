@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.kaneka.planttech2.items.upgradeable.IUpgradeable;
+import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
@@ -15,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ItemUpgradeableContainer extends Container
 {
@@ -52,7 +52,7 @@ public class ItemUpgradeableContainer extends Container
 					{
 						for(int x = 0; x < setting[1]; x++)
 						{
-							addSlot(new ChangeCheckSlot(itemInv, handler, x + y * setting[1], 47 + x * 18, 39 + y * 18));
+							addSlot(new ChangeCheckSlot(itemInv, handler, x + y * setting[1], 47 + x * 18, 39 + y * 18, "slot.upgradeableitem.chipslot"));
 						}
 					}
 				}
@@ -132,13 +132,13 @@ public class ItemUpgradeableContainer extends Container
 		return stack;
 	}
 	
-	class ChangeCheckSlot extends SlotItemHandler
+	class ChangeCheckSlot extends SlotItemHandlerWithInfo
 	{
 		private ItemStack stack; 
 		
-	    public ChangeCheckSlot(ItemStack stack, IItemHandler itemHandler, int index, int xPosition, int yPosition)
+	    public ChangeCheckSlot(ItemStack stack, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 	    {
-	    	super(itemHandler, index, xPosition, yPosition);
+	    	super(itemHandler, index, xPosition, yPosition, usage);
 	    	this.stack = stack; 
 	    }
 

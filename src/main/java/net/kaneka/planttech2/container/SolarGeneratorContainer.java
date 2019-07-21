@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class SolarGeneratorContainer extends BaseContainer
 {
@@ -23,10 +22,10 @@ public class SolarGeneratorContainer extends BaseContainer
 		super(id, ModContainers.SOLARGENERATOR, player, tileentity, 4);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 84, 71));
-		this.addSlot(new SlotItemHandler(handler, 1, 45, 33));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 84, 71, "slot.solargenerator.focus"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 45, 33, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 	}
 	
 	

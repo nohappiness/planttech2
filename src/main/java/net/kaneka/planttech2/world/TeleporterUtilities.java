@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.world;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.play.server.SPlayEntityEffectPacket;
@@ -9,9 +10,11 @@ import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
 import net.minecraft.network.play.server.SRespawnPacket;
 import net.minecraft.network.play.server.SServerDifficultyPacket;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ServerWorld;
+import net.minecraft.world.server.ServerChunkProvider;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.storage.WorldInfo;
@@ -23,12 +26,13 @@ public class TeleporterUtilities
 	public static void changeDimension(World worldIn, BlockPos pos, PlayerEntity playerIn, DimensionType destDim, Block portalBlock)
 	{
 		World destination = worldIn.getServer().getWorld(destDim);
-		BlockPos surfacePos = trySpawnPortal(destination, pos, portalBlock);
+		BlockPos surfacePos = trySpawnPortal(destination, pos, portalBlock, destDim);
 		changeDim(((ServerPlayerEntity) playerIn), surfacePos, destDim);
 	}
 	
-	private static BlockPos trySpawnPortal(World world, BlockPos pos, Block portalBlock)
+	private static BlockPos trySpawnPortal(World world, BlockPos pos, Block portalBlock, DimensionType destDim)
 	{
+		preLoadChunk(world.getServer(), pos.getX(), pos.getZ(), destDim); 
 		BlockPos surfacePos = new BlockPos(pos.getX(), 256, pos.getZ()); 
 		for(int y = 0; y < 256; y++)
 		{
@@ -37,6 +41,12 @@ public class TeleporterUtilities
 				surfacePos = new BlockPos(pos.down(y-2));
 				break;
 			}
+		}
+		boolean flag = false; 
+		if(surfacePos.getY() < 55)
+		{
+			surfacePos = new BlockPos(surfacePos.getX(), 90, surfacePos.getZ()); 
+			flag = true; 
 		}
 		
 		boolean foundBlock = false;
@@ -58,9 +68,24 @@ public class TeleporterUtilities
 				}
 			}
 		}
+		if(flag)
+		{
+			for(int y = -1; y <= 0; y++)
+			{
+				for(int x = -2; x <= 2; x++)
+				{
+					for(int z = -2; z <= 2; z++)
+					{
+						world.setBlockState(surfacePos.up(y).north(x).east(z), Blocks.GRASS_BLOCK.getDefaultState());
+					}
+				}
+			}
+		}
 		if (!foundBlock)
 		{
 			world.setBlockState(surfacePos.down(), portalBlock.getDefaultState());
+			world.setBlockState(surfacePos, Blocks.AIR.getDefaultState());
+			world.setBlockState(surfacePos.up(), Blocks.AIR.getDefaultState());
 		}
 		return surfacePos; 
 	}
@@ -107,5 +132,15 @@ public class TeleporterUtilities
 		player.connection.sendPacket(new SPlaySoundEventPacket(1032, BlockPos.ZERO, 0, false));
 		BasicEventHooks.firePlayerChangedDimensionEvent(player, dimensiontype, type);
 	}
+	
+	private static boolean preLoadChunk(MinecraftServer server, int x, int z, DimensionType dimensionID) {
+       ServerChunkProvider chunkProvider = server.getWorld(dimensionID).getChunkProvider();
+        if (chunkProvider.chunkExists(x, z)) 
+        {
+            return false;
+        }
+        chunkProvider.func_225313_a(x, z);
+        return true;
+    }
 	
 }

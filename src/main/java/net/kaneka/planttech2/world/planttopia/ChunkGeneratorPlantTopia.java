@@ -8,7 +8,6 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.ServerWorld;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
@@ -16,6 +15,7 @@ import net.minecraft.world.gen.NoiseChunkGenerator;
 import net.minecraft.world.gen.OctavesNoiseGenerator;
 import net.minecraft.world.gen.WorldGenRegion;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.CatSpawner;
 import net.minecraft.world.spawner.PatrolSpawner;
 import net.minecraft.world.spawner.PhantomSpawner;
@@ -145,7 +145,7 @@ public class ChunkGeneratorPlantTopia extends NoiseChunkGenerator<PlantTopiaGenS
 	}
 	
 	public void spawnMobs(ServerWorld worldIn, boolean spawnHostileMobs, boolean spawnPeacefulMobs) {
-		this.phantomSpawner.spawnMobs(worldIn, spawnHostileMobs, spawnPeacefulMobs);
+		this.phantomSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 		this.patrolSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 		this.catSpawner.tick(worldIn, spawnHostileMobs, spawnPeacefulMobs);
 	}

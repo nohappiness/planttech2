@@ -8,6 +8,8 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class BaseContainer extends Container
 {
@@ -32,7 +34,7 @@ public class BaseContainer extends Container
 
 		this.tileentity = tileentity;
 		field_array = tileentity.getIntArray();
-		func_216961_a(field_array);
+		trackIntArray(field_array);
 	}
 
 	@Override
@@ -69,4 +71,23 @@ public class BaseContainer extends Container
 	{
 		return field_array.get(id); 
 	}
+	
+	public static class SlotItemHandlerWithInfo extends SlotItemHandler
+	{
+		private String usage; 
+		
+		public SlotItemHandlerWithInfo(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+		{
+			super(itemHandler, index, xPosition, yPosition);
+			this.usage = usage; 
+		}
+		
+		public String getUsageString()
+		{
+			return usage; 
+		}
+		
+	}
 }
+
+

@@ -116,6 +116,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 						ItemStack stackOutput = recipe.getKey().copy();
 						if (neededInput <= stack1.getCount())
 						{
+							previousInput = stack1; 
 							if (ticksPassed < ticksPerItem())
 							{
 								ticksPassed++;

@@ -8,7 +8,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class DNACombinerContainer extends BaseContainer
 {
@@ -23,13 +22,13 @@ public class DNACombinerContainer extends BaseContainer
 		super(id, ModContainers.DNACOMBINER, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 78, 31));
-		this.addSlot(new SlotItemHandler(handler, 1, 114, 31));
-		this.addSlot(new SlotItemHandler(handler, 2, 122, 50));
-		this.addSlot(new SlotItemHandler(handler, 3, 96, 67));
-		this.addSlot(new SlotItemHandler(handler, 4, 55, 44));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 78, 31, "slot.dnacombiner.container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 114, 31, "slot.dnacombiner.container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 122, 50, "slot.dnacombiner.empty_container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 96, 67, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 55, 44, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 	}
 	
 	

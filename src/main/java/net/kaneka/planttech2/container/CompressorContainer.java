@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class CompressorContainer extends BaseContainer
 {
@@ -22,20 +22,20 @@ public class CompressorContainer extends BaseContainer
 		super(id, ModContainers.COMPRESSOR, player, tileentity, 25);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
-		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84));
-		this.addSlot(new SlotItemHandler(handler, 1, 127, 84));
-		this.addSlot(new SlotItemHandler(handler, 2, 79, 88));
+		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84, "slot.compressor.input"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 127, 84, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 79, 88, "slot.util.speedupgrade"));
 
 		for (int y = 0; y < 3; y++)
 		{
 			for (int x = 0; x < 6; x++)
 			{
-				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 36 + x * 18, 27 + y * 18));
+				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 36 + x * 18, 27 + y * 18, "slot.compressor.select"));
 			}
 		}
 
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.ebergyout"));
 	}
 
 	@Override
@@ -89,13 +89,13 @@ public class CompressorContainer extends BaseContainer
 
 }
 
-class ChangeCheckSlot extends SlotItemHandler
+class ChangeCheckSlot extends SlotItemHandlerWithInfo
 {
 	private CompressorTileEntity te;
 
-	public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition)
+	public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 	{
-		super(itemHandler, index, xPosition, yPosition);
+		super(itemHandler, index, xPosition, yPosition, usage);
 		this.te = te;
 	}
 

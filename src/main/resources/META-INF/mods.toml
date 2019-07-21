@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[27,)" 
+loaderVersion="[28,)" 
 issueTrackerURL="http://my.issue.tracker/" #optional
 logoFile="examplemod.png" 
 credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"

@@ -15,6 +15,7 @@ import net.kaneka.planttech2.items.FertilizerItem;
 import net.kaneka.planttech2.items.GuideItem;
 import net.kaneka.planttech2.items.ParticleItem;
 import net.kaneka.planttech2.items.TeleporterItem;
+import net.kaneka.planttech2.items.TestItem;
 import net.kaneka.planttech2.items.ThermometerItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.items.WrenchItem;
@@ -103,7 +104,8 @@ public class ModItems
 	    		   SPEEDUPGRADE_TIER_4 = new TierItem("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
 	    		   TELEPORTER = new TeleporterItem("teleporter", new Item.Properties().group(ModCreativeTabs.groupmain), 1000), 
 	    		   THERMOMETER = new ThermometerItem(),  
-	    		   WRENCH = new WrenchItem();
+	    		   WRENCH = new WrenchItem(), 
+	    		   TESTITEM = new TestItem();
     
 	public static UpgradeChipItem CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(10), 
 				CAPACITYCHIP_TIER_2 = new UpgradeChipItem("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(20), 

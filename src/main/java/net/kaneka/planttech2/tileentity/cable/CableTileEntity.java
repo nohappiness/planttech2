@@ -744,7 +744,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 
 	private void sendUpdates()
 	{
-		world.markForRerender(pos);
+		//world.markForRerender(pos);
 		world.markAndNotifyBlock(pos, world.getChunkAt(pos), world.getBlockState(pos), world.getBlockState(pos), 0);
 	}
 

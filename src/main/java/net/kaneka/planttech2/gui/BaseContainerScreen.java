@@ -2,11 +2,13 @@ package net.kaneka.planttech2.gui;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.BaseContainer;
+import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
 {
@@ -83,6 +85,19 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 		int i = container.getValue(2);
 		int j = container.getValue(3);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
+	}
+	
+	@Override
+	protected void renderHoveredToolTip(int x, int y)
+	{
+		if (this.minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.getHasStack() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
+		{
+	         this.renderTooltip(new TranslationTextComponent(((SlotItemHandlerWithInfo) this.hoveredSlot).getUsageString()).getUnformattedComponentText(), x, y);
+	    }
+		else
+		{
+			super.renderHoveredToolTip(x, y);
+		}
 	}
 
 }

@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class IdentifierContainer extends BaseContainer
 {
@@ -27,7 +26,7 @@ public class IdentifierContainer extends BaseContainer
 		{
 			for(int y = 0; y < 3; y++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 3, 24 + x * 18, 26 + y * 18));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 24 + x * 18, 26 + y * 18, "slot.identifier.input"));
 			}
 		}
 		
@@ -35,12 +34,12 @@ public class IdentifierContainer extends BaseContainer
 		{
 			for(int y = 0; y < 3; y++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 3 + 9, 100 + x * 18, 26 + y * 18));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3 + 9, 100 + x * 18, 26 + y * 18, "slot.util.output"));
 			}
 		}
-		this.addSlot(new SlotItemHandler(handler, 18, 80, 84));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 18, 80, 84, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 		
 	}
 	

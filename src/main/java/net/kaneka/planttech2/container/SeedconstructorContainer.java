@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class SeedconstructorContainer extends BaseContainer
 {
@@ -23,15 +22,15 @@ public class SeedconstructorContainer extends BaseContainer
 		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 96, 30));
-		this.addSlot(new SlotItemHandler(handler, 1, 96, 67));
-		this.addSlot(new SlotItemHandler(handler, 2, 72, 44));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 96, 30, "slot.seedconstructor.container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 96, 67, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 72, 44, "slot.util.speedupgrade"));
 
-		this.addSlot(new SlotItemHandler(handler, 3, 18, 86));
-		this.addSlot(new SlotItemHandler(handler, 4, 36, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 18, 86, "slot.util.fluidin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 36, 86, "slot.util.fluidout"));
 		
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 		
 	}
 	

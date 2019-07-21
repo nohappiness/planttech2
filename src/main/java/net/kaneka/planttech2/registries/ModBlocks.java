@@ -8,6 +8,9 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.BaseBlock;
 import net.kaneka.planttech2.blocks.CropBarsBlock;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.CustomFenceBlock;
+import net.kaneka.planttech2.blocks.GlassPaneEnd;
+import net.kaneka.planttech2.blocks.GlassPanePillar;
 import net.kaneka.planttech2.blocks.machines.CableBlock;
 import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
@@ -54,8 +57,19 @@ public class ModBlocks
 	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
 	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
 	        PLANTTOPIA_TELEPORTER = new MachineBaseBlock("planttopia_teleporter", ModCreativeTabs.groupmachines),
-	        PLANTTOPIA_TELEPORTER_END = new MachineTeleporterEndBlock("planttopia_teleporter_end", Block.Properties.create(Material.IRON).hardnessAndResistance(0.5f), ModCreativeTabs.groupmachines);
-
+	        PLANTTOPIA_TELEPORTER_END = new MachineTeleporterEndBlock("planttopia_teleporter_end", Block.Properties.create(Material.IRON).hardnessAndResistance(0.5f), ModCreativeTabs.groupmachines),
+			GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "glasspane_cross", ModCreativeTabs.groupmain, true), 
+			GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "glasspane_middle", ModCreativeTabs.groupmain, true), 
+			GLASSPANE_END = new GlassPaneEnd(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "glasspane_end", ModCreativeTabs.groupmain, true),
+			DARK_CRYSTAL_BLOCK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_block", ModCreativeTabs.groupmain, true), 
+			DARK_CRYSTAL_BRICK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_brick", ModCreativeTabs.groupmain, true), 
+			DARK_CRYSTAL_TILING = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_tiling", ModCreativeTabs.groupmain, true),
+			DARK_CRYSTAL_FENCE = new CustomFenceBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_fence", ModCreativeTabs.groupmain, true), 
+			DARK_CRYSTAL_LAMP = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).lightValue(15), "dark_crystal_lamp", ModCreativeTabs.groupmain, true);
+			
+	
+	
+	
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 
 	public static void register(IForgeRegistry<Block> registry)

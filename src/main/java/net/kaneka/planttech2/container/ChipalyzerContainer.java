@@ -9,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ChipalyzerContainer extends BaseContainer
 {
@@ -23,12 +22,12 @@ public class ChipalyzerContainer extends BaseContainer
 		super(id, ModContainers.CHIPALYZER, player, tileentity, 5);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandler(handler, 0, 42, 48));
-		this.addSlot(new SlotItemHandler(handler, 1, 69, 28));
-		this.addSlot(new SlotItemHandler(handler, 2, 96, 48));
-		this.addSlot(new SlotItemHandler(handler, 3, 69, 70));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 42, 48, "slot.chipalyzer.chipinput"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 69, 28, "slot.chipalyzer.iteminput"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 96, 48, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 69, 70, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 	}
 	
 	

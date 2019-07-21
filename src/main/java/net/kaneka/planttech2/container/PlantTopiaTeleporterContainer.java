@@ -2,7 +2,6 @@ package net.kaneka.planttech2.container;
 
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModContainers;
-import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -10,7 +9,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class PlantTopiaTeleporterContainer extends BaseContainer
 {
@@ -23,8 +21,8 @@ public class PlantTopiaTeleporterContainer extends BaseContainer
 	{
 		super(id, ModContainers.PLANTTOPIATELEPORTER, player, tileentity, 2);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 	}
 	
 	

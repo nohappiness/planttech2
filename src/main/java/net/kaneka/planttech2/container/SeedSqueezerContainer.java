@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
@@ -9,7 +10,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class SeedSqueezerContainer extends BaseContainer
 {
@@ -27,16 +27,16 @@ public class SeedSqueezerContainer extends BaseContainer
 		{
 			for(int x = 0; x < 3; x++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 3, 51 + x * 18, 29 + y * 18));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 51 + x * 18, 29 + y * 18, "slot.seedsqueezer.input"));
 			}
 		}
 		
-		this.addSlot(new NoAccessSlot(handler, 9, 108, 47));
-		this.addSlot(new SlotItemHandler(handler, 10, 133, 47));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getFluidInSlot(), 18, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getFluidOutSlot(), 36, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new NoAccessSlot(handler, 9, 108, 47, "slot.seedsqueezer.squeeze"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 10, 133, 47, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 18, 86, "slot.util.fluidin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 36, 86, "slot.util.fluidout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 		
 	}
 	
@@ -92,12 +92,12 @@ public class SeedSqueezerContainer extends BaseContainer
 	}
 }
 
-class NoAccessSlot extends SlotItemHandler
+class NoAccessSlot extends SlotItemHandlerWithInfo
 {
 
-	public NoAccessSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
+	public NoAccessSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 	{
-		super(itemHandler, index, xPosition, yPosition);
+		super(itemHandler, index, xPosition, yPosition, usage);
 	}
 	
 	@Override

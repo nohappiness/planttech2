@@ -8,7 +8,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class MegaFurnaceContainer extends BaseContainer
 {
@@ -23,14 +22,19 @@ public class MegaFurnaceContainer extends BaseContainer
 		
 		for(int y = 0; y < 2; y++)
 		{
+			String usage = "slot.megafurnace.input"; 
+			if(y == 1)
+			{
+				usage = "slot.util.output"; 
+			}
 			for(int x = 0; x < 6; x++)
 			{
-				this.addSlot(new SlotItemHandler(handler, x + y * 6, 26 + x * 22 , 26 + y * 37));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 6, 26 + x * 22 , 26 + y * 37, usage));
 			}
 		}
-		this.addSlot(new SlotItemHandler(handler, 12, 113, 85));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyInSlot(), 150, 86));
-		this.addSlot(new SlotItemHandler(handler, tileentity.getEnergyOutSlot(), 168, 86));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 113, 85, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
 	}
 	
 	@Override
