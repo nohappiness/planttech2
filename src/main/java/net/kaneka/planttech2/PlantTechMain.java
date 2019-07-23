@@ -21,6 +21,8 @@ import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModScreens;
+import net.kaneka.planttech2.registries.ModStructurePieceTypes;
+import net.kaneka.planttech2.registries.ModStructures;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -30,6 +32,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,6 +47,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -86,6 +90,7 @@ public class PlantTechMain
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		new ModRecipeTypes();  
+		new ModStructurePieceTypes(); 
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
@@ -150,6 +155,12 @@ public class PlantTechMain
 		public static void registerDimensions(RegistryEvent.Register<ModDimension> event)
 		{
 			ModDimensions.registerAll(event);
+		}
+		
+		@SubscribeEvent
+		public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
+		{
+			ModStructures.registerAll(event);
 		}
 
 	}

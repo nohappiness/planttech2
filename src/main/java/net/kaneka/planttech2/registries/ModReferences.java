@@ -24,4 +24,6 @@ public class ModReferences
 	public static final String TELEPORTERITEMCONTAINER = MODID + ":teleporteritemcontainer";
 	
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
+	
+	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 }
