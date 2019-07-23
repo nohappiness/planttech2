@@ -106,7 +106,6 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
 			if (!stack1.isEmpty() && selectedId >= 0)
 			{
-				
 				if (recipeList != null)
 				{
 					if (!recipeList.isEmpty() && recipeList.size() > selectedId)
@@ -143,7 +142,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 						}
 					} else
 					{
-						selectedId = -3;
+						selectedId = -1;
 					}
 				} 
 				else if (selectedId >= 0)
@@ -172,7 +171,8 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
         		{
         			this.selectedId = -2;
         			initRecipeList();
-        		} else if (previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
+        		} 
+        		else if (previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
         		{
         			this.selectedId = -2;
         			initRecipeList();
