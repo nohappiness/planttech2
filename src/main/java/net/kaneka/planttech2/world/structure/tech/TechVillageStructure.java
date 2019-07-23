@@ -67,7 +67,7 @@ public class TechVillageStructure extends Structure<TechVillageConfig>
 	@Override
 	public String getStructureName()
 	{
-		return "tech_village";
+		return "techvillage";
 	}
 
 	@Override

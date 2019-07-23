@@ -15,8 +15,8 @@ public class ModStructures
 	public static void registerAll(Register<Feature<?>> event)
 	{
 		event.getRegistry().register(TECHVILLAGE.setRegistryName(ModReferences.TECHVILLAGE));
-		Feature.STRUCTURES.put("Tech Village", TECHVILLAGE); 
-		Registry.register(Registry.STRUCTURE_FEATURE, "tech_village", TECHVILLAGE); 
+		Feature.STRUCTURES.put("techvillage", TECHVILLAGE); 
+		Registry.register(Registry.STRUCTURE_FEATURE, "techvillage", TECHVILLAGE); 
 		Biomes.PLAINS.addStructure(TECHVILLAGE, new TechVillageConfig(5));
 	}
 }
