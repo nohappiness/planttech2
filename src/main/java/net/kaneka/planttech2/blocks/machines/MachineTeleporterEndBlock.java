@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.BaseBlock;
+import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.world.TeleporterUtilities;
 import net.kaneka.planttech2.world.planttopia.ModDimensionPlantTopia;
@@ -31,7 +31,7 @@ public class MachineTeleporterEndBlock extends BaseBlock
 			//from PlantTopia
 			if (worldIn.getDimension().getType() == ModDimensionPlantTopia.getDimensionType())
 			{
-				TeleporterUtilities.changeDimension(worldIn, pos, playerIn, DimensionType.OVERWORLD, ModBlocks.PLANTTOPIA_TELEPORTER_END);
+				TeleporterUtilities.changeDimension(worldIn, pos, playerIn, DimensionType.OVERWORLD, ModBlocks.PLANTTOPIA_TELEPORTER_END, ModBlocks.PLANTTOPIA_TELEPORTER);
 			}
 			/*
 			else if(worldIn.getDimension().getType() == DimensionType.OVERWORLD)//to PlantTopia

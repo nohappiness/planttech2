@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.registries.ModBlocks;

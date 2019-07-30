@@ -1,7 +1,8 @@
 package net.kaneka.planttech2.blocks.machines;
 
 import java.util.List;
-import net.kaneka.planttech2.blocks.BaseBlock;
+
+import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;

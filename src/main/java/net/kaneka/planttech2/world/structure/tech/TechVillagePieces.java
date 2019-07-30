@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModReferences;
 import net.kaneka.planttech2.registries.ModStructurePieceTypes;
 import net.minecraft.nbt.CompoundNBT;
@@ -29,7 +28,6 @@ public class TechVillagePieces
 {
 	public static void init(ChunkGenerator<?> chunkGenerator, TemplateManager templateManager, BlockPos pos, List<StructurePiece> piecesList, SharedSeedRandom seed) 
 	{
-		PlantTechMain.LOGGER.info("Generate techvillage at " + pos);
 		JigsawManager.func_214889_a(new ResourceLocation(ModReferences.MODID,"village/tech/starts"), 7, TechVillagePieces.TechVillage::new, chunkGenerator, templateManager, pos, piecesList, seed);
 	}
 	

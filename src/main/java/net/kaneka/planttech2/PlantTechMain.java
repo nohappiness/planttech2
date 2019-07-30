@@ -3,10 +3,10 @@ package net.kaneka.planttech2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import io.netty.buffer.Unpooled;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
+import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
@@ -19,22 +19,21 @@ import net.kaneka.planttech2.registries.ModBiomes;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModDimensions;
+import net.kaneka.planttech2.registries.ModEntityTypes;
 import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModRenderer;
 import net.kaneka.planttech2.registries.ModScreens;
 import net.kaneka.planttech2.registries.ModStructurePieceTypes;
 import net.kaneka.planttech2.registries.ModStructures;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
@@ -47,7 +46,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -66,8 +64,6 @@ public class PlantTechMain
 	{
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			// ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, ()
-			// -> GuiHandler::openGui);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
 		});
@@ -91,6 +87,7 @@ public class PlantTechMain
 	{
 		new ModRecipeTypes();  
 		new ModStructurePieceTypes(); 
+		CapabilityHandler.registerAll(); 
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
@@ -99,6 +96,7 @@ public class PlantTechMain
 
 	private void doClientStuff(final FMLClientSetupEvent event)
 	{
+		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
 	}
 
@@ -162,6 +160,11 @@ public class PlantTechMain
 		{
 			ModStructures.registerAll(event);
 		}
-
+		
+		@SubscribeEvent
+		public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
+		{
+			ModEntityTypes.registerAll(event); 
+		}
 	}
 }

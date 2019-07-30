@@ -26,7 +26,7 @@ public class TechVillageStructure extends Structure<TechVillageConfig>
 
 	protected int getSeedModifier()
 	{
-		return 153947628;
+		return 987654321;
 	}
 	
 	@Override
@@ -57,7 +57,7 @@ public class TechVillageStructure extends Structure<TechVillageConfig>
 	         return false;
 	      }
 	   }
-
+	
 	@Override
 	public IStartFactory getStartFactory()
 	{
@@ -86,7 +86,7 @@ public class TechVillageStructure extends Structure<TechVillageConfig>
 
 		public void init(ChunkGenerator<?> generator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn)
 		{
-			BlockPos blockpos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+			BlockPos blockpos = new BlockPos(chunkX * 16, 90, chunkZ * 16);
 			TechVillagePieces.init(generator, templateManagerIn, blockpos, this.components, this.rand);
 			this.recalculateStructureSize();
 

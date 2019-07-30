@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
 		"1": "planttech2:blocks/machines/solargenerator_top",
 		"2": "planttech2:blocks/machines/machines_side_top"

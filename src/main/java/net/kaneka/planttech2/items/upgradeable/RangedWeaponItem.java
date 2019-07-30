@@ -1,9 +1,11 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem.NamedContainerProvider;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ArrowItem;
@@ -19,6 +21,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class RangedWeaponItem extends UpgradeableHandItem
 {
@@ -132,6 +135,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 						}
 
 						worldIn.addEntity(entityarrow);
+						extractEnergy(stack, getEnergyCost(stack), false);
 					}
 
 					worldIn.playSound((PlayerEntity) null, PlayerEntity.posX, PlayerEntity.posY, PlayerEntity.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
@@ -177,23 +181,34 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		if(extractEnergy(stack, getEnergyCost(player.getActiveItemStack()), true) >= getEnergyCost(stack))
+		if(!player.isSneaking())
 		{
-    		
-    		boolean flag = !this.findAmmo(player).isEmpty();
-    
-    		ActionResult<ItemStack> ret = ForgeEventFactory.onArrowNock(stack, worldIn, player, hand, flag);
-    		if (ret != null)
-    			return ret;
-    
-    		if (!player.abilities.isCreativeMode && !flag)
+			System.out.println(getEnergyCost(stack));
+    		if(extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
     		{
-    			return flag ? new ActionResult<>(ActionResultType.PASS, stack) : new ActionResult<>(ActionResultType.FAIL, stack);
-    		} else
-    		{
-    			player.setActiveHand(hand);
-    			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        		
+        		boolean flag = !this.findAmmo(player).isEmpty();
+        
+        		ActionResult<ItemStack> ret = ForgeEventFactory.onArrowNock(stack, worldIn, player, hand, flag);
+        		if (ret != null)
+        			return ret;
+        
+        		if (!player.abilities.isCreativeMode && !flag)
+        		{
+        			return flag ? new ActionResult<>(ActionResultType.PASS, stack) : new ActionResult<>(ActionResultType.FAIL, stack);
+        		} else
+        		{
+        			player.setActiveHand(hand);
+        			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        		}
     		}
+		}
+		else
+		{
+			if (!worldIn.isRemote && player instanceof ServerPlayerEntity) 
+			{
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
+			}
 		}
 		return new ActionResult<>(ActionResultType.FAIL, stack);
 	}

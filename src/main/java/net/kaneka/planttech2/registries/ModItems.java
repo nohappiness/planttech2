@@ -135,25 +135,6 @@ public class ModItems
 				TOUGHNESSCHIP_TIER_1 = new UpgradeChipItem("toughnesschip_tier_1").setIncreaseToughness(0.5F).setEnergyCost(10), 
 				TOUGHNESSCHIP_TIER_2 = new UpgradeChipItem("toughnesschip_tier_2").setIncreaseToughness(1F).setEnergyCost(30), 
 				TOUGHNESSCHIP_TIER_3 = new UpgradeChipItem("toughnesschip_tier_3").setIncreaseToughness(2F).setEnergyCost(70);
-	    		   
-	    		   
-
-    public static ArmorBaseItem CHESTPLATE_KANEKIUM = new ArmorBaseItem("chestplate_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_KANEKIUM = new ArmorBaseItem("boots_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_KANEKIUM = new ArmorBaseItem("helmet_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_KANEKIUM = new ArmorBaseItem("leggings_kanekium", "kanekium", CustomArmorMaterial.KANEKIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_DANCIUM = new ArmorBaseItem("chestplate_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_DANCIUM = new ArmorBaseItem("boots_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_DANCIUM = new ArmorBaseItem("helmet_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_DANCIUM = new ArmorBaseItem("leggings_dancium", "dancium", CustomArmorMaterial.DANCIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_LENTHURIUM = new ArmorBaseItem("chestplate_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_LENTHURIUM = new ArmorBaseItem("boots_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_LENTHURIUM = new ArmorBaseItem("helmet_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_LENTHURIUM = new ArmorBaseItem("leggings_lenthurium", "lenthurium", CustomArmorMaterial.LENTHURIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				CHESTPLATE_KINNOIUM = new ArmorBaseItem("chestplate_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				BOOTS_KINNOIUM = new ArmorBaseItem("boots_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				HELMET_KINNOIUM = new ArmorBaseItem("helmet_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-				LEGGINGS_KINNOIUM = new ArmorBaseItem("leggings_kinnoium", "kinnoium", CustomArmorMaterial.KINNOIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
     
     public static UpgradeableArmorItem CYBERARMOR_HELMET = new UpgradeableArmorItem("cyberarmor_helmet", "cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0),
     								   CYBERARMOR_CHEST = new UpgradeableArmorItem("cyberarmor_chest", "cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0),

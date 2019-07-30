@@ -1,10 +1,11 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
 	"textures": {
-		"0": "planttech2:blocks/building_blocks/block5",
-		"1": "planttech2:blocks/building_blocks/block4",
+		"0": "planttech2:blocks/building_blocks/dark_crystal_half",
+		"1": "planttech2:blocks/building_blocks/dark_crystal_block",
 		"2": "planttech2:blocks/building_blocks/light",
-		"particle": "planttech2:blocks/building_blocks/block5"
+		"particle": "planttech2:blocks/building_blocks/dark_crystal_half"
 	},
 	"elements": [
 		{

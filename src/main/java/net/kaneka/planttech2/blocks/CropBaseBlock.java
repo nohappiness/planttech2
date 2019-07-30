@@ -246,7 +246,7 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		builder.add(GROWSTATE);
 	}
-
+	
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, IFluidState fluid)
 	{

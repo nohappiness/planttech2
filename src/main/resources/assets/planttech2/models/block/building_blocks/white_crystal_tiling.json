@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "planttech2:blocks/building_blocks/white_crystal_block3"
+        "all": "planttech2:blocks/building_blocks/white_crystal_tiling"
     }
 }

@@ -2,6 +2,8 @@ package net.kaneka.planttech2.blocks;
 
 import javax.annotation.Nullable;
 
+import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
+import net.kaneka.planttech2.blocks.colors.IColoredBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -19,21 +21,23 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
-public class GlassPaneEnd extends BaseBlock
+public class GlassPaneEnd extends BaseBlock implements IColoredBlock
 {
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<AttachFace> FACE = BlockStateProperties.FACE;
+	private final int colorInt;  
 
-	public GlassPaneEnd(Properties property, String name, ItemGroup group, boolean hasItem)
+	public GlassPaneEnd(Properties property, String name, int color, ItemGroup group, boolean hasItem)
 	{
 		super(property, name, group, hasItem);
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(FACE, AttachFace.WALL));
+		this.colorInt = color; 
 	}
 
 	@Override
 	public BlockRenderLayer getRenderLayer()
 	{
-		return BlockRenderLayer.CUTOUT;
+		return BlockRenderLayer.CUTOUT_MIPPED; 
 	}
 
 	@Nullable
@@ -98,5 +102,11 @@ public class GlassPaneEnd extends BaseBlock
 		default:
 			return state.get(HORIZONTAL_FACING);
 		}
+	}
+
+	@Override
+	public int getColor()
+	{
+		return colorInt;
 	}
 }

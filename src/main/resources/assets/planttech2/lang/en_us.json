@@ -551,6 +551,32 @@
     "block.planttech2.machineshell_infused": "Infused Machineshell", 
     "block.planttech2.planttopia_portal": "PlantTopia Portal",
     "block.planttech2.chipalyzer": "Chipalyzer", 
+    
+    "block.planttech2.dark_crystal_block": "Dark Crystal Block", 
+    "block.planttech2.dark_crystal_brick": "Dark Crystal Bricks", 
+    "block.planttech2.dark_crystal_tiling": "Dark Crystal Tiling", 
+    "block.planttech2.dark_crystal_lamp": "Dark Crystal Lamp", 
+    "block.planttech2.dark_crystal_stairs": "Dark Crystal Stairs", 
+    "block.planttech2.dark_crystal_slab": "Dark Crystal Slab", 
+    "block.planttech2.dark_crystal_fence": "Dark Crystal Fence", 
+    "block.planttech2.dark_crystal_door": "Dark Crystal Door", 
+    "block.planttech2.dark_crystal_glasspane_end": "Dark Crystal Glasspane End", 
+    "block.planttech2.dark_crystal_glasspane_middle": "Dark Crystal Glasspane Middle", 
+    "block.planttech2.dark_crystal_glasspane_cross": "Dark Crystal Glasspane Cross", 
+    
+    "block.planttech2.white_crystal_block": "White Crystal Block", 
+    "block.planttech2.white_crystal_brick": "White Crystal Bricks", 
+    "block.planttech2.white_crystal_tiling": "White Crystal Tiling", 
+    "block.planttech2.white_crystal_stairs": "White Crystal Stairs", 
+    "block.planttech2.white_crystal_slab": "White Crystal Slab", 
+    "block.planttech2.white_crystal_fence": "White Crystal Fence", 
+    "block.planttech2.white_crystal_door": "White Crystal Door", 
+    "block.planttech2.white_crystal_glasspane_end": "White Crystal Glasspane End", 
+    "block.planttech2.white_crystal_glasspane_middle": "White Crystal Glasspane Middle", 
+    "block.planttech2.white_crystal_glasspane_cross": "White Crystal Glasspane Cross", 
+    
+    
+    
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",

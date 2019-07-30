@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.minecraft.util.ResourceLocation;
 
 public class ModReferences
 {
@@ -26,4 +27,9 @@ public class ModReferences
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 	
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
+	
+	public static final String TECHVILLAGER = MODID + ":techvillager"; 
+	public static final String TECHVILLAGERTRADESERIALIZER = MODID + ":techvillagertradeserializer"; 
+	
+	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap"); 
 }

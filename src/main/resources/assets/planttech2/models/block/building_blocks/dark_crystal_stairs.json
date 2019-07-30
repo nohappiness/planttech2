@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "planttech2:blocks/building_blocks/dark_crystal_tiling",
+        "top": "planttech2:blocks/building_blocks/dark_crystal_tiling",
+        "side": "planttech2:blocks/building_blocks/dark_crystal_tiling"
+    }
+}

@@ -23,14 +23,14 @@ import net.minecraftforge.fml.hooks.BasicEventHooks;
 
 public class TeleporterUtilities
 {
-	public static void changeDimension(World worldIn, BlockPos pos, PlayerEntity playerIn, DimensionType destDim, Block portalBlock)
+	public static void changeDimension(World worldIn, BlockPos pos, PlayerEntity playerIn, DimensionType destDim, Block... portalBlock)
 	{
 		World destination = worldIn.getServer().getWorld(destDim);
-		BlockPos surfacePos = trySpawnPortal(destination, pos, portalBlock, destDim);
+		BlockPos surfacePos = trySpawnPortal(destination, pos, destDim, portalBlock);
 		changeDim(((ServerPlayerEntity) playerIn), surfacePos, destDim);
 	}
 	
-	private static BlockPos trySpawnPortal(World world, BlockPos pos, Block portalBlock, DimensionType destDim)
+	private static BlockPos trySpawnPortal(World world, BlockPos pos, DimensionType destDim, Block... portalBlock)
 	{
 		preLoadChunk(world.getServer(), pos.getX(), pos.getZ(), destDim); 
 		BlockPos surfacePos = new BlockPos(pos.getX(), 256, pos.getZ()); 
@@ -59,11 +59,14 @@ public class TeleporterUtilities
 				for (int z = pos.getZ() - 6; z < pos.getZ() + 6; z++)
 				{
 					mutableBlockPos.setPos(x, y, z);
-					if (world.getBlockState(mutableBlockPos).getBlock() == portalBlock)
+					for(int i = 0; i < portalBlock.length; i++)
 					{
-						surfacePos = new BlockPos(x, y + 1, z);
-						foundBlock = true;
-						break;
+    					if (world.getBlockState(mutableBlockPos).getBlock() == portalBlock[i])
+    					{
+    						surfacePos = new BlockPos(x, y + 1, z);
+    						foundBlock = true;
+    						break;
+    					}
 					}
 				}
 			}
@@ -83,7 +86,7 @@ public class TeleporterUtilities
 		}
 		if (!foundBlock)
 		{
-			world.setBlockState(surfacePos.down(), portalBlock.getDefaultState());
+			world.setBlockState(surfacePos.down(), portalBlock[0].getDefaultState());
 			world.setBlockState(surfacePos, Blocks.AIR.getDefaultState());
 			world.setBlockState(surfacePos.up(), Blocks.AIR.getDefaultState());
 		}
