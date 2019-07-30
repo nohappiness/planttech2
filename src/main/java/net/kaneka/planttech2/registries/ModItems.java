@@ -19,7 +19,6 @@ import net.kaneka.planttech2.items.TestItem;
 import net.kaneka.planttech2.items.ThermometerItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.items.WrenchItem;
-import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
 import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;

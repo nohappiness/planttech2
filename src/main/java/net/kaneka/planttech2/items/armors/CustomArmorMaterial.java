@@ -14,16 +14,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 public enum CustomArmorMaterial implements IArmorMaterial
 {
-	KANEKIUM("kanekium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return Ingredient.fromItems(ModItems.KANEKIUM_INGOT);
-	}), DANCIUM("dancium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return Ingredient.fromItems(ModItems.DANCIUM_INGOT);
-	}), LENTHURIUM("lenthurium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return Ingredient.fromItems(ModItems.LENTHURIUM_INGOT);
-	}), KINNOIUM("kinnoium", 33, new int[] { 3, 6, 8, 3 }, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return Ingredient.fromItems(ModItems.KINNOIUM_INGOT);
-	}), UNNECESSARY("unnecessary", 0, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return null ;
+	UNNECESSARY("unnecessary", 0, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.fromItems(ModItems.PLANTIUM_INGOT);
 	});
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
