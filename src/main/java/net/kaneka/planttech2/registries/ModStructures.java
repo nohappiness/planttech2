@@ -3,13 +3,8 @@ package net.kaneka.planttech2.registries;
 import net.kaneka.planttech2.world.structure.tech.TechVillageConfig;
 import net.kaneka.planttech2.world.structure.tech.TechVillageStructure;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.RegistryEvent.Register;
 
 public class ModStructures

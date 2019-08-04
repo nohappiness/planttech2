@@ -12,6 +12,8 @@ public interface ITechVillagerTrust
 	public void setTrust(String profession, int trust);
 
 	public int getTrust(String profession);
+	
+	public int getMaxLevel();
 
 	public int getLevel(String profession);
 

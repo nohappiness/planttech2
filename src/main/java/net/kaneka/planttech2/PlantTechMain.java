@@ -110,8 +110,6 @@ public class PlantTechMain
 		// some example code to receive and process InterModComms from other mods
 	}
 
-	// You can use EventBusSubscriber to automatically subscribe events on the
-	// contained class (this is subscribing to the MOD event bus
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class RegistryEvents
 	{

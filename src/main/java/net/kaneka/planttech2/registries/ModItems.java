@@ -8,6 +8,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
+import net.kaneka.planttech2.items.CreditCardItem;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.DNAContainerItem;
 import net.kaneka.planttech2.items.EnergyStorageItem;
@@ -87,6 +88,7 @@ public class ModItems
 	    		   LENTHURIUM_INGOT = new BaseItem("lenthurium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   LENTHURIUM_NUGGET = new BaseItem("lenthurium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   MULTITOOL = new MultitoolItem(), 
+	    		   PLANTCARD = new CreditCardItem("plantcard", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1)),
 	    		   PLANTIUM_INGOT  = new BaseItem("plantium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   PLANTIUM_NUGGET = new BaseItem("plantium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
 	    		   RANGEUPGRADE_TIER_1 = new TierItem("rangeupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 1),

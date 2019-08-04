@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.entities.trades;
+package net.kaneka.planttech2.entities.tradesandjobs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,20 +6,28 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class TechVillagerTrade
 {
+	private final String name; 
 	private final List<ItemStack> inputs; 
 	private final List<ItemStack> outputs; 
-	private final int credits; 
-	private final int neededTrustLevel; 
+	private final int creditsBuy, creditsSell, neededTrustLevel; 
 	
-	public TechVillagerTrade(List<ItemStack> inputs, List<ItemStack> outputs, int credits, int neededTrustLevel )
+	public TechVillagerTrade(String name, List<ItemStack> inputs, List<ItemStack> outputs, int creditsBuy, int creditsSell, int neededTrustLevel )
 	{
+		this.name = name; 
 		this.inputs = inputs; 
 		this.outputs = outputs; 
-		this.credits = credits; 
+		this.creditsBuy = creditsBuy;
+		this.creditsSell = creditsSell; 
 		this.neededTrustLevel = neededTrustLevel; 
+	}
+	
+	public String getName()
+	{
+		return new TranslationTextComponent(name).getUnformattedComponentText(); 
 	}
 	
 	public List<ItemStack> getInputs()
@@ -31,10 +39,15 @@ public class TechVillagerTrade
 	{
 		return outputs;
 	}
-
-	public int getCredits()
+	
+	public int getCreditsBuy()
 	{
-		return credits;
+		return creditsBuy;
+	}
+
+	public int getCreditsSell()
+	{
+		return creditsSell;
 	}
 
 	public int getNeededLevel()
@@ -45,6 +58,7 @@ public class TechVillagerTrade
 	public CompoundNBT toNBT()
 	{
 		CompoundNBT nbt = new CompoundNBT();
+		nbt.putString("name", name);
 		nbt.putInt("length_inputs", inputs.size());
 		for(int i = 0; i < inputs.size(); i++)
 		{
@@ -56,7 +70,8 @@ public class TechVillagerTrade
 		{
 			nbt.put("output_" + i, outputs.get(i).serializeNBT()); 
 		}
-		nbt.putInt("credits", credits);
+		nbt.putInt("creditsbuy", creditsBuy);
+		nbt.putInt("creditssell", creditsSell);
 		nbt.putInt("neededtrustlevel", neededTrustLevel);
 		return nbt; 
 	}
@@ -74,11 +89,12 @@ public class TechVillagerTrade
 			outputs.add(ItemStack.read(nbt.getCompound("output_" + i)));
 		}
 		
-		return new TechVillagerTrade(inputs, outputs, nbt.getInt("credits") , nbt.getInt("neededtrustlevel"));
+		return new TechVillagerTrade(nbt.getString("name"), inputs, outputs, nbt.getInt("creditsbuy") , nbt.getInt("creditssell") , nbt.getInt("neededtrustlevel"));
 	}
 	
 	public PacketBuffer toBuffer(PacketBuffer buf)
 	{
+		buf.writeString(name);
 		buf.writeInt(inputs.size()); 
 		for(int i = 0; i < inputs.size(); i++)
 		{
@@ -90,7 +106,8 @@ public class TechVillagerTrade
 		{
 			buf.writeItemStack(outputs.get(i)); 
 		}
-		buf.writeInt(credits); 
+		buf.writeInt(creditsBuy); 
+		buf.writeInt(creditsSell); 
 		buf.writeInt(neededTrustLevel); 
 		return buf; 
 	}
@@ -98,15 +115,18 @@ public class TechVillagerTrade
 	public static TechVillagerTrade fromBuffer(PacketBuffer buf)
 	{
 		List<ItemStack> inputs = new ArrayList<>(), outputs = new ArrayList<>(); 
-		for(int i = 0; i < buf.readInt(); i++)
+		String name = buf.readString();
+		int size = buf.readInt();
+		for(int i = 0; i < size; i++)
 		{
 			inputs.add(buf.readItemStack());
 		}
 		
-		for(int i = 0; i < buf.readInt(); i++)
+		size = buf.readInt();
+		for(int i = 0; i < size; i++)
 		{
 			outputs.add(buf.readItemStack());
 		}
-		return new TechVillagerTrade(inputs, outputs, buf.readInt() , buf.readInt());
+		return new TechVillagerTrade(name, inputs, outputs, buf.readInt(), buf.readInt(), buf.readInt());
 	}
 }

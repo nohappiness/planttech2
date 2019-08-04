@@ -23,6 +23,7 @@ public class ModReferences
 	public static final String CHIPALYZERCONTAINER = MODID + ":chipalyzercontainer"; 
 	public static final String TELEPORTERBLOCKCONTAINER = MODID + ":teleporterblockcontainer";
 	public static final String TELEPORTERITEMCONTAINER = MODID + ":teleporteritemcontainer";
+	public static final String TECHVILLAGERCONTAINER = MODID + ":techvillagercontainer";
 	
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 	

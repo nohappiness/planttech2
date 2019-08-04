@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.entities.trades;
+package net.kaneka.planttech2.entities.tradesandjobs;
 
 import java.util.Random;
 

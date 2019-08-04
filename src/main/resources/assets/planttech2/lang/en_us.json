@@ -910,5 +910,10 @@
     "temp.COLD": "cold",
     "temp.NORMAL": "normal",
     "temp.WARM": "warm",
-    "temp.EXTREME_WARM": "extreme warm"
+    "temp.EXTREME_WARM": "extreme warm",
+    
+    "techvillager.profession.scientist": "Scientist",
+    "techvillager.profession.botanist": "Botanist",
+    "techvillager.profession.headhunter": "Headhunter",
+    "techvillager.profession.engineer": "Engineer"
 }

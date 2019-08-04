@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.entities.trades;
+package net.kaneka.planttech2.entities.tradesandjobs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +8,19 @@ import net.minecraft.item.ItemStack;
 
 public class TechVillagerTradePool
 {
+	private final String name; 
 	private final List<ItemStackWithRandomSize> inputs;
 	private final List<ItemStackWithRandomSize> outputs;
-	private final int credits;
+	private final int creditsBuy, creditsSell;
 	private final int neededTrustLevel;
 
-	public TechVillagerTradePool(List<ItemStackWithRandomSize> inputs, List<ItemStackWithRandomSize> outputs, int credits, int neededTrustLevel)
+	public TechVillagerTradePool(String name, List<ItemStackWithRandomSize> inputs, List<ItemStackWithRandomSize> outputs, int creditsBuy, int creditsSell, int neededTrustLevel)
 	{
+		this.name = name; 
 		this.inputs = inputs;
 		this.outputs = outputs;
-		this.credits = credits;
+		this.creditsBuy = creditsBuy;
+		this.creditsSell = creditsSell;
 		this.neededTrustLevel = neededTrustLevel;
 	}
 
@@ -34,7 +37,7 @@ public class TechVillagerTradePool
 		{
 			outputstacks.add(template.getRandomSizeStack(rand));
 		}
-		return new TechVillagerTrade(inputstacks, outputstacks, credits, neededTrustLevel);
+		return new TechVillagerTrade(name, inputstacks, outputstacks, creditsBuy, creditsSell, neededTrustLevel);
 	}
 
 	

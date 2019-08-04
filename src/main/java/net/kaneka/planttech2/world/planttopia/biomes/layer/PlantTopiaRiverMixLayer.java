@@ -11,11 +11,16 @@ import net.minecraft.world.gen.layer.traits.IDimOffset0Transformer;
 public enum PlantTopiaRiverMixLayer implements IAreaTransformer2, IDimOffset0Transformer {
     INSTANCE;
 
-    private static final int FROZEN_RIVER = Registry.BIOME.getId(Biomes.FROZEN_RIVER);
-    private static final int SNOWY_TUNDRA = Registry.BIOME.getId(Biomes.SNOWY_TUNDRA);
-    private static final int MUSHROOM_FIELDS = Registry.BIOME.getId(Biomes.MUSHROOM_FIELDS);
-    private static final int MUSHROOM_FIELD_SHORE = Registry.BIOME.getId(Biomes.MUSHROOM_FIELD_SHORE);
-    private static final int RIVER = Registry.BIOME.getId(ModBiomes.PLANTTOPIA_RIVER);
+    @SuppressWarnings("deprecation")
+	private static final int FROZEN_RIVER = Registry.BIOME.getId(Biomes.FROZEN_RIVER);
+    @SuppressWarnings("deprecation")
+	private static final int SNOWY_TUNDRA = Registry.BIOME.getId(Biomes.SNOWY_TUNDRA);
+    @SuppressWarnings("deprecation")
+	private static final int MUSHROOM_FIELDS = Registry.BIOME.getId(Biomes.MUSHROOM_FIELDS);
+    @SuppressWarnings("deprecation")
+	private static final int MUSHROOM_FIELD_SHORE = Registry.BIOME.getId(Biomes.MUSHROOM_FIELD_SHORE);
+    @SuppressWarnings("deprecation")
+	private static final int RIVER = Registry.BIOME.getId(ModBiomes.PLANTTOPIA_RIVER);
 
     private PlantTopiaRiverMixLayer() {
     }

@@ -15,222 +15,220 @@ import net.minecraft.nbt.CompoundNBT;
 
 public class HashMapCropTraits
 {
-    private String type;
-    private HashMap<EnumTraitsInt, Integer> traits = new HashMap<EnumTraitsInt, Integer>();
-    private boolean analysed;
+	private String type;
+	private HashMap<EnumTraitsInt, Integer> traits = new HashMap<EnumTraitsInt, Integer>();
+	private boolean analysed;
 
-    public HashMapCropTraits()
-    {
-	setDefault();
-    }
-
-    private void setDefault()
-    {
-	this.type = "carrot";
-	for (EnumTraitsInt trait : EnumTraitsInt.values())
+	public HashMapCropTraits()
 	{
-	    traits.put(trait, trait.getMin());
+		setDefault();
 	}
-	this.analysed = false;
-    }
 
-    public HashMapCropTraits copy()
-    {
-	HashMapCropTraits copy = new HashMapCropTraits();
-	Set<EnumTraitsInt> keyset = this.getTraitsList();
-	for (EnumTraitsInt key : keyset)
+	private void setDefault()
 	{
-	    copy.setTrait(key, this.getTrait(key));
-	}
-	copy.setType(this.getType());
-	copy.setAnalysed(this.isAnalysed());
-	return copy;
-
-    }
-
-    public Set<EnumTraitsInt> getTraitsList()
-    {
-	return this.traits.keySet();
-    }
-
-    public boolean setTrait(EnumTraitsInt trait, int value)
-    {
-	Set<EnumTraitsInt> keyset = this.getTraitsList();
-	if (keyset.contains(trait) && value > 0)
-	{
-	    this.traits.put(trait, value);
-	    return true;
-	}
-	return false;
-    }
-
-    public int getTrait(EnumTraitsInt trait)
-    {
-	Set<EnumTraitsInt> keyset = this.getTraitsList();
-	if (keyset.contains(trait))
-	{
-	    return this.traits.get(trait);
-	}
-	return 0;
-    }
-
-    public String getType()
-    {
-	return this.type;
-    }
-
-    public void setType(String type)
-    {
-	this.type = type;
-    }
-
-    public boolean isAnalysed()
-    {
-	return this.analysed;
-    }
-
-    public void setAnalysed(boolean bool)
-    {
-	this.analysed = bool;
-    }
-
-    public ItemStack createItemStackwithTraits(Item item)
-    {
-	ItemStack stack = new ItemStack(item);
-	CompoundNBT nbt = this.toNBT();
-	stack.setTag(nbt);
-	return stack;
-    }
-
-    public ItemStack addToItemStack(ItemStack stack)
-    {
-	CompoundNBT nbt = this.toNBT();
-	stack.setTag(nbt);
-	return stack;
-    }
-
-    public CompoundNBT toNBT()
-    {
-	CompoundNBT nbt = new CompoundNBT();
-	return this.addToNBT(nbt);
-    }
-
-    public CompoundNBT addToNBT(CompoundNBT nbt)
-    {
-	Set<EnumTraitsInt> keyset = this.getTraitsList();
-	for (EnumTraitsInt key : keyset)
-	{
-	    nbt.putInt(key.getName(), this.getTrait(key));
-	}
-	nbt.putString("type", this.type);
-	nbt.putBoolean("analysed", this.isAnalysed());
-	return nbt;
-    }
-
-    public void fromStack(ItemStack stack)
-    {
-	this.fromNBT(stack.getTag());
-    }
-
-    public void fromNBT(CompoundNBT nbt)
-    {
-	Set<EnumTraitsInt> keyset = this.getTraitsList();
-	if (nbt != null)
-	{
-	    for (EnumTraitsInt key : keyset)
-	    {
-		if (nbt.contains(key.getName()))
+		this.type = "carrot";
+		for (EnumTraitsInt trait : EnumTraitsInt.values())
 		{
-		    this.setTrait(key, nbt.getInt(key.getName()));
+			traits.put(trait, trait.getMin());
 		}
-	    }
-	    this.setType(nbt.getString("type"));
-	    this.setAnalysed(nbt.getBoolean("analysed"));
+		this.analysed = false;
 	}
-    }
 
-    public HashMapCropTraits calculateNewTraits(HashMapCropTraits oldTraits)
-    {
-	Random rand = new Random();
-
-	HashMapCropTraits newTraits = new HashMapCropTraits();
-
-	if (rand.nextBoolean())
+	public HashMapCropTraits copy()
 	{
-	    newTraits.setType(this.type);
-	}
-	else
-	{
-	    newTraits.setType(oldTraits.getType());
-	}
-	if (this.getType() != oldTraits.getType())
-	{
-	    Set<CropListEntry> possibleChilds = PlantTechMain.croplist.getByParents(this.getType(), oldTraits.getType());
-	    if (!possibleChilds.isEmpty())
-	    {
-		float sumNewTyp = 0;
-		float sumOldTyp = 0;
-		for (CropListEntry entry : possibleChilds)
+		HashMapCropTraits copy = new HashMapCropTraits();
+		Set<EnumTraitsInt> keyset = this.getTraitsList();
+		for (EnumTraitsInt key : keyset)
 		{
-		    sumNewTyp += entry.getChance();
+			copy.setTrait(key, this.getTrait(key));
 		}
+		copy.setType(this.getType());
+		copy.setAnalysed(this.isAnalysed());
+		return copy;
 
-		sumOldTyp = sumNewTyp;
-		if (sumNewTyp < 0.5F)
+	}
+
+	public Set<EnumTraitsInt> getTraitsList()
+	{
+		return this.traits.keySet();
+	}
+
+	public boolean setTrait(EnumTraitsInt trait, int value)
+	{
+		Set<EnumTraitsInt> keyset = this.getTraitsList();
+		if (keyset.contains(trait) && value > 0)
 		{
-		    sumOldTyp = 1 - sumNewTyp;
+			this.traits.put(trait, value);
+			return true;
 		}
+		return false;
+	}
 
-		float randomfloat = rand.nextFloat() * (sumOldTyp + sumNewTyp);
-		if (randomfloat <= sumNewTyp)
+	public int getTrait(EnumTraitsInt trait)
+	{
+		Set<EnumTraitsInt> keyset = this.getTraitsList();
+		if (keyset.contains(trait))
 		{
-		    float sum2 = 0;
-		    for (CropListEntry entry : possibleChilds)
-		    {
-			sum2 += entry.getChance();
-			if (randomfloat <= sum2)
+			return this.traits.get(trait);
+		}
+		return 0;
+	}
+
+	public String getType()
+	{
+		return this.type;
+	}
+
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+	public boolean isAnalysed()
+	{
+		return this.analysed;
+	}
+
+	public void setAnalysed(boolean bool)
+	{
+		this.analysed = bool;
+	}
+
+	public ItemStack createItemStackwithTraits(Item item)
+	{
+		ItemStack stack = new ItemStack(item);
+		CompoundNBT nbt = this.toNBT();
+		stack.setTag(nbt);
+		return stack;
+	}
+
+	public ItemStack addToItemStack(ItemStack stack)
+	{
+		CompoundNBT nbt = this.toNBT();
+		stack.setTag(nbt);
+		return stack;
+	}
+
+	public CompoundNBT toNBT()
+	{
+		CompoundNBT nbt = new CompoundNBT();
+		return this.addToNBT(nbt);
+	}
+
+	public CompoundNBT addToNBT(CompoundNBT nbt)
+	{
+		Set<EnumTraitsInt> keyset = this.getTraitsList();
+		for (EnumTraitsInt key : keyset)
+		{
+			nbt.putInt(key.getName(), this.getTrait(key));
+		}
+		nbt.putString("type", this.type);
+		nbt.putBoolean("analysed", this.isAnalysed());
+		return nbt;
+	}
+
+	public void fromStack(ItemStack stack)
+	{
+		this.fromNBT(stack.getTag());
+	}
+
+	public void fromNBT(CompoundNBT nbt)
+	{
+		Set<EnumTraitsInt> keyset = this.getTraitsList();
+		if (nbt != null)
+		{
+			for (EnumTraitsInt key : keyset)
 			{
-			    newTraits.setType(entry.getString());
+				if (nbt.contains(key.getName()))
+				{
+					this.setTrait(key, nbt.getInt(key.getName()));
+				}
 			}
-		    }
+			this.setType(nbt.getString("type"));
+			this.setAnalysed(nbt.getBoolean("analysed"));
 		}
-
-	    }
 	}
 
-	for (EnumTraitsInt trait : EnumTraitsInt.values())
+	public HashMapCropTraits calculateNewTraits(HashMapCropTraits oldTraits)
 	{
-	    if (this.getTrait(trait) == oldTraits.getTrait(trait))
-	    {
-		if (trait.getTransitionPossibility() > rand.nextFloat() && this.getTrait(trait) < trait.getMax())
+		Random rand = new Random();
+
+		HashMapCropTraits newTraits = new HashMapCropTraits();
+
+		if (rand.nextBoolean())
 		{
-		    newTraits.setTrait(trait, (this.getTrait(trait) + 1));
-		}
-		else
+			newTraits.setType(this.type);
+		} else
 		{
-		    newTraits.setTrait(trait, (this.getTrait(trait)));
+			newTraits.setType(oldTraits.getType());
 		}
-	    }
-	    else
-	    {
-		int min = Math.min(this.getTrait(trait), oldTraits.getTrait(trait));
-		int max = Math.max(this.getTrait(trait), oldTraits.getTrait(trait));
-		newTraits.setTrait(trait, (rand.nextInt((max - min)) + min));
-	    }
+		if (this.getType() != oldTraits.getType())
+		{
+			Set<CropListEntry> possibleChilds = PlantTechMain.croplist.getByParents(this.getType(), oldTraits.getType());
+			if (!possibleChilds.isEmpty())
+			{
+				float sumNewTyp = 0;
+				float sumOldTyp = 0;
+				for (CropListEntry entry : possibleChilds)
+				{
+					sumNewTyp += entry.getChance();
+				}
+
+				sumOldTyp = sumNewTyp;
+				if (sumNewTyp < 0.5F)
+				{
+					sumOldTyp = 1 - sumNewTyp;
+				}
+
+				float randomfloat = rand.nextFloat() * (sumOldTyp + sumNewTyp);
+				if (randomfloat <= sumNewTyp)
+				{
+					float sum2 = 0;
+					for (CropListEntry entry : possibleChilds)
+					{
+						sum2 += entry.getChance();
+						if (randomfloat <= sum2)
+						{
+							newTraits.setType(entry.getString());
+						}
+					}
+				}
+
+			}
+		}
+
+		for (EnumTraitsInt trait : EnumTraitsInt.values())
+		{
+			if (this.getTrait(trait) == oldTraits.getTrait(trait))
+			{
+				if (trait.getTransitionPossibility() > rand.nextFloat() && this.getTrait(trait) < trait.getMax())
+				{
+					newTraits.setTrait(trait, (this.getTrait(trait) + 1));
+				} 
+				else
+				{
+					newTraits.setTrait(trait, (this.getTrait(trait)));
+				}
+			} else
+			{
+				int min = Math.min(this.getTrait(trait), oldTraits.getTrait(trait));
+				int max = Math.max(this.getTrait(trait), oldTraits.getTrait(trait));
+				newTraits.setTrait(trait, (rand.nextInt((max - min)) + min));
+			}
+		}
+
+		return newTraits;
 	}
 
-	return newTraits;
-    }
-
-    static public List<String> getTraitsKeyList()
-    {
-	List<String> list = new ArrayList<String>();
-	list.add("type");
-	for (EnumTraitsInt trait : EnumTraitsInt.values())
+	static public List<String> getTraitsKeyList()
 	{
-	    list.add(trait.getName());
-	}
-	return list;
+		List<String> list = new ArrayList<String>();
+		list.add("type");
+		for (EnumTraitsInt trait : EnumTraitsInt.values())
+		{
+			list.add(trait.getName());
+		}
+		return list;
 
-    }
+	}
 }

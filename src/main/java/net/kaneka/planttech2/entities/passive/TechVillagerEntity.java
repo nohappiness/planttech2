@@ -4,25 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.kaneka.planttech2.entities.trades.TechVillagerTrade;
-import net.kaneka.planttech2.entities.trades.TechVillagerTradePool;
-import net.kaneka.planttech2.entities.trades.TechVillagerTradePools;
+import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerContainerProvider;
+import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTrade;
+import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePool;
+import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePools;
 import net.kaneka.planttech2.registries.ModReferences;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TechVillagerEntity extends AgeableEntity
 {
+	public static final int SCIENTIST = 0; 
+	public static final int BOTANIST = 1; 
+	public static final int HEADHUNTER = 2; 
+	public static final int ENGINEER = 3; 
+	
 	private static final DataParameter<Integer> PROFESSION = EntityDataManager.createKey(TechVillagerEntity.class, DataSerializers.VARINT);
 
 	private List<TechVillagerTrade> offers;
@@ -36,7 +43,24 @@ public class TechVillagerEntity extends AgeableEntity
 	protected void registerData()
 	{
 		super.registerData();
-		this.dataManager.register(PROFESSION, 1);
+		this.dataManager.register(PROFESSION, 0);
+	}
+	
+	public int getProfession()
+	{
+		return dataManager.get(PROFESSION); 
+	}
+	
+	public static String getProfessionString(int profession)
+	{
+		switch(profession)
+		{
+			case 0: return "scientist"; 
+			case 1: return "botanist";
+			case 2: return "headhunter"; 
+			case 3: return "engineer"; 
+			default: return "scientist"; 
+		}
 	}
 
 	private List<TechVillagerTrade> getOffers()
@@ -46,12 +70,15 @@ public class TechVillagerEntity extends AgeableEntity
 			offers = new ArrayList<TechVillagerTrade>();
 			populateTrades();
 		}
+		else if(offers.size() == 0)
+		{
+			populateTrades();
+		}
 		return offers;
 	}
 
 	private void populateTrades()
 	{
-		System.out.println("populate"); 
 		List<TechVillagerTradePool> pool = TechVillagerTradePools.getSCIENTISTS();
 		List<Integer> integers = new ArrayList<Integer>();
 		for (int i = 0; i < pool.size(); i++)
@@ -60,7 +87,7 @@ public class TechVillagerEntity extends AgeableEntity
 		}
 
 		Random rand = new Random();
-		for (int i = 0; i < 6; i++)
+		for (int i = 0; i < Math.min(8, pool.size()); i++)
 		{
 			int randomint = rand.nextInt(integers.size());
 			offers.add(pool.get(integers.get(randomint)).generateTechVillagerTrade());
@@ -70,12 +97,10 @@ public class TechVillagerEntity extends AgeableEntity
 	}
 	
 	@Override
-	public void read(CompoundNBT compound)
+	public void readAdditional(CompoundNBT compound)
 	{
-		super.read(compound);
-		 
-		List<TechVillagerTrade> offers = new ArrayList<TechVillagerTrade>();
-		System.out.println(compound.getInt("length_trades"));
+		super.readAdditional(compound);
+		offers = new ArrayList<TechVillagerTrade>();
 		for (int i = 0; i < compound.getInt("length_trades"); i++)
 		{
 			offers.add(TechVillagerTrade.fromNBT(compound.getCompound("offer_" + i)));
@@ -84,20 +109,22 @@ public class TechVillagerEntity extends AgeableEntity
 
 	
 	@Override
-	public CompoundNBT writeWithoutTypeId(CompoundNBT compound)
+	public void writeAdditional(CompoundNBT compound)
 	{
-		super.writeWithoutTypeId(compound);
-		System.out.println("writeAdd"); 
-		System.out.println(this.offers); 
-		List<TechVillagerTrade> offers = getOffers();
-		compound.putInt("length_trades", offers.size());
-		for (int i = 0; i < offers.size(); i++)
+		super.writeAdditional(compound);
+		if(offers != null)
 		{
-			compound.put("offer_" + i, offers.get(i).toNBT());
+    		compound.putInt("length_trades", offers.size());
+    		for (int i = 0; i < offers.size(); i++)
+    		{
+    			compound.put("offer_" + i, offers.get(i).toNBT());
+    		}
 		}
-		return compound; 
+		else
+		{
+			compound.putInt("length_trades", 0);
+		}
 	}
-	
 	
 	
 	@Override
@@ -105,10 +132,16 @@ public class TechVillagerEntity extends AgeableEntity
 	{
 		if (hand == Hand.MAIN_HAND && !world.isRemote)
 		{
-			List<TechVillagerTrade> offers = getOffers();
-			for (TechVillagerTrade offer : offers)
+			if (player instanceof ServerPlayerEntity) 
 			{
-				player.sendMessage(new StringTextComponent(offer.getInputs() + "für" + offer.getOutputs() + ".Trustlevel:" + offer.getNeededLevel()));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new TechVillagerContainerProvider(getOffers(), getProfession()), buffer -> 
+    			{
+    				buffer.writeInt(getProfession()); 
+    				buffer.writeInt(offers.size());
+    				for(TechVillagerTrade trade:offers)
+    				{
+    					trade.toBuffer(buffer);
+    				}});
 			}
 		}
 		return true;

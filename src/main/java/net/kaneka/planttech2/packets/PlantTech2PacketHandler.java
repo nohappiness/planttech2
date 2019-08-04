@@ -20,6 +20,9 @@ public class PlantTech2PacketHandler
 		INSTANCE.registerMessage(i++, CompressorButtonPressMessage.class, CompressorButtonPressMessage::encode, CompressorButtonPressMessage::decode, CompressorButtonPressMessage.ButtonPressMessageHandler::handle);
 		INSTANCE.registerMessage(i++, CropConfigChangeMessage.class, CropConfigChangeMessage::encode, CropConfigChangeMessage::decode, CropConfigChangeMessage.CropConfigChangeHandler::handle);
 		INSTANCE.registerMessage(i++, TeleporterBlockButtonPressMessage.class, TeleporterBlockButtonPressMessage::encode, TeleporterBlockButtonPressMessage::decode, TeleporterBlockButtonPressMessage.ButtonPressMessageHandler::handle);
+		INSTANCE.registerMessage(i++, DoTechVillagerTradeMessage.class, DoTechVillagerTradeMessage::encode, DoTechVillagerTradeMessage::decode, DoTechVillagerTradeMessage.DoTechVillagerTradeHandler::handle);
+		INSTANCE.registerMessage(i++, DoTechVillagerTaskMessage.class, DoTechVillagerTaskMessage::encode, DoTechVillagerTaskMessage::decode, DoTechVillagerTaskMessage.DoTechVillagerTaskHandler::handle);
+		INSTANCE.registerMessage(i++, SyncTrustMessage.class, SyncTrustMessage::encode, SyncTrustMessage::decode, SyncTrustMessage.SyncTrustHandler::handle);
 		
 	}
 

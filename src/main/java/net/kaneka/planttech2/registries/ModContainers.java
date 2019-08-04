@@ -17,8 +17,10 @@ import net.kaneka.planttech2.container.SeedSqueezerContainer;
 import net.kaneka.planttech2.container.SeedconstructorContainer;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
 import net.kaneka.planttech2.container.TeleporterContainer;
+import net.kaneka.planttech2.container.entities.TechVillagerContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.network.IContainerFactory;
 
 public class ModContainers
 {
@@ -39,6 +41,7 @@ public class ModContainers
 	public static final ContainerType<ChipalyzerContainer> CHIPALYZER = new ContainerType<ChipalyzerContainer>(ChipalyzerContainer::new);
 	public static final ContainerType<PlantTopiaTeleporterContainer> PLANTTOPIATELEPORTER = new ContainerType<PlantTopiaTeleporterContainer>(PlantTopiaTeleporterContainer::new);
 	public static final ContainerType<TeleporterContainer> TELEPORTERITEM = new ContainerType<TeleporterContainer>(TeleporterContainer::new);
+	public static ContainerType<TechVillagerContainer> TECHVILLAGER = new ContainerType<TechVillagerContainer>((IContainerFactory<TechVillagerContainer>) TechVillagerContainer::new);
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
@@ -55,6 +58,7 @@ public class ModContainers
 										PLANTFARM.setRegistryName(ModReferences.PLANTFARMCONTAINER),
 										SEEDCONSTRUCTOR.setRegistryName(ModReferences.SEEDCONSTRUCTORCONTAINER),
 										SEEDQUEEZER.setRegistryName(ModReferences.SEEDQUEEZERCONTAINER),
+										TECHVILLAGER.setRegistryName(ModReferences.TECHVILLAGERCONTAINER),
 										SOLARGENERATOR.setRegistryName(ModReferences.SOLARGENERATORCONTAINER), 
 										CHIPALYZER.setRegistryName(ModReferences.CHIPALYZERCONTAINER), 
 										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER), 

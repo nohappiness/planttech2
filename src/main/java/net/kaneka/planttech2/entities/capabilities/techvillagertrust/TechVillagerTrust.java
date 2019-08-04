@@ -82,10 +82,16 @@ public class TechVillagerTrust implements ITechVillagerTrust, ICapabilitySeriali
 	{
 		if(this.trust.containsKey(key))
 		{ 
-			int intvalue = this.trust.get(key); 
+			int intvalue = this.trust.get(key);  
 			return intvalue; 
 		}
 		return 0; 
+	}
+	
+	@Override
+	public int getMaxLevel()
+	{
+		return levelcondition.length - 1; 
 	}
 	
 	@Override
@@ -98,7 +104,7 @@ public class TechVillagerTrust implements ITechVillagerTrust, ICapabilitySeriali
 	{
 		if (this.trust.containsKey(key))
 		{
-			int level = 1;
+			int level = 0;
 			int trust = this.getTrust(key);
 			for(int i = 0; i < this.levelcondition.length; i++)
 			{
