@@ -6,9 +6,9 @@ credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka" 
 [[mods]] #mandatory
 modId="planttech2" 
-version="${version}" 
+version="0.00.20" 
 displayName="PlantTech 2"
-# updateJSONURL="http://myurl.me/" #optional
+updateJSONURL="https://bitbucket.org/kaneka/planttech2/raw/00b669a61c161eb9dc1a853d9ff380e6f24caf63/update.json" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 PlantTech 2 combines plants and tech for a whole new experience
