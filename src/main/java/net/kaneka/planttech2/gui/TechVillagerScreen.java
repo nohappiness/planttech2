@@ -75,6 +75,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
+		checkPlayerTrustLevel();
 		this.renderBackground();
 		super.render(mouseX, mouseY, partialTicks);
 		this.renderSelectedTrades();
@@ -170,6 +171,8 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		font.drawString(professionname, (this.xSize / 2 - font.getStringWidth(professionname) / 2), 10, Integer.parseInt("00e803",16));
 		font.drawString("Trades", 70, 14, Integer.parseInt("00e803", 16));
 		font.drawString("Jobs", 354, 14, Integer.parseInt("00e803", 16));
+		font.drawString(String.valueOf(playertrustlevel), 140, 20, Integer.parseInt("00e803", 16));
+		font.drawString(String.valueOf(playertrustlevel + 1), 309, 20, Integer.parseInt("00e803", 16));
 		for (int i = 0; i < container.getTrades().size(); i++)
 		{
 			String color = "00e803"; 
