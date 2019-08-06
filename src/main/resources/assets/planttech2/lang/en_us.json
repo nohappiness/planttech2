@@ -1,4 +1,7 @@
 {
+	"planttech2.update.available": "A update for PlantTech 2 is available. ", 
+	"planttech2.update.click": "Click here", 
+	"planttech2.update.tooltip": "View CurseForge", 
     "itemGroup.planttech2_main": "General",
     "itemGroup.planttech2_seeds": "Seeds",
     "itemGroup.planttech2_machines": "Machines",

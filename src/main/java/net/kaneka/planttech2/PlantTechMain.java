@@ -66,6 +66,7 @@ public class PlantTechMain
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onWorldStart);
 		});
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
