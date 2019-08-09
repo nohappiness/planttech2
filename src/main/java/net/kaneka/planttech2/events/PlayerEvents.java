@@ -9,6 +9,7 @@ import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.registries.ModReferences;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
