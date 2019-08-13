@@ -112,7 +112,11 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy") + " BE"));
+		}
+		else
+		{
+			updateEnergy(stack);
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -121,10 +125,6 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 	@Override
 	public boolean showDurabilityBar(ItemStack stack)
 	{
-		if (getDurabilityForDisplay(stack) >= 1)
-		{
-			return false;
-		}
 		return true;
 	}
 
@@ -135,6 +135,10 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
+		}
+		else
+		{
+			updateEnergy(stack);
 		}
 
 		return 1D;

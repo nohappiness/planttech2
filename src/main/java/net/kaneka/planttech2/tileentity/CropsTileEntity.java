@@ -11,7 +11,6 @@ import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -51,6 +50,17 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		this.traits = traits;
 	}
+	
+	public boolean isAnalysed()
+	{
+		return traits.isAnalysed(); 
+	}
+	
+	public HashMapCropTraits setAnalysedAndGetTraits()
+	{
+		traits.setAnalysed(true);
+		return getTraits(); 
+	}
 
 	public HashMapCropTraits getTraits()
 	{
@@ -65,18 +75,6 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	public void setStartTick()
 	{
 		this.startTick = world.getGameTime();
-	}
-
-	public ItemStack getSeedDrop()
-	{
-		// TODO
-		/*
-		 * System.out.println(this.traits.getType()); ItemStack stack =
-		 * this.traits.createItemStackwithTraits(this.traits.getType().getSeed());
-		 * System.out.println(stack);
-		 */
-		return new ItemStack(Items.CARROT);
-
 	}
 
 	public List<ItemStack> addDrops(List<ItemStack> drops, int growstate)

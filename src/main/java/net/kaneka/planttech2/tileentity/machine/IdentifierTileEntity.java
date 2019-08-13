@@ -116,6 +116,16 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 						}
 					}
 				}
+				/*
+				else
+				{
+					CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
+			    	if (entry != null)
+			    	{
+			    		return true; 
+			    	}
+				}
+				*/
 			}
 		}
 		return false;
@@ -146,6 +156,23 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 							}
 						}
 					}
+					/*
+					else
+					{
+						CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
+				    	if (entry != null)
+				    	{
+				    		HashMapCropTraits newtraits = new HashMapCropTraits();
+				    		newtraits.setType(entry.getString());
+				    		newtraits.setAnalysed(true);
+				    		ItemStack result = entry.getMainSeed().copy();
+				    		result.setCount(stack.getCount());
+				    		newtraits.addToItemStack(stack);
+				    		this.itemhandler.setStackInSlot(this.getFreeOutputSlot(), result);
+							this.itemhandler.setStackInSlot(i, ItemStack.EMPTY);
+				    	}
+					}
+					*/
 				}
 			}
 		}

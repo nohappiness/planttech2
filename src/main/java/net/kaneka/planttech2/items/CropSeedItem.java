@@ -42,7 +42,7 @@ public class CropSeedItem extends BaseItem
 	    if (nbt.getBoolean("analysed"))
 	    {
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + nbt.getString("type")));
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(nbt.getString("type"))));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + getSoilString(nbt.getString("type"))));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + nbt.getInt("growspeed")));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + nbt.getInt("sensitivity")));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + (14 - nbt.getInt("lightsensitivity"))));
@@ -74,7 +74,7 @@ public class CropSeedItem extends BaseItem
 	else
 	{
 	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + entryName));
-	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + this.getSoilString(entryName)));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + getSoilString(entryName)));
 	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + 0));
 	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + 0));
 	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + 14));
@@ -88,7 +88,7 @@ public class CropSeedItem extends BaseItem
 	}
     }
 
-    private String temperatureString(String type, int tolerance)
+    public static String temperatureString(String type, int tolerance)
     {
 	if (tolerance == 0)
 	{
@@ -108,7 +108,7 @@ public class CropSeedItem extends BaseItem
 	return EnumTemperature.byId(min).getDisplayString() + " - " + EnumTemperature.byId(max).getDisplayString();
     }
 
-    private String getSoilString(String type)
+    public static String getSoilString(String type)
     {
 	ItemStack soil = PlantTechMain.croplist.getEntryByName(type).getSoil();
 	if (soil.isEmpty())

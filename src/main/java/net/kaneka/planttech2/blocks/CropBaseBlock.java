@@ -10,7 +10,9 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.items.AdvancedAnalyserItem;
 import net.kaneka.planttech2.items.AnalyserItem;
+import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
 import net.minecraft.block.Block;
@@ -274,7 +276,7 @@ public class CropBaseBlock extends ContainerBlock
 			ItemStack holdItem = player.getHeldItem(Hand.MAIN_HAND);
 			if (!holdItem.isEmpty())
 			{
-				if (holdItem.getItem() instanceof AnalyserItem)
+				if (holdItem.getItem() instanceof AnalyserItem || holdItem.getItem() instanceof AdvancedAnalyserItem || holdItem.getItem() instanceof CropRemover)
 				{
 					return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 				}

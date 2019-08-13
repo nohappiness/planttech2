@@ -21,13 +21,6 @@ public class AnalyserItem extends BaseItem
 	{
 		super("analyser", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
 	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
-	{
-		
-		return super.onItemRightClick(worldIn, playerIn, handIn);
-	}
 	
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)

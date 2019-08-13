@@ -26,4 +26,10 @@ public class PlantTopiaWorldType extends WorldType {
         return parentLayer;
     }
 	
+	@Override
+    public boolean canBeCreated() 
+	{
+        return false;
+    }
+	
 }
