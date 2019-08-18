@@ -14,11 +14,11 @@ public class TierItem extends BaseItem
 
     public int getTier()
     {
-	return tier; 
+    	return tier; 
     }
     
     public int getItemType()
     {
-	return itemtype; 
+    	return itemtype; 
     }
 }

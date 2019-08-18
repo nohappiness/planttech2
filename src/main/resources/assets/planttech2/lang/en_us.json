@@ -895,7 +895,7 @@
     "slot.megafurnace.input": "Insert item/block you want to smelt", 
     "slot.plantfarm.storage": "Insert seeds you want to be plantet", 
     "slot.seedconstructor.container": "Insert DNA container with traits you want to be constructed", 
-    "slot.seedsqueezer.input": "Insert seeds that should be squeezed into biomass and energy",
+    "slot.seedsqueezer.input": "Insert planttech2 seeds that should be squeezed into biomass and energy",
     "slot.seedsqueezer.squeeze": "No input, will automaticly pull from input",  
     "slot.solargenerator.focus": "Insert focus to start energyproduction", 
     "slot.upgradeableitem.chipslot": "Insert chip to upgrade item", 

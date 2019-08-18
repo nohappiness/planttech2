@@ -132,7 +132,7 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 	private int getSpeedReduction()
 	{
 
-		ItemStack stack = itemhandler.getStackInSlot(16);
+		ItemStack stack = itemhandler.getStackInSlot(15);
 		if (!stack.isEmpty())
 		{
 			if (stack.getItem() instanceof TierItem)
@@ -149,7 +149,7 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 
 	private int getRange()
 	{
-		ItemStack stack = itemhandler.getStackInSlot(15);
+		ItemStack stack = itemhandler.getStackInSlot(16);
 		if (!stack.isEmpty())
 		{
 			if (stack.getItem() instanceof TierItem)

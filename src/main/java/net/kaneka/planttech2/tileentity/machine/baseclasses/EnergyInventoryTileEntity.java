@@ -21,7 +21,7 @@ import net.minecraftforge.items.ItemStackHandler;
 abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 {
 	protected ItemStackHandler itemhandler;
-	private LazyOptional<IItemHandler> inventoryCap;
+	protected LazyOptional<IItemHandler> inventoryCap;
 
 	public EnergyInventoryTileEntity(TileEntityType<?> type, int energyStorage, int invSize)
 	{

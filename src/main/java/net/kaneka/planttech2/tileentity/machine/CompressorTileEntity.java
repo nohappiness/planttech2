@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
+
+import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
@@ -19,8 +21,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.wrapper.RangedWrapper;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class CompressorTileEntity extends EnergyInventoryTileEntity
 {
@@ -28,6 +36,12 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	private int selectedId = -1;
 	private HashMap<Integer, Pair<ItemStack, Integer>> recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
 	private ItemStack previousInput = null;
+	
+	private RangedWrapper inputs; 
+	private RangedWrapper outputs; 
+	private LazyOptional<IItemHandler> inputs_provider;
+	private LazyOptional<IItemHandler> outputs_provider;
+	
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -94,7 +108,24 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	public CompressorTileEntity()
 	{
 		super(ModTileEntities.COMPRESSOR_TE, 1000, 25);
+		inputs = new RangedWrapper(itemhandler, 0,1); 
+		outputs = new RangedWrapper(itemhandler, 1,2); 
+		inputs_provider = LazyOptional.of(() -> inputs);
+		outputs_provider = LazyOptional.of(() -> outputs);
 	}
+	
+	@Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == Direction.DOWN) return outputs_provider.cast();
+            if (facing != null) return inputs_provider.cast();
+            return inventoryCap.cast();
+        }
+
+        return super.getCapability(capability, facing);
+    }
 
 	@Override
 	public void doUpdate()

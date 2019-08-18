@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
@@ -8,14 +9,24 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.RangedWrapper;
 
 public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 {
 	public int ticksPassed = 0;
+	
+	private RangedWrapper inputs; 
+	private LazyOptional<IItemHandler> inputs_provider;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -70,7 +81,21 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 	public SeedSqueezerTileEntity()
 	{
 		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 15, 5000);
+		inputs = new RangedWrapper(itemhandler, 0,9); 
+		inputs_provider = LazyOptional.of(() -> inputs);
 	}
+	
+	@Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing != null) return inputs_provider.cast();
+            return inventoryCap.cast();
+        }
+
+        return super.getCapability(capability, facing);
+    }
 
 	@Override
 	public void tick()
