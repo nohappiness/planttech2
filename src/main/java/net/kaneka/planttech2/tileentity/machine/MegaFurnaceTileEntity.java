@@ -3,6 +3,7 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import java.util.Optional;
 
+import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
@@ -14,8 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
@@ -23,6 +30,12 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	public int[] ticksPassed = new int[6];
 	boolean isSmelting;
 	protected ItemStackHandler dummyitemhandler = new ItemStackHandler(1);
+	
+	private RangedWrapper inputs; 
+	private RangedWrapper outputs; 
+	private LazyOptional<IItemHandler> inputs_provider;
+	private LazyOptional<IItemHandler> outputs_provider;
+	
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -91,7 +104,24 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	public MegaFurnaceTileEntity()
 	{
 		super(ModTileEntities.MEGAFURNACE_TE, 10000, 15);
+		inputs = new RangedWrapper(itemhandler, 0,6); 
+		outputs = new RangedWrapper(itemhandler, 6, 12); 
+		inputs_provider = LazyOptional.of(() -> inputs);
+		outputs_provider = LazyOptional.of(() -> outputs);
 	}
+	
+	@Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == Direction.DOWN) return outputs_provider.cast();
+            if (facing != null) return inputs_provider.cast();
+            return inventoryCap.cast();
+        }
+
+        return super.getCapability(capability, facing);
+    }
 
 	@Override
 	public void doUpdate()
