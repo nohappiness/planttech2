@@ -1,6 +1,9 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.IdentifierContainer;
+import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -116,7 +119,6 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 						}
 					}
 				}
-				/*
 				else
 				{
 					CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
@@ -125,7 +127,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 			    		return true; 
 			    	}
 				}
-				*/
+				
 			}
 		}
 		return false;
@@ -156,7 +158,6 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 							}
 						}
 					}
-					/*
 					else
 					{
 						CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
@@ -172,7 +173,6 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 							this.itemhandler.setStackInSlot(i, ItemStack.EMPTY);
 				    	}
 					}
-					*/
 				}
 			}
 		}

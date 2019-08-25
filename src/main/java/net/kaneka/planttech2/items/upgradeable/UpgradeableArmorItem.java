@@ -9,10 +9,10 @@ import com.google.common.collect.Multimap;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
+import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem.NamedContainerProvider;
 import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -225,11 +225,12 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		if (Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
+
+		if(player.isSneaking())
 		{
-			if (!world.isRemote && player instanceof ServerPlayerEntity)
+			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{
-				NetworkHooks.openGui((ServerPlayerEntity) player, new BaseUpgradeableItem.NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);

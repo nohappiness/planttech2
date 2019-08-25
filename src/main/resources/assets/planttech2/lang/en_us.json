@@ -890,7 +890,7 @@
     "slot.dnaextractor.seeds": "Insert seed you want to extract traits from", 
     "slot.dnaextractor.empty_container": "Insert empty DNA container", 
     "slot.dnaremover.container": "Insert DNA container you want to remove a single train", 
-    "slot.identifier.input": "Insert PlantTech 2 seeds with unknown traits", 
+    "slot.identifier.input": "Insert seeds with unknown traits", 
     "slot.infuser.input": "Insert item/block you want to infuse with biomass", 
     "slot.megafurnace.input": "Insert item/block you want to smelt", 
     "slot.plantfarm.storage": "Insert seeds you want to be plantet", 

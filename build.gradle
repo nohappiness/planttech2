@@ -19,7 +19,7 @@ repositories {
     }
 }
 
-version = '0.00.26'
+version = '0.00.27'
 group = 'net.kaneka.planttech2' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'planttech2'
 
