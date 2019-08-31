@@ -1,9 +1,12 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.fluids.BiomassFluid;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -11,6 +14,7 @@ import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -49,6 +53,16 @@ public class ClientEvents
 							.setColor(TextFormatting.BLUE)
 							.setUnderlined(true);
 			evt.getEntity().sendMessage(info.appendSibling(link));
+		}
+	}
+	
+	@SubscribeEvent
+	public static void textureStitchEvent(TextureStitchEvent.Pre event) 
+	{
+		if(event.getMap().getBasePath() == "textures")
+		{
+    	    event.addSprite(BiomassFluid.ATTRIBUTES.getStillTexture());
+    	    event.addSprite(BiomassFluid.ATTRIBUTES.getFlowingTexture());
 		}
 	}
 }

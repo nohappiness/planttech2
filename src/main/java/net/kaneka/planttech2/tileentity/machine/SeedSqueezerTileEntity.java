@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import afu.org.checkerframework.checker.nullness.qual.Nullable;
+import javax.annotation.Nullable;
+
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
@@ -9,7 +10,6 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

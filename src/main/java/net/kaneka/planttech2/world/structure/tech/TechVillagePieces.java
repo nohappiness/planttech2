@@ -33,8 +33,8 @@ public class TechVillagePieces
 	
 	static {
 		
-		JigsawManager.field_214891_a.register(new JigsawPattern(new ResourceLocation(ModReferences.MODID,"village/tech/starts" ), new ResourceLocation("empty"), ImmutableList.of(Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/starts/street_cross"   ), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/starts/street_cross2" ), 1)), JigsawPattern.PlacementBehaviour.RIGID));  
-		JigsawManager.field_214891_a.register(new JigsawPattern(new ResourceLocation(ModReferences.MODID,"village/tech/streets"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_straight"), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_threeway"), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_turn"), 1)), JigsawPattern.PlacementBehaviour.TERRAIN_MATCHING));
+		JigsawManager.REGISTRY.register(new JigsawPattern(new ResourceLocation(ModReferences.MODID,"village/tech/starts" ), new ResourceLocation("empty"), ImmutableList.of(Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/starts/street_cross"   ), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/starts/street_cross2" ), 1)), JigsawPattern.PlacementBehaviour.RIGID));  
+		JigsawManager.REGISTRY.register(new JigsawPattern(new ResourceLocation(ModReferences.MODID,"village/tech/streets"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_straight"), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_threeway"), 1), Pair.of(new SingleJigsawPiece(ModReferences.MODID + ":village/tech/streets/street_turn"), 1)), JigsawPattern.PlacementBehaviour.TERRAIN_MATCHING));
 	   }
 	
 	public static class TechVillage extends AbstractVillagePiece {

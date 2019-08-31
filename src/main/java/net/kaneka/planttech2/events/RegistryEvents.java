@@ -6,11 +6,13 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModEntityTypes;
+import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModStructures;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -74,5 +76,11 @@ public class RegistryEvents
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event); 
+	}
+	
+	@SubscribeEvent
+	public static void registerFluids(RegistryEvent.Register<Fluid> event)
+	{
+		ModFluids.register(event.getRegistry());
 	}
 }

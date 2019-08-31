@@ -9,7 +9,6 @@ import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.items.CreditCardItem;
-import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.DNAContainerItem;
 import net.kaneka.planttech2.items.EnergyStorageItem;
@@ -31,6 +30,8 @@ import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.item.BucketItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -40,6 +41,8 @@ public class ModItems
 {
     public static List<BaseItem> ITEMS = new ArrayList<BaseItem>(); 
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
+    
+    public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
     
     public static BaseItem ANALYSER = new AnalyserItem(), 
     				//ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
@@ -150,6 +153,7 @@ public class ModItems
 
     public static void register(IForgeRegistry<Item> registry)
     {
+    	BIOMASSBUCKET.setRegistryName("biomassbucket"); 
 
 	for(BaseItem item: ITEMS)
 	{
@@ -177,6 +181,8 @@ public class ModItems
 		registry.register(tempparticle);
 	    }
 	}
+	
+	registry.register(BIOMASSBUCKET);
 
     }
     

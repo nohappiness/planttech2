@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.minecraft.block.FlowingFluidBlock;
 import net.kaneka.planttech2.blocks.CropBarsBlock;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.blocks.GlassPaneEnd;
@@ -35,6 +36,9 @@ public class ModBlocks
 {
 	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
 	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
+	
+	public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
+   
 
 	public static BaseBlock 
 			CABLE = new CableBlock(), 
@@ -92,6 +96,7 @@ public class ModBlocks
 
 	public static void register(IForgeRegistry<Block> registry)
 	{
+		
 		for (BaseBlock block : BLOCKS)
 		{
 			registry.register(block);
@@ -106,6 +111,9 @@ public class ModBlocks
 			CROPS.put(name, tempcrop);
 			registry.register(tempcrop);
 		}
+		
+		BIOMASSFLUIDBLOCK.setRegistryName("biomassblock"); 
+		registry.register(BIOMASSFLUIDBLOCK);
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)

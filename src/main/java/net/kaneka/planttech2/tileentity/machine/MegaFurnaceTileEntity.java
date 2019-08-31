@@ -3,7 +3,8 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import java.util.Optional;
 
-import afu.org.checkerframework.checker.nullness.qual.Nullable;
+import javax.annotation.Nullable;
+
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;

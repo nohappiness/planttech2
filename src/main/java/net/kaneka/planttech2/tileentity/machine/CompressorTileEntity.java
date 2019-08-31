@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import afu.org.checkerframework.checker.nullness.qual.Nullable;
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
