@@ -9,6 +9,7 @@ import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.items.CreditCardItem;
+import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.DNAContainerItem;
 import net.kaneka.planttech2.items.EnergyStorageItem;
@@ -48,7 +49,7 @@ public class ModItems
     				//ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
 	    		   BIOMASS = new BaseItem("biomass", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   BIOMASSCONTAINER = new BiomassContainerItem(),
-	    		   //CROPREMOVER = new CropRemover(), 
+	    		   CROPREMOVER = new CropRemover(), 
 	    		   CYBERBOW = new RangedWeaponItem("cyberbow", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10), 
 	    		   CYBERDAGGER = new UpgradeableHandItem("cyberdagger", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 1, -1.4F), 
 	    		   CYBERKATANA = new UpgradeableHandItem("cyberkatana", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 8, -3.4F),

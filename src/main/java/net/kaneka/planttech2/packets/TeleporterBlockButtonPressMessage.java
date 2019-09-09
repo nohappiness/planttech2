@@ -3,7 +3,6 @@ package net.kaneka.planttech2.packets;
 import java.util.function.Supplier;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.kaneka.planttech2.world.TeleporterUtilities;
 import net.kaneka.planttech2.world.planttopia.ModDimensionPlantTopia;

@@ -27,7 +27,7 @@ public class EnergyProvider implements ICapabilitySerializable<CompoundNBT>
 		{
 		    return energyCap.cast();
 		}
-		return null;
+		return LazyOptional.empty();
 	}
 
 	@Override

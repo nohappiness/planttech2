@@ -83,7 +83,7 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 	public static IEnergyStorage getEnergyCap(ItemStack stack)
 	{
 		LazyOptional<IEnergyStorage> provider = stack.getCapability(CapabilityEnergy.ENERGY);
-		if (provider != null)
+		if (provider.isPresent())
 		{
 			return provider.orElse(null);
 		}

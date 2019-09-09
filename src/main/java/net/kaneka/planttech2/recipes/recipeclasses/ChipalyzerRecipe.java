@@ -6,7 +6,6 @@ import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;

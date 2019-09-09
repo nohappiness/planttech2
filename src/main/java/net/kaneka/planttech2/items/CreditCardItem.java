@@ -3,7 +3,6 @@ package net.kaneka.planttech2.items;
 
 import java.util.List;
 
-import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
