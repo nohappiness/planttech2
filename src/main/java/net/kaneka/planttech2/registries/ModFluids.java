@@ -7,6 +7,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModFluids
 {
+	/*
 	public static FlowingFluid BIOMASS = new BiomassFluid.Source(); 
 	public static Fluid BIOMASS_FLOWING = new BiomassFluid.Flowing();
 	
@@ -15,5 +16,6 @@ public class ModFluids
 		registry.registerAll(BIOMASS.setRegistryName("planttech2:biomass"), 
 				BIOMASS_FLOWING.setRegistryName("planttech2:biomass_flowing"));
     }
+    */
 
 }

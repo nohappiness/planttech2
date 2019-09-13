@@ -43,7 +43,7 @@ public class ModItems
     public static List<BaseItem> ITEMS = new ArrayList<BaseItem>(); 
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
     
-    public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
+    //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
     
     public static BaseItem ANALYSER = new AnalyserItem(), 
     				//ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
@@ -154,7 +154,7 @@ public class ModItems
 
     public static void register(IForgeRegistry<Item> registry)
     {
-    	BIOMASSBUCKET.setRegistryName("biomassbucket"); 
+    	//BIOMASSBUCKET.setRegistryName("biomassbucket"); 
 
 	for(BaseItem item: ITEMS)
 	{
@@ -183,7 +183,7 @@ public class ModItems
 	    }
 	}
 	
-	registry.register(BIOMASSBUCKET);
+	//registry.register(BIOMASSBUCKET);
 
     }
     

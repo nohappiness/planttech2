@@ -54,6 +54,7 @@ public class ClientEvents
 		}
 	}
 	
+	/*
 	@SubscribeEvent
 	public static void textureStitchEvent(TextureStitchEvent.Pre event) 
 	{
@@ -63,4 +64,5 @@ public class ClientEvents
     	    event.addSprite(BiomassFluid.ATTRIBUTES.getFlowingTexture());
 		}
 	}
+	*/
 }

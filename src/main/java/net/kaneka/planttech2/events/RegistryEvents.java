@@ -78,9 +78,12 @@ public class RegistryEvents
 		ModEntityTypes.registerAll(event); 
 	}
 	
+	/*
+	
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
 	{
 		ModFluids.register(event.getRegistry());
 	}
+	*/
 }

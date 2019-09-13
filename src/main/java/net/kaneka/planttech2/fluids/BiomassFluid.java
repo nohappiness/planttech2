@@ -22,11 +22,12 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraftforge.fluids.FluidAttributes;
 
-public abstract class BiomassFluid extends FlowingFluid
+public abstract class BiomassFluid //extends FlowingFluid
 {
+	/*
 	public static final ResourceLocation BIOMASS_STILL = new ResourceLocation("planttech2:blocks/fluid/biomass_still");
 	public static final ResourceLocation BIOMASS_FLOWING = new ResourceLocation("planttech2:blocks/fluid/biomass_flow");
-	public static final FluidAttributes ATTRIBUTES = FluidAttributes.builder("test_fluid", BIOMASS_STILL, BIOMASS_FLOWING).build();
+	public static final FluidAttributes ATTRIBUTES = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build();
 
 	@Override
 	public Fluid getFlowingFluid()
@@ -151,5 +152,6 @@ public abstract class BiomassFluid extends FlowingFluid
              return true;
          }
 	}
+	*/
 
 }

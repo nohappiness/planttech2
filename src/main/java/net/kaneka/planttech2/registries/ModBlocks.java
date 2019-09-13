@@ -37,7 +37,7 @@ public class ModBlocks
 	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
 	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
 	
-	public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
+	//public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
    
 
 	public static BaseBlock 
@@ -112,8 +112,8 @@ public class ModBlocks
 			registry.register(tempcrop);
 		}
 		
-		BIOMASSFLUIDBLOCK.setRegistryName("biomassblock"); 
-		registry.register(BIOMASSFLUIDBLOCK);
+		//BIOMASSFLUIDBLOCK.setRegistryName("biomassblock"); 
+		//registry.register(BIOMASSFLUIDBLOCK);
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
