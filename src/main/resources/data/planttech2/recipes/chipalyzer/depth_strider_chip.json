@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "depth_strider"
+    },
+    "result": {
+      "item": "planttech2:depth_strider_chip"
+    }
+  }

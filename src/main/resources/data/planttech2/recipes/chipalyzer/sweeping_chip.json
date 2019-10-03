@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "sweeping"
+    },
+    "result": {
+      "item": "planttech2:sweeping_chip"
+    }
+  }

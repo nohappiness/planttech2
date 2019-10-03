@@ -2,12 +2,14 @@ package net.kaneka.planttech2.items.upgradeable;
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -15,13 +17,17 @@ import net.minecraft.world.World;
 
 public class UpgradeChipItem extends BaseItem
 {
+	public static int HELMET = 0, CHEST = 1, LEGGINGS = 2, BOOTS = 3, RANGED_WEAPON = 4, MELEE_WEAPON = 5, TOOL = 6;  
 
 	private int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseHarvestlevel = 0, increaseArmor = 0;
 
 	private float increaseAttack = 0, increaseAttackSpeed = 0, increaseBreakdownRate = 0, increaseToughness = 0;
 
 	private boolean unlockShovelFeat = false, unlockAxeFeat = false, unlockHoeFeat = false, unlockShearFeat = false;
-
+	
+	private Enchantment enchantment;
+	
+	private List<Integer> restrictions = new ArrayList<Integer>(); 
 
 	public UpgradeChipItem(String name)
 	{
@@ -207,6 +213,37 @@ public class UpgradeChipItem extends BaseItem
 		this.unlockShearFeat = true;
 		return this;
 	}
+	
+	public UpgradeChipItem setEnchantment(Enchantment ench)
+	{
+		this.enchantment = ench; 
+		return this; 
+	}
+	
+	public Enchantment getEnchantment()
+	{
+		return enchantment; 
+	}
+	
+	public UpgradeChipItem addRestriction(int id)
+	{
+		restrictions.add(id);
+		return this; 
+	}
+	
+	public boolean isAllowed(int id)
+	{
+		if(restrictions.isEmpty())
+		{
+			return true; 
+		}
+		
+		if(restrictions.contains(id))
+		{
+			return true; 
+		}
+		return false; 
+	}
 
 
 	@Override
@@ -269,6 +306,12 @@ public class UpgradeChipItem extends BaseItem
 		if(unlockHoeFeat)
 		{
 			tooltip.add(new TranslationTextComponent("info.upgradechip.unlockhoefeat"));
+		}
+		
+		if(enchantment != null)
+		{
+			tooltip.add(new TranslationTextComponent("info.upgradechip.add").appendText(" " + enchantment.getDisplayName(0).getUnformattedComponentText())); 
+			tooltip.add(new TranslationTextComponent("info.upgradechip.stackable"));
 		}
 		
 		if (energyCost > 0)

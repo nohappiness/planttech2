@@ -26,7 +26,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 
 	public RangedWeaponItem(String name, Properties property, int basecapacity, int maxInvSize)
 	{
-		super(name, property, basecapacity, maxInvSize, 0, 2.4F);
+		super(name, property, basecapacity, maxInvSize, 0, 2.4F, UpgradeChipItem.RANGED_WEAPON);
 		this.addPropertyOverride(new ResourceLocation("pull"), (stack, world, entity) -> {
 			if (entity == null)
 			{

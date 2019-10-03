@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "feather_falling"
+    },
+    "result": {
+      "item": "planttech2:feather_falling_chip"
+    }
+  }

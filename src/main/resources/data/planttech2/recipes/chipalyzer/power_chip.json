@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "power"
+    },
+    "result": {
+      "item": "planttech2:power_chip"
+    }
+  }

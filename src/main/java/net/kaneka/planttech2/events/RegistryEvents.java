@@ -1,18 +1,18 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.datapack.dataprovider.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModEntityTypes;
-import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModStructures;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -22,6 +22,7 @@ import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents
@@ -77,6 +78,13 @@ public class RegistryEvents
 	{
 		ModEntityTypes.registerAll(event); 
 	}
+	
+	@SubscribeEvent
+    public static void gatherData(GatherDataEvent event)
+    {
+        DataGenerator gen = event.getGenerator();
+            gen.addProvider(new Recipes(gen));
+    }
 	
 	/*
 	

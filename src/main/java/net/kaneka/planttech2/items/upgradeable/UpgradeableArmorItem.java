@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,16 +43,17 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	private static final UUID[] ARMOR_MODIFIERS = new UUID[] { UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"),
 	        UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150") };
 
-	private int basecapacity, maxInvSize, baseDamageReduction;
+	private int basecapacity, maxInvSize, baseDamageReduction, slotId;
 	private float baseToughness; 
 
-	public UpgradeableArmorItem(String name, String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness)
+	public UpgradeableArmorItem(String name, String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
 	{
 		super(name, resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize;
 		this.baseDamageReduction = baseDamageReduction; 
 		this.baseToughness = baseToughness; 
+		this.slotId = slotId; 
 	}
 
 	@Override
@@ -244,6 +247,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 		{
 			int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseArmor = 0;
 			float increaseToughness = 0; 
+			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(); 
 
 			ItemStack slot;
 			for (int i = 0; i < inv.getSlots(); i++)
@@ -259,7 +263,37 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 						energyProduction += item.getEnergyProduction();
 						increaseArmor += item.getIncreaseArmor(); 
 						increaseToughness += item.getIncreaseToughness(); 
+						Enchantment ench = item.getEnchantment(); 
+						if(item.isAllowed(getSlotId()))
+						{
+    						if(ench != null)
+    						{
+    							if(enchantments.containsKey(ench))
+    							{
+    								int nextlevel = enchantments.get(ench) + 1; 
+    								enchantments.put(ench, nextlevel); 
+    							}
+    							else
+    							{
+    								enchantments.put(ench, 1);
+    							}
+    						}
+						}
 					}
+				}
+			}
+			
+			stack.getEnchantmentTagList().clear();
+			for (Enchantment ench: enchantments.keySet())
+			{
+				int level = enchantments.get(ench);  
+				if(ench.getMaxLevel() < level)
+				{
+					stack.addEnchantment(ench, ench.getMaxLevel());
+				}
+				else
+				{
+					stack.addEnchantment(ench, level);
 				}
 			}
 
@@ -343,6 +377,12 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 		}
 
 		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
+
+	@Override
+	public int getSlotId()
+	{
+		return slotId;
 	}
 
 }

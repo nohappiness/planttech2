@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "fire_aspect"
+    },
+    "result": {
+      "item": "planttech2:fire_aspect_chip"
+    }
+  }

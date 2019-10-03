@@ -154,7 +154,6 @@ public class HashMapCropTraits
 		Random rand = new Random();
 
 		HashMapCropTraits newTraits = new HashMapCropTraits();
-
 		if (rand.nextBoolean())
 		{
 			newTraits.setType(this.type);
@@ -162,7 +161,7 @@ public class HashMapCropTraits
 		{
 			newTraits.setType(oldTraits.getType());
 		}
-		if (this.getType() != oldTraits.getType())
+		if (!this.getType().equals(oldTraits.getType()))
 		{
 			Set<CropListEntry> possibleChilds = PlantTechMain.croplist.getByParents(this.getType(), oldTraits.getType());
 			if (!possibleChilds.isEmpty())

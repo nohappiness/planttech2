@@ -11,7 +11,11 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.kaneka.planttech2.addons.jei.libs.AbstractJeiCategory;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe>
 {
@@ -38,7 +42,17 @@ public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe>
 	{
 		List<ItemStack> list = new ArrayList<ItemStack>(); 
 		list.add(recipe.getChip());
-		list.add(recipe.getInput()); 
+		if(!recipe.getInput().isEmpty())
+		{
+			list.add(recipe.getInput()); 
+		}
+		else
+		{
+			ItemStack stack = new ItemStack(Items.ENCHANTED_BOOK);
+			stack.setDisplayName(new TranslationTextComponent("info.any_enchanted_item"));
+			EnchantedBookItem.addEnchantment(stack, new EnchantmentData(recipe.getEnchantment(), 1));
+			list.add(stack);
+		}
 		ingredients.setInputs(VanillaTypes.ITEM, list);
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 	}

@@ -51,7 +51,7 @@ public class CropSeedItem extends BaseItem
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + nbt.getInt("productivity")));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + nbt.getInt("fertility")));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + nbt.getInt("spreedingspeed")));
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrength")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrenght")));
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + nbt.getInt("energyvalue") * 20));
 
 	    }

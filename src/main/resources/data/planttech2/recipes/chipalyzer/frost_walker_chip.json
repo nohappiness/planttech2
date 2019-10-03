@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "frost_walker"
+    },
+    "result": {
+      "item": "planttech2:frost_walker_chip"
+    }
+  }

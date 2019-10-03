@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "respiration"
+    },
+    "result": {
+      "item": "planttech2:respiration_chip"
+    }
+  }

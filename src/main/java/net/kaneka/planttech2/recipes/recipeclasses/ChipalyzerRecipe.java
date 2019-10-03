@@ -1,8 +1,7 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
-import java.util.Map;
-
-import com.google.common.collect.Maps;
+import java.util.ArrayList;
+import java.util.List;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -10,7 +9,6 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnchantedBookItem;
@@ -31,120 +29,125 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class ChipalyzerRecipe implements IRecipe<IInventory>
 {
-	private final ResourceLocation id; 
-	private final int tier; 
-	private final ItemStack input; 
-	private final ItemStack output; 
-	
-	public ChipalyzerRecipe(ResourceLocation id, int tier, ItemStack input, ItemStack output)
+	private final ResourceLocation id;
+	private final int tier;
+	private final ItemStack input;
+	private final Enchantment enchantment;
+	private final ItemStack output;
+
+	public ChipalyzerRecipe(ResourceLocation id, int tier, ItemStack input, Enchantment enchantment, ItemStack output)
 	{
-		this.id = id; 
-		this.tier = tier; 
-		this.input = input;	 
+		this.id = id;
+		this.tier = tier;
+		this.input = input;
+		this.enchantment = enchantment; 
 		this.output = output;
 	}
-	
+
 	public int getTier()
 	{
-		return tier; 
+		return tier;
 	}
-	
+
 	public ItemStack getInput()
 	{
-		return input; 
+		return input;
 	}
 	
+	public Enchantment getEnchantment()
+	{
+		return enchantment; 
+	}
+
 	public ItemStack getOutput()
 	{
-		return output; 
+		return output;
 	}
-	
+
 	public boolean compare(ItemStack chip, ItemStack stack)
 	{
-		if(!stack.isEmpty() && !input.isEmpty() && !chip.isEmpty())
+		if (!stack.isEmpty() && !chip.isEmpty())
 		{
-			if(stack.getItem()  == input.getItem())
+			if (enchantment != null)
 			{
-				Map<Enchantment, Integer> inputench = getEnchList(input), 
-										  stackench = getEnchList(stack); 
-				if(inputench.size() == stackench.size())
+				
+				List<Enchantment> stackench = getEnchList(stack); 
+				if(stackench.contains(enchantment))
 				{
-					boolean bool = true; 
-					for(Enchantment ench: inputench.keySet())
-					{
-						if(stackench.containsKey(ench))
-						{
-							if(!(stackench.get(ench) == inputench.get(ench)))
-							{
-								bool = false;  
-							}
-						}
-						else
-						{
-							bool = false; 
-						}
-					}
-					return bool; 
+					return true; 
+				}
+			}
+			
+			if(!input.isEmpty())
+			{
+				if(input.getItem() == stack.getItem())
+				{
+					return true; 
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
-	public Map<Enchantment, Integer> getEnchList(ItemStack stack)
+
+	public List<Enchantment> getEnchList(ItemStack stack)
 	{
-		Map<Enchantment, Integer> map = Maps.newLinkedHashMap();
-		if(stack != null)
+		List<Enchantment> list = new ArrayList<Enchantment>();
+		if (stack != null)
 		{
-			if(!stack.isEmpty())
+			if (!stack.isEmpty())
 			{
-				if(stack.getItem() == Items.ENCHANTED_BOOK)
+				if (stack.getItem() == Items.ENCHANTED_BOOK)
 				{
-					for(INBT nbt : EnchantedBookItem.getEnchantments(stack))
+					for (INBT nbt : EnchantedBookItem.getEnchantments(stack))
 					{
-						if(nbt instanceof CompoundNBT)
+						if (nbt instanceof CompoundNBT)
 						{
-							CompoundNBT compoundnbt = (CompoundNBT) nbt; 
-							if(compoundnbt.contains("id") && compoundnbt.contains("lvl"))
+							CompoundNBT compoundnbt = (CompoundNBT) nbt;
+							if (compoundnbt.contains("id"))
 							{
-								if(ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(compoundnbt.getString("id"))))
+								if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(compoundnbt.getString("id"))))
 								{
-									map.put(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(compoundnbt.getString("id"))), compoundnbt.getInt("lvl")); 
+									list.add(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(compoundnbt.getString("id"))));
 								}
 							}
 						}
 					}
-				}
+				} 
 				else
 				{
-					map = EnchantmentHelper.getEnchantments(input); 
+					for(Enchantment entry: EnchantmentHelper.getEnchantments(stack).keySet())
+					{
+						list.add(entry);
+					}
 				}
 			}
 		}
-		return map; 
+		return list;
 	}
-	
+
 	public boolean compareEnchantment(ListNBT nbt)
 	{
-		if(input.getEnchantmentTagList() == nbt)
+		if (input.getEnchantmentTagList() == nbt)
 		{
 			return true;
 		}
-		return false; 
+		return false;
 	}
-	
-	
+
 	public ItemStack getChip()
 	{
-		switch(tier)
+		switch (tier)
 		{
-			case 1: return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_1); 
-			case 2: return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_2); 
-			case 3: return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_3); 
+		case 1:
+			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_1);
+		case 2:
+			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_2);
+		case 3:
+			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_3);
 		}
-		
-		return ItemStack.EMPTY; 
+
+		return ItemStack.EMPTY;
 	}
 
 	@Override
@@ -162,8 +165,10 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean canFit(int width, int height)
 	{
-		if(width == height && width == 1) return true; 
-		else return false; 
+		if (width == height && width == 1)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
@@ -190,56 +195,43 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		return ModRecipeTypes.CHIPALYZER;
 	}
 
-	
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ChipalyzerRecipe>
 	{
 		@Override
 		public ChipalyzerRecipe read(ResourceLocation recipeId, JsonObject json)
 		{
-			int tier = 0; 
+			int tier = 0;
 			if (json.has("tier"))
 			{
 				tier = json.get("tier").getAsInt();
 			}
-			
-			
-			ItemStack input = new ItemStack(Items.ENCHANTED_BOOK);
-			if(json.has("input"))
+
+			ItemStack input = ItemStack.EMPTY;
+			Enchantment enchantment = null; 
+			if (json.has("input"))
 			{
-    			JsonObject inputobject = json.getAsJsonObject("input");
-    			
-    			if (inputobject.has("item"))
-    			{
-    				input = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("item").getAsString())));
-    			} 
-    			else if (inputobject.has("block"))// Just in case
-    			{
-    				input = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("block").getAsString())));
-    			} else if (inputobject.has("tag"))
-    			{
-    				input = new ItemStack(TagUtils.getAnyTagItem(new ResourceLocation(inputobject.get("tag").getAsString())));
-    			}
-    			
-    			if(inputobject.has("enchantment"))
-    			{
-        			JsonObject enchobject = inputobject.getAsJsonObject("enchantment");
-        			
-        			if (enchobject.has("namespaced_id") && enchobject.has("level"))
-        			{
-        				ResourceLocation namespaced_id = new ResourceLocation(enchobject.get("namespaced_id").getAsString()); 
-        				if(ForgeRegistries.ENCHANTMENTS.containsKey(namespaced_id))
-        				{
-        					if(input.getItem() instanceof EnchantedBookItem)
-        					{
-        						EnchantedBookItem.addEnchantment(input, new EnchantmentData(ForgeRegistries.ENCHANTMENTS.getValue(namespaced_id), enchobject.get("level").getAsInt()));
-        					}
-        					else
-        					{
-        						input.addEnchantment(ForgeRegistries.ENCHANTMENTS.getValue(namespaced_id), enchobject.get("level").getAsInt()); 
-        					}
-        				}
-        			}
-    			}
+				JsonObject inputobject = json.getAsJsonObject("input");
+
+				if (inputobject.has("item"))
+				{
+					input = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("item").getAsString())));
+				} else if (inputobject.has("block"))// Just in case
+				{
+					input = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("block").getAsString())));
+				} else if (inputobject.has("tag"))
+				{
+					input = new ItemStack(TagUtils.getAnyTagItem(new ResourceLocation(inputobject.get("tag").getAsString())));
+				}
+
+				if (inputobject.has("enchantment"))
+				{
+					ResourceLocation namespaced_id = new ResourceLocation(inputobject.get("enchantment").getAsString());
+					if (ForgeRegistries.ENCHANTMENTS.containsKey(namespaced_id))
+					{
+						enchantment = ForgeRegistries.ENCHANTMENTS.getValue(namespaced_id); 
+					}
+
+				}
 			}
 
 			JsonObject resultobject = json.getAsJsonObject("result");
@@ -254,10 +246,10 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			{
 				result = TagUtils.getAnyTagItem(new ResourceLocation(resultobject.get("tag").getAsString()));
 			}
-			
+
 			if (result != null)
 			{
-				return new ChipalyzerRecipe(recipeId, tier, input, new ItemStack(result));
+				return new ChipalyzerRecipe(recipeId, tier, input, enchantment, new ItemStack(result));
 			} else
 			{
 				throw new IllegalStateException("Item did not exist:" + recipeId.toString());
@@ -267,17 +259,19 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		@Override
 		public ChipalyzerRecipe read(ResourceLocation recipeId, PacketBuffer buffer)
 		{
-			int tier = buffer.readInt(); 
+			int tier = buffer.readInt();
 			ItemStack input = buffer.readItemStack();
+			Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(buffer.readString()));
 			ItemStack result = buffer.readItemStack();
-			return new ChipalyzerRecipe(recipeId, tier, input, result);
+			return new ChipalyzerRecipe(recipeId, tier, input, enchantment, result);
 		}
 
 		@Override
 		public void write(PacketBuffer buffer, ChipalyzerRecipe recipe)
 		{
-			buffer.writeInt(recipe.tier); 
+			buffer.writeInt(recipe.tier);
 			buffer.writeItemStack(recipe.input);
+			buffer.writeString(recipe.enchantment.getRegistryName().toString());
 			buffer.writeItemStack(recipe.output);
 		}
 

@@ -1,5 +1,9 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import net.kaneka.planttech2.container.ChipalyzerContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
@@ -17,7 +21,6 @@ import net.minecraft.util.IIntArray;
 public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 {
 	private int ticksPassed = 0;
-	private ItemStack output = null;
 
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -75,55 +78,39 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 			ItemStack stackOutput = itemhandler.getStackInSlot(2);
 			if (!stackChip.isEmpty() && !stackInput.isEmpty())
 			{
-				
-				ChipalyzerRecipe recipe = getRecipe(stackChip, stackInput);
-				if (recipe != null)
+
+				List<ChipalyzerRecipe> recipe = getRecipeList(stackChip, stackInput);
+				if (!recipe.isEmpty())
 				{
-					if (recipe.getOutput() == output || output == null)
+
+					if (ticksPassed < ticksPerItem())
 					{
-						if (output == null)
-						{
-							output = recipe.getOutput();
-						}
-						if (ticksPassed < ticksPerItem())
-						{
-							ticksPassed++;
-							energystorage.extractEnergy(energyPerTick(), false);
-						} else
-						{
-							ItemStack result = recipe.getRecipeOutput().copy(); 
-							if (stackOutput.isEmpty())
-							{
-								itemhandler.setStackInSlot(2, result);
-								energystorage.extractEnergy(energyPerTick(), false);
-								stackChip.shrink(1);
-								stackInput.shrink(1);
-								ticksPassed = 0;
-							} else if (stackOutput.getItem() == result.getItem())
-							{
-								if (stackOutput.getMaxStackSize() >= stackOutput.getCount() + stackOutput.getCount())
-								{
-									stackOutput.grow(result.getCount());
-									energystorage.extractEnergy(energyPerTick(), false);
-									stackChip.shrink(1);
-									stackInput.shrink(1);
-									ticksPassed = 0;
-								}
-							}
-						}
+						ticksPassed++;
+						energystorage.extractEnergy(energyPerTick(), false);
 					} 
 					else
 					{
-						output = recipe.getOutput();
+						
+						if (stackOutput.isEmpty())
+						{
+							ItemStack result = recipe.get(new Random().nextInt(recipe.size())).getRecipeOutput().copy();
+							itemhandler.setStackInSlot(2, result);
+							energystorage.extractEnergy(energyPerTick(), false);
+							stackChip.shrink(1);
+							stackInput.shrink(1);
+							ticksPassed = 0;
+						} 
 					}
 				}
 			}
+
 		}
 		doEnergyLoop();
 	}
 
-	private ChipalyzerRecipe getRecipe(ItemStack chip, ItemStack stack)
+	private List<ChipalyzerRecipe> getRecipeList(ItemStack chip, ItemStack stack)
 	{
+		List<ChipalyzerRecipe> list = new ArrayList<ChipalyzerRecipe>();
 		if (!stack.isEmpty())
 		{
 			if (world != null)
@@ -135,16 +122,16 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 						ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
 						if (chipRecipe.getTier() == getUpgradeTier(0, PlantTechConstants.UPGRADECHIP_TYPE))
 						{
-							if(chipRecipe.compare(chip, stack))
+							if (chipRecipe.compare(chip, stack))
 							{
-								return chipRecipe; 
+								list.add(chipRecipe);
 							}
 						}
 					}
 				}
 			}
 		}
-		return null;
+		return list;
 	}
 
 	@Override

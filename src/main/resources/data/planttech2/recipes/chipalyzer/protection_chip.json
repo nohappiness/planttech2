@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "protection"
+    },
+    "result": {
+      "item": "planttech2:protection_chip"
+    }
+  }

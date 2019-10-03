@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "looting"
+    },
+    "result": {
+      "item": "planttech2:looting_chip"
+    }
+  }

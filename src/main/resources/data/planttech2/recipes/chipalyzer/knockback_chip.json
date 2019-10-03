@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "knockback"
+    },
+    "result": {
+      "item": "planttech2:knockback_chip"
+    }
+  }

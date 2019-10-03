@@ -6,7 +6,7 @@ credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka" 
 [[mods]] #mandatory
 modId="planttech2" 
-version="0.01.01" 
+version="0.01.02" 
 displayName="PlantTech 2"
 updateJSONURL="https://bitbucket.org/kaneka/planttech2/raw/1.14.x/update.json" #optional
 # The description text for the mod (multi line!) (#mandatory)

@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "unbreaking"
+    },
+    "result": {
+      "item": "planttech2:unbreaking_chip"
+    }
+  }

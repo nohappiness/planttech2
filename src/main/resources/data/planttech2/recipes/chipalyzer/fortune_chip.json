@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "fortune"
+    },
+    "result": {
+      "item": "planttech2:fortune_chip"
+    }
+  }

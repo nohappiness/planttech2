@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.HashMultimap;
@@ -12,6 +13,8 @@ import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -39,18 +42,19 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IUpgradeable
+public abstract class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IUpgradeable
 {
-	private int basecapacity, maxInvSize; 
+	private int basecapacity, maxInvSize, slotId; 
 	private float baseAttack, baseAttackSpeed; 
 	
-	public BaseUpgradeableItem(String name, Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed)
+	public BaseUpgradeableItem(String name, Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed, int slotId)
 	{
 		super(name, property);
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize; 
 		this.baseAttack = baseAttack; 
 		this.baseAttackSpeed = baseAttackSpeed; 
+		this.slotId = slotId; 
 	}
 
 	@Override
@@ -275,6 +279,7 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 			int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseHarvestlevel = 0;
 			float increaseAttack = 0, increaseAttackSpeed = 0, increaseBreakdownRate = 0; 
 			boolean unlockShovelFeat = false, unlockAxeFeat = false, unlockHoeFeat = false, unlockShearsFeat = false; 
+			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(); 
 			
 			ItemStack slot; 
 			for(int i = 0; i < inv.getSlots(); i++)
@@ -296,9 +301,39 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 						if(item.isUnlockAxeFeat()) unlockAxeFeat = true; 
 						if(item.isUnlockHoeFeat()) unlockHoeFeat = true; 
 						if(item.isUnlockShearsFeat()) unlockShearsFeat = true; 
+						Enchantment ench = item.getEnchantment(); 
+						if(item.isAllowed(getSlotId()))
+						{
+    						if(ench != null)
+    						{
+    							if(enchantments.containsKey(ench))
+    							{
+    								int nextlevel = enchantments.get(ench) + 1; 
+    								enchantments.put(ench, nextlevel); 
+    							}
+    							else
+    							{
+    								enchantments.put(ench, 1);
+    							}
+    						}
+						}
 					}
 				}
 			}
+			stack.getEnchantmentTagList().clear();
+			for (Enchantment ench: enchantments.keySet())
+			{
+				int level = enchantments.get(ench);  
+				if(ench.getMaxLevel() < level)
+				{
+					stack.addEnchantment(ench, ench.getMaxLevel());
+				}
+				else
+				{
+					stack.addEnchantment(ench, level);
+				}
+			}
+			
 			
 			CompoundNBT nbt = stack.getTag(); 
 			if(nbt == null)
@@ -344,6 +379,12 @@ public class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IU
 				}
 			}
 		}
+	}
+	
+	@Override
+	public int getSlotId()
+	{
+		return slotId;
 	}
 	
 	

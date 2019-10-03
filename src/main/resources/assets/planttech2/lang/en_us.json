@@ -12,6 +12,7 @@
     "planttech2.crossbreeding": "Crossbreeding", 
     "planttech2.infuser": "Infuser", 
     "planttech2.compressor": "Compressor", 
+    "planttech2.chipalyzer": "Chipalyzer", 
 
     "config.test": "TEST",
 
@@ -136,8 +137,35 @@
     "item.planttech2.unlockchip_axe": "Unlockchip Axe",
     "item.planttech2.unlockchip_shears": "Unlockchip Shears",
     "item.planttech2.unlockchip_hoe": "Unlockchip Hoe",
-
-    "item.planttech2.chestplate_dancium": "Dancium Chestplate",
+    
+    "item.planttech2.protection_chip": "Protection Chip",
+ 	"item.planttech2.fire_protection_chip": "Fire Protection Chip",
+	"item.planttech2.feather_falling_chip": "Feather Falling Chip",
+	"item.planttech2.blast_protection_chip": "Blast Protection Chip",
+	"item.planttech2.projectile_protection_chip": "Projectile Protection Chip",
+	"item.planttech2.respiration_chip": "Respiration Chip",
+	"item.planttech2.aqua_affinity_chip": "Aqua Affinity Chip",
+	"item.planttech2.thorns_chip": "Thorns Chip",
+	"item.planttech2.depth_strider_chip": "Depth Strider Chip",
+	"item.planttech2.frost_walker_chip": "Frost Walker Chip",
+	"item.planttech2.sharpness_chip": "Sharpness Chip",
+	"item.planttech2.smite_chip": "Smite Chip",
+	"item.planttech2.bane_of_arthropods_chip": "Bane of Arthropods Chip",
+	"item.planttech2.knockback_chip": "Knockback Chip",
+	"item.planttech2.fire_aspect_chip": "Fire Aspect Chip",
+	"item.planttech2.looting_chip": "Looting Chip",
+	"item.planttech2.sweeping_chip": "Sweeping Chip",
+	"item.planttech2.efficiency_chip": "Efficiency Chip",
+	"item.planttech2.silk_touch_chip": "Silk Touch Chip",
+	"item.planttech2.unbreaking_chip": "Unbreaking Chip",
+	"item.planttech2.fortune_chip": "Fortune Chip",
+	"item.planttech2.power_chip": "Power Chip",
+	"item.planttech2.punch_chip": "Punch Chip",
+	"item.planttech2.flame_chip": "Flame Chip",
+	"item.planttech2.infinity_chip": "Infinity Chip",
+	
+	
+	"item.planttech2.chestplate_dancium": "Dancium Chestplate",
     "item.planttech2.boots_dancium": "Dancium Boots",
     "item.planttech2.helmet_dancium": "Dancium Helmet",
     "item.planttech2.leggings_dancium": "Dancium Leggings",
@@ -638,6 +666,10 @@
 	"info.upgradechip.unlockshearsfeat": "Unlocks shears features",
 	"info.upgradechip.unlockhoefeat": "Unlocks hoe features",
 	"info.upgradechip.energycosts": "%s more energycosts per chip",
+	"info.upgradechip.add": "Add",
+	"info.upgradechip.stackable": "Enchantment can be stacked", 
+	
+	"info.any_enchanted_item": "Any item with this enchantment. Level doesn`t matter",
     
 
     "guide.start.header": "Start",

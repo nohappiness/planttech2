@@ -1,0 +1,10 @@
+{
+    "type": "planttech2:chipalyzer",
+    "tier": 2, 
+    "input": {
+	  "enchantment": "thorns"
+    },
+    "result": {
+      "item": "planttech2:thorns_chip"
+    }
+  }

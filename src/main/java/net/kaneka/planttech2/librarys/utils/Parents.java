@@ -17,7 +17,7 @@ public class Parents
 	
 	public boolean isMatching(String parent1, String parent2)
 	{
-		if((this.parent1.equals(parent1) && this.parent2.equals(parent2)) || (this.parent1.equals(parent2) && this.parent2.equals(parent2)))
+		if((this.parent1.equals(parent1) && this.parent2.equals(parent2)) || (this.parent1.equals(parent2) && this.parent2.equals(parent1)))
 		{
 			return true; 
 		}

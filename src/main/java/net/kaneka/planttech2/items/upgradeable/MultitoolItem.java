@@ -73,7 +73,7 @@ public class MultitoolItem extends UpgradeableHandItem
 
 	public MultitoolItem()
 	{
-		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 10000, 10, 2F, 2.4F);
+		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 10000, 10, 2F, 2.4F, UpgradeChipItem.TOOL);
 		addPropertyOverride(new ResourceLocation("drilling"), (stack, world, player) -> {
 
 			if (player == null)
