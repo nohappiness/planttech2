@@ -246,10 +246,11 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			{
 				result = TagUtils.getAnyTagItem(new ResourceLocation(resultobject.get("tag").getAsString()));
 			}
-
+ 
 			if (result != null)
 			{
 				return new ChipalyzerRecipe(recipeId, tier, input, enchantment, new ItemStack(result));
+				
 			} else
 			{
 				throw new IllegalStateException("Item did not exist:" + recipeId.toString());
@@ -261,7 +262,12 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		{
 			int tier = buffer.readInt();
 			ItemStack input = buffer.readItemStack();
-			Enchantment enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(buffer.readString()));
+			String ench = buffer.readString();
+			Enchantment enchantment = null;
+			if(!ench.equals("null"))
+			{
+				enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(ench));
+			}
 			ItemStack result = buffer.readItemStack();
 			return new ChipalyzerRecipe(recipeId, tier, input, enchantment, result);
 		}
@@ -271,7 +277,14 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		{
 			buffer.writeInt(recipe.tier);
 			buffer.writeItemStack(recipe.input);
-			buffer.writeString(recipe.enchantment.getRegistryName().toString());
+			if(recipe.enchantment != null)
+			{
+				buffer.writeString(recipe.enchantment.getRegistryName().toString());
+			}
+			else
+			{
+				buffer.writeString("null");
+			}
 			buffer.writeItemStack(recipe.output);
 		}
 
