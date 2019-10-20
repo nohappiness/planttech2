@@ -20,6 +20,6 @@
     ],
     "soil": 
     {
-        "block": "planttech2:dna_combiner"
+        "block": "minecraft:dirt"
     }
 }

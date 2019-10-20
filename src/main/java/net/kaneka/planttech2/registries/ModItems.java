@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.items.AdvancedAnalyserItem;
 import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
@@ -48,7 +49,7 @@ public class ModItems
     //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
     
     public static BaseItem ANALYSER = new AnalyserItem(), 
-    				//ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
+    			   ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
 	    		   BIOMASS = new BaseItem("biomass", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   BIOMASSCONTAINER = new BiomassContainerItem(),
 	    		   CROPREMOVER = new CropRemover(), 
