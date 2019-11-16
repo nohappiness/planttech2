@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.tileentity.machine;
 
+import javax.annotation.Nullable;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.IdentifierContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
@@ -12,11 +14,21 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.RangedWrapper;
 
 public class IdentifierTileEntity extends EnergyInventoryTileEntity
 {
 	public int ticksPassed = 0;
+	private RangedWrapper inputs; 
+	private RangedWrapper outputs; 
+	private LazyOptional<IItemHandler> inputs_provider;
+	private LazyOptional<IItemHandler> outputs_provider;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -60,7 +72,24 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	public IdentifierTileEntity()
 	{
 		super(ModTileEntities.IDENTIFIER_TE, 10000, 21);
+		inputs = new RangedWrapper(itemhandler, 0,9); 
+		outputs = new RangedWrapper(itemhandler, 9, 18); 
+		inputs_provider = LazyOptional.of(() -> inputs);
+		outputs_provider = LazyOptional.of(() -> outputs);
 	}
+	
+	@Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == Direction.DOWN) return outputs_provider.cast();
+            if (facing != null) return inputs_provider.cast();
+            return inventoryCap.cast();
+        }
+
+        return super.getCapability(capability, facing);
+    }
 
 	@Override
 	public void doUpdate()

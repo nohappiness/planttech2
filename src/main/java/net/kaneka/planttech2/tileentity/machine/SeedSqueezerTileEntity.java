@@ -115,7 +115,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				}
 			}
 
-			if (this.energystorage.getEnergyStored() <= energystorage.getMaxEnergyStored() - this.getEnergyPerItem() && !itemhandler.getStackInSlot(9).isEmpty())
+			if (!itemhandler.getStackInSlot(9).isEmpty())
 			{
 				ItemStack stack = itemhandler.getStackInSlot(9);
 				if (stack.getCount() == 1 && (stack.getItem() instanceof CropSeedItem))

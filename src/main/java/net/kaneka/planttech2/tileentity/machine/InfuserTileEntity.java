@@ -2,6 +2,8 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import net.kaneka.planttech2.container.InfuserContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
@@ -14,7 +16,13 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
@@ -22,6 +30,11 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	private int fluidInfused = 0;
 	private int fluidTotal = 0; 
 	private Item output = null;
+	
+	private RangedWrapper inputs; 
+	private RangedWrapper outputs; 
+	private LazyOptional<IItemHandler> inputs_provider;
+	private LazyOptional<IItemHandler> outputs_provider;
 	
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -82,7 +95,24 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	public InfuserTileEntity()
 	{
 		super(ModTileEntities.INFUSER_TE, 1000, 7, 5000);
+		inputs = new RangedWrapper(itemhandler, 0,1); 
+		outputs = new RangedWrapper(itemhandler, 1, 2); 
+		inputs_provider = LazyOptional.of(() -> inputs);
+		outputs_provider = LazyOptional.of(() -> outputs);
 	}
+	
+	@Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
+    {
+        if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+        {
+            if (facing == Direction.DOWN) return outputs_provider.cast();
+            if (facing != null) return inputs_provider.cast();
+            return inventoryCap.cast();
+        }
+
+        return super.getCapability(capability, facing);
+    }
 
 	@Override
 	public void doUpdate()
