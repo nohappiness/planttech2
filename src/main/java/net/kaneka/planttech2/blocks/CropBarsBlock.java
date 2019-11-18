@@ -36,29 +36,33 @@ public class CropBarsBlock extends BaseBlock
     	CropListEntry entry = PlantTechMain.croplist.getBySeed(possibleSeedStack);
     	if (entry != null)
     	{
-    		world.setBlockState(pos, ModBlocks.CROPS.get(entry.getString()).getDefaultState());
-    		if (world.getTileEntity(pos) instanceof CropsTileEntity)
+    		if (!world.isRemote)
     		{
-    			HashMapCropTraits toPass = new HashMapCropTraits();
-    			toPass.setType(entry.getString());
-    			if(possibleSeedStack.hasTag())
-    			{
-    				toPass.fromStack(possibleSeedStack);
-    			}
-    			else
-    			{
-    				toPass.setAnalysed(true);
-    			}
-    			((CropsTileEntity) world.getTileEntity(pos)).setTraits(toPass);
-        		((CropsTileEntity) world.getTileEntity(pos)).setStartTick();
-		
-        		if (!player.isCreative())
-        		{
-        			possibleSeedStack.shrink(1);
-        		}
+	    		world.setBlockState(pos, ModBlocks.CROPS.get(entry.getString()).getDefaultState());
+	    		if (world.getTileEntity(pos) instanceof CropsTileEntity)
+	    		{
+	    			HashMapCropTraits toPass = new HashMapCropTraits();
+	    			toPass.setType(entry.getString());
+	    			if(possibleSeedStack.hasTag())
+	    			{
+	    				toPass.fromStack(possibleSeedStack);
+	    			}
+	    			else
+	    			{
+	    				toPass.setAnalysed(true);
+	    			}
+	    			((CropsTileEntity) world.getTileEntity(pos)).setTraits(toPass);
+	        		((CropsTileEntity) world.getTileEntity(pos)).setStartTick();
+			
+	        		if (!player.isCreative())
+	        		{
+	        			possibleSeedStack.shrink(1);
+	        		}
+	    		}
     		}
+    		return true;
     	}
-	return super.onBlockActivated(state,world,pos,player,hand,hit);
+    	return false;
     }
 
 	@Override
