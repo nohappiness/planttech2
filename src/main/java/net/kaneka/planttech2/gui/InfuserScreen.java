@@ -11,6 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/infuser.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/infuser.png");
 	
 	
 	public InfuserScreen(InfuserContainer container, PlayerInventory player, ITextComponent name)
@@ -21,9 +22,7 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(31);
 		blit(this.guiLeft + 89, this.guiTop + 50, 0, 202, l, 12);
@@ -44,5 +43,18 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

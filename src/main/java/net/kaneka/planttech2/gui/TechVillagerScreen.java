@@ -86,7 +86,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	protected void renderSelectedTrades()
 	{
 		RenderHelper.disableStandardItemLighting();
-		RenderHelper.enableGUIStandardItemLighting();
+		RenderHelper.func_227780_a_();
 		if (selectedTrade != null)
 		{
 			
@@ -107,7 +107,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 				renderItem(selectedTask.getInputs().get(i), 147 + (i % 2) * 18, 53 + (int) (i / 2) * 18);
 			}
 		}
-		RenderHelper.enableStandardItemLighting();
+		RenderHelper.func_227780_a_();
 	}
 
 	public void renderTooltips(int mouseX, int mouseY)
@@ -225,7 +225,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURE);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		int trust = getTrustScaled(172); 
@@ -320,10 +320,11 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public void renderItem(ItemStack stack, int x, int y)
 	{
-		GlStateManager.translatef(0.0F, 0.0F, 32.0F);
-		this.blitOffset = 200;
+		GlStateManager.func_227688_c_(0.0F, 0.0F, 32.0F);
+		this.setBlitOffset(200);
 		this.itemRenderer.zLevel = 200.0F;
 		FontRenderer font = stack.getItem().getFontRenderer(stack);
 		if (font == null)
@@ -332,7 +333,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		}
 		itemRenderer.renderItemAndEffectIntoGUI(stack, this.guiLeft + x, this.guiTop + y);
 		this.itemRenderer.renderItemOverlayIntoGUI(font, stack, this.guiLeft + x, this.guiTop + y, null);
-		this.blitOffset = 0;
+		this.setBlitOffset(0);
 		this.itemRenderer.zLevel = 0.0F;
 	}
 

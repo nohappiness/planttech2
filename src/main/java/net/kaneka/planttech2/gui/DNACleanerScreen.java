@@ -3,6 +3,7 @@ package net.kaneka.planttech2.gui;
 import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.configuration.ClientConfig;
 import net.kaneka.planttech2.container.DNACleanerContainer;
 import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/dna_cleaner.png");
 	
 	public DNACleanerScreen(DNACleanerContainer container, PlayerInventory player, ITextComponent string)
     {
@@ -23,9 +25,7 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(32);
 		blit(this.guiLeft + 62, this.guiTop + 50, 0, 202, l, 12);
@@ -38,5 +38,19 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	{
 		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((DNACleanerTileEntity) this.te).ticksPerItem() : 0;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

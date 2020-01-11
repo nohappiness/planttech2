@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,21 +19,27 @@ public class PlantFarmContainer extends BaseContainer
 	
 	public PlantFarmContainer(int id, PlayerInventory player, PlantFarmTileEntity tileentity) 
 	{
-		super(id, ModContainers.PLANTFARM, player, tileentity, 19);
+		super(id, ModContainers.PLANTFARM, player, tileentity, 17);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		for(int y = 0; y < 3; y++)
+		
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 129, 38, "slot.plantfarm.seed"));
+		
+		for(int y = 0; y < 2; y++)
 		{
 			for(int x = 0; x < 5; x++)
 			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 5, 24 + x * 18, 29 + y * 18, "slot.plantfarm.storage"));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, 1 + x + y * 5, 24 + x * 18, 29 + y * 18, "slot.plantfarm.storage"));
 			}
 		}
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 15, 129, 38, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 16, 129, 56, "slot.util.rangeupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 11, 129, 38, "slot.util.squeezerupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 129, 56, "slot.util.rangeupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 18, 86, "slot.util.fluidin")); 
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 36, 86, "slot.util.fluidout")); 
 		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		
 		
 	}
 	

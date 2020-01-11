@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/seedsqueezer.png");
 	
 	public SeedSqueezerScreen(SeedSqueezerContainer container, PlayerInventory player, ITextComponent name)
     {
@@ -23,22 +24,20 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	{
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
-		this.blitOffset =+ 300; 
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		this.setBlitOffset(this.getBlitOffset() + 300); 
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURES);
 		int l = this.getCookProgressScaled(8);
 		blit(108, 35, 0, 202 + 8 - l, 16, l + 12);
 		
 		blit(108, 63 - l, 16, 202, 16, l + 12);
-		this.blitOffset =- 300; 
+		this.setBlitOffset(this.getBlitOffset() - 300);
 	}
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
@@ -60,5 +59,18 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

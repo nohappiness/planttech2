@@ -1,12 +1,15 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.filehelper.JsonGenerator;
+import net.kaneka.planttech2.dimensions.TeleportationUtils;
+import net.kaneka.planttech2.dimensions.planttopia.PlantTopiaModDimension;
+import net.kaneka.planttech2.gui.guide.GuideScreen;
+import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class TestItem extends BaseItem
 {
@@ -20,13 +23,14 @@ public class TestItem extends BaseItem
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
-		
-		
+		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.planttopia_dimtype, Blocks.DIRT);	
+		Minecraft.getInstance().displayGuiScreen(new GuideScreen());
+		/*
 		if(!ctx.getWorld().isRemote)
 		{
 			new JsonGenerator().create();
 		}
-		/*
+		
 		if(!ctx.getWorld().isRemote)
 		{
 		for(Enchantment ench: ForgeRegistries.ENCHANTMENTS)

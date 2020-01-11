@@ -39,7 +39,7 @@ public class WrenchItem extends BaseItem
 			ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
 			if (!stack.isEmpty() && target.getBlock() instanceof MachineBaseBlock)
 			{
-				if (stack.getItem() instanceof WrenchItem && player.isSneaking())
+				if (stack.getItem() instanceof WrenchItem && player.isCrouching())
 				{
 					world.removeBlock(pos, false);
 					Block.spawnAsEntity(world, pos, new ItemStack(target.getBlock()));

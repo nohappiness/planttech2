@@ -148,7 +148,7 @@ public class JsonGenerator
 		 * Items.IRON_SHOVEL, 1);
 		 */
 
-		
+		/**
 		createChipalyzerItemWithEnchantmentFile(ModItems.PROTECTION_CHIP, Enchantments.PROTECTION);
 		createChipalyzerItemWithEnchantmentFile(ModItems.FIRE_PROTECTION_CHIP, Enchantments.FIRE_PROTECTION);
 		createChipalyzerItemWithEnchantmentFile(ModItems.FEATHER_FALLING_CHIP, Enchantments.FEATHER_FALLING);
@@ -174,6 +174,7 @@ public class JsonGenerator
 		createChipalyzerItemWithEnchantmentFile(ModItems.PUNCH_CHIP, Enchantments.PUNCH);
 		createChipalyzerItemWithEnchantmentFile(ModItems.FLAME_CHIP, Enchantments.FLAME);
 		createChipalyzerItemWithEnchantmentFile(ModItems.INFINITY_CHIP, Enchantments.INFINITY);
+		*/
 		
 		/*
 		createItemModelFile(ModItems.PROTECTION_CHIP, "chips/enchantment_chip");
@@ -206,6 +207,7 @@ public class JsonGenerator
 
 	}
 
+	/*
 	private void createChipalyzerItemWithoutEnchantmentFile(Item output, Item input, int tier)
 	{
 		createFile("chipalyzeritem", output.getRegistryName().getPath(), new HashMap<String, String>()
@@ -231,6 +233,7 @@ public class JsonGenerator
 		});
 
 	}
+	*/
 	
 	private void createItemModelFile(Item output, String file)
 	{

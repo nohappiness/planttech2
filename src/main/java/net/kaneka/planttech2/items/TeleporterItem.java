@@ -28,6 +28,7 @@ public class TeleporterItem extends EnergyStorageItem
 		super(name, property, basecapacity);
 	}
 
+	/*
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
@@ -46,7 +47,7 @@ public class TeleporterItem extends EnergyStorageItem
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
 	}
 
-	
+	*/
 
 	public static boolean addPoint(ItemStack stack, Dimension dim, BlockPos pos)
 	{

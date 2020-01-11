@@ -51,7 +51,7 @@ public class GuideBaseScreen extends Screen
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
 		this.renderBackground();
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		if (fadeInTimer > 0)
 		{

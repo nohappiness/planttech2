@@ -14,6 +14,7 @@ import net.minecraft.util.text.ITextComponent;
 public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 {
     private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
+    private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/compressor.png");
 
     public CompressorScreen(CompressorContainer container, PlayerInventory player, ITextComponent name)
     {
@@ -40,9 +41,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
     {
-	GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-	minecraft.getTextureManager().bindTexture(TEXTURES);
-	blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
 	int l = this.getCookProgressScaled(68);
 	blit(this.guiLeft + 55, this.guiTop + 84, 0, 202, l, 12);
@@ -73,4 +72,16 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	}
 	return false;
     }
+    @Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
+	}
 }

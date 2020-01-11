@@ -79,11 +79,11 @@ public class GuidePlantsScreen extends GuideBaseScreen
 			blit(this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
 			renderItem(this.mainseed, 261, 32);
 			RenderHelper.disableStandardItemLighting();
-			RenderHelper.enableGUIStandardItemLighting();
+			RenderHelper.func_227780_a_();
 			if (soil != null)
 				if (!soil.isEmpty())
 					this.renderItem(this.soil, 217, 65);
-			RenderHelper.enableStandardItemLighting();
+			RenderHelper.func_227780_a_();
 			for (int i = 0; i < 9; i++)
 			{
 				if (seeds[i] != null)

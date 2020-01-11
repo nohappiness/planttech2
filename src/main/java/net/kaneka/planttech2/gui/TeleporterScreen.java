@@ -108,7 +108,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	
 	private void drawButtons(int mouseX, int mouseY, float partialTicks)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
 		for (int i = 0; i < this.buttons.size(); ++i)
 		{
 			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
@@ -118,7 +118,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		

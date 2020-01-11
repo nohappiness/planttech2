@@ -1,6 +1,9 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.configuration.ClientConfig;
 import net.kaneka.planttech2.container.BaseContainer;
 import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
@@ -10,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
+abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
 {
 	protected static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 	protected final PlayerInventory player;
@@ -20,6 +23,7 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	public BaseContainerScreen(BaseContainer inventorySlotsIn, PlayerInventory inventoryPlayer, ITextComponent title)
 	{
 		super((T) inventorySlotsIn, inventoryPlayer, title);
+		
 		this.te = inventorySlotsIn.getTE(); 
 		this.player = inventoryPlayer; 
 	}
@@ -62,15 +66,29 @@ public class BaseContainerScreen<T extends BaseContainer> extends ContainerScree
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		
+		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		minecraft.getTextureManager().bindTexture(getBackgroundTexture());
+		if(ClientConfig.colorblind_guis.get())
+		{
+			minecraft.getTextureManager().bindTexture(getBackgroundTextureColorblind());
+		}
+		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 	}
+	
+	protected abstract ResourceLocation getBackgroundTexture();
+	protected abstract ResourceLocation getBackgroundTextureColorblind();
+	
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) 
 	{
 		String tileName = title.getUnformattedComponentText();
-		
-		font.drawString(tileName, (this.xSize / 2 - font.getStringWidth(tileName) / 2) -5, 14, Integer.parseInt("00e803",16));
+		int textcolor = Integer.parseInt("00e803",16); 
+		if(ClientConfig.colorblind_guis.get())
+		{
+			textcolor = Integer.parseInt("000000",16); 
+		}
+		font.drawString(tileName, (this.xSize / 2 - font.getStringWidth(tileName) / 2) -5, 14, textcolor);
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)

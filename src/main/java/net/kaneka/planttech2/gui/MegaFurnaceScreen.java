@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/megafurnace.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/megafurnace.png");
 	
 	public MegaFurnaceScreen(MegaFurnaceContainer container, PlayerInventory player, ITextComponent name)
     {
@@ -21,9 +22,7 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		for(int p = 0; p < 6; p++)
 		{
@@ -39,5 +38,18 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 	{
 		int i = container.getValue(id + 2);
 		return i != 0 ? i * pixels / ((MegaFurnaceTileEntity) this.te).getTicksPerItem() : 0;
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

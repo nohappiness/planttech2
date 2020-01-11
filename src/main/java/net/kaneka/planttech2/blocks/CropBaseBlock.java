@@ -30,14 +30,14 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.world.ILightReader;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
@@ -184,7 +184,7 @@ public class CropBaseBlock extends ContainerBlock
 		{
 			return false;
 		}
-		if (world.getLightSubtracted(pos, 0) >= (14 - lightsensitivity))
+		if (world.getNeighborAwareLightSubtracted(pos, 0) >= (14 - lightsensitivity))
 		{
 			return true;
 		}
@@ -236,7 +236,7 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
 	{
 		EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
-		if (temp.inRange(world.getBiome(pos).getDefaultTemperature(), tolerance))
+		if (temp.inRange(world.func_225523_d_().func_226836_a_(pos).getDefaultTemperature(), tolerance))
 		{
 			return true;
 		}
@@ -268,7 +268,7 @@ public class CropBaseBlock extends ContainerBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		int growstate = state.get(GROWSTATE).intValue();
 		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
@@ -278,7 +278,7 @@ public class CropBaseBlock extends ContainerBlock
 			{
 				if (holdItem.getItem() instanceof AnalyserItem || holdItem.getItem() instanceof AdvancedAnalyserItem || holdItem.getItem() instanceof CropRemover)
 				{
-					return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
+					return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
 				}
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
@@ -293,7 +293,7 @@ public class CropBaseBlock extends ContainerBlock
 				worldIn.setBlockState(pos, state.with(GROWSTATE, 0));
 			}
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
+		return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
 	}
 
 	@Override
@@ -313,18 +313,6 @@ public class CropBaseBlock extends ContainerBlock
 	}
 
 	/*----------------------RENDERING------------------*/
-
-	@Override
-	public boolean isSolid(BlockState state)
-	{
-		return false;
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.TRANSLUCENT;
-	}
 
 	@Override
 	public BlockRenderType getRenderType(BlockState iBlockState)
@@ -347,16 +335,14 @@ public class CropBaseBlock extends ContainerBlock
 
 	public static class ColorHandler implements IBlockColor
 	{
-
 		@Override
-		public int getColor(BlockState state, IEnviromentBlockReader world, BlockPos pos, int tintindex)
+		public int getColor(BlockState state, ILightReader lightreader, BlockPos pos, int tintindex)
 		{
 			if (tintindex == 0)
 			{
 				return PlantTechMain.croplist.getEntryByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();
 			}
 			return 0xFFFFFFFF;
-
 		}
 
 	}

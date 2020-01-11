@@ -23,7 +23,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.Half;
 import net.minecraft.state.properties.StairsShape;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
@@ -38,6 +38,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -145,10 +146,6 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 		return this.modelBlock.getExplosionResistance();
 	}
 
-	public BlockRenderLayer getRenderLayer()
-	{
-		return this.modelBlock.getRenderLayer();
-	}
 
 	public int tickRate(IWorldReader worldIn)
 	{
@@ -179,14 +176,13 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	}
 
 	@SuppressWarnings("deprecation")
-	public void tick(BlockState state, World worldIn, BlockPos pos, Random random)
-	{
-		this.modelBlock.tick(state, worldIn, pos, random);
-	}
+	public void func_225534_a_(BlockState p_225534_1_, ServerWorld p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
+	      this.modelBlock.func_225534_a_(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
+	   }
 
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{
-		return this.modelState.onBlockActivated(worldIn, player, handIn, hit);
+		return this.modelState.func_227031_a_(worldIn, player, handIn, hit);
 	}
 
 	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn)

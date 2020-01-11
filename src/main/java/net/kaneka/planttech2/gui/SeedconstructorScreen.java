@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/seedconstructor.png");
 	
 	
 	public SeedconstructorScreen(SeedconstructorContainer container, PlayerInventory player, ITextComponent name)
@@ -22,9 +23,7 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(13);
 		blit(this.guiLeft + 98, this.guiTop + 50, 0, 202, 12, l);
@@ -48,5 +47,18 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

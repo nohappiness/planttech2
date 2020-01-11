@@ -229,7 +229,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	{
 		ItemStack stack = player.getHeldItem(hand);
 
-		if(player.isSneaking())
+		if(player.isCrouching())
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{

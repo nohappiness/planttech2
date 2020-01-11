@@ -14,12 +14,14 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GlassPaneEnd extends BaseBlock implements IColoredBlock
 {
@@ -32,12 +34,6 @@ public class GlassPaneEnd extends BaseBlock implements IColoredBlock
 		super(property, name, group, hasItem);
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(FACE, AttachFace.WALL));
 		this.colorInt = color; 
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT_MIPPED; 
 	}
 
 	@Nullable
@@ -108,5 +104,12 @@ public class GlassPaneEnd extends BaseBlock implements IColoredBlock
 	public int getColor()
 	{
 		return colorInt;
+	}
+	
+	@Override 
+	@OnlyIn(Dist.CLIENT)
+	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	{
+	   return true;
 	}
 }

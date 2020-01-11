@@ -13,7 +13,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -30,7 +30,7 @@ public class CropBarsBlock extends BaseBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
+	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
     {
     	ItemStack possibleSeedStack = player.inventory.getCurrentItem();
     	CropListEntry entry = PlantTechMain.croplist.getBySeed(possibleSeedStack);
@@ -60,16 +60,10 @@ public class CropBarsBlock extends BaseBlock
 	        		}
 	    		}
     		}
-    		return true;
+    		return ActionResultType.SUCCESS;
     	}
-    	return false;
+    	return ActionResultType.FAIL;
     }
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
-	}
 
 	@Override
 	public BlockRenderType getRenderType(BlockState iBlockState)

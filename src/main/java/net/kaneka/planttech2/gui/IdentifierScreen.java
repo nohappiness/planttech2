@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/identifier.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/identifier.png");
 	
 	
 	public IdentifierScreen(IdentifierContainer container, PlayerInventory player, ITextComponent name)
@@ -22,9 +23,7 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(16);
 		blit(this.guiLeft + 80, this.guiTop + 44, 0, 202, l, 16);
@@ -37,5 +36,18 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 	{
 		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((IdentifierTileEntity) this.te).getTicksPerItem() : 0;
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

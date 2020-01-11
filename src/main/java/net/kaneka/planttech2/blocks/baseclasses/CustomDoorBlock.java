@@ -22,7 +22,6 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoorHingeSide;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
@@ -269,11 +268,6 @@ public class CustomDoorBlock extends BaseBlock
 	public PushReaction getPushReaction(BlockState state)
 	{
 		return PushReaction.DESTROY;
-	}
-
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
 	}
 
 	public BlockState rotate(BlockState state, Rotation rot)

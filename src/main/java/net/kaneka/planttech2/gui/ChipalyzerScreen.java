@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/chipalyzer.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/chipalyzer.png");
 	
 	
 	public ChipalyzerScreen(ChipalyzerContainer container, PlayerInventory player, ITextComponent name)
@@ -22,9 +23,7 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(32);
 		blit(this.guiLeft + 62, this.guiTop + 48, 0, 202, l, 14);
@@ -37,5 +36,17 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 	{
 		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((ChipalyzerTileEntity) this.te).ticksPerItem() : 0;
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

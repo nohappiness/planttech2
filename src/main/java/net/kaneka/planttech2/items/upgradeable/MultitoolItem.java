@@ -35,6 +35,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 
+@SuppressWarnings("deprecation")
 public class MultitoolItem extends UpgradeableHandItem
 {
 	private static final Set<Block> EFFECTIVE_ON_SPADE = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK,
@@ -215,7 +216,6 @@ public class MultitoolItem extends UpgradeableHandItem
 		return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand)
 	{
@@ -229,7 +229,7 @@ public class MultitoolItem extends UpgradeableHandItem
     		if (entity instanceof IShearable)
     		{
     			IShearable target = (IShearable) entity;
-    			BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
+    			BlockPos pos = new BlockPos(entity.func_226277_ct_(), entity.func_226278_cu_(), entity.func_226281_cx_());
     			if (target.isShearable(stack, entity.world, pos))
     			{
     				List<ItemStack> drops = target.onSheared(stack, entity.world, pos,

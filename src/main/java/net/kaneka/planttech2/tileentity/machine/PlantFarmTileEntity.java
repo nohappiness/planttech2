@@ -1,26 +1,33 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.PlantFarmContainer;
+import net.kaneka.planttech2.enums.EnumTraitsInt;
+import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.kaneka.planttech2.tileentity.CropsTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraftforge.common.extensions.IForgeBlock;
 
-public class PlantFarmTileEntity extends EnergyInventoryTileEntity
+public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
-	private int actualX = 0, actualY = 0;
+	private int[] progress = new int[5]; 
+	
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -31,6 +38,20 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 				return PlantFarmTileEntity.this.energystorage.getEnergyStored();
 			case 1:
 				return PlantFarmTileEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+			    return PlantFarmTileEntity.this.fluidtank.getBiomass();
+			case 3:
+			    return PlantFarmTileEntity.this.fluidtank.getCapacity(); 
+			case 4: 
+				return PlantFarmTileEntity.this.progress[0]; 
+			case 5: 
+				return PlantFarmTileEntity.this.progress[1]; 
+			case 6: 
+				return PlantFarmTileEntity.this.progress[2]; 
+			case 7: 
+				return PlantFarmTileEntity.this.progress[3]; 
+			case 8: 
+				return PlantFarmTileEntity.this.progress[4]; 	
 			default:
 				return 0;
 			}
@@ -46,76 +67,112 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 			case 1:
 				PlantFarmTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
+			case 2:
+				PlantFarmTileEntity.this.fluidtank.setBiomass(value);
+			    break; 
+			case 3: 
+				PlantFarmTileEntity.this.fluidtank.setCapacity(value);
+				break;
+			case 4: 
+				PlantFarmTileEntity.this.progress[0] = value; 
+				break; 
+			case 5: 
+				PlantFarmTileEntity.this.progress[1] = value; 
+				break; 
+			case 6: 
+				PlantFarmTileEntity.this.progress[2] = value; 
+				break; 
+			case 7: 
+				PlantFarmTileEntity.this.progress[3] = value; 
+				break; 
+			case 8: 
+				PlantFarmTileEntity.this.progress[4] = value; 
+				break;
 			}
 
 		}
 
 		public int size()
 		{
-			return 2;
+			return 9;
 		}
 	};
 
 	public PlantFarmTileEntity()
 	{
-		super(ModTileEntities.PLANTFARM_TE, 1000, 19);
+		super(ModTileEntities.PLANTFARM_TE, 1000, 17, 5000);
 	}
 
 	@Override
 	public void doUpdate()
 	{
-		if (world.getGameTime() % (400F - getSpeedReduction() * 45F) == 0F)
+		int range = getRange(); 
+		ItemStack seed = itemhandler.getStackInSlot(0);
+		if(!seed.isEmpty())
 		{
-			actualX++;
-			int range = getRange();
-			int diameter = range * 2 + 1;
-			if (actualX >= diameter)
+			if(isSeed(seed))
 			{
-				actualX = 0;
-				actualY++;
-				if (actualY >= diameter)
-				{
-					actualY = 0;
-				}
+				for(int i = 0 ; i <= range; i++)
+	    		{
+	    			if(progress[i] < getTicks(seed))
+	    			{
+	    				progress[i]++;
+	    			}
+	    			else
+	    			{
+	    				if(energystorage.getEnergyStored() > getEnergyPerAction())
+	    				{
+    	    				NonNullList<ItemStack> drops = getDrops(seed);
+    	    				if(!drops.isEmpty())
+    	    				{
+        	    				for (ItemStack stack : drops)
+        	    				{
+        	    					for (int k = 0; k < 15; k++)
+        	    					{
+        	    						if (!stack.isEmpty())
+        	    						{
+        	    							stack = itemhandler.insertItem(k, stack, false);
+        	    						}
+        	    					}
+        	    					if (!stack.isEmpty())
+        	    					{
+        	    						spawnAsEntity(world, pos.up(), stack);
+        	    					}
+        	    				}
+        	    				energystorage.extractEnergy(getEnergyPerAction(), false);
+    	    				}
+	    				}
+	    			}
+	    		}
 			}
-
-			if (energystorage.getEnergyStored() >= getEnergyPerAction())
+		}
+		
+		doEnergyLoop();
+	}
+	
+	private boolean isSeed(ItemStack stack)
+	{
+		if(!stack.isEmpty())
+		{
+			Item item = stack.getItem(); 
+			if(item instanceof CropSeedItem)
 			{
-
-				BlockPos actualPos = this.pos.add(actualX - range, 0, actualY - range);
-
-				BlockState state = world.getBlockState(actualPos);
-				if (world.getBlockState(actualPos).getBlock() instanceof CropBaseBlock)
+				return true; 
+			}
+			
+			if(item instanceof BlockItem)
+			{
+				Block block = ((BlockItem) item).getBlock(); 
+				if(block != null)
 				{
-					if (state.get(CropBaseBlock.GROWSTATE) > 6)
+					if(block instanceof CropsBlock)
 					{
-						NonNullList<ItemStack> drops = NonNullList.create();
-						TileEntity te = world.getTileEntity(actualPos);
-						if (te instanceof CropsTileEntity)
-						{
-							((CropsTileEntity) te).dropsRemoveOneSeed(drops, 7);
-							for (ItemStack stack : drops)
-							{
-								for (int i = 0; i < 15; i++)
-								{
-									if (!stack.isEmpty())
-									{
-										stack = itemhandler.insertItem(i, stack, false);
-									}
-								}
-								if (!stack.isEmpty())
-								{
-									spawnAsEntity(world, pos.up(), stack);
-								}
-							}
-							world.setBlockState(actualPos, state.with(CropBaseBlock.GROWSTATE, 0));
-							energystorage.extractEnergy(getEnergyPerAction());
-						}
+						return true; 
 					}
 				}
 			}
 		}
-		doEnergyLoop();
+		return false; 
 	}
 	
 	@Override
@@ -123,33 +180,64 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 	{
 		return field_array;
 	}
+	
+	private int getTicks(ItemStack stack)
+	{
+		if(!stack.isEmpty())
+		{
+			Item item = stack.getItem(); 
+			if(item instanceof CropSeedItem)
+			{
+				CompoundNBT nbt = stack.getTag();
+				if(nbt.contains("growspeed"))
+				{
+					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 8;
+				}
+				
+			}
+		}
+		return 90 *20 * 8; 
+	}
 
 	private int getEnergyPerAction()
 	{
-		return 20 + 40 * (getSpeedReduction() + getRange());
+		return 400;
 	}
-
-	private int getSpeedReduction()
+	
+	private NonNullList<ItemStack> getDrops(ItemStack stack)
 	{
-
-		ItemStack stack = itemhandler.getStackInSlot(15);
-		if (!stack.isEmpty())
+		NonNullList<ItemStack> drops = NonNullList.create();
+		if(!stack.isEmpty())
 		{
-			if (stack.getItem() instanceof TierItem)
+			Item item = stack.getItem(); 
+			if(item instanceof CropSeedItem)
 			{
-				TierItem item = (TierItem) stack.getItem();
-				if (item.getItemType() == PlantTechConstants.SPEEDUPGRADE_TYPE)
+				HashMapCropTraits traits = new HashMapCropTraits();
+				traits.fromStack(stack);
+				PlantTechMain.croplist.getEntryByName(traits.getType()).calculateDropsReduced(drops, traits, 7);
+				return drops; 
+			}
+			if(item instanceof BlockItem)
+			{
+				Block block = ((BlockItem) item).getBlock(); 
+				if(block != null)
 				{
-					return item.getTier();
+					if(block instanceof CropsBlock)
+					{
+						if(world instanceof ServerWorld)
+						{
+							drops.addAll(Block.getDrops(block.getDefaultState().with(CropsBlock.AGE, 7), (ServerWorld)world, pos, null));
+						}
+					}
 				}
 			}
 		}
-		return 0;
+		return drops; 
 	}
 
 	private int getRange()
 	{
-		ItemStack stack = itemhandler.getStackInSlot(16);
+		ItemStack stack = itemhandler.getStackInSlot(13);
 		if (!stack.isEmpty())
 		{
 			if (stack.getItem() instanceof TierItem)
@@ -167,16 +255,20 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		compound.putInt("actualx", actualX);
-		compound.putInt("actualY", actualY);
+		for(int i = 0; i < progress.length; i++)
+		{
+			compound.putInt("progress_" + i , progress[i]);
+		}
 		return super.write(compound);
 	}
 
 	@Override
 	public void read(CompoundNBT compound)
 	{
-		actualX = compound.getInt("actualx");
-		actualY = compound.getInt("actualy");
+		for(int i = 0; i < progress.length; i++)
+		{
+			progress[i] = compound.getInt("progress_" + i);
+		}
 		super.read(compound);
 	}
 
@@ -195,12 +287,24 @@ public class PlantFarmTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public int getEnergyInSlot()
 	{
-		return 17;
+		return 15;
 	}
 
 	@Override
 	public int getEnergyOutSlot()
 	{
-		return 18;
+		return 16;
+	}
+
+	@Override
+	public int getFluidInSlot()
+	{
+		return 13;
+	}
+
+	@Override
+	public int getFluidOutSlot()
+	{
+		return 14;
 	}
 }

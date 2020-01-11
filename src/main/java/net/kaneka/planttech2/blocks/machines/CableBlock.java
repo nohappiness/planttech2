@@ -22,7 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
@@ -98,7 +98,7 @@ public class CableBlock extends BaseBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
 		{
@@ -133,7 +133,7 @@ public class CableBlock extends BaseBlock
 			 * } }
 			 */
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
+		return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
 	}
 
 	@Override
@@ -190,12 +190,6 @@ public class CableBlock extends BaseBlock
 			}
 		}
 		super.onReplaced(state, worldIn, pos, newState, isMoving);
-	}
-
-	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override

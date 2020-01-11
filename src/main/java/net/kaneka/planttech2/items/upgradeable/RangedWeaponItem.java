@@ -136,7 +136,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 						extractEnergy(stack, getEnergyCost(stack), false);
 					}
 
-					worldIn.playSound((PlayerEntity) null, PlayerEntity.posX, PlayerEntity.posY, PlayerEntity.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
+					worldIn.playSound((PlayerEntity) null, PlayerEntity.func_226277_ct_(), PlayerEntity.func_226278_cu_(), PlayerEntity.func_226281_cx_(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 					        1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 					if (!flag1 && !PlayerEntity.abilities.isCreativeMode)
 					{
@@ -179,7 +179,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		if(!player.isSneaking())
+		if(!player.isCrouching())
 		{
 			System.out.println(getEnergyCost(stack));
     		if(extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))

@@ -63,7 +63,7 @@ public class PlayerEvents
 		{
     		event.getOriginal().revive();
     		ITechVillagerTrust old = event.getOriginal().getCapability(TechVillagerTrust.INSTANCE).orElse(null); 
-    		ITechVillagerTrust playercap = event.getEntityPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust()); 
+    		ITechVillagerTrust playercap = event.getPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust()); 
     		if(old != null)
     		{
     			for(Entry<String, Integer> entry: old.getTrustsMap().entrySet())

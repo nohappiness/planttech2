@@ -260,7 +260,7 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 	{
 		ItemStack stack = player.getHeldItem(hand);
 
-		if(player.isSneaking())
+		if(player.isCrouching())
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{

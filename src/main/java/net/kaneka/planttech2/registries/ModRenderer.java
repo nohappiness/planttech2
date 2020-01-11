@@ -8,6 +8,6 @@ public class ModRenderer
 {
 	public static void registerEntityRenderer()
 	{
-		RenderingRegistry.registerEntityRenderingHandler(TechVillagerEntity.class, manager -> new TechVillagerRenderer(manager));
+		//RenderingRegistry.registerEntityRenderingHandler(TechVillagerEntity.class, manager -> new TechVillagerRenderer(manager));
 	}
 }

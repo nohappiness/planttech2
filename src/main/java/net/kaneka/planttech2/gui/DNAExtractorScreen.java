@@ -12,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContainer>
 { 
 	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_extractor.png");
+	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/dna_extractor.png");
 	
 	
 	public DNAExtractorScreen(DNAExtractorContainer container, PlayerInventory player, ITextComponent name)
@@ -22,9 +23,7 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(50);
 		blit(this.guiLeft + 59, this.guiTop + 35, 0, 202, l, 20);
@@ -37,5 +36,18 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	{
 		int i = container.getValue(2);
 		return i != 0 ? i * pixels / ((DNAExtractorTileEntity) this.te).ticksPerItem() : 0;
+	}
+	
+	@Override
+	protected ResourceLocation getBackgroundTexture()
+	{
+		return TEXTURES;
+	}
+
+
+	@Override
+	protected ResourceLocation getBackgroundTextureColorblind()
+	{
+		return TEXTURES_COLORBLIND;
 	}
 }

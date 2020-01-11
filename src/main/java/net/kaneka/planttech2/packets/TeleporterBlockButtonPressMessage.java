@@ -4,8 +4,6 @@ import java.util.function.Supplier;
 
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
-import net.kaneka.planttech2.world.TeleporterUtilities;
-import net.kaneka.planttech2.world.planttopia.ModDimensionPlantTopia;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -61,7 +59,7 @@ public class TeleporterBlockButtonPressMessage
 					}
 				}
 				
-				TeleporterUtilities.changeDimension(serverPlayer.world, pos, serverPlayer, ModDimensionPlantTopia.getDimensionType(), ModBlocks.PLANTTOPIA_TELEPORTER_END);
+				//TeleporterUtilities.changeDimension(serverPlayer.world, pos, serverPlayer, ModDimensionPlantTopia.getDimensionType(), ModBlocks.PLANTTOPIA_TELEPORTER_END);
 			});
 			ctx.get().setPacketHandled(true);
 		}

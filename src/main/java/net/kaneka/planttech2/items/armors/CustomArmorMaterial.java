@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyLoadBase;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
@@ -25,7 +25,7 @@ public enum CustomArmorMaterial implements IArmorMaterial
 	private final int enchantability;
 	private final SoundEvent soundEvent;
 	private final float toughness;
-	private final LazyLoadBase<Ingredient> repairMaterial;
+	private final LazyValue<Ingredient> repairMaterial;
 
 	private CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness,
 	        Supplier<Ingredient> repairMaterial)
@@ -36,7 +36,7 @@ public enum CustomArmorMaterial implements IArmorMaterial
 		this.enchantability = enchantability;
 		this.soundEvent = soundEvent;
 		this.toughness = toughness;
-		this.repairMaterial = new LazyLoadBase<>(repairMaterial);
+		this.repairMaterial = new LazyValue<>(repairMaterial);
 	}
 
 	public int getEnchantability()
