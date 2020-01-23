@@ -25,9 +25,9 @@ public class GrowBlockCropBlock extends BaseBlock
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random rand)
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
 	{
-		super.func_225534_a_(state, world, pos, rand);
+		super.tick(state, world, pos, rand);
 		int i = state.get(GROWINGSTATE).intValue();
 		if(i < 7)
 		{

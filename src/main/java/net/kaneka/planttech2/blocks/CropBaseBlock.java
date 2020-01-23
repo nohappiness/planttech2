@@ -268,7 +268,7 @@ public class CropBaseBlock extends ContainerBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		int growstate = state.get(GROWSTATE).intValue();
 		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
@@ -278,7 +278,7 @@ public class CropBaseBlock extends ContainerBlock
 			{
 				if (holdItem.getItem() instanceof AnalyserItem || holdItem.getItem() instanceof AdvancedAnalyserItem || holdItem.getItem() instanceof CropRemover)
 				{
-					return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
+					return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 				}
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
@@ -293,7 +293,7 @@ public class CropBaseBlock extends ContainerBlock
 				worldIn.setBlockState(pos, state.with(GROWSTATE, 0));
 			}
 		}
-		return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
+		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 	}
 
 	@Override

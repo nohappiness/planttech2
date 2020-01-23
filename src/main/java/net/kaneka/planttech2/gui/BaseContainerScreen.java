@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.configuration.ClientConfig;
@@ -66,7 +66,7 @@ abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScr
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(getBackgroundTexture());
 		if(ClientConfig.colorblind_guis.get())
 		{

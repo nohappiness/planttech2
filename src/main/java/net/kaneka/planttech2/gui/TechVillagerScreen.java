@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.entities.TechVillagerContainer;
@@ -86,7 +87,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	protected void renderSelectedTrades()
 	{
 		RenderHelper.disableStandardItemLighting();
-		RenderHelper.func_227780_a_();
+		RenderSystem.enableDepthTest();
 		if (selectedTrade != null)
 		{
 			
@@ -107,7 +108,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 				renderItem(selectedTask.getInputs().get(i), 147 + (i % 2) * 18, 53 + (int) (i / 2) * 18);
 			}
 		}
-		RenderHelper.func_227780_a_();
+		RenderSystem.enableDepthTest();
 	}
 
 	public void renderTooltips(int mouseX, int mouseY)
@@ -225,7 +226,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURE);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		int trust = getTrustScaled(172); 
@@ -323,7 +324,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	@SuppressWarnings("deprecation")
 	public void renderItem(ItemStack stack, int x, int y)
 	{
-		GlStateManager.func_227688_c_(0.0F, 0.0F, 32.0F);
+		RenderSystem.color3f(0.0F, 0.0F, 32.0F);
 		this.setBlitOffset(200);
 		this.itemRenderer.zLevel = 200.0F;
 		FontRenderer font = stack.getItem().getFontRenderer(stack);

@@ -22,6 +22,7 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoorHingeSide;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
@@ -210,17 +211,17 @@ public class CustomDoorBlock extends BaseBlock
 		}
 	}
 
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{
 		if (this.material == Material.IRON)
 		{
-			return false;
+			return ActionResultType.FAIL;
 		} else
 		{
 			state = state.cycle(OPEN);
 			worldIn.setBlockState(pos, state, 10);
 			worldIn.playEvent(player, state.get(OPEN) ? this.getOpenSound() : this.getCloseSound(), pos, 0);
-			return true;
+			return ActionResultType.SUCCESS;
 		}
 	}
 

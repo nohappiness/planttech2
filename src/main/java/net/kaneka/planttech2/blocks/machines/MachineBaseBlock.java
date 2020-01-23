@@ -45,7 +45,7 @@ public class MachineBaseBlock extends BaseBlock
 
 	public MachineBaseBlock(String name, ItemGroup group)
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f), name, group, true);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).func_226896_b_(), name, group, true);
 	}
 
 	public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
@@ -60,7 +60,7 @@ public class MachineBaseBlock extends BaseBlock
 	}
 
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		if (!world.isRemote)
 		{

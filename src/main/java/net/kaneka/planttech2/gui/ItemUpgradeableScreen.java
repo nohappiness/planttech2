@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.ItemUpgradeableContainer;
@@ -78,7 +79,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURES.get(invsize));
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		

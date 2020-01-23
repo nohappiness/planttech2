@@ -28,9 +28,8 @@ public class CropBarsBlock extends BaseBlock
 		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", ModCreativeTabs.groupmain, true);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
     {
     	ItemStack possibleSeedStack = player.inventory.getCurrentItem();
     	CropListEntry entry = PlantTechMain.croplist.getBySeed(possibleSeedStack);

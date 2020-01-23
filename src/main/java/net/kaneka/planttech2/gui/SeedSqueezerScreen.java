@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
@@ -25,7 +26,7 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
 		this.setBlitOffset(this.getBlitOffset() + 300); 
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURES);
 		int l = this.getCookProgressScaled(8);
 		blit(108, 35, 0, 202 + 8 - l, 16, l + 12);

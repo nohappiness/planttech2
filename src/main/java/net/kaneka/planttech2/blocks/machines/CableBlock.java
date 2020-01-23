@@ -95,10 +95,10 @@ public class CableBlock extends BaseBlock
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupmachines, true);
 		this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
 		if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
 		{
@@ -133,7 +133,7 @@ public class CableBlock extends BaseBlock
 			 * } }
 			 */
 		}
-		return super.func_225533_a_(state, worldIn, pos, player, hand, ray);
+		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
 	}
 
 	@Override

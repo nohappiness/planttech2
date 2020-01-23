@@ -95,7 +95,7 @@ public class PlantTechMain
 	{
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
-		RenderType rendertype = RenderType.func_228641_d_();
+		RenderType rendertype = RenderType.cutoutMipped();
 		for(Block block: ModBlocks.CROPS.values())
 		{
 			RenderTypeLookup.setRenderLayer(block, rendertype);

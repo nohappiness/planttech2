@@ -177,12 +177,12 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 
 	@SuppressWarnings("deprecation")
 	public void func_225534_a_(BlockState p_225534_1_, ServerWorld p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
-	      this.modelBlock.func_225534_a_(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
+	      this.modelBlock.tick(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
 	   }
 
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{
-		return this.modelState.func_227031_a_(worldIn, player, handIn, hit);
+		return this.modelState.onBlockActivated(worldIn, player, handIn, hit);
 	}
 
 	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn)

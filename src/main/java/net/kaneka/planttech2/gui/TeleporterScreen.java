@@ -2,6 +2,7 @@ package net.kaneka.planttech2.gui;
 
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.container.TeleporterContainer;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
@@ -108,7 +109,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	
 	private void drawButtons(int mouseX, int mouseY, float partialTicks)
 	{
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		for (int i = 0; i < this.buttons.size(); ++i)
 		{
 			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
@@ -118,7 +119,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
-		GlStateManager.func_227637_a_(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		

@@ -229,7 +229,7 @@ public class MultitoolItem extends UpgradeableHandItem
     		if (entity instanceof IShearable)
     		{
     			IShearable target = (IShearable) entity;
-    			BlockPos pos = new BlockPos(entity.func_226277_ct_(), entity.func_226278_cu_(), entity.func_226281_cx_());
+    			BlockPos pos = new BlockPos(entity.getPosX(), entity.getPosY(), entity.getPosZ());
     			if (target.isShearable(stack, entity.world, pos))
     			{
     				List<ItemStack> drops = target.onSheared(stack, entity.world, pos,
