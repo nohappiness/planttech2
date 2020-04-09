@@ -22,10 +22,11 @@ public class SolarGeneratorContainer extends BaseContainer
 		super(id, ModContainers.SOLARGENERATOR, player, tileentity, 4);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 84, 71, "slot.solargenerator.focus"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 45, 33, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 95, 60, "slot.solargenerator.focus"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 95, 31, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 	}
 	
 	

@@ -70,7 +70,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedconstructorTileEntity()
 	{
-		super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 7, 5000);
+		super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 8, 5000, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR);
 	}
 
 	@Override
@@ -113,6 +113,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 						ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
 						itemhandler.setStackInSlot(1, traits.addToItemStack(stack));
 						fluidtank.extract(fluidPerItem());
+						addKnowledge();
 					}
 				}
 			}
@@ -191,6 +192,18 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 6;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 7;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 250;
 	}
 
 }

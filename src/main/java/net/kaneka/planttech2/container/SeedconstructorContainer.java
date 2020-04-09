@@ -22,15 +22,16 @@ public class SeedconstructorContainer extends BaseContainer
 		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 96, 30, "slot.seedconstructor.container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 96, 67, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 72, 44, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 95, 29, "slot.seedconstructor.container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 95, 66, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 71, 43, "slot.util.speedupgrade"));
 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 18, 86, "slot.util.fluidin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 36, 86, "slot.util.fluidout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 23, 38, "slot.util.fluidin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 23, 57, "slot.util.fluidout"));
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 		
 	}
 	

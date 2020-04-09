@@ -59,7 +59,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 
     public DNAExtractorTileEntity()
     {
-	super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 6);
+	super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
     }
 
     @Override
@@ -91,12 +91,14 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 				stack.setTag(nbt);
 				itemhandler.setStackInSlot(2, stack);
 				endProcess();
+				addKnowledge();
 			    }
 			    else if (stack3.hasTag() && stack3.getItem() == ModItems.DNA_CONTAINER)
 			    {
 				if (stack3.getTag().equals(stack1.getTag()))
 				{
 				    stack3.grow(1);
+				    addKnowledge();
 				    endProcess();
 				}
 			    }
@@ -171,5 +173,17 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 5;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 6;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

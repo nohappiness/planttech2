@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.EnergyStorageContainer;
 import net.minecraft.entity.player.PlayerInventory;

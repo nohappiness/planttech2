@@ -1,0 +1,25 @@
+{
+	"parent": "planttech2:block/basic/three_layered_six_sided", 
+	"textures": 
+	{
+        "particle": "planttech2:blocks/plantium_block",
+        "down_0": "planttech2:blocks/plantium_block",
+        "up_0": "planttech2:blocks/plantium_block",
+        "north_0": "planttech2:blocks/plantium_block",
+        "south_0": "planttech2:blocks/plantium_block",
+        "west_0": "planttech2:blocks/plantium_block",
+        "east_0": "planttech2:blocks/plantium_block",
+        "down_1": "planttech2:blocks/machine/top_down",
+        "up_1": "planttech2:blocks/machine/top_down",
+        "north_1": "planttech2:blocks/machine/side_6",
+        "south_1": "planttech2:blocks/machine/side_6",
+        "west_1": "planttech2:blocks/machine/side_6",
+        "east_1": "planttech2:blocks/machine/side_6",
+        "down_2": "planttech2:blocks/machine/growoverlay_top_down",
+        "up_2": "planttech2:blocks/empty",
+        "north_2": "planttech2:blocks/machine/growoverlay_front_2",
+        "south_2": "planttech2:blocks/machine/growoverlay_back_2",
+        "west_2": "planttech2:blocks/machine/growoverlay_right_2",
+        "east_2": "planttech2:blocks/machine/growoverlay_left_2"
+    }
+}

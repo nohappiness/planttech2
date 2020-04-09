@@ -54,7 +54,7 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 
     public EnergyStorageTileEntity()
     {
-	super(ModTileEntities.ENERGYSTORAGE_TE, 1000, 3);
+	super(ModTileEntities.ENERGYSTORAGE_TE, 1000, 4, 0);
     }
     
     @Override
@@ -137,5 +137,17 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 2;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 3;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 0;
 	}
 }

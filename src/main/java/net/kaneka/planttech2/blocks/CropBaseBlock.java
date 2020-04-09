@@ -236,7 +236,7 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
 	{
 		EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
-		if (temp.inRange(world.func_225523_d_().func_226836_a_(pos).getDefaultTemperature(), tolerance))
+		if (temp.inRange(world.getBiomeManager().getBiome(pos).getDefaultTemperature(), tolerance))
 		{
 			return true;
 		}

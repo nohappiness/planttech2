@@ -65,7 +65,7 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 
 	public ChipalyzerTileEntity()
 	{
-		super(ModTileEntities.CHIPALYZER_TE, 1000, 6);
+		super(ModTileEntities.CHIPALYZER_TE, 1000, 7, PlantTechConstants.MACHINETIER_CHIPALYZER);
 	}
 
 	@Override
@@ -98,6 +98,7 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 							energystorage.extractEnergy(energyPerTick(), false);
 							stackChip.shrink(1);
 							stackInput.shrink(1);
+							addKnowledge();
 							ticksPassed = 0;
 						} 
 					}
@@ -187,5 +188,17 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 5;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 6;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 100;
 	}
 }

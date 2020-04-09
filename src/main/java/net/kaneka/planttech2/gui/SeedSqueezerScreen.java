@@ -1,11 +1,13 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
+import net.kaneka.planttech2.gui.guide.Guide;
+import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -28,10 +30,10 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		this.setBlitOffset(this.getBlitOffset() + 300); 
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(TEXTURES);
-		int l = this.getCookProgressScaled(8);
-		blit(108, 35, 0, 202 + 8 - l, 16, l + 12);
+		int l = this.getCookProgressScaled(7);
+		blit(122, 36, 0, 202 + 8 - l, 16, l + 12);
 		
-		blit(108, 63 - l, 16, 202, 16, l + 12);
+		blit(122, 62 - l, 16, 202, 16, l + 12);
 		this.setBlitOffset(this.getBlitOffset() - 300);
 	}
 	
@@ -41,10 +43,10 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 		
 		int j = this.getFluidStoredScaled(55);
-		blit(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);
+		blit(this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
 		
 	}
 	
@@ -57,7 +59,7 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	@Override
 	protected void drawTooltips(int mouseX, int mouseY)
 	{
-	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
+		drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
 	}

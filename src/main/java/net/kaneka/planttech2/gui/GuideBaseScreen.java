@@ -29,6 +29,7 @@ public class GuideBaseScreen extends Screen
 		this.canscroll = canscroll;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void init()
 	{
@@ -152,6 +153,7 @@ public class GuideBaseScreen extends Screen
 
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void onClose()
 	{

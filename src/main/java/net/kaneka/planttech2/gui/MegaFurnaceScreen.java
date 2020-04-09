@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
@@ -31,7 +29,7 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 		}
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 	
 	private int getCookProgressScaled(int id, int pixels)

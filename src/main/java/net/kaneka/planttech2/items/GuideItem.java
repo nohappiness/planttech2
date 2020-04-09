@@ -1,8 +1,7 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.gui.GuideGeneticEngineeringScreen;
-import net.kaneka.planttech2.gui.GuideOverviewScreen;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
+import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.Minecraft;
@@ -31,14 +30,10 @@ public class GuideItem extends BaseItem
     {
 	if (worldIn.isRemote)
 	{
-	    Screen guiscreen = new GuideOverviewScreen(); 
+	    Screen guiscreen = new GuideScreen(); 
 	    if(this == ModItems.GUIDE_PLANTS)
 	    {
 		guiscreen = new GuidePlantsScreen();
-	    }
-	    else if(this == ModItems.GUIDE_GENETIC_ENGINEERING)
-	    {
-		guiscreen = new GuideGeneticEngineeringScreen();
 	    }
 	    Minecraft.getInstance().displayGuiScreen(guiscreen);
 	}

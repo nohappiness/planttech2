@@ -61,7 +61,7 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 
 	public DNACombinerTileEntity()
 	{
-		super(ModTileEntities.DNACOMBINER_TE, 1000, 7);
+		super(ModTileEntities.DNACOMBINER_TE, 1000, 8, PlantTechConstants.MACHINETIER_DNA_COMBINER);
 	}
 
 	@Override
@@ -91,6 +91,7 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 						stack.setTag(nbt);
 						itemhandler.setStackInSlot(3, stack);
 						stack3.shrink(1);
+						addKnowledge();
 					}
 				}
 			}
@@ -192,5 +193,17 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 6;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 7;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

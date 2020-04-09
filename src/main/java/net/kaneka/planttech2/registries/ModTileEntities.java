@@ -12,6 +12,7 @@ import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
 import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
 import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
+import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
@@ -40,6 +41,7 @@ public class ModTileEntities
     public static final TileEntityType<EnergyStorageTileEntity> ENERGYSTORAGE_TE = TileEntityType.Builder.create(EnergyStorageTileEntity::new, ModBlocks.ENERGYSTORAGE).build(null); 
     public static final TileEntityType<InfuserTileEntity> INFUSER_TE = TileEntityType.Builder.create(InfuserTileEntity::new, ModBlocks.INFUSER).build(null); 
     public static final TileEntityType<ChipalyzerTileEntity> CHIPALYZER_TE = TileEntityType.Builder.create(ChipalyzerTileEntity::new, ModBlocks.CHIPALYZER).build(null); 
+    public static final TileEntityType<MachineBulbReprocessorTileEntity> MACHINEBULBREPROCESSOR_TE = TileEntityType.Builder.create(MachineBulbReprocessorTileEntity::new, ModBlocks.MACHINEBULBREPROCESSOR).build(null); 
     public static final TileEntityType<PlantTopiaTeleporterTileEntity> PLANTTOPIATELEPORTER_TE = TileEntityType.Builder.create(PlantTopiaTeleporterTileEntity::new, ModBlocks.PLANTTOPIA_TELEPORTER).build(null); 
       
     
@@ -62,6 +64,7 @@ public class ModTileEntities
 		    		 ENERGYSTORAGE_TE.setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"), 
 		    		 INFUSER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"), 
 	    			 CHIPALYZER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitychipalyzer"), 
+	    			 MACHINEBULBREPROCESSOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitymachinebulbreprocessor"), 
 	    			 PLANTTOPIATELEPORTER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityplanttopiateleporter"));
 		
 	}

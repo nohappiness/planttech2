@@ -16,6 +16,8 @@ import net.kaneka.planttech2.items.DNAContainerItem;
 import net.kaneka.planttech2.items.EnergyStorageItem;
 import net.kaneka.planttech2.items.FertilizerItem;
 import net.kaneka.planttech2.items.GuideItem;
+import net.kaneka.planttech2.items.KnowledgeChip;
+import net.kaneka.planttech2.items.MachineBulbItem;
 import net.kaneka.planttech2.items.ParticleItem;
 import net.kaneka.planttech2.items.TeleporterItem;
 import net.kaneka.planttech2.items.TestItem;
@@ -30,6 +32,7 @@ import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableHandItem;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -42,6 +45,8 @@ public class ModItems
 {
     public static List<BaseItem> ITEMS = new ArrayList<BaseItem>(); 
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
+
+    public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>(); 
     
     //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
     
@@ -92,6 +97,12 @@ public class ModItems
 	    		   KANEKIUM_NUGGET = new BaseItem("kanekium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   KINNOIUM_INGOT = new BaseItem("kinnoium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   KINNOIUM_NUGGET = new BaseItem("kinnoium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
+	    		   KNOWLEDGECHIP_TIER_0 = new KnowledgeChip(0, 50),
+	    		   KNOWLEDGECHIP_TIER_1 = new KnowledgeChip(1, 250),
+	    		   KNOWLEDGECHIP_TIER_2 = new KnowledgeChip(2, 1250),
+	    		   KNOWLEDGECHIP_TIER_3 = new KnowledgeChip(3, 6250),
+	    		   KNOWLEDGECHIP_TIER_4 = new KnowledgeChip(4, 31250),
+	    		   KNOWLEDGECHIP_TIER_5 = new KnowledgeChip(5, 156250),
 	    		   LENTHURIUM_INGOT = new BaseItem("lenthurium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   LENTHURIUM_NUGGET = new BaseItem("lenthurium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   MULTITOOL = new MultitoolItem(), 
@@ -176,6 +187,21 @@ public class ModItems
     								   CYBERARMOR_LEGGINGS = new UpgradeableArmorItem("cyberarmor_leggings", "cyberarmor", EquipmentSlotType.LEGS, 1000, 10, 2, 0, UpgradeChipItem.LEGGINGS),
     								   CYBERARMOR_BOOTS = new UpgradeableArmorItem("cyberarmor_boots", "cyberarmor", EquipmentSlotType.FEET, 1000, 10, 1, 0, UpgradeChipItem.BOOTS);
 
+    public static MachineBulbItem MACHINEBULBREPROCESSOR_BULB = new MachineBulbItem("machinebulbreprocessor_bulb", ModBlocks.MACHINESHELL_IRON, ModBlocks.MACHINEBULBREPROCESSOR_GROWING, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR, 0), 
+    							SEEDSQUEEZER_BULB = new MachineBulbItem("seedsqueezer_bulb", ModBlocks.MACHINESHELL_IRON, ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 0), 
+    							COMPRESSOR_BULB = new MachineBulbItem("compressor_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.COMPRESSOR_GROWING, PlantTechConstants.MACHINETIER_COMPRESSOR, 100), 
+    	                    	IDENTIFIER_BULB = new MachineBulbItem("identifier_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.IDENTIFIER_GROWING, PlantTechConstants.MACHINETIER_IDENTIFIER, 100),
+    	                    	INFUSER_BULB = new MachineBulbItem("infuser_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.INFUSER_GROWING, PlantTechConstants.MACHINETIER_INFUSER, 1000),
+                        		CHIPALYZER_BULB = new MachineBulbItem("chipalyzer_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.CHIPALYZER_GROWING, PlantTechConstants.MACHINETIER_CHIPALYZER, 1000),
+                            	MEGAFURNACE_BULB = new MachineBulbItem("mega_furnace_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.MEGAFURNACE_GROWING, PlantTechConstants.MACHINETIER_MEGAFURNACE, 1000),
+                    	        DNA_CLEANER_BULB = new MachineBulbItem("dna_cleaner_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_CLEANER_GROWING, PlantTechConstants.MACHINETIER_DNA_CLEANER, 2000), 
+                    	        DNA_COMBINER_BULB = new MachineBulbItem("dna_combiner_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_COMBINER_GROWING, PlantTechConstants.MACHINETIER_DNA_COMBINER, 2000),
+                    	        DNA_EXTRACTOR_BULB = new MachineBulbItem("dna_extractor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_EXTRACTOR_GROWING, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR, 2000), 
+                    	        DNA_REMOVER_BULB = new MachineBulbItem("dna_remover_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_REMOVER_GROWING, PlantTechConstants.MACHINETIER_DNA_REMOVER, 2000), 
+                    	        SEEDCONSTRUCTOR_BULB = new MachineBulbItem("seedconstructor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR, 2000),
+                    	        PLANTFARM_BULB = new MachineBulbItem("plantfarm_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.PLANTFARM_GROWING, PlantTechConstants.MACHINETIER_PLANTFARM, 2000),
+                    	        SOLARGENERATOR_BULB = new MachineBulbItem("solargenerator_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SOLARGENERATOR_GROWING, PlantTechConstants.MACHINETIER_SOLARGENERATOR, 2000); 
+                        
     public static HashMap<String, BaseItem> SEEDS = new HashMap<String, BaseItem>();
     public static HashMap<String, BaseItem> PARTICLES = new HashMap<String, BaseItem>();
 
@@ -211,7 +237,7 @@ public class ModItems
 	}
 	
 	//registry.register(BIOMASSBUCKET);
-
+	
     }
     
     @OnlyIn(Dist.CLIENT)

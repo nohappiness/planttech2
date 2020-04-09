@@ -22,20 +22,21 @@ public class CompressorContainer extends BaseContainer
 		super(id, ModContainers.COMPRESSOR, player, tileentity, 25);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
-		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 35, 84, "slot.compressor.input"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 127, 84, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 79, 88, "slot.util.speedupgrade"));
+		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 34, 83, "slot.compressor.input"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 126, 83, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 78, 87, "slot.util.speedupgrade"));
 
 		for (int y = 0; y < 3; y++)
 		{
 			for (int x = 0; x < 6; x++)
 			{
-				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 36 + x * 18, 27 + y * 18, "slot.compressor.select"));
+				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 35 + x * 18, 26 + y * 18, "slot.compressor.select"));
 			}
 		}
 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 	}
 
 	@Override

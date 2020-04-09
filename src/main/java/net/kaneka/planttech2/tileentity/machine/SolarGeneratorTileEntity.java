@@ -56,7 +56,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 
 	public SolarGeneratorTileEntity()
 	{
-		super(ModTileEntities.SOLARGENERATOR_TE, 10000, 4);
+		super(ModTileEntities.SOLARGENERATOR_TE, 10000, 5, PlantTechConstants.MACHINETIER_SOLARGENERATOR);
 	}
 
 	@Override
@@ -71,6 +71,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 				{
 					energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE)));
 					workload = 0;
+					addKnowledge();
 				}
 			}
 		}
@@ -142,5 +143,17 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 3;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 4;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

@@ -24,7 +24,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 		
 		int l = 0; 
 		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE))

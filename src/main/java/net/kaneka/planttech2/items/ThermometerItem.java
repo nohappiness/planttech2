@@ -24,7 +24,7 @@ public class ThermometerItem extends BaseItem
 	{
 		if(worldIn.isRemote)
 		{
-			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getUnformattedComponentText() + ": " + EnumTemperature.byValue(worldIn.func_225523_d_().func_226836_a_(playerIn.getPosition()).getDefaultTemperature()).getDisplayString()));
+			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getUnformattedComponentText() + ": " + EnumTemperature.byValue(worldIn.getBiomeManager().getBiome(playerIn.getPosition()).getDefaultTemperature()).getDisplayString()));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

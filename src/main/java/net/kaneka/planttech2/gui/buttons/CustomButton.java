@@ -1,9 +1,6 @@
 package net.kaneka.planttech2.gui.buttons;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.gui.GuiUtils;

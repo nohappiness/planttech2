@@ -13,6 +13,7 @@ import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
 import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
 import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
+import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
@@ -45,7 +46,7 @@ public class MachineBaseBlock extends BaseBlock
 
 	public MachineBaseBlock(String name, ItemGroup group)
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).func_226896_b_(), name, group, true);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).notSolid(), name, group, true);
 	}
 
 	public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
@@ -119,6 +120,8 @@ public class MachineBaseBlock extends BaseBlock
 			return new ChipalyzerTileEntity();
 		else if (this == ModBlocks.PLANTTOPIA_TELEPORTER)
 			return new PlantTopiaTeleporterTileEntity();
+		else if (this == ModBlocks.MACHINEBULBREPROCESSOR)
+			return new MachineBulbReprocessorTileEntity();
 		else
 			return new IdentifierTileEntity();
 	}

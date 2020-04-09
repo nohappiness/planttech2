@@ -2,7 +2,6 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.PlantFarmContainer;
-import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.TierItem;
@@ -21,8 +20,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.common.extensions.IForgeBlock;
 
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
@@ -100,7 +97,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 
 	public PlantFarmTileEntity()
 	{
-		super(ModTileEntities.PLANTFARM_TE, 1000, 17, 5000);
+		super(ModTileEntities.PLANTFARM_TE, 1000, 18, 5000, PlantTechConstants.MACHINETIER_PLANTFARM);
 	}
 
 	@Override
@@ -140,6 +137,8 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
         	    					}
         	    				}
         	    				energystorage.extractEnergy(getEnergyPerAction(), false);
+        	    				progress[i] = 0; 
+        	    				addKnowledge();
     	    				}
 	    				}
 	    			}
@@ -191,12 +190,31 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				CompoundNBT nbt = stack.getTag();
 				if(nbt.contains("growspeed"))
 				{
-					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 8;
+					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
 				}
 				
 			}
 		}
-		return 90 *20 * 8; 
+		return 90 * 20 * 7; 
+	}
+	
+	public int getTicks()
+	{
+		ItemStack stack = itemhandler.getStackInSlot(0);
+		if(!stack.isEmpty())
+		{
+			Item item = stack.getItem(); 
+			if(item instanceof CropSeedItem)
+			{
+				CompoundNBT nbt = stack.getTag();
+				if(nbt.contains("growspeed"))
+				{
+					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
+				}
+				
+			}
+		}
+		return 90 * 20 * 7; 
 	}
 
 	private int getEnergyPerAction()
@@ -237,7 +255,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 
 	private int getRange()
 	{
-		ItemStack stack = itemhandler.getStackInSlot(13);
+		ItemStack stack = itemhandler.getStackInSlot(12);
 		if (!stack.isEmpty())
 		{
 			if (stack.getItem() instanceof TierItem)
@@ -245,11 +263,11 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				TierItem item = (TierItem) stack.getItem();
 				if (item.getItemType() == PlantTechConstants.RANGEUPGRADE_TYPE)
 				{
-					return item.getTier() + 1;
+					return item.getTier();
 				}
 			}
 		}
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -306,5 +324,17 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	public int getFluidOutSlot()
 	{
 		return 14;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 17;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

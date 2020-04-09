@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.block.FlowingFluidBlock;
+import net.kaneka.planttech2.blocks.CarverBlock;
 import net.kaneka.planttech2.blocks.CropBarsBlock;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.FacingGrowingBlock;
 import net.kaneka.planttech2.blocks.GlassPaneEnd;
 import net.kaneka.planttech2.blocks.GlassPanePillar;
+import net.kaneka.planttech2.blocks.GrowingBlock;
 import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomDoorBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
@@ -42,6 +44,7 @@ public class ModBlocks
 
 	public static BaseBlock 
 			CABLE = new CableBlock(), 
+			CARVER = new CarverBlock(), 
 			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
 			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
 			CROPBARS = new CropBarsBlock(),
@@ -56,8 +59,9 @@ public class ModBlocks
 	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kanekium_block", ModCreativeTabs.groupmain, true),
 	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kinnoium_block", ModCreativeTabs.groupmain, true),
 	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "lenthurium_block", ModCreativeTabs.groupmain, true),
-		    MACHINESHELL = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).func_226896_b_(), "machineshell", ModCreativeTabs.groupmain, true),  
-		    MACHINESHELL_INFUSED = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).func_226896_b_(), "machineshell_infused", ModCreativeTabs.groupmain, true),  
+	        MACHINEBULBREPROCESSOR = new MachineBaseBlock("machinebulbreprocessor", ModCreativeTabs.groupmachines),
+	        MACHINESHELL_IRON = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_iron", ModCreativeTabs.groupmain, true),  
+		    MACHINESHELL_PLANTIUM = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_plantium", ModCreativeTabs.groupmain, true),  
 	        MEGAFURNACE = new MachineFacingBlock("mega_furnace", ModCreativeTabs.groupmachines), 
 	        PLANTFARM = new MachineBaseBlock("plantfarm", ModCreativeTabs.groupmachines),
 	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "plantium_block", ModCreativeTabs.groupmain, true),
@@ -90,7 +94,23 @@ public class ModBlocks
 			WHITE_CRYSTAL_Stairs = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupmain, true),  
 			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupmain, true); 
 			
-	
+	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, false),
+							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),
+							MACHINESHELL_PLANTIUM_GROWING = new GrowingBlock("machineshell_plantium_growing", ModBlocks.MACHINESHELL_PLANTIUM, false),
+							SEEDSQUEEZER_GROWING = new FacingGrowingBlock("seedsqueezer_growing", ModBlocks.SEEDSQUEEZER, true), 
+                			CHIPALYZER_GROWING = new FacingGrowingBlock("chipalyzer_growing", ModBlocks.CHIPALYZER, true),
+                			COMPRESSOR_GROWING = new FacingGrowingBlock("compressor_growing", ModBlocks.COMPRESSOR, true), 
+                	        DNA_CLEANER_GROWING = new FacingGrowingBlock("dna_cleaner_growing", ModBlocks.DNA_CLEANER, true), 
+                	        DNA_COMBINER_GROWING = new FacingGrowingBlock("dna_combiner_growing", ModBlocks.DNA_COMBINER, true),
+                	        DNA_EXTRACTOR_GROWING = new FacingGrowingBlock("dna_extractor_growing", ModBlocks.DNA_EXTRACTOR, true), 
+                	        DNA_REMOVER_GROWING = new FacingGrowingBlock("dna_remover_growing", ModBlocks.DNA_REMOVER, true),
+                	        IDENTIFIER_GROWING = new FacingGrowingBlock("identifier_growing", ModBlocks.IDENTIFIER, true),
+                	        INFUSER_GROWING = new FacingGrowingBlock("infuser_growing", ModBlocks.INFUSER, true),
+                	        MEGAFURNACE_GROWING = new FacingGrowingBlock("mega_furnace_growing", ModBlocks.MEGAFURNACE, true), 
+                	        PLANTFARM_GROWING = new GrowingBlock("plantfarm_growing", ModBlocks.PLANTFARM, true),
+                	        SEEDCONSTRUCTOR_GROWING = new FacingGrowingBlock("seedconstructor_growing", ModBlocks.SEEDSQUEEZER, true),
+                	        SOLARGENERATOR_GROWING = new GrowingBlock("solargenerator_growing", ModBlocks.SOLARGENERATOR, true);
+	        
 	
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 

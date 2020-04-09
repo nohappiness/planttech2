@@ -23,7 +23,7 @@ public class BaseContainer extends Container
 		{
 			for (int x = 0; x < 9; x++)
 			{
-				addSlot(new Slot(player, x + y * 9 + 9, 24 + x * 18, 107 + y * 18));
+				addSlot(new Slot(player, x + y * 9 + 9, 23 + x * 18, 106 + y * 18));
 			}
 		}
 

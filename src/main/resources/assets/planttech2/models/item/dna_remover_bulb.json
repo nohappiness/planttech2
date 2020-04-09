@@ -1,0 +1,7 @@
+{
+ "parent": "item/generated",
+ "textures": {
+      "layer0": "planttech2:items/machinebulbs/machinebulb_layer_1", 
+      "layer1": "planttech2:items/machinebulbs/machinebulb_layer_2_dna_remover"
+  }
+}

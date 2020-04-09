@@ -1,0 +1,13 @@
+{
+	 "parent": "planttech2:block/basic/carver_block_base",
+    "textures": 
+    {
+        "diagonal_1": "planttech2:blocks/machine/carver_base_2",
+        "diagonal_2": "planttech2:blocks/machine/carver_base_2_mirror",
+        "ew_1": "planttech2:blocks/machine/carver_one_mirror", 
+        "ew_2": "planttech2:blocks/machine/carver_one", 
+        "ns_1": "planttech2:blocks/machine/carver_both", 
+        "ns_2": "planttech2:blocks/machine/carver_both_mirror", 
+        "particles": "planttech2:blocks/machine/carver_base"
+    }
+}

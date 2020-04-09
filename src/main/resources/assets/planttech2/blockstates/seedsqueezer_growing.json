@@ -1,0 +1,32 @@
+{
+    "variants": {
+        "facing=north,growingstate=0": { "model": "planttech2:block/machine/machine_iron_growing_0" },
+        "facing=north,growingstate=1": { "model": "planttech2:block/machine/machine_iron_growing_1" },
+        "facing=north,growingstate=2": { "model": "planttech2:block/machine/machine_iron_growing_2" },
+        "facing=north,growingstate=3": { "model": "planttech2:block/machine/machine_iron_growing_3" },
+        "facing=north,growingstate=4": { "model": "planttech2:block/machine/machine_iron_growing_4" },
+        "facing=north,growingstate=5": { "model": "planttech2:block/machine/machine_iron_growing_5" },
+        "facing=north,growingstate=6": { "model": "planttech2:block/machine/machine_iron_growing_6" },
+        "facing=east,growingstate=0": { "model": "planttech2:block/machine/machine_iron_growing_0" },
+        "facing=east,growingstate=1": { "model": "planttech2:block/machine/machine_iron_growing_1" },
+        "facing=east,growingstate=2": { "model": "planttech2:block/machine/machine_iron_growing_2" },
+        "facing=east,growingstate=3": { "model": "planttech2:block/machine/machine_iron_growing_3" },
+        "facing=east,growingstate=4": { "model": "planttech2:block/machine/machine_iron_growing_4" },
+        "facing=east,growingstate=5": { "model": "planttech2:block/machine/machine_iron_growing_5" },
+        "facing=east,growingstate=6": { "model": "planttech2:block/machine/machine_iron_growing_6" },
+        "facing=south,growingstate=0": { "model": "planttech2:block/machine/machine_iron_growing_0" },
+        "facing=south,growingstate=1": { "model": "planttech2:block/machine/machine_iron_growing_1" },
+        "facing=south,growingstate=2": { "model": "planttech2:block/machine/machine_iron_growing_2" },
+        "facing=south,growingstate=3": { "model": "planttech2:block/machine/machine_iron_growing_3" },
+        "facing=south,growingstate=4": { "model": "planttech2:block/machine/machine_iron_growing_4" },
+        "facing=south,growingstate=5": { "model": "planttech2:block/machine/machine_iron_growing_5" },
+        "facing=south,growingstate=6": { "model": "planttech2:block/machine/machine_iron_growing_6" },
+        "facing=west,growingstate=0": { "model": "planttech2:block/machine/machine_iron_growing_0" },
+        "facing=west,growingstate=1": { "model": "planttech2:block/machine/machine_iron_growing_1" },
+        "facing=west,growingstate=2": { "model": "planttech2:block/machine/machine_iron_growing_2" },
+        "facing=west,growingstate=3": { "model": "planttech2:block/machine/machine_iron_growing_3" },
+        "facing=west,growingstate=4": { "model": "planttech2:block/machine/machine_iron_growing_4" },
+        "facing=west,growingstate=5": { "model": "planttech2:block/machine/machine_iron_growing_5" },
+        "facing=west,growingstate=6": { "model": "planttech2:block/machine/machine_iron_growing_6" }
+    }
+}

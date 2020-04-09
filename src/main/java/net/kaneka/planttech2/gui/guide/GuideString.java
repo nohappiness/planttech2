@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.gui.guide;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.TextFormatting;
 
 public class GuideString
 {

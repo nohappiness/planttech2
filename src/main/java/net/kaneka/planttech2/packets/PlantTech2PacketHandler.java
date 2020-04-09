@@ -17,7 +17,7 @@ public class PlantTech2PacketHandler
 	public static final void register()
 	{
 		int i = 0;
-		INSTANCE.registerMessage(i++, CompressorButtonPressMessage.class, CompressorButtonPressMessage::encode, CompressorButtonPressMessage::decode, CompressorButtonPressMessage.ButtonPressMessageHandler::handle);
+		INSTANCE.registerMessage(i++, ButtonPressMessage.class, ButtonPressMessage::encode, ButtonPressMessage::decode, ButtonPressMessage.ButtonPressMessageHandler::handle);
 		INSTANCE.registerMessage(i++, CropConfigChangeMessage.class, CropConfigChangeMessage::encode, CropConfigChangeMessage::decode, CropConfigChangeMessage.CropConfigChangeHandler::handle);
 		INSTANCE.registerMessage(i++, TeleporterBlockButtonPressMessage.class, TeleporterBlockButtonPressMessage::encode, TeleporterBlockButtonPressMessage::decode, TeleporterBlockButtonPressMessage.ButtonPressMessageHandler::handle);
 		INSTANCE.registerMessage(i++, DoTechVillagerTradeMessage.class, DoTechVillagerTradeMessage::encode, DoTechVillagerTradeMessage::decode, DoTechVillagerTradeMessage.DoTechVillagerTradeHandler::handle);

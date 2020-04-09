@@ -1,10 +1,8 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.CompressorContainer;
-import net.kaneka.planttech2.packets.CompressorButtonPressMessage;
+import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,7 +28,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	    {
     		if(inArea(mouseX, mouseY, 35 + x * 18, 26 + y * 18))
     		{ 
-    		    PlantTech2PacketHandler.sendToServer(new CompressorButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 6));
+    		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 6));
     		}
 	    }
 	}
@@ -44,10 +42,10 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
 	int l = this.getCookProgressScaled(68);
-	blit(this.guiLeft + 55, this.guiTop + 84, 0, 202, l, 12);
+	blit(this.guiLeft + 55, this.guiTop + 83, 0, 202, l, 12);
 
 	int k = this.getEnergyStoredScaled(55);
-	blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+	blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	
 	int i = container.getValue(3);
 	if(i >= 0)

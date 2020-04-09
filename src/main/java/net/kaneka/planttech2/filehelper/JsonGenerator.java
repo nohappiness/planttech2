@@ -11,12 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
-import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 
 public class JsonGenerator
 {
@@ -235,6 +230,7 @@ public class JsonGenerator
 	}
 	*/
 	
+	@SuppressWarnings("unused")
 	private void createItemModelFile(Item output, String file)
 	{
 		createFile("itemmodel", output.getRegistryName().getPath(), new HashMap<String, String>()

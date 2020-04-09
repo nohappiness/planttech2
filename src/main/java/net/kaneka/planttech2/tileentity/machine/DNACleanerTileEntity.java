@@ -51,7 +51,7 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 
     public DNACleanerTileEntity()
     {
-	super(ModTileEntities.DNACLEANER_TE,1000, 5);
+	super(ModTileEntities.DNACLEANER_TE,1000, 6, PlantTechConstants.MACHINETIER_DNA_CLEANER);
     }
 
     @Override
@@ -78,6 +78,7 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 			    energystorage.extractEnergy(energyPerTick(), false);
 			    stack1.shrink(1);
 			    ticksPassed = 0;
+			    addKnowledge();
 			}
 			else if (stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
 			{
@@ -85,6 +86,7 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 			    energystorage.extractEnergy(energyPerTick(), false);
 			    stack1.shrink(1);
 			    ticksPassed = 0;
+			    addKnowledge();
 			}
 		    }
 		}
@@ -146,5 +148,17 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 4;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

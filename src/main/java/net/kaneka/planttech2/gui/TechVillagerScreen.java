@@ -3,7 +3,6 @@ package net.kaneka.planttech2.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;

@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "planttech2:block/machineshell/machineshell_plantium"}
+    }
+}

@@ -67,7 +67,7 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 
 	public PlantTopiaTeleporterTileEntity()
 	{
-		super(ModTileEntities.PLANTTOPIATELEPORTER_TE, 10000, 2);
+		super(ModTileEntities.PLANTTOPIATELEPORTER_TE, 10000, 3, 0);
 	}
 
 	@Override
@@ -127,5 +127,17 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 	public void doTeleportation()
 	{
 		energystorage.extractEnergy(getEnergyPerTeleportation()); 
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 0;
 	}
 }

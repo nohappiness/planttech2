@@ -21,11 +21,12 @@ public class DNACleanerContainer extends BaseContainer
 	super(id, ModContainers.DNACLEANER, player, tileentity, 5);
 	IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
-	this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 42, 48, "slot.dnacleaner.input"));
-	this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 96, 48, "slot.util.output"));
-	this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 69, 70, "slot.util.speedupgrade"));
-	this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-	this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.dnacleaner.input"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 95, 47, "slot.util.output"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 68, 69, "slot.util.speedupgrade"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+	this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
     }
 
     @Override

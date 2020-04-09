@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.kaneka.planttech2.energy.IItemChargeable;
+import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -22,12 +23,14 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 {
 	protected ItemStackHandler itemhandler;
 	protected LazyOptional<IItemHandler> inventoryCap;
+	protected int tier; 
 
-	public EnergyInventoryTileEntity(TileEntityType<?> type, int energyStorage, int invSize)
+	public EnergyInventoryTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int tier)
 	{
 		super(type, energyStorage);
 		itemhandler = new ItemStackHandler(invSize);
 		inventoryCap = LazyOptional.of(() -> itemhandler);
+		this.tier = tier;
 	}
 
 	/**
@@ -137,4 +140,28 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	protected abstract int getEnergyInSlot();
 
 	protected abstract int getEnergyOutSlot();
+	
+
+	
+	protected ItemStack getKnowledgeChip()
+	{
+		return itemhandler.getStackInSlot(getKnowledgeChipSlot()); 
+	}
+	
+	protected void addKnowledge()
+	{
+		ItemStack chip = getKnowledgeChip(); 
+		ItemStack newChip = KnowledgeChip.addKnowledge(chip, getKnowledgePerAction(), tier); 
+		if(!chip.isEmpty() && !newChip.isEmpty())
+		{
+			if(!chip.getItem().equals(newChip.getItem()))
+			{
+				itemhandler.setStackInSlot(getKnowledgeChipSlot(), newChip);
+			}
+		}
+	}
+	
+	public abstract int getKnowledgeChipSlot();
+	
+	public abstract int getKnowledgePerAction();
 }

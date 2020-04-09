@@ -94,7 +94,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 
 	public InfuserTileEntity()
 	{
-		super(ModTileEntities.INFUSER_TE, 1000, 7, 5000);
+		super(ModTileEntities.INFUSER_TE, 1000, 8, 5000, PlantTechConstants.MACHINETIER_INFUSER);
 		inputs = new RangedWrapper(itemhandler, 0,1); 
 		outputs = new RangedWrapper(itemhandler, 1, 2); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -151,6 +151,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 									stack1.shrink(1);
 									fluidInfused = 0;
 									fluidtank.extract(fluidTotal - fluidInfused);
+									addKnowledge();
 								} else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
 								{
 									stack2.grow(1);
@@ -158,6 +159,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 									stack1.shrink(1);
 									fluidInfused = 0;
 									fluidtank.extract(fluidTotal - fluidInfused);
+									addKnowledge();
 								}
 							}
 						}
@@ -248,5 +250,17 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 6;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 7;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 150;
 	}
 }

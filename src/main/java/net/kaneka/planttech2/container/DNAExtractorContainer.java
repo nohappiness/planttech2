@@ -22,12 +22,13 @@ public class DNAExtractorContainer extends BaseContainer
 		super(id, ModContainers.DNAEXTRACTOR, player, tileentity, 6);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 37, "slot.dnaextractor.seeds"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 111, 37, "slot.dnaextractor.empty_container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 111, 79, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 74, 60, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 58, 40, "slot.dnaextractor.seeds"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 130, 40, "slot.dnaextractor.empty_container"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 130, 67, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 94, 66, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 		
 	}
 	

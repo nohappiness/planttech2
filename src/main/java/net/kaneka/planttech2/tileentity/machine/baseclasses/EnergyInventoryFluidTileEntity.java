@@ -11,9 +11,9 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
     
     protected TempFluidTank fluidtank; 
 
-    public EnergyInventoryFluidTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int fluidtanksize)
+    public EnergyInventoryFluidTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int fluidtanksize, int tier)
     {
-	super(type, energyStorage, invSize);
+	super(type, energyStorage, invSize, tier);
 	fluidtank = new TempFluidTank(fluidtanksize);
     }
     

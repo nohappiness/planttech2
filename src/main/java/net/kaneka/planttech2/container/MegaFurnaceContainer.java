@@ -29,12 +29,13 @@ public class MegaFurnaceContainer extends BaseContainer
 			}
 			for(int x = 0; x < 6; x++)
 			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 6, 26 + x * 22 , 26 + y * 37, usage));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 6, 21 + x * 22 , 27 + y * 37, usage));
 			}
 		}
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 113, 85, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 109, 85, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 	}
 	
 	@Override

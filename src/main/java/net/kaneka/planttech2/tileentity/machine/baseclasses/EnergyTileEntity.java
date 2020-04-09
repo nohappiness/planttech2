@@ -105,6 +105,5 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	{
 		return new TranslationTextComponent("container." + getNameString());
 	}
-	
 	 
 }

@@ -80,7 +80,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedSqueezerTileEntity()
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 15, 5000);
+		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, 5000, PlantTechConstants.MACHINETIER_SEEDSQUEEZER);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		inputs_provider = LazyOptional.of(() -> inputs);
 	}
@@ -124,6 +124,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					if (ticksPassed >= this.getTicksPerItem())
 					{
 						squeezeItem();
+						addKnowledge();
 						fluidtank.receive(10);
 						ticksPassed = 0;
 					}
@@ -246,6 +247,18 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 14;
+	}
+	
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 15;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 2;
 	}
 
 }

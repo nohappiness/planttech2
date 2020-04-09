@@ -1,26 +1,5 @@
 package net.kaneka.planttech2.fluids;
 
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModFluids;
-import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.Item;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraftforge.fluids.FluidAttributes;
-
 public abstract class BiomassFluid //extends FlowingFluid
 {
 	/*

@@ -26,7 +26,7 @@ public class IdentifierContainer extends BaseContainer
 		{
 			for(int y = 0; y < 3; y++)
 			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 24 + x * 18, 26 + y * 18, "slot.identifier.input"));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 19 + x * 18, 27 + y * 18, "slot.identifier.input"));
 			}
 		}
 		
@@ -34,12 +34,13 @@ public class IdentifierContainer extends BaseContainer
 		{
 			for(int y = 0; y < 3; y++)
 			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3 + 9, 100 + x * 18, 26 + y * 18, "slot.util.output"));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3 + 9, 95 + x * 18, 27 + y * 18, "slot.util.output"));
 			}
 		}
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 18, 80, 84, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 18, 75, 85, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 		
 	}
 	

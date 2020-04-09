@@ -63,7 +63,7 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 
 	public DNARemoverTileEntity()
 	{
-		super(ModTileEntities.DNAREMOVER_TE, 1000, 5);
+		super(ModTileEntities.DNAREMOVER_TE, 1000, 6, PlantTechConstants.MACHINETIER_DNA_REMOVER);
 	}
 
 	@Override
@@ -95,6 +95,7 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 							stack1.shrink(1);
 							energystorage.extractEnergy(energyPerTick(), false);
 							ticksPassed = 0;
+							addKnowledge();
 						}
 					}
 				}
@@ -171,5 +172,17 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 4;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 }

@@ -2,7 +2,6 @@ package net.kaneka.planttech2.packets;
 
 import java.util.function.Supplier;
 
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

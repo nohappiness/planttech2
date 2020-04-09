@@ -71,7 +71,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 
 	public IdentifierTileEntity()
 	{
-		super(ModTileEntities.IDENTIFIER_TE, 10000, 21);
+		super(ModTileEntities.IDENTIFIER_TE, 10000, 22, PlantTechConstants.MACHINETIER_IDENTIFIER);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		outputs = new RangedWrapper(itemhandler, 9, 18); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -183,6 +183,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 								stack.setTag(nbt);
 								this.itemhandler.setStackInSlot(this.getFreeOutputSlot(), stack);
 								this.itemhandler.setStackInSlot(i, ItemStack.EMPTY);
+								addKnowledge();
 								break;
 							}
 						}
@@ -200,6 +201,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				    		newtraits.addToItemStack(stack);
 				    		this.itemhandler.setStackInSlot(this.getFreeOutputSlot(), result);
 							this.itemhandler.setStackInSlot(i, ItemStack.EMPTY);
+							addKnowledge();
 				    	}
 					}
 				}
@@ -280,5 +282,17 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 20;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 21;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 5;
 	}
 }

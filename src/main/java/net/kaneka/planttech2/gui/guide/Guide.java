@@ -59,4 +59,29 @@ public class Guide
 	{
 		return amountMainMenus; 
 	}
+	
+	public int getMenuByName(String name)
+	{
+		for(GuideMenu menu: mainmenus)
+		{
+			if(menu.getNameString().equals(name))
+			{
+				return mainmenus.indexOf(menu);
+			}
+		}
+		return 0;
+	}
+	
+	public int getEntryByName(int mainmenuid, String name)
+	{
+		GuideMenu menu = mainmenus.get(mainmenuid);
+		for(GuideEntry entry: menu.getSubmenus())
+		{
+			if(entry.getNameString().equals(name))
+			{
+				return menu.getSubmenus().indexOf(entry);
+			}
+		}
+		return 0;
+	}
 }

@@ -42,6 +42,15 @@ public class GuideScreen extends Screen
 		super(new TranslationTextComponent("planttech2.guide"));
 	}
 	
+	//When directly open a entry
+	public GuideScreen(int menuid, int entryid)
+	{
+		this(); 
+		this.mode = 2; 
+		this.menuid = menuid; 
+		this.entryid = entryid;
+	}
+	
 	@Override
 	public void init()
 	{
@@ -102,7 +111,6 @@ public class GuideScreen extends Screen
 			else if(buttonid == 2)
 			{
 				page++; 
-				System.out.println(page); 
 			}
 		}
 		else
@@ -133,6 +141,7 @@ public class GuideScreen extends Screen
 		button.visible = false; 
 	}
 	
+	@SuppressWarnings("unused")
 	private void activateButtonList(List<Widget> list)
 	{
 		for(Widget button: list)
@@ -160,7 +169,7 @@ public class GuideScreen extends Screen
     			if(i < guide.getAmountMainMenus())
     			{ 
     				activateButton(button);
-    				button.setMessage(guide.getMenuById(i).getName());
+    				button.setMessage(guide.getMenuById(i).getNameString());
     			}
     		}
 		}
@@ -250,7 +259,7 @@ public class GuideScreen extends Screen
 		}
 		else if(mode == 1)
 		{
-			this.drawCenteredString(guide.getMenuById(menuid).getName(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
+			this.drawCenteredString(guide.getMenuById(menuid).getNameString(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
 		}
 		else if(mode == 2)
 		{	
@@ -291,8 +300,7 @@ public class GuideScreen extends Screen
 	protected void loadEntry()
 	{
 		GuideEntry entry = guide.getMenuById(menuid).getEntryById(entryid); 
-		pics = entry.getPictures();
-		int charsPerLine = 76; 
+		pics = entry.getPictures(); 
 		lines = entry.getTextFormated(font); 
 		/*
 		String[] array = entry.getText().split("<br>");

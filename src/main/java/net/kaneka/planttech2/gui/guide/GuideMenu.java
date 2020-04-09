@@ -18,7 +18,7 @@ public class GuideMenu
 		return entrys.size();
 	}
 	
-	public String getName()
+	public String getNameString()
 	{
 		return name; 
 	}

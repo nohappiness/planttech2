@@ -27,16 +27,17 @@ public class SeedSqueezerContainer extends BaseContainer
 		{
 			for(int x = 0; x < 3; x++)
 			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 51 + x * 18, 29 + y * 18, "slot.seedsqueezer.input"));
+				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 59 + x * 18, 28 + y * 18, "slot.seedsqueezer.input"));
 			}
 		}
 		
-		this.addSlot(new NoAccessSlot(handler, 9, 108, 47, "slot.seedsqueezer.squeeze"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 10, 133, 47, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 18, 86, "slot.util.fluidin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 36, 86, "slot.util.fluidout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new NoAccessSlot(handler, 9, 122, 46, "slot.seedsqueezer.squeeze"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 10, 97, 85, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 23, 38, "slot.util.fluidin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 23, 57, "slot.util.fluidout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 		
 	}
 	

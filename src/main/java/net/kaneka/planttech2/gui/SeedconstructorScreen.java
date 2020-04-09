@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.SeedconstructorContainer;
 import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
@@ -29,10 +27,10 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 		blit(this.guiLeft + 98, this.guiTop + 50, 0, 202, 12, l);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 		
 		int j = this.getFluidStoredScaled(55);
-		blit(this.guiLeft + 27, this.guiTop + 28 + (55-j), 221, 0, 16, 0 + j);
+		blit(this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
 	}
 	
 	private int getCookProgressScaled(int pixels)
@@ -44,7 +42,7 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	@Override
 	protected void drawTooltips(int mouseX, int mouseY)
 	{
-	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 27, 28, 16, 55);
+	    drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 
 	    super.drawTooltips(mouseX,mouseY);
 	}

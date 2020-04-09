@@ -22,12 +22,13 @@ public class ChipalyzerContainer extends BaseContainer
 		super(id, ModContainers.CHIPALYZER, player, tileentity, 5);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 42, 48, "slot.chipalyzer.chipinput"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 69, 28, "slot.chipalyzer.iteminput"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 96, 48, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 69, 70, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.chipalyzer.chipinput"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 68, 27, "slot.chipalyzer.iteminput"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 95, 47, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 68, 69, "slot.util.speedupgrade"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
 	}
 	
 	

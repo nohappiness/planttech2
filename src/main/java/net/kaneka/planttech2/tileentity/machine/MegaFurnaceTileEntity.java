@@ -104,7 +104,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 
 	public MegaFurnaceTileEntity()
 	{
-		super(ModTileEntities.MEGAFURNACE_TE, 10000, 15);
+		super(ModTileEntities.MEGAFURNACE_TE, 10000, 16, PlantTechConstants.MACHINETIER_MEGAFURNACE);
 		inputs = new RangedWrapper(itemhandler, 0,6); 
 		outputs = new RangedWrapper(itemhandler, 6, 12); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -141,6 +141,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 					{
 						this.smeltItem(i);
 						ticksPassed[i] = 0;
+						addKnowledge();
 					}
 				} else if (ticksPassed[i] > 0)
 				{
@@ -288,6 +289,18 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 14;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 15;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
 	}
 
 }

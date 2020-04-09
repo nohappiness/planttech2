@@ -18,6 +18,7 @@ import net.kaneka.planttech2.gui.SolarGeneratorScreen;
 import net.kaneka.planttech2.gui.TechVillagerScreen;
 import net.kaneka.planttech2.gui.TeleporterScreen;
 import net.kaneka.planttech2.gui.ItemUpgradeableScreen;
+import net.kaneka.planttech2.gui.MachineBulbReprocessorScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,6 +43,7 @@ public class ModScreens
 		ScreenManager.registerFactory(ModContainers.SEEDQUEEZER, SeedSqueezerScreen::new);
 		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
 		ScreenManager.registerFactory(ModContainers.CHIPALYZER, ChipalyzerScreen::new);
+		ScreenManager.registerFactory(ModContainers.MACHINEBULBREPROCESSOR, MachineBulbReprocessorScreen::new);
 		ScreenManager.registerFactory(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
 		ScreenManager.registerFactory(ModContainers.PLANTTOPIATELEPORTER, PlantTopiaTeleporterScreen::new);
 		ScreenManager.registerFactory(ModContainers.TECHVILLAGER, TechVillagerScreen::new);

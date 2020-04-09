@@ -27,6 +27,11 @@ public class GuideEntry
 		return this; 
 	}
 	
+	public String getNameString()
+	{
+		return name; 
+	}
+	
 	public String getName()
 	{
 		return new TranslationTextComponent("guide.planttech2." + name + ".header").getUnformattedComponentText(); 

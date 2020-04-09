@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.DNACombinerContainer;
 import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
@@ -29,7 +27,7 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 		blit(this.guiLeft + 98, this.guiTop + 38, 0, 202, 20, l);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 	
 	private int getCookProgressScaled(int pixels)

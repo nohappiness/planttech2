@@ -109,7 +109,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 
 	public CompressorTileEntity()
 	{
-		super(ModTileEntities.COMPRESSOR_TE, 1000, 25);
+		super(ModTileEntities.COMPRESSOR_TE, 1000, 26, PlantTechConstants.MACHINETIER_COMPRESSOR);
 		inputs = new RangedWrapper(itemhandler, 0,1); 
 		outputs = new RangedWrapper(itemhandler, 1,2); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -169,6 +169,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 										energystorage.extractEnergy(energyPerTick(), false);
 										stack1.shrink(neededInput);
 										ticksPassed = 0;
+										addKnowledge();
 									}
 								}
 							}
@@ -213,6 +214,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 
 	}
 
+	@SuppressWarnings("resource")
 	public void initRecipeList()
 	{
 		// reset old values
@@ -250,7 +252,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			}
 			else
 			{
-				for (IRecipe<?> recipe :Minecraft.getInstance().world.getRecipeManager().getRecipes()) 
+				for (IRecipe<?> recipe : Minecraft.getInstance().world.getRecipeManager().getRecipes()) 
        		 {
        			 if(recipe.getType()  == ModRecipeTypes.COMPRESSING) 
        			 {
@@ -341,6 +343,18 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	public int getEnergyOutSlot()
 	{
 		return 24;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 25;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 2;
 	}
 
 }

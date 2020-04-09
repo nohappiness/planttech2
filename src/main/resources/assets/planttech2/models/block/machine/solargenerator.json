@@ -1,46 +1,26 @@
 {
-	"credit": "Made with Blockbench",
-	"parent": "block/block",
-	"textures": {
-		"1": "planttech2:blocks/machines/solargenerator_top",
-		"2": "planttech2:blocks/machines/machines_side_top"
-	},
-	"elements": [
-		{
-			"from": [0, 0, 0],
-			"to": [16, 14, 16],
-			"faces": {
-				"north": {"uv": [0, 0.5, 16, 16], "texture": "#2"},
-				"east": {"uv": [0, 0.5, 16, 16], "texture": "#2"},
-				"south": {"uv": [0, 0.5, 16, 16], "texture": "#2"},
-				"west": {"uv": [0, 0.5, 16, 16], "texture": "#2"},
-				"up": {"uv": [16, 16, 0, 0], "texture": "#2"},
-				"down": {"uv": [16, 0, 0, 16], "texture": "#2"}
-			}
-		},
-		{
-			"from": [3, 14, 3],
-			"to": [13, 16, 13],
-			"faces": {
-				"north": {"uv": [14.5, 0, 15.75, 0.75], "texture": "#2"},
-				"east": {"uv": [14, 0, 15.75, 0.75], "texture": "#2"},
-				"south": {"uv": [14, 0, 15.75, 0.75], "texture": "#2"},
-				"west": {"uv": [14, 0, 15.75, 0.75], "texture": "#2"},
-				"up": {"uv": [10.5, 5, 9.25, 3.75], "texture": "#2"},
-				"down": {"uv": [11.75, 3.75, 10.5, 5], "texture": "#2"}
-			}
-		},
-		{
-			"from": [0, 16, 0],
-			"to": [16, 17, 16],
-			"faces": {
-				"north": {"uv": [0, 15.5, 16, 16], "texture": "#1"},
-				"east": {"uv": [0, 15.5, 16, 16], "texture": "#1"},
-				"south": {"uv": [0, 15.5, 16, 16], "texture": "#1"},
-				"west": {"uv": [0, 15.5, 16, 16], "texture": "#1"},
-				"up": {"uv": [16, 16, 0, 0.25], "texture": "#1"},
-				"down": {"uv": [0, 0, 1, 1], "texture": "#1"}
-			}
-		}
-	]
+	"parent": "planttech2:block/basic/three_layered_six_sided_nubs", 
+	"textures": 
+	{
+        "particle": "planttech2:blocks/plantium_block",
+        "down_0": "planttech2:blocks/plantium_block",
+        "up_0": "planttech2:blocks/plantium_block",
+        "north_0": "planttech2:blocks/plantium_block",
+        "south_0": "planttech2:blocks/plantium_block",
+        "west_0": "planttech2:blocks/plantium_block",
+        "east_0": "planttech2:blocks/plantium_block",
+        "down_1": "planttech2:blocks/machine/top_down",
+        "up_1": "planttech2:blocks/machine/solargenerator_top",
+        "north_1": "planttech2:blocks/machine/side_6",
+        "south_1": "planttech2:blocks/machine/side_6",
+        "west_1": "planttech2:blocks/machine/side_6",
+        "east_1": "planttech2:blocks/machine/side_6",
+        "down_2": "planttech2:blocks/machine/growoverlay_top_down",
+        "up_2": "planttech2:blocks/machine/growoverlay_top_down",
+        "north_2": "planttech2:blocks/machine/growoverlay_back_7",
+        "south_2": "planttech2:blocks/machine/growoverlay_back_7",
+        "west_2": "planttech2:blocks/machine/growoverlay_right_7",
+        "east_2": "planttech2:blocks/machine/growoverlay_left_7",
+        "nubs": "planttech2:blocks/machine/nubs"
+    }
 }

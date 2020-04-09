@@ -10,6 +10,7 @@ import net.kaneka.planttech2.container.EnergyStorageContainer;
 import net.kaneka.planttech2.container.IdentifierContainer;
 import net.kaneka.planttech2.container.InfuserContainer;
 import net.kaneka.planttech2.container.ItemUpgradeableContainer;
+import net.kaneka.planttech2.container.MachineBulbReprocessorContainer;
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.container.PlantFarmContainer;
 import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
@@ -39,6 +40,7 @@ public class ModContainers
 	public static final ContainerType<SeedSqueezerContainer> SEEDQUEEZER = new ContainerType<SeedSqueezerContainer>(SeedSqueezerContainer::new);
 	public static final ContainerType<SolarGeneratorContainer> SOLARGENERATOR = new ContainerType<SolarGeneratorContainer>(SolarGeneratorContainer::new);
 	public static final ContainerType<ChipalyzerContainer> CHIPALYZER = new ContainerType<ChipalyzerContainer>(ChipalyzerContainer::new);
+	public static final ContainerType<MachineBulbReprocessorContainer> MACHINEBULBREPROCESSOR = new ContainerType<MachineBulbReprocessorContainer>(MachineBulbReprocessorContainer::new);
 	public static final ContainerType<PlantTopiaTeleporterContainer> PLANTTOPIATELEPORTER = new ContainerType<PlantTopiaTeleporterContainer>(PlantTopiaTeleporterContainer::new);
 	public static final ContainerType<TeleporterContainer> TELEPORTERITEM = new ContainerType<TeleporterContainer>(TeleporterContainer::new);
 	public static ContainerType<TechVillagerContainer> TECHVILLAGER = new ContainerType<TechVillagerContainer>((IContainerFactory<TechVillagerContainer>) TechVillagerContainer::new);
@@ -61,6 +63,7 @@ public class ModContainers
 										TECHVILLAGER.setRegistryName(ModReferences.TECHVILLAGERCONTAINER),
 										SOLARGENERATOR.setRegistryName(ModReferences.SOLARGENERATORCONTAINER), 
 										CHIPALYZER.setRegistryName(ModReferences.CHIPALYZERCONTAINER), 
+										MACHINEBULBREPROCESSOR.setRegistryName(ModReferences.MACHINEBULBREPROCESSORCONTAINER), 
 										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER), 
 										PLANTTOPIATELEPORTER.setRegistryName(ModReferences.TELEPORTERBLOCKCONTAINER));
 	}
