@@ -4,22 +4,7 @@ import java.util.List;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNAExtractorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
-import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
-import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
-import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.*;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.minecraft.block.Block;
@@ -122,6 +107,8 @@ public class MachineBaseBlock extends BaseBlock
 			return new PlantTopiaTeleporterTileEntity();
 		else if (this == ModBlocks.MACHINEBULBREPROCESSOR)
 			return new MachineBulbReprocessorTileEntity();
+		else if (this == ModBlocks.ENERGY_SUPPLIER)
+			return new EnergySupplierTileEntity();
 		else
 			return new IdentifierTileEntity();
 	}

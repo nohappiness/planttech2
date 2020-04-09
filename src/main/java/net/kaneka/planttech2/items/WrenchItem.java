@@ -2,6 +2,7 @@ package net.kaneka.planttech2.items;
 
 import java.util.List;
 
+import net.kaneka.planttech2.blocks.ElectricFence;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -25,36 +26,47 @@ public class WrenchItem extends BaseItem
 	{
 		super("wrench", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
 	}
-	
-	
+
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
-		World world = ctx.getWorld(); 
-	    BlockPos pos = ctx.getPos(); 
-	    PlayerEntity player = ctx.getPlayer();
+		World world = ctx.getWorld();
+		BlockPos pos = ctx.getPos();
+		PlayerEntity player = ctx.getPlayer();
 		if (!world.isRemote)
 		{
-			BlockState target = world.getBlockState(pos); 
+			BlockState target = world.getBlockState(pos);
 			ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
-			if (!stack.isEmpty() && target.getBlock() instanceof MachineBaseBlock)
+
+			if (stack.getItem() instanceof WrenchItem && player.isCrouching())
 			{
-				if (stack.getItem() instanceof WrenchItem && player.isCrouching())
+				Block block = target.getBlock();
+				if (block instanceof MachineBaseBlock)
 				{
 					world.removeBlock(pos, false);
 					Block.spawnAsEntity(world, pos, new ItemStack(target.getBlock()));
+					return ActionResultType.SUCCESS;
+				} 
+				else if (block instanceof ElectricFence)
+				{
+					world.removeBlock(pos, false);
+					if (!player.addItemStackToInventory(new ItemStack(block)))
+					{
+						Block.spawnAsEntity(world, player.getPosition(), new ItemStack(block));
+					}
 					return ActionResultType.SUCCESS;
 				}
 			}
 		}
 		return super.onItemUse(ctx);
+
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent("rightclick on cable connections to rotate")); 
-		tooltip.add(new StringTextComponent("shift-rightclick on pt2 machines to dismantle")); 
+		tooltip.add(new StringTextComponent("rightclick on cable connections to rotate"));
+		tooltip.add(new StringTextComponent("shift-rightclick on pt2 machines to dismantle"));
 	}
-	
+
 }

@@ -35,9 +35,8 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 			case 3:l = 25; break; 
 			case 4:l = 35; break; 
 		}
-		
-		int j = getWorkLoadScaled(17); 
-		blit(this.guiLeft + 136, this.guiTop + 45, 205, 75, j, l);
+		int j = getWorkLoadScaled(17);
+		blit(this.guiLeft + 133, this.guiTop + 36, 205, 56, j, l);
 	}
 	
 	private int getWorkLoadScaled(int pixels)

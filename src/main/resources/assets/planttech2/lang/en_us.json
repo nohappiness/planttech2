@@ -36,6 +36,7 @@
     "container.chipalyzer": "Chipalyzer",
     "container.planttopia_teleporter": "PlantTopia Teleporter", 
     "container.machinebulbreprocessor": "Machinebulb Reprocessor", 
+    "container.energysupplier": "Energy Supplier", 
 
     "item.planttech2.guide_overview": "Tablet: Planttech 2 Guide",
     "item.planttech2.guide_plants": "Tablet: Plant Encyclopedia",
@@ -115,6 +116,7 @@
     "item.planttech2.mega_furnace_bulb": "Megafurnace Bulb", 
     "item.planttech2.plantfarm_bulb": "Plantfarm Bulb", 
     "item.planttech2.seedconstructor_bulb": "Seedconstructor Bulb", 
+    "item.planttech2.energy_supplier_bulb": "Energy Supplier Bulb",  
     
     "item.planttech2.cyberbow": "Cyberbow",
     "item.planttech2.cyberdagger": "Cyberdagger",
@@ -610,7 +612,7 @@
     "block.planttech2.machineshell_iron": "Iron Machineshell",
     "block.planttech2.machineshell_plantium": "Plantium Machineshell",
     "block.planttech2.carver": "Carver Crop",
-    
+    "block.planttech2.energy_supplier": "Energy Supplier",
     
     "block.planttech2.dark_crystal_block": "Dark Crystal Block", 
     "block.planttech2.dark_crystal_brick": "Dark Crystal Bricks", 
@@ -623,6 +625,9 @@
     "block.planttech2.dark_crystal_glasspane_end": "Dark Crystal Glasspane End", 
     "block.planttech2.dark_crystal_glasspane_middle": "Dark Crystal Glasspane Middle", 
     "block.planttech2.dark_crystal_glasspane_cross": "Dark Crystal Glasspane Cross", 
+    
+    "block.planttech2.electric_fence":  "Electric Fence",
+	"block.planttech2.electric_fence_top":  "Electric Fence Top",
     
     "block.planttech2.white_crystal_block": "White Crystal Block", 
     "block.planttech2.white_crystal_brick": "White Crystal Bricks", 
@@ -994,5 +999,7 @@
     "techvillager.profession.scientist": "Scientist",
     "techvillager.profession.botanist": "Botanist",
     "techvillager.profession.headhunter": "Headhunter",
-    "techvillager.profession.engineer": "Engineer"
+    "techvillager.profession.engineer": "Engineer",
+    
+    "planttech2.electric_fence.idle": "Electric fence hums"
 }

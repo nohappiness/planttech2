@@ -11,6 +11,7 @@ public class PlantTechConstants
     public static final int MACHINETIER_SEEDSQUEEZER = 0; 
     public static final int MACHINETIER_COMPRESSOR = 1; 
     public static final int MACHINETIER_IDENTIFIER = 1; 
+    public static final int MACHINETIER_ENERGY_SUPPLIER = 2; 
     public static final int MACHINETIER_INFUSER = 2; 
     public static final int MACHINETIER_CHIPALYZER = 2; 
     public static final int MACHINETIER_MEGAFURNACE = 3; 

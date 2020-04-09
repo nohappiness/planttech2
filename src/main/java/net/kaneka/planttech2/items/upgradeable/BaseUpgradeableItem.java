@@ -48,7 +48,7 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 	
 	public BaseUpgradeableItem(String name, Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed, int slotId)
 	{
-		super(name, property);
+		super(name, property.maxStackSize(1));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize; 
 		this.baseAttack = baseAttack; 
@@ -398,7 +398,6 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 		{
 			this.stack = stack; 
 		}
-		
 
 		@Override
 		public Container createMenu(int id, PlayerInventory inv, PlayerEntity entity)
@@ -411,6 +410,5 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 		{
 			return new TranslationTextComponent("container.upgradeableitem");
 		}
-		
 	}
 }

@@ -191,6 +191,7 @@ public class ModItems
     							SEEDSQUEEZER_BULB = new MachineBulbItem("seedsqueezer_bulb", ModBlocks.MACHINESHELL_IRON, ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 0), 
     							COMPRESSOR_BULB = new MachineBulbItem("compressor_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.COMPRESSOR_GROWING, PlantTechConstants.MACHINETIER_COMPRESSOR, 100), 
     	                    	IDENTIFIER_BULB = new MachineBulbItem("identifier_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.IDENTIFIER_GROWING, PlantTechConstants.MACHINETIER_IDENTIFIER, 100),
+    	                    	ENERGY_SUPPLIER_BULB = new MachineBulbItem("energy_supplier_bulb", ModBlocks.MACHINESHELL_IRON,  ModBlocks.ENERGY_SUPPLIER_GROWING, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER, 100),
     	                    	INFUSER_BULB = new MachineBulbItem("infuser_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.INFUSER_GROWING, PlantTechConstants.MACHINETIER_INFUSER, 1000),
                         		CHIPALYZER_BULB = new MachineBulbItem("chipalyzer_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.CHIPALYZER_GROWING, PlantTechConstants.MACHINETIER_CHIPALYZER, 1000),
                             	MEGAFURNACE_BULB = new MachineBulbItem("mega_furnace_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.MEGAFURNACE_GROWING, PlantTechConstants.MACHINETIER_MEGAFURNACE, 1000),

@@ -1,10 +1,5 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nullable;
-
 import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
@@ -26,33 +21,32 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CableBlock extends BaseBlock
 {
-	public static final IntegerProperty 
-			NORTH = IntegerProperty.create("north", 0, 3), 
-			EAST = IntegerProperty.create("east", 0, 3), 
+	public static final IntegerProperty
+			NORTH = IntegerProperty.create("north", 0, 3),
+			EAST = IntegerProperty.create("east", 0, 3),
 			SOUTH = IntegerProperty.create("south", 0, 3),
-	        WEST = IntegerProperty.create("west", 0, 3), 
-	        UP = IntegerProperty.create("up", 0, 3), 
-	        DOWN = IntegerProperty.create("down", 0, 3);
+			WEST = IntegerProperty.create("west", 0, 3),
+			UP = IntegerProperty.create("up", 0, 3),
+			DOWN = IntegerProperty.create("down", 0, 3);
 	public static final Map<Direction, IntegerProperty> directions = new HashMap<Direction, IntegerProperty>()
 	{
 		private static final long serialVersionUID = 1L;
-
 		{
 			put(Direction.NORTH, NORTH);
 			put(Direction.EAST, EAST);
@@ -95,7 +89,7 @@ public class CableBlock extends BaseBlock
 		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupmachines, true);
 		this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
@@ -117,8 +111,9 @@ public class CableBlock extends BaseBlock
 							CableTileEntity te = getTECable(worldIn, pos);
 							if (te != null)
 							{
-								te.rotateConnection(dir); 
-								worldIn.setBlockState(pos, getCurrentState(state, worldIn, pos)); 
+								te.rotateConnection(dir);
+								worldIn.setBlockState(pos, getCurrentState(state, worldIn, pos));
+								return ActionResultType.SUCCESS;
 							}
 						}
 					}
@@ -133,7 +128,7 @@ public class CableBlock extends BaseBlock
 			 * } }
 			 */
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
+		return ActionResultType.PASS;
 	}
 
 	@Override
@@ -149,9 +144,8 @@ public class CableBlock extends BaseBlock
 		if (te != null)
 		{
 			te.initCable(state);
-			world.setBlockState(pos, getCurrentState(state, world, pos)); 
+			world.setBlockState(pos, getCurrentState(state, world, pos));
 		}
-		
 	}
 
 	@Override
@@ -181,13 +175,10 @@ public class CableBlock extends BaseBlock
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		TileEntity te = worldIn.getTileEntity(pos);
+		CableTileEntity te = getTECable(worldIn, pos);
 		if (te != null)
 		{
-			if (te instanceof CableTileEntity)
-			{
-				((CableTileEntity) te).deleteCable();
-			}
+			te.deleteCable();
 		}
 		super.onReplaced(state, worldIn, pos, newState, isMoving);
 	}
@@ -203,16 +194,16 @@ public class CableBlock extends BaseBlock
 	 * Vec3d end) { HashMap<Integer, AxisAlignedBB> boxes =
 	 * getCollisionBoxListConnectionsList(worldIn, pos); HashMap<Integer,
 	 * RayTraceResult> rayTraces = rayTraceList(pos, start, end, boxes);
-	 * 
+	 *
 	 * double d1 = 0.0D; int returnval = -1; for (HashMap.Entry<Integer,
 	 * RayTraceResult> entry : rayTraces.entrySet()) { double d0 =
 	 * entry.getValue().getHitVec().squareDistanceTo(end);
-	 * 
+	 *
 	 * if (d0 > d1) { d1 = d0; returnval = entry.getKey();
-	 * 
+	 *
 	 * } } return returnval; }
-	 * 
-	 * 
+	 *
+	 *
 	 * private HashMap<Integer, AxisAlignedBB>
 	 * getCollisionBoxListConnectionsList(World world, BlockPos pos) {
 	 * HashMap<Integer, AxisAlignedBB> list = new HashMap<Integer, AxisAlignedBB>();
@@ -222,48 +213,40 @@ public class CableBlock extends BaseBlock
 	 * return list; }
 	 */
 
-	@Nullable
-	protected HashMap<Integer, RayTraceResult> rayTraceList(BlockPos pos, Vec3d start, Vec3d end, HashMap<Integer, AxisAlignedBB> boxes)
-	{
-		HashMap<Integer, RayTraceResult> list = new HashMap<Integer, RayTraceResult>();
-		/*
-		 * boxes.forEach((k, v) -> { Vec3d vec3d = start.subtract((double) pos.getX(),
-		 * (double) pos.getY(), (double) pos.getZ()); Vec3d vec3d1 =
-		 * end.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
-		 * RayTraceResult raytraceresult = v.intersects(vec3d, vec3d1); if
-		 * (raytraceresult != null) { list.put(k, new
-		 * RayTraceResult(raytraceresult.getHitVec().add((double) pos.getX(), (double)
-		 * pos.getY(), (double) pos.getZ()), raytraceresult, pos)); } });
-		 */
-		return list;
-	}
+	/*@Nullable
+	protected HashMap<Integer, RayTraceResult> rayTraceList(BlockPos pos, Vec3d start, Vec3d end, HashMap<Integer, AxisAlignedBB> boxes) {
+		HashMap<Integer, RayTraceResult> list = new HashMap<Integer, RayTraceResult>();*/
+	/*
+	 * boxes.forEach((k, v) -> { Vec3d vec3d = start.subtract((double) pos.getX(),
+	 * (double) pos.getY(), (double) pos.getZ()); Vec3d vec3d1 =
+	 * end.subtract((double) pos.getX(), (double) pos.getY(), (double) pos.getZ());
+	 * RayTraceResult raytraceresult = v.intersects(vec3d, vec3d1); if
+	 * (raytraceresult != null) { list.put(k, new
+	 * RayTraceResult(raytraceresult.getHitVec().add((double) pos.getX(), (double)
+	 * pos.getY(), (double) pos.getZ()), raytraceresult, pos)); } });
+	 */
+	/*return list;}*/
 
-	@Override
+	/*@Override
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
 	{
-
-		TileEntity te = world.getTileEntity(pos);
-		if (te != null)
+		System.out.println("onNeighborChange called");
+		CableTileEntity cable = getTECable((World) world, pos);
+		if (cable != null)
 		{
-			if (te instanceof CableTileEntity || te.getCapability(CapabilityEnergy.ENERGY).isPresent())
-			{
-				((CableTileEntity) te).checkConnections();
-			}
+			cable.checkConnections("onNeighborChange");
 		}
-		super.onNeighborChange(state, world, pos, neighbor);
-	}
+	}*/
 
-	private CableTileEntity getTECable(World world, BlockPos pos)
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
-		TileEntity te = world.getTileEntity(pos);
-		if (te != null)
+		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+		CableTileEntity cable = getTECable(world, pos);
+		if (cable != null)
 		{
-			if (te instanceof CableTileEntity)
-			{
-				return (CableTileEntity) te;
-			}
+			cable.checkConnections(true);
 		}
-		return null;
 	}
 
 	@Override
@@ -281,19 +264,20 @@ public class CableBlock extends BaseBlock
 			if (stateDirection.getBlock() instanceof CableBlock)
 			{
 				state.with(directions.get(facing), 1);
-			} else if (te != null)
+			}
+			else if (te != null)
 			{
 				if (te.getCapability(CapabilityEnergy.ENERGY).isPresent())
 				{
 
 					state.with(directions.get(facing), 2);
 				}
-			} else
+			}
+			else
 			{
 				state.with(directions.get(facing), 0);
 			}
 		}
-
 		return state;
 	}
 
@@ -302,18 +286,17 @@ public class CableBlock extends BaseBlock
 	{
 		return getCurrentState(state, world, currentPos);
 	}
-	
+
 	public BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos)
 	{
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof CableTileEntity)
+		CableTileEntity te = getTECable((World) world, pos);
+		if (te != null)
 		{
-			CableTileEntity tec = (CableTileEntity) te;
-			((CableTileEntity) te).checkConnections();
-			return state.with(UP, tec.getConnection(Direction.UP)).with(DOWN, tec.getConnection(Direction.DOWN)).with(EAST, tec.getConnection(Direction.EAST))
-			        .with(WEST, tec.getConnection(Direction.WEST)).with(NORTH, tec.getConnection(Direction.NORTH)).with(SOUTH, tec.getConnection(Direction.SOUTH));
+			te.checkConnections(false);
+			return state.with(UP, te.getConnection(Direction.UP)).with(DOWN, te.getConnection(Direction.DOWN)).with(EAST, te.getConnection(Direction.EAST))
+					.with(WEST, te.getConnection(Direction.WEST)).with(NORTH, te.getConnection(Direction.NORTH)).with(SOUTH, te.getConnection(Direction.SOUTH));
 		}
-		return state; 
+		return state;
 	}
 
 	@Override
@@ -350,5 +333,15 @@ public class CableBlock extends BaseBlock
 			}
 		}
 		return shape;
+	}
+
+	private CableTileEntity getTECable(World world, BlockPos pos)
+	{
+		TileEntity te = world.getTileEntity(pos);
+		if (te instanceof CableTileEntity)
+		{
+			return (CableTileEntity) te;
+		}
+		return null;
 	}
 }

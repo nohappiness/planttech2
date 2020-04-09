@@ -1,11 +1,5 @@
 package net.kaneka.planttech2.tileentity.cable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,29 +15,34 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 public class CableTileEntity extends TileEntity implements ITickableTileEntity
 {
 	private BlockPos masterPos = null;
 	private boolean isMaster = false;
 	private int[] connections = new int[] { 0, 0, 0, 0, 0, 0 };
 	private int maxTransferRate = 20;
-
+	/*private int printInterval = 0;
+	private boolean shouldPrint = true;*/
+	private boolean connectionUpdated = true;
 	private List<BlockPos> cables = new ArrayList<BlockPos>();
 	private HashMap<Integer, List<Connection>> connectionsMaster = new HashMap<Integer, List<Connection>>()
 	{
-		/**
-			 * 
-			 */
 		private static final long serialVersionUID = 1L;
-
 		{
+			//0 as consumers, 1 as producers
 			put(0, new ArrayList<Connection>());
 			put(1, new ArrayList<Connection>());
 		}
 	};
 
 	HashMap<BlockPos, Direction> producer = new HashMap<BlockPos, Direction>(), consumer = new HashMap<BlockPos, Direction>(), storages = new HashMap<BlockPos, Direction>();
-	private boolean connectionUpdate = true;
 
 	public CableTileEntity()
 	{
@@ -53,10 +52,23 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-
-		if (!world.isRemote && isMaster)
+		/*printInterval++;
+		if (printInterval == 20 && shouldPrint)
+		{
+			System.out.println("masterPos:" + masterPos);
+			System.out.println("producer:" + producer);
+			System.out.println("consumer:" + consumer);
+			System.out.println("----------------------------------------------------------------------------");
+			printInterval = 0;
+		}*/
+		if (world != null && !world.isRemote && isMaster)
 		{
 			transferEnergy();
+			/*if (printInterval == 20 && shouldPrint)
+			{
+				System.out.println("producer:" + producer);
+				System.out.println("consumer:" + consumer);
+			}*/
 		}
 	}
 
@@ -66,12 +78,13 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		int maxNeeded = 0, maxSupplied = 0, maxStorragesNeeded = 0, maxStorragesSupplied = 0;
 		int amountConsumer = 0, amountProducer = 0, amountStorages = 0;
 
-		if (connectionUpdate)
+		if (connectionUpdated)
 		{
 			producer.clear();
 			consumer.clear();
 			storages.clear();
 
+			//updating consumers and producers
 			for (Connection con : this.connectionsMaster.get(0))
 			{
 				cap = getEnergyCap(con.getConnectedPos(), con.getFacing().getOpposite());
@@ -92,15 +105,14 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 					if (!producer.containsKey(con.getConnectedPos()))
 					{
 						producer.put(con.getConnectedPos(), con.getFacing().getOpposite());
-
 					}
 				}
 			}
-			
+
+			//check for duplicated producers and consumers
 			List<BlockPos> intersect_PC = producer.keySet().stream().filter(x -> consumer.containsKey(x)).collect(Collectors.toList());
 			producer.entrySet().removeIf(entry -> intersect_PC.contains(entry.getKey()));
 			consumer.entrySet().removeIf(entry -> intersect_PC.contains(entry.getKey()));
-			
 			for (Connection con : this.connectionsMaster.get(0))
 			{
 				cap = getEnergyCap(con.getConnectedPos(), con.getFacing().getOpposite());
@@ -109,14 +121,13 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 					if (!storages.containsKey(con.getConnectedPos()) && intersect_PC.contains(con.getConnectedPos()))
 					{
 						storages.put(con.getConnectedPos(), con.getFacing().getOpposite());
-						System.out.println("test1");
 					}
 				}
 			}
-
-			this.connectionUpdate = false;
+			connectionUpdated = false;
 		}
 
+		//do energy transfer
 		for (Entry<BlockPos, Direction> entry : producer.entrySet())
 		{
 			cap = getEnergyCap(entry.getKey(), entry.getValue());
@@ -155,15 +166,14 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 			if (maxNeeded > maxSupplied)
 			{
 				int maxSuppliedBoth = maxSupplied + maxStorragesSupplied;
+				perMachineProducer = maxTransferRate;
 				if (maxNeeded > maxSuppliedBoth)
 				{
-					perMachineProducer = maxTransferRate;
 					perMachineStoragesOut = maxTransferRate;
 					perMachineConsumer = maxSuppliedBoth / amountConsumer;
 					leftoverConsumer = maxSuppliedBoth - (perMachineConsumer * amountConsumer);
 				} else
 				{
-					perMachineProducer = maxTransferRate;
 					perMachineStoragesOut = (maxNeeded - maxSupplied) / amountStorages;
 					leftoverStorageOut = (maxNeeded - maxSupplied) - (perMachineStoragesOut * amountStorages);
 					perMachineConsumer = maxTransferRate;
@@ -176,14 +186,14 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 					perMachineProducer = maxNeededBoth / amountProducer;
 					leftoverProducer = maxNeededBoth - (perMachineProducer * amountProducer);
 					perMachineStoragesIn = maxTransferRate;
-					perMachineConsumer = maxTransferRate;
-				} else
+				}
+				else
 				{
 					perMachineProducer = maxTransferRate;
 					perMachineStoragesIn = (maxSupplied - maxNeeded) / amountStorages;
 					leftoverStorageIn = (maxSupplied - maxNeeded) - (perMachineStoragesIn * amountStorages);
-					perMachineConsumer = maxTransferRate;
 				}
+				perMachineConsumer = maxTransferRate;
 			} else
 			{
 				perMachineProducer = maxTransferRate;
@@ -273,31 +283,30 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		if (0 <= i && i < 5)
 		{
-			CableTileEntity te = this.getTECable(masterPos);
+			CableTileEntity te = getTECable(masterPos);
 			if (te != null)
 			{
 				te.changeConnectionMaster(pos, facing, this.connections[facing.getIndex()], i);
 			}
-
 			this.connections[facing.getIndex()] = i;
-
 		}
 	}
 
-	public void changeConnectionMaster(BlockPos pos, Direction facing, int before, int after)
+	public void changeConnectionMaster(BlockPos pos, Direction facing, int fromState, int toState)
 	{
-		if (before > 1)
+		if (fromState > 1)
 		{
-			this.connectionsMaster.get(before - 2).removeIf(x -> x.areEqual(pos, facing));
+			//-2 here so 2->0, 3->1 to get corresponding lists (0 as consumers, 1 as producers)
+			this.connectionsMaster.get(fromState - 2).removeIf(x -> x.areEqual(pos, facing));
 		}
-		if (after > 1)
+		if (toState > 1)
 		{
-			if (!this.connectionsMaster.get(after - 2).stream().anyMatch(x -> x.areEqual(pos, facing)))
+			if (this.connectionsMaster.get(toState - 2).stream().noneMatch(x -> x.areEqual(pos, facing)))
 			{
-				this.connectionsMaster.get(after - 2).add(new Connection(pos, facing));
+				this.connectionsMaster.get(toState - 2).add(new Connection(pos, facing));
 			}
 		}
-		this.connectionUpdate = true;
+		connectionUpdated = true;
 	}
 
 	private void removeValues()
@@ -314,10 +323,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		this.isMaster = true;
 		this.masterPos = this.pos;
 		this.cables.add(this.pos);
-		this.connectionUpdate = true;
+		this.connectionUpdated = true;
 	}
 
-	public void removeMaster(BlockPos newMaster)
+	public void removeMaster(@Nullable BlockPos newMaster)
 	{
 		this.isMaster = false;
 		this.masterPos = newMaster;
@@ -342,66 +351,59 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		if(world != null)
 		{
-    		TileEntity te;
-    		List<BlockPos> neighborMaster = new ArrayList<BlockPos>();
-    		for (Direction facing : Direction.values())
-    		{
-    			te = this.getWorld().getTileEntity(this.getPos().offset(facing));
-    			if (te != null)
-    			{
-    				if (te instanceof CableTileEntity)
-    				{
-    					CableTileEntity cable = (CableTileEntity) te;
-    					if (!neighborMaster.contains(cable.getMasterPos()))
-    					{
-    						neighborMaster.add(cable.getMasterPos());
-    					}
-    
-    				}
-    
-    			}
-    		}
-    
-    		switch (neighborMaster.size())
-    		{
-    		case 0:
-    			this.setAsMaster();
-    			this.masterPos = this.pos;
-    			break;
-    		case 1:
-    			te = this.getWorld().getTileEntity(neighborMaster.get(0));
-    			if (te != null)
-    			{
-    				if (te instanceof CableTileEntity)
-    				{
-    					((CableTileEntity) te).addCable(this.getPos());
-    					this.setMasterPos(te.getPos());
-    				}
-    			}
-    			break;
-    		default:
-    			this.combineAndAdd(neighborMaster);
-    			break;
-    		}
-    		checkConnections();
-    		markDirty();
-		}
+			List<BlockPos> neighborMaster = new ArrayList<BlockPos>();
+			for (Direction facing : Direction.values())
+			{
+				CableTileEntity te = getTECable(pos.offset(facing));
+				if (te != null)
+				{
+					if (!neighborMaster.contains(te.getMasterPos()))
+					{
+						neighborMaster.add(te.getMasterPos());
+					}
+				}
+			}
 
+			switch (neighborMaster.size())
+			{
+				//no other master found
+				case 0:
+					this.setAsMaster();
+					this.masterPos = this.pos;
+					break;
+				//connected to a system with master
+				case 1:
+					CableTileEntity te = getTECable(neighborMaster.get(0));
+					if (te != null)
+					{
+						te.addCable(pos);
+						this.setMasterPos(te.getPos());
+					}
+					break;
+				//connected to systems with multiple masters
+				default:
+					this.combineAndAdd(neighborMaster);
+					break;
+			}
+			checkConnections(false);
+			markDirty();
+		}
 	}
 
 	public void deleteCable()
 	{
 		TileEntity te;
 		List<BlockPos> neighborCables = new ArrayList<BlockPos>();
+		if (world == null)
+		{
+			return;
+		}
 		for (Direction facing : Direction.values())
 		{
-			te = this.getWorld().getTileEntity(this.getPos().offset(facing));
-			if (te != null)
+			te = world.getTileEntity(this.getPos().offset(facing));
+			if (isTECable(te))
 			{
-				if (te instanceof CableTileEntity)
-				{
-					neighborCables.add(this.pos.offset(facing));
-				}
+				neighborCables.add(this.pos.offset(facing));
 			}
 		}
 
@@ -409,29 +411,40 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		{
 			if (neighborCables.size() == 1)
 			{
-				CableTileEntity newMaster = (CableTileEntity) this.world.getTileEntity(neighborCables.get(0));
-				this.transferMastery(newMaster, this);
-				newMaster.removeCable(this.pos);
-
+				CableTileEntity newMaster = (CableTileEntity) world.getTileEntity(neighborCables.get(0));
+				if (newMaster != null)
+				{
+					this.transferMastery(newMaster, this);
+					newMaster.removeCable(this.pos);
+				}
 			} else if (neighborCables.size() > 1)
 			{
 				recreateNetworks(neighborCables, this.cables);
 			}
 		} else
 		{
+			CableTileEntity cable;
 			if (neighborCables.size() == 1)
 			{
-				((CableTileEntity) this.world.getTileEntity(neighborCables.get(0))).removeCable(this.pos);
+				cable = getTECable(neighborCables.get(0));
+				if (cable != null)
+				{
+					cable.removeCable(this.pos);
+				}
 			} else if (neighborCables.size() > 1)
 			{
-				recreateNetworks(neighborCables, getTECable(this.masterPos).getCableList());
+				cable = getTECable(neighborCables.get(0));
+				if (cable != null)
+				{
+					recreateNetworks(neighborCables, cable.getCableList());
+				}
 			}
 		}
 	}
 
-	public void recreateNetworks(List<BlockPos> neighborcables, List<BlockPos> cables)
+	public void recreateNetworks(List<BlockPos> neighborCables, List<BlockPos> cables)
 	{
-		List<BlockPos> cableCopy = cables.stream().collect(Collectors.toList());
+		List<BlockPos> cableCopy = new ArrayList<>(cables);
 		for (BlockPos cablePos : cableCopy)
 		{
 			CableTileEntity te = getTECable(cablePos);
@@ -441,10 +454,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 			}
 		}
 
-		for (BlockPos neighborcable : neighborcables)
+		for (BlockPos neighborCable : neighborCables)
 		{
-			CableTileEntity te = getTECable(neighborcable);
-			if (te.getMasterPos() == null)
+			CableTileEntity te = getTECable(neighborCable);
+			if (te != null && te.getMasterPos() == null)
 			{
 				te.setAsMaster();
 				te.sendConnections();
@@ -453,12 +466,13 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		}
 	}
 
-	public void spreadPos(BlockPos exeption)
+	//----------------------
+	public void spreadPos(BlockPos exception)
 	{
 		for (Direction facing : Direction.values())
 		{
 			BlockPos nextPos = this.pos.offset(facing);
-			if (!nextPos.equals(exeption))
+			if (!nextPos.equals(exception))
 			{
 				CableTileEntity te = getTECable(nextPos);
 				if (te != null)
@@ -466,9 +480,13 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 					if (te.getMasterPos() == null)
 					{
 						te.setMasterPos(this.masterPos);
-						getTECable(te.getMasterPos()).addCable(te.getPos());
+						CableTileEntity cable = getTECable(te.getMasterPos());
+						if (cable != null)
+						{
+							cable.addCable(te.getPos());
+						}
 						te.sendConnections();
-						te.spreadPos(exeption);
+						te.spreadPos(exception);
 					}
 				}
 			}
@@ -490,34 +508,34 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		}
 	}
 
+	/***
+	 * use to combine multiple systems with master
+	 * @param list list of all masters that needs to merge
+	 */
 	public void combineAndAdd(List<BlockPos> list)
 	{
-		TileEntity te = this.world.getTileEntity(list.get(0));
+		CableTileEntity newMaster = getTECable(list.get(0));
 		list.remove(0);
-		if (te != null)
+		if (newMaster != null)
 		{
-			if (te instanceof CableTileEntity)
+			for (BlockPos oldMasterPos : list)
 			{
-				CableTileEntity newMaster = (CableTileEntity) te;
-				TileEntity oldTE;
-				for (BlockPos oldMasterPos : list)
+				CableTileEntity oldMaster = getTECable(oldMasterPos);
+				if (oldMaster != null)
 				{
-					oldTE = world.getTileEntity(oldMasterPos);
-					if (oldTE != null)
-					{
-						if (oldTE instanceof CableTileEntity)
-						{
-							CableTileEntity oldMaster = (CableTileEntity) oldTE;
-							this.transferMastery(newMaster, oldMaster);
-						}
-					}
+					this.transferMastery(newMaster, oldMaster);
 				}
-				newMaster.addCable(this.getPos());
-				this.setMasterPos(newMaster.getPos());
 			}
+			newMaster.addCable(this.getPos());
+			setMasterPos(newMaster.getPos());
 		}
 	}
 
+	/***
+	 *  returns a list with keys: 0 as the cables list,
+	 *  1 as the first element of connectionMaster,
+	 *  2 as the second element of connectionMaster
+	 */
 	public HashMap<Integer, List> getLists()
 	{
 		HashMap<Integer, List> lists = new HashMap<Integer, List>();
@@ -527,6 +545,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		return lists;
 	}
 
+	/***
+	 * set the values of lists: cables and connectionsMaster
+	 * @param lists list combination of 0: cables, 1: consumers, 2: producers
+	 */
 	public void setLists(HashMap<Integer, List> lists)
 	{
 		this.cables.addAll(lists.get(0));
@@ -543,13 +565,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		for (BlockPos cablePos : this.cables)
 		{
-			TileEntity te = world.getTileEntity(cablePos);
-			if (te != null)
+			CableTileEntity cable = getTECable(cablePos);
+			if (cable != null)
 			{
-				if (te instanceof CableTileEntity)
-				{
-					((CableTileEntity) te).setMasterPos(pos);
-				}
+				cable.setMasterPos(pos);
 			}
 		}
 	}
@@ -560,6 +579,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		newMaster.setAsMaster();
 		newMaster.setLists(oldMaster.getLists());
 		oldMaster.removeMaster(newMaster.getMasterPos());
+		markDirty();
 	}
 
 	@Override
@@ -589,7 +609,6 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		List<Connection> connections;
 		for (int i = 0; i < 2; i++)
 		{
-
 			if (connectionsMaster.get(i).size() > 0)
 			{
 				connections = connectionsMaster.get(i);
@@ -651,39 +670,32 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 
 	private IEnergyStorage getEnergyCap(BlockPos pos, Direction facing)
 	{
-		TileEntity te = this.world.getTileEntity(pos);
+		if (world == null)
+		{
+			return null;
+		}
+		TileEntity te = world.getTileEntity(pos);
 		if (te != null)
 		{
 			if (te.getCapability(CapabilityEnergy.ENERGY, facing).isPresent())
 			{
-				return (IEnergyStorage) te.getCapability(CapabilityEnergy.ENERGY, facing).orElse(null);
+				return te.getCapability(CapabilityEnergy.ENERGY, facing).orElse(null);
 			}
 		}
 		return null;
 	}
 
-	private CableTileEntity getTECable(BlockPos pos)
-	{
-		if(world != null)
-		{
-			if(!world.isRemote)
-			{
-        		TileEntity te = world.getTileEntity(pos);
-        		if (te != null)
-        		{
-        			if (te instanceof CableTileEntity)
-        			{
-        				return (CableTileEntity) te;
-        			}
-        		}
-			}
-		}
-		return null;
-	}
 
-	public void checkConnections()
+
+	// calls sendUpdates() if there's any connections to other TE that has
+	// energy and cause state change
+	public void checkConnections(boolean neighborChanged)
 	{
 		boolean shouldSendChanges = false;
+		if (world == null)
+		{
+			return;
+		}
 		for (Direction facing : Direction.values())
 		{
 			TileEntity te = world.getTileEntity(this.pos.offset(facing));
@@ -697,8 +709,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 						shouldSendChanges = true;
 					}
 				}
-
-				if (te.getCapability(CapabilityEnergy.ENERGY, facing).isPresent())
+				else if (te.getCapability(CapabilityEnergy.ENERGY, facing).isPresent())
 				{
 					if (getConnection(facing) < 2)
 					{
@@ -706,7 +717,8 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 						shouldSendChanges = true;
 					}
 				}
-			} else
+			}
+			else
 			{
 				if (getConnection(facing) != 0)
 				{
@@ -715,10 +727,16 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 				}
 			}
 		}
-
-		if (shouldSendChanges && !world.isRemote)
+		if (!world.isRemote)
 		{
-			sendUpdates();
+			if (shouldSendChanges)
+			{
+				sendUpdates();
+			}
+			if (neighborChanged)
+			{
+				connectionUpdated = true;
+			}
 		}
 	}
 
@@ -737,7 +755,6 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		super.onDataPacket(net, pkt);
 		handleUpdateTag(pkt.getNbtCompound());
 		// world.markBlockRangeForRenderUpdate(pos, pos);
 	}
@@ -745,7 +762,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	private void sendUpdates()
 	{
 		//world.markForRerender(pos);
-		world.markAndNotifyBlock(pos, world.getChunkAt(pos), world.getBlockState(pos), world.getBlockState(pos), 0);
+		if (world != null)
+		{
+			world.markAndNotifyBlock(pos, world.getChunkAt(pos), world.getBlockState(pos), world.getBlockState(pos), 0);
+		}
 	}
 
 	public void rotateConnection(Direction dir)
@@ -763,4 +783,21 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		setConnection(Direction.byIndex(i), next);
 	}
 
+	boolean isTECable(TileEntity te)
+	{
+		return te instanceof CableTileEntity;
+	}
+
+	private CableTileEntity getTECable(BlockPos pos)
+	{
+		if(world != null && !world.isRemote)
+		{
+			TileEntity te = world.getTileEntity(pos);
+			if (isTECable(te))
+			{
+				return (CableTileEntity) te;
+			}
+		}
+		return null;
+	}
 }

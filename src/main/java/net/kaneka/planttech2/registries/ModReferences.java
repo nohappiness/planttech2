@@ -12,6 +12,7 @@ public class ModReferences
 	public static final String DNAEXTRACTORCONTAINER = MODID + ":dnaextractorcontainer";
 	public static final String DNAREMOVERCONTAINER = MODID + ":dnaremovercontainer";
 	public static final String ENERGYSTORAGECONTAINER = MODID + ":energystoragecontainer";
+	public static final String ENERGYSUPPLIERCONTAINER = MODID + ":energysuppliercontainer";
 	public static final String IDENTIFIERCONTAINER = MODID + ":identifiercontainer";
 	public static final String INFUSERCONTAINER = MODID + ":infusercontainer";
 	public static final String UPGRADEABLEITEMCONTAINER = MODID + ":upgradeableitemcontainer";

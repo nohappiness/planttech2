@@ -1,0 +1,196 @@
+{
+  "variants": {
+    "electric_power=0,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence"
+    } ,
+    "electric_power=0,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence"
+    } ,
+    "electric_power=0,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence" , "y": 90
+    } ,
+    "electric_power=0,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence" , "y": 90
+    } ,
+    "electric_power=1,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=1,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=1,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=1,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=2,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=2,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=2,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=2,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=3,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=3,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=3,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=3,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=4,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=4,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=4,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=4,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=5,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=5,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=5,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=5,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=6,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=6,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=6,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=6,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=7,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=7,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=7,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=7,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=8,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=8,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=8,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=8,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=9,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=9,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=9,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=9,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=10,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=10,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=10,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=10,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=11,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=11,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=11,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=11,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=12,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=12,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=12,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=12,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=13,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=13,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=13,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=13,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=14,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=14,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=14,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=14,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=15,facing=north": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=15,facing=south": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered"
+    } ,
+    "electric_power=15,facing=east": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    } ,
+    "electric_power=15,facing=west": {
+      "model":  "planttech2:block/electric_fences/electric_fence_powered" , "y": 90
+    }
+  }
+}

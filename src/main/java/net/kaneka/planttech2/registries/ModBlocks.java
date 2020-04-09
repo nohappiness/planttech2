@@ -6,23 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.CarverBlock;
-import net.kaneka.planttech2.blocks.CropBarsBlock;
-import net.kaneka.planttech2.blocks.CropBaseBlock;
-import net.kaneka.planttech2.blocks.FacingGrowingBlock;
-import net.kaneka.planttech2.blocks.GlassPaneEnd;
-import net.kaneka.planttech2.blocks.GlassPanePillar;
-import net.kaneka.planttech2.blocks.GrowingBlock;
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomDoorBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomSlabBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomStairsBlock;
-import net.kaneka.planttech2.blocks.machines.CableBlock;
-import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
-import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
-import net.kaneka.planttech2.blocks.machines.MachineFacingBlock;
-import net.kaneka.planttech2.blocks.machines.MachineTeleporterEndBlock;
+import net.kaneka.planttech2.blocks.*;
+import net.kaneka.planttech2.blocks.baseclasses.*;
+import net.kaneka.planttech2.blocks.machines.*;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -53,7 +39,10 @@ public class ModBlocks
 	        DNA_COMBINER = new MachineFacingBlock("dna_combiner", ModCreativeTabs.groupmachines),
 	        DNA_EXTRACTOR = new MachineFacingBlock("dna_extractor", ModCreativeTabs.groupmachines), 
 	        DNA_REMOVER = new MachineFacingBlock("dna_remover", ModCreativeTabs.groupmachines),
-	        ENERGYSTORAGE = new EnergyStorageBlock(), 
+	        ELECTRIC_FENCE = new ElectricFence(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F), "electric_fence", ModCreativeTabs.groupmain, true, false),
+	        ELECTRIC_FENCE_TOP = new ElectricFence(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F), "electric_fence_top", ModCreativeTabs.groupmain, true, true),
+	        ENERGYSTORAGE = new EnergyStorageBlock(),
+	        ENERGY_SUPPLIER = new EnergySupplierBlock("energy_supplier", ModCreativeTabs.groupmachines),
 	        IDENTIFIER = new MachineFacingBlock("identifier", ModCreativeTabs.groupmachines),
 	        INFUSER = new MachineFacingBlock("infuser", ModCreativeTabs.groupmachines),
 	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kanekium_block", ModCreativeTabs.groupmain, true),
@@ -108,6 +97,7 @@ public class ModBlocks
                 	        INFUSER_GROWING = new FacingGrowingBlock("infuser_growing", ModBlocks.INFUSER, true),
                 	        MEGAFURNACE_GROWING = new FacingGrowingBlock("mega_furnace_growing", ModBlocks.MEGAFURNACE, true), 
                 	        PLANTFARM_GROWING = new GrowingBlock("plantfarm_growing", ModBlocks.PLANTFARM, true),
+                	        ENERGY_SUPPLIER_GROWING = new GrowingBlock("energy_supplier_growing", ModBlocks.ENERGY_SUPPLIER, true),
                 	        SEEDCONSTRUCTOR_GROWING = new FacingGrowingBlock("seedconstructor_growing", ModBlocks.SEEDSQUEEZER, true),
                 	        SOLARGENERATOR_GROWING = new GrowingBlock("solargenerator_growing", ModBlocks.SOLARGENERATOR, true);
 	        

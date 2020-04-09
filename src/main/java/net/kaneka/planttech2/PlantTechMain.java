@@ -1,8 +1,5 @@
 package net.kaneka.planttech2;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.events.ClientEvents;
@@ -16,6 +13,7 @@ import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModCommands;
 import net.kaneka.planttech2.registries.ModRenderer;
 import net.kaneka.planttech2.registries.ModScreens;
 import net.minecraft.block.Block;
@@ -30,8 +28,11 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod("planttech2")
 public class PlantTechMain
@@ -63,14 +64,20 @@ public class PlantTechMain
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
 		//ModBiomes.registerBiomes();
 	}
 
-	private void onServerStarting(FMLServerAboutToStartEvent event)
+	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
 	{
 		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+	}
+	
+	private void onServerStarting(final FMLServerStartingEvent event)
+	{
+		ModCommands.registerAll(event.getCommandDispatcher(), event.getServer().isDedicatedServer());
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -124,6 +131,7 @@ public class PlantTechMain
 		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM_GROWING, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR_GROWING, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR_GROWING, rendertype);
+		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER_GROWING, rendertype);
 
 		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINEBULBREPROCESSOR, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDSQUEEZER, rendertype);
@@ -140,6 +148,7 @@ public class PlantTechMain
 		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR, rendertype);
+		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER, rendertype);
 		
 	}
 }

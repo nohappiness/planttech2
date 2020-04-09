@@ -1,0 +1,3 @@
+{
+  "electric_fence_idle": { "category": "block", "subtitle": "planttech2.electric_fence.idle", "sounds": [ "planttech2:electric_fence/electric_fence_idle" ] }
+}

@@ -4,21 +4,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
 import net.kaneka.planttech2.tileentity.cable.CableTileEntity;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNAExtractorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
-import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
-import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
-import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.*;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -43,7 +29,7 @@ public class ModTileEntities
     public static final TileEntityType<ChipalyzerTileEntity> CHIPALYZER_TE = TileEntityType.Builder.create(ChipalyzerTileEntity::new, ModBlocks.CHIPALYZER).build(null); 
     public static final TileEntityType<MachineBulbReprocessorTileEntity> MACHINEBULBREPROCESSOR_TE = TileEntityType.Builder.create(MachineBulbReprocessorTileEntity::new, ModBlocks.MACHINEBULBREPROCESSOR).build(null); 
     public static final TileEntityType<PlantTopiaTeleporterTileEntity> PLANTTOPIATELEPORTER_TE = TileEntityType.Builder.create(PlantTopiaTeleporterTileEntity::new, ModBlocks.PLANTTOPIA_TELEPORTER).build(null); 
-      
+    public static final TileEntityType<EnergySupplierTileEntity> ENERGY_SUPPLIER_TE = TileEntityType.Builder.create(EnergySupplierTileEntity::new, ModBlocks.ENERGY_SUPPLIER).build(null);
     
     
 	public static final void register(IForgeRegistry<TileEntityType<?>> registry)
@@ -64,8 +50,8 @@ public class ModTileEntities
 		    		 ENERGYSTORAGE_TE.setRegistryName(PlantTechMain.MODID,  "tileentityenergystorage"), 
 		    		 INFUSER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityinfuser"), 
 	    			 CHIPALYZER_TE.setRegistryName(PlantTechMain.MODID,  "tileentitychipalyzer"), 
-	    			 MACHINEBULBREPROCESSOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitymachinebulbreprocessor"), 
-	    			 PLANTTOPIATELEPORTER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityplanttopiateleporter"));
+	    			 MACHINEBULBREPROCESSOR_TE.setRegistryName(PlantTechMain.MODID,  "tileentitymachinebulbreprocessor"),
+	    			 ENERGY_SUPPLIER_TE.setRegistryName(PlantTechMain.MODID,  "tileentityenergysupplier"));
 		
 	}
 

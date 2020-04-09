@@ -3,16 +3,14 @@ package net.kaneka.planttech2.events;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datapack.dataprovider.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModContainers;
-import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -53,6 +51,12 @@ public class RegistryEvents
 	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
 	{
 		ModRecipeSerializers.registerAll(event);
+	}
+	
+	@SubscribeEvent
+	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
+	{
+		ModSounds.registerAll(event.getRegistry());
 	}
 	
 	/*

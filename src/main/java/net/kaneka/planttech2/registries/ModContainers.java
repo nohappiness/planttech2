@@ -1,23 +1,6 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.container.ChipalyzerContainer;
-import net.kaneka.planttech2.container.CompressorContainer;
-import net.kaneka.planttech2.container.DNACleanerContainer;
-import net.kaneka.planttech2.container.DNACombinerContainer;
-import net.kaneka.planttech2.container.DNAExtractorContainer;
-import net.kaneka.planttech2.container.DNARemoverContainer;
-import net.kaneka.planttech2.container.EnergyStorageContainer;
-import net.kaneka.planttech2.container.IdentifierContainer;
-import net.kaneka.planttech2.container.InfuserContainer;
-import net.kaneka.planttech2.container.ItemUpgradeableContainer;
-import net.kaneka.planttech2.container.MachineBulbReprocessorContainer;
-import net.kaneka.planttech2.container.MegaFurnaceContainer;
-import net.kaneka.planttech2.container.PlantFarmContainer;
-import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
-import net.kaneka.planttech2.container.SeedSqueezerContainer;
-import net.kaneka.planttech2.container.SeedconstructorContainer;
-import net.kaneka.planttech2.container.SolarGeneratorContainer;
-import net.kaneka.planttech2.container.TeleporterContainer;
+import net.kaneka.planttech2.container.*;
 import net.kaneka.planttech2.container.entities.TechVillagerContainer;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraftforge.event.RegistryEvent;
@@ -44,6 +27,8 @@ public class ModContainers
 	public static final ContainerType<PlantTopiaTeleporterContainer> PLANTTOPIATELEPORTER = new ContainerType<PlantTopiaTeleporterContainer>(PlantTopiaTeleporterContainer::new);
 	public static final ContainerType<TeleporterContainer> TELEPORTERITEM = new ContainerType<TeleporterContainer>(TeleporterContainer::new);
 	public static ContainerType<TechVillagerContainer> TECHVILLAGER = new ContainerType<TechVillagerContainer>((IContainerFactory<TechVillagerContainer>) TechVillagerContainer::new);
+	public static final ContainerType<EnergySupplierContainer> ENERGYSUPPLIER = new ContainerType<EnergySupplierContainer>(EnergySupplierContainer::new);
+	
 	
 	public static final void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
@@ -65,6 +50,7 @@ public class ModContainers
 										CHIPALYZER.setRegistryName(ModReferences.CHIPALYZERCONTAINER), 
 										MACHINEBULBREPROCESSOR.setRegistryName(ModReferences.MACHINEBULBREPROCESSORCONTAINER), 
 										TELEPORTERITEM.setRegistryName(ModReferences.TELEPORTERITEMCONTAINER), 
-										PLANTTOPIATELEPORTER.setRegistryName(ModReferences.TELEPORTERBLOCKCONTAINER));
+										PLANTTOPIATELEPORTER.setRegistryName(ModReferences.TELEPORTERBLOCKCONTAINER), 
+										ENERGYSUPPLIER.setRegistryName(ModReferences.ENERGYSUPPLIERCONTAINER));
 	}
 }

@@ -24,7 +24,7 @@ public class TestItem extends BaseItem
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.planttopia_dimtype, Blocks.DIRT);	
-		Minecraft.getInstance().displayGuiScreen(new GuideScreen());
+		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
 		/*
 		if(!ctx.getWorld().isRemote)
 		{
