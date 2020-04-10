@@ -1,6 +1,8 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.blocks.ElectricFence;
+import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
+import net.kaneka.planttech2.blocks.machines.ElectricFenceTop;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.container.EnergySupplierContainer;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
@@ -8,6 +10,7 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -75,6 +78,10 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
+		if (world == null)
+		{
+			return;
+		}
 		ticks++;
 		if(energystorage.getEnergyStored() <= 0)
 		{
@@ -121,7 +128,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 		for (Direction direction : Direction.values())
 		{
 			BlockPos blockPos = this.pos.offset(direction);
-			if (world.getBlockState(blockPos).getBlock() instanceof ElectricFence)
+			if (world.getBlockState(blockPos).getBlock() instanceof AbstractElectricFence)
 			{
 				list.add(blockPos);
 			}

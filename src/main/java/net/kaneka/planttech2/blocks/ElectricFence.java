@@ -1,6 +1,8 @@
 package net.kaneka.planttech2.blocks;
 
+import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
 import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
+import net.kaneka.planttech2.blocks.machines.ElectricFenceTop;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.block.Block;
@@ -11,10 +13,9 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -28,175 +29,88 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.Random;
 
-public class ElectricFence extends BaseBlock
+public class ElectricFence extends AbstractElectricFence
 {
-    public static final IntegerProperty ELECTRIC_POWER = IntegerProperty.create("electric_power", 0, 15);
-    public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public boolean isTop;
-    public static final VoxelShape TOP_X_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(7.0D, 1.0D, 1.0D, 9.0D, 5.0D, 15.0D),
-            Block.makeCuboidShape(6.0D, 5.0D, 1.0D, 10.0D, 7.0D, 15.0D),
+    public static final BooleanProperty NORTH = BooleanProperty.create("north");
+    public static final BooleanProperty EAST = BooleanProperty.create("east");
+    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
+    public static final BooleanProperty WEST = BooleanProperty.create("west");
 
-            Block.makeCuboidShape(1.0D, 10.0D, 1.0D, 3.0D, 13.0D, 15.0D),
-            Block.makeCuboidShape(3.0D, 7.0D, 1.0D, 6.0D, 10.0D, 15.0D),
-            Block.makeCuboidShape(10.0D, 7.0D, 1.0D, 13.0D, 10.0D, 15.0D),
-            Block.makeCuboidShape(13.0D, 10.0D, 1.0D, 15.0D, 13.0D, 15.0D));
-    public static final VoxelShape TOP_Z_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(1.0D, 1.0D, 7.0D, 15.0D, 5.0D, 9.0D),
-            Block.makeCuboidShape(1.0D, 5.0D, 6.0D, 15.0D, 7.0D, 10.0D),
+    public static final VoxelShape POST = Block.makeCuboidShape(7.5D, 0.10D, 7.5D, 8.5D, 15.90D, 8.5D);
+    public static final VoxelShape NEGATIVE_Z = Block.makeCuboidShape(7.0D, 0.10D, 0.10D, 9.0D, 15.90D, 8.5D);
+    public static final VoxelShape POSITIVE_Z = Block.makeCuboidShape(7.0D, 0.10D, 7.5D, 9.0D, 15.90D, 15.90D);
+    public static final VoxelShape NEGATIVE_X = Block.makeCuboidShape(0.10D, 0.10D, 7.0D, 8.5D, 15.90D, 9.0D);
+    public static final VoxelShape POSITIVE_X = Block.makeCuboidShape(7.5D, 0.10D, 7.0D, 15.90D, 15.90D, 9.0D);
 
-            Block.makeCuboidShape(1.0D, 10.0D, 1.0D, 15.0D, 13.0D, 3.0D),
-            Block.makeCuboidShape(1.0D, 7.0D, 3.0D, 15.0D, 10.0D, 6.0D),
-            Block.makeCuboidShape(1.0D, 7.0D, 10.0D, 15.0D, 10.0D, 13.0D),
-            Block.makeCuboidShape(1.0D, 10.0D, 13.0D, 15.0D, 13.0D, 15.0D));
-    public static final VoxelShape X_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(7.0D, 1.0D, 1.0D, 9.0D, 15.0D, 15.0D));
-    public static final VoxelShape Z_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(1.0D, 1.0D, 7.0D, 15.0D, 15.0D, 9.0D));
-
-    public ElectricFence(Properties property, String name, ItemGroup group, boolean hasItem, boolean isTop)
+    public ElectricFence(Properties property, String name, ItemGroup group, boolean hasItem)
     {
-        super(property.notSolid().lightValue(6), name, group, hasItem);
-        setDefaultState(getDefaultState().with(ELECTRIC_POWER, 1).with(HORIZONTAL_FACING, Direction.NORTH));
-        this.isTop = isTop;
+        super(property, name, group, hasItem);
+        setDefaultState(getDefaultState()
+                .with(ELECTRIC_POWER, 0)
+                .with(NORTH, false)
+                .with(EAST, false)
+                .with(SOUTH, false)
+                .with(WEST, false));
     }
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
-       builder.add(ELECTRIC_POWER, HORIZONTAL_FACING);
+        super.fillStateContainer(builder);
+        builder.add(NORTH, EAST, SOUTH, WEST);
     }
 
     @Override
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        return this.getDefaultState()
-                .with(HORIZONTAL_FACING, stateIn.get(HORIZONTAL_FACING))
-                .with(ELECTRIC_POWER, updatePower((World) worldIn, currentPos));
+        return getState(this.getDefaultState()
+                .with(ELECTRIC_POWER, updatePower((World) worldIn, currentPos)), (World) worldIn, currentPos);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return this.getDefaultState()
-                .with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing())
-                .with(ELECTRIC_POWER, updatePower(context.getWorld(), context.getPos()));
+        return getState(this.getDefaultState()
+                .with(ELECTRIC_POWER, updatePower(context.getWorld(), context.getPos())), context.getWorld(), context.getPos());
     }
 
-    public int updatePower(World worldIn, BlockPos pos)
+    public boolean canConnectTo(World world, BlockPos pos, Direction direction)
     {
-        int Largestpower = 0;
-        for (Direction direction : Direction.values())
-        {
-            BlockState state = worldIn.getBlockState(pos.offset(direction));
-            if (state.getBlock() instanceof EnergySupplierBlock && state.get(EnergySupplierBlock.SUPPLYING))
-            {
-                return 15;
-            }
-            if (state.getBlock() instanceof ElectricFence && state.has(ELECTRIC_POWER))
-            {
-                int power = state.get(ELECTRIC_POWER);
-                if (power > Largestpower)
-                {
-                    Largestpower = power - 1;
-                }
-            }
-        }
-        return Largestpower;
+        BlockState state = world.getBlockState(pos.offset(direction));
+        Block block = state.getBlock();
+        return (block instanceof ElectricFence || state.isSolidSide(world, pos.offset(direction), direction.getOpposite()));
+    }
+
+    private BlockState getState(BlockState state, World worldIn, BlockPos pos)
+    {
+        return state
+                .with(NORTH, canConnectTo(worldIn, pos, Direction.SOUTH))
+                .with(EAST, canConnectTo(worldIn, pos, Direction.WEST))
+                .with(SOUTH, canConnectTo(worldIn, pos, Direction.NORTH))
+                .with(WEST, canConnectTo(worldIn, pos, Direction.EAST));
     }
 
     @SuppressWarnings("deprecation")
 	@Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
-        switch (state.get(HORIZONTAL_FACING).getAxis())
+        VoxelShape shape = POST;
+        if (state.get(NORTH))
         {
-            case X:
-                if (isTop)
-                {
-                    return TOP_X_AXIS;
-                }
-                return X_AXIS;
-            case Z:
-                if (isTop)
-                {
-                    return TOP_Z_AXIS;
-                }
-                return Z_AXIS;
-            default:
-                return super.getShape(state, worldIn, pos, context);
+            shape = VoxelShapes.or(shape, POSITIVE_Z);
         }
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getShape(state, worldIn, pos, context);
-    }
-
-    @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
-    {
-        if (state.get(ELECTRIC_POWER) > 0)
+        if (state.get(SOUTH))
         {
-            if (entityIn instanceof LivingEntity)
-            {
-                if (worldIn.isRaining() && worldIn.canSeeSky(pos))
-                {
-                    entityIn.attackEntityFrom(DamageSource.SWEET_BERRY_BUSH, 5.0F);
-                    if (worldIn.isRemote)
-                    {
-                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.LARGE_SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.75F, 50F);
-                    }
-                }
-                else
-                {
-                    entityIn.attackEntityFrom(DamageSource.SWEET_BERRY_BUSH, 2.5F);
-                    if (worldIn.isRemote)
-                    {
-                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.55F, 20F);
-                    }
-                }
-            }
-            else
-            {
-                entityIn.remove();
-                if (worldIn.isRemote)
-                {
-                    doCollideAnimation(pos, worldIn, 7, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.8F, 20F);
-                }
-            }
+            shape = VoxelShapes.or(shape, NEGATIVE_Z);
         }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void doCollideAnimation(BlockPos pos, World worldIn, int amount, BasicParticleType particle, SoundEvent sound, float volume, float pitch)
-    {
-        double x = pos.getX();
-        double y = pos.getY();
-        double z = pos.getZ();
-        Random random = new Random();
-//        worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
-        worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
-        for (int i = 0; i < amount; i++)
+        if (state.get(WEST))
         {
-            worldIn.addParticle(particle, x + random.nextFloat(), y + random.nextFloat(), z + random.nextFloat(), 0.0D, 0.0D, 0.0D);
+            shape = VoxelShapes.or(shape, POSITIVE_X);
         }
-    }
-
-    @Override
-    public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
-    {
-        if (stateIn.get(ELECTRIC_POWER) == 0)
+        if (state.get(EAST))
         {
-            return;
+            shape = VoxelShapes.or(shape, NEGATIVE_X);
         }
-        if (rand.nextInt(250) == 1)
-        {
-            if (worldIn.isRemote)
-            {
-                doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.15F, 100F);
-            }
-        }
+        return shape;
     }
 }
