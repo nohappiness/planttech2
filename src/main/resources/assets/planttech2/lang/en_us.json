@@ -1008,7 +1008,7 @@
     "slot.util.squeezerupgrade": "Not implemented yet",
     "slot.util.knowledgechip": "Insert knowledgechip to collect knowledge while machine is active (limited by the tier of the machine)",
     "slot.util.output": "Outputslot", 
-    "slot.util.fluidin": "Insert biomass container to insert biomass", 
+    "slot.util.fluidin": "Insert biomass container to insert biomass",
     "slot.util.fluidout": "Insert biomass container to extract biomass",
     "slot.util.energyin": "Insert item with energy to insert energy", 
     "slot.util.energyout": "Insert item with energy to extract energy", 
