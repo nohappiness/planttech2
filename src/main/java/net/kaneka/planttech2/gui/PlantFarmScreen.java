@@ -55,4 +55,10 @@ public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "void_plantfarm";
+	}
 }

@@ -74,7 +74,7 @@ public class GuideScreen extends Screen
 			}
 		}
 		
-		addButtonList(buttons_navigation, 0, 0, this.guiLeft + 170, this.guiTop + 230, 100, 20, translateUnformated("gui.mainmenu")); 
+		addButtonList(buttons_navigation, 0, 0, this.guiLeft + 170, this.guiTop + 230, 100, 20, translateUnformated("gui.back")); 
 		addButtonList(buttons_navigation, 0, 1, this.guiLeft + 15, this.guiTop + 230, 100, 20, translateUnformated("gui.last")); 
 		addButtonList(buttons_navigation, 0, 2, this.guiLeft + 320, this.guiTop + 230, 100, 20, translateUnformated("gui.next")); 
 		
@@ -102,7 +102,11 @@ public class GuideScreen extends Screen
 		{
 			if(buttonid == 0)
 			{
-				mode = 0; 
+				if(mode > 1)
+				{
+					mode--; 
+					page = 0; 
+				}
 			}
 			else if(buttonid == 1)
 			{
@@ -123,7 +127,7 @@ public class GuideScreen extends Screen
 			}
 			else if(mode == 2)
 			{
-				entryid = buttonid; 
+				entryid = buttonid + page * 10; 
 			}
 		}
 		update(modechange); 
@@ -169,23 +173,33 @@ public class GuideScreen extends Screen
     			if(i < guide.getAmountMainMenus())
     			{ 
     				activateButton(button);
-    				button.setMessage(guide.getMenuById(i).getNameString());
+    				button.setMessage(guide.getMenuById(i).getName());
     			}
     		}
 		}
 		else if(mode == 1)
 		{
 			GuideMenu menu = guide.getMenuById(menuid);
+			maxPages = menu.getAmountEntrys()/8; 
 			for(int i = 0; i < buttons_entry.size(); i++)
     		{
     			Widget button = buttons_entry.get(i); 
-    			if(i < menu.getAmountEntrys())
+    			if(i + page * 10 < menu.getAmountEntrys())
     			{ 
     				activateButton(button);
-    				button.setMessage(menu.getEntryById(i).getName());
+    				button.setMessage(menu.getEntryById(i + page * 10).getName());
     			}
     		}
 			activateButton(buttons_navigation.get(0));
+			if(page > 0)
+			{
+				activateButton(buttons_navigation.get(1));
+			}
+			
+			if(maxPages-1 > page)
+			{
+				activateButton(buttons_navigation.get(2));
+			}
 		}
 		else if(mode == 2)
 		{
@@ -200,7 +214,7 @@ public class GuideScreen extends Screen
 				activateButton(buttons_navigation.get(1));
 			}
 			
-			if(maxPages > page)
+			if(maxPages-1 > page)
 			{
 				activateButton(buttons_navigation.get(2));
 			}
@@ -259,7 +273,7 @@ public class GuideScreen extends Screen
 		}
 		else if(mode == 1)
 		{
-			this.drawCenteredString(guide.getMenuById(menuid).getNameString(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
+			this.drawCenteredString(guide.getMenuById(menuid).getName(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
 		}
 		else if(mode == 2)
 		{	
@@ -269,7 +283,8 @@ public class GuideScreen extends Screen
 			for(int i = 0; i < lines.size(); i++)
 			{
 				GuideString guideString = lines.get(i);
-				if(page * 19 < guideString.getLine() && guideString.getLine() < page * 19 + 19)
+				//System.out.println(guideString.getLine() + ":" + guideString.getString()); 
+				if(page * 19 <= guideString.getLine() && guideString.getLine() < page * 19 + 19)
 				{
 					this.drawLine(guideString.getString(), this.guiLeft + 25 + guideString.getX(), this.guiTop + 30 + 10 * (guideString.getLine() - (19 * page)));
 				}

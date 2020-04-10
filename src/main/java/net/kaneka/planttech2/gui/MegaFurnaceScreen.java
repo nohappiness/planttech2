@@ -50,4 +50,10 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "mega_furnace";
+	}
 }

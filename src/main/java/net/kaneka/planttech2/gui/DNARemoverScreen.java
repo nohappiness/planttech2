@@ -48,4 +48,10 @@ public class DNARemoverScreen extends BaseContainerScreen<DNARemoverContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "dna_remover";
+	}
 }

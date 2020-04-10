@@ -40,4 +40,10 @@ public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierCont
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "energy_supplier";
+	}
 }

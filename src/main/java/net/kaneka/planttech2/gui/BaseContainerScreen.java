@@ -137,12 +137,9 @@ abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScr
 	
 	protected String getGuideMenuString()
 	{
-		return "Main2"; 
+		return "machines"; 
 	}
 	
-	protected String getGuideEntryString()
-	{
-		return "traits"; 
-	}
+	abstract protected String getGuideEntryString();
 
 }

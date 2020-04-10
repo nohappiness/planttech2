@@ -16,11 +16,11 @@
         },
         "C": 
         {
-            "item": "minecraft:piston"
+            "item": "minecraft:wheat_seeds"
         }
     },
     "result": {
-        "item": "planttech2:seedsqueezer",
+        "item": "planttech2:machinebulbreprocessor_bulb",
         "count": 1
     }
 }

@@ -48,4 +48,10 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "identifier";
+	}
 }

@@ -48,4 +48,10 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "dna_extractor";
+	}
 }

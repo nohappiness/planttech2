@@ -64,4 +64,10 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "general";
+	}
 }

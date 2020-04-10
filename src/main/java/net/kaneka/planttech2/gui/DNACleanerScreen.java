@@ -50,4 +50,11 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+
+
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "dna_cleaner";
+	}
 }

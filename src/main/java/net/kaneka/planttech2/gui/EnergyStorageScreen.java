@@ -39,4 +39,10 @@ public class EnergyStorageScreen extends BaseContainerScreen<EnergyStorageContai
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "energy_storage";
+	}
 }

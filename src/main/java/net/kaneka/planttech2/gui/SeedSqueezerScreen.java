@@ -76,4 +76,10 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "seed_squeezer";
+	}
 }

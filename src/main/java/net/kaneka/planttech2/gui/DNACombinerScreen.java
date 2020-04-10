@@ -48,4 +48,10 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "dna_combiner";
+	}
 }

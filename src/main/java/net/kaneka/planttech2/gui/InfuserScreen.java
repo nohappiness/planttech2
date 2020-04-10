@@ -58,4 +58,10 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "infuser";
+	}
 }

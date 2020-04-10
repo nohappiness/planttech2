@@ -167,4 +167,10 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "machinebulb_reprocessor";
+	}
 }

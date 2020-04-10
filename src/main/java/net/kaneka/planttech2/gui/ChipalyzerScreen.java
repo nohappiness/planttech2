@@ -48,4 +48,10 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "chipalyzer";
+	}
 }

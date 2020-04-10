@@ -59,4 +59,10 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "seedconstructor";
+	}
 }

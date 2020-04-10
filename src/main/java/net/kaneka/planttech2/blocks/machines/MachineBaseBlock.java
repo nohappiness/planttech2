@@ -6,11 +6,13 @@ import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.machine.*;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
+import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,6 +25,9 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -136,6 +141,47 @@ public class MachineBaseBlock extends BaseBlock
 			}
 			super.onReplaced(state, worldIn, pos, newState, isMoving);
 		}
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	{
+		int tier = 0; 
+		if (this == ModBlocks.IDENTIFIER)
+			tier = PlantTechConstants.MACHINETIER_IDENTIFIER;
+		else if (this == ModBlocks.MEGAFURNACE)
+			tier = PlantTechConstants.MACHINETIER_MEGAFURNACE;
+		else if (this == ModBlocks.PLANTFARM)
+			tier = PlantTechConstants.MACHINETIER_PLANTFARM;
+		else if (this == ModBlocks.SOLARGENERATOR)
+			tier = PlantTechConstants.MACHINETIER_SOLARGENERATOR;
+		else if (this == ModBlocks.SEEDSQUEEZER)
+			tier = PlantTechConstants.MACHINETIER_SEEDSQUEEZER;
+		else if (this == ModBlocks.DNA_COMBINER)
+			tier = PlantTechConstants.MACHINETIER_DNA_COMBINER;
+		else if (this == ModBlocks.DNA_EXTRACTOR)
+			tier = PlantTechConstants.MACHINETIER_DNA_EXTRACTOR;
+		else if (this == ModBlocks.DNA_REMOVER)
+			tier = PlantTechConstants.MACHINETIER_DNA_REMOVER;
+		else if (this == ModBlocks.SEEDCONSTRUCTOR)
+			tier = PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR;
+		else if (this == ModBlocks.DNA_CLEANER)
+			tier = PlantTechConstants.MACHINETIER_DNA_CLEANER;
+		else if (this == ModBlocks.COMPRESSOR)
+			tier = PlantTechConstants.MACHINETIER_COMPRESSOR;
+		else if (this == ModBlocks.INFUSER)
+			tier = PlantTechConstants.MACHINETIER_INFUSER;
+		else if (this == ModBlocks.CHIPALYZER)
+			tier = PlantTechConstants.MACHINETIER_CHIPALYZER;
+		else if (this == ModBlocks.MACHINEBULBREPROCESSOR)
+			tier = PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR;
+		else if (this == ModBlocks.ENERGY_SUPPLIER)
+			tier = PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER;
+		
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.tier").getUnformattedComponentText() + ": " + tier));
+	
+		
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 }

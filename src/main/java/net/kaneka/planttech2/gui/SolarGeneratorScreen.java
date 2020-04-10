@@ -58,4 +58,10 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 	{
 		return TEXTURES_COLORBLIND;
 	}
+	
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "solar_generator";
+	}
 }

@@ -3,6 +3,8 @@ package net.kaneka.planttech2.gui.guide;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.util.text.TranslationTextComponent;
+
 public class GuideMenu
 {
 	private String name; 
@@ -21,6 +23,11 @@ public class GuideMenu
 	public String getNameString()
 	{
 		return name; 
+	}
+	
+	public String getName()
+	{
+		return new TranslationTextComponent("guide.planttech2." + name + ".menu").getUnformattedComponentText(); 
 	}
 
 	public List<GuideEntry> getSubmenus()

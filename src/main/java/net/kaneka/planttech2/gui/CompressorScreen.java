@@ -82,4 +82,10 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	{
 		return TEXTURES_COLORBLIND;
 	}
+
+	@Override
+	protected String getGuideEntryString()
+	{
+		return "compressor";
+	}
 }
