@@ -1,22 +1,13 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.blocks.machines.ElectricFenceTop;
-import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
-import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -24,10 +15,6 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.util.Random;
 
 public class ElectricFence extends AbstractElectricFence
 {
@@ -78,7 +65,7 @@ public class ElectricFence extends AbstractElectricFence
     {
         BlockState state = world.getBlockState(pos.offset(direction));
         Block block = state.getBlock();
-        return (block instanceof ElectricFence || state.isSolidSide(world, pos.offset(direction), direction.getOpposite()));
+        return ((block instanceof AbstractElectricFence || block instanceof ElectricFenceGate) || state.isSolidSide(world, pos.offset(direction), direction.getOpposite()));
     }
 
     private BlockState getState(BlockState state, World worldIn, BlockPos pos)

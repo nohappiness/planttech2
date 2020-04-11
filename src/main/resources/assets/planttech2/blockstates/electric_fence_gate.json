@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "facing=north,open=true,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened"
+    },
+    "facing=south,open=true,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened", "y": 180
+    },
+    "facing=east,open=true,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened", "y": 90
+    },
+    "facing=west,open=true,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened", "y": 270
+    },
+    "facing=north,open=false,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top"
+    },
+    "facing=south,open=false,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top", "y": 180
+    },
+    "facing=east,open=false,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top", "y": 90
+    },
+    "facing=west,open=false,is_top=true": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_top", "y": 270
+    },
+    "facing=north,open=true,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_opened"
+    },
+    "facing=south,open=true,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_opened", "y": 180
+    },
+    "facing=east,open=true,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_opened", "y": 90
+    },
+    "facing=west,open=true,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate_opened", "y": 270
+    },
+    "facing=north,open=false,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate"
+    },
+    "facing=south,open=false,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate", "y": 180
+    },
+    "facing=east,open=false,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate", "y": 90
+    },
+    "facing=west,open=false,is_top=false": {
+      "model": "planttech2:block/electric_fences/electric_fence_gate", "y": 270
+    }
+  }
+}
