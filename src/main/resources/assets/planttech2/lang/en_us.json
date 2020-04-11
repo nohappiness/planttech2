@@ -13,6 +13,9 @@
     "planttech2.infuser": "Infuser", 
     "planttech2.compressor": "Compressor", 
     "planttech2.chipalyzer": "Chipalyzer", 
+    "planttech2.carver": "Carver Crop", 
+    "planttech2.machinebulbreprocessor": "Machinebulbreprocessor", 
+    "planttech2.machine_growing": "Growing Machine", 
 
     "config.test": "TEST",
 
