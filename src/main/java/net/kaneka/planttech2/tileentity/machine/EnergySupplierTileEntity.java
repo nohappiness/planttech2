@@ -1,30 +1,19 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.blocks.ElectricFence;
 import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
-import net.kaneka.planttech2.blocks.machines.ElectricFenceTop;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.container.EnergySupplierContainer;
-import net.kaneka.planttech2.container.SolarGeneratorContainer;
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class EnergySupplierTileEntity extends EnergyInventoryTileEntity

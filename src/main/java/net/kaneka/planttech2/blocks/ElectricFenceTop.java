@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.blocks.machines;
+package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.ElectricFence;
 import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;

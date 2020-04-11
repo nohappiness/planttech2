@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.kaneka.planttech2.blocks.ElectricFence;
-import net.kaneka.planttech2.blocks.machines.ElectricFenceTop;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.block.Block;
@@ -21,7 +19,6 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -131,11 +128,11 @@ public class AbstractElectricFence extends BaseBlock
         {
             return;
         }
-        if (rand.nextInt(250) == 1)
+        if (rand.nextInt(300) == 1)
         {
             if (worldIn.isRemote)
             {
-                doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.15F, 1.0F);
+                doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
             }
         }
     }
@@ -143,6 +140,6 @@ public class AbstractElectricFence extends BaseBlock
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-        tooltip.add(new StringTextComponent("can be dismantled be wrench, connect to a powered energy supplier or electric fence to activate"));
+        tooltip.add(new StringTextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }
 }
