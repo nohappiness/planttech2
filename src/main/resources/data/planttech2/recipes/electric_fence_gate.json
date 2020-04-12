@@ -6,17 +6,17 @@
         "PIP"
     ],
     "key": {
+        "I":
+        {
+            "item": "minecraft:iron_door"
+        },
         "P":
         {
             "item": "planttech2:plantium_ingot"
-        },
-        "I":
-        {
-            "item": "minecraft:iron_bars"
         }
     },
     "result": {
-        "item": "planttech2:electric_fence",
-        "count": 8
+        "item": "planttech2:electric_fence_gate",
+        "count": 2
     }
 }

@@ -1,8 +1,7 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
-import net.kaneka.planttech2.blocks.ElectricFence;
+import net.kaneka.planttech2.blocks.ElectricFenceGate;
+import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -18,6 +17,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class WrenchItem extends BaseItem
 {
@@ -41,25 +42,32 @@ public class WrenchItem extends BaseItem
 			if (stack.getItem() instanceof WrenchItem && player.isCrouching())
 			{
 				Block block = target.getBlock();
-				if (block instanceof MachineBaseBlock)
+				if (removeIfValid(block, world, pos))
 				{
-					world.removeBlock(pos, false);
-					Block.spawnAsEntity(world, pos, new ItemStack(target.getBlock()));
-					return ActionResultType.SUCCESS;
-				} 
-				else if (block instanceof ElectricFence)
-				{
-					world.removeBlock(pos, false);
-					if (!player.addItemStackToInventory(new ItemStack(block)))
+					if (block instanceof AbstractElectricFence || block instanceof ElectricFenceGate)
 					{
-						Block.spawnAsEntity(world, player.getPosition(), new ItemStack(block));
+						if (!player.addItemStackToInventory(new ItemStack(block)))
+						{
+							Block.spawnAsEntity(world, player.getPosition(), new ItemStack(block));
+						}
+						return ActionResultType.SUCCESS;
 					}
+					Block.spawnAsEntity(world, pos, new ItemStack(target.getBlock()));
 					return ActionResultType.SUCCESS;
 				}
 			}
 		}
 		return super.onItemUse(ctx);
+	}
 
+	private boolean removeIfValid(Block block, World world, BlockPos pos)
+	{
+		if (block instanceof MachineBaseBlock || block instanceof AbstractElectricFence || block instanceof ElectricFenceGate)
+		{
+			world.removeBlock(pos, false);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
