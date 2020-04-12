@@ -631,6 +631,7 @@
     
     "block.planttech2.electric_fence":  "Electric Fence",
 	"block.planttech2.electric_fence_top":  "Electric Fence Top",
+	"block.planttech2.electric_fence_gate":  "Electric Fence Gate",
     
     "block.planttech2.white_crystal_block": "White Crystal Block", 
     "block.planttech2.white_crystal_brick": "White Crystal Bricks", 

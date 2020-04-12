@@ -6,6 +6,7 @@ import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -58,6 +59,12 @@ public class RegistryEvents
 	{
 		ModSounds.registerAll(event.getRegistry());
 	}
+
+	@SubscribeEvent
+	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
+	{
+		ModEntityTypes.registerAll(event.getRegistry());
+	}
 	
 	/*
 	@SubscribeEvent
@@ -71,13 +78,6 @@ public class RegistryEvents
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
 	{
 		ModStructures.registerAll(event);
-	}
-	
-	
-	@SubscribeEvent
-	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
-	{
-		ModEntityTypes.registerAll(event); 
 	}
 	*/
 	

@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -16,7 +15,6 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -153,28 +151,28 @@ public class ElectricFenceGate extends BaseBlock
                 shape = DOOR_CLOSE_Z;
                 if (open)
                 {
-                    shape = (top) ? DOOR_NEGATIVE_Z : toTopShape(DOOR_NEGATIVE_Z);
+                    shape = (top) ? toTopShape(DOOR_NEGATIVE_Z) : DOOR_NEGATIVE_Z;
                 }
                 break;
             case SOUTH:
                 shape = DOOR_CLOSE_Z;
                 if (open)
                 {
-                    shape = (top) ? DOOR_POSITIVE_Z : toTopShape(DOOR_POSITIVE_Z);
+                    shape = (top) ? toTopShape(DOOR_POSITIVE_Z) : DOOR_POSITIVE_Z;
                 }
                 break;
             case WEST:
                 shape = DOOR_CLOSE_X;
                 if (open)
                 {
-                    shape = (top) ? DOOR_NEGATIVE_X : toTopShape(DOOR_NEGATIVE_X);
+                    shape = (top) ? toTopShape(DOOR_NEGATIVE_X) : DOOR_NEGATIVE_X;
                 }
                 break;
             case EAST:
                 shape = DOOR_CLOSE_X;
                 if (open)
                 {
-                    shape = (top) ? DOOR_POSITIVE_X : toTopShape(DOOR_POSITIVE_X);
+                    shape = (top) ? toTopShape(DOOR_POSITIVE_X) : DOOR_POSITIVE_X;
                 }
                 break;
         }
@@ -207,7 +205,7 @@ public class ElectricFenceGate extends BaseBlock
     private VoxelShape toTopShape(VoxelShape shape)
     {
         AxisAlignedBB aabb = shape.getBoundingBox();
-        return Block.makeCuboidShape(aabb.minX, aabb.minY - 1, aabb.minZ, aabb.maxX, aabb.maxY - 1, aabb.maxZ);
+        return Block.makeCuboidShape(aabb.minX * 16, aabb.minY * 16 - 1, aabb.minZ * 16, aabb.maxX * 16, aabb.maxY * 16 - 1, aabb.maxZ * 16);
     }
 
     private boolean checkValid(BlockPos pos, World world)
