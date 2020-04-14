@@ -30,7 +30,7 @@ public class ModTileEntities
     public static final TileEntityType<MachineBulbReprocessorTileEntity> MACHINEBULBREPROCESSOR_TE = TileEntityType.Builder.create(MachineBulbReprocessorTileEntity::new, ModBlocks.MACHINEBULBREPROCESSOR).build(null); 
     public static final TileEntityType<PlantTopiaTeleporterTileEntity> PLANTTOPIATELEPORTER_TE = TileEntityType.Builder.create(PlantTopiaTeleporterTileEntity::new, ModBlocks.PLANTTOPIA_TELEPORTER).build(null); 
     public static final TileEntityType<EnergySupplierTileEntity> ENERGY_SUPPLIER_TE = TileEntityType.Builder.create(EnergySupplierTileEntity::new, ModBlocks.ENERGY_SUPPLIER).build(null);
-    
+
     
 	public static final void register(IForgeRegistry<TileEntityType<?>> registry)
 	{

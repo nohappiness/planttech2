@@ -161,13 +161,10 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			
 			if(item instanceof BlockItem)
 			{
-				Block block = ((BlockItem) item).getBlock(); 
-				if(block != null)
+				Block block = ((BlockItem) item).getBlock();
+				if(block instanceof CropsBlock)
 				{
-					if(block instanceof CropsBlock)
-					{
-						return true; 
-					}
+					return true;
 				}
 			}
 		}
@@ -187,12 +184,14 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			Item item = stack.getItem(); 
 			if(item instanceof CropSeedItem)
 			{
-				CompoundNBT nbt = stack.getTag();
-				if(nbt.contains("growspeed"))
+				if (stack.hasTag())
 				{
-					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
+					CompoundNBT nbt = stack.getTag();
+					if(nbt.contains("growspeed"))
+					{
+						return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
+					}
 				}
-				
 			}
 		}
 		return 90 * 20 * 7; 

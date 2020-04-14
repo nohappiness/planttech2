@@ -104,7 +104,9 @@
     "item.planttech2.knowledgechip_3": "Knowledgechip Tier 3", 
     "item.planttech2.knowledgechip_4": "Knowledgechip Tier 4", 
     "item.planttech2.knowledgechip_5": "Knowledgechip Tier 5", 
-    
+
+	"item.planttech2.plant_obtainer": "Plant Obtainer",
+
     "item.planttech2.machinebulbreprocessor_bulb": "Machinebulbreprocessor Bulb", 
     "item.planttech2.dna_combiner_bulb": "DNA Combiner Bulb", 
     "item.planttech2.dna_extractor_bulb": "DNA Extractor Bulb", 

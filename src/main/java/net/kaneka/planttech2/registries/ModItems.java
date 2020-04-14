@@ -5,25 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.AdvancedAnalyserItem;
-import net.kaneka.planttech2.items.AnalyserItem;
-import net.kaneka.planttech2.items.BaseItem;
-import net.kaneka.planttech2.items.BiomassContainerItem;
-import net.kaneka.planttech2.items.CreditCardItem;
-import net.kaneka.planttech2.items.CropRemover;
-import net.kaneka.planttech2.items.CropSeedItem;
-import net.kaneka.planttech2.items.DNAContainerItem;
-import net.kaneka.planttech2.items.EnergyStorageItem;
-import net.kaneka.planttech2.items.FertilizerItem;
-import net.kaneka.planttech2.items.GuideItem;
-import net.kaneka.planttech2.items.KnowledgeChip;
-import net.kaneka.planttech2.items.MachineBulbItem;
-import net.kaneka.planttech2.items.ParticleItem;
-import net.kaneka.planttech2.items.TeleporterItem;
-import net.kaneka.planttech2.items.TestItem;
-import net.kaneka.planttech2.items.ThermometerItem;
-import net.kaneka.planttech2.items.TierItem;
-import net.kaneka.planttech2.items.WrenchItem;
+import net.kaneka.planttech2.items.*;
 import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
@@ -109,6 +91,7 @@ public class ModItems
 	    		   PLANTCARD = new CreditCardItem("plantcard", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1)),
 	    		   PLANTIUM_INGOT  = new BaseItem("plantium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   PLANTIUM_NUGGET = new BaseItem("plantium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
+				   PLANT_OBTAINER = new PlantObtainer("plant_obtainer", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 	    		   RANGEUPGRADE_TIER_1 = new TierItem("rangeupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 1),
 	    		   RANGEUPGRADE_TIER_2 = new TierItem("rangeupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 1),
 	    		   RANGEUPGRADE_TIER_3 = new TierItem("rangeupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 1),
