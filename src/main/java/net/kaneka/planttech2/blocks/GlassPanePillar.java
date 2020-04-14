@@ -9,16 +9,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GlassPanePillar extends CustomRotatedPillarBlock
 {
-
 	public GlassPanePillar(Properties property, String name, ItemGroup group, boolean hasItem)
 	{
-		super(property, name, group, hasItem);
-	}
-	
-	@Override 
-	@OnlyIn(Dist.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
-	{
-	   return true;
+		super(property.notSolid(), name, group, hasItem);
 	}
 }

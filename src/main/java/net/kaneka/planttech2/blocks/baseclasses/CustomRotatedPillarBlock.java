@@ -20,6 +20,7 @@ public class CustomRotatedPillarBlock extends BaseBlock
 		this.setDefaultState(this.getDefaultState().with(AXIS, Direction.Axis.Y));
 	}
 
+	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
 		switch (rot)
@@ -40,11 +41,13 @@ public class CustomRotatedPillarBlock extends BaseBlock
 		}
 	}
 
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(AXIS);
 	}
 
+	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
 		return this.getDefaultState().with(AXIS, context.getFace().getAxis());

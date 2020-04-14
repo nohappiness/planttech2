@@ -30,7 +30,7 @@ public class GlassPaneEnd extends BaseBlock implements IColoredBlock
 
 	public GlassPaneEnd(Properties property, String name, int color, ItemGroup group, boolean hasItem)
 	{
-		super(property, name, group, hasItem);
+		super(property.notSolid(), name, group, hasItem);
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(FACE, AttachFace.WALL));
 		this.colorInt = color; 
 	}
