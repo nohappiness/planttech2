@@ -12,7 +12,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -70,10 +72,16 @@ public class RegistryEvents
 	@SubscribeEvent
 	public static void registerDimensions(final RegistryEvent.Register<ModDimension> event)
 	{
-		ModDimensions.registerAll(event);
+		ModDimensions.initDimensions(event.getRegistry());
 	}
 	
-	
+	@SubscribeEvent
+	public void onRegisteredDimension(RegisterDimensionsEvent event)
+	{
+		ModDimensions.registerAll();
+	}
+	*/
+	/*
 	@SubscribeEvent
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
 	{

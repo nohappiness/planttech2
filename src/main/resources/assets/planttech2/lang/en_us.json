@@ -999,6 +999,7 @@
     "slot.identifier.input": "Insert seeds with unknown traits", 
     "slot.infuser.input": "Insert item/block you want to infuse with biomass", 
     "slot.megafurnace.input": "Insert item/block you want to smelt", 
+    "slot.machinebulbreprocessor.input": "Insert any seed that should be reprocessed",
     "slot.plantfarm.storage": "Drops of harvested crops will be inserted here", 
     "slot.seedconstructor.container": "Insert DNA container with traits you want to be constructed", 
     "slot.seedsqueezer.input": "Insert planttech2 seeds that should be squeezed into biomass and energy",

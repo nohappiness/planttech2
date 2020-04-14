@@ -1,23 +1,49 @@
 package net.kaneka.planttech2.registries;
 
+import java.util.function.BiFunction;
+
 import io.netty.buffer.Unpooled;
-import net.kaneka.planttech2.dimensions.planttopia.PlantTopiaModDimension;
+import net.kaneka.planttech2.dimensions.planttopia.PlantTopiaDimension;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.World;
+import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.ModDimension;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModDimensions
 {
-    public static DimensionType planttopia_dimtype;
-	public static final PlantTopiaModDimension PLANTTOPIA = new PlantTopiaModDimension();
-	
-	
-	public static final void registerAll(RegistryEvent.Register<ModDimension> event)
+    private static final ModDimension PLANTTOPIA = new ModDimension()
 	{
-		planttopia_dimtype = DimensionManager.registerDimension(ModReferences.PLANTTOPIA_RESLOC, PLANTTOPIA, new PacketBuffer(Unpooled.buffer()), true);
-		//DimensionManager.registerDimension(ModReferences.PLANTTOPIA_RESLOC, PLANTTOPIA, null, true);
-		event.getRegistry().register(PLANTTOPIA);
+		@Override
+		public BiFunction<World, DimensionType, ? extends Dimension> getFactory()
+		{
+			return PlantTopiaDimension::new;
+		}
+	};
+	
+	
+	public static void initDimensions(IForgeRegistry<ModDimension> registry)
+	{
+		PLANTTOPIA.setRegistryName(ModReferences.PLANTTOPIA_RESLOC);
+		registry.register(PLANTTOPIA);
+		DimensionManager.registerDimension(ModReferences.PLANTTOPIA_RESLOC, PLANTTOPIA, new PacketBuffer(Unpooled.buffer()), true);
+	}
+
+
+	
+	
+	public static final void registerAll()
+	{
+		if(DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC) == null)
+		{
+			DimensionManager.registerDimension(ModReferences.PLANTTOPIA_RESLOC, PLANTTOPIA, new PacketBuffer(Unpooled.buffer()), true);
+		}
+	}
+	
+	public static DimensionType getPlantTopiaDimensionType()
+	{
+		return DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC);
 	}
 }

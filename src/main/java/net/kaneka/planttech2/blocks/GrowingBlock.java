@@ -10,6 +10,7 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -82,6 +83,14 @@ public class GrowingBlock extends BaseBlock
 		if(block == ModBlocks.COMPRESSOR_GROWING || block == ModBlocks.MACHINEBULBREPROCESSOR_GROWING || block == ModBlocks.SEEDSQUEEZER_GROWING || block == ModBlocks.INFUSER_GROWING || block == ModBlocks.IDENTIFIER_GROWING)
 		{
 			drops.add(new ItemStack(ModBlocks.MACHINESHELL_IRON));
+		}
+		else if(block == ModBlocks.MACHINESHELL_IRON_GROWING)
+		{
+			drops.add(new ItemStack(Blocks.IRON_BLOCK));
+		}
+		else if(block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
+		{
+			drops.add(new ItemStack(ModBlocks.PLANTIUM_BLOCK));
 		}
 		else
 		{

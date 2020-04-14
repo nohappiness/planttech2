@@ -1,13 +1,19 @@
 package net.kaneka.planttech2.dimensions.planttopia;
 
+import net.kaneka.planttech2.registries.ModReferences;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.provider.BiomeProviderType;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.ChunkGeneratorType;
+import net.minecraft.world.gen.OverworldGenSettings;
 
 public class PlantTopiaDimension extends Dimension
 {
@@ -20,7 +26,16 @@ public class PlantTopiaDimension extends Dimension
 	@Override
 	public ChunkGenerator<?> createChunkGenerator()
 	{
-		return new PlantTopiaChunkGenerator(world, new PlantTopiaBiomeProvider());
+		OverworldGenSettings set = ChunkGeneratorType.SURFACE.createSettings();
+		set.setDefaultBlock(Blocks.COBBLESTONE.getDefaultState());
+		set.setDefaultFluid(Blocks.LAVA.getDefaultState());
+		return ChunkGeneratorType.SURFACE.create(this.world, BiomeProviderType.FIXED.create(BiomeProviderType.FIXED.createSettings(this.world.getWorldInfo()).setBiome(Biomes.BIRCH_FOREST)), set);
+	}
+	
+	@Override
+	public DimensionType getType()
+	{
+		return DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC);
 	}
 
 	@Override
