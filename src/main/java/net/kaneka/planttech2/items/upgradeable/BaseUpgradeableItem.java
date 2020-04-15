@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.HashMap;
 import java.util.List;
 
@@ -263,7 +264,7 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.getSlotFor(stack)), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
@@ -391,18 +392,24 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 	
 	public static class NamedContainerProvider implements INamedContainerProvider
 	{
-		
+		private int slot;
 		private final ItemStack stack; 
 		
-		public NamedContainerProvider(ItemStack stack)
+		public NamedContainerProvider(ItemStack stack, int slot)
 		{
-			this.stack = stack; 
+			this.stack = stack;
+			this.slot = slot;
 		}
 
 		@Override
 		public Container createMenu(int id, PlayerInventory inv, PlayerEntity entity)
 		{
-			return new ItemUpgradeableContainer(id, inv, stack);
+			return this.getMenu(id, inv);
+		}
+
+		private Container getMenu(int id, PlayerInventory inv)
+		{
+			return new ItemUpgradeableContainer(id, inv, stack, this.slot);
 		}
 
 		@Override
