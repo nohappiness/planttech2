@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
@@ -61,14 +62,20 @@ public class RegistryEvents
 	{
 		ModSounds.registerAll(event.getRegistry());
 	}
-
+	/*
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
+	*/
 	
-	/*
+	@SubscribeEvent
+	public static void registerBiomes(final RegistryEvent.Register<Biome> event)
+	{
+		ModBiomes.registerBiomes(event.getRegistry());
+	}
+	
 	@SubscribeEvent
 	public static void registerDimensions(final RegistryEvent.Register<ModDimension> event)
 	{
@@ -80,7 +87,7 @@ public class RegistryEvents
 	{
 		ModDimensions.registerAll();
 	}
-	*/
+	
 	/*
 	@SubscribeEvent
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)

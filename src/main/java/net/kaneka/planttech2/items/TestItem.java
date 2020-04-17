@@ -1,13 +1,22 @@
 package net.kaneka.planttech2.items;
 
 
+import java.util.Map.Entry;
+
+import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.dimensions.TeleportationUtils;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class TestItem extends BaseItem
 {
@@ -21,12 +30,34 @@ public class TestItem extends BaseItem
 	@Override 
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
-		/*
 		if(!ctx.getWorld().isRemote)
 		{
-			TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);	
-		}
+			
+			/*
+			System.out.println(" ");
+    		System.out.println("Blocks: "); 
+    		for(Entry<ResourceLocation, Block> list: ForgeRegistries.BLOCKS.getEntries())
+    		{
+    			if(list.getKey().getNamespace().contains("planttech2") && !(list.getValue() instanceof CropBaseBlock))
+    			{
+    				System.out.println(list.getValue().getNameTextComponent().getFormattedText()); 
+    			}
+    		}
+    		
+    		System.out.println(" ");
+    		System.out.println("Items: "); 
+    		for(Entry<ResourceLocation, Item> list: ForgeRegistries.ITEMS.getEntries())
+    		{
+    			if(list.getKey().getNamespace().contains("planttech2") && !(list.getValue() instanceof CropSeedItem) && !(list.getValue() instanceof ParticleItem))
+    			{
+    				System.out.println(list.getValue().getDisplayName(new ItemStack(list.getValue())).getFormattedText()); 
+    			}
+    		}
+		
 		*/
+			//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);	
+		}
+		
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
 		/*
 		if(!ctx.getWorld().isRemote)
