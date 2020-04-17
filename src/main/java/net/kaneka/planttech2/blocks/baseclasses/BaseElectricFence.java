@@ -28,10 +28,10 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class AbstractElectricFence extends BaseBlock
+public class BaseElectricFence extends BaseBlock
 {
     public static final IntegerProperty ELECTRIC_POWER = IntegerProperty.create("electric_power", 0, 15);
-    public AbstractElectricFence(Properties property, String name, ItemGroup group, boolean hasItem)
+    public BaseElectricFence(Properties property, String name, ItemGroup group, boolean hasItem)
     {
         super(property.notSolid().lightValue(6), name, group, hasItem);
     }
@@ -53,7 +53,7 @@ public class AbstractElectricFence extends BaseBlock
             {
                 return 15;
             }
-            if (block instanceof AbstractElectricFence && state.has(ELECTRIC_POWER))
+            if (block instanceof BaseElectricFence && state.has(ELECTRIC_POWER))
             {
                 int power = state.get(ELECTRIC_POWER);
                 if (power > Largestpower)

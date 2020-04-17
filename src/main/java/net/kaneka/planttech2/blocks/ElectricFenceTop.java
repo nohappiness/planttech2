@@ -1,21 +1,12 @@
 package net.kaneka.planttech2.blocks;
 
-import net.kaneka.planttech2.blocks.ElectricFence;
-import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.registries.ModSounds;
+import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -25,12 +16,8 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.util.Random;
-
-public class ElectricFenceTop extends AbstractElectricFence
+public class ElectricFenceTop extends BaseElectricFence
 {
     public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
     public static final VoxelShape TOP_X_AXIS = VoxelShapes.or(

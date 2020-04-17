@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
+import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.container.EnergySupplierContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
@@ -117,7 +117,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 		for (Direction direction : Direction.values())
 		{
 			BlockPos blockPos = this.pos.offset(direction);
-			if (world.getBlockState(blockPos).getBlock() instanceof AbstractElectricFence)
+			if (world.getBlockState(blockPos).getBlock() instanceof BaseElectricFence)
 			{
 				list.add(blockPos);
 			}

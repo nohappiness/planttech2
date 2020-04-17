@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
-import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
+import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -16,7 +16,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class ElectricFence extends AbstractElectricFence
+public class ElectricFence extends BaseElectricFence
 {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
@@ -65,7 +65,7 @@ public class ElectricFence extends AbstractElectricFence
     {
         BlockState state = world.getBlockState(pos.offset(direction));
         Block block = state.getBlock();
-        return ((block instanceof AbstractElectricFence || block instanceof ElectricFenceGate) || state.isSolidSide(world, pos.offset(direction), direction.getOpposite()));
+        return ((block instanceof BaseElectricFence || block instanceof ElectricFenceGate) || state.isSolidSide(world, pos.offset(direction), direction.getOpposite()));
     }
 
     private BlockState getState(BlockState state, World worldIn, BlockPos pos)

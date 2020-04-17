@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.ElectricFenceGate;
-import net.kaneka.planttech2.blocks.baseclasses.AbstractElectricFence;
+import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -44,7 +44,7 @@ public class WrenchItem extends BaseItem
 				Block block = target.getBlock();
 				if (removeIfValid(block, world, pos))
 				{
-					if (block instanceof AbstractElectricFence || block instanceof ElectricFenceGate)
+					if (block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 					{
 						if (!player.addItemStackToInventory(new ItemStack(block)))
 						{
@@ -62,7 +62,7 @@ public class WrenchItem extends BaseItem
 
 	private boolean removeIfValid(Block block, World world, BlockPos pos)
 	{
-		if (block instanceof MachineBaseBlock || block instanceof AbstractElectricFence || block instanceof ElectricFenceGate)
+		if (block instanceof MachineBaseBlock || block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 		{
 			world.removeBlock(pos, false);
 			return true;
