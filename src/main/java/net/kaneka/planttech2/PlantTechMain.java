@@ -12,6 +12,7 @@ import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.registries.ModBiomes;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModCommands;
 import net.kaneka.planttech2.registries.ModRenderer;
@@ -67,7 +68,6 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
-		//ModBiomes.registerBiomes();
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
