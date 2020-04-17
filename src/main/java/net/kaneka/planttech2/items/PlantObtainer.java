@@ -92,6 +92,7 @@ public class PlantObtainer extends BaseItem
     @Override
     public boolean hasEffect(ItemStack stack)
     {
+        iniTags(stack);
         return isFilled(stack);
     }
 

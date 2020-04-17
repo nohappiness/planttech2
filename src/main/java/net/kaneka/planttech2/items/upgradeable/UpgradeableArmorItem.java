@@ -233,7 +233,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.getSlotFor(stack)), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);

@@ -97,4 +97,10 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 		}
 		return 0; 
 	}
+
+	@Override
+	protected boolean func_195363_d(int keyCode, int scanCode)
+	{
+		return false;
+	}
 }
