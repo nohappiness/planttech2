@@ -84,7 +84,7 @@ public class ModBlocks
 			WHITE_CRYSTAL_STAIRS = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupmain, true),
 			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupmain, true); 
 			
-	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, false),
+	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
 							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),
 							MACHINESHELL_PLANTIUM_GROWING = new GrowingBlock("machineshell_plantium_growing", ModBlocks.MACHINESHELL_PLANTIUM, false),
 							SEEDSQUEEZER_GROWING = new FacingGrowingBlock("seedsqueezer_growing", ModBlocks.SEEDSQUEEZER, true), 
