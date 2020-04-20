@@ -1,5 +1,8 @@
 package net.kaneka.planttech2.enums;
 
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public enum EnumTemperature
@@ -52,9 +55,13 @@ public enum EnumTemperature
 	return NORMAL;
     }
 
-    public String getDisplayString()
+	/**
+	 * if coloured is true, will returned coloured text by their temperature (Extreme Cold -- Blue/Aqua/Green/Yellow/Red -- Extreme Hot), else text without colours
+	 */
+	public String getDisplayString(boolean coloured)
     {
-	return new TranslationTextComponent("temp." + this.name()).getUnformattedComponentText();
+    	String str = new TranslationTextComponent("temp." + this.name()).getUnformattedComponentText();
+		return coloured ? new StringTextComponent(str).setStyle(new Style().setColor(getId() == 0 ? TextFormatting.BLUE : getId() == 1 ? TextFormatting.AQUA : getId() == 2 ? TextFormatting.GREEN : getId() == 3 ? TextFormatting.YELLOW : TextFormatting.RED)).getFormattedText() : str;
     }
 
     public boolean inRange(float value, int tolerance)

@@ -83,7 +83,9 @@ public class ModBlocks
 			WHITE_CRYSTAL_FENCE = new CustomFenceBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "white_crystal_fence", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_door", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_STAIRS = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupblocks, true);
+			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupblocks, true),
+
+			WALL_LIGHT = new WallLight(Block.Properties.create(Material.ROCK).sound(SoundType.GLASS), "wall_light", ModCreativeTabs.groupblocks, true);
 			
 	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
 							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),

@@ -92,7 +92,7 @@ public class CropSeedItem extends BaseItem
     {
 	if (tolerance == 0)
 	{
-	    return PlantTechMain.croplist.getEntryByName(type).getTemperature().getDisplayString();
+	    return PlantTechMain.croplist.getEntryByName(type).getTemperature().getDisplayString(true);
 	}
 	int id = PlantTechMain.croplist.getEntryByName(type).getTemperature().getId();
 	int min = id - tolerance;
@@ -105,7 +105,7 @@ public class CropSeedItem extends BaseItem
 	{
 	    max = 4;
 	}
-	return EnumTemperature.byId(min).getDisplayString() + " - " + EnumTemperature.byId(max).getDisplayString();
+	return EnumTemperature.byId(min).getDisplayString(true) + " - " + EnumTemperature.byId(max).getDisplayString(true);
     }
 
     public static String getSoilString(String type)

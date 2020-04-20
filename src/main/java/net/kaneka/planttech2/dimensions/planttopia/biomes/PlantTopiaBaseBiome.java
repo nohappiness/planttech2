@@ -6,7 +6,9 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 
-abstract public class PlantTopiaBaseBiome extends Biome 
+import java.util.HashMap;
+
+abstract public class PlantTopiaBaseBiome extends Biome
 {
 	private BiomeType biomeType; 
 	private BiomeDictionary.Type[] biomDictType; 
@@ -56,5 +58,23 @@ abstract public class PlantTopiaBaseBiome extends Biome
 			this.id = id; 
 		}
 	}
-	
+
+	public abstract float getFogDensity();
+
+	public abstract HashMap<String, Float> getFogRGB();
+
+	public float getFogRed()
+	{
+		return getFogRGB().get("red");
+	}
+
+	public float getFogGreen()
+	{
+		return getFogRGB().get("green");
+	}
+
+	public float getFogBlue()
+	{
+		return getFogRGB().get("blue");
+	}
 }
