@@ -1,8 +1,9 @@
 {
 	"planttech2.update.available": "A update for PlantTech 2 is available. ", 
 	"planttech2.update.click": "Click here", 
-	"planttech2.update.tooltip": "View CurseForge", 
-    "itemGroup.planttech2_main": "General",
+	"planttech2.update.tooltip": "View CurseForge",
+	"itemGroup.planttech2_main": "General",
+	"itemGroup.planttech2_blocks": "Building Blocks",
     "itemGroup.planttech2_seeds": "Seeds",
     "itemGroup.planttech2_machines": "Machines",
     "itemGroup.planttech2_particles": "Particles",

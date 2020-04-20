@@ -60,6 +60,8 @@ public class PlantTechMain
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onWorldStart);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onFogRenderDensity);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onFogRenderColour);
 			//FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::textureStitchEvent);
 		});
 
@@ -149,6 +151,6 @@ public class PlantTechMain
 		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR, rendertype);
 		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER, rendertype);
-		
+
 	}
 }

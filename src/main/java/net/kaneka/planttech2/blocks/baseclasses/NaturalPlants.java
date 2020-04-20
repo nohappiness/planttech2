@@ -45,7 +45,7 @@ public abstract class NaturalPlants extends BaseBlock
     }
 
     /**
-     * returns whether this block can be obtained by
+     * returns whether this block can be obtained by Plant Obtainer
      * {@link PlantObtainer#onItemUse(ItemUseContext)}
      */
     public abstract boolean canBeObtained();

@@ -1,16 +1,22 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
+import net.kaneka.planttech2.registries.ModBiomes;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -49,6 +55,42 @@ public class ClientEvents
 							.setColor(TextFormatting.BLUE)
 							.setUnderlined(true);
 			evt.getEntity().sendMessage(info.appendSibling(link));
+		}
+	}
+
+	@SubscribeEvent
+	public static void onFogRenderDensity(EntityViewRenderEvent.FogDensity event)
+	{
+		Minecraft minecraft = Minecraft.getInstance();
+		ClientPlayerEntity player = minecraft.player;
+		if (player == null || player.getEntityWorld().getDimension().getType() != ModDimensions.getPlantTopiaDimensionType())
+		{
+			return;
+		}
+		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
+		if (biome instanceof PlantTopiaBaseBiome)
+		{
+			event.setCanceled(true);
+			event.setDensity(((PlantTopiaBaseBiome) biome).getFogDensity());
+		}
+	}
+
+	@SubscribeEvent
+	public static void onFogRenderColour(EntityViewRenderEvent.FogColors event)
+	{
+		Minecraft minecraft = Minecraft.getInstance();
+		ClientPlayerEntity player = minecraft.player;
+		if (player == null || player.getEntityWorld().getDimension().getType() != ModDimensions.getPlantTopiaDimensionType())
+		{
+			return;
+		}
+		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
+		if (biome instanceof PlantTopiaBaseBiome)
+		{
+			event.setRed(((PlantTopiaBaseBiome) biome).getFogRed() / (float) 255);
+			event.setGreen(((PlantTopiaBaseBiome) biome).getFogGreen() / (float) 255);
+			event.setBlue(((PlantTopiaBaseBiome) biome).getFogBlue() / (float) 255);
+//			System.out.println("rgb: " + event.getRed() + " " + event.getGreen() + " " + event.getBlue() + " ");
 		}
 	}
 	

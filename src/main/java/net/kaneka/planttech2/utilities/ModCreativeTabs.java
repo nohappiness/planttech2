@@ -18,6 +18,15 @@ public class ModCreativeTabs
 		}
 	};
 
+	public static final ItemGroup groupblocks = new ItemGroup("planttech2_blocks")
+	{
+		@OnlyIn(Dist.CLIENT)
+		public ItemStack createIcon()
+		{
+			return new ItemStack(ModBlocks.KANEKIUM_BLOCK);
+		}
+	};
+
 	public static final ItemGroup groupmachines = new ItemGroup("planttech2_machines")
 	{
 		@OnlyIn(Dist.CLIENT)

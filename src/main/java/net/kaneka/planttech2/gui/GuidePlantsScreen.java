@@ -244,7 +244,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 			if (soil != null)
 				if (!soil.isEmpty())
 					this.drawTooltip(soil.getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 217, 65);
-			this.drawTooltip(temp.getDisplayString(), mouseX, mouseY, 307, 65);
+			this.drawTooltip(temp.getDisplayString(true), mouseX, mouseY, 307, 65);
 
 			for (int i = 0; i < 9; i++)
 			{
