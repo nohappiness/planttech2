@@ -12,6 +12,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
@@ -67,6 +69,13 @@ public class RegistryEvents
 	{
 		ModSounds.registerAll(event.getRegistry());
 	}
+
+	@SubscribeEvent
+	public static void registerPotions(RegistryEvent.Register<Effect> event)
+	{
+		ModEffects.registerAll(event.getRegistry());
+	}
+
 	/*
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)

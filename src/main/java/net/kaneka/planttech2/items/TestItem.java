@@ -5,18 +5,31 @@ import java.util.Map.Entry;
 
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.dimensions.TeleportationUtils;
+import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
+import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
+import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
+import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
+import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
+import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.system.CallbackI;
 
 public class TestItem extends BaseItem
 {
@@ -27,7 +40,17 @@ public class TestItem extends BaseItem
 
 	}
 
-	@Override 
+	/*@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+	{
+		if (playerIn instanceof ServerPlayerEntity)
+		{
+			System.out.println(RadiationEffect.getCap((ServerPlayerEntity) playerIn).getLevel());
+		}
+		return super.onItemRightClick(worldIn, playerIn, handIn);
+	}*/
+
+	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 		if(!ctx.getWorld().isRemote)

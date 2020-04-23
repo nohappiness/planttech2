@@ -33,7 +33,8 @@ public class ModReferences
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 	
 	public static final String TECHVILLAGER = MODID + ":techvillager"; 
-	public static final String TECHVILLAGERTRADESERIALIZER = MODID + ":techvillagertradeserializer"; 
-	
-	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap"); 
+	public static final String TECHVILLAGERTRADESERIALIZER = MODID + ":techvillagertradeserializer";
+
+	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap");
+	public static final ResourceLocation RADIATIONEFFECTCAP = new ResourceLocation(MODID, "radiationeffectcap");
 }

@@ -23,6 +23,8 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.HashMap;
+
 @Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientEvents
 {
@@ -70,8 +72,12 @@ public class ClientEvents
 		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
 		if (biome instanceof PlantTopiaBaseBiome)
 		{
-			event.setCanceled(true);
-			event.setDensity(((PlantTopiaBaseBiome) biome).getFogDensity());
+			float dencity = ((PlantTopiaBaseBiome) biome).getFogDensity();
+			if (dencity != -1)
+			{
+				event.setCanceled(true);
+				event.setDensity(dencity);
+			}
 		}
 	}
 
@@ -87,9 +93,12 @@ public class ClientEvents
 		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
 		if (biome instanceof PlantTopiaBaseBiome)
 		{
-			event.setRed(((PlantTopiaBaseBiome) biome).getFogRed() / (float) 255);
-			event.setGreen(((PlantTopiaBaseBiome) biome).getFogGreen() / (float) 255);
-			event.setBlue(((PlantTopiaBaseBiome) biome).getFogBlue() / (float) 255);
+			if (((PlantTopiaBaseBiome) biome).getFogRGB() != null)
+			{
+				event.setRed(((PlantTopiaBaseBiome) biome).getFogRed() / (float) 255);
+				event.setGreen(((PlantTopiaBaseBiome) biome).getFogGreen() / (float) 255);
+				event.setBlue(((PlantTopiaBaseBiome) biome).getFogBlue() / (float) 255);
+			}
 //			System.out.println("rgb: " + event.getRed() + " " + event.getGreen() + " " + event.getBlue() + " ");
 		}
 	}

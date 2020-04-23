@@ -104,9 +104,10 @@
     "item.planttech2.knowledgechip_2": "Knowledgechip Tier 2", 
     "item.planttech2.knowledgechip_3": "Knowledgechip Tier 3", 
     "item.planttech2.knowledgechip_4": "Knowledgechip Tier 4", 
-    "item.planttech2.knowledgechip_5": "Knowledgechip Tier 5", 
+    "item.planttech2.knowledgechip_5": "Knowledgechip Tier 5",
 
 	"item.planttech2.plant_obtainer": "Plant Obtainer",
+	"item.planttech2.radiation_metre": "Radiation Metre",
 
     "item.planttech2.machinebulbreprocessor_bulb": "Machinebulbreprocessor Bulb", 
     "item.planttech2.dna_combiner_bulb": "DNA Combiner Bulb", 
@@ -1034,5 +1035,7 @@
     "techvillager.profession.headhunter": "Headhunter",
     "techvillager.profession.engineer": "Engineer",
     
-    "planttech2.electric_fence.idle": "Electric fence hums"
+    "planttech2.electric_fence.idle": "Electric fence hums",
+
+	"effect.planttech2.radiation_sickness": "Radiation Sickness"
 }

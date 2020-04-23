@@ -21,6 +21,7 @@ public class FlowerBiome extends PlantTopiaBaseBiome
 			put("blue", 230.0F);
 		}
 	};
+
 	public FlowerBiome()
 	{
 		super((new Biome.Builder()).surfaceBuilder(SurfaceBuilder.DEFAULT, SurfaceBuilder.END_STONE_CONFIG).precipitation(Biome.RainType.RAIN).category(Biome.Category.PLAINS).depth(0.1F).scale(0.4F).temperature(0.7F).downfall(0.8F).waterColor(000000).waterFogColor(329011), 
@@ -35,6 +36,18 @@ public class FlowerBiome extends PlantTopiaBaseBiome
 	public float getFogDensity()
 	{
 		return 0.0125F;
+	}
+
+	/*@Override
+	public float getRadiationDensity()
+	{
+		return 0.0F;
+	}*/
+
+	@Override
+	public BiomeRadiation getRadiationLevel()
+	{
+		return BiomeRadiation.FRESH;
 	}
 
 	@Override
