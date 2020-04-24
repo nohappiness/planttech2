@@ -1037,5 +1037,7 @@
     
     "planttech2.electric_fence.idle": "Electric fence hums",
 
-	"effect.planttech2.radiation_sickness": "Radiation Sickness"
+	"effect.planttech2.radiation_sickness": "Radiation Sickness",
+
+	"death.attack.radiation_sickness": "%1$s was infected by radiation sickness"
 }

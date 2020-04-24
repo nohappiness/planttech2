@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.Effects;
 
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
+import net.kaneka.planttech2.registries.ModDamageSources;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +23,7 @@ public class RadiationSickness extends Effect
     {
         if (entityLivingBaseIn instanceof PlayerEntity)
         {
-            entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, (entityLivingBaseIn.getCapability(RadiationEffect.RADIATION_CAPABILITY).orElseThrow(() -> new NullPointerException("Capability Error")).getLevel() - 1) * 2.50F);
+            entityLivingBaseIn.attackEntityFrom(ModDamageSources.RADIATION_SICKNESS, (entityLivingBaseIn.getCapability(RadiationEffect.RADIATION_CAPABILITY).orElseThrow(() -> new NullPointerException("Capability Error")).getLevel() - 1) * 6.5F);
         }
     }
 

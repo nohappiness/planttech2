@@ -24,9 +24,9 @@ public class ModBlocks
 {
 	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
 	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
-	
+
 	//public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
-   
+
 
 	public static BaseBlock
 			CABLE = new CableBlock(), 

@@ -53,6 +53,7 @@ public class TestItem extends BaseItem
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
+//		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
 			
@@ -78,7 +79,7 @@ public class TestItem extends BaseItem
     		}
 		
 		*/
-			//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);	
+//			TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
 		}
 		
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
@@ -98,7 +99,7 @@ public class TestItem extends BaseItem
 		*/
 		// place(Sets.newHashSet(), ctx.getWorld(), new Random(), ctx.getPos().up(),
 		// MutableBoundingBox.getNewBoundingBox());
-		// System.out.println(ModDimensionPlantTopia.getDimensionType());
+//		 System.out.println(ModDimensionPlantTopia.getDimensionType());
 		return super.onItemUse(ctx);
 	}
 }
