@@ -92,6 +92,7 @@ public class ModItems
 	    		   PLANTIUM_INGOT  = new BaseItem("plantium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   PLANTIUM_NUGGET = new BaseItem("plantium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
 				   PLANT_OBTAINER = new PlantObtainer("plant_obtainer", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+	               RADIATION_METRE= new RadiationMetre("radiation_metre", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 	    		   RANGEUPGRADE_TIER_1 = new TierItem("rangeupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 1),
 	    		   RANGEUPGRADE_TIER_2 = new TierItem("rangeupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 1),
 	    		   RANGEUPGRADE_TIER_3 = new TierItem("rangeupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 1),

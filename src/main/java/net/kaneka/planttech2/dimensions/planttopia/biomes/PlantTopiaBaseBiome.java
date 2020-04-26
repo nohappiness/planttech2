@@ -46,20 +46,31 @@ abstract public class PlantTopiaBaseBiome extends Biome
 		return biomDictType; 
 	}
 
-	public enum BiomeRarity 
+	public enum BiomeRarity
 	{
-		COMMON(0), 
-		UNCOMMON(1), 
+		COMMON(0),
+		UNCOMMON(1),
 		RARE(2);
-		
-		int id; 
+
+		int id;
 		BiomeRarity(int id)
 		{
-			this.id = id; 
+			this.id = id;
 		}
 	}
 
+	/**
+	 * @return -1 for no changes
+	 */
 	public abstract float getFogDensity();
+
+	/**
+	 * When the effect reaches 1, the player starts getting negative effects
+	 * @return get the amount of radiation effect increase on player whilst the player is in this biome
+	 */
+//	public abstract float getRadiationDensity();
+
+	public abstract BiomeRadiation getRadiationLevel();
 
 	public abstract HashMap<String, Float> getFogRGB();
 

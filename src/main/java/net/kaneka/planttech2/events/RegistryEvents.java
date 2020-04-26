@@ -12,6 +12,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
@@ -61,12 +63,19 @@ public class RegistryEvents
 	{
 		ModRecipeSerializers.registerAll(event);
 	}
-	
+
 	@SubscribeEvent
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
 	{
 		ModSounds.registerAll(event.getRegistry());
 	}
+
+	@SubscribeEvent
+	public static void registerPotions(RegistryEvent.Register<Effect> event)
+	{
+		ModEffects.registerAll(event.getRegistry());
+	}
+
 	/*
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
@@ -74,25 +83,25 @@ public class RegistryEvents
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
 	*/
-	
+
 	@SubscribeEvent
 	public static void registerBiomes(final RegistryEvent.Register<Biome> event)
 	{
 		ModBiomes.registerBiomes(event.getRegistry());
 	}
-	
+
 	@SubscribeEvent
 	public static void registerDimensions(final RegistryEvent.Register<ModDimension> event)
 	{
 		ModDimensions.initDimensions(event.getRegistry());
 	}
-	
+
 	@SubscribeEvent
 	public void onRegisteredDimension(RegisterDimensionsEvent event)
 	{
 		ModDimensions.registerAll();
 	}
-	
+
 	/*
 	@SubscribeEvent
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
@@ -100,13 +109,13 @@ public class RegistryEvents
 		ModStructures.registerAll(event);
 	}
 	*/
-	
+
 	@SubscribeEvent
-    public static void gatherData(GatherDataEvent event)
-    {
-        DataGenerator gen = event.getGenerator();
-            gen.addProvider(new Recipes(gen));
-    }
+	public static void gatherData(GatherDataEvent event)
+	{
+		DataGenerator gen = event.getGenerator();
+		gen.addProvider(new Recipes(gen));
+	}
 	
 	/*
 	

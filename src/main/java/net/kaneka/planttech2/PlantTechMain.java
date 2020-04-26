@@ -70,6 +70,11 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::attachCapability);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)

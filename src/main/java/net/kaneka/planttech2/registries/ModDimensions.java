@@ -14,7 +14,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModDimensions
 {
-    private static final ModDimension PLANTTOPIA = new ModDimension()
+	private static final ModDimension PLANTTOPIA = new ModDimension()
 	{
 		@Override
 		public BiFunction<World, DimensionType, ? extends Dimension> getFactory()
@@ -22,8 +22,8 @@ public class ModDimensions
 			return PlantTopiaDimension::new;
 		}
 	};
-	
-	
+
+
 	public static void initDimensions(IForgeRegistry<ModDimension> registry)
 	{
 		PLANTTOPIA.setRegistryName(ModReferences.PLANTTOPIA_RESLOC);
@@ -32,8 +32,8 @@ public class ModDimensions
 	}
 
 
-	
-	
+
+
 	public static final void registerAll()
 	{
 		if(DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC) == null)
@@ -41,7 +41,7 @@ public class ModDimensions
 			DimensionManager.registerDimension(ModReferences.PLANTTOPIA_RESLOC, PLANTTOPIA, new PacketBuffer(Unpooled.buffer()), true);
 		}
 	}
-	
+
 	public static DimensionType getPlantTopiaDimensionType()
 	{
 		return DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC);

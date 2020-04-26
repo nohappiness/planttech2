@@ -28,12 +28,13 @@ public class ModReferences
 	public static final String TECHVILLAGERCONTAINER = MODID + ":techvillagercontainer";
 	
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
-	public static final ResourceLocation PLANTTOPIA_RESLOC = new ResourceLocation(PLANTTOPIA); 
+	public static final ResourceLocation PLANTTOPIA_RESLOC = new ResourceLocation(PLANTTOPIA);
 	
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 	
 	public static final String TECHVILLAGER = MODID + ":techvillager"; 
-	public static final String TECHVILLAGERTRADESERIALIZER = MODID + ":techvillagertradeserializer"; 
-	
-	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap"); 
+	public static final String TECHVILLAGERTRADESERIALIZER = MODID + ":techvillagertradeserializer";
+
+	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap");
+	public static final ResourceLocation RADIATIONEFFECTCAP = new ResourceLocation(MODID, "radiationeffectcap");
 }
