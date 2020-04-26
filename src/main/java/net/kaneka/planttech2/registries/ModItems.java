@@ -183,7 +183,7 @@ public class ModItems
                     	        DNA_COMBINER_BULB = new MachineBulbItem("dna_combiner_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_COMBINER_GROWING, PlantTechConstants.MACHINETIER_DNA_COMBINER, 2000),
                     	        DNA_EXTRACTOR_BULB = new MachineBulbItem("dna_extractor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_EXTRACTOR_GROWING, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR, 2000), 
                     	        DNA_REMOVER_BULB = new MachineBulbItem("dna_remover_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_REMOVER_GROWING, PlantTechConstants.MACHINETIER_DNA_REMOVER, 2000), 
-                    	        SEEDCONSTRUCTOR_BULB = new MachineBulbItem("seedconstructor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR, 2000),
+                    	        SEEDCONSTRUCTOR_BULB = new MachineBulbItem("seedconstructor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SEEDCONSTRUCTOR_GROWING, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR, 2000),
                     	        PLANTFARM_BULB = new MachineBulbItem("plantfarm_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.PLANTFARM_GROWING, PlantTechConstants.MACHINETIER_PLANTFARM, 2000),
                     	        SOLARGENERATOR_BULB = new MachineBulbItem("solargenerator_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SOLARGENERATOR_GROWING, PlantTechConstants.MACHINETIER_SOLARGENERATOR, 2000); 
                         
