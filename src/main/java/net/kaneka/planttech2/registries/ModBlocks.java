@@ -108,7 +108,11 @@ public class ModBlocks
 			MUTATED_PINK_TULIP = new ObtainableNaturalPlants("mutated_pink_tulip", true),
 			MUTATED_OXEYE_DAISY = new ObtainableNaturalPlants("mutated_oxeye_daisy", true),
 			MUTATED_CORNFLOWER = new ObtainableNaturalPlants("mutated_cornflower", true),
-			MUTATED_LILY_OF_THE_VALLEY = new ObtainableNaturalPlants("mutated_lily_of_the_valley", true);
+			MUTATED_LILY_OF_THE_VALLEY = new ObtainableNaturalPlants("mutated_lily_of_the_valley", true),
+
+			MUTATED_LILAC = new ObtainableTallBushBlock("mutated_lilac", true),
+			MUTATED_ROSE_BUSH = new ObtainableTallBushBlock("mutated_rose_bush", true),
+			MUTATED_PEONY = new ObtainableTallBushBlock("mutated_peony", true);
 
 	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
 							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),

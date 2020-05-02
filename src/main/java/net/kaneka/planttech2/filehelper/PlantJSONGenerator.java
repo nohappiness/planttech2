@@ -28,21 +28,65 @@ public class PlantJSONGenerator
         }
     };
 
+    private static final HashSet<String> TALL_PLANTS = new HashSet<String>()
+    {
+        {
+            add("mutated_lilac");
+            add("mutated_rose_bush");
+            add("mutated_peony");
+        }
+    };
+
+    private static final HashSet<String> TALL_PLANTS_SAME = new HashSet<String>()
+    {
+        {
+
+        }
+    };
+
     public static void main(String[] args) throws IOException
     {
         for (int i=0;i<3;i++)
         {
-            for (String name: PLANTS)
+            for (String name : PLANTS)
             {
-                createFile(i, name,true);
+                createForNormalFlower(i, name, true);
+            }
+            for (String name : TALL_PLANTS)
+            {
+                if (i == 1)
+                {
+                    createFile(name, true, true);
+                    createFile(name, true, false);
+                }
+                else
+                {
+                    createForDoubleFlower(i, name, true);
+                }
             }
         }
     }
 
-    private static void createFile(int type, String name, boolean overwrite) throws IOException
+    private static void createForNormalFlower(int type, String name, boolean overwrite) throws IOException
+    {
+        createFile(type, name, overwrite, false, false);
+    }
+
+    private static void createForDoubleFlower(int type, String name, boolean overwrite) throws IOException
+    {
+        createFile(type, name, overwrite, true, false);
+    }
+
+    private static void createForDoubleSameFlower(int type, String name, boolean overwrite) throws IOException
+    {
+        createFile(type, name, overwrite, true, true);
+    }
+
+    private static void createFile(int type, String name, boolean overwrite, boolean isDoubleBlock, boolean isDoubleTheSame) throws IOException
     {
         String directory = "src/main/resources/assets/planttech2" + (type == 0 ? "/blockstates" : type == 1 ? "/models/block/plants" : "/models/item");
         File file = new File(directory + "/" + name + ".json");
+        System.out.println(directory);
         if (overwrite || !file.createNewFile())
         {
             FileWriter w = new FileWriter(file);
@@ -52,7 +96,20 @@ public class PlantJSONGenerator
                 case 0:
                     write("{");
                     write("  \"variants\": {");
-                    write("        \"\": { \"model\": " + "\"planttech2:block/plants/" + name + "\" }");
+                    if (isDoubleTheSame)
+                    {
+                        write("        \"is_top=true\": { \"model\": " + "\"planttech2:block/plants/" + name + "\" },");
+                        write("        \"is_top=false\": { \"model\": " + "\"planttech2:block/plants/" + name + "\" }");
+                    }
+                    else if (isDoubleBlock)
+                    {
+                        write("        \"is_top=true\": { \"model\": " + "\"planttech2:block/plants/" + name + "_top\" },");
+                        write("        \"is_top=false\": { \"model\": " + "\"planttech2:block/plants/" + name + "_bottom\" }");
+                    }
+                    else
+                    {
+                        write("        \"\": { \"model\": " + "\"planttech2:block/plants/" + name + "\" }");
+                    }
                     write("    }");
                     write("}");
                     break;
@@ -60,7 +117,14 @@ public class PlantJSONGenerator
                     write("{");
                     write("    \"parent\": \"block/cross\",");
                     write("    \"textures\": {");
-                    write("        \"cross\": \"planttech2:blocks/plants/" + name + "\"");
+                    if (isDoubleTheSame)
+                    {
+                        write("        \"cross\": \"planttech2:blocks/plants/" + name + "\"");
+                    }
+                    else
+                    {
+                        write("        \"cross\": \"planttech2:blocks/plants/" + name + "\"");
+                    }
                     write("    }");
                     write("}");
                     break;
@@ -68,12 +132,42 @@ public class PlantJSONGenerator
                     write("{");
                     write("    \"parent\": \"item/generated\",");
                     write("    \"textures\": {");
-                    write("        \"layer0\": \"planttech2:blocks/plants/" + name + "\"");
+                    write("        \"layer0\": \"planttech2:blocks/plants/" + name + (isDoubleBlock ? "_top" : "") + "\"");
                     write("    }");
                     write("}");
                 default:
                     break;
             }
+            WRITER.close();
+            w.close();
+        }
+        else
+        {
+            throw new FileAlreadyExistsException("File " + name + "already exist in " + directory);
+        }
+    }
+
+    private static void createFile(String name, boolean overwrite, boolean isTop) throws IOException
+    {
+        String directory = "src/main/resources/assets/planttech2/models/block/plants";
+        File file = new File(directory + "/" + name + (isTop ? "_top" : "_bottom")+ ".json");
+        if (overwrite || !file.createNewFile())
+        {
+            FileWriter w = new FileWriter(file);
+            WRITER = new BufferedWriter(w);
+            write("{");
+            write("    \"parent\": \"block/cross\",");
+            write("    \"textures\": {");
+            if (isTop)
+            {
+                write("        \"cross\": \"planttech2:blocks/plants/" + name + "_top\"");
+            }
+            else
+            {
+                write("        \"cross\": \"planttech2:blocks/plants/" + name + "_bottom\"");
+            }
+            write("    }");
+            write("}");
             WRITER.close();
             w.close();
         }
