@@ -42,14 +42,14 @@ public enum BiomeRadiation
         {
             case FRESH:
             case MEDIUM:
-                return (1.0F / 36000.0F);
+                return (1.0F / 48000.0F);
             case NONE:
             default:
                 return 0.0F;
             case LOW:
-                return (1.0F / 54000.0F);
+                return (1.0F / 72000.0F);
             case HIGH:
-                return (1.0F / 18000.0F);
+                return (1.0F / 24000.0F);
         }
     }
 }

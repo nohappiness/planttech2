@@ -14,23 +14,31 @@ import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModBlocks
 {
 	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
+	public static List<Block> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
 	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
-
+	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, PlantTechMain.MODID);
+	public static final DeferredRegister<Block> BLOCK = new DeferredRegister<>(ForgeRegistries.BLOCKS, PlantTechMain.MODID);
+	public static final RegistryObject<Block> TUTORIAL_BLOCK = BLOCK.register("tutorial_block", () -> new Block(Block.Properties.create(Material.ROCK)));
+	public static final RegistryObject<BlockItem> TUTORIAL_DUST = ITEMS.register("tutorial_dust", () -> new BlockItem(TUTORIAL_BLOCK.get(), new BlockItem.Properties()));
 	//public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
 
 
 	public static BaseBlock
 			CABLE = new CableBlock(), 
-			CARVER = new CarverBlock(), 
+			CARVER = new CarverBlock(),
 			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
 			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
 			CROPBARS = new CropBarsBlock(),
@@ -51,8 +59,8 @@ public class ModBlocks
 	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kinnoium_block", ModCreativeTabs.groupblocks, true),
 	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "lenthurium_block", ModCreativeTabs.groupblocks, true),
 	        MACHINEBULBREPROCESSOR = new MachineBaseBlock("machinebulbreprocessor", ModCreativeTabs.groupmachines),
-	        MACHINESHELL_IRON = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_iron", ModCreativeTabs.groupmain, true),  
-		    MACHINESHELL_PLANTIUM = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_plantium", ModCreativeTabs.groupmain, true),  
+	        MACHINESHELL_IRON = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_iron", ModCreativeTabs.groupmain, true, true),
+		    MACHINESHELL_PLANTIUM = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_plantium", ModCreativeTabs.groupmain, true, true),
 	        MEGAFURNACE = new MachineFacingBlock("mega_furnace", ModCreativeTabs.groupmachines), 
 	        PLANTFARM = new MachineBaseBlock("plantfarm", ModCreativeTabs.groupmachines),
 	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "plantium_block", ModCreativeTabs.groupblocks, true),
@@ -72,8 +80,8 @@ public class ModBlocks
 			DARK_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_door", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_STAIRS = new CustomStairsBlock(DARK_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_stairs", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_slab", ModCreativeTabs.groupblocks, true),
-							
-			
+
+
 			WHITE_CRYSTAL_GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_cross", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_middle", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_GLASSPANE_END = new GlassPaneEnd(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_end",Color.WHITE.getRGB(), ModCreativeTabs.groupblocks, true),
@@ -85,8 +93,23 @@ public class ModBlocks
 			WHITE_CRYSTAL_STAIRS = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupblocks, true),
 
-			WALL_LIGHT = new WallLight(Block.Properties.create(Material.ROCK).sound(SoundType.GLASS), "wall_light", ModCreativeTabs.groupblocks, true);
-			
+			WALL_LIGHT = new WallLight(Block.Properties.create(Material.ROCK).sound(SoundType.GLASS), "wall_light", ModCreativeTabs.groupblocks, true),
+
+			TEST_BLOCK = new ObtainableNaturalPlants("testblock", true, 4, 6),
+
+			MUTATED_DANDELION = new ObtainableNaturalPlants("mutated_dandelion", true),
+			MUTATED_POPPY = new ObtainableNaturalPlants("mutated_poppy", true),
+			MUTATED_BLUE_ORCHID = new ObtainableNaturalPlants("mutated_blue_orchid", true),
+			MUTATED_ALLIUM = new ObtainableNaturalPlants("mutated_allium", true),
+			MUTATED_AZURE_BLUET = new ObtainableNaturalPlants("mutated_azure_bluet", true),
+			MUTATED_RED_TULIP = new ObtainableNaturalPlants("mutated_red_tulip", true),
+			MUTATED_ORANGE_TULIP = new ObtainableNaturalPlants("mutated_orange_tulip", true),
+			MUTATED_WHITE_TULIP = new ObtainableNaturalPlants("mutated_white_tulip", true),
+			MUTATED_PINK_TULIP = new ObtainableNaturalPlants("mutated_pink_tulip", true),
+			MUTATED_OXEYE_DAISY = new ObtainableNaturalPlants("mutated_oxeye_daisy", true),
+			MUTATED_CORNFLOWER = new ObtainableNaturalPlants("mutated_cornflower", true),
+			MUTATED_LILY_OF_THE_VALLEY = new ObtainableNaturalPlants("mutated_lily_of_the_valley", true);
+
 	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
 							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),
 							MACHINESHELL_PLANTIUM_GROWING = new GrowingBlock("machineshell_plantium_growing", ModBlocks.MACHINESHELL_PLANTIUM, false),
@@ -104,7 +127,7 @@ public class ModBlocks
                 	        ENERGY_SUPPLIER_GROWING = new GrowingBlock("energy_supplier_growing", ModBlocks.ENERGY_SUPPLIER, true),
                 	        SEEDCONSTRUCTOR_GROWING = new FacingGrowingBlock("seedconstructor_growing", ModBlocks.SEEDCONSTRUCTOR, true),
                 	        SOLARGENERATOR_GROWING = new GrowingBlock("solargenerator_growing", ModBlocks.SOLARGENERATOR, true);
-	        
+
 	
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
 
@@ -125,7 +148,7 @@ public class ModBlocks
 			CROPS.put(name, tempcrop);
 			registry.register(tempcrop);
 		}
-		
+		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values());
 		//BIOMASSFLUIDBLOCK.setRegistryName("biomassblock"); 
 		//registry.register(BIOMASSFLUIDBLOCK);
 	}

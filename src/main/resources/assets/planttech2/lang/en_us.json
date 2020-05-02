@@ -647,9 +647,21 @@
     "block.planttech2.white_crystal_glasspane_end": "White Crystal Glasspane End", 
     "block.planttech2.white_crystal_glasspane_middle": "White Crystal Glasspane Middle", 
     "block.planttech2.white_crystal_glasspane_cross": "White Crystal Glasspane Cross", 
-    
-    
-    
+
+	"block.planttech2.testblock": "Test Block",
+
+	"block.planttech2.mutated_dandelion": "Mutated Dandelion",
+	"block.planttech2.mutated_poppy": "Mutated Poppy",
+	"block.planttech2.mutated_blue_orchid": "Mutated Blue Orchid",
+	"block.planttech2.mutated_allium": "Mutated Allium",
+	"block.planttech2.mutated_azure_bluet": "Mutated Azire Bluet",
+	"block.planttech2.mutated_red_tulip": "Mutated Red Tulip",
+	"block.planttech2.mutated_orange_tulip": "Mutated Orange Tulip",
+	"block.planttech2.mutated_white_tulip": "Mutated White Tulip",
+	"block.planttech2.mutated_pink_tulip": "Mutated Pink Tulip",
+	"block.planttech2.mutated_oxeye_daisy": "Mutated Oxeye Dasiy",
+	"block.planttech2.mutated_cornflower": "Mutated Cornflower",
+	"block.planttech2.mutated_lily_of_the_valley": "Mutated Lily of the Valley",
 
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",

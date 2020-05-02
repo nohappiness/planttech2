@@ -29,10 +29,10 @@ public class ModItems
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
 
     public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>(); 
-    
-    //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain)); 
-    
-    public static BaseItem ANALYSER = new AnalyserItem(), 
+
+    //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain));
+
+    public static BaseItem ANALYSER = new AnalyserItem(),
     			   ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
 	    		   BIOMASS = new BaseItem("biomass", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   BIOMASSCONTAINER = new BiomassContainerItem(),
@@ -109,7 +109,7 @@ public class ModItems
 	    		   THERMOMETER = new ThermometerItem(),  
 	    		   WRENCH = new WrenchItem(), 
 	    		   TESTITEM = new TestItem();
-    
+
 	public static UpgradeChipItem CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(1), 
 				CAPACITYCHIP_TIER_2 = new UpgradeChipItem("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(2), 
 				CAPACITYCHIP_TIER_3 = new UpgradeChipItem("capacitychip_tier_3").setIncreaseCapacity(10000).setEnergyCost(5), 

@@ -135,6 +135,7 @@ public class PlayerEvents
 		}
 		else
 		{
+			//heals player in all biomes that are not created by pt2
 			float heal = (1.0F / 54000.0F);
 			if (amount + heal < 0.0F)
 			{

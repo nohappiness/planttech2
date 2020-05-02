@@ -103,59 +103,10 @@ public class PlantTechMain
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
 		RenderType rendertype = RenderType.getCutoutMipped();
-		for(Block block: ModBlocks.CROPS.values())
+		for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
 		{
 			RenderTypeLookup.setRenderLayer(block, rendertype);
 		}
-		RenderTypeLookup.setRenderLayer(ModBlocks.CROPBARS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_END, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_CROSS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_MIDDLE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_DOOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_END, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_CROSS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_MIDDLE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_DOOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CARVER, rendertype);
-		
-		
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_IRON_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_PLANTIUM_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_IRON, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_PLANTIUM, rendertype);
-		
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINEBULBREPROCESSOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDSQUEEZER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CHIPALYZER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.COMPRESSOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_CLEANER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_COMBINER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_EXTRACTOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_REMOVER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.IDENTIFIER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MEGAFURNACE_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER_GROWING, rendertype);
-
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINEBULBREPROCESSOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDSQUEEZER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CHIPALYZER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.COMPRESSOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_CLEANER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_COMBINER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_EXTRACTOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_REMOVER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.IDENTIFIER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MEGAFURNACE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER, rendertype);
 
 	}
 }

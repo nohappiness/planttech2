@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "planttech2:blocks/plants/mutated_lily_of_the_valley"
+    }
+}

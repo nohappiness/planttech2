@@ -36,7 +36,7 @@ public class MachineBaseBlock extends BaseBlock
 
 	public MachineBaseBlock(String name, ItemGroup group)
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).notSolid(), name, group, true);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).notSolid(), name, group, true, true);
 	}
 
 	public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
