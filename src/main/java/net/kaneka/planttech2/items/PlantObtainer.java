@@ -51,11 +51,9 @@ public class PlantObtainer extends BaseItem
             IObtainable block = (IObtainable) state.getBlock();
             if (!isFilled(stack) && block.isObtainable(context))
             {
-                System.out.println("onObtained");
                 setBlockFilled(stack, block.getBlockObtained(context), block.transferStateForObtainer(state));
                 block.onObtained(world, player, stack, pos);
                 world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
-                System.out.println(getBlockFilled(stack));
                 return ActionResultType.SUCCESS;
             }
         }
@@ -64,7 +62,6 @@ public class PlantObtainer extends BaseItem
             IObtainable block = (IObtainable) getBlockFilled(stack);
             if (block != null && ((NaturalPlants) block).canPlaceAt(world, pos.offset(context.getFace())))
             {
-                System.out.println("onReleased");
                 block.onReleased(context, getBlockFilled(stack), getBlockFilledData(stack));
                 setBlockFilled(stack, null, "");
                 setFilled(stack, false);
