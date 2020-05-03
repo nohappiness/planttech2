@@ -663,6 +663,10 @@
 	"block.planttech2.mutated_cornflower": "Mutated Cornflower",
 	"block.planttech2.mutated_lily_of_the_valley": "Mutated Lily of the Valley",
 
+	"block.planttech2.mutated_lilac": "Mutated Lilac",
+	"block.planttech2.mutated_rose_bush": "Mutated Rose Bush",
+	"block.planttech2.mutated_peony": "Mutated Peony",
+
     "gui.soil": "Soil",
     "gui.seeds": "Seeds",
     "gui.drops": "Drops",

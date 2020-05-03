@@ -3,9 +3,11 @@ package net.kaneka.planttech2.blocks;
 import net.kaneka.planttech2.blocks.baseclasses.ObtainableNaturalPlants;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -77,5 +79,18 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
         BlockState state = world.getBlockState(pos);
         BlockState state2 = world.getBlockState(state.get(IS_TOP) ? pos.down() : pos.up());
         return state2.getBlock() == this && (state.get(IS_TOP) != state2.get(IS_TOP));
+    }
+
+    @Override
+    public boolean canPlaceAt(World world, BlockPos pos)
+    {
+        return super.canPlaceAt(world, pos) && pos.getY() < 255 && world.isAirBlock(pos.up());
+    }
+
+    @Override
+    public void onReleased(ItemUseContext context, Block block, String data)
+    {
+        super.onReleased(context, block, data);
+        onBlockPlacedBy(context.getWorld(), context.getPos().offset(context.getFace()), block.getDefaultState(), context.getPlayer(), context.getItem());
     }
 }
