@@ -88,9 +88,9 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     }
 
     @Override
-    public void onReleased(ItemUseContext context, Block block, String data)
+    public void onReleased(ItemUseContext context, BlockState state)
     {
-        super.onReleased(context, block, data);
-        onBlockPlacedBy(context.getWorld(), context.getPos().offset(context.getFace()), block.getDefaultState(), context.getPlayer(), context.getItem());
+        context.getWorld().setBlockState(context.getPos().offset(context.getFace()), getDefaultState());
+        onBlockPlacedBy(context.getWorld(), context.getPos().offset(context.getFace()), state, context.getPlayer(), context.getItem());
     }
 }

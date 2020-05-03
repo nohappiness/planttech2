@@ -29,9 +29,9 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
     }
 
     @Override
-    public void onReleased(ItemUseContext context, Block block, String data)
+    public void onReleased(ItemUseContext context, BlockState state)
     {
-        context.getWorld().setBlockState(context.getPos().offset(context.getFace()), block.getDefaultState());
+        context.getWorld().setBlockState(context.getPos().offset(context.getFace()), state);
     }
 
     @Override
@@ -44,17 +44,5 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
     public Block getBlockObtained(ItemUseContext context)
     {
         return context.getWorld().getBlockState(context.getPos()).getBlock();
-    }
-
-    @Override
-    public String transferStateForObtainer(BlockState state)
-    {
-        return "";
-    }
-
-    @Override
-    public BlockState getStateForObtainer(String data)
-    {
-        return getDefaultState();
     }
 }

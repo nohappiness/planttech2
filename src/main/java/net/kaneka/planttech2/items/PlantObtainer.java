@@ -4,13 +4,13 @@ import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -51,7 +51,7 @@ public class PlantObtainer extends BaseItem
             IObtainable block = (IObtainable) state.getBlock();
             if (!isFilled(stack) && block.isObtainable(context))
             {
-                setBlockFilled(stack, block.getBlockObtained(context), block.transferStateForObtainer(state));
+                setBlockFilled(stack, state);
                 block.onObtained(world, player, stack, pos);
                 world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
                 return ActionResultType.SUCCESS;
@@ -59,11 +59,11 @@ public class PlantObtainer extends BaseItem
         }
         else if (isFilled(stack))
         {
-            IObtainable block = (IObtainable) getBlockFilled(stack);
-            if (block != null && ((NaturalPlants) block).canPlaceAt(world, pos.offset(context.getFace())))
+            IObtainable block = (IObtainable) getBlockStateFilled(stack).getBlock();
+            if (((NaturalPlants) block).canPlaceAt(world, pos.offset(context.getFace())))
             {
-                block.onReleased(context, getBlockFilled(stack), getBlockFilledData(stack));
-                setBlockFilled(stack, null, "");
+                block.onReleased(context, getBlockStateFilled(stack));
+                setBlockFilled(stack, null);
                 setFilled(stack, false);
                 world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
                 return ActionResultType.SUCCESS;
@@ -78,39 +78,33 @@ public class PlantObtainer extends BaseItem
         return isFilled(initTags(stack));
     }
 
-    public static ItemStack setBlockFilled(ItemStack stack, Block block, String data)
+    public static ItemStack setBlockFilled(ItemStack stack, BlockState state)
     {
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
-        if (block != null)
+        if (state == Blocks.AIR.getDefaultState() || state != null)
         {
-            compound.putString("block", String.valueOf(block.getRegistryName()));
-            compound.putString("data", data);
+            compound.merge(NBTUtil.writeBlockState(state));
             setFilled(stack, true);
         }
         else
         {
-            compound.putString("block", "");
+            NBTUtil.writeBlockState(Blocks.AIR.getDefaultState());
             setFilled(stack, false);
         }
         stack.setTag(compound);
         return stack;
     }
 
-    public static Block getBlockFilled(ItemStack stack)
+    public static BlockState getBlockStateFilled(ItemStack stack)
     {
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
-        String block = compound.getString("block");
-        if (block.equals(""))
+        BlockState state = NBTUtil.readBlockState(compound);
+        if (state.getBlock() == Blocks.AIR)
         {
             return null;
         }
         setFilled(stack, true);
-        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(block));
-    }
-
-    public static String getBlockFilledData(ItemStack stack)
-    {
-        return stack.hasTag() ? stack.getTag().getString("data") : "";
+        return state;
     }
 
     public static ItemStack setFilled(ItemStack stack, boolean filled)
@@ -118,7 +112,7 @@ public class PlantObtainer extends BaseItem
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (!filled)
         {
-            compound.putString("block", "");
+            compound.merge(NBTUtil.writeBlockState(Blocks.AIR.getDefaultState()));
         }
         compound.putBoolean("filled", filled);
         stack.setTag(compound);
@@ -127,19 +121,13 @@ public class PlantObtainer extends BaseItem
 
     public static boolean isFilled(ItemStack stack)
     {
-        return stack.getTag().getBoolean("filled") && getBlockFilled(stack) != null;
+        return stack.getTag().getBoolean("filled") && getBlockStateFilled(stack) != null;
     }
 
     public static ItemStack initTags(ItemStack stack)
     {
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : new CompoundNBT();
-        if (!compound.contains("filled") || !compound.contains("block") || !compound.contains("data"))
-        {
-            compound.putBoolean("filled", false);
-            compound.putString("block", "");
-            compound.putString("data", "");
-            stack.setTag(compound);
-        }
+        stack.setTag(compound);
         return stack;
     }
 
@@ -151,7 +139,7 @@ public class PlantObtainer extends BaseItem
         initTags(stack);
         if (isFilled(stack))
         {
-            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockFilled(stack).getNameTextComponent().setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)).getFormattedText()));
+            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockStateFilled(stack).getBlock().getNameTextComponent().setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)).getFormattedText()));
         }
         else
         {

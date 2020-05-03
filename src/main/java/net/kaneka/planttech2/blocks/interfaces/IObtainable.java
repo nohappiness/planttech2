@@ -12,13 +12,9 @@ public interface IObtainable
 {
     void onObtained(World world, PlayerEntity player, ItemStack obtainer, BlockPos pos);
 
-    void onReleased(ItemUseContext context, Block block, String data);
+    void onReleased(ItemUseContext context, BlockState state);
 
     boolean isObtainable(ItemUseContext context);
 
     Block getBlockObtained(ItemUseContext context);
-
-    String transferStateForObtainer(BlockState state);
-
-    BlockState getStateForObtainer(String data);
 }
