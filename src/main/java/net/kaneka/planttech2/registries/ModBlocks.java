@@ -12,6 +12,7 @@ import net.kaneka.planttech2.blocks.machines.*;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
+import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -29,12 +30,7 @@ public class ModBlocks
 	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
 	public static List<Block> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
 	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
-	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, PlantTechMain.MODID);
-	public static final DeferredRegister<Block> BLOCK = new DeferredRegister<>(ForgeRegistries.BLOCKS, PlantTechMain.MODID);
-	public static final RegistryObject<Block> TUTORIAL_BLOCK = BLOCK.register("tutorial_block", () -> new Block(Block.Properties.create(Material.ROCK)));
-	public static final RegistryObject<BlockItem> TUTORIAL_DUST = ITEMS.register("tutorial_dust", () -> new BlockItem(TUTORIAL_BLOCK.get(), new BlockItem.Properties()));
-	//public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()) {};
-
+	public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(() -> ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()).setRegistryName("biomassfluid_block");
 
 	public static BaseBlock
 			CABLE = new CableBlock(), 
@@ -153,8 +149,7 @@ public class ModBlocks
 			registry.register(tempcrop);
 		}
 		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values());
-		//BIOMASSFLUIDBLOCK.setRegistryName("biomassblock"); 
-		//registry.register(BIOMASSFLUIDBLOCK);
+		registry.register(BIOMASSFLUIDBLOCK);
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)

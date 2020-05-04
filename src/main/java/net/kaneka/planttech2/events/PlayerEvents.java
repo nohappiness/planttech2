@@ -124,7 +124,7 @@ public class PlayerEvents
 					capability.increaseLevel(BiomeRadiation.getDensity(level));
 				}
 			}
-			if (capability.getLevel() >= 1.0F && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null)
+			if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= 32767))
 			{
 				player.addPotionEffect(new EffectInstance(ModEffects.RADIATION_SICKNESS, 99999));
 			}

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.fluids.BiomassFluid;
 import net.kaneka.planttech2.items.*;
 import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
@@ -17,7 +18,9 @@ import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -30,7 +33,7 @@ public class ModItems
 
     public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>(); 
 
-    //public static Item BIOMASSBUCKET = new BucketItem(ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupmain));
+    public static Item BIOMASS_BUCKET = new BucketItem(() -> ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupToolsAndArmor)).setRegistryName("biomass_bucket");
 
     public static BaseItem ANALYSER = new AnalyserItem(),
     			   ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
@@ -192,37 +195,32 @@ public class ModItems
 
     public static void register(IForgeRegistry<Item> registry)
     {
-    	//BIOMASSBUCKET.setRegistryName("biomassbucket"); 
+		for(BaseItem item: ITEMS)
+		{
+			registry.register(item);
+		}
 
-	for(BaseItem item: ITEMS)
-	{
-	    registry.register(item);
-	}
-	
-	
-	for(ArmorBaseItem item: ITEMSARMOR)
-	{
-	    registry.register(item);
-	}
-	
-	BaseItem tempseed, tempparticle;
-	String name;
-	for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
-	{
-	    name = entry.getString();
-	    tempseed = new CropSeedItem(name);
-	    SEEDS.put(name, tempseed);
-	    registry.register(tempseed);
-	    if (entry.hasParticle())
-	    {
-		tempparticle = new ParticleItem(name);
-		PARTICLES.put(name, tempparticle);
-		registry.register(tempparticle);
-	    }
-	}
-	
-	//registry.register(BIOMASSBUCKET);
-	
+		registry.register(BIOMASS_BUCKET);
+		for(ArmorBaseItem item: ITEMSARMOR)
+		{
+			registry.register(item);
+		}
+
+		BaseItem tempseed, tempparticle;
+		String name;
+		for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
+		{
+			name = entry.getString();
+			tempseed = new CropSeedItem(name);
+			SEEDS.put(name, tempseed);
+			registry.register(tempseed);
+			if (entry.hasParticle())
+			{
+			tempparticle = new ParticleItem(name);
+			PARTICLES.put(name, tempparticle);
+			registry.register(tempparticle);
+			}
+		}
     }
     
     @OnlyIn(Dist.CLIENT)

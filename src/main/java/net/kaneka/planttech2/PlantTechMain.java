@@ -12,11 +12,7 @@ import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.registries.ModBiomes;
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModCommands;
-import net.kaneka.planttech2.registries.ModRenderer;
-import net.kaneka.planttech2.registries.ModScreens;
+import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -102,11 +98,12 @@ public class PlantTechMain
 	{
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
-		RenderType rendertype = RenderType.getCutoutMipped();
 		for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
 		{
-			RenderTypeLookup.setRenderLayer(block, rendertype);
+			RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
 		}
-
+		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
 	}
 }

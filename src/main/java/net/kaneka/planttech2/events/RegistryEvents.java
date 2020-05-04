@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -116,13 +117,10 @@ public class RegistryEvents
 		DataGenerator gen = event.getGenerator();
 		gen.addProvider(new Recipes(gen));
 	}
-	
-	/*
-	
+
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
 	{
 		ModFluids.register(event.getRegistry());
 	}
-	*/
 }
