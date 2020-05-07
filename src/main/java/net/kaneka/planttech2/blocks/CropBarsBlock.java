@@ -25,7 +25,7 @@ public class CropBarsBlock extends BaseBlock
 {
 	public CropBarsBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", ModCreativeTabs.groupmain, true);
+		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", ModCreativeTabs.groupmain, true, true);
 	}
 
 	@Override

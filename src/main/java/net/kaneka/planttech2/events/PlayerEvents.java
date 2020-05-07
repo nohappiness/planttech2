@@ -3,8 +3,10 @@ package net.kaneka.planttech2.events;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.BiomeRadiation;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
+import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
+import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
@@ -60,7 +62,7 @@ public class PlayerEvents
 		}
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void livingDamaged(LivingDamageEvent e)
 	{
 		if(e.getEntityLiving() instanceof PlayerEntity)
@@ -76,15 +78,28 @@ public class PlayerEvents
 				}
 			}
 		}
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void attachCapability(final AttachCapabilitiesEvent<Entity> event)
 	{
-		if(event.getObject() instanceof PlayerEntity && !event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
+		if(event.getObject() instanceof PlayerEntity)
 		{
-//			event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());
-			event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
+			if (!event.getCapabilities().containsKey(ModReferences.TECHVILLAGERTRUSTCAP))
+			{
+				event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());
+			}
+			if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
+			{
+				event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
+			}
+		}
+		if (event.getObject() instanceof IAffectPlayerRadiation)
+		{
+			if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
+			{
+				event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
+			}
 		}
 	}
 
@@ -124,7 +139,7 @@ public class PlayerEvents
 					capability.increaseLevel(BiomeRadiation.getDensity(level));
 				}
 			}
-			if (capability.getLevel() >= 1.0F && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null)
+			if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= 32767))
 			{
 				player.addPotionEffect(new EffectInstance(ModEffects.RADIATION_SICKNESS, 99999));
 			}
@@ -135,6 +150,7 @@ public class PlayerEvents
 		}
 		else
 		{
+			//heals player in all biomes that are not created by pt2
 			float heal = (1.0F / 54000.0F);
 			if (amount + heal < 0.0F)
 			{
@@ -144,6 +160,15 @@ public class PlayerEvents
 			{
 				capability.decreaseLevel(heal);
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerHurt(LivingDamageEvent event)
+	{
+		if (event.getEntityLiving() instanceof PlayerEntity && event.getSource().getTrueSource() instanceof IAffectPlayerRadiation)
+		{
+			RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving()).increaseLevel(((IAffectPlayerRadiation) event.getSource().getTrueSource()).getAmount());
 		}
 	}
 	

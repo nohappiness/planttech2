@@ -56,7 +56,7 @@ public class TestItem extends BaseItem
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
-			
+
 			/*
 			System.out.println(" ");
     		System.out.println("Blocks: "); 

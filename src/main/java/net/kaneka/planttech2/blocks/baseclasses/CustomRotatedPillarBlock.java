@@ -16,7 +16,7 @@ public class CustomRotatedPillarBlock extends BaseBlock
 
 	public CustomRotatedPillarBlock(Properties property, String name, ItemGroup group, boolean hasItem)
 	{
-		super(property, name, group, hasItem);
+		super(property, name, group, hasItem, true);
 		this.setDefaultState(this.getDefaultState().with(AXIS, Direction.Axis.Y));
 	}
 

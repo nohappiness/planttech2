@@ -62,7 +62,10 @@ abstract public class PlantTopiaBaseBiome extends Biome
 	/**
 	 * @return -1 for no changes
 	 */
-	public abstract float getFogDensity();
+	public float getFogDensity()
+	{
+		return -1;
+	}
 
 	/**
 	 * When the effect reaches 1, the player starts getting negative effects
@@ -72,20 +75,23 @@ abstract public class PlantTopiaBaseBiome extends Biome
 
 	public abstract BiomeRadiation getRadiationLevel();
 
-	public abstract HashMap<String, Float> getFogRGB();
+	public HashMap<String, Float> getFogRGB()
+	{
+		return new HashMap<>();
+	}
 
 	public float getFogRed()
 	{
-		return getFogRGB().get("red");
+		return getFogRGB().isEmpty() ? -1 : getFogRGB().get("red");
 	}
 
 	public float getFogGreen()
 	{
-		return getFogRGB().get("green");
+		return getFogRGB().isEmpty() ? -1 :  getFogRGB().get("green");
 	}
 
 	public float getFogBlue()
 	{
-		return getFogRGB().get("blue");
+		return getFogRGB().isEmpty() ? -1 :  getFogRGB().get("blue");
 	}
 }

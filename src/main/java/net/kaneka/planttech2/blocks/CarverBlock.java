@@ -39,7 +39,7 @@ public class CarverBlock extends BaseBlock
 	
 	public CarverBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly(), "carver", ModCreativeTabs.groupmain, true); 
+		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly(), "carver", ModCreativeTabs.groupmain, true, true);
 		this.setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.valueOf(false))
 				.with(EAST, Boolean.valueOf(false))

@@ -67,7 +67,7 @@ public class DNAContainerItem extends BaseItem
 	    {
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + nbt.getInt("spreedingspeed")));
 	    }
-	    if (nbt.contains("genestrength"))
+	    if (nbt.contains("genestrenght"))
 	    {
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrength")));
 	    }

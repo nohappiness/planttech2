@@ -16,11 +16,20 @@ public class BaseBlock extends Block
 
 	public BaseBlock(Properties property, String name, ItemGroup group, boolean hasItem)
 	{
+		this(property, name, group, hasItem, false);
+	}
+
+	public BaseBlock(Properties property, String name, ItemGroup group, boolean hasItem, boolean requireSpecialRender)
+	{
 		super(property);
 		this.group = group;
 		this.name = name;
 		setRegistryName(name);
 
+		if (requireSpecialRender)
+		{
+			ModBlocks.SPECIAL_RENDER_BLOCKS.add(this);
+		}
 		ModBlocks.BLOCKS.add(this);
 		if (hasItem)
 		{

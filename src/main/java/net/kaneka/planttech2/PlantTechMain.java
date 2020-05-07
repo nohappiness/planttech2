@@ -2,6 +2,8 @@ package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
+import net.kaneka.planttech2.entities.models.TechGhoulModel;
+import net.kaneka.planttech2.entities.passive.TechGhoulEntity;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
@@ -12,11 +14,9 @@ import net.kaneka.planttech2.proxy.ClientProxy;
 import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.registries.ModBiomes;
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModCommands;
-import net.kaneka.planttech2.registries.ModRenderer;
-import net.kaneka.planttech2.registries.ModScreens;
+import net.kaneka.planttech2.registries.*;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -75,6 +75,7 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
@@ -95,67 +96,18 @@ public class PlantTechMain
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
-		
 	}
 
 	private void doClientStuff(final FMLClientSetupEvent event)
 	{
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
-		RenderType rendertype = RenderType.getCutoutMipped();
-		for(Block block: ModBlocks.CROPS.values())
+		for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
 		{
-			RenderTypeLookup.setRenderLayer(block, rendertype);
+			RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
 		}
-		RenderTypeLookup.setRenderLayer(ModBlocks.CROPBARS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_END, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_CROSS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_GLASSPANE_MIDDLE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DARK_CRYSTAL_DOOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_END, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_CROSS, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_GLASSPANE_MIDDLE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.WHITE_CRYSTAL_DOOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CARVER, rendertype);
-		
-		
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_IRON_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_PLANTIUM_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_IRON, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINESHELL_PLANTIUM, rendertype);
-		
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINEBULBREPROCESSOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDSQUEEZER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CHIPALYZER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.COMPRESSOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_CLEANER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_COMBINER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_EXTRACTOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_REMOVER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.IDENTIFIER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MEGAFURNACE_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR_GROWING, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER_GROWING, rendertype);
-
-		RenderTypeLookup.setRenderLayer(ModBlocks.MACHINEBULBREPROCESSOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDSQUEEZER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.CHIPALYZER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.COMPRESSOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_CLEANER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_COMBINER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_EXTRACTOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.DNA_REMOVER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.IDENTIFIER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.MEGAFURNACE, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.INFUSER, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.PLANTFARM, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SEEDCONSTRUCTOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.SOLARGENERATOR, rendertype);
-		RenderTypeLookup.setRenderLayer(ModBlocks.ENERGY_SUPPLIER, rendertype);
-
+		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
 	}
 }
