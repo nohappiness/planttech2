@@ -1,11 +1,32 @@
 package net.kaneka.planttech2.fluids;
 
-public abstract class BiomassFluid //extends FlowingFluid
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModFluids;
+import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.IFluidState;
+import net.minecraft.item.Item;
+import net.minecraft.state.StateContainer;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
+import net.minecraftforge.fluids.FluidAttributes;
+
+public abstract class BiomassFluid extends FlowingFluid
 {
-	/*
 	public static final ResourceLocation BIOMASS_STILL = new ResourceLocation("planttech2:blocks/fluid/biomass_still");
 	public static final ResourceLocation BIOMASS_FLOWING = new ResourceLocation("planttech2:blocks/fluid/biomass_flow");
-	public static final FluidAttributes ATTRIBUTES = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build();
+	public static final FluidAttributes ATTRIBUTE_STILL = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build(new Source());
+	public static final FluidAttributes ATTRIBUTE_FLOWING = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build(new Flowing());
 
 	@Override
 	public Fluid getFlowingFluid()
@@ -45,19 +66,13 @@ public abstract class BiomassFluid //extends FlowingFluid
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.TRANSLUCENT;
-	}
-
-	@Override
 	public Item getFilledBucket()
 	{
-		return ModItems.BIOMASSBUCKET;
+		return ModItems.BIOMASS_BUCKET;
 	}
 
 	@Override
-	protected boolean func_215665_a(IFluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_)
+	protected boolean canDisplace(IFluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_)
 	{
 		return p_215665_5_ == Direction.DOWN && !p_215665_4_.isIn(FluidTags.WATER);
 	}
@@ -71,7 +86,7 @@ public abstract class BiomassFluid //extends FlowingFluid
 	@Override
 	protected float getExplosionResistance()
 	{
-		return 1;
+		return 100.0F;
 	}
 
 	@Override
@@ -86,15 +101,8 @@ public abstract class BiomassFluid //extends FlowingFluid
 		return fluidIn == ModFluids.BIOMASS || fluidIn == ModFluids.BIOMASS_FLOWING;
 	}
 
-	@Override
-	public FluidAttributes createAttributes(Fluid fluid)
-	{
-		return ATTRIBUTES;
-	}
-
 	public static class Flowing extends BiomassFluid
 	{
-
 		public Flowing()
 		{
 			setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
@@ -116,6 +124,11 @@ public abstract class BiomassFluid //extends FlowingFluid
 			return false;
 		}
 
+		@Override
+		protected FluidAttributes createAttributes()
+		{
+			return ATTRIBUTE_STILL;
+		}
 	}
 
 	public static class Source extends BiomassFluid
@@ -125,11 +138,15 @@ public abstract class BiomassFluid //extends FlowingFluid
              return 8;
          }
 
-         public boolean isSource(IFluidState state) 
+         public boolean isSource(IFluidState state)
          {
              return true;
          }
-	}
-	*/
 
+		@Override
+		protected FluidAttributes createAttributes()
+		{
+			return ATTRIBUTE_FLOWING;
+		}
+	}
 }

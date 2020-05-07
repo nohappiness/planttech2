@@ -28,7 +28,7 @@ public class GrowingBlock extends BaseBlock
 	
 	public GrowingBlock(String name, Block block, boolean growAlone)
 	{
-		super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F).tickRandomly(), name, ModCreativeTabs.groupmain, false);
+		super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F).tickRandomly(), name, ModCreativeTabs.groupmain, false, true);
 		this.block = block; 
 		this.growAlone = growAlone; 
 		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, Integer.valueOf(0)));

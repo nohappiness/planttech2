@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.Effects.RadiationSickness;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.BiomeRadiation;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
