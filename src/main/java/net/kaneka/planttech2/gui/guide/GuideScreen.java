@@ -102,7 +102,7 @@ public class GuideScreen extends Screen
 		{
 			if(buttonid == 0)
 			{
-				if(mode > 1)
+				if(mode >= 1)
 				{
 					mode--; 
 					page = 0; 

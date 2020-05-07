@@ -43,9 +43,12 @@ public class MachineBulbItem extends BaseItem
 				if(crop instanceof FacingGrowingBlock)
 				{
 					Direction direction = ctx.getFace();
-    				world.setBlockState(pos, crop.getDefaultState().with(FacingGrowingBlock.FACING, direction));
-    				stack.shrink(1);
-    				return ActionResultType.CONSUME; 
+					if(!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
+					{
+        				world.setBlockState(pos, crop.getDefaultState().with(FacingGrowingBlock.FACING, direction));
+        				stack.shrink(1);
+        				return ActionResultType.CONSUME; 
+					}
 				}
 				else
 				{

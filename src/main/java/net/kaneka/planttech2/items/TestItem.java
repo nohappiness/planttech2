@@ -79,7 +79,7 @@ public class TestItem extends BaseItem
     		}
 		
 		*/
-//			TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
+		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
 		}
 		
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
