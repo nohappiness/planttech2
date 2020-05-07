@@ -1,9 +1,7 @@
 package net.kaneka.planttech2.entities.capabilities.player;
 
-import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -12,7 +10,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import org.apache.http.impl.entity.LaxContentLengthStrategy;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

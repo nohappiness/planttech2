@@ -2,6 +2,8 @@ package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
+import net.kaneka.planttech2.entities.models.TechGhoulModel;
+import net.kaneka.planttech2.entities.passive.TechGhoulEntity;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
@@ -13,6 +15,8 @@ import net.kaneka.planttech2.proxy.IProxy;
 import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.*;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -71,6 +75,7 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
+		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
@@ -91,7 +96,6 @@ public class PlantTechMain
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configuratePlanttechEntries();
 		LootTableHandler.register();
-		
 	}
 
 	private void doClientStuff(final FMLClientSetupEvent event)
