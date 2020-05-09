@@ -23,7 +23,7 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(31);
-		blit(this.guiLeft + 89, this.guiTop + 50, 0, 202, l, 12);
+		blit(this.guiLeft + 88, this.guiTop + 49, 0, 200, l, 12);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

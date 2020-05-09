@@ -25,7 +25,7 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 		for(int p = 0; p < 6; p++)
 		{
 			int l = this.getCookProgressScaled(p, 13);
-			blit(this.guiLeft + 29 + p * 22, this.guiTop + 46, 5, 202, 10, l);
+			blit(this.guiLeft + 24 + p * 22, this.guiTop + 47, 0, 200, 10, l);
 		}
 		
 		int k = this.getEnergyStoredScaled(55);

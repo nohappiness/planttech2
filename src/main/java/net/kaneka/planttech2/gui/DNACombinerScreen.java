@@ -24,7 +24,7 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(25);
-		blit(this.guiLeft + 98, this.guiTop + 38, 0, 202, 20, l);
+		blit(this.guiLeft + 97, this.guiTop + 44, 0, 200, 20, l);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

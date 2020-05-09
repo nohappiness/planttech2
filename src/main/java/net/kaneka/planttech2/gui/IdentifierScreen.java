@@ -24,7 +24,7 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(16);
-		blit(this.guiLeft + 80, this.guiTop + 44, 0, 202, l, 16);
+		blit(this.guiLeft + 75, this.guiTop + 45, 0, 200, l, 16);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
