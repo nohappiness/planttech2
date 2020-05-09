@@ -23,8 +23,8 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	{
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
-		int l = this.getCookProgressScaled(50);
-		blit(this.guiLeft + 77, this.guiTop + 38, 0, 200, l, 20);
+		int l = this.getCookProgressScaled(52);
+		blit(this.guiLeft + 76, this.guiTop + 37, 0, 200, l, 22);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

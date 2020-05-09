@@ -25,7 +25,7 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(32);
-		blit(this.guiLeft + 61, this.guiTop + 47, 0, 200, l, 14);
+		blit(this.guiLeft + 60, this.guiTop + 46, 0, 200, l, 16);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
