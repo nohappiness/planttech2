@@ -93,7 +93,7 @@ public class ClientEvents
 		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
 		if (biome instanceof PlantTopiaBaseBiome)
 		{
-			if (((PlantTopiaBaseBiome) biome).getFogRGB() != null)
+			if (!((PlantTopiaBaseBiome) biome).getFogRGB().isEmpty())
 			{
 				event.setRed(((PlantTopiaBaseBiome) biome).getFogRed() / (float) 255);
 				event.setGreen(((PlantTopiaBaseBiome) biome).getFogGreen() / (float) 255);

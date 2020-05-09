@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.Effects.RadiationSickness;
+import net.kaneka.planttech2.potioneffects.RadiationSickness;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.registries.IForgeRegistry;
 

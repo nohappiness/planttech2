@@ -1,52 +1,100 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.kaneka.planttech2.items.PlantObtainer;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemUseContext;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
-public abstract class NaturalPlants extends BaseBlock
+public class NaturalPlants extends BaseBlock
 {
-    public NaturalPlants(Properties property, String name, ItemGroup group, boolean hasItem)
+//    private float width;
+//    private float height;
+    protected static VoxelShape BASE_SHAPE;
+    public NaturalPlants(String name, boolean hasItem, float width, float height)
     {
-        super(property, name, group, hasItem);
+        super(Block.Properties.create(Material.PLANTS).notSolid().sound(SoundType.PLANT), name, ModCreativeTabs.groupblocks, hasItem, true);
+//        this.width = width;
+//        this.height = height;
+        float halfWidth = width / 2;
+        BASE_SHAPE = Block.makeCuboidShape(8 - halfWidth, 0, 8 - halfWidth, 8 + halfWidth, height, 8 + halfWidth);
     }
 
-    /**
-     * returns whether it is possible to set the given position in the given world with this block
-     */
-    public boolean canPlaceAt(World world, BlockPos pos, @Nullable BlockItemUseContext context)
+    public NaturalPlants(String name, boolean hasItem)
+    {
+        //default size
+        this(name, hasItem, 6, 10);
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+        Vec3d vec3d = state.getOffset(worldIn, pos);
+        return BASE_SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+    }
+
+    @Override
+    public OffsetType getOffsetType()
+    {
+        return Block.OffsetType.XZ;
+    }
+
+    //    /**
+//     * set both x and y -1 for the centre position
+//     */
+    /*private VoxelShape getShape(float x, float z)
+    {
+        if ((x == -1 && z == -1) || (x < 0 && z < 0))
+        {
+            float halfWidth = this.width / 2;
+            return Block.makeCuboidShape(8 - halfWidth, 0, 16 - halfWidth, 8 - halfWidth, this.height, 16 - halfWidth);
+        }
+        x = Math.min(16 - this.width, x);
+        z = Math.min(16 - this.width, z);
+        return Block.makeCuboidShape(x, 0, z, x + this.width, this.height, this.width);
+    }*/
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+        return VoxelShapes.empty();
+    }
+
+    public boolean canPlaceAt(World world, BlockPos pos)
     {
         if (getValidGrounds().contains(world.getBlockState(pos.down()).getBlock()))
         {
-            return context == null ? world.isAirBlock(pos) : world.getBlockState(pos).isReplaceable(context);
+            return world.isAirBlock(pos);
         }
         return false;
     }
 
-    /**
-     * returns a HashSet of valid blocks (ground)
-     */
     public HashSet<Block> getValidGrounds()
     {
         HashSet<Block> list = new HashSet<>();
         list.add(Blocks.DIRT);
         list.add(Blocks.GRASS_BLOCK);
         list.add(ModBlocks.PLANTIUM_BLOCK);
+        list.add(Blocks.COARSE_DIRT);
+        list.add(Blocks.FARMLAND);
+        list.add(Blocks.PODZOL);
         return list;
     }
 
-    /**
-     * returns whether this block can be obtained by Plant Obtainer
-     * {@link PlantObtainer#onItemUse(ItemUseContext)}
-     */
-    public abstract boolean canBeObtained();
+//    /**
+//     * returns whether this block can be obtained by Plant Obtainer
+//     * {@link PlantObtainer#onItemUse(ItemUseContext)}
+//     */
+//    public abstract boolean canBeObtained(ItemUseContext context);
 }

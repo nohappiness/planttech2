@@ -8,6 +8,7 @@ import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerContainerProvide
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTrade;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePool;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePools;
+import net.kaneka.planttech2.registries.ModEntityTypes;
 import net.kaneka.planttech2.registries.ModReferences;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
@@ -34,7 +35,7 @@ public class TechVillagerEntity extends AgeableEntity
 
 	private List<TechVillagerTrade> offers;
 
-	public TechVillagerEntity(EntityType<TechVillagerEntity> type, World worldIn)
+	public TechVillagerEntity(EntityType<? extends TechVillagerEntity> type, World worldIn)
 	{
 		super(type, worldIn);
 	}
@@ -153,16 +154,16 @@ public class TechVillagerEntity extends AgeableEntity
 		return false;
 	}
 
-	public EntityType<?> getEntityType()
+	public static EntityType<? extends TechVillagerEntity> getEntityType()
 	{
-		return ForgeRegistries.ENTITIES.getValue(new ResourceLocation(ModReferences.TECHVILLAGER));
+		return (EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public AgeableEntity createChild(AgeableEntity ageable)
 	{
-		return new TechVillagerEntity((EntityType<TechVillagerEntity>) getEntityType(), this.world);
+		return new TechVillagerEntity(getEntityType(), this.world);
 	}
 
 }

@@ -5,21 +5,16 @@ import net.kaneka.planttech2.datapack.dataprovider.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityType;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
-import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
@@ -76,13 +71,11 @@ public class RegistryEvents
 		ModEffects.registerAll(event.getRegistry());
 	}
 
-	/*
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
-	*/
 
 	@SubscribeEvent
 	public static void registerBiomes(final RegistryEvent.Register<Biome> event)
@@ -116,13 +109,10 @@ public class RegistryEvents
 		DataGenerator gen = event.getGenerator();
 		gen.addProvider(new Recipes(gen));
 	}
-	
-	/*
-	
+
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
 	{
 		ModFluids.register(event.getRegistry());
 	}
-	*/
 }

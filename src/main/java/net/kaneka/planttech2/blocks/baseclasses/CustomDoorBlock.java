@@ -55,7 +55,7 @@ public class CustomDoorBlock extends BaseBlock
 
 	public CustomDoorBlock(Block.Properties builder, String name, ItemGroup group, boolean hasItem)
 	{
-		super(builder, name, group, hasItem);
+		super(builder, name, group, hasItem, true);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(OPEN, Boolean.valueOf(false)).with(HINGE, DoorHingeSide.LEFT)
 		        .with(POWERED, Boolean.valueOf(false)).with(HALF, DoubleBlockHalf.LOWER));
 	}

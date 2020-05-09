@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "planttech2:blocks/plants/mutated_blue_orchid"
+    }
+}

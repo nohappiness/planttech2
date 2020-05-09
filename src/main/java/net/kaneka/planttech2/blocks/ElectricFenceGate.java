@@ -73,15 +73,7 @@ public class ElectricFenceGate extends BaseBlock
         {
             worldIn.destroyBlock(currentPos, !stateIn.get(IS_TOP));
         }
-        BlockState state;
-        if (stateIn.get(IS_TOP))
-        {
-            state = worldIn.getBlockState(currentPos.down());
-        }
-        else
-        {
-            state = worldIn.getBlockState(currentPos.up());
-        }
+        BlockState state = worldIn.getBlockState(stateIn.get(IS_TOP) ? currentPos.down() : currentPos.up());
         if (state.getBlock() instanceof ElectricFenceGate)
         {
             return getDefaultState()
@@ -211,28 +203,8 @@ public class ElectricFenceGate extends BaseBlock
     private boolean checkValid(BlockPos pos, World world)
     {
         BlockState state = world.getBlockState(pos);
-        BlockState state2;
-        if (state.get(IS_TOP))
-        {
-            state2 = world.getBlockState(pos.down());
-        }
-        else
-        {
-            state2 = world.getBlockState(pos.up());
-        }
-        if (state2.getBlock() instanceof ElectricFenceGate)
-        {
-            if (state.get(IS_TOP) && state2.get(IS_TOP))
-            {
-                return false;
-            }
-            if (!state.get(IS_TOP) && !state2.get(IS_TOP))
-            {
-                return false;
-            }
-            return true;
-        }
-        return false;
+        BlockState state2 = world.getBlockState(state.get(IS_TOP) ? pos.down() : pos.up());
+        return state2.getBlock() instanceof ElectricFenceGate && (state.get(IS_TOP) != state2.get(IS_TOP));
     }
 
     @Override

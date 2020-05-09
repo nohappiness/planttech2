@@ -56,7 +56,7 @@ public class TestItem extends BaseItem
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
-			
+
 			/*
 			System.out.println(" ");
     		System.out.println("Blocks: "); 
@@ -79,7 +79,7 @@ public class TestItem extends BaseItem
     		}
 		
 		*/
-//			TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
+		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
 		}
 		
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());

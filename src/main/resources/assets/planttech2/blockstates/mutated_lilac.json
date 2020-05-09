@@ -1,0 +1,6 @@
+{
+  "variants": {
+        "is_top=true": { "model": "planttech2:block/plants/mutated_lilac_top" },
+        "is_top=false": { "model": "planttech2:block/plants/mutated_lilac_bottom" }
+    }
+}
