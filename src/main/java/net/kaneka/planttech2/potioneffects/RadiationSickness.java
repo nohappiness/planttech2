@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.effects;
+package net.kaneka.planttech2.potioneffects;
 
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.kaneka.planttech2.registries.ModDamageSources;
