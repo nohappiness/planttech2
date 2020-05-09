@@ -69,7 +69,7 @@ public class DNAContainerItem extends BaseItem
 	    }
 	    if (nbt.contains("genestrenght"))
 	    {
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrength")));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrenght")));
 	    }
 	    if (nbt.contains("energyvalue"))
 	    {
