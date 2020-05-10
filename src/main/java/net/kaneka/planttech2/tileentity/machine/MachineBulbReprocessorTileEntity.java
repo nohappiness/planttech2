@@ -34,9 +34,9 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 			case 1:
 				return MachineBulbReprocessorTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return MachineBulbReprocessorTileEntity.this.fluidtank.getBiomass();
+			    return MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.getCurrentStorage();
 			case 3:
-			    return MachineBulbReprocessorTileEntity.this.fluidtank.getCapacity(); 
+			    return MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.getMaxStorage();
 			case 4: 
 				return MachineBulbReprocessorTileEntity.this.ticksPassed; 
 			case 5: 
@@ -65,10 +65,10 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 				MachineBulbReprocessorTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				MachineBulbReprocessorTileEntity.this.fluidtank.setBiomass(value);
+				MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				MachineBulbReprocessorTileEntity.this.fluidtank.setCapacity(value);
+				MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
 				break;
 			case 4: 
 				MachineBulbReprocessorTileEntity.this.ticksPassed = value; 
@@ -113,7 +113,7 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 		{
 			 
 			MachineBulbItem bulb = ModItems.MACHINEBULBS.get(selectedId-1); 
-    		if (energystorage.getEnergyStored() >= energyPerItem() && bulb.getTier() <= actualTier && fluidtank.getBiomass() >= bulb.getNeededBiomass())
+    		if (energystorage.getEnergyStored() >= energyPerItem() && bulb.getTier() <= actualTier && BIOMASS_CAP.getCurrentStorage() >= bulb.getNeededBiomass())
     		{
     			ItemStack input = itemhandler.getStackInSlot(0);
     			ItemStack output = itemhandler.getStackInSlot(1); 
@@ -127,8 +127,8 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
     					}
     					else
     					{
-    						energystorage.extractEnergy(energyPerItem()); 
-    						fluidtank.extract(bulb.getNeededBiomass()); 
+    						energystorage.extractEnergy(energyPerItem());
+							BIOMASS_CAP.extractBiomass(bulb.getNeededBiomass());
     						input.shrink(1);
     						ticksPassed = 0; 
     						itemhandler.setStackInSlot(1, new ItemStack(bulb));

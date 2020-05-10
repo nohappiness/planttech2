@@ -28,9 +28,9 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return SeedconstructorTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return SeedconstructorTileEntity.this.fluidtank.getBiomass();
+			    return SeedconstructorTileEntity.this.BIOMASS_CAP.getCurrentStorage();
 			case 3:
-			    return SeedconstructorTileEntity.this.fluidtank.getCapacity(); 
+			    return SeedconstructorTileEntity.this.BIOMASS_CAP.getMaxStorage();
 			case 4: 
 				return SeedconstructorTileEntity.this.ticksPassed; 
 				
@@ -50,10 +50,10 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 				SeedconstructorTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				SeedconstructorTileEntity.this.fluidtank.setBiomass(value);
+				SeedconstructorTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				SeedconstructorTileEntity.this.fluidtank.setCapacity(value);
+				SeedconstructorTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
 				break;
 			case 4: 
 				SeedconstructorTileEntity.this.ticksPassed = value; 
@@ -83,7 +83,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 
 			if (!stack1.isEmpty() && stack2.isEmpty())
 			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && fluidtank.getBiomass() >= fluidPerItem())
+				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && BIOMASS_CAP.getCurrentStorage() >= fluidPerItem())
 				{
 					if (ticksPassed < ticksPerItem())
 					{
@@ -112,7 +112,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 						}
 						ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
 						itemhandler.setStackInSlot(1, traits.addToItemStack(stack));
-						fluidtank.extract(fluidPerItem());
+						BIOMASS_CAP.extractBiomass(fluidPerItem());
 						addKnowledge();
 					}
 				}

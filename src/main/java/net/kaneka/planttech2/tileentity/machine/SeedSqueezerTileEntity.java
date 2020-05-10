@@ -33,19 +33,18 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 		{
 			switch (index)
 			{
-			case 0:
-				return SeedSqueezerTileEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return SeedSqueezerTileEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return SeedSqueezerTileEntity.this.fluidtank.getBiomass();
-			case 3:
-				return SeedSqueezerTileEntity.this.fluidtank.getCapacity();
-			case 4:
-				return SeedSqueezerTileEntity.this.ticksPassed;
-
-			default:
-				return 0;
+				case 0:
+					return SeedSqueezerTileEntity.this.energystorage.getEnergyStored();
+				case 1:
+					return SeedSqueezerTileEntity.this.energystorage.getMaxEnergyStored();
+				case 2:
+					return SeedSqueezerTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+				case 3:
+					return SeedSqueezerTileEntity.this.BIOMASS_CAP.getMaxStorage();
+				case 4:
+					return SeedSqueezerTileEntity.this.ticksPassed;
+				default:
+					return 0;
 			}
 		}
 
@@ -53,21 +52,21 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 		{
 			switch (index)
 			{
-			case 0:
-				SeedSqueezerTileEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				SeedSqueezerTileEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				SeedSqueezerTileEntity.this.fluidtank.setBiomass(value);
-				break;
-			case 3:
-				SeedSqueezerTileEntity.this.fluidtank.setCapacity(value);
-				break;
-			case 4:
-				SeedSqueezerTileEntity.this.ticksPassed = value;
-				break;
+				case 0:
+					SeedSqueezerTileEntity.this.energystorage.setEnergyStored(value);
+					break;
+				case 1:
+					SeedSqueezerTileEntity.this.energystorage.setEnergyMaxStored(value);
+					break;
+				case 2:
+					SeedSqueezerTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+					break;
+				case 3:
+					SeedSqueezerTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+					break;
+				case 4:
+					SeedSqueezerTileEntity.this.ticksPassed = value;
+					break;
 			}
 
 		}
@@ -80,7 +79,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedSqueezerTileEntity()
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, 5000, PlantTechConstants.MACHINETIER_SEEDSQUEEZER);
+		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 5000);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		inputs_provider = LazyOptional.of(() -> inputs);
 	}
@@ -125,7 +124,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					{
 						squeezeItem();
 						addKnowledge();
-						fluidtank.receive(10);
+						BIOMASS_CAP.changeCurrentStorage(10);
 						ticksPassed = 0;
 					}
 				} else if (stack.getCount() > 0)

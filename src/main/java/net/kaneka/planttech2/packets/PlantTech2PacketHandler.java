@@ -24,6 +24,7 @@ public class PlantTech2PacketHandler
 		INSTANCE.registerMessage(i++, DoTechVillagerTaskMessage.class, DoTechVillagerTaskMessage::encode, DoTechVillagerTaskMessage::decode, DoTechVillagerTaskMessage.DoTechVillagerTaskHandler::handle);
 		INSTANCE.registerMessage(i++, SyncTrustMessage.class, SyncTrustMessage::encode, SyncTrustMessage::decode, SyncTrustMessage.SyncTrustHandler::handle);
 		INSTANCE.registerMessage(i++, SyncRadiationLevelMessage.class, SyncRadiationLevelMessage::encode, SyncRadiationLevelMessage::decode, SyncRadiationLevelMessage.SyncRadiationLevelHandler::handle);
+		INSTANCE.registerMessage(i++, SyncBiomassFluidEnergyMessage.class, SyncBiomassFluidEnergyMessage::encode, SyncBiomassFluidEnergyMessage::decode, SyncBiomassFluidEnergyMessage.SyncBiomassFluidEnergyHandler::handle);
 	}
 
 	public static void sendToServer(Object msg)
