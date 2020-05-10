@@ -142,7 +142,7 @@ public class TeleportationUtils
         {
             return false;
         }
-        chunkProvider.func_225313_a(x, z);
+        chunkProvider.getChunk(x, z, true);
         return true;
     }
 	
