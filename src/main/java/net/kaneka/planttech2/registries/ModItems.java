@@ -21,14 +21,18 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import static net.kaneka.planttech2.registries.ModReferences.MODID;
+
 public class ModItems
 {
-    public static List<BaseItem> ITEMS = new ArrayList<BaseItem>(); 
+	private static ResourceLocation CropResLoc=new ResourceLocation(MODID, "crops/");
+	public static List<BaseItem> ITEMS = new ArrayList<BaseItem>();
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
 
     public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>(); 
@@ -213,6 +217,7 @@ public class ModItems
 			name = entry.getString();
 			tempseed = new CropSeedItem(name);
 			SEEDS.put(name, tempseed);
+
 			registry.register(tempseed);
 			if (entry.hasParticle())
 			{

@@ -1,11 +1,11 @@
 {
     "type": "planttech2:compressing",
     "input": {
-      "item": "planttech2:stray_particles",
+      "item": "planttech2:cow_particles",
       "amount": 8
     },
     "result": {
-      "item": "minecraft:arrow",
+      "item": "minecraft:leather",
       "amount": 1
     }
-  }
+}

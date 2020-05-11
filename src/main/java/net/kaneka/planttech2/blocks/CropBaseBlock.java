@@ -147,7 +147,7 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		if (!enoughtLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
 			return false;
-		if (!enoughtWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
+		if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
 			return false;
 		if (!rightSoil(world, pos, traits.getType()))
 			return false;
@@ -165,7 +165,7 @@ public class CropBaseBlock extends ContainerBlock
 			HashMapCropTraits traits = ((CropsTileEntity) te).getTraits();
 			if (!enoughtLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
 				messages[1] = "Not enough light";
-			if (!enoughtWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
+			if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
 				messages[2] = "Not enough water";
 			if (!rightSoil(world, pos, traits.getType()))
 				messages[3] = "Not right soil";
@@ -191,7 +191,7 @@ public class CropBaseBlock extends ContainerBlock
 		return false;
 	}
 
-	public boolean enoughtWater(World world, BlockPos pos, int waterSensitivity)
+	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity)
 	{
 		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
 		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
