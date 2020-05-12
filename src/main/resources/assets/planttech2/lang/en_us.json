@@ -578,6 +578,8 @@
 	"block.planttech2.kanekium_block": "Kanekium Block",
 	"block.planttech2.kinnoium_block": "Kinnoium Block",
 	"block.planttech2.lenthurium_block": "Lenthurium Block",
+      "block.planttech2.universal_soil": "Experimental Soil Prototype",
+      "block.planttech2.universal_soil_infused": "Biomass-Infused OmniSoil",
 	"block.planttech2.cable": "Cable",
 	"block.planttech2.dna_extractor": "DNA Extractor",
 	"block.planttech2.dna_combiner": "DNA Combiner",
