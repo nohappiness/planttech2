@@ -1,13 +1,13 @@
 {
     "enabled": true,
-    "temperature": 2,
+    "temperature": 1,
     "seeds": [
-        "planttech2:wheat_seeds",
-        "minecraft:wheat_seeds"
+        "planttech2:kelp_seeds",
+        "minecraft:kelp"
     ],
     "drops":[
         {
-            "item": "minecraft:wheat",
+            "item": "minecraft:kelp",
             "min": 0,
             "max": 4
         }

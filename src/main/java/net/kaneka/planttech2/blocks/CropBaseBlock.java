@@ -145,7 +145,7 @@ public class CropBaseBlock extends ContainerBlock
 
 	private boolean canGrow(World world, BlockPos pos, HashMapCropTraits traits)
 	{
-		if (!enoughtLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
+		if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
 			return false;
 		if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
 			return false;
@@ -163,7 +163,7 @@ public class CropBaseBlock extends ContainerBlock
 		if (te instanceof CropsTileEntity)
 		{
 			HashMapCropTraits traits = ((CropsTileEntity) te).getTraits();
-			if (!enoughtLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
+			if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
 				messages[1] = "Not enough light";
 			if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
 				messages[2] = "Not enough water";
@@ -178,7 +178,7 @@ public class CropBaseBlock extends ContainerBlock
 		return messages;
 	}
 
-	public boolean enoughtLight(World world, BlockPos pos, int lightsensitivity)
+	public boolean enoughLight(World world, BlockPos pos, int lightsensitivity)
 	{
 		if (!world.isAreaLoaded(pos, 1))// prevent loading unloaded chunks
 		{
@@ -223,7 +223,7 @@ public class CropBaseBlock extends ContainerBlock
 		{
 			Block block = ((BlockItem) stack.getItem()).getBlock();
 			BlockState state = world.getBlockState(pos.down());
-			if (state.getBlock() == block)
+			if ((state.getBlock() == block) || state.getBlock() == ModBlocks.UNIVERSAL_SOIL_INFUSED)
 			{
 				return true;
 			}

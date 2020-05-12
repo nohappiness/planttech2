@@ -414,16 +414,17 @@ public class CropList
 				.addDrop(new ItemStack(KELP), 0, 4);
 		this.getEntryByName("melon").addSeeds(new ItemStack(MELON_SEEDS))
 				.addDrop(new ItemStack(MELON), 0, 2);
+				.addDrop(new ItemStack(MELON), 0, 3);
 		this.getEntryByName("mushroom").addSeeds(new ItemStack(RED_MUSHROOM), new ItemStack(BROWN_MUSHROOM))
 				.addDrop(new ItemStack(RED_MUSHROOM), 0, 4)
 				.addDrop(new ItemStack(BROWN_MUSHROOM), 0, 4);
 		this.getEntryByName("nether_wart").addSeeds(new ItemStack(NETHER_WART))
 				.addDrop(new ItemStack(NETHER_WART), 0, 4);
 		this.getEntryByName("potato").addSeeds(new ItemStack(POTATO))
-				.addDrop(new ItemStack(Items.POTATO), 0, 4)
-				.addDrop(new ItemStack(Items.POISONOUS_POTATO), 0, 1);
+				.addDrop(new ItemStack(POTATO), 0, 4)
+				.addDrop(new ItemStack(POISONOUS_POTATO), 0, 2);
 		this.getEntryByName("pumpkin").addSeeds(new ItemStack(PUMPKIN_SEEDS))
-				.addDrop(new ItemStack(PUMPKIN), 0, 2);
+				.addDrop(new ItemStack(PUMPKIN), 0, 3);
 		this.getEntryByName("sugarcane").addSeeds(new ItemStack(SUGAR_CANE))
 				.addDrop(new ItemStack(SUGAR_CANE), 0, 4);
 		this.getEntryByName("vine").addSeeds(new ItemStack(VINE))
@@ -482,7 +483,7 @@ public class CropList
 		this.getEntryByName("soulsand");
 		this.getEntryByName("spider");
 		this.getEntryByName("sponge");
-		this.getEntryByName("squid").addDrop(new ItemStack(BLACK_DYE), 0, 1);
+		this.getEntryByName("squid");
 		this.getEntryByName("stone");
 		this.getEntryByName("stray");
 		this.getEntryByName("turtle");

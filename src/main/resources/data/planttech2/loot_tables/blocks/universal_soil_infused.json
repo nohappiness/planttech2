@@ -1,0 +1,20 @@
+{
+	  "type": "minecraft:block",
+	  "pools": [
+	    {
+		  "name": "planttech2:universal_soil_infused",
+	      "rolls": 1,
+	      "entries": [
+	        {
+	          "type": "minecraft:item",
+	          "name": "planttech2:universal_soil_infused"
+	        }
+	      ],
+	      "conditions": [
+	        {
+	          "condition": "minecraft:survives_explosion"
+	        }
+	      ]
+	    }
+	  ]
+	}
