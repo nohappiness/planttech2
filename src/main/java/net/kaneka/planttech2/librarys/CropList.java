@@ -413,7 +413,6 @@ public class CropList
 		this.getEntryByName("kelp").addSeeds(new ItemStack(KELP))
 				.addDrop(new ItemStack(KELP), 0, 4);
 		this.getEntryByName("melon").addSeeds(new ItemStack(MELON_SEEDS))
-				.addDrop(new ItemStack(MELON), 0, 2);
 				.addDrop(new ItemStack(MELON), 0, 3);
 		this.getEntryByName("mushroom").addSeeds(new ItemStack(RED_MUSHROOM), new ItemStack(BROWN_MUSHROOM))
 				.addDrop(new ItemStack(RED_MUSHROOM), 0, 4)
