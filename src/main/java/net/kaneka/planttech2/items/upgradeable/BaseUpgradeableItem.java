@@ -1,12 +1,7 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import java.lang.management.PlatformLoggingMXBean;
-import java.util.HashMap;
-import java.util.List;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-
 import net.kaneka.planttech2.container.ItemUpgradeableContainer;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
@@ -41,6 +36,9 @@ import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.HashMap;
+import java.util.List;
 
 public abstract class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IUpgradeable
 {
@@ -264,12 +262,12 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 		{
 			if (!world.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.getSlotFor(stack)), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, EquipmentSlotType.MAINHAND.getSlotIndex()), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
 	}
-	
+
 	@Override
 	public void updateNBTValues(ItemStack stack)
 	{

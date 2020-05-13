@@ -13,6 +13,8 @@ import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModEffects;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.EffectInstance;

@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -205,7 +206,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		{
 			if (!worldIn.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.getSlotFor(stack)), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, EquipmentSlotType.MAINHAND.getSlotIndex()), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<>(ActionResultType.FAIL, stack);
