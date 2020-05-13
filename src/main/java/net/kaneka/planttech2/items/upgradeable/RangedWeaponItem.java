@@ -206,7 +206,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		{
 			if (!worldIn.isRemote && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, EquipmentSlotType.MAINHAND.getSlotIndex()), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.currentItem), buffer -> buffer.writeItemStack(stack));
 			}
 		}
 		return new ActionResult<>(ActionResultType.FAIL, stack);
