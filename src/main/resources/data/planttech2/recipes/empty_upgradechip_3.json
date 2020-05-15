@@ -1,9 +1,16 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "rdr"
+        "nnn",
+        "rdr",
+        "nnn"
+
     ],
     "key": {
+        "n":
+        {
+            "item": "minecraft:gold_ingot"
+        },
         "r":
         {
             "item": "planttech2:redstone_infused"
@@ -15,6 +22,6 @@
     },
     "result": {
         "item": "planttech2:empty_upgradechip_3",
-        "count": 2
+        "count": 1
     }
 }

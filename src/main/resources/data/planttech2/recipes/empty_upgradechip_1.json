@@ -8,7 +8,7 @@
     "key": {
         "p":
         {
-            "item": "planttech2:plantium_nugget"
+            "item": "planttech2:plantium_ingot"
         },
         "r":
         {
@@ -17,6 +17,6 @@
     },
     "result": {
         "item": "planttech2:empty_upgradechip_1",
-        "count": 3
+        "count": 1
     }
 }

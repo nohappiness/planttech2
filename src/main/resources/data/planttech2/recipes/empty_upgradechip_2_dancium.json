@@ -1,16 +1,18 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "ngn"
+        "nnn",
+        "ggg",
+        "nnn"
     ],
     "key": {
         "n":
         {
-            "item": "planttech2:dancium_nugget"
+            "item": "planttech2:dancium_ingot"
         },
         "g":
         {
-            "item": "minecraft:gold_nugget"
+            "item": "minecraft:gold_ingot"
         }
     },
     "result": {
