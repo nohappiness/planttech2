@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.kaneka.planttech2.commands.DevListCommand;
 import net.kaneka.planttech2.commands.GuideCommand;
+import net.kaneka.planttech2.commands.RadiationlevelCommand;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 
@@ -15,7 +16,8 @@ public class ModCommands
     {
         LiteralArgumentBuilder<CommandSource> pt2command = Commands
                 .literal("pt2")
-                .then(DevListCommand.register(dispatcher));
+                .then(DevListCommand.register(dispatcher))
+                .then(RadiationlevelCommand.register(dispatcher));
         //Client Only Commands - currently unavailable
         /*if (!isDedicatedServer)
         {

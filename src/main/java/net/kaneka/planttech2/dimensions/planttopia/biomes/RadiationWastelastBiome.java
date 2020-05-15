@@ -12,16 +12,10 @@ import java.util.HashMap;
 
 public class RadiationWastelastBiome extends PlantTopiaBaseBiome
 {
-    private static HashMap<String, Float> FOG_RGB = new HashMap<String, Float>()
-    {
-        {
-            /*put("red", 153.0F);
-            put("green", 204.0F);
-            put("blue", 255.0F);*/
-            put("red", 255.0F);
-            put("green", 204.0F);
-            put("blue", 153.0F);
-        }
+    private static float[] FOG_RGB = {
+            255.0F,
+            204.0F,
+            153.0F
     };
 
     public RadiationWastelastBiome()
@@ -63,7 +57,7 @@ public class RadiationWastelastBiome extends PlantTopiaBaseBiome
     }
 
     @Override
-    public HashMap<String, Float> getFogRGB()
+    public float[] getFogRGB()
     {
         return FOG_RGB;
     }

@@ -23,7 +23,7 @@ public class ModEntityTypes
 					.build(ModReferences.TECHGHOUL)
 					.setRegistryName(ModReferences.TECHGHOUL),
 			TECHPENGUINENTITY = EntityType.Builder.create(TechPenguinEntity::new, EntityClassification.MISC)
-					.size(0.7F, 1.0F)
+					.size(0.5F, 1.5F)
 					.build(ModReferences.TECHPENGUIN)
 					.setRegistryName(ModReferences.TECHPENGUIN);
 

@@ -2,6 +2,7 @@ package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
+import net.kaneka.planttech2.events.AttachCapabilityEvents;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
@@ -66,7 +67,9 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::attachCapability);
+		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachEntityCapability);
+//		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachItemStackCapability);
+		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachTileEntityCapability);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
@@ -94,7 +97,7 @@ public class PlantTechMain
 		LootTableHandler.register();
 	}
 
-	private void doClientStuff(final FMLClientSetupEvent event)
+		private void doClientStuff(final FMLClientSetupEvent event)
 	{
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();

@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
@@ -15,10 +13,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class BiomassContainerItem extends BaseItem
 {
-
-	private static int capacity = 1000;
+	private static int CAPACITY = 1000;
 
 	public BiomassContainerItem()
 	{
@@ -30,119 +29,137 @@ public class BiomassContainerItem extends BaseItem
 
 	public static float getFillLevelModel(ItemStack stack)
 	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt != null)
+//		int biomass = BiomassFluidEnergy.getItemStackCap(stack).getCurrentStorage();
+//		int capacity = BiomassFluidEnergy.getItemStackCap(stack).getMaxStorage();
+		int biomass = getCurrentStorage(stack);
+		if (biomass > (CAPACITY / 9) * 9)
 		{
-			int biomass = nbt.getInt("biomass");
-
-			if (biomass > (capacity / 9) * 9)
-			{
-				return 9F;
-			} else if (biomass > (capacity / 9) * 8)
-			{
-				return 8F;
-			} else if (biomass > (capacity / 9) * 7)
-			{
-				return 7F;
-			} else if (biomass > (capacity / 9) * 6)
-			{
-				return 6F;
-			} else if (biomass > (capacity / 9) * 5)
-			{
-				return 5F;
-			} else if (biomass > (capacity / 9) * 4)
-			{
-				return 4F;
-			} else if (biomass > (capacity / 9) * 3)
-			{
-				return 3F;
-			} else if (biomass > (capacity / 9) * 2)
-			{
-				return 2F;
-			} else if (biomass > (capacity / 9) * 1)
-			{
-				return 1F;
-			}
-
+			return 9F;
+		} else if (biomass > (CAPACITY / 9) * 8)
+		{
+			return 8F;
+		} else if (biomass > (CAPACITY / 9) * 7)
+		{
+			return 7F;
+		} else if (biomass > (CAPACITY / 9) * 6)
+		{
+			return 6F;
+		} else if (biomass > (CAPACITY / 9) * 5)
+		{
+			return 5F;
+		} else if (biomass > (CAPACITY / 9) * 4)
+		{
+			return 4F;
+		} else if (biomass > (CAPACITY / 9) * 3)
+		{
+			return 3F;
+		} else if (biomass > (CAPACITY / 9) * 2)
+		{
+			return 2F;
+		} else if (biomass > (CAPACITY / 9) * 1)
+		{
+			return 1F;
 		}
-
 		return 0F;
 	}
 
-	public int getFillLevel(ItemStack stack)
+	public static int extractBiomass(ItemStack stack, int amount)
 	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt != null)
+		int current = getCurrentStorage(stack);
+		if (current<amount)
 		{
-			return nbt.getInt("biomass");
+			changeCurrentStorage(stack, -current);
+			return current;
 		}
-		return 0;
-	}
-
-	private void setFillLevel(ItemStack stack, int value)
-	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt == null)
+		else
 		{
-			nbt = new CompoundNBT();
-		}
-		nbt.putInt("biomass", value);
-		stack.setTag(nbt);
-	}
-
-	public int receiveFillLevel(ItemStack stack, int value)
-	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt == null)
-		{
-			nbt = new CompoundNBT();
-		}
-		int biomass = nbt.getInt("biomass");
-		int space = capacity - biomass;
-		if (space >= value)
-		{
-			setFillLevel(stack, biomass + value);
-			return value;
-		} else
-		{
-			setFillLevel(stack, capacity);
-			return space;
+			changeCurrentStorage(stack, -amount);
+			return amount;
 		}
 	}
 
-	public int extractFillLevel(ItemStack stack, int value)
+	public static int receiveBiomass(ItemStack stack, int amount)
 	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt == null)
+		int current = getCurrentStorage(stack);
+		if (current + amount > CAPACITY)
 		{
-			nbt = new CompoundNBT();
+			changeCurrentStorage(stack, CAPACITY - current);
+			return -CAPACITY + current;
 		}
-		int biomass = nbt.getInt("biomass");
-		if (biomass >= value)
+		else
 		{
-			setFillLevel(stack, biomass - value);
-			return value;
-		} else
-		{
-			setFillLevel(stack, 0);
-			return biomass;
+			changeCurrentStorage(stack, amount);
+			return -amount;
 		}
+	}
+
+	public static void changeCurrentStorage(ItemStack stack, int amount)
+	{
+		int current = getCurrentStorage(stack);
+		if (current + amount < 0)
+		{
+			current = 0;
+		}
+		else if (current + amount > CAPACITY)
+		{
+			current = CAPACITY;
+		}
+		else
+		{
+			current += amount;
+		}
+		setCurrentStorage(stack, current);
+	}
+
+	public static void setCurrentStorage(ItemStack stack, int value)
+	{
+		initTag(stack).putInt("biomass", (value < 0) ? 0 : Math.min(value, CAPACITY));
+	}
+
+	public static int getCurrentStorage(ItemStack stack)
+	{
+		return initTag(stack).getInt("biomass");
+	}
+
+	public static int getCapacity()
+	{
+		return CAPACITY;
+	}
+
+	private static CompoundNBT initTag(ItemStack stack)
+	{
+		CompoundNBT compoundNBT;
+		if (stack.hasTag())
+		{
+			compoundNBT = stack.getTag();
+		}
+		else
+		{
+			compoundNBT = new CompoundNBT();
+			compoundNBT.putInt("biomass", 0);
+			stack.setTag(compoundNBT);
+		}
+		return compoundNBT;
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		CompoundNBT nbt = stack.getTag();
-		if (nbt != null)
-		{
-			tooltip.add(new StringTextComponent(nbt.getInt("biomass") + "/" + capacity));
-		} else
-		{
-			tooltip.add(new StringTextComponent("0/" + capacity));
-		}
+//		IBiomassFluidEnergy cap = BiomassFluidEnergy.getItemStackCap(stack);
+//		if (cap.getCurrentStorage() > 0)
+//		if (getCurrentStorage(stack) > 0)
+//		{
+//			tooltip.add(new StringTextComponent(cap.getMaxStorage() + "/" + cap.getMaxStorage()));
+//			tooltip.add(new StringTextComponent(getCapacity() + "/" + getCapacity()));
+//		}
+//		else
+//		{
+//			tooltip.add(new StringTextComponent(cap.getCurrentStorage() + "/" + cap.getMaxStorage()));
+		tooltip.add(new StringTextComponent(getCurrentStorage(stack) + "/" + getCapacity()));
+//		}
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
-	
+
 	@Override
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) 
 	{
@@ -150,8 +167,9 @@ public class BiomassContainerItem extends BaseItem
 		{
 			items.add(new ItemStack(ModItems.BIOMASSCONTAINER)); 
 			ItemStack full = new ItemStack(ModItems.BIOMASSCONTAINER);
-			setFillLevel(full, capacity);
-			items.add(full); 
+//			BiomassFluidEnergy.getItemStackCap(full).setCurrentStorage(BiomassFluidEnergy.getItemStackCap(full).getMaxStorage());
+			setCurrentStorage(full, getCapacity());
+			items.add(full);
 		}
 	}
 

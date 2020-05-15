@@ -39,4 +39,7 @@ public class ModReferences
 
 	public static final ResourceLocation TECHVILLAGERTRUSTCAP = new ResourceLocation(MODID, "techvillagertrustcap");
 	public static final ResourceLocation RADIATIONEFFECTCAP = new ResourceLocation(MODID, "radiationeffectcap");
+	public static final ResourceLocation PLAYERRENDERRGBCAP = new ResourceLocation(MODID, "playerrenderrgbcap");
+	public static final ResourceLocation BIOMASSFLUIDENERGYCAP = new ResourceLocation(MODID, "biomassfluidenergycap");
+
 }
