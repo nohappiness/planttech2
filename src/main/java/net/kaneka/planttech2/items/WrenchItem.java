@@ -2,6 +2,7 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.ElectricFenceGate;
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
+import net.kaneka.planttech2.blocks.machines.CableBlock;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -16,6 +17,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -62,7 +64,7 @@ public class WrenchItem extends BaseItem
 
 	private boolean removeIfValid(Block block, World world, BlockPos pos)
 	{
-		if (block instanceof MachineBaseBlock || block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
+		if (block instanceof MachineBaseBlock || block instanceof CableBlock || block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 		{
 			world.removeBlock(pos, false);
 			return true;
@@ -73,8 +75,9 @@ public class WrenchItem extends BaseItem
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent("rightclick on cable connections to rotate"));
-		tooltip.add(new StringTextComponent("shift-rightclick on pt2 machines to dismantle"));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_cable").getFormattedText()));
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_dismantle").getUnformattedComponentText()));
 	}
 
 }

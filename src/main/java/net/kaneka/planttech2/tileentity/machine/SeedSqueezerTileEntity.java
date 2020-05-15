@@ -119,7 +119,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				ItemStack stack = itemhandler.getStackInSlot(9);
 				if (stack.getCount() == 1 && (stack.getItem() instanceof CropSeedItem))
 				{
-					ticksPassed += getUpgradeTier(11, PlantTechConstants.SPEEDUPGRADE_TYPE) + 1;
+					ticksPassed += getUpgradeTier(10, PlantTechConstants.SPEEDUPGRADE_TYPE) + 1;
 					if (ticksPassed >= this.getTicksPerItem())
 					{
 						squeezeItem();

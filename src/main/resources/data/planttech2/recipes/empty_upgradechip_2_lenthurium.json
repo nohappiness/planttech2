@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "nnn",
+        "ggg",
+        "nnn"
+
+    ],
+    "key": {
+        "n":
+        {
+            "item": "planttech2:lenthurium_ingot"
+        },
+        "g":
+        {
+            "item": "minecraft:gold_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:empty_upgradechip_2",
+        "count": 1
+    }
+}

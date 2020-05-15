@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ppp",
+        "bcb",
+        "pip"
+    ],
+    "key": {
+        "p": {
+            "item": "planttech2:plantium_ingot"
+        },
+        "b": {
+            "item": "planttech2:energystorage_tier_1"
+        },
+        "c":
+        {
+            "item": "planttech2:empty_upgradechip_2"
+        },
+        "i":
+        {
+            "item": "minecraft:iron_block"
+        }
+    },
+    "result": {
+        "item": "planttech2:chip_upgradepack_capacity_1",
+        "count": 1
+    }
+}

@@ -13,9 +13,10 @@
         },
         {
             "item": "minecraft:oxeye_daisy",
-            "min": 0, 
+            "min": 0,
             "max": 4
         }
+
     ],
     "parents": [
     ],

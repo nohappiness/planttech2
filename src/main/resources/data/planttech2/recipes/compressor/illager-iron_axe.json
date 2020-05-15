@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:illager_particles",
+      "amount": 24
+    },
+    "result": {
+      "item": "minecraft:iron_axe",
+      "amount": 1
+    }
+}

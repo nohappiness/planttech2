@@ -13,9 +13,10 @@
         },
         {
             "item": "minecraft:poppy",
-            "min": 0, 
+            "min": 0,
             "max": 4
         }
+
     ],
     "parents": [
     ],

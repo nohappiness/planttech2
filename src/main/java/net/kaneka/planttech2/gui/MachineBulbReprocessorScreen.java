@@ -29,8 +29,8 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	{
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
-		int l = this.getCookProgressScaled(30);
-		blit(this.guiLeft + 88, this.guiTop + 89, 32, 200, l, 8);
+		int l = this.getCookProgressScaled(32);
+		blit(this.guiLeft + 87, this.guiTop + 88, 32, 200, l, 10);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

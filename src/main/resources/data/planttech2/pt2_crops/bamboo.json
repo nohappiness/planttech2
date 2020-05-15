@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "temperature": 2,
+    "seeds": [
+        "planttech2:bamboo_seeds",
+        "minecraft:bamboo"
+    ],
+    "drops":[
+        {
+            "item": "minecraft:bamboo",
+            "min": 0, 
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

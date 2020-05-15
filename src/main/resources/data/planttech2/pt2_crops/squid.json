@@ -9,11 +9,6 @@
             "item": "planttech2:squid_particles",
             "min": 0, 
             "max": 8
-        },
-        {
-            "item": "planttech2:color_particles",
-            "min": 0, 
-            "max": 2
         }
     ],
     "parents": [

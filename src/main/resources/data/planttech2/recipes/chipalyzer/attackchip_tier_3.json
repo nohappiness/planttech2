@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 3, 
-    "input": {
-      "item": "minecraft:iron_sword"
-    },
-    "result": {
-      "item": "planttech2:attackchip_tier_3"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:attackchip_tier_2"
+  },
+  "input": {
+    "item": "planttech2:empty_upgradechip_3"
+  },
+  "result": {
+    "item": "planttech2:attackchip_tier_3"
   }
+}

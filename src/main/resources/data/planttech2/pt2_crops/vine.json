@@ -7,8 +7,8 @@
     ],
     "drops":[
     	{
-            "item": "planttech2:vine_particles",
-            "min": 0, 
+            "item": "minecraft:vine",
+            "min": 0,
             "max": 4
         }
     ],

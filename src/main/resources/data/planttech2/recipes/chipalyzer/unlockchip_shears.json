@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 1, 
-    "input": {
-      "item": "minecraft:shears"
-    },
-    "result": {
-      "item": "planttech2:unlockchip_shears"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "item": "minecraft:shears"
+  },
+  "result": {
+    "item": "planttech2:unlockchip_shears"
   }
+}
