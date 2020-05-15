@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 2, 
-    "input": {
-	  "enchantment": "silk_touch"
-    },
-    "result": {
-      "item": "planttech2:silk_touch_chip"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "enchantment": "silk_touch"
+  },
+  "result": {
+    "item": "planttech2:silk_touch_chip"
   }
+}

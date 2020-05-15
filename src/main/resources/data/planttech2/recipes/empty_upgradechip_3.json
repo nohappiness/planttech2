@@ -1,18 +1,16 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "BBB",
-        "AAA",
-        "BBB"
+        "rdr"
     ],
     "key": {
-        "A": 
+        "r":
+        {
+            "item": "planttech2:redstone_infused"
+        },
+        "d":
         {
             "item": "minecraft:diamond"
-        },
-        "B": 
-        {
-            "item": "planttech2:plantium_nugget"
         }
     },
     "result": {

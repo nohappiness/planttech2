@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 2, 
-    "input": {
-	  "enchantment": "bane_of_arthropods"
-    },
-    "result": {
-      "item": "planttech2:bane_of_arthropods_chip"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "enchantment": "bane_of_arthropods"
+  },
+  "result": {
+    "item": "planttech2:bane_of_arthropods_chip"
   }
+}

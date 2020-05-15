@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ngn"
+    ],
+    "key": {
+        "n":
+        {
+            "item": "planttech2:lenthurium_nugget"
+        },
+        "g":
+        {
+            "item": "minecraft:gold_nugget"
+        }
+    },
+    "result": {
+        "item": "planttech2:empty_upgradechip_2",
+        "count": 1
+    }
+}
