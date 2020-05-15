@@ -47,9 +47,9 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return InfuserTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return InfuserTileEntity.this.fluidtank.getBiomass();
+				return InfuserTileEntity.this.BIOMASS_CAP.getCurrentStorage();
 			case 3:
-			    return InfuserTileEntity.this.fluidtank.getCapacity(); 
+				return InfuserTileEntity.this.BIOMASS_CAP.getMaxStorage();
 			case 4: 
 				return InfuserTileEntity.this.fluidInfused; 
 			case 5: 
@@ -71,10 +71,10 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 				InfuserTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				InfuserTileEntity.this.fluidtank.setBiomass(value);
+				InfuserTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				InfuserTileEntity.this.fluidtank.setCapacity(value);
+				InfuserTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
 				break;
 			case 4: 
 				InfuserTileEntity.this.fluidInfused = value; 
@@ -135,12 +135,12 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 							fluidTotal = recipe.getBiomass(); 
 						}
 						int fluidpertick = fluidPerTick();
-						if (fluidtank.getBiomass() >= fluidpertick)
+						if (BIOMASS_CAP.getCurrentStorage() >= fluidpertick)
 						{
 							if (fluidInfused + fluidpertick < fluidTotal)
 							{
 								fluidInfused += fluidpertick;
-								fluidtank.extract(fluidpertick);
+								BIOMASS_CAP.extractBiomass(fluidpertick);
 								energystorage.extractEnergy(energyPerTick(), false);
 							} else
 							{
@@ -150,7 +150,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
-									fluidtank.extract(fluidTotal - fluidInfused);
+									BIOMASS_CAP.extractBiomass(fluidTotal - fluidInfused);
 									addKnowledge();
 								} else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
 								{
@@ -158,7 +158,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
-									fluidtank.extract(fluidTotal - fluidInfused);
+									BIOMASS_CAP.extractBiomass(fluidTotal - fluidInfused);
 									addKnowledge();
 								}
 							}

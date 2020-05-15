@@ -13,13 +13,10 @@ import java.util.HashMap;
 
 public class FlowerBiome extends PlantTopiaBaseBiome
 {
-	private static HashMap<String, Float> FOG_RGB = new HashMap<String, Float>()
-	{
-		{
-			put("red", 230.0F);
-			put("green", 255.0F);
-			put("blue", 230.0F);
-		}
+	private static float[] FOG_RGB = {
+			230.0F,
+			255.0F,
+			230.0F
 	};
 
 	public FlowerBiome()
@@ -51,7 +48,7 @@ public class FlowerBiome extends PlantTopiaBaseBiome
 	}
 
 	@Override
-	public HashMap<String, Float> getFogRGB()
+	public float[] getFogRGB()
 	{
 		return FOG_RGB;
 	}

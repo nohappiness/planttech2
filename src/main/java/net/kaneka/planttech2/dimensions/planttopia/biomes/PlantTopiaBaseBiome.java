@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.dimensions.planttopia.biomes;
 
 import net.kaneka.planttech2.registries.ModBiomes;
+import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -75,23 +76,23 @@ abstract public class PlantTopiaBaseBiome extends Biome
 
 	public abstract BiomeRadiation getRadiationLevel();
 
-	public HashMap<String, Float> getFogRGB()
+	public float[] getFogRGB()
 	{
-		return new HashMap<>();
+		return new float[] {-1, -1, -1};
 	}
 
 	public float getFogRed()
 	{
-		return getFogRGB().isEmpty() ? -1 : getFogRGB().get("red");
+		return getFogRGB()[0];
 	}
 
 	public float getFogGreen()
 	{
-		return getFogRGB().isEmpty() ? -1 :  getFogRGB().get("green");
+		return getFogRGB()[1];
 	}
 
 	public float getFogBlue()
 	{
-		return getFogRGB().isEmpty() ? -1 :  getFogRGB().get("blue");
+		return getFogRGB()[2];
 	}
 }

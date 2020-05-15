@@ -4,23 +4,21 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.BiomeRadiation;
 import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
+import net.kaneka.planttech2.entities.capabilities.player.IPlayerRenderRGB;
 import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
+import net.kaneka.planttech2.entities.capabilities.player.PlayerRenderRGB;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
-import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModEffects;
-import net.kaneka.planttech2.registries.ModReferences;
-import net.minecraft.entity.Entity;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -35,10 +33,23 @@ public class PlayerEvents
 	{
 		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
 		{
-			syncRadiationCapWithClient((ServerPlayerEntity) event.getEntity());
+			ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+			syncRadiationCapWithClient(player);
+			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(PlantTechMain.croplist.getConfigs()), player);
 		}
-		ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-		PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(PlantTechMain.croplist.getConfigs()), player);
+		if (event.getPlayer().getEntityWorld().isRemote() && event.getPlayer().getEntityWorld().getDimension().getType() == ModDimensions.getPlantTopiaDimensionType())
+		{
+			PlayerEntity player = event.getPlayer();
+			IPlayerRenderRGB capability = PlayerRenderRGB.getCap(player);
+			Biome biome = player.getEntityWorld().getBiome(player.getPosition());
+			if (biome instanceof PlantTopiaBaseBiome)
+			{
+				PlantTopiaBaseBiome pt2biome = (PlantTopiaBaseBiome) biome;
+				float[] rgb = new float[]{pt2biome.getFogRed(), pt2biome.getFogGreen(), pt2biome.getFogBlue()};
+				capability.setCurrentFogDensity(pt2biome.getFogDensity());
+				capability.setRGB(rgb);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -79,87 +90,45 @@ public class PlayerEvents
 			}
 		}
 	}*/
-	
-	@SubscribeEvent
-	public static void attachCapability(final AttachCapabilitiesEvent<Entity> event)
-	{
-		if(event.getObject() instanceof PlayerEntity)
-		{
-			if (!event.getCapabilities().containsKey(ModReferences.TECHVILLAGERTRUSTCAP))
-			{
-				event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());
-			}
-			if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
-			{
-				event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
-			}
-		}
-		if (event.getObject() instanceof IAffectPlayerRadiation)
-		{
-			if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
-			{
-				event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
-			}
-		}
-	}
 
 	@SubscribeEvent
 	public static void playerTicking(TickEvent.PlayerTickEvent event)
 	{
 		PlayerEntity player = event.player;
-		if (player == null || !player.isAlive() || !(player instanceof ServerPlayerEntity) || player.getEntityWorld().isRemote() || player.getEntityWorld().getDimension().getType() != ModDimensions.getPlantTopiaDimensionType())
+		if (player == null || !player.isAlive() || !(player instanceof ServerPlayerEntity) || player.getEntityWorld().isRemote() || player.abilities.isCreativeMode)
 		{
+			if (player != null && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) != null && player.abilities.isCreativeMode)
+			{
+				player.removePotionEffect(ModEffects.RADIATION_SICKNESS);
+			}
 			return;
 		}
 		Biome biome = player.getEntityWorld().getBiome(player.getPosition());
 		IRadiationEffect capability = RadiationEffect.getCap((ServerPlayerEntity) player);
-		float amount = capability.getLevel();
 		if (biome instanceof PlantTopiaBaseBiome)
 		{
 			BiomeRadiation level = ((PlantTopiaBaseBiome) biome).getRadiationLevel();
 			if (level == BiomeRadiation.FRESH)
 			{
-				if (amount - BiomeRadiation.getDensity(level) < 0.0F)
-				{
-					capability.setLevel(0.0F);
-				}
-				else
-				{
-					capability.decreaseLevel(BiomeRadiation.getDensity(level));
-				}
+				capability.decreaseLevel(BiomeRadiation.getDensity(level));
 			}
 			else
 			{
-				if (amount + BiomeRadiation.getDensity(level) > 2.0F)
-				{
-					capability.setLevel(2.0F);
-				}
-				else
-				{
-					capability.increaseLevel(BiomeRadiation.getDensity(level));
-				}
-			}
-			if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= 32767))
-			{
-				player.addPotionEffect(new EffectInstance(ModEffects.RADIATION_SICKNESS, 99999));
-			}
-			else if (capability.getLevel() < 1.0F && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) != null)
-			{
-				player.removePotionEffect(ModEffects.RADIATION_SICKNESS);
+				capability.increaseLevel(BiomeRadiation.getDensity(level));
 			}
 		}
 		else
 		{
 			//heals player in all biomes that are not created by pt2
-			float heal = (1.0F / 54000.0F);
-			if (amount + heal < 0.0F)
-			{
-				capability.setLevel(0.0F);
-			}
-			else
-			{
-				capability.decreaseLevel(heal);
-			}
+			capability.decreaseLevel((1.0F / 108000.0F));
+		}
+		if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= /*32767*/33000))
+		{
+			player.addPotionEffect(new EffectInstance(ModEffects.RADIATION_SICKNESS, 99999));
+		}
+		else if (capability.getLevel() < 1.0F && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) != null)
+		{
+			player.removePotionEffect(ModEffects.RADIATION_SICKNESS);
 		}
 	}
 
@@ -168,10 +137,13 @@ public class PlayerEvents
 	{
 		if (event.getEntityLiving() instanceof PlayerEntity && event.getSource().getTrueSource() instanceof IAffectPlayerRadiation)
 		{
-			RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving()).increaseLevel(((IAffectPlayerRadiation) event.getSource().getTrueSource()).getAmount());
+			if (!((PlayerEntity) event.getEntityLiving()).abilities.isCreativeMode)
+			{
+				RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving()).increaseLevel(((IAffectPlayerRadiation) event.getSource().getTrueSource()).getAmount());
+			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone event)
 	{

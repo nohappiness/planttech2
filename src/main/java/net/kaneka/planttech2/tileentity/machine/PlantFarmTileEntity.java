@@ -36,9 +36,9 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return PlantFarmTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return PlantFarmTileEntity.this.fluidtank.getBiomass();
+			    return PlantFarmTileEntity.this.BIOMASS_CAP.getCurrentStorage();
 			case 3:
-			    return PlantFarmTileEntity.this.fluidtank.getCapacity(); 
+			    return PlantFarmTileEntity.this.BIOMASS_CAP.getMaxStorage();
 			case 4: 
 				return PlantFarmTileEntity.this.progress[0]; 
 			case 5: 
@@ -65,10 +65,10 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				PlantFarmTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				PlantFarmTileEntity.this.fluidtank.setBiomass(value);
+				PlantFarmTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				PlantFarmTileEntity.this.fluidtank.setCapacity(value);
+				PlantFarmTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
 				break;
 			case 4: 
 				PlantFarmTileEntity.this.progress[0] = value; 
