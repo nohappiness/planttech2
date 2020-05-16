@@ -29,7 +29,7 @@ public class MachineGrowingCategory implements IRecipeCategory<MachineGrowingRec
     public MachineGrowingCategory(IGuiHelper helper)
     {
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "machine_growing"); 
-    	this.background = helper.createDrawable(TEXTURE, 0, 18, 78, 18); 
+    	this.background = helper.createDrawable(TEXTURE, 32, 160, 86, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.MACHINEBULBREPROCESSOR_BULB));
     	localizedName = new TranslationTextComponent("planttech2.machine_growing").getUnformattedComponentText();
     }
@@ -83,7 +83,7 @@ public class MachineGrowingCategory implements IRecipeCategory<MachineGrowingRec
 		IGuiItemStackGroup stacks = recipeLayout.getItemStacks();
 		stacks.init(BULB, true, 0, 0);
 		stacks.init(SHELL, true, 26, 0);
-		stacks.init(OUTPUT, false, 60, 0);
+		stacks.init(OUTPUT, false, 68, 0);
 		stacks.set(ingredients);
 	}
 

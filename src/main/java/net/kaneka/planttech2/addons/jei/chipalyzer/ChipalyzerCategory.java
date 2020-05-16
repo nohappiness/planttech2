@@ -15,7 +15,7 @@ public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe> {
 	protected static final int OUTPUT = 2;
 
 	public ChipalyzerCategory(IGuiHelper helper) {
-		super("chipalyzer", ModBlocks.CHIPALYZER.asItem(), helper, 0, 36, 58, 30);
+		super("chipalyzer", ModBlocks.CHIPALYZER.asItem(), helper, 32, 32, 58, 32);
 	}
 
 	@Override
