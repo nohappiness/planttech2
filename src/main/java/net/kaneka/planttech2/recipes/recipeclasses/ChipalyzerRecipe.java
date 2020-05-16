@@ -31,6 +31,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 {
 	private final ResourceLocation id;
 	private final int tier;
+	private final ItemStack chip;
 	private final ItemStack input;
 	private final Enchantment enchantment;
 	private final ItemStack output;
@@ -39,30 +40,25 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	{
 		this.id = id;
 		this.tier = tier;
+		this.chip = ItemStack.EMPTY;
 		this.input = input;
 		this.enchantment = enchantment; 
 		this.output = output;
 	}
-
-	public int getTier()
+	public ChipalyzerRecipe(ResourceLocation id, ItemStack chip, ItemStack input, Enchantment enchantment, ItemStack output)
 	{
-		return tier;
+		this.id = id;
+		this.tier = 0;
+		this.chip = chip;
+		this.input = input;
+		this.enchantment = enchantment;
+		this.output = output;
 	}
-
-	public ItemStack getInput()
-	{
-		return input;
-	}
-	
-	public Enchantment getEnchantment()
-	{
-		return enchantment; 
-	}
-
-	public ItemStack getOutput()
-	{
-		return output;
-	}
+	public int getTier() {return tier;}
+	public ItemStack getChip() {return chip;}
+	public ItemStack getInput() {return input;}
+	public Enchantment getEnchantment() {return enchantment;}
+	public ItemStack getOutput() {return output;}
 
 	public boolean compare(ItemStack chip, ItemStack stack)
 	{
@@ -135,21 +131,6 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		return false;
 	}
 
-	public ItemStack getChip()
-	{
-		switch (tier)
-		{
-		case 1:
-			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_1);
-		case 2:
-			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_2);
-		case 3:
-			return new ItemStack(ModItems.EMPTY_UPGRADECHIP_TIER_3);
-		}
-
-		return ItemStack.EMPTY;
-	}
-
 	@Override
 	public boolean matches(IInventory inv, World worldIn)
 	{
@@ -172,16 +153,10 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
-	{
-		return output;
-	}
+	public ItemStack getRecipeOutput() {return output;}
 
 	@Override
-	public ResourceLocation getId()
-	{
-		return id;
-	}
+	public ResourceLocation getId() {return id;}
 
 	@Override
 	public IRecipeSerializer<?> getSerializer()
@@ -190,10 +165,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public IRecipeType<?> getType()
-	{
-		return ModRecipeTypes.CHIPALYZER;
-	}
+	public IRecipeType<?> getType() {return ModRecipeTypes.CHIPALYZER;}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ChipalyzerRecipe>
 	{
@@ -204,6 +176,17 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			if (json.has("tier"))
 			{
 				tier = json.get("tier").getAsInt();
+			}
+
+			ItemStack chip = ItemStack.EMPTY;
+			if (json.has("chip"))
+			{
+				JsonObject inputobject = json.getAsJsonObject("chip");
+
+				if (inputobject.has("item"))
+				{
+					chip = new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("item").getAsString())));
+				}
 			}
 
 			ItemStack input = ItemStack.EMPTY;
@@ -247,12 +230,11 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 				result = TagUtils.getAnyTagItem(new ResourceLocation(resultobject.get("tag").getAsString()));
 			}
  
-			if (result != null)
-			{
+			if (result != null && tier > 0) {
 				return new ChipalyzerRecipe(recipeId, tier, input, enchantment, new ItemStack(result));
-				
-			} else
-			{
+			} else if (result != null && tier == 0) {
+				return new ChipalyzerRecipe(recipeId, chip, input, enchantment, new ItemStack(result));
+			} else {
 				throw new IllegalStateException("Item did not exist:" + recipeId.toString());
 			}
 		}

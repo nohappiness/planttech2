@@ -1,5 +1,5 @@
 {
-    "enabled": false,
+    "enabled": true,
     "temperature": 1,
     "seeds": [
         "planttech2:stray_seeds"
@@ -12,6 +12,11 @@
         }
     ],
     "parents": [
+        {
+            "partner_1": "skeleton",
+            "partner_2": "snow",
+            "chance": 0.1
+        }
     ],
     "soil": 
     {

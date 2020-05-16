@@ -1,0 +1,11 @@
+{
+    "type": "planttech2:compressing",
+    "input": {
+      "item": "planttech2:sand_particles",
+      "amount": 32
+    },
+    "result": {
+      "item": "minecraft:smooth_sandstone",
+      "amount": 1
+    }
+  }

@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "temperature": 1,
+    "seeds": [
+        "planttech2:kelp_seeds",
+        "minecraft:kelp"
+    ],
+    "drops":[
+        {
+            "item": "minecraft:kelp",
+            "min": 0,
+            "max": 4
+        }
+    ],
+    "parents": [
+    ],
+    "soil": 
+    {
+    }
+}

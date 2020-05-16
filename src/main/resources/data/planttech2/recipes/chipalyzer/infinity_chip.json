@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 2, 
-    "input": {
-	  "enchantment": "infinity"
-    },
-    "result": {
-      "item": "planttech2:infinity_chip"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "enchantment": "infinity"
+  },
+  "result": {
+    "item": "planttech2:infinity_chip"
   }
+}

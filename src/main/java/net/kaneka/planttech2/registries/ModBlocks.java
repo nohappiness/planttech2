@@ -65,6 +65,8 @@ public class ModBlocks
 	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
 	        PLANTTOPIA_TELEPORTER = new MachineBaseBlock("planttopia_teleporter", ModCreativeTabs.groupmachines),
 	        PLANTTOPIA_TELEPORTER_END = new MachineTeleporterEndBlock("planttopia_teleporter_end", Block.Properties.create(Material.IRON).hardnessAndResistance(0.5f), ModCreativeTabs.groupmachines),
+	        UNIVERSAL_SOIL = new BaseBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.5F), "universal_soil", ModCreativeTabs.groupblocks, true),
+			UNIVERSAL_SOIL_INFUSED = new BaseBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.7F), "universal_soil_infused", ModCreativeTabs.groupblocks, true),
 	        DARK_CRYSTAL_GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_cross", ModCreativeTabs.groupblocks, true),
 	        DARK_CRYSTAL_GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_middle", ModCreativeTabs.groupblocks, true),
 	        DARK_CRYSTAL_GLASSPANE_END = new GlassPaneEnd(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_end",Color.WHITE.getRGB(), ModCreativeTabs.groupblocks, true),

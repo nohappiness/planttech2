@@ -1,4 +1,4 @@
 {
     "parent": "item/generated",
-    "textures": { "layer0": "planttech2:items/chips/template_tier_2"}
+    "textures": { "layer0": "planttech2:items/chips/upgradepack/standard_1"}
 }

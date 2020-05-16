@@ -23,8 +23,8 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	{
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 		
-		int l = this.getCookProgressScaled(13);
-		blit(this.guiLeft + 98, this.guiTop + 50, 0, 202, 12, l);
+		int l = this.getCookProgressScaled(15);
+		blit(this.guiLeft + 96, this.guiTop + 48, 0, 200, 14, l);
 		
 		int k = this.getEnergyStoredScaled(55);
 		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

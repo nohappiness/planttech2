@@ -7,7 +7,7 @@
     ],
     "drops":[
     	{
-            "item": "planttech2:nether_wart_particles",
+            "item": "minecraft:nether_wart",
             "min": 0, 
             "max": 4
         }

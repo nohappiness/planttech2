@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 2, 
-    "input": {
-	  "enchantment": "efficiency"
-    },
-    "result": {
-      "item": "planttech2:efficiency_chip"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "enchantment": "efficiency"
+  },
+  "result": {
+    "item": "planttech2:efficiency_chip"
   }
+}
