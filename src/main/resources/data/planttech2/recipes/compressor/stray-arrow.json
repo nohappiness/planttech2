@@ -5,7 +5,8 @@
       "amount": 8
     },
     "result": {
-      "item": "minecraft:arrow",
+      "item": "minecraft:tipped_arrow",
+      "potion_effect": "minecraft:slowness",
       "amount": 1
     }
 }

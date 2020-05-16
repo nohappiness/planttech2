@@ -1,19 +1,26 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.PotionItem;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.datafix.fixes.PotionItems;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -95,6 +102,10 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			
 			JsonObject inputobject = json.getAsJsonObject("input");
 			Item inputitem = null;
+			Potion effect = null;
+			Enchantment enchantType = null;
+			int enchantLevel = 0;
+
 			if (inputobject.has("item"))
 			{
 				inputitem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputobject.get("item").getAsString()));
@@ -118,6 +129,17 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			{
 				resultitem = ForgeRegistries.ITEMS
 				        .getValue(new ResourceLocation(resultobject.get("item").getAsString()));
+
+				if (resultobject.has("potion_effect")) {
+					effect = ForgeRegistries.POTION_TYPES.getValue(new ResourceLocation(resultobject.get("potion_effect").getAsString()));
+				}
+				if (resultobject.has("enchantment")) {
+				 	JsonObject enchantment = resultobject.getAsJsonObject("enchantment");
+				 	System.out.println(enchantment);
+					enchantType = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.get("type").getAsString()));
+					enchantLevel = JSONUtils.getInt(enchantment, "level", 1);
+				}
+
 			} else if (resultobject.has("block"))// Just in case
 			{
 				resultitem = ForgeRegistries.ITEMS
@@ -131,6 +153,8 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			if (resultitem != null)
 			{
 				resultstack = new ItemStack(resultitem, JSONUtils.getInt(resultobject, "amount", 1));
+				if (effect != null) { PotionUtils.addPotionToItemStack(resultstack, effect); }
+				else if (enchantType != null) { resultstack.addEnchantment(enchantType, enchantLevel); }
 			}
 
 			if (inputstack != null && resultstack != null)
