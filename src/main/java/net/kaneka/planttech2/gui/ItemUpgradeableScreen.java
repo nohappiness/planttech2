@@ -18,12 +18,11 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContainer>
 {
-	protected static final Map<Integer, ResourceLocation> TEXTURES = new HashMap<Integer, ResourceLocation>(){
-		private static final long serialVersionUID = 1L;
-
-	{
+	protected static final Map<Integer, ResourceLocation> BACKGROUND = new HashMap<Integer, ResourceLocation>()	{
+		private static final long serialVersionUID = 1L; {
 			put(10, new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/itemupgradeable_10.png"));
-	}}; 
+	    }
+	};
 	protected final PlayerInventory player;
     protected ItemStack stack; 
     protected int invsize; 
@@ -79,7 +78,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES.get(invsize));
+		minecraft.getTextureManager().bindTexture(BACKGROUND.get(invsize));
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
 		int k = this.getEnergyStoredScaled(55);

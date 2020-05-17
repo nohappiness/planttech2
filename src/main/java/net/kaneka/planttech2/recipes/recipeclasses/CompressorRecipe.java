@@ -135,7 +135,6 @@ public class CompressorRecipe implements IRecipe<IInventory>
 				}
 				if (resultobject.has("enchantment")) {
 				 	JsonObject enchantment = resultobject.getAsJsonObject("enchantment");
-				 	System.out.println(enchantment);
 					enchantType = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.get("type").getAsString()));
 					enchantLevel = JSONUtils.getInt(enchantment, "level", 1);
 				}

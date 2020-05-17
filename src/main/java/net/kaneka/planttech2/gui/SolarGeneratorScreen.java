@@ -10,9 +10,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorContainer>
 {
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/solargenerator.png");
-    
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
+
 	public SolarGeneratorScreen(SolarGeneratorContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -47,18 +46,8 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 	}
 	
 	@Override
-	protected ResourceLocation getBackgroundTexture()
-	{
-		return TEXTURES;
-	}
+	protected ResourceLocation getBackgroundTexture() { return BACKGROUND; }
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

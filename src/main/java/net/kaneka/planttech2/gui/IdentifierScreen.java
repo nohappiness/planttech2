@@ -9,10 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/identifier.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/identifier.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/identifier.png");
+
 	public IdentifierScreen(IdentifierContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -39,16 +37,9 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

@@ -11,7 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 public class GuideBaseScreen extends Screen
 {
-	protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/plantencyclopeadia_big.png");
+	protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/plantencyclopaedia_big.png");
 	protected int xSize = 512;
 	protected int ySize = 196;
 	protected int guiLeft;
