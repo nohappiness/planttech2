@@ -590,6 +590,8 @@
 	"item.planttech2.zombie_pigman_particles": "Zombie Pigman Particles",
 	"item.planttech2.zombie_villager_particles": "Zombie Villager Particles",
 
+	"block.planttech2.wall_light": "Wall Light",
+	"block.planttech2.biomassfluid_block": "Biomass Fluid",
     "block.planttech2.cropbars": "Cropbars",
     "block.planttech2.identifier": "Identifier",
     "block.planttech2.mega_furnace": "Mega Furnace",
