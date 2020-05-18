@@ -145,8 +145,8 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	    		}
 			}
 		}
-		
 		doEnergyLoop();
+		doFluidLoop();
 	}
 	
 	private boolean isSeed(ItemStack stack)

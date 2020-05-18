@@ -13,7 +13,7 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 {
 	protected final IBiomassFluidEnergy BIOMASS_CAP = BiomassFluidEnergy.getTECap(this);
 
-    public EnergyInventoryFluidTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int tier, int maxBiomassStorage)
+    public EnergyInventoryFluidTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int maxBiomassStorage, int tier)
     {
 		super(type, energyStorage, invSize, tier);
 		BIOMASS_CAP.setMaxStorage(maxBiomassStorage);

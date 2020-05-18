@@ -79,7 +79,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 
 	public SeedSqueezerTileEntity()
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 5000);
+		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, 5000, PlantTechConstants.MACHINETIER_SEEDSQUEEZER);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		inputs_provider = LazyOptional.of(() -> inputs);
 	}
