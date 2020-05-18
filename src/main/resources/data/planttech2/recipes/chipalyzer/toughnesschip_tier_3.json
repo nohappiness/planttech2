@@ -1,10 +1,12 @@
 {
-    "type": "planttech2:chipalyzer",
-    "tier": 3, 
-    "input": {
-      "item": "minecraft:diamond_chestplate"
-    },
-    "result": {
-      "item": "planttech2:toughnesschip_tier_3"
-    }
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:toughnesschip_tier_2"
+  },
+  "input": {
+    "item": "planttech2:empty_upgradechip_3"
+  },
+  "result": {
+    "item": "planttech2:toughnesschip_tier_3"
   }
+}

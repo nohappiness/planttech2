@@ -13,9 +13,10 @@
         },
         {
             "item": "minecraft:white_tulip",
-            "min": 0, 
+            "min": 0,
             "max": 4
         }
+
     ],
     "parents": [
     ],

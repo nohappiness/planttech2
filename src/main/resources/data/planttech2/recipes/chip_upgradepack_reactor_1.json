@@ -1,0 +1,30 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "gcg",
+        "fDf",
+        "gfg"
+    ],
+    "key": {
+        "g":
+        {
+            "item": "minecraft:glass_pane"
+        },
+        "c":
+        {
+            "item": "planttech2:empty_upgradechip_2"
+        },
+        "f":
+        {
+            "item": "planttech2:solarfocus_1"
+        },
+        "D":
+        {
+            "item": "minecraft:diamond"
+        }
+    },
+    "result": {
+        "item": "planttech2:chip_upgradepack_reactor_1",
+        "count": 1
+    }
+}

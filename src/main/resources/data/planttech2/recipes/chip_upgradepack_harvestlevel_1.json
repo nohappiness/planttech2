@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "planttech2:harvestlevelchip_tier_1"
+        },
+        {
+            "item": "minecraft:iron_pickaxe"
+        }
+    ],
+    "result": {
+        "item": "planttech2:chip_upgradepack_harvestlevel_1",
+        "count": 1
+    }
+}

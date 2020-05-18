@@ -2,14 +2,21 @@
     "enabled": true,
     "temperature": 2,
     "seeds": [
-        "planttech2:cornflower_seeds"
+        "planttech2:cornflower_seeds",
+        "minecraft:cornflower"
     ],
     "drops":[
         {
             "item": "planttech2:color_particles",
             "min": 1, 
             "max": 4
+        },
+        {
+            "item": "minecraft:cornflower",
+            "min": 0,
+            "max": 4
         }
+
     ],
     "parents": [
     ],

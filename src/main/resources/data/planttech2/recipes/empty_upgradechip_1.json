@@ -1,22 +1,22 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "BBB",
-        " A ",
-        "BBB"
+        "ppp",
+        "rrr",
+        "ppp"
     ],
     "key": {
-        "A": 
+        "p":
         {
-            "item": "minecraft:diamond"
+            "item": "planttech2:plantium_ingot"
         },
-        "B": 
+        "r":
         {
-            "item": "planttech2:plantium_nugget"
+            "item": "minecraft:redstone"
         }
     },
     "result": {
         "item": "planttech2:empty_upgradechip_1",
-        "count": 8
+        "count": 1
     }
 }

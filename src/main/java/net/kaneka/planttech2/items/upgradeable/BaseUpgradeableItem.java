@@ -344,7 +344,7 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 			nbt.putInt("harvestlevel", increaseHarvestlevel);
 			nbt.putFloat("attack", increaseAttack);
 			nbt.putFloat("attackspeed", increaseAttackSpeed);
-			nbt.putFloat("breakdownrate", increaseBreakdownRate);
+			nbt.putFloat("breakdownrate", 0.5F + increaseBreakdownRate);
 			nbt.putBoolean("unlockshovel", unlockShovelFeat);
 			nbt.putBoolean("unlockaxe", unlockAxeFeat);
 			nbt.putBoolean("unlockhoe", unlockHoeFeat);

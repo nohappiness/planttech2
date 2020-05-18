@@ -121,7 +121,7 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 					if (recipe.getType() == ModRecipeTypes.CHIPALYZER)
 					{
 						ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
-						if (chipRecipe.getTier() == getUpgradeTier(0, PlantTechConstants.UPGRADECHIP_TYPE))
+						if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), chip))
 						{
 							if (chipRecipe.compare(chip, stack))
 							{

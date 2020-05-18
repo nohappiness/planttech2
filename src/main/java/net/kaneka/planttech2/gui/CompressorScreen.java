@@ -41,8 +41,8 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     {
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 
-	int l = this.getCookProgressScaled(68);
-	blit(this.guiLeft + 55, this.guiTop + 83, 0, 202, l, 12);
+	int l = this.getCookProgressScaled(70);
+	blit(this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
 
 	int k = this.getEnergyStoredScaled(55);
 	blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);

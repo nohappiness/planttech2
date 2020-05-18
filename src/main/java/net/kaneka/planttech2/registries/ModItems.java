@@ -21,14 +21,18 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import static net.kaneka.planttech2.registries.ModReferences.MODID;
+
 public class ModItems
 {
-    public static List<BaseItem> ITEMS = new ArrayList<BaseItem>(); 
+	private static ResourceLocation CropResLoc=new ResourceLocation(MODID, "crops/");
+	public static List<BaseItem> ITEMS = new ArrayList<BaseItem>();
     public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>(); 
 
     public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>(); 
@@ -55,7 +59,13 @@ public class ModItems
 	    		   EMPTY_UPGRADECHIP_TIER_1 = new TierItem("empty_upgradechip_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 1, 3),
 	    		   EMPTY_UPGRADECHIP_TIER_2 = new TierItem("empty_upgradechip_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
 	    		   EMPTY_UPGRADECHIP_TIER_3 = new TierItem("empty_upgradechip_3",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
-	    		   ENERGYSTORAGE_TIER_1 = new EnergyStorageItem("energystorage_tier_1", new Item.Properties().group(ModCreativeTabs.groupmain), 500), 
+	    		   CHIP_UPGRADEPACK_CAPACITY_1 = new TierItem("chip_upgradepack_capacity_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
+	    		   CHIP_UPGRADEPACK_CAPACITY_2 = new TierItem("chip_upgradepack_capacity_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
+	    		   CHIP_UPGRADEPACK_HARVESTLEVEL_1 = new TierItem("chip_upgradepack_harvestlevel_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
+	    		   CHIP_UPGRADEPACK_HARVESTLEVEL_2 = new TierItem("chip_upgradepack_harvestlevel_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
+	    		   CHIP_UPGRADEPACK_REACTOR_1 = new TierItem("chip_upgradepack_reactor_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
+	    		   CHIP_UPGRADEPACK_REACTOR_2 = new TierItem("chip_upgradepack_reactor_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
+	    		   ENERGYSTORAGE_TIER_1 = new EnergyStorageItem("energystorage_tier_1", new Item.Properties().group(ModCreativeTabs.groupmain), 500),
 	    		   ENERGYSTORAGE_TIER_2 = new EnergyStorageItem("energystorage_tier_2", new Item.Properties().group(ModCreativeTabs.groupmain), 5000), 
 	    		   ENERGYSTORAGE_TIER_3 = new EnergyStorageItem("energystorage_tier_3", new Item.Properties().group(ModCreativeTabs.groupmain), 50000), 
 	    		   FERTILIZER_TIER_1 = new FertilizerItem("fertilizer_tier_1", ModCreativeTabs.groupmain),
@@ -75,7 +85,8 @@ public class ModItems
 	    		   GEAR_KINNOIUM_INFUSED = new BaseItem("gear_kinnoium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
 	    		   GEAR_PLANTIUM_INFUSED = new BaseItem("gear_plantium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
 	    		   GEAR_IRON_INFUSED = new BaseItem("gear_iron_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GUIDE_OVERVIEW = new GuideItem("overview"), 
+	    		   REDSTONE_INFUSED = new BaseItem("redstone_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
+	    		   GUIDE_OVERVIEW = new GuideItem("overview"),
 	    		   GUIDE_PLANTS  = new GuideItem("plants"), 
 	    		   GUIDE_GENETIC_ENGINEERING = new GuideItem("genetic_engineering"),
 	    		   KANEKIUM_INGOT = new BaseItem("kanekium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
@@ -113,7 +124,8 @@ public class ModItems
 	    		   WRENCH = new WrenchItem(), 
 	    		   TESTITEM = new TestItem();
 
-	public static UpgradeChipItem CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(1), 
+	public static UpgradeChipItem
+				CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(1),
 				CAPACITYCHIP_TIER_2 = new UpgradeChipItem("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(2), 
 				CAPACITYCHIP_TIER_3 = new UpgradeChipItem("capacitychip_tier_3").setIncreaseCapacity(10000).setEnergyCost(5), 
 				REACTORCHIP_TIER_1 = new UpgradeChipItem("reactorchip_tier_1").setEnergyProduction(1).setEnergyCost(1), 
@@ -213,6 +225,7 @@ public class ModItems
 			name = entry.getString();
 			tempseed = new CropSeedItem(name);
 			SEEDS.put(name, tempseed);
+
 			registry.register(tempseed);
 			if (entry.hasParticle())
 			{

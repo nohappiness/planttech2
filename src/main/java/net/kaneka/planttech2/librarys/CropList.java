@@ -15,6 +15,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
+import static net.minecraft.item.Items.*;
+
 public class CropList
 {
 	private HashMap<String, CropListEntry> croplist = new HashMap<String, CropListEntry>();
@@ -180,6 +182,7 @@ public class CropList
 		addEntry("ardite", Integer.parseInt("88471b", 16), true);
 		addEntry("awakened_draconium", Integer.parseInt("bf4c00", 16), true);
 		addEntry("azure_bluet", Integer.parseInt("d6e8e8", 16), false);
+		addEntry("bamboo", Integer.parseInt("5d8824", 16), false);
 		addEntry("basalt", Integer.parseInt("424242", 16), true);
 		addEntry("beast", Integer.parseInt("6a6965", 16), true);
 		addEntry("beetroots", Integer.parseInt("bf2529", 16), false);
@@ -248,6 +251,7 @@ public class CropList
 		addEntry("iridium", Integer.parseInt("cfcfcf", 16), true);
 		addEntry("iron", Integer.parseInt("bc9980", 16), true);
 		addEntry("kanekium", Integer.parseInt("572e8a", 16), true);
+		addEntry("kelp", Integer.parseInt("5b8131", 16), false);
 		addEntry("kinnoium", Integer.parseInt("246b2d", 16), true);
 		addEntry("knightslime", Integer.parseInt("fd5fff", 16), true);
 		addEntry("lapis", Integer.parseInt("1044ac", 16), true);
@@ -269,7 +273,7 @@ public class CropList
 		addEntry("mooshroom", Integer.parseInt("a81012", 16), true);
 		addEntry("mushroom", Integer.parseInt("e21212", 16), false);
 		addEntry("mycelium", Integer.parseInt("736162", 16), true);
-		addEntry("nether_wart", Integer.parseInt("831c20", 16), true);
+		addEntry("nether_wart", Integer.parseInt("831c20", 16), false);
 		addEntry("netherrack", Integer.parseInt("652828", 16), true);
 		addEntry("neutronium", Integer.parseInt("585858", 16), true);
 		addEntry("nickel", Integer.parseInt("9f998c", 16), true);
@@ -323,7 +327,7 @@ public class CropList
 		addEntry("steel", Integer.parseInt("686868", 16), true);
 		addEntry("stone", Integer.parseInt("616161", 16), true);
 		addEntry("stray", Integer.parseInt("acbabd", 16), true);
-		addEntry("sugarcane", Integer.parseInt("82a859", 16), true);
+		addEntry("sugarcane", Integer.parseInt("82a859", 16), false);
 		addEntry("sulfur", Integer.parseInt("b1ac27", 16), true);
 		addEntry("sunstone", Integer.parseInt("c13b00", 16), true);
 		addEntry("syrmorite", Integer.parseInt("c71eff", 16), true);
@@ -339,7 +343,7 @@ public class CropList
 		addEntry("valonite", Integer.parseInt("cfa5d5", 16), true);
 		addEntry("vibrant_alloy", Integer.parseInt("bf7e00", 16), true);
 		addEntry("villager", Integer.parseInt("b57b67", 16), true);
-		addEntry("vine", Integer.parseInt("1b5011", 16), true);
+		addEntry("vine", Integer.parseInt("1b5011", 16), false);
 		addEntry("vinteum", Integer.parseInt("5a81ff", 16), true);
 		addEntry("void_metal", Integer.parseInt("000000", 16), true);
 		addEntry("water", Integer.parseInt("2b5fff", 16), true);
@@ -363,29 +367,81 @@ public class CropList
 
 	}
 
-	public void configuratePlanttechEntries()
+	public void configurePlanttechEntries()
 	{
 		this.setMainSeeds();
 		this.setParticles();
 
-		this.getEntryByName("allium").addSeeds(new ItemStack(Blocks.ALLIUM)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
-		this.getEntryByName("azure_bluet").addSeeds(new ItemStack(Blocks.AZURE_BLUET)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
+		this.getEntryByName("allium").addSeeds(new ItemStack(Blocks.ALLIUM))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(ALLIUM), 0, 4);
+		this.getEntryByName("azure_bluet").addSeeds(new ItemStack(Blocks.AZURE_BLUET))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(AZURE_BLUET), 0, 4);
+		this.getEntryByName("blue_orchid").addSeeds(new ItemStack(Blocks.BLUE_ORCHID))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(BLUE_ORCHID), 0, 4);
+		this.getEntryByName("cornflower").addSeeds(new ItemStack(Blocks.CORNFLOWER))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(CORNFLOWER), 0, 4);
+		this.getEntryByName("dandelion").addSeeds(new ItemStack(Blocks.DANDELION))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(DANDELION), 0, 4);
+		this.getEntryByName("lilly_of_the_valley").addSeeds(new ItemStack(LILY_OF_THE_VALLEY))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(LILY_OF_THE_VALLEY), 0, 4);
+		this.getEntryByName("orange_tulip").addSeeds(new ItemStack(ORANGE_TULIP))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(ORANGE_TULIP), 0, 4);
+		this.getEntryByName("oxeye_daisy").addSeeds(new ItemStack(OXEYE_DAISY))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(OXEYE_DAISY), 0, 4);
+		this.getEntryByName("pink_tulip").addSeeds(new ItemStack(PINK_TULIP))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(PINK_TULIP), 0, 4);
+		this.getEntryByName("poppy").addSeeds(new ItemStack(POPPY))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(POPPY), 0, 4);
+		this.getEntryByName("red_tulip").addSeeds(new ItemStack(RED_TULIP))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(RED_TULIP), 0, 4);
+		this.getEntryByName("white_tulip").addSeeds(new ItemStack(WHITE_TULIP))
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)       .addDrop(new ItemStack(Blocks.WHITE_TULIP), 0, 4);
+
+		this.getEntryByName("bamboo").addSeeds(new ItemStack(BAMBOO))
+				.addDrop(new ItemStack(BAMBOO), 0, 4);
+		this.getEntryByName("beetroots").addSeeds(new ItemStack(BEETROOT_SEEDS))
+				.addDrop(new ItemStack(BEETROOT), 0, 4);
+		this.getEntryByName("cactus").addSeeds(new ItemStack(CACTUS))
+				.addDrop(new ItemStack(CACTUS), 0, 4);
+		this.getEntryByName("carrot").addSeeds(new ItemStack(CARROT))
+				.addDrop(new ItemStack(CARROT), 0, 4);
+		this.getEntryByName("chorus").addSeeds(new ItemStack(CHORUS_FLOWER))
+				.addDrop(new ItemStack(CHORUS_FRUIT), 0, 4);
+		this.getEntryByName("cocoa_bean").addSeeds(new ItemStack(COCOA_BEANS))
+				.addDrop(new ItemStack(COCOA_BEANS), 0, 4)
+				.addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
+		this.getEntryByName("kelp").addSeeds(new ItemStack(KELP))
+				.addDrop(new ItemStack(KELP), 0, 4);
+		this.getEntryByName("melon").addSeeds(new ItemStack(MELON_SEEDS))
+				.addDrop(new ItemStack(MELON), 0, 3);
+		this.getEntryByName("mushroom").addSeeds(new ItemStack(RED_MUSHROOM), new ItemStack(BROWN_MUSHROOM))
+				.addDrop(new ItemStack(RED_MUSHROOM), 0, 4)
+				.addDrop(new ItemStack(BROWN_MUSHROOM), 0, 4);
+		this.getEntryByName("nether_wart").addSeeds(new ItemStack(NETHER_WART))
+				.addDrop(new ItemStack(NETHER_WART), 0, 4);
+		this.getEntryByName("potato").addSeeds(new ItemStack(POTATO))
+				.addDrop(new ItemStack(POTATO), 0, 4)
+				.addDrop(new ItemStack(POISONOUS_POTATO), 0, 2);
+		this.getEntryByName("pumpkin").addSeeds(new ItemStack(PUMPKIN_SEEDS))
+				.addDrop(new ItemStack(PUMPKIN), 0, 3);
+		this.getEntryByName("sugarcane").addSeeds(new ItemStack(SUGAR_CANE))
+				.addDrop(new ItemStack(SUGAR_CANE), 0, 4);
+		this.getEntryByName("vine").addSeeds(new ItemStack(VINE))
+				.addDrop(new ItemStack(VINE), 0, 4);
+		this.getEntryByName("wheat").addSeeds(new ItemStack(WHEAT_SEEDS))
+				.addDrop(new ItemStack(WHEAT), 0, 4);
+		this.getEntryByName("wither_rose").addSeeds(new ItemStack(WITHER_ROSE))
+				.addDrop(new ItemStack(WITHER_ROSE), 0, 1);
+
+		this.getEntryByName("plantium").addSeeds(new ItemStack(ModItems.PLANTIUM_NUGGET));
+
 		this.getEntryByName("beast");
-		this.getEntryByName("beetroots").addSeeds(new ItemStack(Items.BEETROOT_SEEDS)).addDrop(new ItemStack(Items.BEETROOT), 0, 4);
 		this.getEntryByName("blaze");
-		this.getEntryByName("blue_orchid").addSeeds(new ItemStack(Blocks.BLUE_ORCHID)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
-		this.getEntryByName("cactus").addSeeds(new ItemStack(Blocks.CACTUS)).addDrop(new ItemStack(Blocks.CACTUS), 0, 4);
-		this.getEntryByName("carrot").addSeeds(new ItemStack(Items.CARROT)).addDrop(new ItemStack(Items.CARROT), 0, 4);
 		this.getEntryByName("chicken");
-		this.getEntryByName("chorus").addSeeds(new ItemStack(Blocks.CHORUS_FLOWER)).addDrop(new ItemStack(Items.CHORUS_FRUIT), 0, 4);
 		this.getEntryByName("coal");
-		this.getEntryByName("cocoa_bean").addSeeds(new ItemStack(Items.COCOA_BEANS)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
-		this.getEntryByName("cornflower").addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
 		this.getEntryByName("cow");
 		this.getEntryByName("creeper");
 		this.getEntryByName("dancium");
-		this.getEntryByName("dandelion").addSeeds(new ItemStack(Blocks.DANDELION)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4).addDrop(new ItemStack(Blocks.DANDELION),
-		        0, 4);
 		this.getEntryByName("diamond");
 		this.getEntryByName("dirt");
 		this.getEntryByName("drowned");
@@ -403,37 +459,20 @@ public class CropList
 		this.getEntryByName("iron");
 		this.getEntryByName("kanekium");
 		this.getEntryByName("kinnoium");
-		this.getEntryByName("lilly_of_the_valley").addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4);
 		this.getEntryByName("lapis");
 		this.getEntryByName("lava");
 		this.getEntryByName("lenthurium");
 		this.getEntryByName("magma_cube");
-		this.getEntryByName("melon").addSeeds(new ItemStack(Items.MELON_SEEDS)).addDrop(new ItemStack(Blocks.MELON), 0, 4);
 		this.getEntryByName("mooshroom");
-		this.getEntryByName("mushroom").addSeeds(new ItemStack(Blocks.RED_MUSHROOM), new ItemStack(Blocks.BROWN_MUSHROOM)).addDrop(new ItemStack(Blocks.RED_MUSHROOM), 0, 4)
-		        .addDrop(new ItemStack(Blocks.BROWN_MUSHROOM), 0, 4);
 		this.getEntryByName("mycelium");
 		this.getEntryByName("netherrack");
-		this.getEntryByName("nether_wart").addSeeds(new ItemStack(Items.NETHER_WART));
-		this.getEntryByName("orange_tulip").addSeeds(new ItemStack(Blocks.ORANGE_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
-		        .addDrop(new ItemStack(Blocks.ORANGE_TULIP), 0, 4);
-		this.getEntryByName("oxeye_daisy").addSeeds(new ItemStack(Blocks.OXEYE_DAISY)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
-		        .addDrop(new ItemStack(Blocks.OXEYE_DAISY), 0, 4);
 		this.getEntryByName("panda");
 		this.getEntryByName("parrot");
 		this.getEntryByName("pig");
-		this.getEntryByName("pink_tulip").addSeeds(new ItemStack(Blocks.PINK_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
-		        .addDrop(new ItemStack(Blocks.PINK_TULIP), 0, 4);
-		this.getEntryByName("plantium").addSeeds(new ItemStack(ModItems.PLANTIUM_NUGGET));
 		this.getEntryByName("polarbear");
-		this.getEntryByName("poppy").addSeeds(new ItemStack(Blocks.POPPY)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4).addDrop(new ItemStack(Blocks.POPPY), 0, 4);
-		this.getEntryByName("potato").addSeeds(new ItemStack(Items.POTATO)).addDrop(new ItemStack(Items.POTATO), 1, 4).addDrop(new ItemStack(Items.POISONOUS_POTATO), 0, 4);
 		this.getEntryByName("prismarin");
-		this.getEntryByName("pumpkin").addSeeds(new ItemStack(Items.PUMPKIN_SEEDS)).addDrop(new ItemStack(Blocks.PUMPKIN), 0, 4);
 		this.getEntryByName("quartz");
 		this.getEntryByName("redstone");
-		this.getEntryByName("red_tulip").addSeeds(new ItemStack(Blocks.RED_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4).addDrop(new ItemStack(Blocks.RED_TULIP),
-		        0, 4);
 		this.getEntryByName("sand");
 		this.getEntryByName("sheep");
 		this.getEntryByName("shulker");
@@ -443,19 +482,13 @@ public class CropList
 		this.getEntryByName("soulsand");
 		this.getEntryByName("spider");
 		this.getEntryByName("sponge");
-		this.getEntryByName("squid").addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 0, 2);
+		this.getEntryByName("squid");
 		this.getEntryByName("stone");
 		this.getEntryByName("stray");
-		this.getEntryByName("sugarcane").addSeeds(new ItemStack(Blocks.SUGAR_CANE));
 		this.getEntryByName("turtle");
 		this.getEntryByName("villager");
-		this.getEntryByName("vine").addSeeds(new ItemStack(Blocks.VINE));
 		this.getEntryByName("water");
-		this.getEntryByName("wheat").addSeeds(new ItemStack(Items.WHEAT_SEEDS)).addDrop(new ItemStack(Items.WHEAT), 1, 4);
-		this.getEntryByName("white_tulip").addSeeds(new ItemStack(Blocks.WHITE_TULIP)).addDrop(new ItemStack(ModItems.COLOR_PARTICLES), 1, 4)
-		        .addDrop(new ItemStack(Blocks.WHITE_TULIP), 0, 4);
 		this.getEntryByName("witch");
-		this.getEntryByName("wither_rose");
 		this.getEntryByName("wither_skeleton");
 		this.getEntryByName("wither");
 		this.getEntryByName("wood");
