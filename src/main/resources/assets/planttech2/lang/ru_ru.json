@@ -559,6 +559,8 @@
 	"item.planttech2.zombie_pigman_particles": "Частицы свинозомби",
 	"item.planttech2.zombie_villager_particles": "Частицы зомби-жителя",
 
+	"block.planttech2.wall_light": "Wall Light",
+	"block.planttech2.biomassfluid_block": "Biomass Fluid",
     "block.planttech2.cropbars": "Планка для посевов",
     "block.planttech2.identifier": "Распознаватель",
     "block.planttech2.mega_furnace": "Мега-печь",
