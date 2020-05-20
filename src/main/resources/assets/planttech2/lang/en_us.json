@@ -105,6 +105,8 @@
 	"item.planttech2.knowledgechip_3": "Knowledge Chip v3.0",
 	"item.planttech2.knowledgechip_4": "Knowledge Chip v4.0",
 	"item.planttech2.knowledgechip_5": "Knowledge Chip v5.0",
+	"item.planttech2.white_crystal": "White Crystal",
+	"item.planttech2.dark_crystal": "Dark Crystal",
 
 	"item.planttech2.plant_obtainer": "Plant Obtainer",
 	"item.planttech2.radiation_metre": "Radiation Metre",
@@ -618,6 +620,7 @@
 	"block.planttech2.dark_crystal_glasspane_end": "Dark Crystal Glasspane End",
 	"block.planttech2.dark_crystal_glasspane_middle": "Dark Crystal Glasspane Middle",
 	"block.planttech2.dark_crystal_glasspane_cross": "Dark Crystal Glasspane Cross",
+	"block.planttech2.dark_crystal_ore": "Dark Crystal Ore",
 
 	"block.planttech2.electric_fence":  "Electric Fence",
 	"block.planttech2.electric_fence_top":  "Electric Fence Top",
@@ -633,9 +636,7 @@
 	"block.planttech2.white_crystal_glasspane_end": "White Crystal Glasspane End",
 	"block.planttech2.white_crystal_glasspane_middle": "White Crystal Glasspane Middle",
 	"block.planttech2.white_crystal_glasspane_cross": "White Crystal Glasspane Cross",
-
-
-
+	"block.planttech2.white_crystal_ore": "White Crystal Ore",
 
 	"gui.soil": "Soil",
 	"gui.seeds": "Seeds",
