@@ -32,7 +32,7 @@ public class MachinebulbReprocessorCategory implements IRecipeCategory<Machinebu
     public MachinebulbReprocessorCategory(IGuiHelper helper)
     {
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "machinebulbreprocessor"); 
-    	this.background = helper.createDrawable(TEXTURE, 0, 66, 60, 27); 
+    	this.background = helper.createDrawable(TEXTURE, 32, 192, 60, 26);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MACHINEBULBREPROCESSOR));
     	localizedName = new TranslationTextComponent("planttech2.machinebulbreprocessor").getUnformattedComponentText();
     }

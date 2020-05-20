@@ -11,8 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 {
-    private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
-    private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/compressor.png");
+    private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
 
     public CompressorScreen(CompressorContainer container, PlayerInventory player, ITextComponent name)
     {
@@ -70,17 +69,11 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	}
 	return false;
     }
+
     @Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
-	}
-
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
+		return BACKGROUND;
 	}
 
 	@Override

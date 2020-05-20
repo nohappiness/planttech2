@@ -29,7 +29,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 {
-	protected static final ResourceLocation TEXTURE = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/techvillager.png");
+	protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/techvillager.png");
 	protected final PlayerInventory player;
 	protected int invsize;
 	protected IEnergyStorage energystorage;
@@ -226,7 +226,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURE);
+		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		int trust = getTrustScaled(172); 
 		blit(this.guiLeft + 141, this.guiTop + 23, 225, 197, trust , 2, 512, 512);

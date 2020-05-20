@@ -10,9 +10,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/plantfarm.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/plantfarm.png");
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/plantfarm.png");
+
 	public PlantFarmScreen(PlantFarmContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -44,18 +43,8 @@ public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
 	}
 	
 	@Override
-	protected ResourceLocation getBackgroundTexture()
-	{
-		return TEXTURES;
-	}
+	protected ResourceLocation getBackgroundTexture() { return BACKGROUND; }
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

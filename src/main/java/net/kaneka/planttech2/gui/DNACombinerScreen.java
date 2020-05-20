@@ -9,10 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_combiner.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/dna_combiner.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_combiner.png");
+
 	public DNACombinerScreen(DNACombinerContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -39,16 +37,9 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{
