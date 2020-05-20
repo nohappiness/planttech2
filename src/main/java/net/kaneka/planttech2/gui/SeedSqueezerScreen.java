@@ -14,9 +14,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/seedsqueezer.png");
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
+
 	public SeedSqueezerScreen(SeedSqueezerContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -29,7 +28,7 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 		
 		this.setBlitOffset(this.getBlitOffset() + 300); 
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(TEXTURES);
+		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		int l = this.getCookProgressScaled(7);
 		blit(122, 36, 0, 202 + 8 - l, 16, l + 12);
 		
@@ -67,16 +66,9 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

@@ -10,10 +10,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/chipalyzer.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/chipalyzer.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/chipalyzer.png");
+
 	public ChipalyzerScreen(ChipalyzerContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -40,15 +38,9 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 	
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-
 	@Override
 	protected String getGuideEntryString()
 	{

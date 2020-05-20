@@ -8,6 +8,7 @@ import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.addons.jei.carver.CarverCategory;
+import net.kaneka.planttech2.addons.jei.chipalyzer.ChipalyzerCategory;
 import net.kaneka.planttech2.addons.jei.compressor.CompressorCategory;
 import net.kaneka.planttech2.addons.jei.crossbreeding.CrossbreedingCategory;
 import net.kaneka.planttech2.addons.jei.infuser.InfuserCategory;
@@ -19,6 +20,7 @@ import mezz.jei.api.IModPlugin;
 @JeiPlugin
 public class PlantTech2Plugin implements IModPlugin
 {
+	private ChipalyzerCategory chipalyzerCategory;
 	private CompressorCategory compressorCategory;
 	private CrossbreedingCategory crossbreedingCategory; 
 	private InfuserCategory infuserCategory; 
@@ -37,6 +39,7 @@ public class PlantTech2Plugin implements IModPlugin
 	{
 		IJeiHelpers jeiHelpers = registration.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+		chipalyzerCategory = new ChipalyzerCategory(guiHelper);
 		compressorCategory = new CompressorCategory(guiHelper);
 		crossbreedingCategory = new CrossbreedingCategory(guiHelper); 
 		infuserCategory = new InfuserCategory(guiHelper); 
@@ -44,7 +47,8 @@ public class PlantTech2Plugin implements IModPlugin
 		machinebulbReprocessorCategory = new MachinebulbReprocessorCategory(guiHelper); 
 		machineGrowingCategory = new MachineGrowingCategory(guiHelper); 
 		registration.addRecipeCategories(
-			compressorCategory, 
+			chipalyzerCategory,
+			compressorCategory,
 			crossbreedingCategory, 
 			infuserCategory, 
 			carverCategory,
@@ -55,6 +59,7 @@ public class PlantTech2Plugin implements IModPlugin
 	
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) {
+		registration.addRecipes(RecipeGetter.getChipalyzerRecipes(), new ResourceLocation(PlantTechMain.MODID, "chipalyzer"));
 		registration.addRecipes(RecipeGetter.getCompressorRecipes(), new ResourceLocation(PlantTechMain.MODID, "compressor"));
 		registration.addRecipes(RecipeGetter.getCrossbreedingRecipes(), new ResourceLocation(PlantTechMain.MODID, "crossbreeding"));
 		registration.addRecipes(RecipeGetter.getInfuserRecipes(), new ResourceLocation(PlantTechMain.MODID, "infuser"));

@@ -12,10 +12,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTeleporterContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/blockteleporter.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/blockteleporter.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/blockteleporter.png");
+
 	public PlantTopiaTeleporterScreen(PlantTopiaTeleporterContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -55,16 +53,9 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{
