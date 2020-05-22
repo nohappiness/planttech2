@@ -15,6 +15,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
@@ -93,6 +94,12 @@ public class RegistryEvents
 	public void onRegisteredDimension(RegisterDimensionsEvent event)
 	{
 		ModDimensions.registerAll();
+	}
+	
+	@SubscribeEvent
+	public void registerPlacements(RegistryEvent.Register<Placement<?>> event)
+	{
+		ModPlacements.registerDimensions(event.getRegistry());
 	}
 
 	/*
