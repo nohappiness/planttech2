@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BcB",
+    "BcB"
+  ],
+  "key": {
+    "B": {
+      "item": "planttech2:dark_crystal_block"
+    },
+    "c": {
+      "item": "planttech2:dark_crystal"
+    }
+
+  },
+  "result": {
+    "item": "planttech2:dark_crystal_fence",
+    "count": 3
+  }
+}

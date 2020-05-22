@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "planttech2:white_crystal_brick"
+  },
+  "result": "planttech2:white_crystal_tiling",
+  "count": 1
+}
