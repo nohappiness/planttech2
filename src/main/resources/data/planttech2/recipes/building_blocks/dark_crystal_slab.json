@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "planttech2:dark_crystal_block"
+    }
+  },
+  "result": {
+    "item": "planttech2:dark_crystal_slab",
+    "count": 6
+  }
+}

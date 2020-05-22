@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "planttech2:dark_crystal_tiling"
+    }
+  },
+  "result": {
+    "item": "planttech2:dark_crystal_stairs",
+    "count": 4
+  }
+}
