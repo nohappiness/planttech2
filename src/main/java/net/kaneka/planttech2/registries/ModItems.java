@@ -52,6 +52,7 @@ public class ModItems
 	    		   CAPACITYUPGRADE_TIER_2 = new TierItem("capacityupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 3),
 	    		   CAPACITYUPGRADE_TIER_3 = new TierItem("capacityupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 3),
 	    		   COLOR_PARTICLES = new ParticleItem("color"),
+	    		   DARK_CRYSTAL = new BaseItem("dark_crystal", new Item.Properties().group(ModCreativeTabs.groupmain)),
 	    		   DNA_CONTAINER_EMPTY = new BaseItem("dna_container_empty", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   DNA_CONTAINER = new DNAContainerItem(), 
 	    		   DANCIUM_INGOT = new BaseItem("dancium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
@@ -121,6 +122,7 @@ public class ModItems
 	    		   SPEEDUPGRADE_TIER_4 = new TierItem("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
 	    		   TELEPORTER = new TeleporterItem("teleporter", new Item.Properties().group(ModCreativeTabs.groupmain), 1000), 
 	    		   THERMOMETER = new ThermometerItem(),  
+	    	       WHITE_CRYSTAL = new BaseItem("white_crystal", new Item.Properties().group(ModCreativeTabs.groupmain)),
 	    		   WRENCH = new WrenchItem(), 
 	    		   TESTITEM = new TestItem();
 

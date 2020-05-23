@@ -78,7 +78,8 @@ public class ModBlocks
 			DARK_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_door", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_STAIRS = new CustomStairsBlock(DARK_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_stairs", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_slab", ModCreativeTabs.groupblocks, true),
-
+			DARK_CRYSTAL_ORE = new BaseOreBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), "dark_crystal_ore", 1, 3), 
+			
 
 			WHITE_CRYSTAL_GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_cross", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_middle", ModCreativeTabs.groupblocks, true),
@@ -90,7 +91,9 @@ public class ModBlocks
 			WHITE_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_door", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_STAIRS = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupblocks, true),
 			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupblocks, true),
-
+			WHITE_CRYSTAL_ORE = new BaseOreBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), "white_crystal_ore", 1, 3), 
+			
+			
 			WALL_LIGHT = new WallLight(Block.Properties.create(Material.ROCK).sound(SoundType.GLASS), "wall_light", ModCreativeTabs.groupblocks, true),
 
 			TEST_BLOCK = new ObtainableNaturalPlants("testblock", true, 4, 6),

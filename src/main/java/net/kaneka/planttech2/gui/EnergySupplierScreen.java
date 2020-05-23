@@ -9,9 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 
 public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierContainer>
 {
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energy_supplier.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/energystorage.png");
-
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energy_supplier.png");
 
 	public EnergySupplierScreen(EnergySupplierContainer container, PlayerInventory player, ITextComponent name)
     {
@@ -31,16 +29,9 @@ public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierCont
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

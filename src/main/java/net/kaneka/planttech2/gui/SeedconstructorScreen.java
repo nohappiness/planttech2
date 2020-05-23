@@ -9,10 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/seedconstructor.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
+
 	public SeedconstructorScreen(SeedconstructorContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -48,18 +46,8 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorCo
 	}
 	
 	@Override
-	protected ResourceLocation getBackgroundTexture()
-	{
-		return TEXTURES;
-	}
+	protected ResourceLocation getBackgroundTexture() { return BACKGROUND; }
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

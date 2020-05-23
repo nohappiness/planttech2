@@ -20,7 +20,7 @@ public class InfuserCategory extends AbstractJeiCategory<InfuserRecipe>
 	
 	public InfuserCategory(IGuiHelper helper)
 	{
-		super("infuser", ModBlocks.INFUSER.asItem(), helper, 0, 66, 60, 26);
+		super("infuser", ModBlocks.INFUSER.asItem(), helper, 32, 128, 60, 26);
 	}
 
 

@@ -29,7 +29,7 @@ public class CrossbreedingCategory implements IRecipeCategory<CrossbreedingRecip
     public CrossbreedingCategory(IGuiHelper helper)
     {
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "crossbreeding"); 
-    	this.background = helper.createDrawable(TEXTURE, 0, 18, 78, 18); 
+    	this.background = helper.createDrawable(TEXTURE, 32, 96, 78, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.COLOR_PARTICLES));
     	localizedName = new TranslationTextComponent("planttech2.crossbreeding").getUnformattedComponentText();
     }

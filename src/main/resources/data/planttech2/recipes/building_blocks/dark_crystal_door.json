@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    "cgc",
+    "ccc"
+  ],
+  "key": {
+    "c": {
+      "item": "planttech2:dark_crystal"
+    },
+    "g": {
+      "item": "minecraft:glass_pane"
+    }
+
+  },
+  "result": {
+    "item": "planttech2:dark_crystal_door"
+  }
+}

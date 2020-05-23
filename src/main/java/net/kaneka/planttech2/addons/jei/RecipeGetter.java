@@ -14,6 +14,7 @@ import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.librarys.CropListEntry;
 import net.kaneka.planttech2.librarys.utils.Parents;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModBlocks;
@@ -27,6 +28,20 @@ import net.minecraft.item.crafting.RecipeManager;
 
 public class RecipeGetter
 {
+	public static List<ChipalyzerRecipe> getChipalyzerRecipes() {
+		List<ChipalyzerRecipe> results = new ArrayList<>();
+		ClientWorld world = Minecraft.getInstance().world;
+		RecipeManager recipeManager = world.getRecipeManager();
+		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
+		while (it.hasNext()) {
+			IRecipe<?> recipe = it.next();
+			if (recipe.getType() == ModRecipeTypes.CHIPALYZER) {
+				ChipalyzerRecipe chipalyzerrecipe = (ChipalyzerRecipe) recipe;
+				results.add(chipalyzerrecipe);
+			}
+		}
+		return results;
+	}
 
 	public static List<CompressorRecipe> getCompressorRecipes()
 	{
