@@ -8,10 +8,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class EnergyStorageScreen extends BaseContainerScreen<EnergyStorageContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energystorage.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/energystorage.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energystorage.png");
+
 	public EnergyStorageScreen(EnergyStorageContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -30,16 +28,9 @@ public class EnergyStorageScreen extends BaseContainerScreen<EnergyStorageContai
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

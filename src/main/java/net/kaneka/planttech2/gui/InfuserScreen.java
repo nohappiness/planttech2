@@ -8,10 +8,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/infuser.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/infuser.png");
-	
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/infuser.png");
+
 	public InfuserScreen(InfuserContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
@@ -49,16 +47,9 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
 
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-	
 	@Override
 	protected String getGuideEntryString()
 	{

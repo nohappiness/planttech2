@@ -17,7 +17,7 @@ public class CompressorCategory extends AbstractJeiCategory<CompressorRecipe>
 	
 	public CompressorCategory(IGuiHelper helper)
 	{
-		super("compressor", ModBlocks.COMPRESSOR.asItem(), helper, 0, 0, 60, 18);
+		super("compressor", ModBlocks.COMPRESSOR.asItem(), helper, 32, 64, 60, 18);
 	}
 
 

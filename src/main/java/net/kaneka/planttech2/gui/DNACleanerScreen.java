@@ -9,9 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 
 public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 { 
-	private static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
-	private static final ResourceLocation TEXTURES_COLORBLIND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container_colorblind/dna_cleaner.png");
-	
+	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
+
 	public DNACleanerScreen(DNACleanerContainer container, PlayerInventory player, ITextComponent string)
     {
     	super(container, player, string);
@@ -41,16 +40,8 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{
-		return TEXTURES;
+		return BACKGROUND;
 	}
-
-
-	@Override
-	protected ResourceLocation getBackgroundTextureColorblind()
-	{
-		return TEXTURES_COLORBLIND;
-	}
-
 
 	@Override
 	protected String getGuideEntryString()

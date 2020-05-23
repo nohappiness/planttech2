@@ -2,6 +2,8 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -30,31 +32,19 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class ChipalyzerRecipe implements IRecipe<IInventory>
 {
 	private final ResourceLocation id;
-	private final int tier;
 	private final ItemStack chip;
 	private final ItemStack input;
 	private final Enchantment enchantment;
 	private final ItemStack output;
 
-	public ChipalyzerRecipe(ResourceLocation id, int tier, ItemStack input, Enchantment enchantment, ItemStack output)
-	{
-		this.id = id;
-		this.tier = tier;
-		this.chip = ItemStack.EMPTY;
-		this.input = input;
-		this.enchantment = enchantment; 
-		this.output = output;
-	}
 	public ChipalyzerRecipe(ResourceLocation id, ItemStack chip, ItemStack input, Enchantment enchantment, ItemStack output)
 	{
 		this.id = id;
-		this.tier = 0;
 		this.chip = chip;
 		this.input = input;
 		this.enchantment = enchantment;
 		this.output = output;
 	}
-	public int getTier() {return tier;}
 	public ItemStack getChip() {return chip;}
 	public ItemStack getInput() {return input;}
 	public Enchantment getEnchantment() {return enchantment;}
@@ -76,10 +66,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			
 			if(!input.isEmpty())
 			{
-				if(input.getItem() == stack.getItem())
-				{
-					return true; 
-				}
+				return input.getItem() == stack.getItem();
 			}
 		}
 
@@ -131,6 +118,19 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		return false;
 	}
 
+	public List<ItemStack> getComponents() {
+		List<ItemStack> components = new ArrayList<>();
+		components.add(chip);
+		if (input == ItemStack.EMPTY) {
+			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+			book.addEnchantment(enchantment, 1);
+			components.add(book);
+		} else {
+			components.add(input);
+		}
+		return components;
+	}
+
 	@Override
 	public boolean matches(IInventory inv, World worldIn)
 	{
@@ -172,12 +172,6 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		@Override
 		public ChipalyzerRecipe read(ResourceLocation recipeId, JsonObject json)
 		{
-			int tier = 0;
-			if (json.has("tier"))
-			{
-				tier = json.get("tier").getAsInt();
-			}
-
 			ItemStack chip = ItemStack.EMPTY;
 			if (json.has("chip"))
 			{
@@ -230,9 +224,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 				result = TagUtils.getAnyTagItem(new ResourceLocation(resultobject.get("tag").getAsString()));
 			}
  
-			if (result != null && tier > 0) {
-				return new ChipalyzerRecipe(recipeId, tier, input, enchantment, new ItemStack(result));
-			} else if (result != null && tier == 0) {
+			if (result != null) {
 				return new ChipalyzerRecipe(recipeId, chip, input, enchantment, new ItemStack(result));
 			} else {
 				throw new IllegalStateException("Item did not exist:" + recipeId.toString());
@@ -242,7 +234,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		@Override
 		public ChipalyzerRecipe read(ResourceLocation recipeId, PacketBuffer buffer)
 		{
-			int tier = buffer.readInt();
+			ItemStack chip = buffer.readItemStack();
 			ItemStack input = buffer.readItemStack();
 			String ench = buffer.readString();
 			Enchantment enchantment = null;
@@ -251,13 +243,13 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 				enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(ench));
 			}
 			ItemStack result = buffer.readItemStack();
-			return new ChipalyzerRecipe(recipeId, tier, input, enchantment, result);
+			return new ChipalyzerRecipe(recipeId, chip, input, enchantment, result);
 		}
 
 		@Override
 		public void write(PacketBuffer buffer, ChipalyzerRecipe recipe)
 		{
-			buffer.writeInt(recipe.tier);
+			buffer.writeItemStack(recipe.chip);
 			buffer.writeItemStack(recipe.input);
 			if(recipe.enchantment != null)
 			{

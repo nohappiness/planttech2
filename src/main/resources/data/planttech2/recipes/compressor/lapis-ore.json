@@ -2,10 +2,10 @@
     "type": "planttech2:compressing",
     "input": {
       "item": "planttech2:lapis_particles",
-      "amount": 8
+      "amount": 12
     },
     "result": {
       "item": "minecraft:lapis_ore",
       "amount": 1
     }
-  }
+}

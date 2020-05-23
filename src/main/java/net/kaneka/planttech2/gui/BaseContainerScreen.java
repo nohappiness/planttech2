@@ -18,9 +18,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
 {
-	protected static final ResourceLocation TEXTURES = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
+	//protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 	protected final PlayerInventory player;
 	protected final EnergyTileEntity te;
+	protected abstract ResourceLocation getBackgroundTexture();
 
 	@SuppressWarnings("unchecked")
 	public BaseContainerScreen(BaseContainer inventorySlotsIn, PlayerInventory inventoryPlayer, ITextComponent title)
@@ -71,26 +72,14 @@ abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScr
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(getBackgroundTexture());
-		if(ClientConfig.colorblind_guis.get())
-		{
-			minecraft.getTextureManager().bindTexture(getBackgroundTextureColorblind());
-		}
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 	}
-	
-	protected abstract ResourceLocation getBackgroundTexture();
-	protected abstract ResourceLocation getBackgroundTextureColorblind();
-	
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) 
 	{
 		String tileName = title.getUnformattedComponentText();
-		int textcolor = Integer.parseInt("000000",16); 
-		if(ClientConfig.colorblind_guis.get())
-		{
-			textcolor = Integer.parseInt("000000",16); 
-		}
+		int textcolor = Integer.parseInt("000000",16);
 		font.drawString(tileName, (this.xSize / 2 - font.getStringWidth(tileName) / 2) + 1, 14, textcolor);
 	}
 	

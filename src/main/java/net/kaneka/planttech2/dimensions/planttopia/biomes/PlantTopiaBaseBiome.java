@@ -1,13 +1,11 @@
 package net.kaneka.planttech2.dimensions.planttopia.biomes;
 
 import net.kaneka.planttech2.registries.ModBiomes;
-import net.minecraft.entity.projectile.EggEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 
-import java.util.HashMap;
 
 abstract public class PlantTopiaBaseBiome extends Biome
 {
@@ -35,6 +33,9 @@ abstract public class PlantTopiaBaseBiome extends Biome
 		{
 			ModBiomes.RARE_BIOMES.add(this);
 		}
+		 
+		PlantTopiaBiomeDecorator.addCrystalOres(this);
+		PlantTopiaBiomeDecorator.addBiomassLake(this);
 	} 
 	
 	public BiomeType getBiomeType()
