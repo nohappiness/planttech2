@@ -1,0 +1,20 @@
+{
+	  "type": "minecraft:block",
+	  "pools": [
+	    {
+		  "name": "planttech2:energy_supplier",
+	      "rolls": 1,
+	      "entries": [
+	        {
+	          "type": "minecraft:item",
+	          "name": "planttech2:energy_supplier"
+	        }
+	      ],
+	      "conditions": [
+	        {
+	          "condition": "minecraft:survives_explosion"
+	        }
+	      ]
+	    }
+	  ]
+	}
