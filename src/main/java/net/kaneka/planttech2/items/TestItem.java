@@ -27,6 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.lwjgl.system.CallbackI;
@@ -56,7 +57,7 @@ public class TestItem extends BaseItem
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
-
+			System.out.println(Feature.STRUCTURES); 
 			/*
 			System.out.println(" ");
     		System.out.println("Blocks: "); 
