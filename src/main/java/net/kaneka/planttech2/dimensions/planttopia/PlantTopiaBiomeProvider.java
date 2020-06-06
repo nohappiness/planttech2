@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
 import net.kaneka.planttech2.dimensions.planttopia.layers.GenLayerBiomes;
+import net.kaneka.planttech2.registries.ModStructures;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.BiomeProvider;
@@ -29,6 +30,7 @@ public class PlantTopiaBiomeProvider extends BiomeProvider
 	protected PlantTopiaBiomeProvider(long seed)
 	{
 		super(BIOMES);
+		hasStructureCache.put(ModStructures.TECHVILLAGE, true); 
 		genLayer = genLayers(seed);
 
 	}

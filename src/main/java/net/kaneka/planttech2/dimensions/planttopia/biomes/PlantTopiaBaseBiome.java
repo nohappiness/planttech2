@@ -1,6 +1,11 @@
 package net.kaneka.planttech2.dimensions.planttopia.biomes;
 
+import net.kaneka.planttech2.dimensions.structure.tech.TechVillageConfig;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.Placement;
 import net.kaneka.planttech2.registries.ModBiomes;
+import net.kaneka.planttech2.registries.ModStructures;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -21,6 +26,7 @@ abstract public class PlantTopiaBaseBiome extends Biome
 		setRegistryName(resLoc); 
 		
 		ModBiomes.BIOMES.add(this);
+		
 		if(rarity.equals(BiomeRarity.COMMON))
 		{
 			ModBiomes.COMMON_BIOMES.add(this);
@@ -33,9 +39,12 @@ abstract public class PlantTopiaBaseBiome extends Biome
 		{
 			ModBiomes.RARE_BIOMES.add(this);
 		}
+		this.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModStructures.TECHVILLAGE.withConfiguration(new TechVillageConfig("planttech2:village/tech/starts", 6)));
+		this.addStructure(ModStructures.TECHVILLAGE.withConfiguration(new TechVillageConfig("planttech2:village/tech/starts", 6)));
 		 
 		PlantTopiaBiomeDecorator.addCrystalOres(this);
 		PlantTopiaBiomeDecorator.addBiomassLake(this);
+		
 	} 
 	
 	public BiomeType getBiomeType()
