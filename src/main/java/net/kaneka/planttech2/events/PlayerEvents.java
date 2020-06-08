@@ -144,33 +144,33 @@ public class PlayerEvents
 		}
 	}
 
-	@SubscribeEvent
-	public static void onPlayerClone(PlayerEvent.Clone event)
-	{
-		/*if(event.isWasDeath())
+		@SubscribeEvent
+		public static void onPlayerClone(PlayerEvent.Clone event)
 		{
-    		event.getOriginal().revive();
-    		ITechVillagerTrust old = event.getOriginal().getCapability(TechVillagerTrust.INSTANCE).orElse(null); 
-    		ITechVillagerTrust playercap = event.getPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust()); 
-    		if(old != null)
-    		{
-    			for(Entry<String, Integer> entry: old.getTrustsMap().entrySet())
-    			{
-    				playercap.setTrust(entry.getKey(), entry.getValue());
-    			}
-    		}
-		}*/
-		IRadiationEffect oldCap = RadiationEffect.getCap((ServerPlayerEntity) event.getOriginal());
-		IRadiationEffect newCap = RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving());
-		if (event.isWasDeath())
-		{
-			newCap.setLevel(oldCap.getLevel());
+			/*if(event.isWasDeath())
+			{
+				event.getOriginal().revive();
+				ITechVillagerTrust old = event.getOriginal().getCapability(TechVillagerTrust.INSTANCE).orElse(null);
+				ITechVillagerTrust playercap = event.getPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust());
+				if(old != null)
+				{
+					for(Entry<String, Integer> entry: old.getTrustsMap().entrySet())
+					{
+						playercap.setTrust(entry.getKey(), entry.getValue());
+					}
+				}
+			}*/
+			IRadiationEffect oldCap = RadiationEffect.getCap((ServerPlayerEntity) event.getOriginal());
+			IRadiationEffect newCap = RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving());
+			if (event.isWasDeath())
+			{
+				newCap.setLevel(oldCap.getLevel());
+			}
+			else
+			{
+				newCap.setLevel(0.0F);
+			}
 		}
-		else
-		{
-			newCap.setLevel(0.0F);
-		}
-	}
 
 	private static void syncRadiationCapWithClient(ServerPlayerEntity player)
 	{

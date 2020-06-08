@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.entities.passive;
+package net.kaneka.planttech2.entities.neutral;
 
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.registries.ModEntityTypes;
