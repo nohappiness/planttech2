@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.entities.passive.TechGhoulEntity;
+import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.kaneka.planttech2.entities.passive.TechPenguinEntity;
 import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
 import net.kaneka.planttech2.entities.renderer.TechGhoulRenderer;

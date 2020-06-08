@@ -3,12 +3,9 @@ package net.kaneka.planttech2.entities.renderer;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.entities.models.TechGhoulModel;
-import net.kaneka.planttech2.entities.models.TechVillagerModel;
-import net.kaneka.planttech2.entities.passive.TechGhoulEntity;
-import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
+import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.layers.HeadLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
