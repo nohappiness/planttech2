@@ -98,7 +98,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	}
 
 	@Override
-	protected boolean func_195363_d(int keyCode, int scanCode)
+	protected boolean itemStackMoved(int keyCode, int scanCode)
 	{
 		return false;
 	}
