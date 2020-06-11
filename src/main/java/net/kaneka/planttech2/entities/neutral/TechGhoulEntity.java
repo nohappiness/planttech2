@@ -1,8 +1,7 @@
 package net.kaneka.planttech2.entities.neutral;
 
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
-import net.kaneka.planttech2.registries.ModEntityTypes;
-import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.entities.TechCreatureEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -10,11 +9,11 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.monster.WitchEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
-public class TechGhoulEntity extends CreatureEntity implements IAffectPlayerRadiation
+public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayerRadiation
 {
 	public TechGhoulEntity(EntityType<? extends TechGhoulEntity> type, World worldIn)
 	{
@@ -29,44 +28,19 @@ public class TechGhoulEntity extends CreatureEntity implements IAffectPlayerRadi
 		this.goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 12.0F));
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 
-		this.targetSelector.addGoal(1, new AttackNearbyKillerGoal<>(MobEntity.class
-//			(target) -> (target instanceof IMob || target instanceof PlayerEntity) && !(target instanceof CreeperEntity) && !(target instanceof SkeletonEntity)
-		));
-		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		this.targetSelector.addGoal(2, new AttackNearbyKillerGoal<>(MobEntity.class));
 	}
 
 	@Override
 	protected void registerAttributes()
 	{
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(35.0D);
+		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(45.0D);
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
 		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
 		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.0D);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
-	}
-
-	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand)
-	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (stack.getItem() == ModItems.BIOMASS)
-		{
-			if (this.getHealth() + 2.0F <= this.getMaxHealth())
-			{
-				this.heal(2.0F);
-				if (!player.abilities.isCreativeMode)
-				{
-					stack.shrink(1);
-				}
-			}
-		}
-		return false;
-	}
-
-	public static EntityType<? extends TechGhoulEntity> getEntityType()
-	{
-		return (EntityType<? extends TechGhoulEntity>) ModEntityTypes.TECHGHOULENTITY;
 	}
 
 	@Override
@@ -75,7 +49,27 @@ public class TechGhoulEntity extends CreatureEntity implements IAffectPlayerRadi
 		return (1.0F / 1000.0F);
 	}
 
-	class AttackNearbyKillerGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T>
+	@Override
+	protected boolean onPassiveActivate()
+	{
+		this.addPotionEffect(new EffectInstance(Effects.STRENGTH, 60));
+		return super.onPassiveActivate();
+	}
+
+    @Override
+    protected void onPassiveActive()
+    {
+        super.onPassiveActive();
+    }
+
+    @Override
+    protected void onPassiveEnds()
+    {
+        this.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 60, 1));
+        super.onPassiveEnds();
+    }
+
+    class AttackNearbyKillerGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T>
 	{
 		public AttackNearbyKillerGoal(Class<T> targetClassIn)
 		{
