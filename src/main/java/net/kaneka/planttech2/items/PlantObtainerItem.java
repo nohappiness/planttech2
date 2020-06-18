@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.items;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
 import net.minecraft.block.Block;
@@ -26,11 +27,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PlantObtainer extends BaseItem
+public class PlantObtainerItem extends BaseItem
 {
-    public PlantObtainer(String name, Properties property)
+    public PlantObtainerItem(String name, Properties property)
     {
         super(name, property.maxStackSize(1));
+        addPropertyOverride(new ResourceLocation(PlantTechMain.MODID, "filled"), (stack, world, entity) ->
+                isFilled(initTags(stack)) ? 1.0F : 0.0F);
     }
 
     @Override
@@ -53,7 +56,7 @@ public class PlantObtainer extends BaseItem
             {
                 setBlockFilled(stack, state);
                 block.onObtained(world, player, stack, pos);
-                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
+//                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
                 return ActionResultType.SUCCESS;
             }
         }
@@ -65,17 +68,11 @@ public class PlantObtainer extends BaseItem
                 block.onReleased(context, getBlockStateFilled(stack));
                 setBlockFilled(stack, null);
                 setFilled(stack, false);
-                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
+//                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
                 return ActionResultType.SUCCESS;
             }
         }
         return ActionResultType.PASS;
-    }
-
-    @Override
-    public boolean hasEffect(ItemStack stack)
-    {
-        return isFilled(initTags(stack));
     }
 
     public static ItemStack setBlockFilled(ItemStack stack, BlockState state)
