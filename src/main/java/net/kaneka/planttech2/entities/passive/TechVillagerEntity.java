@@ -154,16 +154,11 @@ public class TechVillagerEntity extends AgeableEntity
 		return false;
 	}
 
-	public static EntityType<? extends TechVillagerEntity> getEntityType()
-	{
-		return (EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY;
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public AgeableEntity createChild(AgeableEntity ageable)
 	{
-		return new TechVillagerEntity(getEntityType(), this.world);
+		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
 	}
 
 }

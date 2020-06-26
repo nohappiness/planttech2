@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.registries;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -10,7 +11,7 @@ public class ModSounds
 
     private static SoundEvent get(String name)
     {
-        return new SoundEvent(new ResourceLocation("planttech2", name)).setRegistryName("planttech2", name);
+        return new SoundEvent(new ResourceLocation(PlantTechMain.MODID, name)).setRegistryName(PlantTechMain.MODID, name);
     }
 
     public static void registerAll(IForgeRegistry<SoundEvent> registry)
