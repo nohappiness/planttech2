@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.fluids.BiomassFluid;
 import net.kaneka.planttech2.items.*;
 import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
@@ -106,8 +105,8 @@ public class ModItems
 	    		   PLANTCARD = new CreditCardItem("plantcard", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1)),
 	    		   PLANTIUM_INGOT  = new BaseItem("plantium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)), 
 	    		   PLANTIUM_NUGGET = new BaseItem("plantium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-				   PLANT_OBTAINER = new PlantObtainer("plant_obtainer", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-	               RADIATION_METRE= new RadiationMetre("radiation_metre", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+				   PLANT_OBTAINER = new PlantObtainerItem("plant_obtainer", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
+	               RADIATION_METRE= new RadiationMetreItem("radiation_metre", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
 	    		   RANGEUPGRADE_TIER_1 = new TierItem("rangeupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 1),
 	    		   RANGEUPGRADE_TIER_2 = new TierItem("rangeupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 1),
 	    		   RANGEUPGRADE_TIER_3 = new TierItem("rangeupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 1),
