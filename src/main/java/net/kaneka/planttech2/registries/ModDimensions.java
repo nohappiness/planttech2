@@ -1,19 +1,10 @@
 package net.kaneka.planttech2.registries;
 
-import java.util.function.BiFunction;
 
-import io.netty.buffer.Unpooled;
-import net.kaneka.planttech2.dimensions.planttopia.PlantTopiaDimension;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.World;
-import net.minecraft.world.dimension.Dimension;
-import net.minecraft.world.dimension.DimensionType;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ModDimension;
-import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModDimensions
 {
+	/*
 	private static final ModDimension PLANTTOPIA = new ModDimension()
 	{
 		@Override
@@ -46,4 +37,5 @@ public class ModDimensions
 	{
 		return DimensionType.byName(ModReferences.PLANTTOPIA_RESLOC);
 	}
+	*/
 }

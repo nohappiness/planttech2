@@ -1,36 +1,10 @@
 package net.kaneka.planttech2.items;
 
 
-import java.util.Map.Entry;
-
-import net.kaneka.planttech2.blocks.CropBaseBlock;
-import net.kaneka.planttech2.dimensions.TeleportationUtils;
-import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
-import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
-import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.lwjgl.system.CallbackI;
 
 public class TestItem extends BaseItem
 {
@@ -57,8 +31,9 @@ public class TestItem extends BaseItem
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
-			System.out.println(Feature.STRUCTURES); 
 			/*
+			System.out.println(Feature.STRUCTURES); 
+			
 			System.out.println(" ");
     		System.out.println("Blocks: "); 
     		for(Entry<ResourceLocation, Block> list: ForgeRegistries.BLOCKS.getEntries())

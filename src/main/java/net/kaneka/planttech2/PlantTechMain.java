@@ -17,6 +17,7 @@ import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.world.biome.provider.OverworldBiomeProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DistExecutor;
@@ -37,6 +38,7 @@ public class PlantTechMain
 {
 	public static final String MODID = "planttech2";
 
+	@SuppressWarnings("deprecation")
 	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
@@ -44,7 +46,9 @@ public class PlantTechMain
 	public static PlantTechMain instance;
 	
 	public static CropList croplist = new CropList();
+	
 
+	@SuppressWarnings("deprecation")
 	public PlantTechMain()
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER, "planttech2-server.toml");
@@ -80,6 +84,7 @@ public class PlantTechMain
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
 	{
 		event.getServer().getResourceManager().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+		//event.getServer().getDataPackRegistries()
 	}
 	
 	private void onServerStarting(final FMLServerStartingEvent event)

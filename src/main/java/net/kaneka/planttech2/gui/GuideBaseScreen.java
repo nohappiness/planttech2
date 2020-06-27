@@ -125,7 +125,7 @@ public class GuideBaseScreen extends Screen
 
 	protected void drawCenteredString(String string, int posX, int posY)
 	{
-		font.drawString(string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
+		field_230712_o_.drawString(string, posX - (field_230712_o_.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
 	}
 
 	public void renderItem(ItemStack itemstack, int x, int y)

@@ -30,7 +30,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -197,7 +197,7 @@ public class CustomDoorBlock extends BaseBlock
 			{
 				int j = direction.getXOffset();
 				int k = direction.getZOffset();
-				Vec3d vec3d = p_208073_1_.getHitVec();
+				Vector3d vec3d = p_208073_1_.getHitVec();
 				double d0 = vec3d.x - (double) blockpos.getX();
 				double d1 = vec3d.z - (double) blockpos.getZ();
 				return (j >= 0 || !(d1 < 0.5D)) && (j <= 0 || !(d1 > 0.5D)) && (k >= 0 || !(d0 > 0.5D)) && (k <= 0 || !(d0 < 0.5D)) ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
@@ -218,7 +218,7 @@ public class CustomDoorBlock extends BaseBlock
 			return ActionResultType.FAIL;
 		} else
 		{
-			state = state.cycle(OPEN);
+			state = state.func_235896_a_(OPEN);
 			worldIn.setBlockState(pos, state, 10);
 			worldIn.playEvent(player, state.get(OPEN) ? this.getOpenSound() : this.getCloseSound(), pos, 0);
 			return ActionResultType.SUCCESS;
@@ -278,7 +278,7 @@ public class CustomDoorBlock extends BaseBlock
 
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		return mirrorIn == Mirror.NONE ? state : state.rotate(mirrorIn.toRotation(state.get(FACING))).cycle(HINGE);
+		return mirrorIn == Mirror.NONE ? state : state.rotate(mirrorIn.toRotation(state.get(FACING))).func_235896_a_(HINGE);
 	}
 
 	@OnlyIn(Dist.CLIENT)

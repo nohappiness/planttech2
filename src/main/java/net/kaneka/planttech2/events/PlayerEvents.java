@@ -1,24 +1,13 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.dimensions.planttopia.biomes.BiomeRadiation;
-import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
-import net.kaneka.planttech2.entities.capabilities.player.IPlayerRenderRGB;
 import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.player.PlayerRenderRGB;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
-import net.kaneka.planttech2.registries.ModDimensions;
-import net.kaneka.planttech2.registries.ModEffects;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -31,6 +20,8 @@ public class PlayerEvents
 	@SubscribeEvent
 	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
 	{
+		/*
+		
 		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
 		{
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
@@ -50,6 +41,7 @@ public class PlayerEvents
 				capability.setRGB(rgb);
 			}
 		}
+		*/
 	}
 
 	@SubscribeEvent
@@ -94,6 +86,7 @@ public class PlayerEvents
 	@SubscribeEvent
 	public static void playerTicking(TickEvent.PlayerTickEvent event)
 	{
+		/*
 		PlayerEntity player = event.player;
 		if (player == null || !player.isAlive() || !(player instanceof ServerPlayerEntity) || player.getEntityWorld().isRemote() || player.abilities.isCreativeMode)
 		{
@@ -121,15 +114,16 @@ public class PlayerEvents
 		{
 			//heals player in all biomes that are not created by pt2
 			capability.decreaseLevel((1.0F / 108000.0F));
-		}
-		if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= /*32767*/33000))
-		{
+		}*/
+		//if (capability.getLevel() >= 1.0F && (player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) == null || player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS).getDuration() <= /*32767*/33000))
+		/*{
 			player.addPotionEffect(new EffectInstance(ModEffects.RADIATION_SICKNESS, 99999));
 		}
 		else if (capability.getLevel() < 1.0F && player.getActivePotionEffect(ModEffects.RADIATION_SICKNESS) != null)
 		{
 			player.removePotionEffect(ModEffects.RADIATION_SICKNESS);
 		}
+		*/
 	}
 
 	@SubscribeEvent
