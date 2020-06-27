@@ -23,7 +23,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.loot.LootContext;
 
 import java.util.Collections;
 import java.util.List;
@@ -107,7 +107,8 @@ public class FacingWallLightBase extends BaseBlock
         return state.get(IS_ON) ? state.get(LIGHT_STATUS) * 3 : 0;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         return getShape(state, worldIn, pos, context);

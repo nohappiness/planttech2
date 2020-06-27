@@ -10,6 +10,7 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -112,6 +113,12 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
+	public void handleUpdateTag(BlockState state, CompoundNBT tag)
+	{
+		// TODO Auto-generated method stub
+		super.handleUpdateTag(state, tag);
+	}
+	@Override
 	public void handleUpdateTag(CompoundNBT tag)
 	{
 		this.read(tag);
@@ -126,8 +133,9 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 		return compound;
 	}
 
+	
 	@Override
-	public void read(CompoundNBT compound)
+	public void read()
 	{
 		super.read(compound);
 		this.startTick = compound.getLong("starttick");

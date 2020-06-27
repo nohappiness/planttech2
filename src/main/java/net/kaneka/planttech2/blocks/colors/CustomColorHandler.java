@@ -3,14 +3,14 @@ package net.kaneka.planttech2.blocks.colors;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ILightReader;
+import net.minecraft.world.IBlockDisplayReader;
 
 public class CustomColorHandler  implements IBlockColor
 {
 	
 
 	@Override
-	public int getColor(BlockState state, ILightReader lightreader, BlockPos pos, int tintindex)
+	public int getColor(BlockState state, IBlockDisplayReader blockDisplayReader, BlockPos pos, int tintindex)
 	{
 		if (tintindex == 0)
 		{

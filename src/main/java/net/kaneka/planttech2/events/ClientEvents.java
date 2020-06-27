@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.dimensions.planttopia.biomes.PlantTopiaBaseBiome;
 import net.kaneka.planttech2.entities.capabilities.player.IPlayerRenderRGB;
 import net.kaneka.planttech2.entities.capabilities.player.PlayerRenderRGB;
 import net.kaneka.planttech2.registries.ModBlocks;
@@ -16,9 +15,7 @@ import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.OverworldBiomeProvider;
-import net.minecraft.world.dimension.OverworldDimension;
-import net.minecraft.world.gen.OverworldGenSettings;
-import net.minecraft.world.storage.loot.conditions.WeatherCheck;
+import net.minecraft.loot.conditions.WeatherCheck;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -58,17 +55,20 @@ public class ClientEvents
 			
 			ITextComponent info = new TranslationTextComponent("planttech2.update.available");
 			ITextComponent link = new TranslationTextComponent("planttech2.update.click");
-			link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
-							.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
-							.setColor(TextFormatting.BLUE)
+			link.getStyle().func_240715_a_(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+							.func_240716_a_(new HoverEvent(HoverEvent.Action.field_230550_a_, new TranslationTextComponent("planttech2.update.tooltip")))
+							.func_240712_a_(TextFormatting.BLUE)
 							.setUnderlined(true);
-			evt.getEntity().sendMessage(info.appendSibling(link));
+			//evt.getEntity().sendMessage(info.appendSibling(link));
+			evt.getEntity().sendMessage(info, evt.getEntity().getUniqueID());
+			//TODO 
 		}
 	}
 
 	@SubscribeEvent
 	public static void onFogRenderDensity(EntityViewRenderEvent.FogDensity event)
 	{
+		/*
 		Minecraft minecraft = Minecraft.getInstance();
 		ClientPlayerEntity player = minecraft.player;
 		if (player == null || !player.isAlive() || player.getEntityWorld().getDimension().getType() != ModDimensions.getPlantTopiaDimensionType())
@@ -94,7 +94,7 @@ public class ClientEvents
 			event.setCanceled(true);
 			event.setDensity(biomeDencity);
 		}
-		/*Minecraft minecraft = Minecraft.getInstance();
+		Minecraft minecraft = Minecraft.getInstance();
 		ClientPlayerEntity player = minecraft.player;
 		if (player == null || player.getEntityWorld().getDimension().getType() != ModDimensions.getPlantTopiaDimensionType())
 		{
@@ -115,6 +115,7 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void onFogRenderColour(EntityViewRenderEvent.FogColors event)
 	{
+		/*
 		Minecraft minecraft = Minecraft.getInstance();
 		ClientPlayerEntity player = minecraft.player;
 		if (player == null || !player.isAlive())
@@ -157,6 +158,7 @@ public class ClientEvents
 		{
 			event.setBlue(targetRGB[2]);
 		}
+		*/
 	}
 	
 	/*

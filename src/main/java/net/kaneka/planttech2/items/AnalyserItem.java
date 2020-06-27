@@ -37,13 +37,13 @@ public class AnalyserItem extends BaseItem
 				{
 					if(messages[i] != null)
 					{
-						player.sendMessage(new StringTextComponent(messages[i]));
+						player.sendMessage(new StringTextComponent(messages[i]), player.getUniqueID());
 						ok = false; 
 					}
 				}
 				if(ok)
 				{
-					player.sendMessage(new StringTextComponent("Everything ok"));
+					player.sendMessage(new StringTextComponent("Everything ok"), player.getUniqueID());
 				}
 			}
 		}

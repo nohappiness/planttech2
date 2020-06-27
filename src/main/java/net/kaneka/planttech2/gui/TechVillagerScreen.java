@@ -168,11 +168,11 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	{
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		
-		font.drawString(professionname, (this.xSize / 2 - font.getStringWidth(professionname) / 2), 10, Integer.parseInt("00e803",16));
-		font.drawString("Trades", 70, 14, Integer.parseInt("00e803", 16));
-		font.drawString("Jobs", 354, 14, Integer.parseInt("00e803", 16));
-		font.drawString(String.valueOf(playertrustlevel), 140, 20, Integer.parseInt("00e803", 16));
-		font.drawString(String.valueOf(playertrustlevel + 1), 309, 20, Integer.parseInt("00e803", 16));
+		field_230712_o_.drawString(professionname, (this.xSize / 2 - field_230712_o_.getStringWidth(professionname) / 2), 10, Integer.parseInt("00e803",16));
+		field_230712_o_.drawString("Trades", 70, 14, Integer.parseInt("00e803", 16));
+		field_230712_o_.drawString("Jobs", 354, 14, Integer.parseInt("00e803", 16));
+		field_230712_o_.drawString(String.valueOf(playertrustlevel), 140, 20, Integer.parseInt("00e803", 16));
+		field_230712_o_.drawString(String.valueOf(playertrustlevel + 1), 309, 20, Integer.parseInt("00e803", 16));
 		for (int i = 0; i < container.getTrades().size(); i++)
 		{
 			String color = "00e803"; 
@@ -180,7 +180,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 			{
 				color = "000000";
 			}
-			font.drawString(container.getTrades().get(i).getName(), 43, 32 + i * 20, Integer.parseInt(color, 16));
+			field_230712_o_.drawString(container.getTrades().get(i).getName(), 43, 32 + i * 20, Integer.parseInt(color, 16));
 		}
 
 		for (int i = 0; i < container.getTasks().size(); i++)
@@ -190,7 +190,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 			{
 				color = "000000";
 			}
-			font.drawString(container.getTasks().get(i).getName(), 321, 32 + i * 20, Integer.parseInt(color, 16));
+			field_230712_o_.drawString(container.getTasks().get(i).getName(), 321, 32 + i * 20, Integer.parseInt(color, 16));
 		}
 
 		if (selectedTrade != null)
@@ -200,9 +200,9 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 			{
 				color = "000000";
 			}
-			font.drawString("Trade", 212, 93, Integer.parseInt(color, 16));
-			font.drawString(String.valueOf(selectedTrade.getCreditsBuy()), 193 - String.valueOf(selectedTrade.getCreditsBuy()).length() * 6, 61, Integer.parseInt("00e803", 16));
-			font.drawString(String.valueOf(selectedTrade.getCreditsSell()), 301 - String.valueOf(selectedTrade.getCreditsSell()).length() * 6, 61, Integer.parseInt("00e803", 16));
+			field_230712_o_.drawString("Trade", 212, 93, Integer.parseInt(color, 16));
+			field_230712_o_.drawString(String.valueOf(selectedTrade.getCreditsBuy()), 193 - String.valueOf(selectedTrade.getCreditsBuy()).length() * 6, 61, Integer.parseInt("00e803", 16));
+			field_230712_o_.drawString(String.valueOf(selectedTrade.getCreditsSell()), 301 - String.valueOf(selectedTrade.getCreditsSell()).length() * 6, 61, Integer.parseInt("00e803", 16));
 		} 
 		else if (selectedTask != null)
 		{
@@ -211,13 +211,13 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 			{
 				color = "000000";
 			}
-			font.drawString("Trade", 194, 93, Integer.parseInt(color, 16));
-			font.drawString(String.valueOf(selectedTask.getTrust()) + " Trust", 317 - String.valueOf(selectedTask.getTrust() + " Trust").length() * 6, 78, Integer.parseInt("00e803", 16));
+			field_230712_o_.drawString("Trade", 194, 93, Integer.parseInt(color, 16));
+			field_230712_o_.drawString(String.valueOf(selectedTask.getTrust()) + " Trust", 317 - String.valueOf(selectedTask.getTrust() + " Trust").length() * 6, 78, Integer.parseInt("00e803", 16));
 			
 		} 
 		else
 		{
-			font.drawString("Maybe some kind of intoduction?", 142, 30, Integer.parseInt("00e803", 16));
+			field_230712_o_.drawString("Maybe some kind of intoduction?", 142, 30, Integer.parseInt("00e803", 16));
 		}
 
 	}

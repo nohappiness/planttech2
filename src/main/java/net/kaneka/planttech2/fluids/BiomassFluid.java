@@ -8,7 +8,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.Item;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
@@ -72,7 +72,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected boolean canDisplace(IFluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_)
+	protected boolean canDisplace(FluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_)
 	{
 		return p_215665_5_ == Direction.DOWN && !p_215665_4_.isIn(FluidTags.WATER);
 	}
@@ -90,7 +90,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected BlockState getBlockState(IFluidState state)
+	protected BlockState getBlockState(FluidState state)
 	{
 		return ModBlocks.BIOMASSFLUIDBLOCK.getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
 	}
@@ -108,18 +108,18 @@ public abstract class BiomassFluid extends FlowingFluid
 			setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
 		}
 
-		protected void fillStateContainer(StateContainer.Builder<Fluid, IFluidState> builder)
+		protected void fillStateContainer(StateContainer.Builder<Fluid, FluidState> builder)
 		{
 			super.fillStateContainer(builder);
 			builder.add(LEVEL_1_8);
 		}
 
-		public int getLevel(IFluidState state)
+		public int getLevel(FluidState state)
 		{
 			return state.get(LEVEL_1_8);
 		}
 
-		public boolean isSource(IFluidState state)
+		public boolean isSource(FluidState state)
 		{
 			return false;
 		}
@@ -133,12 +133,12 @@ public abstract class BiomassFluid extends FlowingFluid
 
 	public static class Source extends BiomassFluid
 	{
-		 public int getLevel(IFluidState state) 
+		 public int getLevel(FluidState state) 
 		 {
              return 8;
          }
 
-         public boolean isSource(IFluidState state)
+         public boolean isSource(FluidState state)
          {
              return true;
          }

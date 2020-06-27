@@ -23,7 +23,7 @@ import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -96,7 +96,7 @@ public class CableBlock extends BaseBlock
 	{
 		if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
 		{
-			Vec3d hitvec = ray.getHitVec();
+			Vector3d hitvec = ray.getHitVec();
 			hitvec = hitvec.add(-pos.getX(), -pos.getY(), -pos.getZ());
 			VoxelShape tempshape;
 			for (Direction dir : Direction.values())
@@ -147,7 +147,7 @@ public class CableBlock extends BaseBlock
 			world.setBlockState(pos, getCurrentState(state, world, pos));
 		}
 	}
-
+	
 	@Override
 	public boolean hasTileEntity()
 	{

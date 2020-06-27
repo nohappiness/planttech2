@@ -17,9 +17,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.RegisterDimensionsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -78,13 +76,13 @@ public class RegistryEvents
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
-
+	/*
 	@SubscribeEvent
 	public static void registerBiomes(final RegistryEvent.Register<Biome> event)
 	{
 		ModBiomes.registerBiomes(event.getRegistry());
 	}
-
+	
 	@SubscribeEvent
 	public static void registerDimensions(final RegistryEvent.Register<ModDimension> event)
 	{
@@ -110,6 +108,7 @@ public class RegistryEvents
 		ModStructures.registerAll(event);
 	}
 
+	*/
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event)
 	{

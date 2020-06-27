@@ -3,9 +3,9 @@ package net.kaneka.planttech2.entities;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -44,7 +44,7 @@ public abstract class TechCreatureEntity extends CreatureEntity
             if (this.matchPassiveCriteria())
                 if (this.onPassiveActivate())
                     this.passiveCooldown = this.getMaxPassiveCooldown();
-            IAttributeInstance attribute = this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+            ModifiableAttributeInstance attribute = this.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier modifier = attribute.getModifier(MOVEMENT_SPEED_MODIFIER);
             float amount = (this.getMaxHealth() - this.getHealth()) / this.getMaxHealth() * 0.03F;
             if (modifier != null && (this.isPassiveActive() || modifier.getAmount() != amount))

@@ -29,11 +29,7 @@ public enum EnumTraitsInt implements IStringSerializable
 	this.transitionpossibility = transitionpossibility;
     }
 
-    @Override
-    public String toString()
-    {
-	return super.toString();
-    }
+    
 
     public static EnumTraitsInt getByMetadata(int meta)
     {
@@ -89,4 +85,11 @@ public enum EnumTraitsInt implements IStringSerializable
 	    META_LOOKUP[type.getMetadata()] = type;
 	}
     }
+
+	@Override
+	public String func_176610_l()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

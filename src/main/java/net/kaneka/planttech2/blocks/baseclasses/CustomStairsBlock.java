@@ -12,7 +12,7 @@ import net.minecraft.block.StairsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.pathfinding.PathType;
@@ -194,7 +194,7 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	{
 		Direction direction = context.getFace();
 		BlockPos blockpos = context.getPos();
-		IFluidState ifluidstate = context.getWorld().getFluidState(blockpos);
+		FluidState ifluidstate = context.getWorld().getFluidState(blockpos);
 		BlockState blockstate = this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing())
 		        .with(HALF, direction != Direction.DOWN && (direction == Direction.UP || !(context.getHitVec().y - (double) blockpos.getY() > 0.5D)) ? Half.BOTTOM : Half.TOP)
 		        .with(WATERLOGGED, Boolean.valueOf(ifluidstate.getFluid() == Fluids.WATER));
@@ -318,7 +318,7 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	}
 
 	@SuppressWarnings("deprecation")
-	public IFluidState getFluidState(BlockState state)
+	public FluidState getFluidState(BlockState state)
 	{
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}

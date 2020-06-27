@@ -71,7 +71,7 @@ abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScr
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(getBackgroundTexture());
+		field_230706_i_.getTextureManager().bindTexture(getBackgroundTexture());
 		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 	}
 	
@@ -80,7 +80,7 @@ abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScr
 	{
 		String tileName = title.getUnformattedComponentText();
 		int textcolor = Integer.parseInt("000000",16);
-		font.drawString(tileName, (this.xSize / 2 - font.getStringWidth(tileName) / 2) + 1, 14, textcolor);
+		field_230712_o_.drawString(tileName, (this.xSize / 2 - field_230712_o_.getStringWidth(tileName) / 2) + 1, 14, textcolor);
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)
