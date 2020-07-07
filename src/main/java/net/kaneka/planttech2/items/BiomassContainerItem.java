@@ -1,10 +1,12 @@
 package net.kaneka.planttech2.items;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
@@ -19,12 +21,15 @@ public class BiomassContainerItem extends BaseItem
 {
 	private static int CAPACITY = 1000;
 
+	static
+	{
+		ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+				(stack, world, entity) -> getFillLevelModel(stack));
+	}
+
 	public BiomassContainerItem()
 	{
 		super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1));
-		addPropertyOverride(new ResourceLocation("filled"), (stack, world, player) -> {
-			return getFillLevelModel(stack);
-		});
 	}
 
 	public static float getFillLevelModel(ItemStack stack)

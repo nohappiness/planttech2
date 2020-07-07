@@ -10,6 +10,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableMap.Builder;
 
+import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.Block;
@@ -24,6 +26,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
@@ -72,25 +75,16 @@ public class MultitoolItem extends UpgradeableHandItem
 
 	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.IRON, Material.ANVIL, Material.ROCK, Material.WOOD, Material.PLANTS);
 
+	static
+	{
+		ItemModelsProperties.func_239418_a_(
+				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),
+				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1);
+	}
+
 	public MultitoolItem()
 	{
 		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 10000, 10, 2F, 2.4F, UpgradeChipItem.TOOL);
-		addPropertyOverride(new ResourceLocation("drilling"), (stack, world, player) -> {
-
-			if (player == null)
-			{
-				return 0.0F;
-			} else
-			{
-				if (!(stack.getItem() instanceof MultitoolItem))
-				{
-					return 0.0F;
-				} else
-				{
-					return (player.ticksExisted % 4) + 1;
-				}
-			}
-		});
 	}
 
 	@Override

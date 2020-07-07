@@ -3,11 +3,13 @@ package net.kaneka.planttech2.items;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -17,10 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -29,11 +28,17 @@ import java.util.List;
 
 public class PlantObtainerItem extends BaseItem
 {
+    static
+    {
+        ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+                (stack, world, entity) -> isFilled(initTags(stack)) ? 1.0F : 0.0F);
+    }
+
     public PlantObtainerItem(String name, Properties property)
     {
         super(name, property.maxStackSize(1));
-        addPropertyOverride(new ResourceLocation(PlantTechMain.MODID, "filled"), (stack, world, entity) ->
-                isFilled(initTags(stack)) ? 1.0F : 0.0F);
+//        addPropertyOverride(new ResourceLocation(PlantTechMain.MODID, "filled"), (stack, world, entity) ->
+//                isFilled(initTags(stack)) ? 1.0F : 0.0F);
     }
 
     @Override
@@ -118,7 +123,7 @@ public class PlantObtainerItem extends BaseItem
 
     public static boolean isFilled(ItemStack stack)
     {
-        return stack.getTag().getBoolean("filled") && getBlockStateFilled(stack) != null;
+        return stack.getTag() != null && stack.getTag().getBoolean("filled") && getBlockStateFilled(stack) != null;
     }
 
     public static ItemStack initTags(ItemStack stack)
@@ -135,12 +140,9 @@ public class PlantObtainerItem extends BaseItem
         tooltip.add(new StringTextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-        {
-            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockStateFilled(stack).getBlock().getNameTextComponent().setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)).getFormattedText()));
-        }
+            //not sure if getString() works, can't find the replacement of getFormattedText() in 1.15
+            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockStateFilled(stack).getBlock().getTranslatedName().func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true)).getString()));
         else
-        {
-            tooltip.add(new StringTextComponent("Empty").setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)));
-        }
+            tooltip.add(new StringTextComponent("Empty").func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true)));
     }
 }

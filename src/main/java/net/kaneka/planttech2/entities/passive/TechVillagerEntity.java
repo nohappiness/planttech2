@@ -18,8 +18,10 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -126,26 +128,27 @@ public class TechVillagerEntity extends AgeableEntity
 			compound.putInt("length_trades", 0);
 		}
 	}
-	
-	
+
 	@Override
-	public boolean processInteract(PlayerEntity player, Hand hand)
+	protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
 	{
 		if (hand == Hand.MAIN_HAND && !world.isRemote)
 		{
-			if (player instanceof ServerPlayerEntity) 
+			if (player instanceof ServerPlayerEntity)
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new TechVillagerContainerProvider(getOffers(), getProfession()), buffer -> 
-    			{
-    				buffer.writeInt(getProfession()); 
-    				buffer.writeInt(offers.size());
-    				for(TechVillagerTrade trade:offers)
-    				{
-    					trade.toBuffer(buffer);
-    				}});
+				NetworkHooks.openGui((ServerPlayerEntity) player, new TechVillagerContainerProvider(getOffers(), getProfession()), buffer ->
+				{
+					buffer.writeInt(getProfession());
+					buffer.writeInt(offers.size());
+					for(TechVillagerTrade trade:offers)
+					{
+						trade.toBuffer(buffer);
+					}
+				});
+				return ActionResultType.SUCCESS;
 			}
 		}
-		return true;
+		return super.func_230254_b_(player, hand);
 	}
 
 	@Override
