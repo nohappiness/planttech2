@@ -9,6 +9,7 @@ import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -258,13 +259,13 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
 		for (int i = 0; i < 6; i++)
 		{
 			this.ticksPassed[i] = compound.getInt("cooktime_" + i);
 		}
-		super.read(compound);
+		super.read(state, compound);
 	}
 
 	@Override

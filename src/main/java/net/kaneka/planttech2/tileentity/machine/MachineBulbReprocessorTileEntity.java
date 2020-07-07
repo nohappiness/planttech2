@@ -8,6 +8,7 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -195,10 +196,10 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
 		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(compound);
+		super.read(state, compound);
 	}
 
 	@Override

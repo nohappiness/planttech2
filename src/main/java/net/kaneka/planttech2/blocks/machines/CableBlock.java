@@ -147,12 +147,6 @@ public class CableBlock extends BaseBlock
 			world.setBlockState(pos, getCurrentState(state, world, pos));
 		}
 	}
-	
-	@Override
-	public boolean hasTileEntity()
-	{
-		return true;
-	}
 
 	@Override
 	public boolean hasTileEntity(BlockState state)

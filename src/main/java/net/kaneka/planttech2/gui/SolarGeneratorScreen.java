@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
 import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
@@ -18,12 +20,12 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
     }
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 		
 		int l = 0; 
 		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE))
@@ -35,7 +37,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 			case 4:l = 35; break; 
 		}
 		int j = getWorkLoadScaled(17);
-		blit(this.guiLeft + 133, this.guiTop + 36, 205, 56, j, l);
+		blit(mStack, this.guiLeft + 133, this.guiTop + 36, 205, 56, j, l);
 	}
 	
 	private int getWorkLoadScaled(int pixels)

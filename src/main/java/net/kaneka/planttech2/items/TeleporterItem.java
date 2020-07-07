@@ -41,7 +41,7 @@ public class TeleporterItem extends EnergyStorageItem
 	}
 
 	*/
-
+    /*
 	public static boolean addPoint(ItemStack stack, Dimension dim, BlockPos pos)
 	{
 		boolean retval = false; 
@@ -79,7 +79,7 @@ public class TeleporterItem extends EnergyStorageItem
 		return retval; 
 
 	}
-	
+	*/
 	public static class NamedContainerProvider implements INamedContainerProvider
 	{
 		

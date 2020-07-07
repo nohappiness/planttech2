@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.gui.buttons.CustomButton;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 
@@ -173,7 +175,7 @@ public class GuideScreen extends Screen
     			if(i < guide.getAmountMainMenus())
     			{ 
     				activateButton(button);
-    				button.setMessage(guide.getMenuById(i).getName());
+    				button.setMessage(new StringTextComponent(guide.getMenuById(i).getName()));
     			}
     		}
 		}
@@ -187,7 +189,7 @@ public class GuideScreen extends Screen
     			if(i + page * 10 < menu.getAmountEntrys())
     			{ 
     				activateButton(button);
-    				button.setMessage(menu.getEntryById(i + page * 10).getName());
+    				button.setMessage(new StringTextComponent(menu.getEntryById(i + page * 10).getName()));
     			}
     		}
 			activateButton(buttons_navigation.get(0));
@@ -222,34 +224,34 @@ public class GuideScreen extends Screen
 	}
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks)
+	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground();
+		this.renderBackground(mStack);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		
-		this.drawBackground();
-		this.drawForeground();
-		this.drawButtons(mouseX, mouseY, partialTicks);
-		this.drawStrings();
+		this.drawBackground(mStack);
+		this.drawForeground(mStack);
+		this.drawButtons(mStack, mouseX, mouseY, partialTicks);
+		this.drawStrings(mStack);
 		this.drawTooltips(mouseX, mouseY);
 		
 	}
 
-	private void drawButtons(int mouseX, int mouseY, float partialTicks)
+	private void drawButtons(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 		for (int i = 0; i < this.buttons.size(); ++i)
 		{
-			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
+			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
 
-	protected void drawBackground()
+	protected void drawBackground(MatrixStack mStack)
 	{
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 	}
 
-	protected void drawForeground()
+	protected void drawForeground(MatrixStack mStack)
 	{
 		if(mode == 2)
 		{
@@ -259,34 +261,34 @@ public class GuideScreen extends Screen
 				for(GuidePicture pic: pics)
 				{
     				minecraft.getTextureManager().bindTexture(pic.getResloc());
-    				blit(this.guiLeft + pic.getXStart() + 25, this.guiTop + pic.getYStart() + 30, 0, 0, pic.getWidth(), pic.getHeight(), pic.getWidth(), pic.getHeight());
+    				blit(mStack, this.guiLeft + pic.getXStart() + 25, this.guiTop + pic.getYStart() + 30, 0, 0, pic.getWidth(), pic.getHeight(), pic.getWidth(), pic.getHeight());
 				}
 			}
 		}
 	}
 	
-	protected void drawStrings()
+	protected void drawStrings(MatrixStack mStack)
 	{
 		if(mode == 0)
 		{
-			this.drawCenteredString(translateUnformated("guide.planttech2.header"), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
+			this.drawCenteredString(mStack, translateUnformated("guide.planttech2.header"), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
 		}
 		else if(mode == 1)
 		{
-			this.drawCenteredString(guide.getMenuById(menuid).getName(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
+			this.drawCenteredString(mStack, guide.getMenuById(menuid).getName(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
 		}
 		else if(mode == 2)
 		{	
 		
 			
-			this.drawCenteredString(guide.getMenuById(menuid).getEntryById(entryid).getHeader().getFormattedText(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
+			this.drawCenteredString(mStack, guide.getMenuById(menuid).getEntryById(entryid).getHeader().getString(), this.guiLeft + (this.xSize / 2), this.guiTop + 15 );
 			for(int i = 0; i < lines.size(); i++)
 			{
 				GuideString guideString = lines.get(i);
 				//System.out.println(guideString.getLine() + ":" + guideString.getString()); 
 				if(page * 19 <= guideString.getLine() && guideString.getLine() < page * 19 + 19)
 				{
-					this.drawLine(guideString.getString(), this.guiLeft + 25 + guideString.getX(), this.guiTop + 30 + 10 * (guideString.getLine() - (19 * page)));
+					this.drawLine(mStack, guideString.getString(), this.guiLeft + 25 + guideString.getX(), this.guiTop + 30 + 10 * (guideString.getLine() - (19 * page)));
 				}
 			}
 		}
@@ -302,14 +304,14 @@ public class GuideScreen extends Screen
 		return new TranslationTextComponent(name).getUnformattedComponentText();
 	}
 	
-	protected void drawCenteredString(String string, int posX, int posY)
+	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
 	{
-		font.drawString(string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("000000", 16));
+		font.drawString(mStack, string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("000000", 16));
 	}
 	
-	protected void drawLine(String text, int x, int y)
+	protected void drawLine(MatrixStack mStack, String text, int x, int y)
 	{
-	    font.drawString(text, x, y, Integer.parseInt("000000",16));
+	    font.drawString(mStack, text, x, y, Integer.parseInt("000000",16));
 	}
 	
 	protected void loadEntry()

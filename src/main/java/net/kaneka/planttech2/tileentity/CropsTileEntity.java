@@ -101,7 +101,7 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet)
 	{
-		read(packet.getNbtCompound());
+		read(world.getBlockState(packet.getPos()), packet.getNbtCompound());
 	}
 
 	@Override
@@ -115,13 +115,7 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
-		// TODO Auto-generated method stub
-		super.handleUpdateTag(state, tag);
-	}
-	@Override
-	public void handleUpdateTag(CompoundNBT tag)
-	{
-		this.read(tag);
+		super.read(state, tag);
 	}
 
 	@Override
@@ -132,12 +126,11 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 		compound = traits.addToNBT(compound);
 		return compound;
 	}
-
 	
 	@Override
-	public void read()
+	public void read(BlockState state, CompoundNBT compound)
 	{
-		super.read(compound);
+		super.read(state, compound);
 		this.startTick = compound.getLong("starttick");
 		this.traits.fromNBT(compound);
 	}

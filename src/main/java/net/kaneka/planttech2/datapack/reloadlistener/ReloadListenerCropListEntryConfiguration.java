@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -19,6 +21,8 @@ import net.kaneka.planttech2.datapack.CropListEntryConfiguration;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IFutureReloadListener;
 import net.minecraft.resources.IResource;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.IResourceManagerReloadListener;
@@ -28,15 +32,51 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 
 @SuppressWarnings("deprecation")
-public class ReloadListenerCropListEntryConfiguration implements IResourceManagerReloadListener
+public class ReloadListenerCropListEntryConfiguration implements IFutureReloadListener
 {
 	public static final String PATH = "pt2_crops";
 	public static final String EXTENTION = ".json";
 
 	
 
+	
+
+	private void tryDeserialization(IResourceManager resourceManager, ResourceLocation file, Gson gson,Map<String, CropListEntryConfiguration> configs, boolean merge)
+	{
+		String name = file.getPath().replace(PATH, "").replace(EXTENTION, "").replace("/", "");
+		try (IResource iresource = resourceManager.getResource(file))
+		{
+			JsonObject jsonobject = JSONUtils.fromJson(gson, IOUtils.toString(iresource.getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
+			if (jsonobject == null)
+			{
+				PlantTechMain.LOGGER.error("Couldn't load recipe {} as it's null or empty", file);
+			} 
+			else
+			{
+				if(!merge)
+				{
+					configs.put(name, CropListEntryConfiguration.Deserializer.read(name, jsonobject));
+				}
+				else
+				{
+					configs.get(name).merge(CropListEntryConfiguration.Deserializer.read(name, jsonobject));
+				}
+			}
+
+		} 
+		catch (IllegalArgumentException | JsonParseException jsonparseexception)
+		{
+			PlantTechMain.LOGGER.error("Parsing error loading recipe {}", name, jsonparseexception);
+		} 
+		catch (IOException ioexception)
+		{
+			PlantTechMain.LOGGER.error("Couldn't read custom advancement {} from {}", name, file, ioexception);
+		}
+	}
+
 	@Override
-	public void onResourceManagerReload(IResourceManager resourceManager)
+	public CompletableFuture<Void> reload(IStage stage, IResourceManager resourceManager, IProfiler preparationsProfiler, IProfiler reloadProfiler, Executor backgroundExecutor,
+	        Executor gameExecutor)
 	{
 		PlantTechMain.LOGGER.info("Load crop configuration from data packs");
 		Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
@@ -71,39 +111,9 @@ public class ReloadListenerCropListEntryConfiguration implements IResourceManage
 		{
 			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
 		}
-	}
-
-	private void tryDeserialization(IResourceManager resourceManager, ResourceLocation file, Gson gson,Map<String, CropListEntryConfiguration> configs, boolean merge)
-	{
-		String name = file.getPath().replace(PATH, "").replace(EXTENTION, "").replace("/", "");
-		try (IResource iresource = resourceManager.getResource(file))
-		{
-			JsonObject jsonobject = JSONUtils.fromJson(gson, IOUtils.toString(iresource.getInputStream(), StandardCharsets.UTF_8), JsonObject.class);
-			if (jsonobject == null)
-			{
-				PlantTechMain.LOGGER.error("Couldn't load recipe {} as it's null or empty", file);
-			} 
-			else
-			{
-				if(!merge)
-				{
-					configs.put(name, CropListEntryConfiguration.Deserializer.read(name, jsonobject));
-				}
-				else
-				{
-					configs.get(name).merge(CropListEntryConfiguration.Deserializer.read(name, jsonobject));
-				}
-			}
-
-		} 
-		catch (IllegalArgumentException | JsonParseException jsonparseexception)
-		{
-			PlantTechMain.LOGGER.error("Parsing error loading recipe {}", name, jsonparseexception);
-		} 
-		catch (IOException ioexception)
-		{
-			PlantTechMain.LOGGER.error("Couldn't read custom advancement {} from {}", name, file, ioexception);
-		}
+		CompletableFuture<Void> completablefuture = new CompletableFuture<>();
+		completablefuture.complete((Void)null);
+		return completablefuture;
 	}
 
 }

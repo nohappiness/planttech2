@@ -6,6 +6,7 @@ import java.util.List;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -96,13 +97,13 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
 		int slotamount = itemhandler.getSlots();// prevent crash
 		itemhandler.deserializeNBT(compound.getCompound("inventory"));
 		if (itemhandler.getSlots() != slotamount)
 			itemhandler.setSize(slotamount);// prevent crash when invsize changed while update
-		super.read(compound);
+		super.read(state, compound);
 	}
 
 	public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)

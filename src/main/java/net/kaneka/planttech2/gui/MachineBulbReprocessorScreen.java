@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.MachineBulbReprocessorContainer;
 import net.kaneka.planttech2.items.MachineBulbItem;
@@ -23,23 +25,23 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
     }
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(32);
-		blit(this.guiLeft + 87, this.guiTop + 88, 32, 200, l, 10);
+		blit(mStack, this.guiLeft + 87, this.guiTop + 88, 32, 200, l, 10);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 		
 		int j = this.getFluidStoredScaled(55);
-		blit(this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
+		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
 		
 		int m = container.getValue(5) - 1;
 		if(m >= 0)
 		{
-			blit(this.guiLeft + 59 + (m % 5)*18, this.guiTop + 27 + ((int)m/5)*18, 0, 200, 16, 16);
+			blit(mStack, this.guiLeft + 59 + (m % 5)*18, this.guiTop + 27 + ((int)m/5)*18, 0, 200, 16, 16);
 		}
 		
 		int n = container.getValue(6); 
@@ -52,7 +54,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 			{
 				if(n <  bulb.getTier())
 				{
-					blit(this.guiLeft + 59 + x*18, this.guiTop + 27 + y*18, 16, 200, 16, 16);
+					blit(mStack, this.guiLeft + 59 + x*18, this.guiTop + 27 + y*18, 16, 200, 16, 16);
 				}
 			}
 			x++; 
@@ -65,9 +67,9 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	}
 	
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
+	protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		super.drawGuiContainerForegroundLayer(mStack, mouseX, mouseY);
 		int x = 0; 
 		int y = 0; 
 		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
@@ -104,7 +106,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 			Block machine = bulb.getMachine(); 
 			if(machine != null)
 			{
-				drawTooltip( new ItemStack(machine).getHighlightTip(machine.getNameTextComponent().getFormattedText()), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
+				drawTooltip( new ItemStack(machine).getHighlightTip(machine.getNameComponend().getFormattedText()), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
 			}
 			x++; 
 			if(x > 4)

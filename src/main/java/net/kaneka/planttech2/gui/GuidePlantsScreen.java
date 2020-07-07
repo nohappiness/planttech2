@@ -3,6 +3,7 @@ package net.kaneka.planttech2.gui;
 import java.util.List;
 import java.util.Set;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -15,6 +16,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.StringTextComponent;
 
 public class GuidePlantsScreen extends GuideBaseScreen
 {
@@ -74,11 +76,11 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	}
 
 	@Override
-	protected void drawForeground()
+	protected void drawForeground(MatrixStack mStack)
 	{
 		if (selectedId != -1)
 		{
-			blit(this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
+			blit(mStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
 			renderItem(this.mainseed, 261, 32);
 			RenderHelper.disableStandardItemLighting();
 			RenderSystem.enableDepthTest();
@@ -119,26 +121,26 @@ public class GuidePlantsScreen extends GuideBaseScreen
 			if (scrollPos + i < list.size())
 			{
 				CropListEntry entry = PlantTechMain.croplist.getEntryByName(list.get(scrollPos + i));
-				this.buttons.get(i).setMessage(entry.getDisplayNameUnformated());
+				this.buttons.get(i).setMessage(new StringTextComponent(entry.getDisplayNameUnformated()));
 				buttonIDs[i] = entry.getID();
 			}
 		}
 	}
 
 	@Override
-	protected void drawStrings()
+	protected void drawStrings(MatrixStack mStack)
 	{
 		if (selectedId == -1)
 		{
-			this.drawCenteredString(translateUnformated("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90);
+			this.drawCenteredString(mStack, translateUnformated("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90);
 		} else
 		{
-			this.drawCenteredString(selectedName, this.guiLeft + 263, this.guiTop + 15);
-			this.drawCenteredString(translateUnformated("gui.soil"), this.guiLeft + 223, this.guiTop + 54);
-			this.drawCenteredString(translateUnformated("gui.temperature"), this.guiLeft + 306, this.guiTop + 54);
-			this.drawCenteredString(translateUnformated("gui.seeds"), this.guiLeft + 263, this.guiTop + 87);
-			this.drawCenteredString(translateUnformated("gui.drops"), this.guiLeft + 263, this.guiTop + 120);
-			this.drawCenteredString(translateUnformated("gui.parents"), this.guiLeft + 263, this.guiTop + 153);
+			this.drawCenteredString(mStack, selectedName, this.guiLeft + 263, this.guiTop + 15);
+			this.drawCenteredString(mStack, translateUnformated("gui.soil"), this.guiLeft + 223, this.guiTop + 54);
+			this.drawCenteredString(mStack, translateUnformated("gui.temperature"), this.guiLeft + 306, this.guiTop + 54);
+			this.drawCenteredString(mStack, translateUnformated("gui.seeds"), this.guiLeft + 263, this.guiTop + 87);
+			this.drawCenteredString(mStack, translateUnformated("gui.drops"), this.guiLeft + 263, this.guiTop + 120);
+			this.drawCenteredString(mStack, translateUnformated("gui.parents"), this.guiLeft + 263, this.guiTop + 153);
 		}
 	}
 
@@ -342,15 +344,15 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	}
 
 	@Override
-	protected void drawBackground()
+	protected void drawBackground(MatrixStack mStack)
 	{
 		if (selectedId == -1)
 		{
-			blit(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
+			blit(mStack, this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
 		} else
 		{
-			blit(this.guiLeft + 100, this.guiTop, 212, 196, 300, this.ySize, 512, 512);
+			blit(mStack, this.guiLeft + 100, this.guiTop, 212, 196, 300, this.ySize, 512, 512);
 		}
-		blit(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
 	}
 }

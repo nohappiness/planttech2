@@ -76,4 +76,10 @@ public enum CustomArmorMaterial implements IArmorMaterial
 	{
 		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}
+
+	@Override
+	public float func_230304_f_()
+	{
+		return 0;
+	}
 }

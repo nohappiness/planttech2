@@ -110,9 +110,9 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
     }
 
     @Override
-    public void read(CompoundNBT compound)
+    public void read(BlockState state, CompoundNBT compound)
     {
-	super.read(compound);
+	super.read(state, compound);
     }
 
     @Override

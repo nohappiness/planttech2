@@ -2,6 +2,7 @@ package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datapack.dataprovider.Recipes;
+import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
@@ -17,6 +18,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -75,6 +77,12 @@ public class RegistryEvents
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
+	}
+	
+	@SubscribeEvent
+	public static void addReloadListenerEvent(AddReloadListenerEvent e)
+	{
+		e.addListener(new ReloadListenerCropListEntryConfiguration());
 	}
 	/*
 	@SubscribeEvent

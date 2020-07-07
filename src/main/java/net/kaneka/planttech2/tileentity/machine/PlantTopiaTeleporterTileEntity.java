@@ -3,6 +3,7 @@ package net.kaneka.planttech2.tileentity.machine;
 import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -89,9 +90,9 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
-		super.read(compound);
+		super.read(state, compound);
 	}
 
 	@Override

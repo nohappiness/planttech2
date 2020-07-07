@@ -19,6 +19,7 @@ import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.IShearable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,7 +34,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IShearable;
 
 @SuppressWarnings("deprecation")
 public class MultitoolItem extends UpgradeableHandItem
@@ -217,35 +217,25 @@ public class MultitoolItem extends UpgradeableHandItem
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand)
+	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand)
 	{
-		if (entity.world.isRemote)
-		{
-			return false;
-		}
-		if (NBTHelper.getBooleanSave(stack, "unlockshears", false))
-		{
-		
-    		if (entity instanceof IShearable)
-    		{
-    			IShearable target = (IShearable) entity;
-    			BlockPos pos = new BlockPos(entity.getPosX(), entity.getPosY(), entity.getPosZ());
-    			if (target.isShearable(stack, entity.world, pos))
-    			{
-    				List<ItemStack> drops = target.onSheared(stack, entity.world, pos,
-    				EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, stack));
-    				Random rand = new Random();
-    				for (ItemStack drop : drops)
-    				{
-    					ItemEntity ent = entity.entityDropItem(drop, 1.0F);
-    					ent.setMotion(ent.getMotion().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
-    				}
-    				extractEnergy(stack, getEnergyCost(stack), false);
-    			}
-    			return true;
-    		}
-		}
-		return false;
+		if (entity.world.isRemote) return net.minecraft.util.ActionResultType.PASS;
+	      if (entity instanceof net.minecraftforge.common.IForgeShearable) {
+	          net.minecraftforge.common.IForgeShearable target = (net.minecraftforge.common.IForgeShearable)entity;
+	         BlockPos pos = new BlockPos(entity.getPosX(), entity.getPosY(), entity.getPosZ());
+	         if (target.isShearable(stack, entity.world, pos)) {
+	            java.util.List<ItemStack> drops = target.onSheared(player, stack, entity.world, pos,
+	                    net.minecraft.enchantment.EnchantmentHelper.getEnchantmentLevel(net.minecraft.enchantment.Enchantments.FORTUNE, stack));
+	            java.util.Random rand = new java.util.Random();
+	            drops.forEach(d -> {
+	               net.minecraft.entity.item.ItemEntity ent = entity.entityDropItem(d, 1.0F);
+	               ent.setMotion(ent.getMotion().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
+	            });
+	            stack.damageItem(1, entity, e -> e.sendBreakAnimation(hand));
+	         }
+	         return net.minecraft.util.ActionResultType.SUCCESS;
+	      }
+	      return net.minecraft.util.ActionResultType.PASS;
 	}
 
 }
