@@ -3,6 +3,7 @@ package net.kaneka.planttech2.gui;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -48,15 +49,15 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
     }
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks)
+	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-			this.renderBackground();
-			super.render(mouseX, mouseY, partialTicks);
-			this.drawTooltips(mouseX, mouseY);
-	        this.renderHoveredToolTip(mouseX, mouseY);
+			this.renderBackground(mStack);
+			super.render(mStack, mouseX, mouseY, partialTicks);
+			this.drawTooltips(mStack, mouseX, mouseY);
+	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
 	}
 	
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		if(energystorage != null)
 		{
@@ -64,25 +65,25 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 		}
 	}
 	
-	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
-            renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
+            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
         }
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND.get(invsize));
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)

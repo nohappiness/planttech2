@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
@@ -36,21 +38,21 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+    protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
     {
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 
-	int l = this.getCookProgressScaled(70);
-	blit(this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
-
-	int k = this.getEnergyStoredScaled(55);
-	blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-	
-	int i = container.getValue(3);
-	if(i >= 0)
-	{
-	    blit(this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
-	}
+    	int l = this.getCookProgressScaled(70);
+    	blit(mStack, this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
+    
+    	int k = this.getEnergyStoredScaled(55);
+    	blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+    	
+    	int i = container.getValue(3);
+    	if(i >= 0)
+    	{
+    	    blit(mStack, this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
+    	}
     }
 
     private int getCookProgressScaled(int pixels)

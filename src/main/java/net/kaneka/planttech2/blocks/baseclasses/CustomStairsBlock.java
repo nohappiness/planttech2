@@ -146,12 +146,6 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 		return this.modelBlock.getExplosionResistance();
 	}
 
-
-	public int tickRate(IWorldReader worldIn)
-	{
-		return this.modelBlock.tickRate(worldIn);
-	}
-
 	@SuppressWarnings("deprecation")
 	public void onBlockAdded(BlockState p_220082_1_, World worldIn, BlockPos pos, BlockState p_220082_4_, boolean p_220082_5_)
 	{

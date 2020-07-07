@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
@@ -17,18 +19,18 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
     }
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		
 		for(int p = 0; p < 6; p++)
 		{
 			int l = this.getCookProgressScaled(p, 15);
-			blit(this.guiLeft + 23 + p * 22, this.guiTop + 46, 0, 200, 12, l);
+			blit(mStack, this.guiLeft + 23 + p * 22, this.guiTop + 46, 0, 200, 12, l);
 		}
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 	
 	private int getCookProgressScaled(int id, int pixels)

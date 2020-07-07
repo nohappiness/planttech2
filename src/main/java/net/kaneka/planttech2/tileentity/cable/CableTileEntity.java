@@ -624,9 +624,9 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
-		super.read(compound);
+		super.read(state, compound);
 		if (compound.contains("ismaster"))
 		{
 			this.isMaster = compound.getBoolean("ismaster");
@@ -755,7 +755,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		handleUpdateTag(pkt.getNbtCompound());
+		handleUpdateTag(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
 		// world.markBlockRangeForRenderUpdate(pos, pos);
 	}
 
@@ -764,7 +764,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		//world.markForRerender(pos);
 		if (world != null)
 		{
-			world.markAndNotifyBlock(pos, world.getChunkAt(pos), world.getBlockState(pos), world.getBlockState(pos), 0);
+			world.markAndNotifyBlock(pos, world.getChunkAt(pos), world.getBlockState(pos), world.getBlockState(pos), 0, 512);
 		}
 	}
 

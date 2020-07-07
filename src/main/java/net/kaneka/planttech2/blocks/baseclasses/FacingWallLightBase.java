@@ -6,6 +6,7 @@ import net.minecraft.block.DoorBlock;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -69,9 +70,9 @@ public class FacingWallLightBase extends BaseBlock
             worldIn.getPendingBlockTicks().scheduleTick(pos, this, new Random().nextInt(20), TickPriority.VERY_LOW);
         }
     }
-
+    
     @Override
-    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, Entity projectile)
+    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile)
     {
         if (state.get(LIGHT_STATUS) != 0)
         {

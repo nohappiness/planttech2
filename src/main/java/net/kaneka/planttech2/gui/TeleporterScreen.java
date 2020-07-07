@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.gui;
 
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.container.TeleporterContainer;
@@ -90,13 +91,13 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks)
+	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground();
-		drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY); 
-		this.drawButtons(mouseX, mouseY, partialTicks);
-		this.drawTooltips(mouseX, mouseY);
-        this.renderHoveredToolTip(mouseX, mouseY);
+		this.renderBackground(mStack);
+		drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY); 
+		this.drawButtons(mStack, mouseX, mouseY, partialTicks);
+		this.drawTooltips(mStack, mouseX, mouseY);
+        this.renderHoveredToolTip(mStack, mouseX, mouseY);
 	}
 	
 	private void buttonClicked(int id)
@@ -106,41 +107,41 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	
 	
 	
-	private void drawButtons(int mouseX, int mouseY, float partialTicks)
+	private void drawButtons(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		for (int i = 0; i < this.buttons.size(); ++i)
 		{
-			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
+			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
-		blit(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 		
 		int k = this.getEnergyStoredScaled(157);
-		blit(this.guiLeft + 396, this.guiTop + 23 + (157 - k), 441, 157 - k, 16, 0 + k, 512, 512);
+		blit(mStack, this.guiLeft + 396, this.guiTop + 23 + (157 - k), 441, 157 - k, 16, 0 + k, 512, 512);
 	}
 	
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		if(energystorage != null)
 		{
-		drawTooltip( energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
+		drawTooltip(mStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
 		}
 	}
 	
-	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
-            renderComponentHoverEffect(new StringTextComponent(lines), mouseX, mouseY);
+            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
         }
     }
 	

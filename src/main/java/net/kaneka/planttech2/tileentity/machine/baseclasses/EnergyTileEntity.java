@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
 import net.kaneka.planttech2.energy.BioEnergyStorage;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
@@ -66,9 +67,9 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
-		super.read(compound);
+		super.read(state, compound);
 		this.energystorage.deserializeNBT(compound.getCompound("energy"));
 	}
 

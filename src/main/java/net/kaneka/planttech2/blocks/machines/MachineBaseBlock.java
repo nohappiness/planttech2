@@ -64,13 +64,7 @@ public class MachineBaseBlock extends BaseBlock
 
 		return ActionResultType.SUCCESS;
 	}
-
-	@Override
-	public boolean hasTileEntity()
-	{
-		return true;
-	}
-
+	
 	@Override
 	public boolean hasTileEntity(BlockState state)
 	{

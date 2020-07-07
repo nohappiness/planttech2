@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.kaneka.planttech2.items.GuideItem;
@@ -49,50 +50,50 @@ public class GuideBaseScreen extends Screen
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks)
+	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground();
+		this.renderBackground(mStack);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		if (fadeInTimer > 0)
 		{
 			fadeInTimer--;
-			drawFadeInEffect();
+			drawFadeInEffect(mStack);
 		} else
 		{
-			this.drawBackground();
+			this.drawBackground(mStack);
 			this.drawForeground();
-			this.drawButtons(mouseX, mouseY, partialTicks);
+			this.drawButtons(mStack, mouseX, mouseY, partialTicks);
 			this.drawStrings();
 			this.drawTooltips(mouseX, mouseY);
 		}
 	}
 
-	private void drawButtons(int mouseX, int mouseY, float partialTicks)
+	private void drawButtons(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 		for (int i = 0; i < this.buttons.size(); ++i)
 		{
-			this.buttons.get(i).render(mouseX, mouseY, partialTicks);
+			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
 
-	protected void drawBackground()
+	protected void drawBackground(MatrixStack mStack)
 	{
-		blit(this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
-		blit(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
 	}
 
-	protected void drawForeground()
+	protected void drawForeground(MatrixStack mStack)
 	{
 
 	}
 
-	private void drawFadeInEffect()
+	private void drawFadeInEffect(MatrixStack mStack)
 	{
 		float percentage = 1f - ((float) fadeInTimer / 50f);
-		blit(this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
+		blit(mStack, this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
 
-		blit(this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
 	}
 
 	@Override
@@ -113,7 +114,7 @@ public class GuideBaseScreen extends Screen
 		return super.mouseScrolled(p_mouseScrolled_1_, p_mouseScrolled_3_, p_mouseScrolled_5_);
 	}
 
-	protected void drawStrings()
+	protected void drawStrings(MatrixStack mStack)
 	{
 
 	}
@@ -123,9 +124,9 @@ public class GuideBaseScreen extends Screen
 		return new TranslationTextComponent(name).getUnformattedComponentText();
 	}
 
-	protected void drawCenteredString(String string, int posX, int posY)
+	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
 	{
-		field_230712_o_.drawString(string, posX - (field_230712_o_.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
+		font.drawString(mStack, string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
 	}
 
 	public void renderItem(ItemStack itemstack, int x, int y)
@@ -138,13 +139,13 @@ public class GuideBaseScreen extends Screen
 		drawTooltip(lines, mouseX, mouseY, posX, posY, 16, 16);
 	}
 
-	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 		{
-			renderTooltip(lines, mouseX, mouseY);
+			renderTooltip(mStack, lines, mouseX, mouseY);
 		}
 	}
 

@@ -104,7 +104,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 						ArrowItem itemarrow = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
 						AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, itemstack, PlayerEntity);
 						entityarrow = customizeArrow(entityarrow);
-						entityarrow.shoot(PlayerEntity, PlayerEntity.rotationPitch, PlayerEntity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+						entityarrow.shoot(PlayerEntity.rotationPitch, PlayerEntity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F)
 						{
 							entityarrow.setIsCritical(true);

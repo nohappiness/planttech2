@@ -89,7 +89,7 @@ public class DevListCommand
 
     private static String getText(String name, StringTextComponent status)
     {
-        return name + "  " +status.getFormattedText();
+        return name + "  " + status.getText();
     }
 
     private static void send(CommandSource src, StringTextComponent msg)

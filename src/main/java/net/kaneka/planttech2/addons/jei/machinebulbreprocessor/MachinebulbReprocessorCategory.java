@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.addons.jei.machinebulbreprocessor;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -98,7 +100,8 @@ public class MachinebulbReprocessorCategory implements IRecipeCategory<Machinebu
 			Minecraft minecraft = Minecraft.getInstance();
 			FontRenderer fontRenderer = minecraft.fontRenderer;
 			int stringWidth = fontRenderer.getStringWidth(biomassString);
-			fontRenderer.drawString(biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
+			MatrixStack mStack = new MatrixStack();
+			fontRenderer.drawString(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
 		}
 		
 	}

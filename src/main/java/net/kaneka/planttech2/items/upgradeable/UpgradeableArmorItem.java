@@ -16,8 +16,9 @@ import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -322,13 +323,13 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
 	{
-		Multimap<String, AttributeModifier> multimap = HashMultimap.create();
+		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
 		if (equipmentSlot == slot)
 		{
-			multimap.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor modifier", (double)getDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
-			multimap.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor toughness", (double)getToughness(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor modifier", (double)getDamageReduceAmount(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIERS[equipmentSlot.getIndex()], "Armor toughness", (double)getToughness(stack), AttributeModifier.Operation.ADDITION));
 		}
 
 		return multimap;

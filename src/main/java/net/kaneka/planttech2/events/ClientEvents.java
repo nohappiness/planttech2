@@ -1,23 +1,15 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.entities.capabilities.player.IPlayerRenderRGB;
-import net.kaneka.planttech2.entities.capabilities.player.PlayerRenderRGB;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.OverworldBiomeProvider;
-import net.minecraft.loot.conditions.WeatherCheck;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -55,9 +47,9 @@ public class ClientEvents
 			
 			ITextComponent info = new TranslationTextComponent("planttech2.update.available");
 			ITextComponent link = new TranslationTextComponent("planttech2.update.click");
-			link.getStyle().func_240715_a_(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
-							.func_240716_a_(new HoverEvent(HoverEvent.Action.field_230550_a_, new TranslationTextComponent("planttech2.update.tooltip")))
-							.func_240712_a_(TextFormatting.BLUE)
+			link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+							.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
+							.setFormatting(TextFormatting.BLUE)
 							.setUnderlined(true);
 			//evt.getEntity().sendMessage(info.appendSibling(link));
 			evt.getEntity().sendMessage(info, evt.getEntity().getUniqueID());

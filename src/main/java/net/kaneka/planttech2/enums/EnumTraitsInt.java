@@ -86,10 +86,11 @@ public enum EnumTraitsInt implements IStringSerializable
 	}
     }
 
+
+
 	@Override
-	public String func_176610_l()
+	public String getString()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return getName();
 	}
 }

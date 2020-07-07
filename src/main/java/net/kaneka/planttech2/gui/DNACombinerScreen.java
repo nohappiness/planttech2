@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.DNACombinerContainer;
 import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
@@ -17,15 +19,15 @@ public class DNACombinerScreen extends BaseContainerScreen<DNACombinerContainer>
     }
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		
 		int l = this.getCookProgressScaled(27);
-		blit(this.guiLeft + 96, this.guiTop + 43, 0, 200, 22, l);
+		blit(mStack, this.guiLeft + 96, this.guiTop + 43, 0, 200, 22, l);
 		
 		int k = this.getEnergyStoredScaled(55);
-		blit(this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 	
 	private int getCookProgressScaled(int pixels)

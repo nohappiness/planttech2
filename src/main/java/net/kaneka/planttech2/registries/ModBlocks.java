@@ -74,7 +74,7 @@ public class ModBlocks
 			DARK_CRYSTAL_BRICK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_brick", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_TILING = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_tiling", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_FENCE = new CustomFenceBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_fence", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_LAMP = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).lightValue(15).notSolid(), "dark_crystal_lamp", ModCreativeTabs.groupblocks, true),
+			DARK_CRYSTAL_LAMP = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p)->{return 15;}).notSolid(), "dark_crystal_lamp", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_door", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_STAIRS = new CustomStairsBlock(DARK_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_stairs", ModCreativeTabs.groupblocks, true),
 			DARK_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_slab", ModCreativeTabs.groupblocks, true),

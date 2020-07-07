@@ -3,6 +3,7 @@ package net.kaneka.planttech2.entities.neutral;
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.TechCreatureEntity;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
@@ -36,11 +37,11 @@ public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayer
 	protected void registerAttributes()
 	{
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(45.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
-		this.getAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
-		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(5.0D);
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(50.0D);
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(45.0D);
+		this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
+		this.getAttributes().registerAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);
+		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(50.0D);
 	}
 
 	@Override

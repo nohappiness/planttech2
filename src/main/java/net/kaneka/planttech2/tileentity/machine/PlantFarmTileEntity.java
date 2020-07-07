@@ -9,6 +9,7 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -280,13 +281,13 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	public void read(CompoundNBT compound)
+	public void read(BlockState state, CompoundNBT compound)
 	{
 		for(int i = 0; i < progress.length; i++)
 		{
 			progress[i] = compound.getInt("progress_" + i);
 		}
-		super.read(compound);
+		super.read(state, compound);
 	}
 
 	@Override

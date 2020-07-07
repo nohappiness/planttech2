@@ -201,7 +201,7 @@ public class CropBaseBlock extends ContainerBlock
 				return true;
 			}
 			
-			if(world.getBlockState(blockpos$mutableblockpos).has(BlockStateProperties.WATERLOGGED))
+			if(world.getBlockState(blockpos$mutableblockpos).func_235901_b_(BlockStateProperties.WATERLOGGED))
 			{
 				if(world.getBlockState(blockpos$mutableblockpos).get(BlockStateProperties.WATERLOGGED))
 				{
