@@ -39,7 +39,7 @@ public class GuideEntry
 	
 	public ITextComponent getHeader()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".header").applyTextStyle(TextFormatting.UNDERLINE).applyTextStyle(TextFormatting.ITALIC); 
+		return new TranslationTextComponent("guide.planttech2." + name + ".header").func_240699_a_(TextFormatting.UNDERLINE).func_240699_a_(TextFormatting.ITALIC);
 	}
 	
 	public GuideMenu getMenu()
