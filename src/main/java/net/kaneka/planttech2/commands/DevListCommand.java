@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.util.text.Color;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
@@ -47,10 +48,10 @@ public class DevListCommand
         return Commands.literal("devlist").executes((context) ->
         {
             CommandSource src = context.getSource();
-            send(src, getFormattedText("----Plant Tech 2 Developers----", TextFormatting.DARK_GREEN, true, true));
-            send(src, getFormattedText("Artist:", TextFormatting.AQUA, true, false));
+            send(src, getFormattedText("----Plant Tech 2 Developers----", Color.func_240744_a_(TextFormatting.DARK_GREEN), true, true));
+            send(src, getFormattedText("Artist:", Color.func_240744_a_(TextFormatting.AQUA), true, false));
             printAllFromList(ARTISTS, src);
-            send(src, getFormattedText("Authors:", TextFormatting.AQUA, true, false));
+            send(src, getFormattedText("Authors:", Color.func_240744_a_(TextFormatting.AQUA), true, false));
             printAllFromList(AUTHORS, src);
             return onlineMembersCount;
         });
@@ -63,7 +64,7 @@ public class DevListCommand
             StringTextComponent status = new StringTextComponent("");
             if (isOnline(src.getWorld(), username))
             {
-                status = getFormattedText("(Online)", TextFormatting.GREEN, false, false);
+                status = getFormattedText("(Online)", Color.func_240744_a_(TextFormatting.GREEN), false, false);
                 onlineMembersCount++;
             }
             send(src, getText(username, status));
@@ -102,8 +103,8 @@ public class DevListCommand
         src.sendFeedback(new StringTextComponent(msg), false);
     }
 
-    private static StringTextComponent getFormattedText(String text, TextFormatting colour, boolean bold, boolean underline)
+    private static StringTextComponent getFormattedText(String text, Color colour, boolean bold, boolean underline)
     {
-        return (StringTextComponent) new StringTextComponent(text).setStyle(new Style().setColor(colour).setBold(bold).setUnderlined(underline));
+        return (StringTextComponent) new StringTextComponent(text).func_230530_a_(Style.EMPTY.setColor(colour).setBold(bold).setUnderlined(underline));
     }
 }

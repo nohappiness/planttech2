@@ -6,9 +6,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class RadiationMetre extends BaseItem
+public class RadiationMetreItem extends BaseItem
 {
-    public RadiationMetre(String name, Properties property)
+    public RadiationMetreItem(String name, Properties property)
     {
         super(name, property);
     }

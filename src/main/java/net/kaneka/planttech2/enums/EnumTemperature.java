@@ -1,9 +1,6 @@
 package net.kaneka.planttech2.enums;
 
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 
 public enum EnumTemperature
 {
@@ -61,7 +58,8 @@ public enum EnumTemperature
 	public String getDisplayString(boolean coloured)
     {
     	String str = new TranslationTextComponent("temp." + this.name()).getUnformattedComponentText();
-		return coloured ? new StringTextComponent(str).setStyle(new Style().setColor(getId() == 0 ? TextFormatting.BLUE : getId() == 1 ? TextFormatting.AQUA : getId() == 2 ? TextFormatting.GREEN : getId() == 3 ? TextFormatting.YELLOW : TextFormatting.RED)).getFormattedText() : str;
+    	//again, not sure if getString would work (replaces getFormattedText()) before testing
+		return coloured ? new StringTextComponent(str).func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(getId() == 0 ? TextFormatting.BLUE : getId() == 1 ? TextFormatting.AQUA : getId() == 2 ? TextFormatting.GREEN : getId() == 3 ? TextFormatting.YELLOW : TextFormatting.RED))).getString() : str;
     }
 
     public boolean inRange(float value, int tolerance)

@@ -2,8 +2,11 @@ package net.kaneka.planttech2.entities.neutral;
 
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.TechCreatureEntity;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
@@ -33,7 +36,7 @@ public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayer
 		this.targetSelector.addGoal(2, new AttackNearbyKillerGoal<>(MobEntity.class));
 	}
 
-	@Override
+	/*@Override
 	protected void registerAttributes()
 	{
 		super.registerAttributes();
@@ -42,6 +45,19 @@ public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayer
 		this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
 		this.getAttributes().registerAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(50.0D);
+	}*/
+
+	/**
+	 * Not being called before a good place to call it is found
+	 * {@link net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes#put(EntityType, AttributeModifierMap)}
+	 */
+	public static AttributeModifierMap.MutableAttribute getAttributes()
+	{
+		return MobEntity.func_233666_p_().func_233815_a_(Attributes.MAX_HEALTH, 45.0D)
+				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.25D)
+				.func_233815_a_(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
+				.func_233815_a_(Attributes.ATTACK_DAMAGE, 5.0F)
+				.func_233815_a_(Attributes.FOLLOW_RANGE, 50.0D);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -45,12 +46,15 @@ public abstract class TechCreatureEntity extends CreatureEntity
                 if (this.onPassiveActivate())
                     this.passiveCooldown = this.getMaxPassiveCooldown();
             ModifiableAttributeInstance attribute = this.getAttribute(Attributes.MOVEMENT_SPEED);
-            AttributeModifier modifier = attribute.getModifier(MOVEMENT_SPEED_MODIFIER);
-            float amount = (this.getMaxHealth() - this.getHealth()) / this.getMaxHealth() * 0.03F;
-            if (modifier != null && (this.isPassiveActive() || modifier.getAmount() != amount))
-                attribute.removeModifier(MOVEMENT_SPEED_MODIFIER);
-            else if (modifier == null)
-                attribute.applyModifier(new AttributeModifier(MOVEMENT_SPEED_MODIFIER, "Speed Modifier", -amount, AttributeModifier.Operation.ADDITION));
+            if (attribute != null)
+            {
+                AttributeModifier modifier = attribute.getModifier(MOVEMENT_SPEED_MODIFIER);
+                float amount = (this.getMaxHealth() - this.getHealth()) / this.getMaxHealth() * 0.03F;
+                if (modifier != null && (this.isPassiveActive() || modifier.getAmount() != amount))
+                    attribute.removeModifier(MOVEMENT_SPEED_MODIFIER);
+                else if (modifier == null)
+                    attribute.func_233767_b_(new AttributeModifier(MOVEMENT_SPEED_MODIFIER, "Speed Modifier", -amount, AttributeModifier.Operation.ADDITION));
+            }
         }
         this.idleTime++;
         if (this.getHealth() < this.getMaxHealth() && this.idleTime > 300 && this.idleTime % 12 == 0)
@@ -63,7 +67,7 @@ public abstract class TechCreatureEntity extends CreatureEntity
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand)
+    protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() == ModItems.BIOMASS)
@@ -74,9 +78,9 @@ public abstract class TechCreatureEntity extends CreatureEntity
                     stack.shrink(1);
                 for (int p=0;p<5;p++)
                     this.spawnParticles(ParticleTypes.HAPPY_VILLAGER);
-                return true;
+                return ActionResultType.CONSUME;
             }
-        return false;
+        return super.func_230254_b_(player, hand);
     }
 
     protected boolean matchPassiveCriteria()

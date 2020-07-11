@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
@@ -8,10 +10,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
+import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -25,21 +24,20 @@ import net.minecraftforge.fml.network.NetworkHooks;
 public class RangedWeaponItem extends UpgradeableHandItem
 {
 
+	static
+	{
+		ItemModelsProperties.func_239418_a_(
+				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),
+				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
+		);
+		ItemModelsProperties.func_239418_a_(
+				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
+				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+	}
+
 	public RangedWeaponItem(String name, Properties property, int basecapacity, int maxInvSize)
 	{
 		super(name, property, basecapacity, maxInvSize, 0, 2.4F, UpgradeChipItem.RANGED_WEAPON);
-		this.addPropertyOverride(new ResourceLocation("pull"), (stack, world, entity) -> {
-			if (entity == null)
-			{
-				return 0.0F;
-			} else
-			{
-				return !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F;
-			}
-		});
-		this.addPropertyOverride(new ResourceLocation("pulling"), (stack, world, entity) -> {
-			return entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F;
-		});
 	}
 
 	protected ItemStack findAmmo(PlayerEntity player)

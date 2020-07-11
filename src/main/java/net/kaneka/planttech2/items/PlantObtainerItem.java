@@ -1,12 +1,15 @@
 package net.kaneka.planttech2.items;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,21 +19,26 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PlantObtainer extends BaseItem
+public class PlantObtainerItem extends BaseItem
 {
-    public PlantObtainer(String name, Properties property)
+    static
+    {
+        ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+                (stack, world, entity) -> isFilled(initTags(stack)) ? 1.0F : 0.0F);
+    }
+
+    public PlantObtainerItem(String name, Properties property)
     {
         super(name, property.maxStackSize(1));
+//        addPropertyOverride(new ResourceLocation(PlantTechMain.MODID, "filled"), (stack, world, entity) ->
+//                isFilled(initTags(stack)) ? 1.0F : 0.0F);
     }
 
     @Override
@@ -53,7 +61,7 @@ public class PlantObtainer extends BaseItem
             {
                 setBlockFilled(stack, state);
                 block.onObtained(world, player, stack, pos);
-                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
+//                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
                 return ActionResultType.SUCCESS;
             }
         }
@@ -65,17 +73,11 @@ public class PlantObtainer extends BaseItem
                 block.onReleased(context, getBlockStateFilled(stack));
                 setBlockFilled(stack, null);
                 setFilled(stack, false);
-                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
+//                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
                 return ActionResultType.SUCCESS;
             }
         }
         return ActionResultType.PASS;
-    }
-
-    @Override
-    public boolean hasEffect(ItemStack stack)
-    {
-        return isFilled(initTags(stack));
     }
 
     public static ItemStack setBlockFilled(ItemStack stack, BlockState state)
@@ -121,7 +123,7 @@ public class PlantObtainer extends BaseItem
 
     public static boolean isFilled(ItemStack stack)
     {
-        return stack.getTag().getBoolean("filled") && getBlockStateFilled(stack) != null;
+        return stack.getTag() != null && stack.getTag().getBoolean("filled") && getBlockStateFilled(stack) != null;
     }
 
     public static ItemStack initTags(ItemStack stack)
@@ -138,12 +140,9 @@ public class PlantObtainer extends BaseItem
         tooltip.add(new StringTextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-        {
-            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockStateFilled(stack).getBlock().getNameTextComponent().setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)).getFormattedText()));
-        }
+            //not sure if getString() works, can't find the replacement of getFormattedText() in 1.15
+            tooltip.add(new StringTextComponent("Plant Obtained: " + getBlockStateFilled(stack).getBlock().getTranslatedName().func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true)).getString()));
         else
-        {
-            tooltip.add(new StringTextComponent("Empty").setStyle(new Style().setColor(TextFormatting.GREEN).setBold(true)));
-        }
+            tooltip.add(new StringTextComponent("Empty").func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true)));
     }
 }
