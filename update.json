@@ -16,7 +16,7 @@
         "0.01.05": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information."
     },
     "1.15.2": {
-    	"0.00.22": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
+        "0.00.22": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
         "0.00.23": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
         "0.00.24": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
         "0.00.25": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
@@ -43,13 +43,17 @@
         "0.02.09": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
         "0.02.10": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information.",
         "0.02.11": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information."
-    }
-    ,
+    },
+    "1.16.1": {
+        "0.02.12": "See https://www.curseforge.com/minecraft/mc-mods/planttech-2/files for detailed information."
+    },
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/planttech-2",
     "promos": {
         "1.14.4-latest": "0.01.05",
         "1.14.4-recommended": "0.01.05",
         "1.15.2-latest": "0.02.11",
-        "1.15.2-recommended": "0.02.11"
+        "1.15.2-recommended": "0.02.11",
+        "1.16.1-latest": "0.02.12",
+        "1.16.1-recommended": "0.02.12"
     }
 }
