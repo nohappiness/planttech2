@@ -82,10 +82,10 @@ public class FertilizerItem extends BaseItem
     @Override
     public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
-	tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer").getUnformattedComponentText() + ": " + (int) (getIncreaseChance(stack.getItem()) * 100) + "%"));
+	tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer").getString() + ": " + (int) (getIncreaseChance(stack.getItem()) * 100) + "%"));
 	if(stack.getItem() == ModItems.FERTILIZER_CREATIVE)
 	{
-	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer_creative").getUnformattedComponentText()));
+	    tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer_creative").getString()));
 		 
 	}
     

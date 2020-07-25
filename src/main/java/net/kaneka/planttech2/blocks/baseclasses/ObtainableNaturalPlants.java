@@ -41,8 +41,8 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
     }
 
     @Override
-    public Block getBlockObtained(ItemUseContext context)
+    public BlockState getObtainedBlockState(BlockState state)
     {
-        return context.getWorld().getBlockState(context.getPos()).getBlock();
+        return state;
     }
 }

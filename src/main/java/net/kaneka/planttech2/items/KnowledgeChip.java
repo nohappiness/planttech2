@@ -106,11 +106,11 @@ public class KnowledgeChip extends BaseItem
 		CompoundNBT nbt = stack.getOrCreateTag();
 		if(nbt.contains("knowledge"))
 		{
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getUnformattedComponentText() + ": " + nbt.getInt("knowledge") + "/" + getMaxKnowledge()));
+			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getString() + ": " + nbt.getInt("knowledge") + "/" + getMaxKnowledge()));
 		}
 		else
 		{
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getUnformattedComponentText() + ": 0/" + getMaxKnowledge()));
+			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getString() + ": 0/" + getMaxKnowledge()));
 		}
 	}
 

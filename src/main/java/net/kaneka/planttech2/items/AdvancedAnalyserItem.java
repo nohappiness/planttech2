@@ -75,18 +75,18 @@ public class AdvancedAnalyserItem extends EnergyStorageItem
 	private void sendTraits(PlayerEntity player, HashMapCropTraits traits)
 	{
 		player.sendMessage(new StringTextComponent("--------------------------------------"), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + traits.getType()), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.soil").getUnformattedComponentText() + ": " + CropSeedItem.getSoilString(traits.getType())), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.GROWSPEED)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.SENSITIVITY)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + (14 - traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY))), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.waterrange").getUnformattedComponentText() + ": " + (1 + traits.getTrait(EnumTraitsInt.WATERSENSITIVITY))), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.temperature").getUnformattedComponentText() + ": " + CropSeedItem.temperatureString(traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE))), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.PRODUCTIVITY)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.FERTILITY)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.SPREEDINGSPEED)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.GENESTRENGHT)), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + traits.getTrait(EnumTraitsInt.ENERGYVALUE) * 20), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.type").getString() + ": " + traits.getType()), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.soil").getString() + ": " + CropSeedItem.getSoilString(traits.getType())), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.growspeed").getString() + ": " + traits.getTrait(EnumTraitsInt.GROWSPEED)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getString() + ": " + traits.getTrait(EnumTraitsInt.SENSITIVITY)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + (14 - traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY))), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.waterrange").getString() + ": " + (1 + traits.getTrait(EnumTraitsInt.WATERSENSITIVITY))), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").append(CropSeedItem.temperatureString(traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE))), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.productivity").getString() + ": " + traits.getTrait(EnumTraitsInt.PRODUCTIVITY)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.fertility").getString() + ": " + traits.getTrait(EnumTraitsInt.FERTILITY)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getString() + ": " + traits.getTrait(EnumTraitsInt.SPREEDINGSPEED)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.genestrength").getString() + ": " + traits.getTrait(EnumTraitsInt.GENESTRENGHT)), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.energyvalue").getString() + ": " + traits.getTrait(EnumTraitsInt.ENERGYVALUE) * 20), player.getUniqueID());
 	}
 
 	private static int getEnergyCosts()

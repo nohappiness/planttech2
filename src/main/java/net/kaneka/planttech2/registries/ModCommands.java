@@ -18,6 +18,7 @@ public class ModCommands
                 .literal("pt2")
                 .then(DevListCommand.register(dispatcher))
                 .then(RadiationlevelCommand.register(dispatcher));
+//                .then(GuideCommand.register(dispatcher));
         //Client Only Commands - currently unavailable
         /*if (!isDedicatedServer)
         {

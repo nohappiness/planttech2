@@ -17,17 +17,17 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		int l = this.getCookProgressScaled(18);
 		blit(mStack, this.guiLeft + 74, this.guiTop + 44, 0, 200, l, 18);
-		
+
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
 	
 	private int getCookProgressScaled(int pixels)

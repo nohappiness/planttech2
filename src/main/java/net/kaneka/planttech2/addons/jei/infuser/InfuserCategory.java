@@ -51,15 +51,14 @@ public class InfuserCategory extends AbstractJeiCategory<InfuserRecipe>
 	}
 	
 	@Override
-	public void draw(InfuserRecipe recipe, double mouseX, double mouseY)
+	public void draw(InfuserRecipe recipe, MatrixStack mStack, double mouseX, double mouseY)
 	{
 		int biomass = recipe.getBiomass();
 		if (biomass > 0) {
-			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getUnformattedComponentText();
+			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getString();
 			Minecraft minecraft = Minecraft.getInstance();
 			FontRenderer fontRenderer = minecraft.fontRenderer;
 			int stringWidth = fontRenderer.getStringWidth(biomassString);
-			MatrixStack mStack = new MatrixStack();
 			fontRenderer.drawString(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
 		}
 		

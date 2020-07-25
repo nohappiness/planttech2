@@ -6,6 +6,7 @@ import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.event.TickEvent;
@@ -13,6 +14,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.logging.log4j.core.jmx.Server;
 
 @Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class PlayerEvents
@@ -129,13 +131,10 @@ public class PlayerEvents
 	@SubscribeEvent
 	public static void onPlayerHurt(LivingDamageEvent event)
 	{
-		if (event.getEntityLiving() instanceof PlayerEntity && event.getSource().getTrueSource() instanceof IAffectPlayerRadiation)
-		{
-			if (!((PlayerEntity) event.getEntityLiving()).abilities.isCreativeMode)
-			{
-				RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving()).increaseLevel(((IAffectPlayerRadiation) event.getSource().getTrueSource()).getAmount());
-			}
-		}
+		Entity trueSource = event.getSource().getTrueSource();
+		if (event.getEntityLiving() instanceof ServerPlayerEntity && !((ServerPlayerEntity) event.getEntityLiving()).abilities.isCreativeMode && trueSource instanceof IAffectPlayerRadiation)
+			if (((IAffectPlayerRadiation) trueSource).shouldAffectPlayer())
+				((IAffectPlayerRadiation) trueSource).onTriggerAffectingPlayer((ServerPlayerEntity) event.getEntityLiving());
 	}
 
 		@SubscribeEvent

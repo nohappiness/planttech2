@@ -8,6 +8,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class GuideBaseScreen extends Screen
@@ -62,10 +64,10 @@ public class GuideBaseScreen extends Screen
 		} else
 		{
 			this.drawBackground(mStack);
-			this.drawForeground();
+			this.drawForeground(mStack);
 			this.drawButtons(mStack, mouseX, mouseY, partialTicks);
-			this.drawStrings();
-			this.drawTooltips(mouseX, mouseY);
+			this.drawStrings(mStack);
+			this.drawTooltips(mStack, mouseX, mouseY);
 		}
 	}
 
@@ -121,7 +123,7 @@ public class GuideBaseScreen extends Screen
 
 	protected String translateUnformated(String name)
 	{
-		return new TranslationTextComponent(name).getUnformattedComponentText();
+		return new TranslationTextComponent(name).getString();
 	}
 
 	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
@@ -134,12 +136,12 @@ public class GuideBaseScreen extends Screen
 		itemRenderer.renderItemAndEffectIntoGUI(itemstack, this.guiLeft + x, this.guiTop + y);
 	}
 
-	public void drawTooltip(String lines, int mouseX, int mouseY, int posX, int posY)
+	public void drawTooltip(MatrixStack mStack, ITextComponent lines, int mouseX, int mouseY, int posX, int posY)
 	{
-		drawTooltip(lines, mouseX, mouseY, posX, posY, 16, 16);
+		drawTooltip(mStack, lines, mouseX, mouseY, posX, posY, 16, 16);
 	}
 
-	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, ITextComponent lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop;
@@ -149,7 +151,7 @@ public class GuideBaseScreen extends Screen
 		}
 	}
 
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 
 	}

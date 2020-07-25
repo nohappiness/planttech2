@@ -31,7 +31,7 @@ public class MachineGrowingCategory implements IRecipeCategory<MachineGrowingRec
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "machine_growing"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 160, 86, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.MACHINEBULBREPROCESSOR_BULB));
-    	localizedName = new TranslationTextComponent("planttech2.machine_growing").getUnformattedComponentText();
+    	localizedName = new TranslationTextComponent("planttech2.machine_growing").getString();
     }
 
 	@Override

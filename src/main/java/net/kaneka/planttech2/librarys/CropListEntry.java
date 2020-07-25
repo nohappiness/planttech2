@@ -66,7 +66,7 @@ public class CropListEntry implements Comparable<CropListEntry>
 
     public String getDisplayNameUnformated()
     {
-	return this.getDisplayName().getUnformattedComponentText();
+	return this.getDisplayName().getString();
     }
 
     public ITextComponent getDisplayName()

@@ -2,11 +2,16 @@ package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
+import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.kaneka.planttech2.events.AttachCapabilityEvents;
 import net.kaneka.planttech2.events.ClientEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
+import net.kaneka.planttech2.items.BiomassContainerItem;
+import net.kaneka.planttech2.items.PlantObtainerItem;
+import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
+import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.proxy.ClientProxy;
@@ -17,9 +22,17 @@ import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.provider.OverworldBiomeProvider;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -79,12 +92,16 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
+		MinecraftForge.EVENT_BUS.addListener(this::addReloadListener);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
 	{
-		event.getServer().getResourceManager().func_240970_h_().addReloadListener(new ReloadListenerCropListEntryConfiguration());
-		//event.getServer().getDataPackRegistries().func_240970_h_().addReloadListener(new ReloadListenerCropListEntryConfiguration());
+	}
+
+	private void addReloadListener(AddReloadListenerEvent event)
+	{
+		DeferredWorkQueue.runLater(() -> event.addListener(new ReloadListenerCropListEntryConfiguration()));
 	}
 	
 	private void onServerStarting(final FMLServerStartingEvent event)
@@ -100,18 +117,47 @@ public class PlantTechMain
 		PlantTech2PacketHandler.register();
 		PlantTechMain.croplist.configurePlanttechEntries();
 		LootTableHandler.register();
+        DeferredWorkQueue.runLater(PlantTechMain::registerAllEntityAttributes);
 	}
 
-		private void doClientStuff(final FMLClientSetupEvent event)
+	private static void registerAllEntityAttributes()
+    {
+        GlobalEntityTypeAttributes.put((EntityType<? extends LivingEntity>) ModEntityTypes.TECHGHOULENTITY, TechGhoulEntity.getAttributes().create());
+    }
+
+    private void doClientStuff(final FMLClientSetupEvent event)
 	{
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
 		for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-		{
 			RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
-		}
 		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
+		DeferredWorkQueue.runLater(PlantTechMain::addAllItemModelsOverrides);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private static void addAllItemModelsOverrides()
+	{
+		ItemModelsProperties.func_239418_a_(
+				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),
+				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1
+		);
+		ItemModelsProperties.func_239418_a_(
+				ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+				(stack, world, entity) -> {
+					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
+					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F; }
+		);
+		ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
+		ItemModelsProperties.func_239418_a_(
+				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),
+				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
+		);
+		ItemModelsProperties.func_239418_a_(
+				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
+				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 	}
 }
