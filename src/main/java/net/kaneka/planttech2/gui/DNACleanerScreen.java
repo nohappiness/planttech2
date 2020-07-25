@@ -18,19 +18,30 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
     	super(container, player, string);
 
     }
-	
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		int l = this.getCookProgressScaled(32);
 		blit(mStack, this.guiLeft + 60, this.guiTop + 48, 0, 200, l, 14);
-		
+
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
+
+//	@Override
+//	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+//	{
+//		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+//
+//		int l = this.getCookProgressScaled(32);
+//		blit(mStack, this.guiLeft + 60, this.guiTop + 48, 0, 200, l, 14);
+//
+//		int k = this.getEnergyStoredScaled(55);
+//		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+//	}
 	
 	private int getCookProgressScaled(int pixels)
 	{

@@ -1,12 +1,12 @@
 package net.kaneka.planttech2.entities.neutral;
 
-import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.TechCreatureEntity;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.entity.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.monster.IMob;
@@ -17,7 +17,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
-public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayerRadiation
+public class TechGhoulEntity extends TechCreatureEntity
 {
 	public TechGhoulEntity(EntityType<? extends TechGhoulEntity> type, World worldIn)
 	{
@@ -47,23 +47,18 @@ public class TechGhoulEntity extends TechCreatureEntity implements IAffectPlayer
 		this.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(50.0D);
 	}*/
 
-	/**
-	 * Not being called before a good place to call it is found
-	 * {@link net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes#put(EntityType, AttributeModifierMap)}
-	 */
+//	/**
+//	 * Not being called before a good place to call it is found
+//	 * {@link net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes#put(EntityType, AttributeModifierMap)}
+//	 */
+	//Was called CommonSetupEvent atm
 	public static AttributeModifierMap.MutableAttribute getAttributes()
 	{
-		return MobEntity.func_233666_p_().func_233815_a_(Attributes.MAX_HEALTH, 45.0D)
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.25D)
-				.func_233815_a_(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
-				.func_233815_a_(Attributes.ATTACK_DAMAGE, 5.0F)
-				.func_233815_a_(Attributes.FOLLOW_RANGE, 50.0D);
-	}
-
-	@Override
-	public float getAmount()
-	{
-		return (1.0F / 1000.0F);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 45.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 5.0F)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 50.0D);
 	}
 
 	@Override

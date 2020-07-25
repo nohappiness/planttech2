@@ -27,7 +27,7 @@ public class TechVillagerTrade
 	
 	public String getName()
 	{
-		return new TranslationTextComponent(name).getUnformattedComponentText(); 
+		return new TranslationTextComponent(name).getString(); 
 	}
 	
 	public List<ItemStack> getInputs()

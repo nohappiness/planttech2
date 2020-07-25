@@ -24,7 +24,7 @@ public abstract class AbstractJeiCategory<T extends IRecipe<IInventory>> impleme
     	this.UID = new ResourceLocation(PlantTechMain.MODID, name); 
     	this.background = helper.createDrawable(TEXTURE, u, v, width, height); 
     	this.icon = helper.createDrawableIngredient(new ItemStack(icon));
-    	localizedName = new TranslationTextComponent("planttech2." + name).getUnformattedComponentText();
+    	localizedName = new TranslationTextComponent("planttech2." + name).getString();
     }
 
 	@Override

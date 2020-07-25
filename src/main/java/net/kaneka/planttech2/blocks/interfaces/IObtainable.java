@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.blocks.interfaces;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,5 +15,5 @@ public interface IObtainable
 
     boolean isObtainable(ItemUseContext context);
 
-    Block getBlockObtained(ItemUseContext context);
+    BlockState getObtainedBlockState(BlockState state);
 }

@@ -18,26 +18,25 @@ public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		for(int i = 0; i < 5; i++)
 		{
 			int l = this.getCookProgressScaled(16, i);
 			blit(mStack, this.guiLeft + 106, this.guiTop + 37 + i * 5, 0, 200, l, 4);
 		}
-		
-		
+
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-		
+
 		int j = this.getFluidStoredScaled(55);
 		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
 	}
-	
+
 	private int getCookProgressScaled(int pixels, int slot)
 	{
 		int i = container.getValue(4 + slot);

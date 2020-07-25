@@ -171,8 +171,8 @@ public class MachineBaseBlock extends BaseBlock
 			tier = PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR;
 		else if (this == ModBlocks.ENERGY_SUPPLIER)
 			tier = PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER;
-		
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.tier").getUnformattedComponentText() + ": " + tier));
+
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.tier").getString() + ": " + tier));
 	
 		
 		super.addInformation(stack, worldIn, tooltip, flagIn);

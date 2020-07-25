@@ -50,7 +50,7 @@ public class WrenchItem extends BaseItem
 					{
 						if (!player.addItemStackToInventory(new ItemStack(block)))
 						{
-							Block.spawnAsEntity(world, player.func_233580_cy_(), new ItemStack(block));
+							Block.spawnAsEntity(world, player.getPosition(), new ItemStack(block));
 						}
 						return ActionResultType.SUCCESS;
 					}
@@ -77,7 +77,7 @@ public class WrenchItem extends BaseItem
 	{
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_cable").getString()));
 		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_dismantle").getUnformattedComponentText()));
+		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_dismantle").getString()));
 	}
 
 }

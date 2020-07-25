@@ -18,28 +18,28 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-		
-		int l = 0; 
+
+		int l = 0;
 		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE))
 		{
-			case 0:l = 0; break;   
-			case 1:l = 6; break; 
-			case 2:l = 15; break; 
-			case 3:l = 25; break; 
-			case 4:l = 35; break; 
+			case 0:l = 0; break;
+			case 1:l = 6; break;
+			case 2:l = 15; break;
+			case 3:l = 25; break;
+			case 4:l = 35; break;
 		}
 		int j = getWorkLoadScaled(17);
 		blit(mStack, this.guiLeft + 133, this.guiTop + 36, 205, 56, j, l);
 	}
-	
+
 	private int getWorkLoadScaled(int pixels)
 	{
 		int i = container.getValue(2);

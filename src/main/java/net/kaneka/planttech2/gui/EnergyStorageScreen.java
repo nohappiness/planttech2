@@ -16,16 +16,25 @@ public class EnergyStorageScreen extends BaseContainerScreen<EnergyStorageContai
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
-		
+
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(mStack, this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, k);
 	}
+
+//	@Override
+//	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+//	{
+//		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+//
+//
+//		int k = this.getEnergyStoredScaled(55);
+//		blit(mStack, this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+//	}
 	
 	@Override
 	protected ResourceLocation getBackgroundTexture()

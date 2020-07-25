@@ -36,24 +36,21 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
         return super.mouseClicked(mouseX, mouseY, p_mouseClicked_5_);
     }
 
-
-    @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
-    {
+	@Override
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 
-    	int l = this.getCookProgressScaled(70);
-    	blit(mStack, this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
-    
-    	int k = this.getEnergyStoredScaled(55);
-    	blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-    	
-    	int i = container.getValue(3);
-    	if(i >= 0)
-    	{
-    	    blit(mStack, this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
-    	}
-    }
+		int l = this.getCookProgressScaled(70);
+		blit(mStack, this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
+
+		int k = this.getEnergyStoredScaled(55);
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+
+		int i = container.getValue(3);
+		if(i >= 0)
+			blit(mStack, this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
+	}
 
     private int getCookProgressScaled(int pixels)
     {
@@ -63,13 +60,9 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     
     private boolean inArea(double mouseX, double mouseY, int posX, int posY)
     {
-	posX += this.guiLeft;
-	posY += this.guiTop;
-	if (mouseX >= posX && mouseX <= posX + 18 && mouseY >= posY && mouseY <= posY + 18)
-	{
-	    return true;
-	}
-	return false;
+		posX += this.guiLeft;
+		posY += this.guiTop;
+		return mouseX >= posX && mouseX <= posX + 18 && mouseY >= posY && mouseY <= posY + 18;
     }
 
     @Override

@@ -17,22 +17,22 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		for(int p = 0; p < 6; p++)
 		{
 			int l = this.getCookProgressScaled(p, 15);
 			blit(mStack, this.guiLeft + 23 + p * 22, this.guiTop + 46, 0, 200, 12, l);
 		}
-		
+
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
-	
+
 	private int getCookProgressScaled(int id, int pixels)
 	{
 		int i = container.getValue(id + 2);

@@ -23,67 +23,103 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		int l = this.getCookProgressScaled(32);
 		blit(mStack, this.guiLeft + 87, this.guiTop + 88, 32, 200, l, 10);
-		
+
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-		
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
+
 		int j = this.getFluidStoredScaled(55);
-		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
-		
+		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, j);
+
 		int m = container.getValue(5) - 1;
 		if(m >= 0)
-		{
 			blit(mStack, this.guiLeft + 59 + (m % 5)*18, this.guiTop + 27 + ((int)m/5)*18, 0, 200, 16, 16);
-		}
-		
-		int n = container.getValue(6); 
-		int x = 0; 
-		int y = 0; 
+
+		int n = container.getValue(6);
+		int x = 0;
+		int y = 0;
 		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
 		{
-			Block machine = bulb.getMachine(); 
+			Block machine = bulb.getMachine();
 			if(machine != null)
-			{
 				if(n <  bulb.getTier())
-				{
 					blit(mStack, this.guiLeft + 59 + x*18, this.guiTop + 27 + y*18, 16, 200, 16, 16);
-				}
-			}
-			x++; 
+			x++;
 			if(x > 4)
 			{
-				x = 0; 
-				y++; 
+				x = 0;
+				y++;
 			}
 		}
 	}
-	
+
+//	@Override
+//	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+//	{
+//		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+//
+//		int l = this.getCookProgressScaled(32);
+//		blit(mStack, this.guiLeft + 87, this.guiTop + 88, 32, 200, l, 10);
+//
+//		int k = this.getEnergyStoredScaled(55);
+//		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+//
+//		int j = this.getFluidStoredScaled(55);
+//		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
+//
+//		int m = container.getValue(5) - 1;
+//		if(m >= 0)
+//		{
+//			blit(mStack, this.guiLeft + 59 + (m % 5)*18, this.guiTop + 27 + ((int)m/5)*18, 0, 200, 16, 16);
+//		}
+//
+//		int n = container.getValue(6);
+//		int x = 0;
+//		int y = 0;
+//		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+//		{
+//			Block machine = bulb.getMachine();
+//			if(machine != null)
+//			{
+//				if(n <  bulb.getTier())
+//				{
+//					blit(mStack, this.guiLeft + 59 + x*18, this.guiTop + 27 + y*18, 16, 200, 16, 16);
+//				}
+//			}
+//			x++;
+//			if(x > 4)
+//			{
+//				x = 0;
+//				y++;
+//			}
+//		}
+//	}
+
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerForegroundLayer(mStack, mouseX, mouseY);
-		int x = 0; 
-		int y = 0; 
+		int x = 0;
+		int y = 0;
 		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
 		{
-			Block machine = bulb.getMachine(); 
+			Block machine = bulb.getMachine();
 			if(machine != null)
 			{
 				renderItem(new ItemStack(machine), 59 + x*18, 27 + y*18);
 			}
-			x++; 
+			x++;
 			if(x > 4)
 			{
-				x = 0; 
-				y++; 
+				x = 0;
+				y++;
 			}
 		}
 	}
@@ -95,9 +131,9 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	}
 	
 	@Override
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
+		drawTooltip(mStack, container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 	    
 	    int x = 0; 
 		int y = 0; 
@@ -105,9 +141,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 		{
 			Block machine = bulb.getMachine(); 
 			if(machine != null)
-			{
-				drawTooltip( new ItemStack(machine).getHighlightTip(machine.getNameComponend().getFormattedText()), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
-			}
+				drawTooltip(mStack, new ItemStack(machine).getHighlightTip(machine.getTranslatedName()).getString(), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
 			x++; 
 			if(x > 4)
 			{
@@ -115,7 +149,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 				y++; 
 			}
 		}
-	    super.drawTooltips(mouseX,mouseY);
+	    super.drawTooltips(mStack, mouseX, mouseY);
 	}
 	
 	@Override
@@ -143,11 +177,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop;
-		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
-		{
-			return true;
-		}
-		return false;
+		return mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height;
 	}
 
 	private boolean inItemStackArea(double mouseX, double mouseY, int posX, int posY)

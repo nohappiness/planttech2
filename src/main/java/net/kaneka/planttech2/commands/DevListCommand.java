@@ -78,13 +78,9 @@ public class DevListCommand
     private static boolean isOnline(ServerWorld world, String username)
     {
         if (username.equals("Poopoodice(pupudice)"))
-        {
             return world.getPlayerByUuid(getUUID("poopoodice")) != null || world.getPlayerByUuid(getUUID("pupudice")) != null;
-        }
         if (username.equals("MoonlitLamps"))
-        {
             return false;
-        }
         return world.getPlayerByUuid(getUUID(username)) != null;
     }
 
@@ -105,6 +101,6 @@ public class DevListCommand
 
     private static StringTextComponent getFormattedText(String text, Color colour, boolean bold, boolean underline)
     {
-        return (StringTextComponent) new StringTextComponent(text).func_230530_a_(Style.EMPTY.setColor(colour).setBold(bold).setUnderlined(underline));
+        return (StringTextComponent) new StringTextComponent(text).setStyle(Style.EMPTY.setColor(colour).setBold(bold).setUnderlined(underline));
     }
 }

@@ -27,7 +27,7 @@ public class GuideMenu
 	
 	public String getName()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".menu").getUnformattedComponentText(); 
+		return new TranslationTextComponent("guide.planttech2." + name + ".menu").getString(); 
 	}
 
 	public List<GuideEntry> getSubmenus()

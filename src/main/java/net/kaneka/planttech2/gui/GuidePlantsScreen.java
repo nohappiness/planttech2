@@ -238,36 +238,32 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	}
 
 	@Override
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		if (selectedId != -1)
 		{
-			this.drawTooltip(mainseed.getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 261, 32);
+			this.drawTooltip(mStack, mainseed.getDisplayName(), mouseX, mouseY, 261, 32);
 			if (soil != null)
 				if (!soil.isEmpty())
-					this.drawTooltip(soil.getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 217, 65);
-			this.drawTooltip(temp.getDisplayString(true), mouseX, mouseY, 307, 65);
+					this.drawTooltip(mStack, soil.getDisplayName(), mouseX, mouseY, 217, 65);
+			this.drawTooltip(mStack, temp.getDisplayString(true), mouseX, mouseY, 307, 65);
 
 			for (int i = 0; i < 9; i++)
 			{
 				if (seeds[i] != null)
-				{
-					this.drawTooltip(seeds[i].getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 189 + 18 * i, 98);
-				}
+					this.drawTooltip(mStack, seeds[i].getDisplayName(), mouseX, mouseY, 189 + 18 * i, 98);
 
 				if (drops[i] != null)
-				{
-					this.drawTooltip(drops[i].getMin() + "-" + drops[i].getMax() + "x " + drops[i].getItemStack().getDisplayName().getUnformattedComponentText(), mouseX, mouseY,
+					this.drawTooltip(mStack, new StringTextComponent("").appendString(drops[i].getMin() + "-" + drops[i].getMax() + "x ").append(drops[i].getItemStack().getDisplayName()), mouseX, mouseY,
 					        189 + 18 * i, 131);
-				}
 			}
 
 			for (int i = 0; i < 4; i++)
 			{
 				if (parents[i][0] != null)
 				{
-					this.drawTooltip(parents[i][0].getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 162 + 56 * i, 164);
-					this.drawTooltip(parents[i][1].getDisplayName().getUnformattedComponentText(), mouseX, mouseY, 192 + 56 * i, 164);
+					this.drawTooltip(mStack, parents[i][0].getDisplayName(), mouseX, mouseY, 162 + 56 * i, 164);
+					this.drawTooltip(mStack, parents[i][1].getDisplayName(), mouseX, mouseY, 192 + 56 * i, 164);
 				}
 			}
 		}

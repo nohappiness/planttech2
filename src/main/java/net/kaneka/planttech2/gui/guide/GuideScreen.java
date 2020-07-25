@@ -301,7 +301,7 @@ public class GuideScreen extends Screen
 	
 	protected String translateUnformated(String name)
 	{
-		return new TranslationTextComponent(name).getUnformattedComponentText();
+		return new TranslationTextComponent(name).getString();
 	}
 	
 	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)

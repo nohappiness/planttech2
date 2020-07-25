@@ -54,38 +54,35 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 			this.renderBackground(mStack);
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
-	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
+	        this.func_230459_a_(mStack, mouseX, mouseY);
 	}
-	
+
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		if(energystorage != null)
-		{
-		drawTooltip( energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
-		}
+			drawTooltip(mStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
 	}
 	
 	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
-		posY += this.guiTop; 
-        if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
-        {
-            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
-        }
+		posY += this.guiTop;
+        if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
+			renderComponentHoverEffect(mStack, null, mouseX, mouseY);
+//            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float p_230450_2_, int p_230450_3_, int p_230450_4_)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND.get(invsize));
 		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-		
+
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
-	
+
 	protected int getEnergyStoredScaled(int pixels)
 	{
 		

@@ -53,7 +53,7 @@ public class BaseElectricFence extends BaseBlock
             {
                 return 15;
             }
-            if (block instanceof BaseElectricFence && state.func_235901_b_(ELECTRIC_POWER))
+            if (block instanceof BaseElectricFence && state.hasProperty(ELECTRIC_POWER))
             {
                 int power = state.get(ELECTRIC_POWER);
                 if (power > Largestpower)

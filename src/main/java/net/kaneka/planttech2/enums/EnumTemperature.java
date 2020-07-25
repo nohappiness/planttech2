@@ -4,16 +4,23 @@ import net.minecraft.util.text.*;
 
 public enum EnumTemperature
 {
-    EXTREME_COLD(0, -1.0F, 0.0F), COLD(1, 0.0F, 0.5F), NORMAL(2, 0.5F, 1.0F), WARM(3, 1.0F, 1.5F), EXTREME_WARM(4, 1.5F, 2.5F);
+
+	EXTREME_COLD(0, -1.0F, 0.0F, TextFormatting.BLUE),
+	COLD(1, 0.0F, 0.5F, TextFormatting.AQUA),
+	NORMAL(2, 0.5F, 1.0F, TextFormatting.GREEN),
+	WARM(3, 1.0F, 1.5F, TextFormatting.YELLOW),
+	EXTREME_WARM(4, 1.5F, 2.5F, TextFormatting.RED);
 
     private int id;
     private float min, max;
+    private Color color;
 
-    EnumTemperature(int id, float min, float max)
+    EnumTemperature(int id, float min, float max, TextFormatting color)
     {
-	this.id = id;
-	this.min = min;
-	this.max = max;
+		this.id = id;
+		this.min = min;
+		this.max = max;
+		this.color = Color.func_240744_a_(color);
     }
 
     public static EnumTemperature byValue(float value)
@@ -55,11 +62,10 @@ public enum EnumTemperature
 	/**
 	 * if coloured is true, will returned coloured text by their temperature (Extreme Cold -- Blue/Aqua/Green/Yellow/Red -- Extreme Hot), else text without colours
 	 */
-	public String getDisplayString(boolean coloured)
+	public IFormattableTextComponent getDisplayString(boolean coloured)
     {
-    	String str = new TranslationTextComponent("temp." + this.name()).getUnformattedComponentText();
-    	//again, not sure if getString would work (replaces getFormattedText()) before testing
-		return coloured ? new StringTextComponent(str).func_230530_a_(Style.EMPTY.setColor(Color.func_240744_a_(getId() == 0 ? TextFormatting.BLUE : getId() == 1 ? TextFormatting.AQUA : getId() == 2 ? TextFormatting.GREEN : getId() == 3 ? TextFormatting.YELLOW : TextFormatting.RED))).getString() : str;
+		IFormattableTextComponent str = new TranslationTextComponent("temp." + this.name());
+		return coloured ? new StringTextComponent(str.getString()).setStyle(Style.EMPTY.setColor(this.getColor())) : str;
     }
 
     public boolean inRange(float value, int tolerance)
@@ -81,4 +87,9 @@ public enum EnumTemperature
     {
 	return this.id;
     }
+
+	public Color getColor()
+	{
+		return this.color;
+	}
 }

@@ -34,12 +34,12 @@ public class GuideEntry
 	
 	public String getName()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".header").getUnformattedComponentText(); 
+		return new TranslationTextComponent("guide.planttech2." + name + ".header").getString(); 
 	}
 	
 	public ITextComponent getHeader()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".header").func_240699_a_(TextFormatting.UNDERLINE).func_240699_a_(TextFormatting.ITALIC);
+		return new TranslationTextComponent("guide.planttech2." + name + ".header").mergeStyle(TextFormatting.UNDERLINE, TextFormatting.ITALIC);
 	}
 	
 	public GuideMenu getMenu()
@@ -60,7 +60,7 @@ public class GuideEntry
 	
 	public String getText()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".text").getUnformattedComponentText();
+		return new TranslationTextComponent("guide.planttech2." + name + ".text").getString();
 	}
 	
 	public List<GuideString> getTextFormated(FontRenderer font)

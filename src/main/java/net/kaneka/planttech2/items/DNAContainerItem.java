@@ -33,37 +33,37 @@ public class DNAContainerItem extends BaseItem
 		CompoundNBT nbt = stack.getTag();
 		if (nbt != null) {
 			if (nbt.contains("type")) {
-				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getUnformattedComponentText() + ": " + nbt.getString("type")));
+				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getString() + ": " + nbt.getString("type")));
 			}
 			if (nbt.contains("temperaturetolerance")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "temperaturetolerance") + new TranslationTextComponent("info.temperaturetolerance").getUnformattedComponentText() + ": " + nbt.getInt("temperaturetolerance")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "temperaturetolerance") + new TranslationTextComponent("info.temperaturetolerance").getString() + ": " + nbt.getInt("temperaturetolerance")));
 			}
 			if (nbt.contains("growspeed")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "growspeed") + new TranslationTextComponent("info.growspeed").getUnformattedComponentText() + ": " + nbt.getInt("growspeed")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "growspeed") + new TranslationTextComponent("info.growspeed").getString() + ": " + nbt.getInt("growspeed")));
 			}
 			if (nbt.contains("sensitivity")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "sensitivity") + new TranslationTextComponent("info.sensitivity").getUnformattedComponentText() + ": " + nbt.getInt("sensitivity")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "sensitivity") + new TranslationTextComponent("info.sensitivity").getString() + ": " + nbt.getInt("sensitivity")));
 			}
 			if (nbt.contains("lightsensitivity")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "lightsensitivity") + new TranslationTextComponent("info.needed_lightlevel").getUnformattedComponentText() + ": " + (14 - nbt.getInt("lightsensitivity"))));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "lightsensitivity") + new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + (14 - nbt.getInt("lightsensitivity"))));
 			}
 			if (nbt.contains("watersensitivity")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "watersensitivity") + new TranslationTextComponent("info.waterrange").getUnformattedComponentText() + ": " + (1 + nbt.getInt("watersensitivity"))));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "watersensitivity") + new TranslationTextComponent("info.waterrange").getString() + ": " + (1 + nbt.getInt("watersensitivity"))));
 			}
 			if (nbt.contains("productivity")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "productivity") + new TranslationTextComponent("info.productivity").getUnformattedComponentText() + ": " + nbt.getInt("productivity")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "productivity") + new TranslationTextComponent("info.productivity").getString() + ": " + nbt.getInt("productivity")));
 			}
 			if (nbt.contains("fertility")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "fertility") + new TranslationTextComponent("info.fertility").getUnformattedComponentText() + ": " + nbt.getInt("fertility")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "fertility") + new TranslationTextComponent("info.fertility").getString() + ": " + nbt.getInt("fertility")));
 			}
 			if (nbt.contains("spreedingspeed")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "spreedingspeed") + new TranslationTextComponent("info.spreedingspeed").getUnformattedComponentText() + ": " + nbt.getInt("spreedingspeed")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "spreedingspeed") + new TranslationTextComponent("info.spreedingspeed").getString() + ": " + nbt.getInt("spreedingspeed")));
 			}
 			if (nbt.contains("genestrenght")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "genestrenght") + new TranslationTextComponent("info.genestrength").getUnformattedComponentText() + ": " + nbt.getInt("genestrenght")));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "genestrenght") + new TranslationTextComponent("info.genestrength").getString() + ": " + nbt.getInt("genestrenght")));
 			}
 			if (nbt.contains("energyvalue")) {
-				tooltip.add(new StringTextComponent(getTraitColor(nbt, "energyvalue") + new TranslationTextComponent("info.energyvalue").getUnformattedComponentText() + ": " + nbt.getInt("energyvalue") * 20));
+				tooltip.add(new StringTextComponent(getTraitColor(nbt, "energyvalue") + new TranslationTextComponent("info.energyvalue").getString() + ": " + nbt.getInt("energyvalue") * 20));
 			}
 		}
 	}

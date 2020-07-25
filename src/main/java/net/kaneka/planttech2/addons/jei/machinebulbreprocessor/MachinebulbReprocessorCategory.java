@@ -36,7 +36,7 @@ public class MachinebulbReprocessorCategory implements IRecipeCategory<Machinebu
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "machinebulbreprocessor"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 192, 60, 26);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.MACHINEBULBREPROCESSOR));
-    	localizedName = new TranslationTextComponent("planttech2.machinebulbreprocessor").getUnformattedComponentText();
+    	localizedName = new TranslationTextComponent("planttech2.machinebulbreprocessor").getString();
     }
 
 	@Override
@@ -92,15 +92,14 @@ public class MachinebulbReprocessorCategory implements IRecipeCategory<Machinebu
 	}
 	
 	@Override
-	public void draw(MachinebulbReprocessorRecipe recipe, double mouseX, double mouseY)
+	public void draw(MachinebulbReprocessorRecipe recipe, MatrixStack mStack, double mouseX, double mouseY)
 	{
 		int biomass = recipe.getBiomass();
 		if (biomass > 0) {
-			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getUnformattedComponentText();
+			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getString();
 			Minecraft minecraft = Minecraft.getInstance();
 			FontRenderer fontRenderer = minecraft.fontRenderer;
 			int stringWidth = fontRenderer.getStringWidth(biomassString);
-			MatrixStack mStack = new MatrixStack();
 			fontRenderer.drawString(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
 		}
 		

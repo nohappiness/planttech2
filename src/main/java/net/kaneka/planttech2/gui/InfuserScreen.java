@@ -16,22 +16,22 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
     {
     	super(container, player, name);
     }
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
-		
+
 		int l = this.getCookProgressScaled(32);
 		blit(mStack, this.guiLeft + 87, this.guiTop + 48, 0, 200, l, 14);
-		
+
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-		
+
 		int j = this.getFluidStoredScaled(55);
 		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
 	}
-	
+
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = container.getValue(4);
@@ -39,11 +39,10 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	}
 	
 	@Override
-	protected void drawTooltips(int mouseX, int mouseY)
+	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		drawTooltip( container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
-
-	    super.drawTooltips(mouseX,mouseY);
+		drawTooltip( mStack, container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
+	    super.drawTooltips(mStack, mouseX, mouseY);
 	}
 	
 	@Override

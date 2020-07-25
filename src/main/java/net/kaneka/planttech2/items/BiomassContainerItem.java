@@ -21,12 +21,6 @@ public class BiomassContainerItem extends BaseItem
 {
 	private static int CAPACITY = 1000;
 
-	static
-	{
-		ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
-				(stack, world, entity) -> getFillLevelModel(stack));
-	}
-
 	public BiomassContainerItem()
 	{
 		super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1));

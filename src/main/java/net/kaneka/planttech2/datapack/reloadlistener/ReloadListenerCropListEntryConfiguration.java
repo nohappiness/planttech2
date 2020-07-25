@@ -107,10 +107,10 @@ public class ReloadListenerCropListEntryConfiguration implements IFutureReloadLi
 		//save on server
 		PlantTechMain.croplist.setConfigs(configs);
 		//Sync all Clients
-		for(ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-		{
+		// Used DeferredWorkQueue to register the reload listener otherwise
+		// ServerLifecycleHooks.getCurrentServer() crashes with NPE
+		for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
 			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
-		}
 		CompletableFuture<Void> completablefuture = new CompletableFuture<>();
 		completablefuture.complete((Void)null);
 		return completablefuture;

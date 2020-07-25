@@ -30,7 +30,7 @@ public class CarverCategory implements IRecipeCategory<CarverRecipe>
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "carver"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 0, 60, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.CARVER));
-    	localizedName = new TranslationTextComponent("planttech2.carver").getUnformattedComponentText();
+    	localizedName = new TranslationTextComponent("planttech2.carver").getString();
     }
 
 	@Override

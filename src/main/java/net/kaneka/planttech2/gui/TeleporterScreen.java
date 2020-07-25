@@ -94,10 +94,10 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 		this.renderBackground(mStack);
-		drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY); 
+//		drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		this.drawButtons(mStack, mouseX, mouseY, partialTicks);
 		this.drawTooltips(mStack, mouseX, mouseY);
-        this.renderHoveredToolTip(mStack, mouseX, mouseY);
+        this.func_230459_a_(mStack, mouseX, mouseY);
 	}
 	
 	private void buttonClicked(int id)
@@ -115,23 +115,23 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
-	
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().bindTexture(BACKGROUND);
 		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
-		
+
 		int k = this.getEnergyStoredScaled(157);
-		blit(mStack, this.guiLeft + 396, this.guiTop + 23 + (157 - k), 441, 157 - k, 16, 0 + k, 512, 512);
+		blit(mStack, this.guiLeft + 396, this.guiTop + 23 + (157 - k), 441, 157 - k, 16, k, 512, 512);
 	}
 	
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		if(energystorage != null)
 		{
-		drawTooltip(mStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
+			drawTooltip(mStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
 		}
 	}
 	
@@ -139,10 +139,9 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop; 
-        if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
-        {
-            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
-        }
+        if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
+			renderComponentHoverEffect(mStack, null, mouseX, mouseY);
+//            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
     }
 	
 	protected int getEnergyStoredScaled(int pixels)
