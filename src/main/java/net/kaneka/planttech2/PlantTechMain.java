@@ -106,7 +106,7 @@ public class PlantTechMain
 	
 	private void onServerStarting(final FMLServerStartingEvent event)
 	{
-		ModCommands.registerAll(event.getCommandDispatcher(), event.getServer().isDedicatedServer());
+		
 	}
 
 	private void setup(final FMLCommonSetupEvent event)

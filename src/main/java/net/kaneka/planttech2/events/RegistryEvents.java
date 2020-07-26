@@ -19,6 +19,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -83,6 +84,12 @@ public class RegistryEvents
 	public static void addReloadListenerEvent(AddReloadListenerEvent e)
 	{
 		e.addListener(new ReloadListenerCropListEntryConfiguration());
+	}
+	
+	@SubscribeEvent
+	public static void onCommandRegister(RegisterCommandsEvent e)
+	{
+		ModCommands.registerAll(e.getDispatcher());
 	}
 	/*
 	@SubscribeEvent

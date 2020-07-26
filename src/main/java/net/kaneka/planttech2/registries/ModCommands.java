@@ -12,7 +12,7 @@ public class ModCommands
 {
     public ModCommands() {}
 
-    public static void registerAll(CommandDispatcher<CommandSource> dispatcher, boolean isDedicatedServer)
+    public static void registerAll(CommandDispatcher<CommandSource> dispatcher)
     {
         LiteralArgumentBuilder<CommandSource> pt2command = Commands
                 .literal("pt2")
