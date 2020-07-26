@@ -85,12 +85,7 @@ public class RegistryEvents
 	{
 		e.addListener(new ReloadListenerCropListEntryConfiguration());
 	}
-	
-	@SubscribeEvent
-	public static void onCommandRegister(RegisterCommandsEvent e)
-	{
-		ModCommands.registerAll(e.getDispatcher());
-	}
+
 	/*
 	@SubscribeEvent
 	public static void registerBiomes(final RegistryEvent.Register<Biome> event)

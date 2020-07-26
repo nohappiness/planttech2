@@ -6,7 +6,5 @@ public interface IRadiationEffect
 
     float getLevel();
 
-    void increaseLevel(float amount);
-
-    void decreaseLevel(float amount);
+    void changeLevel(float amount);
 }

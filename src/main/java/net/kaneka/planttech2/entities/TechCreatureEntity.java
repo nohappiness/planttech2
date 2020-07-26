@@ -156,6 +156,6 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
     @Override
     public void onTriggerAffectingPlayer(@Nonnull ServerPlayerEntity player)
     {
-        RadiationEffect.getCap(player).increaseLevel(0.001F);
+        RadiationEffect.getCap(player).changeLevel(0.001F);
     }
 }

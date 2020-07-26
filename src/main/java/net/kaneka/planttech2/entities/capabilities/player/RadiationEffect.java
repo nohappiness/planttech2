@@ -63,37 +63,10 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IR
     }
 
     @Override
-    public void increaseLevel(float amount)
+    public void changeLevel(float amount)
     {
-        if (this.level + amount < 0)
-        {
-            this.level = 0.0F;
-        }
-        else if (this.level + amount > 2)
-        {
-            this.level = 2.0F;
-        }
-        else
-        {
-            this.level += amount;
-        }
-    }
-
-    @Override
-    public void decreaseLevel(float amount)
-    {
-        if (this.level - amount < 0)
-        {
-            this.level = 0.0F;
-        }
-        else if (this.level - amount > 2)
-        {
-            this.level = 2.0F;
-        }
-        else
-        {
-            this.level -= amount;
-        }
+        this.level += amount;
+        this.level = Math.min(Math.max(this.level, 0), 2);
     }
 
     public static class RadiationEffectStorage implements Capability.IStorage<IRadiationEffect>

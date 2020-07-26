@@ -27,7 +27,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.provider.OverworldBiomeProvider;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -92,16 +91,11 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
-		MinecraftForge.EVENT_BUS.addListener(this::addReloadListener);
+		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
 	{
-	}
-
-	private void addReloadListener(AddReloadListenerEvent event)
-	{
-		DeferredWorkQueue.runLater(() -> event.addListener(new ReloadListenerCropListEntryConfiguration()));
 	}
 	
 	private void onServerStarting(final FMLServerStartingEvent event)
