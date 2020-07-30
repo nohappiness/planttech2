@@ -24,6 +24,7 @@ public class AttachCapabilityEvents
     {
         if(event.getObject() instanceof PlayerEntity)
         {
+
             if (!event.getCapabilities().containsKey(ModReferences.TECHVILLAGERTRUSTCAP))
             {
                 event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());

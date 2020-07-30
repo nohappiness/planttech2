@@ -79,12 +79,6 @@ public class RegistryEvents
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
-	
-	@SubscribeEvent
-	public static void addReloadListenerEvent(AddReloadListenerEvent e)
-	{
-		e.addListener(new ReloadListenerCropListEntryConfiguration());
-	}
 
 	/*
 	@SubscribeEvent

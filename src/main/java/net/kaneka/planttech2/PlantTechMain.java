@@ -22,10 +22,12 @@ import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -70,28 +72,30 @@ public class PlantTechMain
 		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onWorldStart);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onFogRenderDensity);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::onFogRenderColour);
 			//FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::textureStitchEvent);
 		});
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+		MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, AttachCapabilityEvents::attachEntityCapability);
+		MinecraftForge.EVENT_BUS.addGenericListener(TileEntity.class, AttachCapabilityEvents::attachTileEntityCapability);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
-		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachEntityCapability);
 //		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachItemStackCapability);
-		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachTileEntityCapability);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
+		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onWorldStart);
+				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderDensity);
+				MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
+				MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
+				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderColour);
+		});
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)

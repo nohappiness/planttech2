@@ -19,7 +19,7 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 		BIOMASS_CAP.setMaxStorage(maxBiomassStorage);
 		BIOMASS_CAP.setCurrentStorage(0);
     }
-    
+
     public void doFluidLoop()
     {
 		ItemStack stack = itemhandler.getStackInSlot(getFluidInSlot());
@@ -66,5 +66,5 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
     protected abstract int getFluidInSlot();
     
     protected abstract int getFluidOutSlot();
-    
+
 }
