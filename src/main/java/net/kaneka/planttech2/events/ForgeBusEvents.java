@@ -12,6 +12,6 @@ public class ForgeBusEvents
     @SubscribeEvent
     public static void addReloadListenerEvent(AddReloadListenerEvent e)
     {
-        DeferredWorkQueue.runLater(() -> e.addListener(new ReloadListenerCropListEntryConfiguration()));
+         e.addListener(new ReloadListenerCropListEntryConfiguration());
     }
 }

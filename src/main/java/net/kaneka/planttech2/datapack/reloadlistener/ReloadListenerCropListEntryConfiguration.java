@@ -43,6 +43,7 @@ public class ReloadListenerCropListEntryConfiguration implements IFutureReloadLi
 
 	private void tryDeserialization(IResourceManager resourceManager, ResourceLocation file, Gson gson,Map<String, CropListEntryConfiguration> configs, boolean merge)
 	{
+		
 		String name = file.getPath().replace(PATH, "").replace(EXTENTION, "").replace("/", "");
 		try (IResource iresource = resourceManager.getResource(file))
 		{
@@ -81,23 +82,26 @@ public class ReloadListenerCropListEntryConfiguration implements IFutureReloadLi
 		PlantTechMain.LOGGER.info("Load crop configuration from data packs");
 		Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
 		Map<String, CropListEntryConfiguration> configs = new HashMap<String, CropListEntryConfiguration>();
-
+		PlantTechMain.LOGGER.info("Load all files");
 		Collection<ResourceLocation> files = resourceManager.getAllResourceLocations(PATH, f -> {
 			return f.endsWith(EXTENTION);
 		});
 
+		PlantTechMain.LOGGER.info("Load crop configuration default");
 		// First load all default configurations
 		for (ResourceLocation file : files.stream().filter(file -> file.getNamespace().equals("planttech2")).collect(Collectors.toList()))
 		{
 			tryDeserialization(resourceManager, file, gson, configs, false);
 		}
 
+		PlantTechMain.LOGGER.info("Load crop configuration overrides");
 		// Then then load overrides
 		for (ResourceLocation file : files.stream().filter(file -> !file.getNamespace().equals("planttech2")).collect(Collectors.toList()))
 		{
 			tryDeserialization(resourceManager, file, gson, configs, true);
 		}
 		
+		PlantTechMain.LOGGER.info("Apply crop configuration");
 		//Apply values
 		for(CropListEntryConfiguration config: configs.values())
 		{
@@ -109,10 +113,16 @@ public class ReloadListenerCropListEntryConfiguration implements IFutureReloadLi
 		//Sync all Clients
 		// Used DeferredWorkQueue to register the reload listener otherwise
 		// ServerLifecycleHooks.getCurrentServer() crashes with NPE
-		for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
+		if(ServerLifecycleHooks.getCurrentServer() != null)
+		{
+    		for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
+    		{
+    			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
+    		}
+		}
 		CompletableFuture<Void> completablefuture = new CompletableFuture<>();
 		completablefuture.complete((Void)null);
+		PlantTechMain.LOGGER.info("Finish load crop configuration");
 		return completablefuture;
 	}
 
