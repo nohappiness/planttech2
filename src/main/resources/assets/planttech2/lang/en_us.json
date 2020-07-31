@@ -787,7 +787,7 @@
 	"guide.planttech2.energy_supplier.text": "The Energy Supplier does what the names says, it supplies energy for blocks like electric fences.",
 	"guide.planttech2.identifier.text": "The Identifier is used to identify crop traits. It can also be used to convert vanilla seeds into PlantTech 2 seeds.",
 	"guide.planttech2.infuser.text": "The Infuser infuses biomass into things like bonemeal to obtain fertilizer.",
-	"guide.planttech2.machinebulb_reprocessor.text": "Takes energy and biomass to produce Machinebulbs. Available Machinebulbs are limited by the Knowledge Chip installed.",
+	"guide.planttech2.machinebulb_reprocessor.text": "Takes energy and biomass to produce Machinebulbs. Available Machinebulbs are limited by the Knowledge Chip installed. Energy needed for each bulb: 1000.        Biomass needed: Compressor, Identifier, Energy Supplier -> 100; Infuser, Chipalyzer, Mega Furnace -> 1000; DNA Cleaner, DNA Combiner, DNA Extractor, DNA Remover, Seed Constructor, Void-Plantfarm, Solar Generator -> 2000;",
 	"guide.planttech2.mega_furnace.text": "Powered with BE and has 6 slots for smelting.",
 	"guide.planttech2.void_plantfarm.text": "You want to have cropproducts but don't want to have a farm consume your space? The void plantfarm takes a seed and will plant and farm the crops in the void dimension! It consumes energy to create a portal once it can harvest a crop and the production can be increased by putting a rangeupgrade in it! We can't access the dimension in person, but the machine can.",
 	"guide.planttech2.seedconstructor.text": "The seedconstructor takes a sequence of dna, energy and biomass to creates seeds from it. The sequence will not be consumed. If a trait is not set in the sequence, it will be set to the default value.",

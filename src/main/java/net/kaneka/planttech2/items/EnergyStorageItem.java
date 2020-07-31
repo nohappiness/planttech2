@@ -5,9 +5,12 @@ import java.util.List;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.EnergyProvider;
 import net.kaneka.planttech2.energy.IItemChargeable;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -150,4 +153,15 @@ public class EnergyStorageItem extends BaseItem implements IItemChargeable
 		return Integer.parseInt("06bc00", 16);
 	}
 
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	{
+		if(group == this.group)
+		{
+			items.add(new ItemStack(this));
+			ItemStack full = new ItemStack(this);
+			this.receiveEnergy(full, this.maxEnergy(full), false);
+			items.add(full);
+		}
+	}
 }

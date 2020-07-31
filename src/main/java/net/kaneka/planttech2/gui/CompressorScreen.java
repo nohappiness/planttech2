@@ -7,6 +7,7 @@ import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
+import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -45,11 +46,10 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 		blit(mStack, this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
-
+		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
 		int i = container.getValue(3);
 		if(i >= 0)
-			blit(mStack, this.guiLeft + 35 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 221, 0, 18, 18);
+			blit(mStack, this.guiLeft + 34 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 224, 0, 18, 18);
 	}
 
     private int getCookProgressScaled(int pixels)
@@ -57,7 +57,6 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	int i = container.getValue(2);
 	return i != 0 ? i * pixels / ((CompressorTileEntity) this.te).ticksPerItem() : 0;
     }
-    
     private boolean inArea(double mouseX, double mouseY, int posX, int posY)
     {
 		posX += this.guiLeft;

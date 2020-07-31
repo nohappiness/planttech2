@@ -92,8 +92,8 @@ public class PlantTechMain
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onWorldStart);
 				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderDensity);
-				MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorBlock);
-				MinecraftForge.EVENT_BUS.addListener(ClientEvents::registerColorItem);
+				FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
+				FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
 				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderColour);
 		});
 	}
