@@ -5,6 +5,7 @@ import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntry
 import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.kaneka.planttech2.events.AttachCapabilityEvents;
 import net.kaneka.planttech2.events.ClientEvents;
+import net.kaneka.planttech2.events.ForgeBusEvents;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
