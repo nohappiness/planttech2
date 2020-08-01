@@ -1,13 +1,11 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -49,7 +47,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
 		int i = container.getValue(3);
 		if(i >= 0)
-			blit(mStack, this.guiLeft + 34 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 224, 0, 18, 18);
+			blit(mStack, this.guiLeft + 33 + (i % 6) * 18, this.guiTop + 26 + (i / 6) * 18, 224, 0, 18, 18);
 	}
 
     private int getCookProgressScaled(int pixels)

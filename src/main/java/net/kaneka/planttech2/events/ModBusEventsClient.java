@@ -1,17 +1,25 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.gui.GuidePlantsScreen;
+import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -21,7 +29,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Arrays;
 
 @Mod.EventBusSubscriber(Dist.CLIENT)
-public class ClientEvents
+public class ModBusEventsClient
 {
 	public static boolean hasSendUpdateAvailable = false; 
 	
@@ -164,4 +172,32 @@ public class ClientEvents
 		}
 	}
 	*/
+
+	@SubscribeEvent
+	public static void onClientTick(TickEvent.ClientTickEvent event)
+	{
+		PlayerEntity player = Minecraft.getInstance().player;
+		if (player != null)
+		{
+			CompoundNBT data = player.getPersistentData();
+			if (data.contains("planttech2_screen_delay"))
+			{
+				Screen screen = null;
+				switch (data.getInt("planttech2_screen_delay"))
+				{
+					case 1:
+						screen = new GuideScreen();
+						break;
+					case 2:
+						screen = new GuidePlantsScreen();
+						break;
+				}
+				if (screen != null)
+				{
+					Minecraft.getInstance().displayGuiScreen(screen);
+					data.putInt("planttech2_screen_delay", 0);
+				}
+			}
+		}
+	}
 }

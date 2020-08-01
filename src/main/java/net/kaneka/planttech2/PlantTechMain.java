@@ -1,11 +1,9 @@
 package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
-import net.kaneka.planttech2.datapack.reloadlistener.ReloadListenerCropListEntryConfiguration;
 import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.kaneka.planttech2.events.AttachCapabilityEvents;
-import net.kaneka.planttech2.events.ClientEvents;
-import net.kaneka.planttech2.events.ForgeBusEvents;
+import net.kaneka.planttech2.events.ModBusEventsClient;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
@@ -33,7 +31,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -91,11 +88,11 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onWorldStart);
-				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderDensity);
-				FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorBlock);
-				FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::registerColorItem);
-				MinecraftForge.EVENT_BUS.addListener(ClientEvents::onFogRenderColour);
+				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onWorldStart);
+				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onFogRenderDensity);
+				FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBusEventsClient::registerColorBlock);
+				FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBusEventsClient::registerColorItem);
+				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onFogRenderColour);
 		});
 	}
 
