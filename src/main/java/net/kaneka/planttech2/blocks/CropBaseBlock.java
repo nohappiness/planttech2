@@ -69,14 +69,10 @@ public class CropBaseBlock extends ContainerBlock
 	public void updateCrop(World world, BlockPos pos, HashMapCropTraits traits)
 	{
 		BlockState state = world.getBlockState(pos);
-		int growstate = state.get(GROWSTATE).intValue();
+		int growstate = state.get(GROWSTATE);
 		if (growstate < 7)
-		{
-			if (canGrow(world, pos, traits))
-			{
-				world.setBlockState(pos, state.with(GROWSTATE, Integer.valueOf(growstate) + 1));
-			}
-		} else
+				world.setBlockState(pos, state.with(GROWSTATE, growstate + 1));
+		else
 		{
 			List<BlockPos> neighborpos = getNeighborBlockPosRandom(pos);
 			for (BlockPos blockpos : neighborpos)
@@ -236,11 +232,7 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
 	{
 		EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
-		if (temp.inRange(world.getBiomeManager().getBiome(pos).getDefaultTemperature(), tolerance))
-		{
-			return true;
-		}
-		return false;
+		return temp.inRange(world.getBiomeManager().getBiome(pos).getDefaultTemperature(), tolerance);
 	}
 
 	@Override
