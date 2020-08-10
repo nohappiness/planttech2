@@ -69,10 +69,6 @@ public class PlantTechMain
 		PlantTech2Configuration.loadConfig(PlantTech2Configuration.CLIENT, FMLPaths.CONFIGDIR.get().resolve("planttech2-client.toml").toString());
 		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
 
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			//FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientEvents::textureStitchEvent);
-		});
-
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, AttachCapabilityEvents::attachEntityCapability);
@@ -87,13 +83,6 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onWorldStart);
-				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onFogRenderDensity);
-				FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBusEventsClient::registerColorBlock);
-				FMLJavaModLoadingContext.get().getModEventBus().addListener(ModBusEventsClient::registerColorItem);
-				MinecraftForge.EVENT_BUS.addListener(ModBusEventsClient::onFogRenderColour);
-		});
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
