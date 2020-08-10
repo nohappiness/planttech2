@@ -3,8 +3,6 @@ func_240716_a_ -> setHoverEvent
 func_240712_a_ -> setColor
 field_230712_o_ -> font
 func_235896_a_ -> cycle
-
-//not 100% certain
 func_230450_a_ -> drawGuiContainerBackgroundLayer
 func_230451_b_ -> drawGuiContainerForegroundLayer
 func_230459_a_ -> renderHoveredToolTip

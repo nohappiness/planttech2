@@ -29,7 +29,7 @@ public class BaseContainer extends Container
 
 		for (int x = 0; x < 9; x++)
 		{
-			addSlot(new Slot(player, x, 24 + x * 18, 165));
+			addSlot(new Slot(player, x, 23 + x * 18, 164));
 		}
 
 		this.tileentity = tileentity;

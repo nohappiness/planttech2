@@ -107,13 +107,15 @@ public class PlantTechMain
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-		new ModRecipeTypes();  
-		//new ModStructurePieceTypes(); 
-		CapabilityHandler.registerAll(); 
-		PlantTech2PacketHandler.register();
-		PlantTechMain.croplist.configurePlanttechEntries();
-		LootTableHandler.register();
-        DeferredWorkQueue.runLater(PlantTechMain::registerAllEntityAttributes);
+		DeferredWorkQueue.runLater(() -> {
+			new ModRecipeTypes();
+			//new ModStructurePieceTypes();
+			CapabilityHandler.registerAll();
+			PlantTech2PacketHandler.register();
+			PlantTechMain.croplist.configurePlanttechEntries();
+			LootTableHandler.register();
+			registerAllEntityAttributes();
+		});
 	}
 
 	private static void registerAllEntityAttributes()
@@ -123,14 +125,17 @@ public class PlantTechMain
 
     private void doClientStuff(final FMLClientSetupEvent event)
 	{
-		ModRenderer.registerEntityRenderer();
-		ModScreens.registerGUI();
-		for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-			RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
-		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
-		DeferredWorkQueue.runLater(PlantTechMain::addAllItemModelsOverrides);
+		DeferredWorkQueue.runLater(() ->
+		{
+			ModRenderer.registerEntityRenderer();
+			ModScreens.registerGUI();
+			for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
+				RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
+			RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
+			addAllItemModelsOverrides();
+		});
 	}
 
 	@OnlyIn(Dist.CLIENT)

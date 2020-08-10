@@ -207,7 +207,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			if(item instanceof CropSeedItem)
 			{
 				CompoundNBT nbt = stack.getTag();
-				if(nbt.contains("growspeed"))
+				if (nbt != null && nbt.contains("growspeed"))
 				{
 					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
 				}
