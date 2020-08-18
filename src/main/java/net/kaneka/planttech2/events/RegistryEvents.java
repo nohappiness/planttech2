@@ -56,11 +56,11 @@ public class RegistryEvents
 		ModContainers.registerAll(event);
 	}
 
-	@SubscribeEvent
-	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
-	{
-		ModRecipeSerializers.registerAll(event);
-	}
+//	@SubscribeEvent
+//	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
+//	{
+//		ModRecipeSerializers.registerAll(event);
+//	}
 
 	@SubscribeEvent
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
@@ -120,9 +120,9 @@ public class RegistryEvents
 //		gen.addProvider(new Recipes(gen));
 //	}
 
-	@SubscribeEvent
-	public static void registerFluids(RegistryEvent.Register<Fluid> event)
-	{
-		ModFluids.register(event.getRegistry());
-	}
+//	@SubscribeEvent
+//	public static void registerFluids(RegistryEvent.Register<Fluid> event)
+//	{
+//		ModFluids.register(event.getRegistry());
+//	}
 }
