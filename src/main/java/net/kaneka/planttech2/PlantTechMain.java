@@ -53,8 +53,8 @@ public class PlantTechMain
 {
 	public static final String MODID = "planttech2";
 
-	@SuppressWarnings("deprecation")
-	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
+//	@SuppressWarnings("deprecation")
+//	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
@@ -66,26 +66,26 @@ public class PlantTechMain
 	@SuppressWarnings("deprecation")
 	public PlantTechMain()
 	{
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER, "planttech2-server.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT, "planttech2-client.toml");
-
-		PlantTech2Configuration.loadConfig(PlantTech2Configuration.CLIENT, FMLPaths.CONFIGDIR.get().resolve("planttech2-client.toml").toString());
-		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
-
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
-		MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, AttachCapabilityEvents::attachEntityCapability);
-		MinecraftForge.EVENT_BUS.addGenericListener(TileEntity.class, AttachCapabilityEvents::attachTileEntityCapability);
-		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
-		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
+//		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER, "planttech2-server.toml");
+//		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT, "planttech2-client.toml");
+//
+//		PlantTech2Configuration.loadConfig(PlantTech2Configuration.CLIENT, FMLPaths.CONFIGDIR.get().resolve("planttech2-client.toml").toString());
+//		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
+//
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+//		MinecraftForge.EVENT_BUS.addGenericListener(Entity.class, AttachCapabilityEvents::attachEntityCapability);
+//		MinecraftForge.EVENT_BUS.addGenericListener(TileEntity.class, AttachCapabilityEvents::attachTileEntityCapability);
+//		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
+//		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
 //		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachItemStackCapability);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
 //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
 //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
 //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
 //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
-		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
+//		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
 	}
 
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
@@ -99,15 +99,15 @@ public class PlantTechMain
 
 	private void setup(final FMLCommonSetupEvent event)
 	{
-		DeferredWorkQueue.runLater(() -> {
-			new ModRecipeTypes();
-			//new ModStructurePieceTypes();
-			CapabilityHandler.registerAll();
-			PlantTech2PacketHandler.register();
-			PlantTechMain.croplist.configurePlanttechEntries();
-			LootTableHandler.register();
-			registerAllEntityAttributes();
-		});
+//		DeferredWorkQueue.runLater(() -> {
+//			new ModRecipeTypes();
+//			//new ModStructurePieceTypes();
+//			CapabilityHandler.registerAll();
+//			PlantTech2PacketHandler.register();
+//			PlantTechMain.croplist.configurePlanttechEntries();
+//			LootTableHandler.register();
+//			registerAllEntityAttributes();
+//		});
 	}
 
 	private static void registerAllEntityAttributes()
@@ -117,18 +117,18 @@ public class PlantTechMain
 
     private void doClientStuff(final FMLClientSetupEvent event)
 	{
-		DeferredWorkQueue.runLater(() ->
-		{
-			ModRenderer.registerEntityRenderer();
-			ModScreens.registerGUI();
-			for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-				RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
-			RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
-			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
-			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
-			addAllItemModelsOverrides();
-			addAllSeedsColours();
-		});
+//		DeferredWorkQueue.runLater(() ->
+//		{
+//			ModRenderer.registerEntityRenderer();
+//			ModScreens.registerGUI();
+//			for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
+//				RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
+//			RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
+//			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
+//			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
+//			addAllItemModelsOverrides();
+//			addAllSeedsColours();
+//		});
 	}
 
 	@OnlyIn(Dist.CLIENT)

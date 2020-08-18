@@ -16,12 +16,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.core.jmx.Server;
 
-@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
+//@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class PlayerEvents
 {
-	@SubscribeEvent
-	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
-	{
+//	@SubscribeEvent
+//	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
+//	{
 		/*
 		
 		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
@@ -44,7 +44,7 @@ public class PlayerEvents
 			}
 		}
 		*/
-	}
+//	}
 
 //	@SubscribeEvent
 //	public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
@@ -85,9 +85,9 @@ public class PlayerEvents
 		}
 	}*/
 
-	@SubscribeEvent
-	public static void playerTicking(TickEvent.PlayerTickEvent event)
-	{
+//	@SubscribeEvent
+//	public static void playerTicking(TickEvent.PlayerTickEvent event)
+//	{
 		/*
 		PlayerEntity player = event.player;
 		if (player == null || !player.isAlive() || !(player instanceof ServerPlayerEntity) || player.getEntityWorld().isRemote() || player.abilities.isCreativeMode)
@@ -126,7 +126,7 @@ public class PlayerEvents
 			player.removePotionEffect(ModEffects.RADIATION_SICKNESS);
 		}
 		*/
-	}
+//	}
 
 //	@SubscribeEvent
 //	public static void onPlayerHurt(LivingDamageEvent event)

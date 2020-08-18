@@ -7,20 +7,20 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModBusEventsClient
 {
-    @SubscribeEvent
-	public static void registerColorItem(ColorHandlerEvent.Item event)
-	{
-	    ModItems.registerItemColorHandler(event);
-	}
+//    @SubscribeEvent
+//	public static void registerColorItem(ColorHandlerEvent.Item event)
+//	{
+//	    ModItems.registerItemColorHandler(event);
+//	}
 
-	@SubscribeEvent
-	public static void registerColorBlock(ColorHandlerEvent.Block event)
-	{
-	    ModBlocks.registerBlockColorHandler(event);
-	}
+//	@SubscribeEvent
+//	public static void registerColorBlock(ColorHandlerEvent.Block event)
+//	{
+//	    ModBlocks.registerBlockColorHandler(event);
+//	}
 
 	/*
 	@SubscribeEvent

@@ -25,60 +25,60 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents
 {
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event)
-	{
-		ModItems.register(event.getRegistry());
-		ModBlocks.registerItemBlocks(event.getRegistry());
-		// new DropsJSONGenerator().defaultValues();
-		//new JsonGenerator().create();
-	}
+//	@SubscribeEvent
+//	public static void registerItems(RegistryEvent.Register<Item> event)
+//	{
+//		ModItems.register(event.getRegistry());
+//		ModBlocks.registerItemBlocks(event.getRegistry());
+//		// new DropsJSONGenerator().defaultValues();
+//		//new JsonGenerator().create();
+//	}
 
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event)
-	{
-		PlantTechMain.croplist.addPlanttechEntries();
-		ModBlocks.register(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
-	{
-		ModTileEntities.register(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
-	{
-		ModContainers.registerAll(event);
-	}
-
-	@SubscribeEvent
-	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
-	{
-		ModRecipeSerializers.registerAll(event);
-	}
-
-	@SubscribeEvent
-	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
-	{
-		ModSounds.registerAll(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerPotions(RegistryEvent.Register<Effect> event)
-	{
-		ModEffects.registerAll(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
-	{
-		ModEntityTypes.registerAll(event.getRegistry());
-	}
+//	@SubscribeEvent
+//	public static void registerBlocks(RegistryEvent.Register<Block> event)
+//	{
+//		PlantTechMain.croplist.addPlanttechEntries();
+//		ModBlocks.register(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+//	{
+//		ModTileEntities.register(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
+//	{
+//		ModContainers.registerAll(event);
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
+//	{
+//		ModRecipeSerializers.registerAll(event);
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
+//	{
+//		ModSounds.registerAll(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerPotions(RegistryEvent.Register<Effect> event)
+//	{
+//		ModEffects.registerAll(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
+//	{
+//		ModEntityTypes.registerAll(event.getRegistry());
+//	}
 
 	/*
 	@SubscribeEvent
@@ -113,16 +113,16 @@ public class RegistryEvents
 	}
 
 	*/
-	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event)
-	{
-		DataGenerator gen = event.getGenerator();
-		gen.addProvider(new Recipes(gen));
-	}
+//	@SubscribeEvent
+//	public static void gatherData(GatherDataEvent event)
+//	{
+//		DataGenerator gen = event.getGenerator();
+//		gen.addProvider(new Recipes(gen));
+//	}
 
-	@SubscribeEvent
-	public static void registerFluids(RegistryEvent.Register<Fluid> event)
-	{
-		ModFluids.register(event.getRegistry());
-	}
+//	@SubscribeEvent
+//	public static void registerFluids(RegistryEvent.Register<Fluid> event)
+//	{
+//		ModFluids.register(event.getRegistry());
+//	}
 }

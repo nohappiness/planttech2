@@ -16,29 +16,29 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
+//@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class AttachCapabilityEvents
 {
-    @SubscribeEvent
-    public static void attachEntityCapability(final AttachCapabilitiesEvent<Entity> event)
-    {
-        if(event.getObject() instanceof PlayerEntity)
-        {
-
-            if (!event.getCapabilities().containsKey(ModReferences.TECHVILLAGERTRUSTCAP))
-            {
-                event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());
-            }
-            if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
-            {
-                event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
-            }
-            if (!event.getCapabilities().containsKey(ModReferences.PLAYERRENDERRGBCAP))
-            {
-                event.addCapability(ModReferences.PLAYERRENDERRGBCAP, new PlayerRenderRGB());
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void attachEntityCapability(final AttachCapabilitiesEvent<Entity> event)
+//    {
+//        if(event.getObject() instanceof PlayerEntity)
+//        {
+//
+//            if (!event.getCapabilities().containsKey(ModReferences.TECHVILLAGERTRUSTCAP))
+//            {
+//                event.addCapability(ModReferences.TECHVILLAGERTRUSTCAP, new TechVillagerTrust());
+//            }
+//            if (!event.getCapabilities().containsKey(ModReferences.RADIATIONEFFECTCAP))
+//            {
+//                event.addCapability(ModReferences.RADIATIONEFFECTCAP, new RadiationEffect());
+//            }
+//            if (!event.getCapabilities().containsKey(ModReferences.PLAYERRENDERRGBCAP))
+//            {
+//                event.addCapability(ModReferences.PLAYERRENDERRGBCAP, new PlayerRenderRGB());
+//            }
+//        }
+//    }
 
 //    @SubscribeEvent
 //    public static void attachItemStackCapability(final AttachCapabilitiesEvent<ItemStack> event)
@@ -58,15 +58,15 @@ public class AttachCapabilityEvents
 //        }
 //    }
 
-    @SubscribeEvent
-    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<TileEntity> event)
-    {
-        if(event.getObject() instanceof EnergyInventoryFluidTileEntity)
-        {
-            if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
-            {
-                event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
-            }
-        }
-    }
+//    @SubscribeEvent
+//    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<TileEntity> event)
+//    {
+//        if(event.getObject() instanceof EnergyInventoryFluidTileEntity)
+//        {
+//            if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
+//            {
+//                event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
+//            }
+//        }
+//    }
 }
