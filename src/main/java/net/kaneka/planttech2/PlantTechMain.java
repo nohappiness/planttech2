@@ -127,9 +127,15 @@ public class PlantTechMain
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
 			addAllItemModelsOverrides();
-			for (BaseItem item : ModItems.SEEDS.values())
-				Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
+			addAllSeedsColours();
 		});
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private static void addAllSeedsColours()
+	{
+		for (BaseItem item : ModItems.SEEDS.values())
+			Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
 	}
 
 	@OnlyIn(Dist.CLIENT)
