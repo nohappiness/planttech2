@@ -50,7 +50,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	protected void beforeReplacingBlock(IWorld worldIn, BlockPos pos, BlockState state)
 	{
 		TileEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getTileEntity(pos) : null;
-		Block.spawnDrops(state, worldIn.getWorld(), pos, tileentity);
+		Block.spawnDrops(state, worldIn, pos, tileentity);
 	}
 
 	@Override

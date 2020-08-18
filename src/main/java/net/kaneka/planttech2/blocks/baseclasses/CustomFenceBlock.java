@@ -22,6 +22,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
 public class CustomFenceBlock extends BaseBlock
 {
@@ -59,7 +60,7 @@ public class CustomFenceBlock extends BaseBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		IBlockReader iblockreader = context.getWorld();
+		World iblockreader = context.getWorld();
 		BlockPos blockpos = context.getPos();
 		BlockPos blockpos1 = blockpos.north();
 		BlockPos blockpos2 = blockpos.east();
@@ -70,10 +71,10 @@ public class CustomFenceBlock extends BaseBlock
 		BlockState blockstate2 = iblockreader.getBlockState(blockpos3);
 		BlockState blockstate3 = iblockreader.getBlockState(blockpos4);
 		return super.getStateForPlacement(context)
-		        .with(NORTH, Boolean.valueOf(this.func_220111_a(blockstate, Block.hasSolidSide(blockstate, iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH)))
-		        .with(EAST, Boolean.valueOf(this.func_220111_a(blockstate1, Block.hasSolidSide(blockstate1, iblockreader, blockpos2, Direction.WEST), Direction.WEST)))
-		        .with(SOUTH, Boolean.valueOf(this.func_220111_a(blockstate2, Block.hasSolidSide(blockstate2, iblockreader, blockpos3, Direction.NORTH), Direction.NORTH)))
-		        .with(WEST, Boolean.valueOf(this.func_220111_a(blockstate3, Block.hasSolidSide(blockstate3, iblockreader, blockpos4, Direction.EAST), Direction.EAST)));
+		        .with(NORTH, this.func_220111_a(blockstate, Block.hasEnoughSolidSide(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
+		        .with(EAST, this.func_220111_a(blockstate1, Block.hasEnoughSolidSide(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
+		        .with(SOUTH, this.func_220111_a(blockstate2, Block.hasEnoughSolidSide(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
+		        .with(WEST, this.func_220111_a(blockstate3, Block.hasEnoughSolidSide(iblockreader, blockpos4, Direction.EAST), Direction.EAST));
 	}
 
 	@Override
@@ -131,7 +132,8 @@ public class CustomFenceBlock extends BaseBlock
 
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL
 		        ? stateIn.with(FACING_TO_PROPERTY_MAP.get(facing),
-		                Boolean.valueOf(this.func_220111_a(facingState, Block.hasSolidSide(facingState, worldIn, facingPos, facing.getOpposite()), facing.getOpposite())))
+				this.func_220111_a(facingState, Block.hasEnoughSolidSide(worldIn, facingPos, facing.getOpposite()), facing.getOpposite())
+		)
 		        : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 

@@ -7,7 +7,9 @@ import net.kaneka.planttech2.events.ModBusEventsClient;
 import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
+import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.items.BiomassContainerItem;
+import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.PlantObtainerItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
@@ -19,6 +21,7 @@ import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.Entity;
@@ -65,7 +68,7 @@ public class PlantTechMain
 	{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER, "planttech2-server.toml");
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT, "planttech2-client.toml");
-		
+
 		PlantTech2Configuration.loadConfig(PlantTech2Configuration.CLIENT, FMLPaths.CONFIGDIR.get().resolve("planttech2-client.toml").toString());
 		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
 
@@ -78,10 +81,10 @@ public class PlantTechMain
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerConnect);
 //		MinecraftForge.EVENT_BUS.addListener(AttachCapabilityEvents::attachItemStackCapability);
 		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::playerTicking);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
-		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerChangedDimension);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
+//		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
 		MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
 	}
 
@@ -124,6 +127,8 @@ public class PlantTechMain
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
 			addAllItemModelsOverrides();
+			for (BaseItem item : ModItems.SEEDS.values())
+				Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
 		});
 	}
 

@@ -39,7 +39,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	protected TechVillagerTrade selectedTrade = null;
 	protected TechVillagerTask selectedTask = null;
 	protected int selectedID = -1;
-	protected List<ITextProperties> canTradeTextProperties = new ArrayList<ITextProperties>();
+	protected List<ITextComponent> canTradeTextProperties = new ArrayList<>();
 	private String profession = "scientist";
 	private String professionname = "loading"; 
 	private int playertrustlevel = 0; 
@@ -127,12 +127,13 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 
 	}
 
-	public void drawTooltip(MatrixStack mStack, List<ITextProperties> lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, List<ITextComponent> lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
-			renderTooltip(mStack, lines, mouseX, mouseY);
+			for (ITextComponent line : lines)
+				renderTooltip(mStack, line, mouseX, mouseY);
 	}
 	
 	public void drawTooltip(MatrixStack mStack, String line, int mouseX, int mouseY, int posX, int posY, int width, int height)
@@ -300,14 +301,10 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	{
 		startX += this.guiLeft;
 		startY += this.guiTop;
-		if (mouseX >= startX && mouseX <= startX + width && mouseY >= startY && mouseY <= startY + height)
-		{
-			return true;
-		}
-		return false;
+		return mouseX >= startX && mouseX <= startX + width && mouseY >= startY && mouseY <= startY + height;
 	}
 
-	public List<ITextProperties> getCanTradeTextProperties()
+	public List<ITextComponent> getCanTradeTextProperties()
 	{
 		List<String> list = new ArrayList<>();
 		if (selectedTrade != null)
@@ -348,7 +345,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		}
 		else
 			list.add("No trade selected");
-		List<ITextProperties> textPropertiesList = new ArrayList<>();
+		List<ITextComponent> textPropertiesList = new ArrayList<>();
 		for (String str : list)
 			textPropertiesList.add(new StringTextComponent(str));
 		return textPropertiesList;

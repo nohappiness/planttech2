@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import com.sun.javafx.geom.Vec3d;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
@@ -38,9 +39,11 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.server.permission.context.BlockPosContext;
 
 public class CropBaseBlock extends ContainerBlock
 {
@@ -232,7 +235,7 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
 	{
 		EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
-		return temp.inRange(world.getBiomeManager().getBiome(pos).getDefaultTemperature(), tolerance);
+		return temp.inRange(world.getBiomeManager().getBiome(pos).getTemperature(pos), tolerance);
 	}
 
 	@Override
@@ -292,15 +295,18 @@ public class CropBaseBlock extends ContainerBlock
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
 	{
 		List<ItemStack> drops = Lists.newArrayList();
-		int growstate = state.get(GROWSTATE).intValue();
-		BlockPos pos = builder.get(LootParameters.POSITION); 
-		TileEntity te = builder.getWorld().getTileEntity(pos);
-		if (te instanceof CropsTileEntity)
+		int growstate = state.get(GROWSTATE);
+		Vector3d vec3d = builder.get(LootParameters.field_237457_g_);
+		if (vec3d != null)
 		{
-			((CropsTileEntity) te).addDrops(drops, growstate);
-			drops.add(new ItemStack(ModBlocks.CROPBARS));
+			BlockPos pos = new BlockPos(vec3d);
+			TileEntity te = builder.getWorld().getTileEntity(pos);
+			if (te instanceof CropsTileEntity)
+			{
+				((CropsTileEntity) te).addDrops(drops, growstate);
+				drops.add(new ItemStack(ModBlocks.CROPBARS));
+			}
 		}
-		
 		return drops; 
 	}
 

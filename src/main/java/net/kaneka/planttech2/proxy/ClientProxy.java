@@ -20,9 +20,9 @@ public class ClientProxy implements IProxy
 	//fontRenderer = new CustomFontRenderer(Minecraft.getInstance().gameSettings, new ResourceLocation("planttech2:textures/font/font.png"), Minecraft.getInstance().textureManager, true);
 	
 	
-	for (BaseItem item : ModItems.SEEDS.values())
-	{
-	    Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
-	}
+//	for (BaseItem item : ModItems.SEEDS.values())
+//	{
+//	    Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
+//	}
     }
 }

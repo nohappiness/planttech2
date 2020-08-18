@@ -23,8 +23,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import javax.annotation.Nullable;
 
 public class TechVillagerEntity extends AgeableEntity
 {
@@ -40,6 +43,14 @@ public class TechVillagerEntity extends AgeableEntity
 	public TechVillagerEntity(EntityType<? extends TechVillagerEntity> type, World worldIn)
 	{
 		super(type, worldIn);
+	}
+
+	@Nullable
+	@Override
+	public AgeableEntity func_241840_a(ServerWorld serverWorld, AgeableEntity ageableEntity)
+	{
+		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
+
 	}
 
 	@Override
@@ -157,11 +168,11 @@ public class TechVillagerEntity extends AgeableEntity
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public AgeableEntity createChild(AgeableEntity ageable)
-	{
-		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public AgeableEntity createChild(AgeableEntity ageable)
+//	{
+//		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
+//	}
 
 }

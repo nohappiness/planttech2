@@ -253,12 +253,8 @@ public class CustomDoorBlock extends BaseBlock
 		BlockPos blockpos = pos.down();
 		BlockState blockstate = worldIn.getBlockState(blockpos);
 		if (state.get(HALF) == DoubleBlockHalf.LOWER)
-		{
-			return Block.hasSolidSide(blockstate, worldIn, blockpos, Direction.UP);
-		} else
-		{
-			return blockstate.getBlock() == this;
-		}
+			return Block.hasEnoughSolidSide(worldIn, blockpos, Direction.UP);
+		return blockstate.getBlock() == this;
 	}
 
 	private void playSound(World world, BlockPos pos, boolean flag)

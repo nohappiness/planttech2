@@ -1,5 +1,6 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" 
+loaderVersion="[28,)"
+license="All rights reserved"
 issueTrackerURL="https://bitbucket.org/kaneka/planttech2/issues?status=new&status=open" #optional
 logoFile="examplemod.png" 
 credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"

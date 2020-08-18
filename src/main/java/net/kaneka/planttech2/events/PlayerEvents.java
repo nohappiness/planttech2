@@ -46,26 +46,26 @@ public class PlayerEvents
 		*/
 	}
 
-	@SubscribeEvent
-	public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
-	{
-		PlayerEntity player = event.getPlayer();
-		if (player instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
-		{
-			syncRadiationCapWithClient((ServerPlayerEntity) player);
-		}
-	}
-
-	@SubscribeEvent
-	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
-	{
-		PlayerEntity player = event.getPlayer();
-		if (player instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
-		{
-			RadiationEffect.getCap((ServerPlayerEntity) player).setLevel(0.0F);
-			syncRadiationCapWithClient((ServerPlayerEntity) player);
-		}
-	}
+//	@SubscribeEvent
+//	public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)
+//	{
+//		PlayerEntity player = event.getPlayer();
+//		if (player instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
+//		{
+//			syncRadiationCapWithClient((ServerPlayerEntity) player);
+//		}
+//	}
+//
+//	@SubscribeEvent
+//	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event)
+//	{
+//		PlayerEntity player = event.getPlayer();
+//		if (player instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
+//		{
+//			RadiationEffect.getCap((ServerPlayerEntity) player).setLevel(0.0F);
+//			syncRadiationCapWithClient((ServerPlayerEntity) player);
+//		}
+//	}
 
 	/*@SubscribeEvent
 	public static void livingDamaged(LivingDamageEvent e)
@@ -128,45 +128,45 @@ public class PlayerEvents
 		*/
 	}
 
-	@SubscribeEvent
-	public static void onPlayerHurt(LivingDamageEvent event)
-	{
-		Entity trueSource = event.getSource().getTrueSource();
-		if (event.getEntityLiving() instanceof ServerPlayerEntity && !((ServerPlayerEntity) event.getEntityLiving()).abilities.isCreativeMode && trueSource instanceof IAffectPlayerRadiation)
-			if (((IAffectPlayerRadiation) trueSource).shouldAffectPlayer())
-				((IAffectPlayerRadiation) trueSource).onTriggerAffectingPlayer((ServerPlayerEntity) event.getEntityLiving());
-	}
+//	@SubscribeEvent
+//	public static void onPlayerHurt(LivingDamageEvent event)
+//	{
+//		Entity trueSource = event.getSource().getTrueSource();
+//		if (event.getEntityLiving() instanceof ServerPlayerEntity && !((ServerPlayerEntity) event.getEntityLiving()).abilities.isCreativeMode && trueSource instanceof IAffectPlayerRadiation)
+//			if (((IAffectPlayerRadiation) trueSource).shouldAffectPlayer())
+//				((IAffectPlayerRadiation) trueSource).onTriggerAffectingPlayer((ServerPlayerEntity) event.getEntityLiving());
+//	}
 
-		@SubscribeEvent
-		public static void onPlayerClone(PlayerEvent.Clone event)
-		{
-			/*if(event.isWasDeath())
-			{
-				event.getOriginal().revive();
-				ITechVillagerTrust old = event.getOriginal().getCapability(TechVillagerTrust.INSTANCE).orElse(null);
-				ITechVillagerTrust playercap = event.getPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust());
-				if(old != null)
-				{
-					for(Entry<String, Integer> entry: old.getTrustsMap().entrySet())
-					{
-						playercap.setTrust(entry.getKey(), entry.getValue());
-					}
-				}
-			}*/
-			IRadiationEffect oldCap = RadiationEffect.getCap((ServerPlayerEntity) event.getOriginal());
-			IRadiationEffect newCap = RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving());
-			if (event.isWasDeath())
-			{
-				newCap.setLevel(oldCap.getLevel());
-			}
-			else
-			{
-				newCap.setLevel(0.0F);
-			}
-		}
+//		@SubscribeEvent
+//		public static void onPlayerClone(PlayerEvent.Clone event)
+//		{
+//			/*if(event.isWasDeath())
+//			{
+//				event.getOriginal().revive();
+//				ITechVillagerTrust old = event.getOriginal().getCapability(TechVillagerTrust.INSTANCE).orElse(null);
+//				ITechVillagerTrust playercap = event.getPlayer().getCapability(TechVillagerTrust.INSTANCE).orElse(new TechVillagerTrust());
+//				if(old != null)
+//				{
+//					for(Entry<String, Integer> entry: old.getTrustsMap().entrySet())
+//					{
+//						playercap.setTrust(entry.getKey(), entry.getValue());
+//					}
+//				}
+//			}*/
+//			IRadiationEffect oldCap = RadiationEffect.getCap((ServerPlayerEntity) event.getOriginal());
+//			IRadiationEffect newCap = RadiationEffect.getCap((ServerPlayerEntity) event.getEntityLiving());
+//			if (event.isWasDeath())
+//			{
+//				newCap.setLevel(oldCap.getLevel());
+//			}
+//			else
+//			{
+//				newCap.setLevel(0.0F);
+//			}
+//		}
 
-	private static void syncRadiationCapWithClient(ServerPlayerEntity player)
-	{
-		PlantTech2PacketHandler.sendTo(new SyncRadiationLevelMessage(RadiationEffect.getCap(player).getLevel()), player);
-	}
+//	private static void syncRadiationCapWithClient(ServerPlayerEntity player)
+//	{
+//		PlantTech2PacketHandler.sendTo(new SyncRadiationLevelMessage(RadiationEffect.getCap(player).getLevel()), player);
+//	}
 }
