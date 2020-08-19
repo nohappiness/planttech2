@@ -62,17 +62,17 @@ public class RegistryEvents
 //		ModRecipeSerializers.registerAll(event);
 //	}
 
-	@SubscribeEvent
-	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
-	{
-		ModSounds.registerAll(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerPotions(RegistryEvent.Register<Effect> event)
-	{
-		ModEffects.registerAll(event.getRegistry());
-	}
+//	@SubscribeEvent
+//	public static void registerSounds(RegistryEvent.Register<SoundEvent> event)
+//	{
+//		ModSounds.registerAll(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerPotions(RegistryEvent.Register<Effect> event)
+//	{
+//		ModEffects.registerAll(event.getRegistry());
+//	}
 
 //	@SubscribeEvent
 //	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
