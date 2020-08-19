@@ -44,17 +44,17 @@ public class RegistryEvents
 		ModBlocks.register(event.getRegistry());
 	}
 
-	@SubscribeEvent
-	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
-	{
-		ModTileEntities.register(event.getRegistry());
-	}
-
-	@SubscribeEvent
-	public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
-	{
-		ModContainers.registerAll(event);
-	}
+//	@SubscribeEvent
+//	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+//	{
+//		ModTileEntities.register(event.getRegistry());
+//	}
+//
+//	@SubscribeEvent
+//	public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
+//	{
+//		ModContainers.registerAll(event);
+//	}
 
 //	@SubscribeEvent
 //	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
