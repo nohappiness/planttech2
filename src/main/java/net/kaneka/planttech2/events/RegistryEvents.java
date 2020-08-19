@@ -74,11 +74,11 @@ public class RegistryEvents
 		ModEffects.registerAll(event.getRegistry());
 	}
 
-	@SubscribeEvent
-	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
-	{
-		ModEntityTypes.registerAll(event.getRegistry());
-	}
+//	@SubscribeEvent
+//	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
+//	{
+//		ModEntityTypes.registerAll(event.getRegistry());
+//	}
 
 	/*
 	@SubscribeEvent
