@@ -28,14 +28,14 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents
 {
-	@SubscribeEvent
-	public static void registerItems(RegistryEvent.Register<Item> event)
-	{
-		ModItems.register(event.getRegistry());
-		ModBlocks.registerItemBlocks(event.getRegistry());
-		// new DropsJSONGenerator().defaultValues();
-		//new JsonGenerator().create();
-	}
+//	@SubscribeEvent
+//	public static void registerItems(RegistryEvent.Register<Item> event)
+//	{
+//		ModItems.register(event.getRegistry());
+//		ModBlocks.registerItemBlocks(event.getRegistry());
+//		// new DropsJSONGenerator().defaultValues();
+//		//new JsonGenerator().create();
+//	}
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event)

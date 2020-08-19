@@ -154,7 +154,7 @@ public class ModBlocks
 			registry.register(tempcrop);
 		}
 		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values());
-		registry.register(BIOMASSFLUIDBLOCK);
+//		registry.register(BIOMASSFLUIDBLOCK);
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
