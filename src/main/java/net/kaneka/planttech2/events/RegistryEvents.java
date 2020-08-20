@@ -40,7 +40,7 @@ public class RegistryEvents
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-		PlantTechMain.croplist.addPlanttechEntries();
+//		PlantTechMain.croplist.addPlanttechEntries();
 		ModBlocks.register(event.getRegistry());
 	}
 
