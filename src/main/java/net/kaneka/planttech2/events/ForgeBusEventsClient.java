@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
@@ -24,81 +25,81 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
 
-//@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class ForgeBusEventsClient
 {
-//    public static boolean hasSendUpdateAvailable = false;
-//
-//    @SubscribeEvent
-//    public static void onTextInsert(ClientChatEvent event)
-//    {
-//        PlayerEntity player = Minecraft.getInstance().player;
-//        if (player == null)
-//            return;
-//        int screen = 0;
-//        switch (event.getOriginalMessage())
-//        {
-//            case "/pt2 guide overview":
-//                screen = 1;
-//                break;
-//            case "/pt2 guide plant":
-//                screen = 2;
-//                break;
-//        }
-//        if (screen != 0)
-//        {
-//            player.getPersistentData().putInt("planttech2_screen_delay", screen);
-//            event.setCanceled(true);
-//        }
-//    }
-//
-//    @SubscribeEvent
-//    public static void onClientTick(TickEvent.ClientTickEvent event)
-//    {
-//        PlayerEntity player = Minecraft.getInstance().player;
-//        if (player != null)
-//        {
-//            CompoundNBT data = player.getPersistentData();
-//            if (data.contains("planttech2_screen_delay"))
-//            {
-//                Screen screen = null;
-//                switch (data.getInt("planttech2_screen_delay"))
-//                {
-//                    case 1:
-//                        screen = new GuideScreen();
-//                        break;
-//                    case 2:
-//                        screen = new GuidePlantsScreen();
-//                        break;
-//                }
-//                if (screen != null)
-//                {
-//                    Minecraft.getInstance().displayGuiScreen(screen);
-//                    data.putInt("planttech2_screen_delay", 0);
-//                }
-//            }
-//        }
-//    }
-//
-//    @SubscribeEvent
-//    public static void onWorldStart(EntityJoinWorldEvent evt)
-//    {
-//        VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
-//        if (evt.getEntity() instanceof ClientPlayerEntity && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
-//        {
-//            hasSendUpdateAvailable = true;
-//
-//            ITextComponent info = new TranslationTextComponent("planttech2.update.available");
-//            ITextComponent link = new TranslationTextComponent("planttech2.update.click");
-//            link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
-//                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
-//                    .setFormatting(TextFormatting.BLUE)
-//                    .setUnderlined(true);
-//            evt.getEntity().sendMessage(info.appendSibling(link));
-//            evt.getEntity().sendMessage(info, evt.getEntity().getUniqueID());
+    public static boolean hasSendUpdateAvailable = false;
+
+    @SubscribeEvent
+    public static void onTextInsert(ClientChatEvent event)
+    {
+        PlayerEntity player = Minecraft.getInstance().player;
+        if (player == null)
+            return;
+        int screen = 0;
+        switch (event.getOriginalMessage())
+        {
+            case "/pt2 guide overview":
+                screen = 1;
+                break;
+            case "/pt2 guide plant":
+                screen = 2;
+                break;
+        }
+        if (screen != 0)
+        {
+            player.getPersistentData().putInt("planttech2_screen_delay", screen);
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event)
+    {
+        PlayerEntity player = Minecraft.getInstance().player;
+        if (player != null)
+        {
+            CompoundNBT data = player.getPersistentData();
+            if (data.contains("planttech2_screen_delay"))
+            {
+                Screen screen = null;
+                switch (data.getInt("planttech2_screen_delay"))
+                {
+                    case 1:
+                        screen = new GuideScreen();
+                        break;
+                    case 2:
+                        screen = new GuidePlantsScreen();
+                        break;
+                }
+                if (screen != null)
+                {
+                    Minecraft.getInstance().displayGuiScreen(screen);
+                    data.putInt("planttech2_screen_delay", 0);
+                }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onWorldStart(EntityJoinWorldEvent evt)
+    {
+        VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
+        if (evt.getEntity() instanceof ClientPlayerEntity && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
+        {
+            hasSendUpdateAvailable = true;
+
+            TextComponent info = new TranslationTextComponent("planttech2.update.available");
+            TextComponent link = new TranslationTextComponent("planttech2.update.click");
+            link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
+                    .setFormatting(TextFormatting.BLUE)
+                    .setUnderlined(true);
+            evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUniqueID());
+            evt.getEntity().sendMessage(info, evt.getEntity().getUniqueID());
 //            TODO
-//        }
-//    }
+        }
+    }
 
 //    @SubscribeEvent
 //    public static void onFogRenderDensity(EntityViewRenderEvent.FogDensity event)

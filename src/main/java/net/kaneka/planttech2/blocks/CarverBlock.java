@@ -36,7 +36,7 @@ public class CarverBlock extends BaseBlock
 	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((p_199775_0_) -> {
 		return p_199775_0_.getKey().getAxis().isHorizontal();
 	}).collect(Util.toMapCollector());
-	
+
 	public CarverBlock()
 	{
 		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly(), "carver", ModCreativeTabs.groupmain, true, true);
@@ -46,12 +46,12 @@ public class CarverBlock extends BaseBlock
 				.with(SOUTH, Boolean.valueOf(false))
 		        .with(WEST, Boolean.valueOf(false)));
 	}
-	
+
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
 	{
 		List<Direction> directions = new ArrayList<Direction>();
-		directions.add(Direction.NORTH); 
+		directions.add(Direction.NORTH);
 		directions.add(Direction.EAST);
 		directions.add(Direction.SOUTH);
 		directions.add(Direction.WEST);
@@ -59,7 +59,7 @@ public class CarverBlock extends BaseBlock
 		for(Direction direction: directions)
 		{
 			BlockState state2 = world.getBlockState(pos.offset(direction));
-			Block block = state2.getBlock(); 
+			Block block = state2.getBlock();
 			if(checkForGrowable(block))
 			{
 				if(block == Blocks.IRON_BLOCK)
@@ -74,24 +74,24 @@ public class CarverBlock extends BaseBlock
 				{
 					((GrowingBlock)block).grow(state2, world, pos.offset(direction));
 				}
-				break; 
+				break;
 			}
 		}
-		
+
 	}
-	
+
 	@Override
 	public BlockRenderType getRenderType(BlockState iBlockState)
 	{
 		return BlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
 	{
-		return true; 
+		return true;
 	}
-	
+
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
@@ -107,7 +107,7 @@ public class CarverBlock extends BaseBlock
 			return state;
 		}
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
@@ -122,18 +122,18 @@ public class CarverBlock extends BaseBlock
 			return super.mirror(state, mirrorIn);
 		}
 	}
-	
+
 	private boolean checkForConnection(BlockState state)
 	{
 		Block block = state.getBlock();
 		return checkForGrowable(block) || block == ModBlocks.MACHINESHELL_IRON || block == ModBlocks.MACHINESHELL_PLANTIUM;
 	}
-	
+
 	private boolean checkForGrowable(Block block)
 	{
-		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block  == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ; 
+		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block  == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
@@ -141,7 +141,7 @@ public class CarverBlock extends BaseBlock
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL ? stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), Boolean.valueOf(this.checkForConnection(facingState)))
 		        : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
-	
+
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
@@ -153,12 +153,12 @@ public class CarverBlock extends BaseBlock
 		        .with(SOUTH, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.south()))))
 		        .with(WEST, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.west()))));
 	}
-	
+
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}
 
-	
+
 }

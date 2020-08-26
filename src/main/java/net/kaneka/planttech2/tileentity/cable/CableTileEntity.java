@@ -28,8 +28,6 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	private boolean isMaster = false;
 	private int[] connections = new int[] { 0, 0, 0, 0, 0, 0 };
 	private int maxTransferRate = 20;
-	/*private int printInterval = 0;
-	private boolean shouldPrint = true;*/
 	private boolean connectionUpdated = true;
 	private List<BlockPos> cables = new ArrayList<BlockPos>();
 	private HashMap<Integer, List<Connection>> connectionsMaster = new HashMap<Integer, List<Connection>>()
@@ -52,23 +50,9 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-		/*printInterval++;
-		if (printInterval == 20 && shouldPrint)
-		{
-			System.out.println("masterPos:" + masterPos);
-			System.out.println("producer:" + producer);
-			System.out.println("consumer:" + consumer);
-			System.out.println("----------------------------------------------------------------------------");
-			printInterval = 0;
-		}*/
 		if (world != null && !world.isRemote && isMaster)
 		{
 			transferEnergy();
-			/*if (printInterval == 20 && shouldPrint)
-			{
-				System.out.println("producer:" + producer);
-				System.out.println("consumer:" + consumer);
-			}*/
 		}
 	}
 
@@ -401,7 +385,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		for (Direction facing : Direction.values())
 		{
 			te = world.getTileEntity(this.getPos().offset(facing));
-			if (isTECable(te))
+			if (te instanceof CableTileEntity)
 			{
 				neighborCables.add(this.pos.offset(facing));
 			}
@@ -685,17 +669,13 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		return null;
 	}
 
-
-
 	// calls sendUpdates() if there's any connections to other TE that has
 	// energy and cause state change
 	public void checkConnections(boolean neighborChanged)
 	{
 		boolean shouldSendChanges = false;
 		if (world == null)
-		{
 			return;
-		}
 		for (Direction facing : Direction.values())
 		{
 			TileEntity te = world.getTileEntity(this.pos.offset(facing));
@@ -718,13 +698,10 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 					}
 				}
 			}
-			else
+			else if (getConnection(facing) != 0)
 			{
-				if (getConnection(facing) != 0)
-				{
-					this.setConnection(facing, 0);
-					shouldSendChanges = true;
-				}
+				this.setConnection(facing, 0);
+				shouldSendChanges = true;
 			}
 		}
 		if (!world.isRemote)
@@ -783,17 +760,12 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 		setConnection(Direction.byIndex(i), next);
 	}
 
-	boolean isTECable(TileEntity te)
-	{
-		return te instanceof CableTileEntity;
-	}
-
 	private CableTileEntity getTECable(BlockPos pos)
 	{
 		if(world != null && !world.isRemote)
 		{
 			TileEntity te = world.getTileEntity(pos);
-			if (isTECable(te))
+			if (te instanceof CableTileEntity)
 			{
 				return (CableTileEntity) te;
 			}

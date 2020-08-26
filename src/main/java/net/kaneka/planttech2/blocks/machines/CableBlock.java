@@ -132,12 +132,6 @@ public class CableBlock extends BaseBlock
 	}
 
 	@Override
-	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state)
-	{
-		return new ItemStack(ModBlocks.CABLE);
-	}
-
-	@Override
 	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
 	{
 		CableTileEntity te = getTECable(world, pos);
@@ -332,10 +326,6 @@ public class CableBlock extends BaseBlock
 	private CableTileEntity getTECable(World world, BlockPos pos)
 	{
 		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof CableTileEntity)
-		{
-			return (CableTileEntity) te;
-		}
-		return null;
+		return te instanceof CableTileEntity ? (CableTileEntity) te : null;
 	}
 }

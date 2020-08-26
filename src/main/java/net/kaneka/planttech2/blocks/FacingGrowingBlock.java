@@ -21,7 +21,7 @@ public class FacingGrowingBlock extends GrowingBlock
 		super(name, block, growAlone);
 		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, Integer.valueOf(0)).with(FACING, Direction.NORTH));
 	}
-	
+
 	@Override
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{

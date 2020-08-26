@@ -118,7 +118,7 @@ public class RecipeGetter
 		}
 		return results;
 	}
-	
+
 	public static List<MachineGrowingRecipe> getMachineGrowingRecipes()
 	{
 		List<MachineGrowingRecipe> results = new ArrayList<MachineGrowingRecipe>();

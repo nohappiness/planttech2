@@ -33,7 +33,7 @@ public class ModBlocks
 	public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(() -> ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()).setRegistryName("biomassfluid_block");
 
 	public static BaseBlock
-			CABLE = new CableBlock(), 
+			CABLE = new TestCableBlock(),
 			CARVER = new CarverBlock(),
 			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
 			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
@@ -118,16 +118,16 @@ public class ModBlocks
 	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
 							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),
 							MACHINESHELL_PLANTIUM_GROWING = new GrowingBlock("machineshell_plantium_growing", ModBlocks.MACHINESHELL_PLANTIUM, false),
-							SEEDSQUEEZER_GROWING = new FacingGrowingBlock("seedsqueezer_growing", ModBlocks.SEEDSQUEEZER, true), 
+							SEEDSQUEEZER_GROWING = new FacingGrowingBlock("seedsqueezer_growing", ModBlocks.SEEDSQUEEZER, true),
                 			CHIPALYZER_GROWING = new FacingGrowingBlock("chipalyzer_growing", ModBlocks.CHIPALYZER, true),
-                			COMPRESSOR_GROWING = new FacingGrowingBlock("compressor_growing", ModBlocks.COMPRESSOR, true), 
-                	        DNA_CLEANER_GROWING = new FacingGrowingBlock("dna_cleaner_growing", ModBlocks.DNA_CLEANER, true), 
+                			COMPRESSOR_GROWING = new FacingGrowingBlock("compressor_growing", ModBlocks.COMPRESSOR, true),
+                	        DNA_CLEANER_GROWING = new FacingGrowingBlock("dna_cleaner_growing", ModBlocks.DNA_CLEANER, true),
                 	        DNA_COMBINER_GROWING = new FacingGrowingBlock("dna_combiner_growing", ModBlocks.DNA_COMBINER, true),
-                	        DNA_EXTRACTOR_GROWING = new FacingGrowingBlock("dna_extractor_growing", ModBlocks.DNA_EXTRACTOR, true), 
+                	        DNA_EXTRACTOR_GROWING = new FacingGrowingBlock("dna_extractor_growing", ModBlocks.DNA_EXTRACTOR, true),
                 	        DNA_REMOVER_GROWING = new FacingGrowingBlock("dna_remover_growing", ModBlocks.DNA_REMOVER, true),
                 	        IDENTIFIER_GROWING = new FacingGrowingBlock("identifier_growing", ModBlocks.IDENTIFIER, true),
                 	        INFUSER_GROWING = new FacingGrowingBlock("infuser_growing", ModBlocks.INFUSER, true),
-                	        MEGAFURNACE_GROWING = new FacingGrowingBlock("mega_furnace_growing", ModBlocks.MEGAFURNACE, true), 
+                	        MEGAFURNACE_GROWING = new FacingGrowingBlock("mega_furnace_growing", ModBlocks.MEGAFURNACE, true),
                 	        PLANTFARM_GROWING = new GrowingBlock("plantfarm_growing", ModBlocks.PLANTFARM, true),
                 	        ENERGY_SUPPLIER_GROWING = new GrowingBlock("energy_supplier_growing", ModBlocks.ENERGY_SUPPLIER, true),
                 	        SEEDCONSTRUCTOR_GROWING = new FacingGrowingBlock("seedconstructor_growing", ModBlocks.SEEDCONSTRUCTOR, true),
@@ -154,7 +154,7 @@ public class ModBlocks
 			registry.register(tempcrop);
 		}
 		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values());
-//		registry.register(BIOMASSFLUIDBLOCK);
+		registry.register(BIOMASSFLUIDBLOCK);
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)

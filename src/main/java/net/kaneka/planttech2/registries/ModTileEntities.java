@@ -3,6 +3,7 @@ package net.kaneka.planttech2.registries;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
 import net.kaneka.planttech2.tileentity.cable.CableTileEntity;
+import net.kaneka.planttech2.tileentity.cable.TestCableTileEntity;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.*;
 import net.minecraft.block.Block;
@@ -17,7 +18,7 @@ public class ModTileEntities
     public static final TileEntityType<SeedSqueezerTileEntity> SEEDSQUEEZER_TE = TileEntityType.Builder.create(SeedSqueezerTileEntity::new, ModBlocks.SEEDSQUEEZER).build(null); 
     public static final TileEntityType<SolarGeneratorTileEntity> SOLARGENERATOR_TE = TileEntityType.Builder.create(SolarGeneratorTileEntity::new, ModBlocks.SOLARGENERATOR).build(null); 
     public static final TileEntityType<PlantFarmTileEntity> PLANTFARM_TE = TileEntityType.Builder.create(PlantFarmTileEntity::new, ModBlocks.PLANTFARM).build(null); 
-    public static final TileEntityType<CableTileEntity> CABLE_TE = TileEntityType.Builder.create(CableTileEntity::new, ModBlocks.CABLE).build(null); 
+    public static final TileEntityType<TestCableTileEntity> CABLE_TE = TileEntityType.Builder.create(TestCableTileEntity::new, ModBlocks.CABLE).build(null);
     public static final TileEntityType<DNAExtractorTileEntity> DNAEXTRACTOR_TE = TileEntityType.Builder.create(DNAExtractorTileEntity::new, ModBlocks.DNA_EXTRACTOR).build(null); 
     public static final TileEntityType<DNARemoverTileEntity> DNAREMOVER_TE = TileEntityType.Builder.create(DNARemoverTileEntity::new, ModBlocks.DNA_REMOVER).build(null); 
     public static final TileEntityType<DNACleanerTileEntity> DNACLEANER_TE = TileEntityType.Builder.create(DNACleanerTileEntity::new, ModBlocks.DNA_CLEANER).build(null); 

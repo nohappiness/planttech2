@@ -15,27 +15,27 @@ import net.minecraft.world.World;
 
 public class MachineBulbItem extends BaseItem
 {
-	private Block crop, hull; 
-	private int tier; 
-	private int neededBiomass; 
+	private Block crop, hull;
+	private int tier;
+	private int neededBiomass;
 
 	public MachineBulbItem(String name, Block hull, Block crop, int tier, int neededBiomass)
 	{
 		super(name, new Item.Properties().group(ModCreativeTabs.groupseeds));
-		this.hull = hull; 
-		this.crop = crop; 
-		this.tier = tier; 
-		this.neededBiomass = neededBiomass; 
-		ModItems.MACHINEBULBS.add(this); 
+		this.hull = hull;
+		this.crop = crop;
+		this.tier = tier;
+		this.neededBiomass = neededBiomass;
+		ModItems.MACHINEBULBS.add(this);
 	}
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 		World world = ctx.getWorld();
-		BlockPos pos = ctx.getPos(); 
-		Block target = world.getBlockState(pos).getBlock(); 
-		ItemStack stack = ctx.getItem(); 
+		BlockPos pos = ctx.getPos();
+		Block target = world.getBlockState(pos).getBlock();
+		ItemStack stack = ctx.getItem();
 		if(target != null)
 		{
 			if(target.equals(hull))
@@ -47,47 +47,47 @@ public class MachineBulbItem extends BaseItem
 					{
         				world.setBlockState(pos, crop.getDefaultState().with(FacingGrowingBlock.FACING, direction));
         				stack.shrink(1);
-        				return ActionResultType.CONSUME; 
+        				return ActionResultType.CONSUME;
 					}
 				}
 				else
 				{
 					world.setBlockState(pos, crop.getDefaultState());
     				stack.shrink(1);
-    				return ActionResultType.CONSUME; 
+    				return ActionResultType.CONSUME;
 				}
 			}
 		}
 		return ActionResultType.FAIL;
 	}
-	
+
 	public int getTier()
 	{
 		return tier;
 	}
-	
+
 	public Block getHull()
 	{
-		return hull; 
+		return hull;
 	}
-	
+
 	public Block getCrop()
 	{
-		return crop; 
+		return crop;
 	}
-	
+
 	public Block getMachine()
 	{
 		if(crop instanceof GrowingBlock)
 		{
-			return crop.getBlock(); 
+			return crop.getBlock();
 		}
-		return crop; 
+		return crop;
 	}
-	
+
 	public int getNeededBiomass()
 	{
-		return neededBiomass; 
+		return neededBiomass;
 	}
-	
+
 }

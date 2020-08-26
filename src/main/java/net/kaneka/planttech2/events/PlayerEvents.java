@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.logging.log4j.core.jmx.Server;
 
-//@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
+@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class PlayerEvents
 {
 //	@SubscribeEvent

@@ -113,34 +113,34 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 		if(selectedId > 0 && selectedId <= ModItems.MACHINEBULBS.size())
 		{
 
-			MachineBulbItem bulb = ModItems.MACHINEBULBS.get(selectedId-1); 
+			MachineBulbItem bulb = ModItems.MACHINEBULBS.get(selectedId-1);
     		if (energystorage.getEnergyStored() >= energyPerItem() && bulb.getTier() <= actualTier && BIOMASS_CAP.getCurrentStorage() >= bulb.getNeededBiomass())
     		{
     			ItemStack input = itemhandler.getStackInSlot(0);
-    			ItemStack output = itemhandler.getStackInSlot(1); 
+    			ItemStack output = itemhandler.getStackInSlot(1);
     			if(!input.isEmpty() && output.isEmpty())
     			{
     				if(Items.SEEDS.contains(input.getItem()) || input.getItem() instanceof CropSeedItem)
     				{
     					if(ticksPassed < ticksPerItem())
     					{
-    						ticksPassed++; 
+    						ticksPassed++;
     					}
     					else
     					{
     						energystorage.extractEnergy(energyPerItem());
 							BIOMASS_CAP.extractBiomass(bulb.getNeededBiomass());
     						input.shrink(1);
-    						ticksPassed = 0; 
+    						ticksPassed = 0;
     						itemhandler.setStackInSlot(1, new ItemStack(bulb));
     						addKnowledge();
     					}
     				}
     			}
-    			
+
     		}
 		}
-		checkTier(); 
+		checkTier();
 		doEnergyLoop();
 		doFluidLoop();
 	}

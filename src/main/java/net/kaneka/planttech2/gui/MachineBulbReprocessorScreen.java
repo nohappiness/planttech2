@@ -139,14 +139,14 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 		int y = 0; 
 		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
 		{
-			Block machine = bulb.getMachine(); 
+			Block machine = bulb.getMachine();
 			if(machine != null)
 				drawTooltip(mStack, new ItemStack(machine).getHighlightTip(machine.getTranslatedName()).getString(), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
-			x++; 
+			x++;
 			if(x > 4)
 			{
-				x = 0; 
-				y++; 
+				x = 0;
+				y++;
 			}
 		}
 	    super.drawTooltips(mStack, mouseX, mouseY);
@@ -160,7 +160,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
     	    for(int x = 0; x < 5; x++)
     	    {
         		if(inItemStackArea(mouseX, mouseY, 59 + x * 18, 27 + y * 18) && x + y * 5 < ModItems.MACHINEBULBS.size())
-        		{ 
+        		{
         		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 5 + 1));
         		}
     	    }

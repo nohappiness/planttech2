@@ -16,7 +16,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-//@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
+@Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class AttachCapabilityEvents
 {
 //    @SubscribeEvent
@@ -40,33 +40,29 @@ public class AttachCapabilityEvents
 //        }
 //    }
 
-//    @SubscribeEvent
-//    public static void attachItemStackCapability(final AttachCapabilitiesEvent<ItemStack> event)
-//    {
-        //add a checking here because somehow it passes a server world at the end of the event
+    @SubscribeEvent
+    public static void attachItemStackCapability(final AttachCapabilitiesEvent<ItemStack> event)
+    {
+//        add a checking here because somehow it passes a server world at the end of the event
 //      [00:39:00] [Server thread/INFO] [STDOUT/]: [net.kaneka.planttech2.events.AttachCapabilityEvents:attachItemStackCapability:45]: 1 carrot
 //      [00:39:11] [Server thread/INFO] [STDOUT/]: [net.kaneka.planttech2.events.AttachCapabilityEvents:attachItemStackCapability:45]: net.minecraft.world.server.ServerWorld@38766f34
-//        if(event.getObject() instanceof ItemStack)
-//        {
-//            if (event.getObject().getItem() instanceof BiomassContainerItem)
-//            {
-//                if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
-//                {
-//                    event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
-//                }
-//            }
-//        }
-//    }
+        if(event.getObject() instanceof ItemStack)
+        {
+            if (event.getObject().getItem() instanceof BiomassContainerItem)
+            {
+                if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
+                {
+                    event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
+                }
+            }
+        }
+    }
 
-//    @SubscribeEvent
-//    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<TileEntity> event)
-//    {
-//        if(event.getObject() instanceof EnergyInventoryFluidTileEntity)
-//        {
-//            if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
-//            {
-//                event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
-//            }
-//        }
-//    }
+    @SubscribeEvent
+    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<TileEntity> event)
+    {
+        if(event.getObject() instanceof EnergyInventoryFluidTileEntity)
+            if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
+                event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
+    }
 }
