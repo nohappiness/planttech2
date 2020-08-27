@@ -284,11 +284,11 @@ public class RecipeJSONGenerator
 		create2x2Recipe(new ItemStack(ModBlocks.CROPBARS), 1, new ItemStack(Items.STICK));
 		
 		createShapedRecipeFileItem("AAA", "BCB", "AAA", new ItemStack(ModBlocks.MEGAFURNACE), 1, new ItemStack(Blocks.FURNACE), new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.PLANTIUM_BLOCK));
-		createShapedRecipeFileItem("AAA", "BCB", "AAA", new ItemStack(ModBlocks.IDENTIFIER), 1, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.CABLE), new ItemStack(ModItems.ANALYSER));
-		createShapedRecipeFileItem("ACA", "B B", "ACA", new ItemStack(ModBlocks.SEEDSQUEEZER), 1, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.CABLE), new ItemStack(Blocks.PISTON));
-		createShapedRecipeFileItem("AAA", "BCB", "DDD", new ItemStack(ModBlocks.SOLARGENERATOR), 1, new ItemStack(Items.EMERALD), new ItemStack(ModBlocks.CABLE), new ItemStack(Blocks.DAYLIGHT_DETECTOR), new ItemStack(ModItems.PLANTIUM_INGOT));
-		createShapedRecipeFileItem("AAA", "BCB", "AAA", new ItemStack(ModBlocks.PLANTFARM), 1, new ItemStack(ModBlocks.PLANTIUM_BLOCK), new ItemStack(ModBlocks.CABLE), new ItemStack(Items.DIAMOND_HOE));
-		createShapedRecipeFileItem(" A ", "ABA", " A ", new ItemStack(ModBlocks.CABLE), 16, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.PLANTIUM_BLOCK));
+		//createShapedRecipeFileItem("AAA", "BCB", "AAA", new ItemStack(ModBlocks.IDENTIFIER), 1, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.CABLE), new ItemStack(ModItems.ANALYSER));
+		//createShapedRecipeFileItem("ACA", "B B", "ACA", new ItemStack(ModBlocks.SEEDSQUEEZER), 1, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.CABLE), new ItemStack(Blocks.PISTON));
+		//createShapedRecipeFileItem("AAA", "BCB", "DDD", new ItemStack(ModBlocks.SOLARGENERATOR), 1, new ItemStack(Items.EMERALD), new ItemStack(ModBlocks.CABLE), new ItemStack(Blocks.DAYLIGHT_DETECTOR), new ItemStack(ModItems.PLANTIUM_INGOT));
+		//createShapedRecipeFileItem("AAA", "BCB", "AAA", new ItemStack(ModBlocks.PLANTFARM), 1, new ItemStack(ModBlocks.PLANTIUM_BLOCK), new ItemStack(ModBlocks.CABLE), new ItemStack(Items.DIAMOND_HOE));
+		//createShapedRecipeFileItem(" A ", "ABA", " A ", new ItemStack(ModBlocks.CABLE), 16, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(ModBlocks.PLANTIUM_BLOCK));
 		
 		createShapedRecipeFileItem("ABA", "A A", "AAA", new ItemStack(ModItems.DNA_CONTAINER_EMPTY), 16, new ItemStack(Blocks.GLASS_PANE), new ItemStack(Blocks.BIRCH_PLANKS));
 		createShapedRecipeFileItem("ABA", "ACA", "AAA", new ItemStack(ModBlocks.DNA_CLEANER), 1, new ItemStack(ModItems.PLANTIUM_INGOT), new ItemStack(Items.FLINT), new ItemStack(ModItems.DNA_CONTAINER_EMPTY));
