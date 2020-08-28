@@ -81,6 +81,7 @@ public class TestCableBlock extends Block
             put(Direction.EAST, makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));// EAST
         }
     };
+    public static final Map<List<Integer>, VoxelShape> SHAPES_CACHE = new HashMap<>();
 
     public TestCableBlock()
     {
@@ -233,6 +234,11 @@ public class TestCableBlock extends Block
 
     private VoxelShape getCombinedShape(BlockState state)
     {
+        List<Integer> key = getShapeKey(state);
+        if (SHAPES_CACHE.containsKey(key))
+        {
+            return SHAPES_CACHE.get(key);
+        }
         VoxelShape shape = POST;
         for (Direction dir : Direction.values())
         {
@@ -244,7 +250,18 @@ public class TestCableBlock extends Block
                     shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(dir));
             }
         }
+        SHAPES_CACHE.put(key, shape);
         return shape;
+    }
+
+    private List<Integer> getShapeKey(BlockState state)
+    {
+        List<Integer> result = new ArrayList<>();
+        for (Direction dir : Direction.values())
+        {
+            result.add(state.get(DIRECTIONS.get(dir)));
+        }
+        return result;
     }
 
     private TestCableTileEntity getTECable(World world, BlockPos pos)
