@@ -26,6 +26,9 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+import static net.kaneka.planttech2.utilities.PlantTechConstants.*;
+
 public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 {
 	private int fluidInfused = 0;
@@ -95,7 +98,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 
 	public InfuserTileEntity()
 	{
-		super(ModTileEntities.INFUSER_TE, 1000, 8, 5000, PlantTechConstants.MACHINETIER_INFUSER);
+		super(ModTileEntities.INFUSER_TE, 1000, 8, 5000, MACHINETIER_INFUSER);
 		inputs = new RangedWrapper(itemhandler, 0,1); 
 		outputs = new RangedWrapper(itemhandler, 1, 2); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -194,12 +197,12 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 
 	public int energyPerTick()
 	{
-		return 4 + (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+		return 4 + (getUpgradeTier(2, SPEED_UPGRADE) * 4);
 	}
 
 	public int fluidPerTick()
 	{
-		return 5 + (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 3);
+		return 5 + (getUpgradeTier(2, SPEED_UPGRADE) * 3);
 	}
 
 	@Override

@@ -1,14 +1,10 @@
 package net.kaneka.planttech2.blocks;
 
-import javax.annotation.Nullable;
-
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.blocks.colors.IColoredBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -22,15 +18,17 @@ import net.minecraft.world.IWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class GlassPaneEnd extends BaseBlock implements IColoredBlock
+import javax.annotation.Nullable;
+
+public class GlassPaneEnd extends Block implements IColoredBlock
 {
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<AttachFace> FACE = BlockStateProperties.FACE;
 	private final int colorInt;  
 
-	public GlassPaneEnd(Properties property, String name, int color, ItemGroup group, boolean hasItem)
+	public GlassPaneEnd(Properties property, int color)
 	{
-		super(property.notSolid(), name, group, hasItem, true);
+		super(property.notSolid());
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(FACE, AttachFace.WALL));
 		this.colorInt = color; 
 	}

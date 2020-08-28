@@ -34,7 +34,6 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		if (this.world != null && !this.world.isRemote)
 		{
-
 			if ((world.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
 			{
 				Block block = world.getBlockState(pos).getBlock();

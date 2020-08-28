@@ -30,14 +30,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CropSeedItem extends BaseItem {
-	private String entryName;
+public class CropSeedItem extends Item {
+	private final String entryName;
 	private int TRAIT_MIN=0;
 	private int TRAIT_MAX=1;
 
 	public CropSeedItem(String entryName)
 	{
-		super(entryName + "_seeds", new Item.Properties().group(ModCreativeTabs.groupseeds));
+		super(new Item.Properties().group(ModCreativeTabs.SEEDS));
 		this.entryName = entryName;
 		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
 		{

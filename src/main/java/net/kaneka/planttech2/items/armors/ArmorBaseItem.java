@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.items.armors;
 
-import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -9,15 +8,12 @@ import net.minecraft.item.ItemStack;
 
 public class ArmorBaseItem extends ArmorItem
 {
-    private String resString;
+    private final String resString;
 
-    public ArmorBaseItem(String name, String resString, IArmorMaterial mat, EquipmentSlotType equipmentSlotIn, Properties properties)
+    public ArmorBaseItem(String resString, IArmorMaterial mat, EquipmentSlotType equipmentSlotIn, Properties properties)
     {
 	super(mat, equipmentSlotIn, properties);
-	this.resString = resString; 
-	setRegistryName(name);
-	
-	ModItems.ITEMSARMOR.add(this);
+	this.resString = resString;
     }
 
 

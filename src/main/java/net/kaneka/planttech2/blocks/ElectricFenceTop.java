@@ -5,7 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.*;
@@ -37,9 +36,9 @@ public class ElectricFenceTop extends BaseElectricFence
             Block.makeCuboidShape(0.10D, 7.0D, 10.0D, 15.90D, 10.0D, 13.0D),
             Block.makeCuboidShape(0.10D, 10.0D, 13.0D, 15.90D, 13.0D, 15.90D));
 
-    public ElectricFenceTop(Properties property, String name, ItemGroup group, boolean hasItem)
+    public ElectricFenceTop(Properties property)
     {
-        super(property, name, group, hasItem);
+        super(property);
         setDefaultState(getDefaultState()
                 .with(ELECTRIC_POWER, 0)
                 .with(HORIZONTAL_FACING, Direction.NORTH));
@@ -57,7 +56,7 @@ public class ElectricFenceTop extends BaseElectricFence
     {
         return getDefaultState()
                 .with(HORIZONTAL_FACING, stateIn.get(HORIZONTAL_FACING))
-                .with(ELECTRIC_POWER, updatePower((World) worldIn, currentPos));
+                .with(ELECTRIC_POWER, calculatePower((World) worldIn, currentPos));
     }
 
     @Override
@@ -65,7 +64,7 @@ public class ElectricFenceTop extends BaseElectricFence
     {
         return this.getDefaultState()
                 .with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing())
-                .with(ELECTRIC_POWER, updatePower(context.getWorld(), context.getPos()));
+                .with(ELECTRIC_POWER, calculatePower(context.getWorld(), context.getPos()));
     }
 
     @SuppressWarnings("deprecation")

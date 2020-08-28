@@ -1,19 +1,13 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.CableTileEntity;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
@@ -23,10 +17,10 @@ import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -35,7 +29,7 @@ import net.minecraftforge.energy.CapabilityEnergy;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CableBlock extends BaseBlock
+public class CableBlock extends Block
 {
 	public static final IntegerProperty
 			NORTH = IntegerProperty.create("north", 0, 3),
@@ -86,7 +80,7 @@ public class CableBlock extends BaseBlock
 
 	public CableBlock()
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupmachines, true);
+		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F));
 		this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
 	}
 
@@ -152,11 +146,6 @@ public class CableBlock extends BaseBlock
 	public TileEntity createTileEntity(BlockState state, IBlockReader world)
 	{
 		return new CableTileEntity();
-	}
-
-	public Item createItemBlock()
-	{
-		return new BlockItem(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
 	}
 
 	@SuppressWarnings("deprecation")

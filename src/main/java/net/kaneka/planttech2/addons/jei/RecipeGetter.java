@@ -3,6 +3,7 @@ package net.kaneka.planttech2.addons.jei;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.addons.jei.carver.CarverRecipe;
@@ -112,9 +113,9 @@ public class RecipeGetter
 	public static List<MachinebulbReprocessorRecipe> getMachinebulbReprocessorRecipes()
 	{
 		List<MachinebulbReprocessorRecipe> results = new ArrayList<MachinebulbReprocessorRecipe>();
-		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			results.add(new MachinebulbReprocessorRecipe(bulb.getTier(), new ItemStack(bulb), bulb.getNeededBiomass()));
+			results.add(new MachinebulbReprocessorRecipe(bulb.get().getTier(), new ItemStack(bulb.get()), bulb.get().getNeededBiomass()));
 		}
 		return results;
 	}
@@ -122,9 +123,9 @@ public class RecipeGetter
 	public static List<MachineGrowingRecipe> getMachineGrowingRecipes()
 	{
 		List<MachineGrowingRecipe> results = new ArrayList<MachineGrowingRecipe>();
-		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			results.add(new MachineGrowingRecipe(new ItemStack(bulb), new ItemStack(bulb.getHull()), new ItemStack(bulb.getMachine())));
+			results.add(new MachineGrowingRecipe(new ItemStack(bulb.get()), new ItemStack(bulb.get().getHull()), new ItemStack(bulb.get().getMachine())));
 		}
 		return results;
 	}

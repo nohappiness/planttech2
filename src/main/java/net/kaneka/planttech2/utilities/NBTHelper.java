@@ -3,59 +3,49 @@ package net.kaneka.planttech2.utilities;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
+import static net.minecraftforge.common.util.Constants.NBT.TAG_ANY_NUMERIC;
+
 public class NBTHelper
 {
-	public static int getIntSave(ItemStack stack, String key, int value)
+	public static int getInt(ItemStack stack, String key, int defaultValue)
 	{
-		return getIntSave(stack.getTag(), key, value);  
+		return getInt(stack.getTag(), key, defaultValue);
 	}
-	
-	public static int getIntSave(CompoundNBT nbt, String key,  int value)
+
+	public static int getInt(CompoundNBT nbt, String key, int defaultValue)
 	{
-		if(nbt != null)
+		if (nbt != null && nbt.contains(key, TAG_ANY_NUMERIC))
 		{
-			if(nbt.contains(key))
-			{
-				return nbt.getInt(key); 
-			}
+			return nbt.getInt(key);
 		}
-		
-		return value; 
+		return defaultValue;
 	}
-	
-	public static float getFloatSave(ItemStack stack, String key, int value)
+
+	public static float getFloat(ItemStack stack, String key, int defaultValue)
 	{
-		return getFloatSave(stack.getTag(), key, value);  
+		return getFloat(stack.getTag(), key, defaultValue);
 	}
-	
-	public static float getFloatSave(CompoundNBT nbt, String key,  float value)
+
+	public static float getFloat(CompoundNBT nbt, String key, float defaultValue)
 	{
-		if(nbt != null)
+		if (nbt != null && nbt.contains(key, TAG_ANY_NUMERIC))
 		{
-			if(nbt.contains(key))
-			{
-				return nbt.getFloat(key); 
-			}
+			return nbt.getFloat(key);
 		}
-		
-		return value; 
+		return defaultValue;
 	}
-	
-	public static boolean getBooleanSave(ItemStack stack, String key, boolean value)
+
+	public static boolean getBoolean(ItemStack stack, String key, boolean defaultValue)
 	{
-		return getBooleanSave(stack.getTag(), key, value); 
+		return getBoolean(stack.getTag(), key, defaultValue);
 	}
-	
-	public static boolean getBooleanSave(CompoundNBT nbt, String key,  boolean value)
+
+	public static boolean getBoolean(CompoundNBT nbt, String key, boolean defaultValue)
 	{
-		if(nbt != null)
+		if (nbt != null && nbt.contains(key))
 		{
-			if(nbt.contains(key))
-			{
-				return nbt.getBoolean(key); 
-			}
+			return nbt.getBoolean(key);
 		}
-		
-		return value; 
+		return defaultValue;
 	}
 }

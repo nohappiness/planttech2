@@ -22,6 +22,8 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
+
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
 	private int[] progress = new int[5]; 
@@ -104,7 +106,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	@Override
 	public void doUpdate()
 	{
-		int range = getRange(); 
+		int range = getRange();
 		ItemStack seed = itemhandler.getStackInSlot(0);
 		if(!seed.isEmpty())
 		{
@@ -261,7 +263,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			if (stack.getItem() instanceof TierItem)
 			{
 				TierItem item = (TierItem) stack.getItem();
-				if (item.getItemType() == PlantTechConstants.RANGEUPGRADE_TYPE)
+				if (item.getItemType() == RANGE_UPGRADE)
 				{
 					return item.getTier();
 				}

@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.kaneka.planttech2.blocks.ElectricFenceGate;
-import net.kaneka.planttech2.blocks.FibreFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
@@ -17,16 +15,16 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public abstract class AbstractCustomFence extends BaseBlock
+public abstract class AbstractCustomFence extends Block
 {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
     public static final BooleanProperty SOUTH = BooleanProperty.create("south");
     public static final BooleanProperty WEST = BooleanProperty.create("west");
 
-    public AbstractCustomFence(Properties property, String name, ItemGroup group, boolean hasItem)
+    public AbstractCustomFence(Properties property)
     {
-        super(property.notSolid(), name, group, hasItem);
+        super(property.notSolid());
     }
 
     @Override

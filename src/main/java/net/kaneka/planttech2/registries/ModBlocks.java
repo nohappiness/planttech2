@@ -1,149 +1,280 @@
 package net.kaneka.planttech2.registries;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.*;
-import net.kaneka.planttech2.blocks.baseclasses.*;
-import net.kaneka.planttech2.blocks.machines.*;
+import net.kaneka.planttech2.blocks.CarverBlock;
+import net.kaneka.planttech2.blocks.CropBarsBlock;
+import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.ElectricFence;
+import net.kaneka.planttech2.blocks.ElectricFenceGate;
+import net.kaneka.planttech2.blocks.ElectricFenceTop;
+import net.kaneka.planttech2.blocks.FacingGrowingBlock;
+import net.kaneka.planttech2.blocks.GlassPaneEnd;
+import net.kaneka.planttech2.blocks.GlassPanePillar;
+import net.kaneka.planttech2.blocks.GrowingBlock;
+import net.kaneka.planttech2.blocks.ObtainableTallBushBlock;
+import net.kaneka.planttech2.blocks.WallLight;
+import net.kaneka.planttech2.blocks.baseclasses.BaseOreBlock;
+import net.kaneka.planttech2.blocks.baseclasses.CustomDoorBlock;
+import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
+import net.kaneka.planttech2.blocks.baseclasses.CustomSlabBlock;
+import net.kaneka.planttech2.blocks.baseclasses.CustomStairsBlock;
+import net.kaneka.planttech2.blocks.baseclasses.ObtainableNaturalPlants;
+import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
+import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
+import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
+import net.kaneka.planttech2.blocks.machines.MachineFacingBlock;
+import net.kaneka.planttech2.blocks.machines.MachineTeleporterEndBlock;
+import net.kaneka.planttech2.blocks.machines.TestCableBlock;
 import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
+import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
+import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
+import net.kaneka.planttech2.tileentity.machine.DNAExtractorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
+import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
+import net.kaneka.planttech2.tileentity.machine.EnergySupplierTileEntity;
+import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
+import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
+import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
+import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
+import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
+import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
+import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
+import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
+import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import static net.kaneka.planttech2.utilities.ModCreativeTabs.*;
+import static net.minecraft.block.AbstractBlock.Properties.create;
+
+@ObjectHolder(PlantTechMain.MODID)
 public class ModBlocks
 {
-	public static List<BaseBlock> BLOCKS = new ArrayList<BaseBlock>();
-	public static List<Block> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
-	public static List<BaseBlock> BLOCKITEMS = new ArrayList<BaseBlock>();
-	public static Block BIOMASSFLUIDBLOCK = new FlowingFluidBlock(() -> ModFluids.BIOMASS, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops()).setRegistryName("biomassfluid_block");
+	public static List<Supplier<? extends Block>> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
+	public static List<Supplier<? extends Item>> BLOCK_ITEM_SUPPLIERS = new ArrayList<>();
+	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<>();
 
-	public static BaseBlock
-			CABLE = new TestCableBlock(),
-			CARVER = new CarverBlock(),
-			CHIPALYZER = new MachineFacingBlock("chipalyzer", ModCreativeTabs.groupmachines),
-			COMPRESSOR = new MachineFacingBlock("compressor", ModCreativeTabs.groupmachines), 
-			CROPBARS = new CropBarsBlock(),
-	        DANCIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "dancium_block", ModCreativeTabs.groupblocks, true),
-	        DNA_CLEANER = new MachineFacingBlock("dna_cleaner", ModCreativeTabs.groupmachines), 
-	        DNA_COMBINER = new MachineFacingBlock("dna_combiner", ModCreativeTabs.groupmachines),
-	        DNA_EXTRACTOR = new MachineFacingBlock("dna_extractor", ModCreativeTabs.groupmachines), 
-	        DNA_REMOVER = new MachineFacingBlock("dna_remover", ModCreativeTabs.groupmachines),
-	        ELECTRIC_FENCE = new ElectricFence(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F), "electric_fence", ModCreativeTabs.groupblocks, true),
-			ELECTRIC_FENCE_TOP = new ElectricFenceTop(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F), "electric_fence_top", ModCreativeTabs.groupblocks, true),
-			ELECTRIC_FENCE_GATE = new ElectricFenceGate(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F), "electric_fence_gate", ModCreativeTabs.groupblocks, true),
-	        ENERGYSTORAGE = new EnergyStorageBlock(),
-	        ENERGY_SUPPLIER = new EnergySupplierBlock("energy_supplier", ModCreativeTabs.groupmachines),
-			FIBRE_FENCE = new BaseBlock(Block.Properties.create(Material.WOOD).sound(SoundType.WOOD), "fibre_fence", ModCreativeTabs.groupblocks, true),
-	        IDENTIFIER = new MachineFacingBlock("identifier", ModCreativeTabs.groupmachines),
-	        INFUSER = new MachineFacingBlock("infuser", ModCreativeTabs.groupmachines),
-	        KANEKIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kanekium_block", ModCreativeTabs.groupblocks, true),
-	        KINNOIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "kinnoium_block", ModCreativeTabs.groupblocks, true),
-	        LENTHURIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "lenthurium_block", ModCreativeTabs.groupblocks, true),
-	        MACHINEBULBREPROCESSOR = new MachineBaseBlock("machinebulbreprocessor", ModCreativeTabs.groupmachines),
-	        MACHINESHELL_IRON = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_iron", ModCreativeTabs.groupmain, true, true),
-		    MACHINESHELL_PLANTIUM = new BaseBlock(Block.Properties.create(Material.IRON).hardnessAndResistance(0.9F).notSolid(), "machineshell_plantium", ModCreativeTabs.groupmain, true, true),
-	        MEGAFURNACE = new MachineFacingBlock("mega_furnace", ModCreativeTabs.groupmachines), 
-	        PLANTFARM = new MachineBaseBlock("plantfarm", ModCreativeTabs.groupmachines),
-	        PLANTIUM_BLOCK = new BaseBlock(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F), "plantium_block", ModCreativeTabs.groupblocks, true),
-	        SEEDCONSTRUCTOR = new MachineFacingBlock("seedconstructor", ModCreativeTabs.groupmachines),
-	        SEEDSQUEEZER = new MachineFacingBlock("seedsqueezer", ModCreativeTabs.groupmachines),
-	        SOLARGENERATOR = new MachineBaseBlock("solargenerator", ModCreativeTabs.groupmachines),
-	        PLANTTOPIA_TELEPORTER = new MachineBaseBlock("planttopia_teleporter", ModCreativeTabs.groupmachines),
-	        PLANTTOPIA_TELEPORTER_END = new MachineTeleporterEndBlock("planttopia_teleporter_end", Block.Properties.create(Material.IRON).hardnessAndResistance(0.5f), ModCreativeTabs.groupmachines),
-	        UNIVERSAL_SOIL = new BaseBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.5F), "universal_soil", ModCreativeTabs.groupblocks, true),
-			UNIVERSAL_SOIL_INFUSED = new BaseBlock(Block.Properties.create(Material.EARTH).hardnessAndResistance(0.7F), "universal_soil_infused", ModCreativeTabs.groupblocks, true),
-	        DARK_CRYSTAL_GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_cross", ModCreativeTabs.groupblocks, true),
-	        DARK_CRYSTAL_GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_middle", ModCreativeTabs.groupblocks, true),
-	        DARK_CRYSTAL_GLASSPANE_END = new GlassPaneEnd(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_glasspane_end",Color.WHITE.getRGB(), ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_BLOCK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_block", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_BRICK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_brick", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_TILING = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_tiling", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_FENCE = new CustomFenceBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "dark_crystal_fence", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_LAMP = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p)->{return 15;}).notSolid(), "dark_crystal_lamp", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "dark_crystal_door", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_STAIRS = new CustomStairsBlock(DARK_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_stairs", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "dark_crystal_slab", ModCreativeTabs.groupblocks, true),
-			DARK_CRYSTAL_ORE = new BaseOreBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), "dark_crystal_ore", 1, 3), 
-			
+	@ObjectHolder("biomassfluid_block") public static FlowingFluidBlock BIOMASSFLUIDBLOCK;
 
-			WHITE_CRYSTAL_GLASSPANE_CROSS = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_cross", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_GLASSPANE_MIDDLE = new GlassPanePillar(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_middle", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_GLASSPANE_END = new GlassPaneEnd(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_glasspane_end",Color.WHITE.getRGB(), ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_BLOCK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "white_crystal_block", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_BRICK = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "white_crystal_brick", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_TILING = new BaseBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "white_crystal_tiling", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_FENCE = new CustomFenceBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F), "white_crystal_fence", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_DOOR = new CustomDoorBlock(Block.Properties.create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), "white_crystal_door", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_STAIRS = new CustomStairsBlock(WHITE_CRYSTAL_BLOCK.getDefaultState(), Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_stairs", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_SLAB = new CustomSlabBlock(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F), "white_crystal_slab", ModCreativeTabs.groupblocks, true),
-			WHITE_CRYSTAL_ORE = new BaseOreBlock(Block.Properties.create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), "white_crystal_ore", 1, 3), 
-			
-			
-			WALL_LIGHT = new WallLight(Block.Properties.create(Material.ROCK).sound(SoundType.GLASS), "wall_light", ModCreativeTabs.groupblocks, true),
+	@ObjectHolder("cable") public static TestCableBlock CABLE;
+	@ObjectHolder("carver") public static CarverBlock CARVER;
+	@ObjectHolder("chipalyzer") public static MachineFacingBlock CHIPALYZER;
+	@ObjectHolder("compressor") public static MachineFacingBlock COMPRESSOR;
+	@ObjectHolder("cropbars") public static CropBarsBlock CROPBARS;
+	@ObjectHolder("dancium_block") public static Block DANCIUM_BLOCK;
+	@ObjectHolder("dna_cleaner") public static MachineFacingBlock DNA_CLEANER;
+	@ObjectHolder("dna_combiner") public static MachineFacingBlock DNA_COMBINER;
+	@ObjectHolder("dna_extractor") public static MachineFacingBlock DNA_EXTRACTOR;
+	@ObjectHolder("dna_remover") public static MachineFacingBlock DNA_REMOVER;
+	@ObjectHolder("electric_fence") public static ElectricFence ELECTRIC_FENCE;
+	@ObjectHolder("electric_fence_top") public static ElectricFenceTop ELECTRIC_FENCE_TOP;
+	@ObjectHolder("electric_fence_gate") public static ElectricFenceGate ELECTRIC_FENCE_GATE;
+	@ObjectHolder("energystorage") public static EnergyStorageBlock ENERGYSTORAGE;
+	@ObjectHolder("energy_supplier") public static EnergySupplierBlock ENERGY_SUPPLIER;
+	@ObjectHolder("fibre_fence") public static Block FIBRE_FENCE;
+	@ObjectHolder("identifier") public static MachineFacingBlock IDENTIFIER;
+	@ObjectHolder("infuser") public static MachineFacingBlock INFUSER;
+	@ObjectHolder("kanekium_block") public static Block KANEKIUM_BLOCK;
+	@ObjectHolder("kinnoium_block") public static Block KINNOIUM_BLOCK;
+	@ObjectHolder("lenthurium_block") public static Block LENTHURIUM_BLOCK;
+	@ObjectHolder("machinebulbreprocessor") public static Block MACHINEBULBREPROCESSOR;
+	@ObjectHolder("machineshell_iron") public static Block MACHINESHELL_IRON;
+	@ObjectHolder("machineshell_plantium") public static Block MACHINESHELL_PLANTIUM;
+	@ObjectHolder("mega_furnace") public static MachineFacingBlock MEGAFURNACE;
+	@ObjectHolder("plantfarm") public static MachineBaseBlock PLANTFARM;
+	@ObjectHolder("plantium_block") public static Block PLANTIUM_BLOCK;
+	@ObjectHolder("seedconstructor") public static MachineFacingBlock SEEDCONSTRUCTOR;
+	@ObjectHolder("seedsqueezer") public static MachineFacingBlock SEEDSQUEEZER;
+	@ObjectHolder("solargenerator") public static MachineBaseBlock SOLARGENERATOR;
+	@ObjectHolder("planttopia_teleporter") public static MachineBaseBlock PLANTTOPIA_TELEPORTER;
+	@ObjectHolder("planttopia_teleporter_end") public static MachineTeleporterEndBlock PLANTTOPIA_TELEPORTER_END;
+	@ObjectHolder("universal_soil") public static Block UNIVERSAL_SOIL;
+	@ObjectHolder("universal_soil_infused") public static Block UNIVERSAL_SOIL_INFUSED;
 
-			TEST_BLOCK = new ObtainableNaturalPlants("testblock", true, 4, 6),
+	@ObjectHolder("dark_crystal_glasspane_cross") public static GlassPanePillar DARK_CRYSTAL_GLASSPANE_CROSS;
+	@ObjectHolder("dark_crystal_glasspane_middle") public static GlassPanePillar DARK_CRYSTAL_GLASSPANE_MIDDLE;
+	@ObjectHolder("dark_crystal_glasspane_end") public static GlassPaneEnd DARK_CRYSTAL_GLASSPANE_END;
+	@ObjectHolder("dark_crystal_block") public static Block DARK_CRYSTAL_BLOCK;
+	@ObjectHolder("dark_crystal_brick") public static Block DARK_CRYSTAL_BRICK;
+	@ObjectHolder("dark_crystal_tiling") public static Block DARK_CRYSTAL_TILING;
+	@ObjectHolder("dark_crystal_fence") public static CustomFenceBlock DARK_CRYSTAL_FENCE;
+	@ObjectHolder("dark_crystal_lamp") public static Block DARK_CRYSTAL_LAMP;
+	@ObjectHolder("dark_crystal_door") public static CustomDoorBlock DARK_CRYSTAL_DOOR;
+	@ObjectHolder("dark_crystal_stairs") public static CustomStairsBlock DARK_CRYSTAL_STAIRS;
+	@ObjectHolder("dark_crystal_slab") public static CustomSlabBlock DARK_CRYSTAL_SLAB;
+	@ObjectHolder("dark_crystal_ore") public static BaseOreBlock DARK_CRYSTAL_ORE;
 
-			MUTATED_DANDELION = new ObtainableNaturalPlants("mutated_dandelion", true),
-			MUTATED_POPPY = new ObtainableNaturalPlants("mutated_poppy", true),
-			MUTATED_BLUE_ORCHID = new ObtainableNaturalPlants("mutated_blue_orchid", true),
-			MUTATED_ALLIUM = new ObtainableNaturalPlants("mutated_allium", true),
-			MUTATED_AZURE_BLUET = new ObtainableNaturalPlants("mutated_azure_bluet", true),
-			MUTATED_RED_TULIP = new ObtainableNaturalPlants("mutated_red_tulip", true),
-			MUTATED_ORANGE_TULIP = new ObtainableNaturalPlants("mutated_orange_tulip", true),
-			MUTATED_WHITE_TULIP = new ObtainableNaturalPlants("mutated_white_tulip", true),
-			MUTATED_PINK_TULIP = new ObtainableNaturalPlants("mutated_pink_tulip", true),
-			MUTATED_OXEYE_DAISY = new ObtainableNaturalPlants("mutated_oxeye_daisy", true),
-			MUTATED_CORNFLOWER = new ObtainableNaturalPlants("mutated_cornflower", true),
-			MUTATED_LILY_OF_THE_VALLEY = new ObtainableNaturalPlants("mutated_lily_of_the_valley", true),
+	@ObjectHolder("white_crystal_glasspane_cross") public static GlassPanePillar WHITE_CRYSTAL_GLASSPANE_CROSS;
+	@ObjectHolder("white_crystal_glasspane_middle") public static GlassPanePillar WHITE_CRYSTAL_GLASSPANE_MIDDLE;
+	@ObjectHolder("white_crystal_glasspane_end") public static GlassPaneEnd WHITE_CRYSTAL_GLASSPANE_END;
+	@ObjectHolder("white_crystal_block") public static Block WHITE_CRYSTAL_BLOCK;
+	@ObjectHolder("white_crystal_brick") public static Block WHITE_CRYSTAL_BRICK;
+	@ObjectHolder("white_crystal_tiling") public static Block WHITE_CRYSTAL_TILING;
+	@ObjectHolder("white_crystal_fence") public static CustomFenceBlock WHITE_CRYSTAL_FENCE;
+	@ObjectHolder("white_crystal_door") public static CustomDoorBlock WHITE_CRYSTAL_DOOR;
+	@ObjectHolder("white_crystal_stairs") public static CustomStairsBlock WHITE_CRYSTAL_STAIRS;
+	@ObjectHolder("white_crystal_slab") public static CustomSlabBlock WHITE_CRYSTAL_SLAB;
+	@ObjectHolder("white_crystal_ore") public static BaseOreBlock WHITE_CRYSTAL_ORE;
 
-			MUTATED_LILAC = new ObtainableTallBushBlock("mutated_lilac", true),
-			MUTATED_ROSE_BUSH = new ObtainableTallBushBlock("mutated_rose_bush", true),
-			MUTATED_PEONY = new ObtainableTallBushBlock("mutated_peony", true);
+	@ObjectHolder("wall_light") public static WallLight WALL_LIGHT;
 
-	public static BaseBlock MACHINEBULBREPROCESSOR_GROWING = new GrowingBlock("machinebulbreprocessor_growing", ModBlocks.MACHINEBULBREPROCESSOR, true),
-							MACHINESHELL_IRON_GROWING = new GrowingBlock("machineshell_iron_growing", ModBlocks.MACHINESHELL_IRON, false),
-							MACHINESHELL_PLANTIUM_GROWING = new GrowingBlock("machineshell_plantium_growing", ModBlocks.MACHINESHELL_PLANTIUM, false),
-							SEEDSQUEEZER_GROWING = new FacingGrowingBlock("seedsqueezer_growing", ModBlocks.SEEDSQUEEZER, true),
-                			CHIPALYZER_GROWING = new FacingGrowingBlock("chipalyzer_growing", ModBlocks.CHIPALYZER, true),
-                			COMPRESSOR_GROWING = new FacingGrowingBlock("compressor_growing", ModBlocks.COMPRESSOR, true),
-                	        DNA_CLEANER_GROWING = new FacingGrowingBlock("dna_cleaner_growing", ModBlocks.DNA_CLEANER, true),
-                	        DNA_COMBINER_GROWING = new FacingGrowingBlock("dna_combiner_growing", ModBlocks.DNA_COMBINER, true),
-                	        DNA_EXTRACTOR_GROWING = new FacingGrowingBlock("dna_extractor_growing", ModBlocks.DNA_EXTRACTOR, true),
-                	        DNA_REMOVER_GROWING = new FacingGrowingBlock("dna_remover_growing", ModBlocks.DNA_REMOVER, true),
-                	        IDENTIFIER_GROWING = new FacingGrowingBlock("identifier_growing", ModBlocks.IDENTIFIER, true),
-                	        INFUSER_GROWING = new FacingGrowingBlock("infuser_growing", ModBlocks.INFUSER, true),
-                	        MEGAFURNACE_GROWING = new FacingGrowingBlock("mega_furnace_growing", ModBlocks.MEGAFURNACE, true),
-                	        PLANTFARM_GROWING = new GrowingBlock("plantfarm_growing", ModBlocks.PLANTFARM, true),
-                	        ENERGY_SUPPLIER_GROWING = new GrowingBlock("energy_supplier_growing", ModBlocks.ENERGY_SUPPLIER, true),
-                	        SEEDCONSTRUCTOR_GROWING = new FacingGrowingBlock("seedconstructor_growing", ModBlocks.SEEDCONSTRUCTOR, true),
-                	        SOLARGENERATOR_GROWING = new GrowingBlock("solargenerator_growing", ModBlocks.SOLARGENERATOR, true);
+	@ObjectHolder("testblock") public static ObtainableNaturalPlants TEST_BLOCK;
 
-	
-	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<String, CropBaseBlock>();
+	@ObjectHolder("mutated_dandelion") public static ObtainableNaturalPlants MUTATED_DANDELION;
+	@ObjectHolder("mutated_poppy") public static ObtainableNaturalPlants MUTATED_POPPY;
+	@ObjectHolder("mutated_blue_orchid") public static ObtainableNaturalPlants MUTATED_BLUE_ORCHID;
+	@ObjectHolder("mutated_allium") public static ObtainableNaturalPlants MUTATED_ALLIUM;
+	@ObjectHolder("mutated_azure_bluet") public static ObtainableNaturalPlants MUTATED_AZURE_BLUET;
+	@ObjectHolder("mutated_red_tulip") public static ObtainableNaturalPlants MUTATED_RED_TULIP;
+	@ObjectHolder("mutated_orange_tulip") public static ObtainableNaturalPlants MUTATED_ORANGE_TULIP;
+	@ObjectHolder("mutated_white_tulip") public static ObtainableNaturalPlants MUTATED_WHITE_TULIP;
+	@ObjectHolder("mutated_pink_tulip") public static ObtainableNaturalPlants MUTATED_PINK_TULIP;
+	@ObjectHolder("mutated_oxeye_daisy") public static ObtainableNaturalPlants MUTATED_OXEYE_DAISY;
+	@ObjectHolder("mutated_cornflower") public static ObtainableNaturalPlants MUTATED_CORNFLOWER;
+	@ObjectHolder("mutated_lily_of_the_valley") public static ObtainableNaturalPlants MUTATED_LILY_OF_THE_VALLEY;
+	@ObjectHolder("mutated_lilac") public static ObtainableNaturalPlants MUTATED_LILAC;
+	@ObjectHolder("mutated_rose_bush") public static ObtainableNaturalPlants MUTATED_ROSE_BUSH;
+	@ObjectHolder("mutated_peony") public static ObtainableNaturalPlants MUTATED_PEONY;
 
-	public static void register(IForgeRegistry<Block> registry)
+	@ObjectHolder("machinebulbreprocessor_growing") public static GrowingBlock MACHINEBULBREPROCESSOR_GROWING;
+	@ObjectHolder("machineshell_iron_growing") public static GrowingBlock MACHINESHELL_IRON_GROWING;
+	@ObjectHolder("machineshell_plantium_growing") public static GrowingBlock MACHINESHELL_PLANTIUM_GROWING;
+	@ObjectHolder("seedsqueezer_growing") public static GrowingBlock SEEDSQUEEZER_GROWING;
+	@ObjectHolder("chipalyzer_growing") public static GrowingBlock CHIPALYZER_GROWING;
+	@ObjectHolder("compressor_growing") public static GrowingBlock COMPRESSOR_GROWING;
+	@ObjectHolder("dna_cleaner_growing") public static GrowingBlock DNA_CLEANER_GROWING;
+	@ObjectHolder("dna_combiner_growing") public static GrowingBlock DNA_COMBINER_GROWING;
+	@ObjectHolder("dna_extractor_growing") public static GrowingBlock DNA_EXTRACTOR_GROWING;
+	@ObjectHolder("dna_remover_growing") public static GrowingBlock DNA_REMOVER_GROWING;
+	@ObjectHolder("identifier_growing") public static GrowingBlock IDENTIFIER_GROWING;
+	@ObjectHolder("infuser_growing") public static GrowingBlock INFUSER_GROWING;
+	@ObjectHolder("mega_furnace_growing") public static GrowingBlock MEGAFURNACE_GROWING;
+	@ObjectHolder("plantfarm_growing") public static GrowingBlock PLANTFARM_GROWING;
+	@ObjectHolder("energy_supplier_growing") public static GrowingBlock ENERGY_SUPPLIER_GROWING;
+	@ObjectHolder("seedconstructor_growing") public static GrowingBlock SEEDCONSTRUCTOR_GROWING;
+	@ObjectHolder("solargenerator_growing") public static GrowingBlock SOLARGENERATOR_GROWING;
+
+	public static void register(IForgeRegistry<Block> r)
 	{
-		
-		for (BaseBlock block : BLOCKS)
-		{
-			registry.register(block);
-		}
+		r.register(makeBlock("biomassfluid_block", new FlowingFluidBlock(() -> ModFluids.BIOMASS, create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())));
 
+		r.register(makeSpecialWithItem("cable", BLOCKS, new TestCableBlock()));
+		r.register(makeSpecialWithItem("carver", MAIN, new CarverBlock()));
+		r.register(makeSpecialWithItem("chipalyzer", MACHINES, new MachineFacingBlock(ChipalyzerTileEntity::new, PlantTechConstants.MACHINETIER_CHIPALYZER)));
+		r.register(makeSpecialWithItem("compressor", MACHINES, new MachineFacingBlock(CompressorTileEntity::new, PlantTechConstants.MACHINETIER_COMPRESSOR)));
+		r.register(makeSpecialWithItem("cropbars", MAIN, new CropBarsBlock()));
+		r.register(makeWithItem("dancium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeSpecialWithItem("dna_cleaner", MACHINES, new MachineFacingBlock(DNACleanerTileEntity::new, PlantTechConstants.MACHINETIER_DNA_CLEANER)));
+		r.register(makeSpecialWithItem("dna_combiner", MACHINES, new MachineFacingBlock(DNACombinerTileEntity::new, PlantTechConstants.MACHINETIER_DNA_COMBINER)));
+		r.register(makeSpecialWithItem("dna_extractor", MACHINES, new MachineFacingBlock(DNAExtractorTileEntity::new, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR)));
+		r.register(makeSpecialWithItem("dna_remover", MACHINES, new MachineFacingBlock(DNARemoverTileEntity::new, PlantTechConstants.MACHINETIER_DNA_REMOVER)));
+		r.register(makeWithItem("electric_fence", BLOCKS, new ElectricFence(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
+		r.register(makeWithItem("electric_fence_top", BLOCKS, new ElectricFenceTop(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
+		r.register(makeWithItem("electric_fence_gate", BLOCKS, new ElectricFenceGate(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
+		r.register(makeSpecialWithItem("energystorage", MACHINES, new EnergyStorageBlock(EnergyStorageTileEntity::new)));
+		r.register(makeSpecialWithItem("energy_supplier", MACHINES, new EnergySupplierBlock(EnergySupplierTileEntity::new, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER)));
+		r.register(makeWithItem("fibre_fence", BLOCKS, new Block(create(Material.WOOD).sound(SoundType.WOOD))));
+		r.register(makeSpecialWithItem("identifier", MACHINES, new MachineFacingBlock(IdentifierTileEntity::new, PlantTechConstants.MACHINETIER_IDENTIFIER)));
+		r.register(makeSpecialWithItem("infuser", MACHINES, new MachineFacingBlock(InfuserTileEntity::new, PlantTechConstants.MACHINETIER_INFUSER)));
+		r.register(makeWithItem("kanekium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("kinnoium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("lenthurium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeSpecialWithItem("machinebulbreprocessor", MACHINES, new MachineBaseBlock(MachineBulbReprocessorTileEntity::new, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR)));
+		r.register(makeSpecialWithItem("machineshell_iron", MAIN, new Block(create(Material.IRON).hardnessAndResistance(0.9F).notSolid())));
+		r.register(makeSpecialWithItem("machineshell_plantium", MAIN, new Block(create(Material.IRON).hardnessAndResistance(0.9F).notSolid())));
+		r.register(makeSpecialWithItem("mega_furnace", MACHINES, new MachineFacingBlock(MegaFurnaceTileEntity::new, PlantTechConstants.MACHINETIER_MEGAFURNACE)));
+		r.register(makeSpecialWithItem("plantfarm", MACHINES, new MachineBaseBlock(PlantFarmTileEntity::new, PlantTechConstants.MACHINETIER_PLANTFARM)));
+		r.register(makeWithItem("plantium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeSpecialWithItem("seedconstructor", MACHINES, new MachineFacingBlock(SeedconstructorTileEntity::new, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR)));
+		r.register(makeSpecialWithItem("seedsqueezer", MACHINES, new MachineFacingBlock(SeedSqueezerTileEntity::new, PlantTechConstants.MACHINETIER_SEEDSQUEEZER)));
+		r.register(makeSpecialWithItem("solargenerator", MACHINES, new MachineBaseBlock(SolarGeneratorTileEntity::new, PlantTechConstants.MACHINETIER_SOLARGENERATOR)));
+		r.register(makeSpecialWithItem("planttopia_teleporter", MACHINES, new MachineBaseBlock(PlantTopiaTeleporterTileEntity::new)));
+		r.register(makeWithItem("planttopia_teleporter_end", MACHINES, new MachineTeleporterEndBlock(create(Material.IRON).hardnessAndResistance(0.5f))));
+		r.register(makeWithItem("universal_soil", BLOCKS, new Block(create(Material.EARTH).hardnessAndResistance(0.5F))));
+		r.register(makeWithItem("universal_soil_infused", BLOCKS, new Block(create(Material.EARTH).hardnessAndResistance(0.7F))));
+
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), Color.WHITE.getRGB())));
+		r.register(makeWithItem("dark_crystal_block", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("dark_crystal_brick", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("dark_crystal_tiling", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("dark_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("dark_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
+		r.register(makeSpecialWithItem("dark_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("dark_crystal_stairs", BLOCKS, new CustomStairsBlock(() -> DARK_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("dark_crystal_slab", BLOCKS, new CustomSlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("dark_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
+
+		r.register(makeSpecialWithItem("white_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeSpecialWithItem("white_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeSpecialWithItem("white_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), Color.WHITE.getRGB())));
+		r.register(makeWithItem("white_crystal_block", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("white_crystal_brick", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("white_crystal_tiling", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("white_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("white_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
+		r.register(makeSpecialWithItem("white_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("white_crystal_stairs", BLOCKS, new CustomStairsBlock(() -> WHITE_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("white_crystal_slab", BLOCKS, new CustomSlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("white_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
+
+		r.register(makeWithItem("wall_light", BLOCKS, new WallLight(create(Material.ROCK).sound(SoundType.GLASS))));
+
+		r.register(makeSpecialWithItem("testblock", BLOCKS, new ObtainableNaturalPlants(4, 6)));
+
+		r.register(makeSpecialWithItem("mutated_dandelion", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_poppy", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_blue_orchid", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_allium", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_azure_bluet", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_red_tulip", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_orange_tulip", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_white_tulip", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_pink_tulip", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_oxeye_daisy", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_cornflower", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_lily_of_the_valley", BLOCKS, new ObtainableNaturalPlants()));
+		r.register(makeSpecialWithItem("mutated_lilac", BLOCKS, new ObtainableTallBushBlock()));
+		r.register(makeSpecialWithItem("mutated_rose_bush", BLOCKS, new ObtainableTallBushBlock()));
+		r.register(makeSpecialWithItem("mutated_peony", BLOCKS, new ObtainableTallBushBlock()));
+
+		r.register(makeSpecial("machinebulbreprocessor_growing", new GrowingBlock(() -> ModBlocks.MACHINEBULBREPROCESSOR, true)));
+		r.register(makeSpecial("machineshell_iron_growing", new GrowingBlock(() -> ModBlocks.MACHINESHELL_IRON, false)));
+		r.register(makeSpecial("machineshell_plantium_growing", new GrowingBlock(() -> ModBlocks.MACHINESHELL_PLANTIUM, false)));
+		r.register(makeSpecial("seedsqueezer_growing", new FacingGrowingBlock(() -> ModBlocks.SEEDSQUEEZER, true)));
+		r.register(makeSpecial("chipalyzer_growing", new FacingGrowingBlock(() -> ModBlocks.CHIPALYZER, true)));
+		r.register(makeSpecial("compressor_growing", new FacingGrowingBlock(() -> ModBlocks.COMPRESSOR, true)));
+		r.register(makeSpecial("dna_cleaner_growing", new FacingGrowingBlock(() -> ModBlocks.DNA_CLEANER, true)));
+		r.register(makeSpecial("dna_combiner_growing", new FacingGrowingBlock(() -> ModBlocks.DNA_COMBINER, true)));
+		r.register(makeSpecial("dna_extractor_growing", new FacingGrowingBlock(() -> ModBlocks.DNA_EXTRACTOR, true)));
+		r.register(makeSpecial("dna_remover_growing", new FacingGrowingBlock(() -> ModBlocks.DNA_REMOVER, true)));
+		r.register(makeSpecial("identifier_growing", new FacingGrowingBlock(() -> ModBlocks.IDENTIFIER, true)));
+		r.register(makeSpecial("infuser_growing", new FacingGrowingBlock(() -> ModBlocks.INFUSER, true)));
+		r.register(makeSpecial("mega_furnace_growing", new FacingGrowingBlock(() -> ModBlocks.MEGAFURNACE, true)));
+		r.register(makeSpecial("plantfarm_growing", new GrowingBlock(() -> ModBlocks.PLANTFARM, true)));
+		r.register(makeSpecial("energy_supplier_growing", new GrowingBlock(() -> ModBlocks.ENERGY_SUPPLIER, true)));
+		r.register(makeSpecial("seedconstructor_growing", new FacingGrowingBlock(() -> ModBlocks.SEEDCONSTRUCTOR, true)));
+		r.register(makeSpecial("solargenerator_growing", new GrowingBlock(() -> ModBlocks.SOLARGENERATOR, true)));
+
+		CROPS.clear();
 		CropBaseBlock tempcrop;
 		String name;
 		for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
@@ -151,28 +282,44 @@ public class ModBlocks
 			name = entry.getString();
 			tempcrop = new CropBaseBlock(name);
 			CROPS.put(name, tempcrop);
-			registry.register(tempcrop);
+			r.register(tempcrop);
 		}
-		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values());
-		registry.register(BIOMASSFLUIDBLOCK);
+		SPECIAL_RENDER_BLOCKS.clear();
+		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values().stream().map(b -> (Supplier<? extends Block>) () -> b).collect(Collectors.toList()));
+	}
+
+	static <B extends Block> B makeWithItem(String registryName, ItemGroup group, B block)
+	{
+		final B b = makeBlock(registryName, block);
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
+		return b;
+	}
+
+	static <B extends Block> B makeSpecialWithItem(String registryName, ItemGroup group, B block)
+	{
+		final B b = makeSpecial(registryName, block);
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
+		return b;
+	}
+
+	static <B extends Block> B makeBlock(String registryName, B block)
+	{
+		block.setRegistryName(registryName);
+		return block;
+	}
+
+	static <B extends Block> B makeSpecial(String registryName, B block)
+	{
+		block.setRegistryName(registryName);
+		SPECIAL_RENDER_BLOCKS.add(() -> block);
+		return block;
 	}
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{
-
-		for (BaseBlock block : BLOCKITEMS)
+		for (Supplier<? extends Item> supplier : BLOCK_ITEM_SUPPLIERS)
 		{
-			registry.register(block.createItemBlock());
-		}
-
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public static void registerBlockColorHandler(ColorHandlerEvent.Block event)
-	{
-		for (CropBaseBlock block : CROPS.values())
-		{
-			event.getBlockColors().register(new CropBaseBlock.ColorHandler(), block);
+			registry.register(supplier.get());
 		}
 	}
 }

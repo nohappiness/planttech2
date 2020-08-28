@@ -46,11 +46,11 @@ public class GuideCommand
         return command;
     }
 
-    @OnlyIn(Dist.CLIENT)
-    private static void openScreen()
-    {
-        Minecraft.getInstance().displayGuiScreen(new GuideScreen());
-    }
+//    @OnlyIn(Dist.CLIENT)
+//    private static void openScreen()
+//    {
+//        Minecraft.getInstance().displayGuiScreen(new GuideScreen());
+//    }
 
 //    public static class GuideTypeArgument implements ArgumentType<String>
 //    {

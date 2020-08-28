@@ -26,7 +26,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.fluid.FluidState;
 
-public class CustomSlabBlock extends BaseBlock implements IWaterLoggable
+public class CustomSlabBlock extends Block implements IWaterLoggable
 {
 
 	public static final EnumProperty<SlabType> TYPE = BlockStateProperties.SLAB_TYPE;
@@ -34,9 +34,9 @@ public class CustomSlabBlock extends BaseBlock implements IWaterLoggable
 	static final VoxelShape BOTTOM_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
 	static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-	public CustomSlabBlock(Properties builder, String name, ItemGroup group, boolean hasItem)
+	public CustomSlabBlock(Properties builder)
 	{
-		super(builder, name, group, hasItem);
+		super(builder);
 	}
 
 	public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos)

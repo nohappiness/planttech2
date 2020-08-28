@@ -2,78 +2,41 @@ package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
-import net.kaneka.planttech2.events.AttachCapabilityEvents;
-import net.kaneka.planttech2.events.ModBusEventsClient;
-import net.kaneka.planttech2.events.PlayerEvents;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
-import net.kaneka.planttech2.items.BaseItem;
-import net.kaneka.planttech2.items.BiomassContainerItem;
-import net.kaneka.planttech2.items.CropSeedItem;
-import net.kaneka.planttech2.items.PlantObtainerItem;
-import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
-import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.librarys.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.proxy.ClientProxy;
-import net.kaneka.planttech2.proxy.IProxy;
-import net.kaneka.planttech2.proxy.ServerProxy;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.registries.*;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.kaneka.planttech2.registries.ModCommands;
+import net.kaneka.planttech2.registries.ModEntityTypes;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod("planttech2")
+@Mod(PlantTechMain.MODID)
 public class PlantTechMain
 {
 	public static final String MODID = "planttech2";
 
-//	@SuppressWarnings("deprecation")
-//	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
-
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-	public static PlantTechMain instance;
-	
 	public static CropList croplist = new CropList();
-	
 
-	@SuppressWarnings("deprecation")
 	public PlantTechMain()
 	{
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER, "planttech2-server.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT, "planttech2-client.toml");
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT);
 
-		PlantTech2Configuration.loadConfig(PlantTech2Configuration.CLIENT, FMLPaths.CONFIGDIR.get().resolve("planttech2-client.toml").toString());
-		PlantTech2Configuration.loadConfig(PlantTech2Configuration.SERVER, FMLPaths.CONFIGDIR.get().resolve("planttech2-server.toml").toString());
-//
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
 //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerClone);
@@ -86,10 +49,9 @@ public class PlantTechMain
 	private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
 	{
 	}
-	
+
 	private void onServerStarting(final FMLServerStartingEvent event)
 	{
-		
 	}
 
 	private void setup(final FMLCommonSetupEvent event)
@@ -107,53 +69,6 @@ public class PlantTechMain
 
 	private static void registerAllEntityAttributes()
     {
-        GlobalEntityTypeAttributes.put((EntityType<? extends LivingEntity>) ModEntityTypes.TECHGHOULENTITY, TechGhoulEntity.getAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.TECHGHOULENTITY, TechGhoulEntity.getAttributes().create());
     }
-
-    private void doClientStuff(final FMLClientSetupEvent event)
-	{
-		DeferredWorkQueue.runLater(() ->
-		{
-			ModRenderer.registerEntityRenderer();
-			ModScreens.registerGUI();
-			for (Block block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-				RenderTypeLookup.setRenderLayer(block, RenderType.getCutoutMipped());
-			RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
-			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
-			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
-			addAllItemModelsOverrides();
-			addAllSeedsColours();
-		});
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	private static void addAllSeedsColours()
-	{
-		for (BaseItem item : ModItems.SEEDS.values())
-			Minecraft.getInstance().getItemColors().register(new CropSeedItem.ColorHandler(), item);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	private static void addAllItemModelsOverrides()
-	{
-		ItemModelsProperties.func_239418_a_(
-				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),
-				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1
-		);
-		ItemModelsProperties.func_239418_a_(
-				ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
-				(stack, world, entity) -> {
-					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
-					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F; }
-		);
-		ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
-				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
-		ItemModelsProperties.func_239418_a_(
-				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),
-				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
-		);
-		ItemModelsProperties.func_239418_a_(
-				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
-				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
-	}
 }

@@ -21,16 +21,16 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
 {
     public static final BooleanProperty IS_TOP = BooleanProperty.create("is_top");
 
-    public ObtainableTallBushBlock(String name, boolean hasItem, float width, float height)
+    public ObtainableTallBushBlock(float width, float height)
     {
-        super(name, hasItem, width, height);
+        super(width, height);
         setDefaultState(getDefaultState()
                 .with(IS_TOP, false));
     }
 
-    public ObtainableTallBushBlock(String name, boolean hasItem)
+    public ObtainableTallBushBlock()
     {
-        this(name, hasItem, 16, 16);
+        this(16, 16);
     }
 
     @Override

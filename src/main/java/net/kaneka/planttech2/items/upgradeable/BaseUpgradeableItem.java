@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import net.kaneka.planttech2.container.ItemUpgradeableContainer;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
-import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -21,6 +20,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
@@ -41,14 +41,14 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.HashMap;
 import java.util.List;
 
-public abstract class BaseUpgradeableItem extends BaseItem implements IItemChargeable, IUpgradeable
+public abstract class BaseUpgradeableItem extends Item implements IItemChargeable, IUpgradeable
 {
-	private int basecapacity, maxInvSize, slotId; 
-	private float baseAttack, baseAttackSpeed; 
+	private final int basecapacity, maxInvSize, slotId;
+	private final float baseAttack, baseAttackSpeed;
 	
-	public BaseUpgradeableItem(String name, Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed, int slotId)
+	public BaseUpgradeableItem(Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed, int slotId)
 	{
-		super(name, property.maxStackSize(1));
+		super(property.maxStackSize(1));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize; 
 		this.baseAttack = baseAttack; 
@@ -133,17 +133,17 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 
 	protected static int getEnergyCost(ItemStack stack)
 	{
-		return 20 + NBTHelper.getIntSave(stack, "energycost", 0);
+		return 20 + NBTHelper.getInt(stack, "energycost", 0);
 	}
 
 	private double getAttackSpeed(ItemStack stack)
 	{
-		return Math.min(baseAttackSpeed + NBTHelper.getFloatSave(stack, "attackspeed", 0), -0.4D);
+		return Math.min(baseAttackSpeed + NBTHelper.getFloat(stack, "attackspeed", 0), -0.4D);
 	}
 
 	private double getAttDamage(ItemStack stack)
 	{ 
-		return Math.min(baseAttack + NBTHelper.getFloatSave(stack, "attack", 0), UpgradeChipItem.getAttackMax());
+		return Math.min(baseAttack + NBTHelper.getFloat(stack, "attack", 0), UpgradeChipItem.getAttackMax());
 	}
 	
 
@@ -374,7 +374,7 @@ public abstract class BaseUpgradeableItem extends BaseItem implements IItemCharg
 			{
 				if(world.getGameTime() % 200L == 0)
 				{
-					receiveEnergy(stack, NBTHelper.getIntSave(stack, "energyproduction", 0), false); 
+					receiveEnergy(stack, NBTHelper.getInt(stack, "energyproduction", 0), false);
 				}
 			}
 		}

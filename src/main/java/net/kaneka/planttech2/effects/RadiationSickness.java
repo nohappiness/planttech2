@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.potioneffects;
+package net.kaneka.planttech2.effects;
 
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.kaneka.planttech2.registries.ModDamageSources;
@@ -13,7 +13,6 @@ public class RadiationSickness extends Effect
     public RadiationSickness()
     {
         super(EffectType.HARMFUL, 16744256);
-        setRegistryName("radiation_sickness");
     }
 
     @Override

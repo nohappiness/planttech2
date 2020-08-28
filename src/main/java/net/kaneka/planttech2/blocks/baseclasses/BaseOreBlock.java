@@ -1,31 +1,25 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorldReader;
 
-public class BaseOreBlock extends BaseBlock
+public class BaseOreBlock extends Block
 {
-	int expmin, expmax; 
-	
-	
-	public BaseOreBlock(Properties property, String name, int expmin, int expmax)
+	private final int expMin, expMax;
+
+	public BaseOreBlock(Properties property, int expMin, int expMax)
 	{
-		super(property, name, ModCreativeTabs.groupblocks, true);
-		this.expmin = expmin; 
-		this.expmax = expmax; 
+		super(property);
+		this.expMin = expMin;
+		this.expMax = expMax;
 	}
-	
+
 	@Override
-	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch)
+	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silkTouch)
 	{
-		if(silktouch == 0)
-		{
-			return MathHelper.nextInt(RANDOM, expmin, expmax);
-		}
-		return 0; 
+		return silkTouch == 0 ? MathHelper.nextInt(RANDOM, expMin, expMax) : 0;
 	}
 }

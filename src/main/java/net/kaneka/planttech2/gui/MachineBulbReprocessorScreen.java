@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.gui;
 
+import java.util.function.Supplier;
+
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.kaneka.planttech2.PlantTechMain;
@@ -16,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBulbReprocessorContainer>
-{ 
+{
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/machinebulbreprocessor.png");
 
 	public MachineBulbReprocessorScreen(MachineBulbReprocessorContainer container, PlayerInventory player, ITextComponent name)
@@ -45,11 +47,11 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 		int n = container.getValue(6);
 		int x = 0;
 		int y = 0;
-		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			Block machine = bulb.getMachine();
+			Block machine = bulb.get().getMachine();
 			if(machine != null)
-				if(n <  bulb.getTier())
+				if(n <  bulb.get().getTier())
 					blit(mStack, this.guiLeft + 59 + x*18, this.guiTop + 27 + y*18, 16, 200, 16, 16);
 			x++;
 			if(x > 4)
@@ -108,9 +110,9 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 		super.drawGuiContainerForegroundLayer(mStack, mouseX, mouseY);
 		int x = 0;
 		int y = 0;
-		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			Block machine = bulb.getMachine();
+			Block machine = bulb.get().getMachine();
 			if(machine != null)
 			{
 				renderItem(new ItemStack(machine), 59 + x*18, 27 + y*18);
@@ -123,23 +125,23 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 			}
 		}
 	}
-	
+
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = container.getValue(4);
 		return i != 0 ? i * pixels / ((MachineBulbReprocessorTileEntity) this.te).ticksPerItem() : 0;
 	}
-	
+
 	@Override
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		drawTooltip(mStack, container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
-	    
-	    int x = 0; 
-		int y = 0; 
-		for(MachineBulbItem bulb: ModItems.MACHINEBULBS)
+
+	    int x = 0;
+		int y = 0;
+		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			Block machine = bulb.getMachine();
+			Block machine = bulb.get().getMachine();
 			if(machine != null)
 				drawTooltip(mStack, new ItemStack(machine).getHighlightTip(machine.getTranslatedName()).getString(), mouseX, mouseY, 59 + x*18, 27 + y*18, 16, 16);
 			x++;
@@ -151,7 +153,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 		}
 	    super.drawTooltips(mStack, mouseX, mouseY);
 	}
-	
+
 	@Override
     public boolean mouseClicked(double mouseX, double mouseY, int p_mouseClicked_5_)
     {
@@ -159,7 +161,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
     	{
     	    for(int x = 0; x < 5; x++)
     	    {
-        		if(inItemStackArea(mouseX, mouseY, 59 + x * 18, 27 + y * 18) && x + y * 5 < ModItems.MACHINEBULBS.size())
+        		if(inItemStackArea(mouseX, mouseY, 59 + x * 18, 27 + y * 18) && x + y * 5 < ModItems.MACHINE_BULBS.size())
         		{
         		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 5 + 1));
         		}
@@ -167,12 +169,12 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
     	}
         return super.mouseClicked(mouseX, mouseY, p_mouseClicked_5_);
     }
-	
+
 	public void renderItem(ItemStack itemstack, int x, int y)
 	{
 		itemRenderer.renderItemAndEffectIntoGUI(itemstack, x, y);
 	}
-	
+
 	private boolean inArea(double mouseX, double mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.guiLeft;
@@ -184,7 +186,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	{
 		return this.inArea(mouseX, mouseY, posX, posY, 16, 16);
 	}
-	
+
 	@Override
 	protected ResourceLocation getBackgroundTexture()
 	{

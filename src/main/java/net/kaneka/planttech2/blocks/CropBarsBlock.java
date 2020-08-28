@@ -1,8 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.items.CropSeedItem;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -17,11 +15,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class CropBarsBlock extends BaseBlock
+public class CropBarsBlock extends Block
 {
 	public CropBarsBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement(), "cropbars", ModCreativeTabs.groupmain, true, true);
+		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement());
 	}
 
 	@Override

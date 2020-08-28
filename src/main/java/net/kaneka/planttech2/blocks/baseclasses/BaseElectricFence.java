@@ -1,40 +1,39 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
+import java.util.List;
+import java.util.Random;
+import javax.annotation.Nullable;
+
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
+import net.kaneka.planttech2.registries.ModDamageSources;
 import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.BasicParticleType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.*;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-
-public class BaseElectricFence extends BaseBlock
+public class BaseElectricFence extends Block
 {
     public static final IntegerProperty ELECTRIC_POWER = IntegerProperty.create("electric_power", 0, 15);
-    public BaseElectricFence(Properties property, String name, ItemGroup group, boolean hasItem)
-    {
-        super(property.notSolid().setLightLevel((p)->{return 6;}), name, group, hasItem);
-    }
+    public BaseElectricFence(Properties property)
+	{
+		super(property.notSolid().setLightLevel((p) -> 6));
+	}
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
@@ -42,9 +41,9 @@ public class BaseElectricFence extends BaseBlock
         builder.add(ELECTRIC_POWER);
     }
 
-    public int updatePower(World worldIn, BlockPos pos)
+    protected int calculatePower(World worldIn, BlockPos pos)
     {
-        int Largestpower = 0;
+        int fencePower = 0;
         for (Direction direction : Direction.values())
         {
             BlockState state = worldIn.getBlockState(pos.offset(direction));
@@ -56,20 +55,19 @@ public class BaseElectricFence extends BaseBlock
             if (block instanceof BaseElectricFence && state.hasProperty(ELECTRIC_POWER))
             {
                 int power = state.get(ELECTRIC_POWER);
-                if (power > Largestpower)
+                if (power > fencePower)
                 {
-                    Largestpower = power - 1;
+                    fencePower = power - 1;
                 }
             }
         }
-        return Largestpower;
+        return fencePower;
     }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getShape(state, worldIn, pos, context);
-    }
+//    @Override
+//    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+//    {
+//        return getShape(state, worldIn, pos, context);
+//    }
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
@@ -80,7 +78,7 @@ public class BaseElectricFence extends BaseBlock
             {
                 if (worldIn.isRaining() && worldIn.canSeeSky(pos))
                 {
-                    entityIn.attackEntityFrom(DamageSource.SWEET_BERRY_BUSH, 5.0F);
+                    entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 5.0F);
                     if (worldIn.isRemote)
                     {
                         doCollideAnimation(pos, worldIn, 1, ParticleTypes.LARGE_SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.75F, 50F);
@@ -88,7 +86,7 @@ public class BaseElectricFence extends BaseBlock
                 }
                 else
                 {
-                    entityIn.attackEntityFrom(DamageSource.SWEET_BERRY_BUSH, 2.5F);
+                    entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 2.5F);
                     if (worldIn.isRemote)
                     {
                         doCollideAnimation(pos, worldIn, 1, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.55F, 20F);
@@ -106,14 +104,13 @@ public class BaseElectricFence extends BaseBlock
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    private void doCollideAnimation(BlockPos pos, World worldIn, int amount, BasicParticleType particle, SoundEvent sound, float volume, float pitch)
+	private void doCollideAnimation(BlockPos pos, World worldIn, int amount, BasicParticleType particle, SoundEvent sound, float volume, float pitch)
     {
         double x = pos.getX();
         double y = pos.getY();
         double z = pos.getZ();
         Random random = new Random();
-        //        worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
+        // worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
         worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
         for (int i = 0; i < amount; i++)
         {
@@ -124,11 +121,7 @@ public class BaseElectricFence extends BaseBlock
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (stateIn.get(ELECTRIC_POWER) == 0)
-        {
-            return;
-        }
-        if (rand.nextInt(300) == 1)
+        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(300) == 1)
         {
             if (worldIn.isRemote)
             {

@@ -4,7 +4,6 @@ import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -29,9 +28,9 @@ public class ElectricFence extends BaseElectricFence
     public static final VoxelShape NEGATIVE_X = Block.makeCuboidShape(0.10D, 0.10D, 7.0D, 8.5D, 15.90D, 9.0D);
     public static final VoxelShape POSITIVE_X = Block.makeCuboidShape(7.5D, 0.10D, 7.0D, 15.90D, 15.90D, 9.0D);
 
-    public ElectricFence(Properties property, String name, ItemGroup group, boolean hasItem)
+    public ElectricFence(Properties property)
     {
-        super(property, name, group, hasItem);
+        super(property);
         setDefaultState(getDefaultState()
                 .with(ELECTRIC_POWER, 0)
                 .with(NORTH, false)
@@ -51,14 +50,14 @@ public class ElectricFence extends BaseElectricFence
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         return getState(this.getDefaultState()
-                .with(ELECTRIC_POWER, updatePower((World) worldIn, currentPos)), (World) worldIn, currentPos);
+                .with(ELECTRIC_POWER, calculatePower((World) worldIn, currentPos)), (World) worldIn, currentPos);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
         return getState(this.getDefaultState()
-                .with(ELECTRIC_POWER, updatePower(context.getWorld(), context.getPos())), context.getWorld(), context.getPos());
+                .with(ELECTRIC_POWER, calculatePower(context.getWorld(), context.getPos())), context.getWorld(), context.getPos());
     }
 
     public boolean canConnectTo(World world, BlockPos pos, Direction direction)

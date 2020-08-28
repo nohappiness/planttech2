@@ -8,7 +8,6 @@ import net.minecraft.data.RecipeProvider;
 
 public class Recipes extends RecipeProvider
 {
-
 	public Recipes(DataGenerator gen)
 	{
 		super(gen);
@@ -26,5 +25,4 @@ public class Recipes extends RecipeProvider
 		.addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
 		.build(cons);*/
 	}
-
 }

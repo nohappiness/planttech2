@@ -22,6 +22,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 {
 	public int ticksPassed = 0;
@@ -120,7 +122,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				ItemStack stack = itemhandler.getStackInSlot(9);
 				if (stack.getCount() == 1 && (stack.getItem() instanceof CropSeedItem))
 				{
-					ticksPassed += getUpgradeTier(10, PlantTechConstants.SPEEDUPGRADE_TYPE) + 1;
+					ticksPassed += getUpgradeTier(10, SPEED_UPGRADE) + 1;
 					if (ticksPassed >= this.getTicksPerItem())
 					{
 						squeezeItem();

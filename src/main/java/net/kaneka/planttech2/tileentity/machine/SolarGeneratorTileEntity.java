@@ -11,6 +11,9 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SOLAR_FOCUS;
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 {
 	int workload = 0;
@@ -20,14 +23,14 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 		{
 			switch (index)
 			{
-			case 0:
-				return SolarGeneratorTileEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return SolarGeneratorTileEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return SolarGeneratorTileEntity.this.workload;
-			default:
-				return 0;
+				case 0:
+					return SolarGeneratorTileEntity.this.energystorage.getEnergyStored();
+				case 1:
+					return SolarGeneratorTileEntity.this.energystorage.getMaxEnergyStored();
+				case 2:
+					return SolarGeneratorTileEntity.this.workload;
+				default:
+					return 0;
 			}
 		}
 
@@ -35,16 +38,16 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 		{
 			switch (index)
 			{
-			case 0:
-				SolarGeneratorTileEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				SolarGeneratorTileEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				SolarGeneratorTileEntity.this.workload = value;
-				;
-				break;
+				case 0:
+					SolarGeneratorTileEntity.this.energystorage.setEnergyStored(value);
+					break;
+				case 1:
+					SolarGeneratorTileEntity.this.energystorage.setEnergyMaxStored(value);
+					break;
+				case 2:
+					SolarGeneratorTileEntity.this.workload = value;
+					;
+					break;
 			}
 
 		}
@@ -70,7 +73,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 				workload++;
 				if (workload >= getTicksPerAmount())
 				{
-					energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE)));
+					energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, SOLAR_FOCUS)));
 					workload = 0;
 					addKnowledge();
 				}
@@ -89,14 +92,14 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	{
 		switch (focusLevel)
 		{
-		case 1:
-			return 20;
-		case 2:
-			return 60;
-		case 3:
-			return 180;
-		case 4:
-			return 540;
+			case 1:
+				return 20;
+			case 2:
+				return 60;
+			case 3:
+				return 180;
+			case 4:
+				return 540;
 		}
 
 		return 0;
@@ -104,7 +107,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 
 	public int getTicksPerAmount()
 	{
-		return 80 - (getUpgradeTier(1, PlantTechConstants.SPEEDUPGRADE_TYPE) * 15);
+		return 80 - (getUpgradeTier(1, SPEED_UPGRADE) * 15);
 	}
 
 	@Override

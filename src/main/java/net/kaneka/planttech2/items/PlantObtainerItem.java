@@ -1,20 +1,17 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
-import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
@@ -22,11 +19,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class PlantObtainerItem extends BaseItem
+public class PlantObtainerItem extends Item
 {
-    public PlantObtainerItem(String name, Properties property)
+    public PlantObtainerItem(Properties property)
     {
-        super(name, property.maxStackSize(1));
+        super(property.maxStackSize(1));
     }
 
     @Override

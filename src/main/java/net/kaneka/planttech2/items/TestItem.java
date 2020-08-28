@@ -6,12 +6,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 
-public class TestItem extends BaseItem
+public class TestItem extends Item
 {
 
 	public TestItem()
 	{
-		super("testitem", new Item.Properties().group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().group(ModCreativeTabs.MAIN));
 
 	}
 

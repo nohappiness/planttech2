@@ -6,7 +6,7 @@ public class ClientConfig
 {
 	public static ForgeConfigSpec.BooleanValue colorblind_guis;
 	
-	public static void init(ForgeConfigSpec.Builder server, ForgeConfigSpec.Builder client)
+	public static void init(ForgeConfigSpec.Builder client)
 	{
 		client.comment("Client Configuration");
 		

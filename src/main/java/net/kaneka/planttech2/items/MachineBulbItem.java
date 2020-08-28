@@ -2,7 +2,6 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.FacingGrowingBlock;
 import net.kaneka.planttech2.blocks.GrowingBlock;
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -13,20 +12,21 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class MachineBulbItem extends BaseItem
-{
-	private Block crop, hull;
-	private int tier;
-	private int neededBiomass;
+import java.util.function.Supplier;
 
-	public MachineBulbItem(String name, Block hull, Block crop, int tier, int neededBiomass)
+public class MachineBulbItem extends Item
+{
+	private final Supplier<Block> crop, hull;
+	private final int tier;
+	private final int neededBiomass;
+
+	public MachineBulbItem(Supplier<Block> hull, Supplier<Block> crop, int tier, int neededBiomass)
 	{
-		super(name, new Item.Properties().group(ModCreativeTabs.groupseeds));
+		super(new Item.Properties().group(ModCreativeTabs.SEEDS));
 		this.hull = hull;
 		this.crop = crop;
 		this.tier = tier;
 		this.neededBiomass = neededBiomass;
-		ModItems.MACHINEBULBS.add(this);
 	}
 
 	@Override
@@ -36,26 +36,22 @@ public class MachineBulbItem extends BaseItem
 		BlockPos pos = ctx.getPos();
 		Block target = world.getBlockState(pos).getBlock();
 		ItemStack stack = ctx.getItem();
-		if(target != null)
+		if (target.equals(hull))
 		{
-			if(target.equals(hull))
+			if (crop instanceof FacingGrowingBlock)
 			{
-				if(crop instanceof FacingGrowingBlock)
+				Direction direction = ctx.getFace();
+				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					Direction direction = ctx.getFace();
-					if(!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
-					{
-        				world.setBlockState(pos, crop.getDefaultState().with(FacingGrowingBlock.FACING, direction));
-        				stack.shrink(1);
-        				return ActionResultType.CONSUME;
-					}
+					world.setBlockState(pos, crop.get().getDefaultState().with(FacingGrowingBlock.FACING, direction));
+					stack.shrink(1);
+					return ActionResultType.CONSUME;
 				}
-				else
-				{
-					world.setBlockState(pos, crop.getDefaultState());
-    				stack.shrink(1);
-    				return ActionResultType.CONSUME;
-				}
+			} else
+			{
+				world.setBlockState(pos, crop.get().getDefaultState());
+				stack.shrink(1);
+				return ActionResultType.CONSUME;
 			}
 		}
 		return ActionResultType.FAIL;
@@ -68,26 +64,25 @@ public class MachineBulbItem extends BaseItem
 
 	public Block getHull()
 	{
-		return hull;
+		return hull.get();
 	}
 
 	public Block getCrop()
 	{
-		return crop;
+		return crop.get();
 	}
 
 	public Block getMachine()
 	{
-		if(crop instanceof GrowingBlock)
+		if (crop.get() instanceof GrowingBlock)
 		{
-			return crop.getBlock();
+			return crop.get().getBlock();
 		}
-		return crop;
+		return crop.get();
 	}
 
 	public int getNeededBiomass()
 	{
 		return neededBiomass;
 	}
-
 }

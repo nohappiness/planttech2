@@ -7,18 +7,15 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.Dimension;
 
 public class TeleporterItem extends EnergyStorageItem
 {
 
-	public TeleporterItem(String name, Properties property, int basecapacity)
+	public TeleporterItem(Properties property, int basecapacity)
 	{
-		super(name, property, basecapacity);
+		super(property, basecapacity);
 	}
 
 	/*

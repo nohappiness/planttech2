@@ -19,12 +19,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class DNAContainerItem extends BaseItem
+public class DNAContainerItem extends Item
 {
 
 	public DNAContainerItem()
 	{
-		super("dna_container",new Item.Properties().group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().group(ModCreativeTabs.MAIN));
 	}
 
 	@Override

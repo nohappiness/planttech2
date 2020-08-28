@@ -6,13 +6,13 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class ParticleItem extends BaseItem
+public class ParticleItem extends Item
 {
-	private String entryName;
+	private final String entryName;
 	
 	public ParticleItem(String name)
 	{
-		super(name + "_particles",new Item.Properties().group(ModCreativeTabs.groupparticles));
+		super(new Item.Properties().group(ModCreativeTabs.PARTICLES));
 		this.entryName = name; 
 	}
 	

@@ -11,12 +11,12 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class ThermometerItem extends BaseItem
+public class ThermometerItem extends Item
 {
 
 	public ThermometerItem()
 	{
-		super("thermometer", new Item.Properties().group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().group(ModCreativeTabs.MAIN));
 	}
 
 	@Override
