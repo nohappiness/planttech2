@@ -3,6 +3,7 @@ package net.kaneka.planttech2.recipes.recipeclasses;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.inventory.IInventory;
@@ -86,7 +87,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 	@Override
 	public IRecipeSerializer<?> getSerializer()
 	{
-		return ForgeRegistries.RECIPE_SERIALIZERS.getValue(new ResourceLocation(PlantTechMain.MODID, "infusing"));
+		return ModRecipeSerializers.INFUSER;
 	}
 
 	@Override
