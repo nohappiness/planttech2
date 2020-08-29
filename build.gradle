@@ -33,6 +33,10 @@ archivesBaseName = 'planttech2'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+sourceSets {
+    main.resources.srcDirs += 'src/generated/resources/'
+}
+
 minecraft {
     mappings channel: 'snapshot', version: "${mappings_version}"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.

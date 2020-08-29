@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.datapack.dataprovider.Languages;
 import net.kaneka.planttech2.datapack.dataprovider.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
@@ -87,7 +88,7 @@ public class RegistryEvents
 	{
 		ModBiomes.registerBiomes(event.getRegistry());
 	}
-	
+
 	@SubscribeEvent
 	public static void registerDimensions(final RegistryEvent.Register<ModDimension> event)
 	{
@@ -99,14 +100,14 @@ public class RegistryEvents
 	{
 		ModDimensions.registerAll();
 	}
-	
+
 	@SubscribeEvent
 	public void registerPlacements(RegistryEvent.Register<Placement<?>> event)
 	{
 		ModPlacements.registerDimensions(event.getRegistry());
 	}
 
-	
+
 	@SubscribeEvent
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
 	{
@@ -114,12 +115,19 @@ public class RegistryEvents
 	}
 
 	*/
-	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event)
-	{
-		DataGenerator gen = event.getGenerator();
-		gen.addProvider(new Recipes(gen));
-	}
+    @SubscribeEvent
+    public static void gatherData(GatherDataEvent event)
+    {
+        DataGenerator gen = event.getGenerator();
+        if (event.includeClient())
+        {
+            gen.addProvider(new Languages(gen));
+        }
+        if (event.includeServer())
+        {
+            gen.addProvider(new Recipes(gen));
+        }
+    }
 
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)

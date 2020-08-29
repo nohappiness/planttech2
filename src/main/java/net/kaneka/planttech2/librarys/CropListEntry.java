@@ -20,11 +20,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 public class CropListEntry implements Comparable<CropListEntry>
 {
 
-    private int ID;
+    private final int ID;
 
-    private String name;
+    private final String name;
 
-    private List<ItemStack> seeds = new ArrayList<ItemStack>();
+    private final List<ItemStack> seeds = new ArrayList<ItemStack>();
 
     private ItemStack mainSeed = new ItemStack(Items.WHEAT_SEEDS);
 
