@@ -2,6 +2,7 @@ package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datapack.dataprovider.Languages;
+import net.kaneka.planttech2.datapack.dataprovider.LootTables;
 import net.kaneka.planttech2.datapack.dataprovider.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
@@ -126,6 +127,7 @@ public class RegistryEvents
         if (event.includeServer())
         {
             gen.addProvider(new Recipes(gen));
+            gen.addProvider(new LootTables(gen));
         }
     }
 
