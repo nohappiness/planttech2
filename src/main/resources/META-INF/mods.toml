@@ -6,7 +6,7 @@ issueTrackerURL="https://bitbucket.org/kaneka/planttech2/issues?status=new&statu
 
 [[mods]]
 modId="planttech2"
-version="{file.jarVersion}" # automatically gets version from manifest, but will not display in dev
+version="${file.jarVersion}" # automatically gets version from manifest, but will not display in dev
 displayName="PlantTech 2"
 credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka, Setrion, poopoodice"
