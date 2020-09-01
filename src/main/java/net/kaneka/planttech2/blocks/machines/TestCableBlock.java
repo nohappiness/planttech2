@@ -5,7 +5,6 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TestCableTileEntity;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,6 +41,7 @@ public class TestCableBlock extends BaseBlock
             WEST = IntegerProperty.create("west", 0, 3),
             UP = IntegerProperty.create("up", 0, 3),
             DOWN = IntegerProperty.create("down", 0, 3);
+
     public static final Map<Direction, IntegerProperty> DIRECTIONS = new HashMap<Direction, IntegerProperty>()
     {
         private static final long serialVersionUID = 1L;
@@ -74,13 +74,26 @@ public class TestCableBlock extends BaseBlock
         private static final long serialVersionUID = 1L;
         {
             put(Direction.DOWN, Block.makeCuboidShape(7F, 0F, 7F, 9F, 7F, 9F)); // DOWN
-            put(Direction.UP, Block.makeCuboidShape(7F, 9F, 7F, 9F, 16F, 9F)); // UP
-            put(Direction.NORTH, Block.makeCuboidShape(7F, 7F, 0F, 9F, 9F, 7F)); // NORTH
-            put(Direction.SOUTH, Block.makeCuboidShape(7F, 7F, 9F, 9F, 9F, 16F)); // SOUTH
-            put(Direction.WEST, Block.makeCuboidShape(0F, 7F, 7F, 7F, 9F, 9F)); // WEST
-            put(Direction.EAST, Block.makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));// EAST
+            put(Direction.UP, Block.makeCuboidShape(7F, 9F, 7F, 9F, 16F, 9F));  // UP
+            put(Direction.NORTH, Block.makeCuboidShape(7F, 7F, 0F, 9F, 9F, 7F));  // NORTH
+            put(Direction.SOUTH, Block.makeCuboidShape(7F, 7F, 9F, 9F, 9F, 16F));  // SOUTH
+            put(Direction.WEST, Block.makeCuboidShape(0F, 7F, 7F, 7F, 9F, 9F));  // WEST
+            put(Direction.EAST, Block.makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));  // EAST
         }
     };
+
+    private static final HashMap<int[], VoxelShape> POSSIBLE_SHAPES = new HashMap<int[], VoxelShape>() {{
+            for (int a=0;a<2;a++)
+                for (int b=0;b<2;b++)
+                    for (int c=0;c<2;c++)
+                        for (int d=0;d<2;d++)
+                            for (int e=0;e<2;e++)
+                                for (int f=0;f<2;f++)
+                                {
+                                    int[] states = new int[]{a, b, c, d, e, f};
+                                    put(states, getCombinedShape(states));
+                                }
+        }};
 
     public TestCableBlock()
     {
@@ -164,12 +177,6 @@ public class TestCableBlock extends BaseBlock
     }
 
     @Override
-    public BlockRenderType getRenderType(BlockState state)
-    {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);
@@ -230,24 +237,44 @@ public class TestCableBlock extends BaseBlock
         return getCombinedShape(state);
     }
 
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getCombinedShape(state);
-    }
-
     private VoxelShape getCombinedShape(BlockState state)
     {
+        int[] states = new int[]{0, 0, 0, 0, 0, 0};
+        for (int d=0;d<6;d++)
+            states[d] = state.get(DIRECTIONS.get(Direction.byIndex(d)));
+        return POSSIBLE_SHAPES.get(states);
+    }
+
+//    private VoxelShape getCombinedShape(BlockState state)
+//    {
+//        VoxelShape shape = POST;
+//        for (Direction direction : Direction.values())
+//        {
+//            int value = state.get(DIRECTIONS.get(direction));
+//            shape = getCombinedShape(shape, value, direction);
+//        }
+//        return shape;
+//    }
+
+    private static VoxelShape getCombinedShape(int[] states)
+    {
         VoxelShape shape = POST;
-        for (Direction dir : Direction.values())
+        for (int i=0;i<6;i++)
         {
-            int value = state.get(DIRECTIONS.get(dir));
-            if (value > 0)
-            {
-                shape = VoxelShapes.or(shape, CABLE_VOXELS.get(dir));
-                if (value > 1)
-                    shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(dir));
-            }
+            int state = states[i];
+            Direction direction = Direction.byIndex(i);
+            shape = getCombinedShape(shape, state, direction);
+        }
+        return shape;
+    }
+
+    private static VoxelShape getCombinedShape(VoxelShape shape, int state, Direction direction)
+    {
+        if (state > 0)
+        {
+            shape = VoxelShapes.or(shape, CABLE_VOXELS.get(direction));
+            if (state > 1)
+                shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(direction));
         }
         return shape;
     }
