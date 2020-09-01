@@ -80,27 +80,58 @@ public class TestCableBlock extends BaseBlock
             put(Direction.EAST, Block.makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));  // EAST
         }
     };
+    
+    protected final VoxelShape[][][][][][] shapes = new  VoxelShape[3][3][3][3][3][3];
 
-    private static final HashMap<List<Integer>, VoxelShape> POSSIBLE_SHAPES = new HashMap<List<Integer>, VoxelShape>() {{
-            for (int a=0;a<3;a++)
-                for (int b=0;b<3;b++)
-                    for (int c=0;c<3;c++)
-                        for (int d=0;d<3;d++)
-                            for (int e=0;e<3;e++)
-                                for (int f=0;f<3;f++)
-                                {
-                                    List<Integer> states = Arrays.asList(a, b, c, d, e, f);
-                                    put(states, getCombinedShape(states));
-                                }
-        }};
 
     public TestCableBlock()
     {
         super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupblocks, true);
         this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
+        initShapes();
+    }
+    
+    private void initShapes()
+    {
+    	//Direction indexes are DUNSWE
+    	 for (int d=0;d<3;d++)
+             for (int u=0;u<3;u++)
+                 for (int n=0;n<3;n++)
+                     for (int s=0;s<3;s++)
+                         for (int w=0;w<3;w++)
+                             for (int e=0;e<3;e++)
+                             {
+                            	 shapes[d][u][n][s][w][e] = getCombinedShape(d,u,n,s,w,e); 
+                             }
+    }
+    
+    private  VoxelShape getCombinedShape(int... states)
+    {
+    	VoxelShape shape = POST;
+    	if(states.length == 6)
+    	{
+            for (int i=0;i<6;i++)
+            {
+                int state = states[i];
+                Direction direction = Direction.byIndex(i);
+                if (state > 0)
+                {
+                    shape = VoxelShapes.or(shape, CABLE_VOXELS.get(direction));
+                    if (state > 1)
+                        shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(direction));
+                }
+            }
+    	}
+    	return shape; 
+    }
+    
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+    	//Direction indexes are DUNSWE
+    	return shapes[Math.min(2, state.get(DOWN))][Math.min(2, state.get(UP))][Math.min(2, state.get(NORTH))][Math.min(2, state.get(SOUTH))][Math.min(2, state.get(WEST))][Math.min(2, state.get(EAST))];
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
     {
@@ -164,7 +195,6 @@ public class TestCableBlock extends BaseBlock
         return new BlockItem(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
@@ -175,7 +205,8 @@ public class TestCableBlock extends BaseBlock
         }
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);
@@ -230,20 +261,6 @@ public class TestCableBlock extends BaseBlock
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getCombinedShape(state);
-    }
-
-    private VoxelShape getCombinedShape(BlockState state)
-    {
-        ArrayList<Integer> states = new ArrayList<>();
-        for (int d=0;d<6;d++)
-            states.add(Math.max(0, Math.min(2, state.get(DIRECTIONS.get(Direction.byIndex(d))))));
-        return POSSIBLE_SHAPES.get(states);
-    }
-
 //    private VoxelShape getCombinedShape(BlockState state)
 //    {
 //        VoxelShape shape = POST;
@@ -255,28 +272,7 @@ public class TestCableBlock extends BaseBlock
 //        return shape;
 //    }
 
-    private static VoxelShape getCombinedShape(List<Integer> states)
-    {
-        VoxelShape shape = POST;
-        for (int i=0;i<6;i++)
-        {
-            int state = states.get(i);
-            Direction direction = Direction.byIndex(i);
-            shape = getCombinedShape(shape, state, direction);
-        }
-        return shape;
-    }
-
-    private static VoxelShape getCombinedShape(VoxelShape shape, int state, Direction direction)
-    {
-        if (state > 0)
-        {
-            shape = VoxelShapes.or(shape, CABLE_VOXELS.get(direction));
-            if (state > 1)
-                shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(direction));
-        }
-        return shape;
-    }
+    
 
     private TestCableTileEntity getTECable(World world, BlockPos pos)
     {
