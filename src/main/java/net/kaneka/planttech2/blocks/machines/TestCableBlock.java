@@ -28,8 +28,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class TestCableBlock extends BaseBlock
@@ -82,15 +81,15 @@ public class TestCableBlock extends BaseBlock
         }
     };
 
-    private static final HashMap<int[], VoxelShape> POSSIBLE_SHAPES = new HashMap<int[], VoxelShape>() {{
-            for (int a=0;a<2;a++)
-                for (int b=0;b<2;b++)
-                    for (int c=0;c<2;c++)
-                        for (int d=0;d<2;d++)
-                            for (int e=0;e<2;e++)
-                                for (int f=0;f<2;f++)
+    private static final HashMap<List<Integer>, VoxelShape> POSSIBLE_SHAPES = new HashMap<List<Integer>, VoxelShape>() {{
+            for (int a=0;a<3;a++)
+                for (int b=0;b<3;b++)
+                    for (int c=0;c<3;c++)
+                        for (int d=0;d<3;d++)
+                            for (int e=0;e<3;e++)
+                                for (int f=0;f<3;f++)
                                 {
-                                    int[] states = new int[]{a, b, c, d, e, f};
+                                    List<Integer> states = Arrays.asList(a, b, c, d, e, f);
                                     put(states, getCombinedShape(states));
                                 }
         }};
@@ -239,9 +238,9 @@ public class TestCableBlock extends BaseBlock
 
     private VoxelShape getCombinedShape(BlockState state)
     {
-        int[] states = new int[]{0, 0, 0, 0, 0, 0};
+        ArrayList<Integer> states = new ArrayList<>();
         for (int d=0;d<6;d++)
-            states[d] = state.get(DIRECTIONS.get(Direction.byIndex(d)));
+            states.add(Math.max(0, Math.min(2, state.get(DIRECTIONS.get(Direction.byIndex(d))))));
         return POSSIBLE_SHAPES.get(states);
     }
 
@@ -256,12 +255,12 @@ public class TestCableBlock extends BaseBlock
 //        return shape;
 //    }
 
-    private static VoxelShape getCombinedShape(int[] states)
+    private static VoxelShape getCombinedShape(List<Integer> states)
     {
         VoxelShape shape = POST;
         for (int i=0;i<6;i++)
         {
-            int state = states[i];
+            int state = states.get(i);
             Direction direction = Direction.byIndex(i);
             shape = getCombinedShape(shape, state, direction);
         }
@@ -295,5 +294,10 @@ public class TestCableBlock extends BaseBlock
         TestCableTileEntity cable = getTECable(world, pos);
         if (cable != null)
             modification.accept(cable);
+    }
+
+    public static class ConnnectionState
+    {
+
     }
 }

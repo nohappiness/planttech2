@@ -53,8 +53,8 @@ public class PlantTechMain
 {
 	public static final String MODID = "planttech2";
 
-//	@SuppressWarnings("deprecation")
-//	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
+	@SuppressWarnings("deprecation")
+	public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
 
 	public static final Logger LOGGER = LogManager.getLogger(MODID);
 
