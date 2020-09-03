@@ -101,7 +101,7 @@ public class TestCableBlock extends BaseBlock
                          for (int w=0;w<3;w++)
                              for (int e=0;e<3;e++)
                              {
-                            	 shapes[d][u][n][s][w][e] = getCombinedShape(d,u,n,s,w,e); 
+                            	 shapes[d][u][n][s][w][e] = getCombinedShape(d,u,n,s,w,e);
                              }
     }
     

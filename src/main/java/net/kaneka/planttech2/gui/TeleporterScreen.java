@@ -97,7 +97,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 //		drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		this.drawButtons(mStack, mouseX, mouseY, partialTicks);
 		this.drawTooltips(mStack, mouseX, mouseY);
-        this.func_230459_a_(mStack, mouseX, mouseY);
+        this.renderHoveredTooltip(mStack, mouseX, mouseY);
 	}
 	
 	private void buttonClicked(int id)

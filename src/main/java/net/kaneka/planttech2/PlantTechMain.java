@@ -99,7 +99,7 @@ public class PlantTechMain
 			//new ModStructurePieceTypes();
 			CapabilityHandler.registerAll();
 			PlantTech2PacketHandler.register();
-//			PlantTechMain.croplist.configurePlanttechEntries();
+			PlantTechMain.croplist.configurePlanttechEntries();
 			LootTableHandler.register();
 			registerAllEntityAttributes();
 		});

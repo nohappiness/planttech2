@@ -82,7 +82,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		this.renderBackground(mStack);
 		super.render(mStack, mouseX, mouseY, partialTicks);
 		this.renderSelectedTrades();
-		this.func_230459_a_(mStack, mouseX, mouseY);
+		this.renderHoveredTooltip(mStack, mouseX, mouseY);
 		this.renderTooltips(mStack, mouseX, mouseY);
 	}
 

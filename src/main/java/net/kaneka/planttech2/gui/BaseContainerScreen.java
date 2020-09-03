@@ -51,7 +51,7 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
 //	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
-	        this.func_230459_a_(mStack, mouseX, mouseY);
+	        this.renderHoveredTooltip(mStack, mouseX, mouseY);
 	}
 	
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
@@ -102,12 +102,12 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 
 	//renderHoveredToolTip
 	@Override
-	protected void func_230459_a_(MatrixStack mStack, int x, int y)
+	protected void renderHoveredTooltip(MatrixStack mStack, int x, int y)
 	{
-		if (this.minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.getHasStack() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
+		if (minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.getHasStack() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
 			this.renderTooltip(mStack, new TranslationTextComponent(((SlotItemHandlerWithInfo) this.hoveredSlot).getUsageString()), x, y);
 		else
-			super.func_230459_a_(mStack, x, y);
+			super.renderHoveredTooltip(mStack, x, y);
 	}
 
 //	@Override
