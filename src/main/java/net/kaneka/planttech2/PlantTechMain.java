@@ -1,10 +1,10 @@
 package net.kaneka.planttech2;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
+import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
 import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
-import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModCommands;

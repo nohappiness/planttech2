@@ -40,12 +40,19 @@ public class TechVillagerEntity extends AgeableEntity
 		super(type, worldIn);
 	}
 
+//	@Nullable
+//	@Override
+//	public AgeableEntity createChild(AgeableEntity ageableEntity)
+//	{
+//		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
+//
+//	}
+
 	@Nullable
 	@Override
 	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity ageableEntity)
 	{
 		return new TechVillagerEntity(ModEntityTypes.TECHVILLAGERENTITY, this.world);
-
 	}
 
 	@Override

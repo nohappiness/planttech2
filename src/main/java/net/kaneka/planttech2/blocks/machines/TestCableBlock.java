@@ -3,7 +3,6 @@ package net.kaneka.planttech2.blocks.machines;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TestCableTileEntity;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,9 +24,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -42,6 +39,7 @@ public class TestCableBlock extends Block
             WEST = IntegerProperty.create("west", 0, 3),
             UP = IntegerProperty.create("up", 0, 3),
             DOWN = IntegerProperty.create("down", 0, 3);
+
     public static final Map<Direction, IntegerProperty> DIRECTIONS = new HashMap<Direction, IntegerProperty>()
     {
         private static final long serialVersionUID = 1L;
@@ -81,15 +79,56 @@ public class TestCableBlock extends Block
             put(Direction.EAST, makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));// EAST
         }
     };
-    public static final Map<List<Integer>, VoxelShape> SHAPES_CACHE = new HashMap<>();
+    protected final VoxelShape[][][][][][] shapes = new  VoxelShape[3][3][3][3][3][3];
 
     public TestCableBlock()
     {
         super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F));
         this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
+        initShapes();
+    }
+    
+    private void initShapes()
+    {
+    	//Direction indexes are DUNSWE
+    	 for (int d=0;d<3;d++)
+             for (int u=0;u<3;u++)
+                 for (int n=0;n<3;n++)
+                     for (int s=0;s<3;s++)
+                         for (int w=0;w<3;w++)
+                             for (int e=0;e<3;e++)
+                             {
+                            	 shapes[d][u][n][s][w][e] = getCombinedShape(d,u,n,s,w,e);
+                             }
+    }
+    
+    private  VoxelShape getCombinedShape(int... states)
+    {
+    	VoxelShape shape = POST;
+    	if(states.length == 6)
+    	{
+            for (int i=0;i<6;i++)
+            {
+                int state = states[i];
+                Direction direction = Direction.byIndex(i);
+                if (state > 0)
+                {
+                    shape = VoxelShapes.or(shape, CABLE_VOXELS.get(direction));
+                    if (state > 1)
+                        shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(direction));
+                }
+            }
+    	}
+    	return shape; 
+    }
+    
+    @Override
+    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    {
+    	//Direction indexes are DUNSWE
+    	return shapes[Math.min(2, state.get(DOWN))][Math.min(2, state.get(UP))][Math.min(2, state.get(NORTH))][Math.min(2, state.get(SOUTH))][Math.min(2, state.get(WEST))][Math.min(2, state.get(EAST))];
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
     {
@@ -148,7 +187,6 @@ public class TestCableBlock extends Block
         return new TestCableTileEntity();
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
     {
@@ -159,13 +197,8 @@ public class TestCableBlock extends Block
         }
     }
 
-    @Override
-    public BlockRenderType getRenderType(BlockState state)
-    {
-        return BlockRenderType.MODEL;
-    }
-
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);
@@ -220,49 +253,16 @@ public class TestCableBlock extends Block
         builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
     }
 
-    @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getCombinedShape(state);
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getCombinedShape(state);
-    }
-
-    private VoxelShape getCombinedShape(BlockState state)
-    {
-        List<Integer> key = getShapeKey(state);
-        if (SHAPES_CACHE.containsKey(key))
-        {
-            return SHAPES_CACHE.get(key);
-        }
-        VoxelShape shape = POST;
-        for (Direction dir : Direction.values())
-        {
-            int value = state.get(DIRECTIONS.get(dir));
-            if (value > 0)
-            {
-                shape = VoxelShapes.or(shape, CABLE_VOXELS.get(dir));
-                if (value > 1)
-                    shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(dir));
-            }
-        }
-        SHAPES_CACHE.put(key, shape);
-        return shape;
-    }
-
-    private List<Integer> getShapeKey(BlockState state)
-    {
-        List<Integer> result = new ArrayList<>();
-        for (Direction dir : Direction.values())
-        {
-            result.add(state.get(DIRECTIONS.get(dir)));
-        }
-        return result;
-    }
+//    private VoxelShape getCombinedShape(BlockState state)
+//    {
+//        VoxelShape shape = POST;
+//        for (Direction direction : Direction.values())
+//        {
+//            int value = state.get(DIRECTIONS.get(direction));
+//            shape = getCombinedShape(shape, value, direction);
+//        }
+//        return shape;
+//    }
 
     private TestCableTileEntity getTECable(World world, BlockPos pos)
     {
@@ -280,5 +280,10 @@ public class TestCableBlock extends Block
         TestCableTileEntity cable = getTECable(world, pos);
         if (cable != null)
             modification.accept(cable);
+    }
+
+    public static class ConnnectionState
+    {
+
     }
 }

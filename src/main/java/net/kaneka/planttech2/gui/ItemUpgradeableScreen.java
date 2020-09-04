@@ -54,7 +54,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 			this.renderBackground(mStack);
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
-	        this.func_230459_a_(mStack, mouseX, mouseY);
+	        this.renderHoveredTooltip(mStack, mouseX, mouseY);
 	}
 
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
