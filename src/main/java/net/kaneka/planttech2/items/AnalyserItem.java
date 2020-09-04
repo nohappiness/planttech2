@@ -11,12 +11,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
-public class AnalyserItem extends BaseItem
+public class AnalyserItem extends Item
 {
 
 	public AnalyserItem()
 	{
-		super("analyser", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
 	}
 	
 	@Override
@@ -25,7 +25,7 @@ public class AnalyserItem extends BaseItem
 	    World world = ctx.getWorld(); 
 	    BlockPos pos = ctx.getPos(); 
 	    PlayerEntity player = ctx.getPlayer(); 
-		if(!world.isRemote)
+		if(!world.isRemote && player != null)
 		{
 			Block targetBlock = world.getBlockState(pos).getBlock(); 
 

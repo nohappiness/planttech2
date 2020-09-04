@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.fluids;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
@@ -23,8 +24,8 @@ import net.minecraftforge.fluids.FluidAttributes;
 
 public abstract class BiomassFluid extends FlowingFluid
 {
-	public static final ResourceLocation BIOMASS_STILL = new ResourceLocation("planttech2:blocks/fluid/biomass_still");
-	public static final ResourceLocation BIOMASS_FLOWING = new ResourceLocation("planttech2:blocks/fluid/biomass_flow");
+	public static final ResourceLocation BIOMASS_STILL = new ResourceLocation(PlantTechMain.MODID, "blocks/fluid/biomass_still");
+	public static final ResourceLocation BIOMASS_FLOWING = new ResourceLocation(PlantTechMain.MODID, "blocks/fluid/biomass_flow");
 	public static final FluidAttributes ATTRIBUTE_STILL = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build(new Source());
 	public static final FluidAttributes ATTRIBUTE_FLOWING = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build(new Flowing());
 

@@ -1,0 +1,29 @@
+{
+  "crop": "white_tulip",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:white_tulip_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:white_tulip"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:color_particles",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "item": "minecraft:white_tulip",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

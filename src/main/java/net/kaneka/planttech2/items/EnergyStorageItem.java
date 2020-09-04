@@ -7,6 +7,7 @@ import net.kaneka.planttech2.energy.EnergyProvider;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,13 +20,13 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyStorageItem extends BaseItem implements IItemChargeable
+public class EnergyStorageItem extends Item implements IItemChargeable
 {
 	private int basecapacity; 
 
-	public EnergyStorageItem(String name, Properties property, int basecapacity)
+	public EnergyStorageItem(Properties property, int basecapacity)
 	{
-		super(name, property.maxStackSize(1));
+		super(property.maxStackSize(1));
 		this.basecapacity = basecapacity;
 	}
 	

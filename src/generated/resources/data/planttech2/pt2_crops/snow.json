@@ -1,0 +1,28 @@
+{
+  "crop": "snow",
+  "enabled": true,
+  "temperature": "extreme_cold",
+  "primary_seed": {
+    "item": "planttech2:snow_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:snow_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "polarbear",
+      "parent_2": "water",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

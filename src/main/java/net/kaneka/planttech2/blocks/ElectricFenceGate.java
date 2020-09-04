@@ -1,13 +1,11 @@
 package net.kaneka.planttech2.blocks;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
@@ -30,7 +28,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ElectricFenceGate extends BaseBlock
+public class ElectricFenceGate extends Block
 {
     public static final DirectionProperty HORIZONTAL_FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
@@ -51,9 +49,9 @@ public class ElectricFenceGate extends BaseBlock
     public static final VoxelShape DOOR_POSITIVE_Z = Block.makeCuboidShape(13.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
     public static final VoxelShape DOOR_NEGATIVE_X = Block.makeCuboidShape(1.0D, 0.0D, 13.0D, 15.0D, 16.0D, 15.0D);
     public static final VoxelShape DOOR_POSITIVE_X = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 3.0D);
-    public ElectricFenceGate(Properties property, String name, ItemGroup group, boolean hasItem)
+    public ElectricFenceGate(Properties property)
     {
-        super(property.notSolid(), name, group, hasItem);
+        super(property.notSolid());
         setDefaultState(getDefaultState()
                 .with(HORIZONTAL_FACING, Direction.NORTH)
                 .with(OPEN, false)

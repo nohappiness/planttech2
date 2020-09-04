@@ -1,16 +1,12 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.cable.TestCableTileEntity;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -28,10 +24,13 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
-public class TestCableBlock extends BaseBlock
+import static net.minecraftforge.common.util.Constants.BlockFlags;
+
+public class TestCableBlock extends Block
 {
     public static final IntegerProperty
             NORTH = IntegerProperty.create("north", 0, 3),
@@ -54,17 +53,17 @@ public class TestCableBlock extends BaseBlock
         }
     };
 
-    private static final VoxelShape POST = Block.makeCuboidShape(7F, 7F, 7F, 9F, 9F, 9F);
+    private static final VoxelShape POST = makeCuboidShape(7F, 7F, 7F, 9F, 9F, 9F);
     private static final Map<Direction, VoxelShape> CONNECTION_VOXELS = new HashMap<Direction, VoxelShape>()
     {
         private static final long serialVersionUID = 1L;
         {
-            put(Direction.DOWN, Block.makeCuboidShape(6F, 0F, 6F, 10F, 2F, 10F)); // DOWN
-            put(Direction.UP, Block.makeCuboidShape(6F, 14F, 6F, 10F, 16F, 10F)); // UP
-            put(Direction.NORTH, Block.makeCuboidShape(6F, 6F, 0F, 10F, 10F, 2F)); // NORTH
-            put(Direction.SOUTH, Block.makeCuboidShape(6F, 6F, 14F, 10F, 10F, 16F)); // SOUTH
-            put(Direction.WEST, Block.makeCuboidShape(0F, 6F, 6F, 2F, 10F, 10F)); // WEST
-            put(Direction.EAST, Block.makeCuboidShape(14F, 6F, 6F, 16F, 10F, 10F)); // EAST
+            put(Direction.DOWN, makeCuboidShape(6F, 0F, 6F, 10F, 2F, 10F)); // DOWN
+            put(Direction.UP, makeCuboidShape(6F, 14F, 6F, 10F, 16F, 10F)); // UP
+            put(Direction.NORTH, makeCuboidShape(6F, 6F, 0F, 10F, 10F, 2F)); // NORTH
+            put(Direction.SOUTH, makeCuboidShape(6F, 6F, 14F, 10F, 10F, 16F)); // SOUTH
+            put(Direction.WEST, makeCuboidShape(0F, 6F, 6F, 2F, 10F, 10F)); // WEST
+            put(Direction.EAST, makeCuboidShape(14F, 6F, 6F, 16F, 10F, 10F)); // EAST
         }
     };
 
@@ -72,21 +71,19 @@ public class TestCableBlock extends BaseBlock
     {
         private static final long serialVersionUID = 1L;
         {
-            put(Direction.DOWN, Block.makeCuboidShape(7F, 0F, 7F, 9F, 7F, 9F)); // DOWN
-            put(Direction.UP, Block.makeCuboidShape(7F, 9F, 7F, 9F, 16F, 9F));  // UP
-            put(Direction.NORTH, Block.makeCuboidShape(7F, 7F, 0F, 9F, 9F, 7F));  // NORTH
-            put(Direction.SOUTH, Block.makeCuboidShape(7F, 7F, 9F, 9F, 9F, 16F));  // SOUTH
-            put(Direction.WEST, Block.makeCuboidShape(0F, 7F, 7F, 7F, 9F, 9F));  // WEST
-            put(Direction.EAST, Block.makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));  // EAST
+            put(Direction.DOWN, makeCuboidShape(7F, 0F, 7F, 9F, 7F, 9F)); // DOWN
+            put(Direction.UP, makeCuboidShape(7F, 9F, 7F, 9F, 16F, 9F)); // UP
+            put(Direction.NORTH, makeCuboidShape(7F, 7F, 0F, 9F, 9F, 7F)); // NORTH
+            put(Direction.SOUTH, makeCuboidShape(7F, 7F, 9F, 9F, 9F, 16F)); // SOUTH
+            put(Direction.WEST, makeCuboidShape(0F, 7F, 7F, 7F, 9F, 9F)); // WEST
+            put(Direction.EAST, makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));// EAST
         }
     };
-    
     protected final VoxelShape[][][][][][] shapes = new  VoxelShape[3][3][3][3][3][3];
-
 
     public TestCableBlock()
     {
-        super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F), "cable", ModCreativeTabs.groupblocks, true);
+        super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F));
         this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
         initShapes();
     }
@@ -153,7 +150,7 @@ public class TestCableBlock extends BaseBlock
                             if (te != null)
                             {
                                 te.rotateConnection(dir);
-                                worldIn.setBlockState(pos, getCurrentState(state, worldIn, pos), 3);
+                                worldIn.setBlockState(pos, getCurrentState(state, worldIn, pos), BlockFlags.DEFAULT);
                                 return ActionResultType.SUCCESS;
                             }
                         }
@@ -173,7 +170,7 @@ public class TestCableBlock extends BaseBlock
             if (te != null)
             {
                 te.initCable();
-                world.setBlockState(pos, getCurrentState(state, world, pos), 3);
+                world.setBlockState(pos, getCurrentState(state, world, pos), BlockFlags.DEFAULT);
             }
         }
     }
@@ -188,11 +185,6 @@ public class TestCableBlock extends BaseBlock
     public TileEntity createTileEntity(BlockState state, IBlockReader world)
     {
         return new TestCableTileEntity();
-    }
-
-    public Item createItemBlock()
-    {
-        return new BlockItem(this, new Item.Properties().group(ModCreativeTabs.groupmain)).setRegistryName("cable");
     }
 
     @Override
@@ -271,8 +263,6 @@ public class TestCableBlock extends BaseBlock
 //        }
 //        return shape;
 //    }
-
-    
 
     private TestCableTileEntity getTECable(World world, BlockPos pos)
     {

@@ -2,19 +2,20 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.items.GuideItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class GuideBaseScreen extends Screen
+public abstract class GuideBaseScreen extends Screen
 {
-	protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/plantencyclopaedia_big.png");
+	protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID, "textures/gui/plantencyclopaedia_big.png");
+	protected static final int TEXT_COLOR = 0x00e803;
 	protected int xSize = 512;
 	protected int ySize = 196;
 	protected int guiLeft;
@@ -22,14 +23,14 @@ public class GuideBaseScreen extends Screen
 	protected int scrollMax;
 	protected int scrollPos = 0;
 	protected int fadeInTimer = 50;
-	protected int selectedId;
-	protected boolean canscroll;
+	protected boolean hasSelection;
+	protected boolean allowScroll;
 
-	public GuideBaseScreen(int scrollMax, boolean canscroll, String title)
+	public GuideBaseScreen(int scrollMax, boolean allowScroll, String title)
 	{
 		super(new TranslationTextComponent(title));
 		this.scrollMax = scrollMax;
-		this.canscroll = canscroll;
+		this.allowScroll = allowScroll;
 	}
 
 	@SuppressWarnings("resource")
@@ -37,19 +38,17 @@ public class GuideBaseScreen extends Screen
 	public void init()
 	{
 		super.init();
-		if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof GuideItem)
+		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof GuideItem)
 		{
+			// TODO: move this to use a custom item property
 			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(1);
 		}
-		selectedId = -1;
+		hasSelection = false;
 		this.guiLeft = (this.width - 400) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 	}
 
-	protected void updateButtons()
-	{
-
-	}
+	protected abstract void updateButtons();
 
 	@Override
 	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
@@ -73,9 +72,9 @@ public class GuideBaseScreen extends Screen
 
 	private void drawButtons(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		for (int i = 0; i < this.buttons.size(); ++i)
+		for (Widget button : this.buttons)
 		{
-			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
+			button.render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
 
@@ -85,51 +84,31 @@ public class GuideBaseScreen extends Screen
 		blit(mStack, this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
 	}
 
-	protected void drawForeground(MatrixStack mStack)
-	{
-
-	}
+	protected abstract void drawForeground(MatrixStack mStack);
 
 	private void drawFadeInEffect(MatrixStack mStack)
 	{
 		float percentage = 1f - ((float) fadeInTimer / 50f);
 		blit(mStack, this.guiLeft + 100, this.guiTop, this.xSize - (300 * percentage), 0, (int) (300 * percentage), this.ySize, 512, 512);
-
 		blit(mStack, this.guiLeft, this.guiTop, 0, 0, 150, this.ySize, 512, 512);
 	}
 
 	@Override
-	public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double p_mouseScrolled_5_) 
+	public boolean mouseScrolled(double mouseX, double mouseY, double delta)
 	{
-		
-		if (canscroll)
+
+		if (allowScroll && mouseX != 0)
 		{
-			if (p_mouseScrolled_1_ != 0)
-			{
-				scrollPos += p_mouseScrolled_5_ > 0 ? -1 : 1;
-				scrollPos = Math.max(0, scrollPos);
-				scrollPos = Math.min(scrollMax, scrollPos);
-				
-				updateButtons();
-			}
+			scrollPos += delta > 0 ? -1 : 1;
+			scrollPos = Math.max(0, scrollPos);
+			scrollPos = Math.min(scrollMax, scrollPos);
+
+			updateButtons();
 		}
-		return super.mouseScrolled(p_mouseScrolled_1_, p_mouseScrolled_3_, p_mouseScrolled_5_);
+		return super.mouseScrolled(mouseX, mouseY, delta);
 	}
 
-	protected void drawStrings(MatrixStack mStack)
-	{
-
-	}
-
-	protected String translateUnformated(String name)
-	{
-		return new TranslationTextComponent(name).getString();
-	}
-
-	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
-	{
-		font.drawString(mStack, string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("00e803", 16));
-	}
+	protected abstract void drawStrings(MatrixStack mStack);
 
 	public void renderItem(ItemStack itemstack, int x, int y)
 	{
@@ -151,10 +130,7 @@ public class GuideBaseScreen extends Screen
 		}
 	}
 
-	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
-	{
-
-	}
+	protected abstract void drawTooltips(MatrixStack mStack, int mouseX, int mouseY);
 
 	@SuppressWarnings("resource")
 	@Override
@@ -164,6 +140,6 @@ public class GuideBaseScreen extends Screen
 		{
 			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
 		}
-		super.onClose(); 
+		super.onClose();
 	}
 }

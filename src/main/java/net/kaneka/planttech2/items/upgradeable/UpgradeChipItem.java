@@ -1,21 +1,18 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import net.kaneka.planttech2.items.BaseItem;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class UpgradeChipItem extends BaseItem
+import java.util.ArrayList;
+import java.util.List;
+
+public class UpgradeChipItem extends Item
 {
 	public static int HELMET = 0, CHEST = 1, LEGGINGS = 2, BOOTS = 3, RANGED_WEAPON = 4, MELEE_WEAPON = 5, TOOL = 6;  
 
@@ -27,11 +24,11 @@ public class UpgradeChipItem extends BaseItem
 	
 	private Enchantment enchantment;
 	
-	private List<Integer> restrictions = new ArrayList<Integer>(); 
+	private final List<Integer> restrictions = new ArrayList<>();
 
 	public UpgradeChipItem(String name)
 	{
-		super(name, new Item.Properties().group(ModCreativeTabs.groupchips));
+		super(new Item.Properties().group(ModCreativeTabs.CHIPS));
 	}
 
 
@@ -224,11 +221,14 @@ public class UpgradeChipItem extends BaseItem
 	{
 		return enchantment; 
 	}
-	
-	public UpgradeChipItem addRestriction(int id)
+
+	public UpgradeChipItem addRestriction(int... ids)
 	{
-		restrictions.add(id);
-		return this; 
+		for (int id : ids)
+		{
+			restrictions.add(id);
+		}
+		return this;
 	}
 	
 	public boolean isAllowed(int id)
@@ -237,12 +237,8 @@ public class UpgradeChipItem extends BaseItem
 		{
 			return true; 
 		}
-		
-		if(restrictions.contains(id))
-		{
-			return true; 
-		}
-		return false; 
+
+		return restrictions.contains(id);
 	}
 
 

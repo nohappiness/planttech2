@@ -1,8 +1,5 @@
 package net.kaneka.planttech2.packets;
 
-import java.util.function.Supplier;
-
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
 import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
 import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTask;
@@ -13,10 +10,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class DoTechVillagerTaskMessage
 {
-	;
-	private int task;
+	private final int task;
 
 	public DoTechVillagerTaskMessage(int task)
 	{
@@ -33,33 +31,29 @@ public class DoTechVillagerTaskMessage
 		return new DoTechVillagerTaskMessage(buf.readInt());
 	}
 
-	public static class DoTechVillagerTaskHandler
-	{
 		public static void handle(final DoTechVillagerTaskMessage pkt, Supplier<NetworkEvent.Context> ctx)
 		{
 			ctx.get().enqueueWork(() -> {
 				ServerPlayerEntity player = ctx.get().getSender();
+				if (player == null) { return; }
 				PlayerInventory inv = player.inventory;
 				TechVillagerTask task = TechVillagerTaskList.getByID(pkt.task);
 				if (PlayerInventoryUtils.hasList(inv, task.getInputs()))
 				{
-					ITechVillagerTrust trust = player.getCapability(TechVillagerTrust.INSTANCE).orElse(null);
-					if (trust != null)
-					{
+					player.getCapability(TechVillagerTrust.INSTANCE).ifPresent(trust -> {
 						int level = trust.getLevel(TechVillagerEntity.getProfessionString(task.getProfession()));
-						if(level >= task.getMinTrustLevel() && level <= task.getMaxTrustLevel())
+						if (level >= task.getMinTrustLevel() && level <= task.getMaxTrustLevel())
 						{
-    						if (PlayerInventoryUtils.removeList(inv, task.getInputs()))
-    						{
-    							String profession = TechVillagerEntity.getProfessionString(task.getProfession()); 
-    							trust.increaseTrust(profession, task.getTrust(), task.getMaxTrustLevel() + 1);
-    							PlantTech2PacketHandler.sendTo(new SyncTrustMessage(profession, trust.getTrust(profession)), player);
-    						}
+							if (PlayerInventoryUtils.removeList(inv, task.getInputs()))
+							{
+								String profession = TechVillagerEntity.getProfessionString(task.getProfession());
+								trust.increaseTrust(profession, task.getTrust(), task.getMaxTrustLevel() + 1);
+								PlantTech2PacketHandler.sendTo(new SyncTrustMessage(profession, trust.getTrust(profession)), player);
+							}
 						}
-					}
+					});
 				}
 			});
 			ctx.get().setPacketHandled(true);
 		}
-	}
 }

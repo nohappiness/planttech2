@@ -1,16 +1,30 @@
-modLoader="javafml" #mandatory
-loaderVersion="[28,)"
-license="All rights reserved"
-issueTrackerURL="https://bitbucket.org/kaneka/planttech2/issues?status=new&status=open" #optional
-logoFile="examplemod.png" 
+modLoader="javafml"
+loaderVersion="[33,)"
+license="MIT License"
+issueTrackerURL="https://bitbucket.org/kaneka/planttech2/issues?status=new&status=open"
+#logoFile="examplemod.png"
+
+[[mods]]
+modId="planttech2"
+version="${file.jarVersion}" # automatically gets version from manifest, but will not display in dev
+displayName="PlantTech 2"
 credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka, Setrion, poopoodice"
-[[mods]] #mandatory
-modId="planttech2"
-version="0.02.16"
-displayName="PlantTech 2"
-updateJSONURL="https://bitbucket.org/kaneka/planttech2/raw/1.16.x/update.json" #optional
-# The description text for the mod (multi line!) (#mandatory)
+updateJSONURL="https://bitbucket.org/kaneka/planttech2/raw/1.16.x/update.json"
 description='''
 PlantTech 2 combines plants and tech for a whole new experience
 '''
+
+[[dependencies.basedefense]]
+modId="forge"
+mandatory=true
+versionRange="[33.0.5,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.basedefense]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.2]"
+ordering="NONE"
+side="BOTH"

@@ -25,11 +25,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 
-public class CropRemover extends BaseItem
+public class CropRemover extends Item
 {
 	public CropRemover()
 	{
-		super("cropremover", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain).maxDamage(1024));
+		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN).maxDamage(1024));
 		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override

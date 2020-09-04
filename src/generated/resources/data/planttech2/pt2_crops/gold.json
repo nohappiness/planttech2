@@ -1,0 +1,28 @@
+{
+  "crop": "gold",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:gold_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:gold_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "coal",
+      "parent_2": "lapis",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:gold_ore"
+  }
+}

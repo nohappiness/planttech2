@@ -1,21 +1,21 @@
 package net.kaneka.planttech2.packets;
 
-import java.util.function.Supplier;
-
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
 import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
 import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTrade;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.PlayerInventoryUtils;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class DoTechVillagerTradeMessage
 {; 
-	private TechVillagerTrade trade;
-	private int profession; 
+	private final TechVillagerTrade trade;
+	private final int profession;
 
 	public DoTechVillagerTradeMessage(TechVillagerTrade trade, int profession)
 	{
@@ -34,53 +34,40 @@ public class DoTechVillagerTradeMessage
 		return new DoTechVillagerTradeMessage(TechVillagerTrade.fromBuffer(buf), buf.readInt());
 	}
 
-	public static class DoTechVillagerTradeHandler
+	public static void handle(final DoTechVillagerTradeMessage pkt, Supplier<NetworkEvent.Context> ctx)
 	{
-		public static void handle(final DoTechVillagerTradeMessage pkt, Supplier<NetworkEvent.Context> ctx)
-		{
-			ctx.get().enqueueWork(() -> {
-				PlayerInventory inv = ctx.get().getSender().inventory;
-				TechVillagerTrade trade = pkt.trade; 
-				ITechVillagerTrust trust = ctx.get().getSender().getCapability(TechVillagerTrust.INSTANCE).orElse(null);
-				if (trust != null)
+		ctx.get().enqueueWork(() -> {
+			ServerPlayerEntity sender = ctx.get().getSender();
+			if (sender == null) return;
+			PlayerInventory inv = sender.inventory;
+			TechVillagerTrade trade = pkt.trade;
+			sender.getCapability(TechVillagerTrust.INSTANCE).ifPresent(trust ->
+			{
+				boolean success = trust.getLevel(TechVillagerEntity.getProfessionString(pkt.profession)) >= trade.getNeededLevel();
+				success = success && PlayerInventoryUtils.enoughSpace(inv, trade.getOutputs().size());
+				success = success && PlayerInventoryUtils.hasList(inv, trade.getInputs());
+				success = success && PlayerInventoryUtils.enoughCredits(inv, trade.getCreditsBuy());
+				if (success)
 				{
-					if(trust.getLevel(TechVillagerEntity.getProfessionString(pkt.profession)) >= trade.getNeededLevel())
+					if (trade.getCreditsSell() > 0 && inv.count(ModItems.PLANTCARD) > 0)
 					{
-        				if(PlayerInventoryUtils.enoughSpace(inv, trade.getOutputs().size()))
-        				{
-        					if(PlayerInventoryUtils.hasList(inv, trade.getInputs()))
-        					{
-        						if(PlayerInventoryUtils.enoughCredits(inv, trade.getCreditsBuy()))
-        						{
-        							if(trade.getCreditsSell() > 0 && inv.count(ModItems.PLANTCARD) > 0)
-        							{
-        								if(PlayerInventoryUtils.removeCredits(inv, trade.getCreditsBuy()))
-        								{
-            								if(PlayerInventoryUtils.removeList(inv, trade.getInputs()))
-            	        					{
-            	        						PlayerInventoryUtils.addList(inv, trade.getOutputs()); 
-            	        						PlayerInventoryUtils.addCredits(inv, trade.getCreditsSell()); 
-            	        					}
-        								}
-        							}
-        							else if(trade.getCreditsSell() == 0)
-        							{
-        								if(PlayerInventoryUtils.removeCredits(inv, trade.getCreditsBuy()))
-        								{
-            								if(PlayerInventoryUtils.removeList(inv, trade.getInputs()))
-            	        					{
-            	        						PlayerInventoryUtils.addList(inv, trade.getOutputs()); 
-            	        					}
-        								}
-        							}
-                					
-        						}
-        					}
-        				}
-    				}
-    			}
+						if (PlayerInventoryUtils.removeCredits(inv, trade.getCreditsBuy())
+								&& PlayerInventoryUtils.removeList(inv, trade.getInputs()))
+						{
+							PlayerInventoryUtils.addList(inv, trade.getOutputs());
+							PlayerInventoryUtils.addCredits(inv, trade.getCreditsSell());
+						}
+					} else if (trade.getCreditsSell() == 0)
+					{
+						if (PlayerInventoryUtils.removeCredits(inv, trade.getCreditsBuy())
+								&& PlayerInventoryUtils.removeList(inv, trade.getInputs()))
+						{
+							PlayerInventoryUtils.addList(inv, trade.getOutputs());
+						}
+					}
+				}
 			});
-			ctx.get().setPacketHandled(true);
-		}
+		});
+		ctx.get().setPacketHandled(true);
 	}
 }

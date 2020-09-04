@@ -13,19 +13,18 @@ import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.item.*;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class FertilizerItem extends BaseItem
+public class FertilizerItem extends Item
 {
 
-    public FertilizerItem(String name, ItemGroup group)
+    public FertilizerItem(ItemGroup group)
     {
-		super(name, new Item.Properties().group(group));
+		super(new Item.Properties().group(group));
 		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override

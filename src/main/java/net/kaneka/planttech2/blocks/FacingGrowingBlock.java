@@ -12,20 +12,22 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.function.Supplier;
+
 public class FacingGrowingBlock extends GrowingBlock
 {
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 
-	public FacingGrowingBlock(String name, Block block, boolean growAlone)
+	public FacingGrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
 	{
-		super(name, block, growAlone);
-		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, Integer.valueOf(0)).with(FACING, Direction.NORTH));
+		super(blockSupplier, growAlone);
+		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, 0).with(FACING, Direction.NORTH));
 	}
 
 	@Override
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{
-		world.setBlockState(pos, block.getDefaultState().with(FACING, state.get(FACING)));
+		world.setBlockState(pos, blockSupplier.get().getDefaultState().with(FACING, state.get(FACING)));
 	}
 
 	@Override

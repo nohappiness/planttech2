@@ -7,6 +7,7 @@ import java.util.Map;
 import com.google.gson.JsonObject;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;
@@ -161,7 +162,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	@Override
 	public IRecipeSerializer<?> getSerializer()
 	{
-		return ForgeRegistries.RECIPE_SERIALIZERS.getValue(new ResourceLocation(PlantTechMain.MODID, "chipalyzer"));
+		return ModRecipeSerializers.CHIPALYZER;
 	}
 
 	@Override

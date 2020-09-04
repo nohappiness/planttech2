@@ -1,0 +1,28 @@
+{
+  "crop": "fish",
+  "enabled": true,
+  "temperature": "cold",
+  "primary_seed": {
+    "item": "planttech2:fish_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:fish_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "cactus",
+      "parent_2": "sugarcane",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

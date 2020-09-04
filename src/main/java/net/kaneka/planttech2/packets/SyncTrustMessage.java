@@ -1,17 +1,16 @@
 package net.kaneka.planttech2.packets;
 
-import java.util.function.Supplier;
-
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
 import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
+import java.util.function.Supplier;
+
 public class SyncTrustMessage
 {
-	private String profession; 
-	private int value;
+	private final String profession;
+	private final int value;
 
 	public SyncTrustMessage(String profession, int value)
 	{
@@ -30,18 +29,15 @@ public class SyncTrustMessage
 		return new SyncTrustMessage(buf.readString(), buf.readInt());
 	}
 
-	public static class SyncTrustHandler
+	public static void handle(final SyncTrustMessage pkt, Supplier<NetworkEvent.Context> ctx)
 	{
-		public static void handle(final SyncTrustMessage pkt, Supplier<NetworkEvent.Context> ctx)
-		{
-			ctx.get().enqueueWork(() -> {
-				ITechVillagerTrust trust = Minecraft.getInstance().player.getCapability(TechVillagerTrust.INSTANCE).orElse(null);
-				if(trust != null)
-				{
-					trust.setTrust(pkt.profession, pkt.value);
-				}
-			});
-			ctx.get().setPacketHandled(true);
-		}
+		ctx.get().enqueueWork(() -> {
+			if (Minecraft.getInstance().player != null)
+			{
+				Minecraft.getInstance().player.getCapability(TechVillagerTrust.INSTANCE).ifPresent(trust ->
+						trust.setTrust(pkt.profession, pkt.value));
+			}
+		});
+		ctx.get().setPacketHandled(true);
 	}
 }

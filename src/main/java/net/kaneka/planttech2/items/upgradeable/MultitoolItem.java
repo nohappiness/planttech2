@@ -1,8 +1,6 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
@@ -10,8 +8,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableMap.Builder;
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.block.Block;
@@ -19,22 +15,12 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.IShearable;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
 @SuppressWarnings("deprecation")
 public class MultitoolItem extends UpgradeableHandItem
@@ -75,7 +61,7 @@ public class MultitoolItem extends UpgradeableHandItem
 
 	public MultitoolItem()
 	{
-		super("multitool", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 10000, 10, 2F, 2.4F, UpgradeChipItem.TOOL);
+		super(new Item.Properties().group(ModCreativeTabs.TOOLS_AND_ARMOR), 10000, 10, 2F, 2.4F, UpgradeChipItem.TOOL);
 	}
 
 	@Override
@@ -130,7 +116,7 @@ public class MultitoolItem extends UpgradeableHandItem
 			PlayerEntity PlayerEntity = ctx.getPlayer();
 			if (ctx.getFace() != Direction.DOWN && world.getBlockState(blockpos.up()).isAir(world, blockpos.up()) && state_for_spade != null)
 			{
-				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockshovel", false))
+				if (NBTHelper.getBoolean(ctx.getItem(), "unlockshovel", false))
 				{
 
 					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
@@ -147,7 +133,7 @@ public class MultitoolItem extends UpgradeableHandItem
 				return ActionResultType.SUCCESS;
 			} else if (block_for_strinping != null)
 			{
-				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockaxe", false))
+				if (NBTHelper.getBoolean(ctx.getItem(), "unlockaxe", false))
 				{
 					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					if (!world.isRemote)
@@ -163,7 +149,7 @@ public class MultitoolItem extends UpgradeableHandItem
 				return ActionResultType.SUCCESS;
 			} else if (ctx.getFace() != Direction.DOWN && world.isAirBlock(blockpos.up()) && state_for_hoe != null)
 			{
-				if (NBTHelper.getBooleanSave(ctx.getItem(), "unlockhoe", false))
+				if (NBTHelper.getBoolean(ctx.getItem(), "unlockhoe", false))
 				{
 					world.playSound(PlayerEntity, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 					if (!world.isRemote)
@@ -185,13 +171,13 @@ public class MultitoolItem extends UpgradeableHandItem
 
 	public int getHarvestLevel(ItemStack stack)
 	{
-		return NBTHelper.getIntSave(stack, "harvestlevel", 0);
+		return NBTHelper.getInt(stack, "harvestlevel", 0);
 
 	}
 
 	public float getEfficiency(ItemStack stack)
 	{
-		return Math.min(NBTHelper.getFloatSave(stack, "breakdownrate", 4), UpgradeChipItem.getBreakdownRateMax());
+		return Math.min(NBTHelper.getFloat(stack, "breakdownrate", 4), UpgradeChipItem.getBreakdownRateMax());
 	}
 
 	@Override

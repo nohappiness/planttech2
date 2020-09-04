@@ -8,23 +8,33 @@ import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+import static java.util.Optional.of;
+
 public class PlantTech2PacketHandler
 {
 	private static final String PROTOCOL_VERSION = Integer.toString(1);
 	private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(PlantTechMain.MODID, "main_channel"))
 	        .clientAcceptedVersions(PROTOCOL_VERSION::equals).serverAcceptedVersions(PROTOCOL_VERSION::equals).networkProtocolVersion(() -> PROTOCOL_VERSION).simpleChannel();
+	static int ID = 0;
 
-	public static final void register()
+	public static void register()
 	{
-		int i = 0;
-		INSTANCE.registerMessage(i++, ButtonPressMessage.class, ButtonPressMessage::encode, ButtonPressMessage::decode, ButtonPressMessage.ButtonPressMessageHandler::handle);
-		INSTANCE.registerMessage(i++, CropConfigChangeMessage.class, CropConfigChangeMessage::encode, CropConfigChangeMessage::decode, CropConfigChangeMessage.CropConfigChangeHandler::handle);
-		INSTANCE.registerMessage(i++, TeleporterBlockButtonPressMessage.class, TeleporterBlockButtonPressMessage::encode, TeleporterBlockButtonPressMessage::decode, TeleporterBlockButtonPressMessage.ButtonPressMessageHandler::handle);
-		INSTANCE.registerMessage(i++, DoTechVillagerTradeMessage.class, DoTechVillagerTradeMessage::encode, DoTechVillagerTradeMessage::decode, DoTechVillagerTradeMessage.DoTechVillagerTradeHandler::handle);
-		INSTANCE.registerMessage(i++, DoTechVillagerTaskMessage.class, DoTechVillagerTaskMessage::encode, DoTechVillagerTaskMessage::decode, DoTechVillagerTaskMessage.DoTechVillagerTaskHandler::handle);
-		INSTANCE.registerMessage(i++, SyncTrustMessage.class, SyncTrustMessage::encode, SyncTrustMessage::decode, SyncTrustMessage.SyncTrustHandler::handle);
-		INSTANCE.registerMessage(i++, SyncRadiationLevelMessage.class, SyncRadiationLevelMessage::encode, SyncRadiationLevelMessage::decode, SyncRadiationLevelMessage.SyncRadiationLevelHandler::handle);
-		INSTANCE.registerMessage(i++, SyncBiomassFluidEnergyMessage.class, SyncBiomassFluidEnergyMessage::encode, SyncBiomassFluidEnergyMessage::decode, SyncBiomassFluidEnergyMessage.SyncBiomassFluidEnergyHandler::handle);
+		INSTANCE.registerMessage(ID++, ButtonPressMessage.class, ButtonPressMessage::encode,
+				ButtonPressMessage::decode, ButtonPressMessage::handle, of(NetworkDirection.PLAY_TO_SERVER));
+		INSTANCE.registerMessage(ID++, CropConfigChangeMessage.class, CropConfigChangeMessage::encode,
+				CropConfigChangeMessage::decode, CropConfigChangeMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
+		INSTANCE.registerMessage(ID++, TeleporterBlockButtonPressMessage.class, TeleporterBlockButtonPressMessage::encode,
+				TeleporterBlockButtonPressMessage::decode, TeleporterBlockButtonPressMessage::handle, of(NetworkDirection.PLAY_TO_SERVER));
+		INSTANCE.registerMessage(ID++, DoTechVillagerTradeMessage.class, DoTechVillagerTradeMessage::encode,
+				DoTechVillagerTradeMessage::decode, DoTechVillagerTradeMessage::handle, of(NetworkDirection.PLAY_TO_SERVER));
+		INSTANCE.registerMessage(ID++, DoTechVillagerTaskMessage.class, DoTechVillagerTaskMessage::encode,
+				DoTechVillagerTaskMessage::decode, DoTechVillagerTaskMessage::handle, of(NetworkDirection.PLAY_TO_SERVER));
+		INSTANCE.registerMessage(ID++, SyncTrustMessage.class, SyncTrustMessage::encode,
+				SyncTrustMessage::decode, SyncTrustMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
+		INSTANCE.registerMessage(ID++, SyncRadiationLevelMessage.class, SyncRadiationLevelMessage::encode,
+				SyncRadiationLevelMessage::decode, SyncRadiationLevelMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
+		INSTANCE.registerMessage(ID++, SyncBiomassFluidEnergyMessage.class, SyncBiomassFluidEnergyMessage::encode,
+				SyncBiomassFluidEnergyMessage::decode, SyncBiomassFluidEnergyMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
 	}
 
 	public static void sendToServer(Object msg)

@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class SyncRadiationLevelMessage
 {
-    private float level;
+    private final float level;
 
     public SyncRadiationLevelMessage(float level)
     {
@@ -26,17 +26,14 @@ public class SyncRadiationLevelMessage
         return new SyncRadiationLevelMessage(buffer.readFloat());
     }
 
-    public static class SyncRadiationLevelHandler
+    public static void handle(SyncRadiationLevelMessage message, Supplier<NetworkEvent.Context> ctx)
     {
-        public static void handle(SyncRadiationLevelMessage message, Supplier<NetworkEvent.Context> ctx)
-        {
-            ctx.get().enqueueWork(() -> {
-                if (Minecraft.getInstance().player.isAlive())
-                {
-                    Minecraft.getInstance().player.getCapability(RadiationEffect.RADIATION_CAPABILITY).orElseThrow(() -> new NullPointerException("An error occurred during packet process")).setLevel(message.level);
-                }
-            });
-            ctx.get().setPacketHandled(true);
-        }
+        ctx.get().enqueueWork(() -> {
+            if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.isAlive())
+            {
+                Minecraft.getInstance().player.getCapability(RadiationEffect.RADIATION_CAPABILITY).orElseThrow(() -> new NullPointerException("An error occurred during packet process")).setLevel(message.level);
+            }
+        });
+        ctx.get().setPacketHandled(true);
     }
 }

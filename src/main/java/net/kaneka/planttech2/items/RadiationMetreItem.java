@@ -1,27 +1,17 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.Color;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 
-import java.text.DecimalFormat;
-
-public class RadiationMetreItem extends BaseItem
+public class RadiationMetreItem extends Item
 {
-    public RadiationMetreItem(String name, Properties property)
+    public RadiationMetreItem(Properties property)
     {
-        super(name, property);
+        super(property);
     }
 
     @Override

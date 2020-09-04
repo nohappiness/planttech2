@@ -1,0 +1,29 @@
+{
+  "crop": "blue_orchid",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:blue_orchid_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:blue_orchid"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:color_particles",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "item": "minecraft:blue_orchid",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

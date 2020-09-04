@@ -2,6 +2,7 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
 import net.kaneka.planttech2.container.EnergyStorageContainer;
+import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
@@ -76,7 +77,7 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 	{
 	    if (!world.isRemote)
 	    {
-		int newTier = getUpgradeTier(0, 3);
+		int newTier = getUpgradeTier(0, TierItem.ItemType.UPGRADE_CHIP);
 		if (currentTier != newTier)
 		{
 		    switch (newTier)

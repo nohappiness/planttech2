@@ -1,0 +1,28 @@
+{
+  "crop": "glowstone",
+  "enabled": true,
+  "temperature": "extreme_warm",
+  "primary_seed": {
+    "item": "planttech2:glowstone_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:glowstone_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "soulsand",
+      "parent_2": "netherrack",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

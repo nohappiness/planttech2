@@ -1,15 +1,10 @@
 package net.kaneka.planttech2.entities.passive;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerContainerProvider;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTrade;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePool;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTradePools;
 import net.kaneka.planttech2.registries.ModEntityTypes;
-import net.kaneka.planttech2.registries.ModReferences;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,13 +15,13 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import javax.annotation.Nullable;
 
 public class TechVillagerEntity extends AgeableEntity
@@ -55,10 +50,9 @@ public class TechVillagerEntity extends AgeableEntity
 
 	@Nullable
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_)
+	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity ageableEntity)
 	{
-		return new TechVillagerEntity((EntityType<? extends TechVillagerEntity>) ModEntityTypes.TECHVILLAGERENTITY, this.world);
-
+		return new TechVillagerEntity(ModEntityTypes.TECHVILLAGERENTITY, this.world);
 	}
 
 	@Override
@@ -77,11 +71,11 @@ public class TechVillagerEntity extends AgeableEntity
 	{
 		switch(profession)
 		{
-			case 0: return "scientist"; 
+			default:
+			case 0: return "scientist";
 			case 1: return "botanist";
 			case 2: return "headhunter"; 
-			case 3: return "engineer"; 
-			default: return "scientist"; 
+			case 3: return "engineer";
 		}
 	}
 
@@ -89,7 +83,7 @@ public class TechVillagerEntity extends AgeableEntity
 	{
 		if (offers == null)
 		{
-			offers = new ArrayList<TechVillagerTrade>();
+			offers = new ArrayList<>();
 			populateTrades();
 		}
 		else if(offers.size() == 0)
@@ -102,7 +96,7 @@ public class TechVillagerEntity extends AgeableEntity
 	private void populateTrades()
 	{
 		List<TechVillagerTradePool> pool = TechVillagerTradePools.getSCIENTISTS();
-		List<Integer> integers = new ArrayList<Integer>();
+		List<Integer> integers = new ArrayList<>();
 		for (int i = 0; i < pool.size(); i++)
 		{
 			integers.add(i);
@@ -122,7 +116,7 @@ public class TechVillagerEntity extends AgeableEntity
 	public void readAdditional(CompoundNBT compound)
 	{
 		super.readAdditional(compound);
-		offers = new ArrayList<TechVillagerTrade>();
+		offers = new ArrayList<>();
 		for (int i = 0; i < compound.getInt("length_trades"); i++)
 		{
 			offers.add(TechVillagerTrade.fromNBT(compound.getCompound("offer_" + i)));

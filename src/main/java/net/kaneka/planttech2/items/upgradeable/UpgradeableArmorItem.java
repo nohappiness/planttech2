@@ -47,9 +47,9 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	private int basecapacity, maxInvSize, baseDamageReduction, slotId;
 	private float baseToughness; 
 
-	public UpgradeableArmorItem(String name, String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
+	public UpgradeableArmorItem(String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
 	{
-		super(name, resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor));
+		super(resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.TOOLS_AND_ARMOR));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize;
 		this.baseDamageReduction = baseDamageReduction; 
@@ -178,7 +178,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 
 	public static int getEnergyCost(ItemStack stack)
 	{
-		return 20 + NBTHelper.getIntSave(stack, "energycost", 0);
+		return 20 + NBTHelper.getInt(stack, "energycost", 0);
 	}
 
 	@Override
@@ -337,12 +337,12 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	
 	public int getDamageReduceAmount(ItemStack stack)
 	{
-		return baseDamageReduction + NBTHelper.getIntSave(stack, "increasearmor", 0);
+		return baseDamageReduction + NBTHelper.getInt(stack, "increasearmor", 0);
 	}
 	
 	public float getToughness(ItemStack stack)
 	{
-		return baseToughness + NBTHelper.getFloatSave(stack, "increasetoughness", 0);
+		return baseToughness + NBTHelper.getFloat(stack, "increasetoughness", 0);
 	}
 	
 	@Override
@@ -360,7 +360,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 			{
 				if(world.getGameTime() % 200L == 0)
 				{
-					receiveEnergy(stack, NBTHelper.getIntSave(stack, "energyproduction", 0), false); 
+					receiveEnergy(stack, NBTHelper.getInt(stack, "energyproduction", 0), false);
 				}
 			}
 		}

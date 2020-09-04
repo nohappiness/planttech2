@@ -1,14 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -27,7 +19,13 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.server.ServerWorld;
 
-public class CarverBlock extends BaseBlock
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+public class CarverBlock extends Block
 {
 	public static final BooleanProperty NORTH = SixWayBlock.NORTH;
 	public static final BooleanProperty EAST = SixWayBlock.EAST;
@@ -39,12 +37,12 @@ public class CarverBlock extends BaseBlock
 
 	public CarverBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly(), "carver", ModCreativeTabs.groupmain, true, true);
+		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly());
 		this.setDefaultState(this.stateContainer.getBaseState()
-				.with(NORTH, Boolean.valueOf(false))
-				.with(EAST, Boolean.valueOf(false))
-				.with(SOUTH, Boolean.valueOf(false))
-		        .with(WEST, Boolean.valueOf(false)));
+				.with(NORTH, false)
+				.with(EAST, false)
+				.with(SOUTH, false)
+		        .with(WEST, false));
 	}
 
 	@Override

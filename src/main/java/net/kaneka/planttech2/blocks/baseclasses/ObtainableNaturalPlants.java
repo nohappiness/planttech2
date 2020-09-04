@@ -12,14 +12,14 @@ import net.minecraft.world.World;
 
 public class ObtainableNaturalPlants extends NaturalPlants implements IObtainable
 {
-    public ObtainableNaturalPlants(String name, boolean hasItem, float width, float height)
+    public ObtainableNaturalPlants(float width, float height)
     {
-        super(name, hasItem, width, height);
+        super(width, height);
     }
 
-    public ObtainableNaturalPlants(String name, boolean hasItem)
+    public ObtainableNaturalPlants()
     {
-        super(name, hasItem);
+        super();
     }
 
     @Override
