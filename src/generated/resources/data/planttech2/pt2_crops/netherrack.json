@@ -1,0 +1,28 @@
+{
+  "crop": "netherrack",
+  "enabled": true,
+  "temperature": "extreme_warm",
+  "primary_seed": {
+    "item": "planttech2:netherrack_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:netherrack_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "endstone",
+      "parent_2": "nether_wart",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "crop": "guardian",
+  "enabled": true,
+  "temperature": "cold",
+  "primary_seed": {
+    "item": "planttech2:guardian_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:guardian_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "ghast",
+      "parent_2": "witch",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

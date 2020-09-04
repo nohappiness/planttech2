@@ -1,8 +1,9 @@
 package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.datapack.CropListEntryConfiguration;
+import net.kaneka.planttech2.crops.CropEntryConfigData;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.HashMap;
@@ -12,45 +13,42 @@ import java.util.function.Supplier;
 
 public class CropConfigChangeMessage
 {
-	private final Map<String, CropListEntryConfiguration> user_configs;
+    private final Map<ResourceLocation, CropEntryConfigData> configData;
 
-	public CropConfigChangeMessage(Map<String, CropListEntryConfiguration> user_configs)
-	{
-		this.user_configs = user_configs;
-	}
+    public CropConfigChangeMessage(Map<ResourceLocation, CropEntryConfigData> configData)
+    {
+        this.configData = configData;
+    }
 
-	public static void encode(CropConfigChangeMessage pkt, PacketBuffer buf)
-	{
-		buf.writeVarInt(pkt.user_configs.size());
-		for (Entry<String, CropListEntryConfiguration> entry : pkt.user_configs.entrySet())
-		{
-			buf.writeString(entry.getKey());
-			CropListEntryConfiguration.Deserializer.write(buf, entry.getValue());
-		}
-	}
+    public static void encode(CropConfigChangeMessage pkt, PacketBuffer buf)
+    {
+        buf.writeVarInt(pkt.configData.size());
+        for (Entry<ResourceLocation, CropEntryConfigData> entry : pkt.configData.entrySet())
+        {
+            buf.writeResourceLocation(entry.getKey());
+            CropEntryConfigData.Serializer.INSTANCE.write(entry.getValue(), buf);
+        }
+    }
 
-	public static CropConfigChangeMessage decode(PacketBuffer buf)
-	{
-		Map<String, CropListEntryConfiguration> new_configs = new HashMap<>();
-		int size = buf.readVarInt();
-		for (int i = 0; i < size; i++)
-		{
-			String name = buf.readString(1024);
-			new_configs.put(name, CropListEntryConfiguration.Deserializer.read(name, buf));
-		}
+    public static CropConfigChangeMessage decode(PacketBuffer buf)
+    {
+        Map<ResourceLocation, CropEntryConfigData> configData = new HashMap<>();
+        int size = buf.readVarInt();
+        for (int i = 0; i < size; i++)
+        {
+            ResourceLocation name = buf.readResourceLocation();
+            configData.put(name, CropEntryConfigData.Serializer.INSTANCE.read(buf));
+        }
 
-		return new CropConfigChangeMessage(new_configs);
-	}
+        return new CropConfigChangeMessage(configData);
+    }
 
-	public static void handle(final CropConfigChangeMessage pkt, Supplier<NetworkEvent.Context> ctx)
-	{
-		ctx.get().enqueueWork(() -> {
-			PlantTechMain.LOGGER.info("Sync crop configurations");
-			for (CropListEntryConfiguration config : pkt.user_configs.values())
-			{
-				config.applyToEntry();
-			}
-		});
-		ctx.get().setPacketHandled(true);
-	}
+    public static void handle(final CropConfigChangeMessage pkt, Supplier<NetworkEvent.Context> ctx)
+    {
+        ctx.get().enqueueWork(() -> {
+            PlantTechMain.LOGGER.debug("Syncing crop configurations from server");
+            PlantTechMain.getCropList().configureFromConfigData(pkt.configData.values());
+        });
+        ctx.get().setPacketHandled(true);
+    }
 }

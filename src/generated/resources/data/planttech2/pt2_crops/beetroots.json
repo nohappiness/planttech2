@@ -1,0 +1,24 @@
+{
+  "crop": "beetroots",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:beetroots_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:beetroot_seeds"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:beetroot",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,9 +1,11 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.datapack.dataprovider.Languages;
-import net.kaneka.planttech2.datapack.dataprovider.LootTables;
-import net.kaneka.planttech2.datapack.dataprovider.Recipes;
+import net.kaneka.planttech2.datagen.DefaultCropConfigProvider;
+import net.kaneka.planttech2.datagen.Languages;
+import net.kaneka.planttech2.datagen.LootTables;
+import net.kaneka.planttech2.datagen.Recipes;
+import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModContainers;
@@ -43,7 +45,6 @@ public class RegistryEvents
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-		PlantTechMain.croplist.addPlanttechEntries();
 		ModBlocks.register(event.getRegistry());
 	}
 
@@ -128,6 +129,7 @@ public class RegistryEvents
         {
             gen.addProvider(new Recipes(gen));
             gen.addProvider(new LootTables(gen));
+            gen.addProvider(new DefaultCropConfigProvider(gen));
         }
     }
 

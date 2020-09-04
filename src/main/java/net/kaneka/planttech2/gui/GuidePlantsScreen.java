@@ -1,108 +1,77 @@
 package net.kaneka.planttech2.gui;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.function.Supplier;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.crops.CropEntry;
+import net.kaneka.planttech2.crops.DropEntry;
+import net.kaneka.planttech2.crops.ParentPair;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.librarys.utils.Drop;
-import net.kaneka.planttech2.librarys.utils.Parents;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class GuidePlantsScreen extends GuideBaseScreen
 {
-	private int[] buttonIDs = new int[8];
-	private String selectedName;
-	protected ItemStack mainseed;
-	protected ItemStack soil;
+	private final String[] buttonEntryNames = new String[8];
+	private ITextComponent selectedName = new StringTextComponent("");
+	protected ItemStack primarySeed = ItemStack.EMPTY;
+	protected ItemStack soil = ItemStack.EMPTY;
 	protected ItemStack[] seeds = new ItemStack[9];
-	protected Drop[] drops = new Drop[9];
+	protected DropEntry[] drops = new DropEntry[9];
 	protected ItemStack[][] parents = new ItemStack[4][2];
-	private EnumTemperature temp = EnumTemperature.NORMAL;
+	protected EnumTemperature temp = EnumTemperature.NORMAL;
 
 	public GuidePlantsScreen()
 	{
-		super(PlantTechMain.croplist.getLengthWithoutBlacklisted() - 8, true, "screen.guideplants");
+		super(PlantTechMain.getCropList().getLengthEnabledOnly() - 8, true, "screen.guideplants");
 	}
 
 	@Override
 	public void init()
 	{
 		super.init();
-		
-		addButton(new CustomButton(1, this.guiLeft + 28, this.guiTop + 10 + 0 * 22, 100, 20, "TEST", (button) -> 
+		final int xPos = this.guiLeft + 28, baseYPos = this.guiTop + 10, width = 100, height = 20;
+		for (int id = 0; id < 8; id++)
 		{
-			GuidePlantsScreen.this.buttonClicked(0);
-		})); 
-		addButton(new CustomButton(2, this.guiLeft + 28, this.guiTop + 10 + 1 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(1);
-		})); 
-		addButton(new CustomButton(3, this.guiLeft + 28, this.guiTop + 10 + 2 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(2);
-		})); 
-		addButton(new CustomButton(4, this.guiLeft + 28, this.guiTop + 10 + 3 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(3);
-		})); 
-		addButton(new CustomButton(5, this.guiLeft + 28, this.guiTop + 10 + 4 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(4);
-		})); 
-		addButton(new CustomButton(6, this.guiLeft + 28, this.guiTop + 10 + 5 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(5);
-		})); 
-		addButton(new CustomButton(7, this.guiLeft + 28, this.guiTop + 10 + 6 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(6);
-		})); 
-		addButton(new CustomButton(8, this.guiLeft + 28, this.guiTop + 10 + 7 * 22, 100, 20, "TEST", (button) -> 
-		{
-			GuidePlantsScreen.this.buttonClicked(7);
-		})); 
-
+			addButton(new CustomButton(id, xPos, baseYPos + (id * 22), width, height, "Button " + (id + 1), GuidePlantsScreen.this::buttonClicked));
+		}
 		updateButtons();
 	}
 
 	@Override
 	protected void drawForeground(MatrixStack mStack)
 	{
-		if (selectedId != -1)
+		if (hasSelection)
 		{
-			blit(mStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.getId(), 16, 16, 512, 512);
-			renderItem(this.mainseed, 261, 32);
-			RenderHelper.disableStandardItemLighting();
-			RenderSystem.enableDepthTest();
-			if (soil != null)
-				if (!soil.isEmpty())
-					this.renderItem(this.soil, 217, 65);
-			RenderSystem.enableDepthTest();
+			blit(mStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.ordinal(), 16, 16, 512, 512);
+			renderItem(this.primarySeed, 261, 32);
+//			RenderHelper.disableStandardItemLighting();
+//			RenderSystem.enableDepthTest();
+			if (!soil.isEmpty())
+				this.renderItem(this.soil, 217, 65);
+//			RenderSystem.enableDepthTest();
 			for (int i = 0; i < 9; i++)
 			{
-				if (seeds[i] != null)
+				if (!seeds[i].isEmpty())
 				{
 					this.renderItem(seeds[i], 189 + 18 * i, 98);
 				}
 
-				if (drops[i] != null)
+				if (drops[i] != DropEntry.EMPTY)
 				{
 					this.renderItem(drops[i].getItemStack(), 189 + 18 * i, 131);
 				}
 			}
 			for (int i = 0; i < 4; i++)
 			{
-				if (parents[i][0] != null)
+				if (!parents[i][0].isEmpty())
 				{
 					this.renderItem(parents[i][0], 162 + 56 * i, 164);
 					this.renderItem(parents[i][1], 192 + 56 * i, 164);
@@ -115,14 +84,14 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	@Override
 	protected void updateButtons()
 	{
-		List<String> list = PlantTechMain.croplist.getAllEntriesWithoutBlacklisted();
+		List<CropEntry> list = PlantTechMain.getCropList().values(false);
 		for (int i = 0; i < 8; i++)
 		{
 			if (scrollPos + i < list.size())
 			{
-				CropListEntry entry = PlantTechMain.croplist.getEntryByName(list.get(scrollPos + i));
-				this.buttons.get(i).setMessage(new StringTextComponent(entry.getDisplayNameUnformated()));
-				buttonIDs[i] = entry.getID();
+				CropEntry entry = list.get(scrollPos + i);
+				this.buttons.get(i).setMessage(entry.getDisplayName());
+				buttonEntryNames[i] = entry.getName();
 			}
 		}
 	}
@@ -130,137 +99,102 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	@Override
 	protected void drawStrings(MatrixStack mStack)
 	{
-		if (selectedId == -1)
+		if (!hasSelection)
 		{
-			this.drawCenteredString(mStack, translateUnformated("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90, TEXT_COLOR);
 		} else
 		{
-			this.drawCenteredString(mStack, selectedName, this.guiLeft + 263, this.guiTop + 15);
-			this.drawCenteredString(mStack, translateUnformated("gui.soil"), this.guiLeft + 223, this.guiTop + 54);
-			this.drawCenteredString(mStack, translateUnformated("gui.temperature"), this.guiLeft + 306, this.guiTop + 54);
-			this.drawCenteredString(mStack, translateUnformated("gui.seeds"), this.guiLeft + 263, this.guiTop + 87);
-			this.drawCenteredString(mStack, translateUnformated("gui.drops"), this.guiLeft + 263, this.guiTop + 120);
-			this.drawCenteredString(mStack, translateUnformated("gui.parents"), this.guiLeft + 263, this.guiTop + 153);
+			drawCenteredString(mStack, font, selectedName, this.guiLeft + 263, this.guiTop + 15, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.soil"), this.guiLeft + 223, this.guiTop + 54, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.temperature"), this.guiLeft + 306, this.guiTop + 54, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.seeds"), this.guiLeft + 263, this.guiTop + 87, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.drops"), this.guiLeft + 263, this.guiTop + 120, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslationTextComponent("gui.parents"), this.guiLeft + 263, this.guiTop + 153, TEXT_COLOR);
 		}
 	}
 
-	protected void buttonClicked(int button)
+	protected void buttonClicked(CustomButton button)
 	{
-		if (button >= 0 && button < 8)
+		int buttonID = button.id;
+		if (buttonID >= 0 && buttonID < 8)
 		{
-			this.setItems(buttonIDs[button]);
+			this.setItems(buttonEntryNames[buttonID]);
 		}
-
 	}
 
 	@SuppressWarnings("deprecation")
-	protected void setItems(int id)
+	protected void setItems(String entryName)
 	{
-		selectedId = id;
-		CropListEntry entry = PlantTechMain.croplist.getByID(id);
-		selectedName = entry.getDisplayNameUnformated();
-		if (entry.getMainSeed() != null)
+		CropEntry entry = PlantTechMain.getCropList().getByName(entryName);
+		hasSelection = entry != null;
+		if (!hasSelection)
 		{
-			mainseed = entry.getMainSeed();
+			// TODO: empty the lists?
+			return;
 		}
 
-		this.soil = entry.getSoil();
-		if (soil.isEmpty())
+		this.selectedName = entry.getDisplayName();
+		this.primarySeed = entry.getPrimarySeed().getItemStack();
+		this.temp = entry.getConfiguration().getTemperature();
+		this.soil = new ItemStack(entry.getConfiguration().getSoil().get());
+
+		Arrays.fill(this.seeds, ItemStack.EMPTY);
+		Arrays.fill(this.drops, DropEntry.EMPTY);
+		for (int k = 0; k < 4; k++)
 		{
-			this.soil = new ItemStack(Item.getItemFromBlock(Blocks.DIRT));
+			Arrays.fill(this.parents[k], ItemStack.EMPTY);
 		}
 
-		List<ItemStack> seeds = entry.getSeeds();
-		Set<Drop> drops = entry.getDrops();
-		Set<Parents> parentslist = entry.getParents();
+		List<Supplier<Item>> seeds = entry.getSeeds();
+		List<DropEntry> drops = entry.getAdditionalDrops();
+		List<ParentPair> parents = entry.getParents();
 
-		int i = 0;
-		if (!seeds.isEmpty())
+		this.seeds[0] = entry.getPrimarySeed().getItemStack();
+		for (int j = 0; j < 8 && j < seeds.size(); j++)
 		{
-			for (ItemStack item : seeds)
-			{
-				if (i < 9)
-				{
-					this.seeds[i] = item;
-				}
-				i++;
-
-			}
+			this.seeds[j + 1] = new ItemStack(seeds.get(j).get());
 		}
 
-		for (int k = i; k < 9; k++)
+		this.drops[0] = entry.getPrimarySeed();
+		for (int j = 0; j < 8 && j < drops.size(); j++)
 		{
-			this.seeds[k] = null;
+			this.drops[j + 1] = drops.get(j);
 		}
 
-		i = 1;
-		this.drops[0] = entry.getMainSeedDrop();
-		if (drops != null)
+		for (int j = 0; j < 4 && j < parents.size(); j++)
 		{
-			for (Drop drop : drops)
-			{
-				if (i < 9)
-				{
-					this.drops[i] = drop;
-				}
-				i++;
-
-			}
+			ParentPair pair = parents.get(j);
+			this.parents[j][0] = PlantTechMain.getCropList().getByName(pair.getFirstParent()).getPrimarySeed().getItemStack();
+			this.parents[j][1] = PlantTechMain.getCropList().getByName(pair.getSecondParent()).getPrimarySeed().getItemStack();
 		}
-
-		for (int k = i; k < 9; k++)
-		{
-			this.drops[k] = null;
-		}
-
-		i = 0;
-		if (parentslist != null)
-		{
-			for (Parents parents : parentslist)
-			{
-				if (i < 4)
-				{
-					this.parents[i][0] = PlantTechMain.croplist.getEntryByName(parents.getParent(0)).getMainSeed();
-					this.parents[i][1] = PlantTechMain.croplist.getEntryByName(parents.getParent(1)).getMainSeed();
-				}
-				i++;
-			}
-		}
-
-		for (int k = i; k < 4; k++)
-		{
-			this.parents[k][0] = null;
-			this.parents[k][1] = null;
-		}
-
-		temp = entry.getTemperature();
-
 	}
 
 	@Override
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		if (selectedId != -1)
+		if (hasSelection)
 		{
-			this.drawTooltip(mStack, mainseed.getDisplayName(), mouseX, mouseY, 261, 32);
-			if (soil != null)
-				if (!soil.isEmpty())
-					this.drawTooltip(mStack, soil.getDisplayName(), mouseX, mouseY, 217, 65);
-			this.drawTooltip(mStack, temp.getDisplayString(true), mouseX, mouseY, 307, 65);
+			this.drawTooltip(mStack, primarySeed.getDisplayName(), mouseX, mouseY, 261, 32);
+			if (!soil.isEmpty())
+			{
+				this.drawTooltip(mStack, soil.getDisplayName(), mouseX, mouseY, 217, 65);
+			}
+			this.drawTooltip(mStack, temp.getDisplayString(), mouseX, mouseY, 307, 65);
 
 			for (int i = 0; i < 9; i++)
 			{
-				if (seeds[i] != null)
+				if (!seeds[i].isEmpty())
 					this.drawTooltip(mStack, seeds[i].getDisplayName(), mouseX, mouseY, 189 + 18 * i, 98);
 
-				if (drops[i] != null)
-					this.drawTooltip(mStack, new StringTextComponent("").appendString(drops[i].getMin() + "-" + drops[i].getMax() + "x ").append(drops[i].getItemStack().getDisplayName()), mouseX, mouseY,
-					        189 + 18 * i, 131);
+				if (drops[i] != DropEntry.EMPTY)
+					this.drawTooltip(mStack, new StringTextComponent("").appendString(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
+									.append(drops[i].getItem().get().asItem().getName()), mouseX, mouseY,
+							189 + 18 * i, 131);
 			}
 
 			for (int i = 0; i < 4; i++)
 			{
-				if (parents[i][0] != null)
+				if (!parents[i][0].isEmpty())
 				{
 					this.drawTooltip(mStack, parents[i][0].getDisplayName(), mouseX, mouseY, 162 + 56 * i, 164);
 					this.drawTooltip(mStack, parents[i][1].getDisplayName(), mouseX, mouseY, 192 + 56 * i, 164);
@@ -272,51 +206,48 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
 	{
-		if (selectedId != -1)
+		if (hasSelection && mouseButton == 0)
 		{
-			if (mouseButton == 0)
+			Item clickedOn = null;
+			if (this.inItemStackArea(mouseX, mouseY, 261, 32))
+				clickedOn = this.primarySeed.getItem();
+			if (this.inItemStackArea(mouseX, mouseY, 217, 65))
+				if (soil != null)
+					if (!soil.isEmpty())
+						clickedOn = this.soil.getItem();
+
+			for (int i = 0; i < 9; i++)
 			{
-				ItemStack clickedOn = null;
-				if (this.inItemStackArea(mouseX, mouseY, 261, 32))
-					clickedOn = this.mainseed;
-				if (this.inItemStackArea(mouseX, mouseY, 217, 65))
-					if (soil != null)
-						if (!soil.isEmpty())
-							clickedOn = this.soil;
-
-				for (int i = 0; i < 9; i++)
+				if (seeds[i] != null)
 				{
-					if (seeds[i] != null)
-					{
-						if (this.inItemStackArea(mouseX, mouseY, 189 + 18 * i, 98))
-							clickedOn = this.seeds[i];
-					}
-
-					if (drops[i] != null)
-					{
-						if (this.inItemStackArea(mouseX, mouseY, 189 + 18 * i, 131))
-							clickedOn = this.drops[i].getItemStack();
-					}
+					if (this.inItemStackArea(mouseX, mouseY, 189 + 18 * i, 98))
+						clickedOn = this.seeds[i].getItem();
 				}
 
-				for (int i = 0; i < 4; i++)
+				if (drops[i] != null)
 				{
-					if (parents[i][0] != null)
-					{
-						if (this.inItemStackArea(mouseX, mouseY, 162 + 56 * i, 164))
-							clickedOn = this.parents[i][0];
-						if (this.inItemStackArea(mouseX, mouseY, 192 + 56 * i, 164))
-							clickedOn = this.parents[i][1];
-					}
+					if (this.inItemStackArea(mouseX, mouseY, 189 + 18 * i, 131))
+						clickedOn = this.drops[i].getItem().get().asItem();
 				}
+			}
 
-				if (clickedOn != null)
+			for (int i = 0; i < 4; i++)
+			{
+				if (parents[i][0] != null)
 				{
-					CropListEntry entry = PlantTechMain.croplist.getBySeed(clickedOn);
-					if (entry != null)
-					{
-						this.setItems(entry.getID());
-					}
+					if (this.inItemStackArea(mouseX, mouseY, 162 + 56 * i, 164))
+						clickedOn = this.parents[i][0].getItem();
+					if (this.inItemStackArea(mouseX, mouseY, 192 + 56 * i, 164))
+						clickedOn = this.parents[i][1].getItem();
+				}
+			}
+
+			if (clickedOn != null)
+			{
+				CropEntry entry = PlantTechMain.getCropList().getBySeed(clickedOn);
+				if (entry != null)
+				{
+					this.setItems(entry.getName());
 				}
 			}
 		}
@@ -327,11 +258,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	{
 		posX += this.guiLeft;
 		posY += this.guiTop;
-		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
-		{
-			return true;
-		}
-		return false;
+		return mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height;
 	}
 
 	private boolean inItemStackArea(double mouseX, double mouseY, int posX, int posY)
@@ -342,7 +269,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	@Override
 	protected void drawBackground(MatrixStack mStack)
 	{
-		if (selectedId == -1)
+		if (!hasSelection)
 		{
 			blit(mStack, this.guiLeft + 100, this.guiTop, 212, 0, 300, this.ySize, 512, 512);
 		} else

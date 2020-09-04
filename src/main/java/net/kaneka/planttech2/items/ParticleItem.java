@@ -26,7 +26,7 @@ public class ParticleItem extends Item
 		@Override
 		public int getColor(ItemStack stack, int tintIndex)
 		{
-		    return PlantTechMain.croplist.getEntryByName(((ParticleItem) stack.getItem()).getEntryName()).getSeedColor();
+		    return PlantTechMain.getCropList().getByName(((ParticleItem) stack.getItem()).getEntryName()).getSeedColor();
 		}
 	}
 }

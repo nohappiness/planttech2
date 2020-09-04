@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.IdentifierContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.librarys.CropListEntry;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -153,7 +153,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				}
 				else
 				{
-					CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
+					CropEntry entry = PlantTechMain.getCropList().getBySeed(stack.getItem());
 			    	if (entry != null)
 			    	{
 			    		return true; 
@@ -193,13 +193,13 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 					}
 					else
 					{
-						CropListEntry entry = PlantTechMain.croplist.getBySeed(stack);
+						CropEntry entry = PlantTechMain.getCropList().getBySeed(stack.getItem());
 				    	if (entry != null)
 				    	{
 				    		HashMapCropTraits newtraits = new HashMapCropTraits();
-				    		newtraits.setType(entry.getString());
+				    		newtraits.setType(entry.getName());
 				    		newtraits.setAnalysed(true);
-				    		ItemStack result = entry.getMainSeed().copy();
+				    		ItemStack result = new ItemStack(entry.getPrimarySeed().getItem().get()).copy();
 				    		result.setCount(stack.getCount());
 				    		newtraits.addToItemStack(stack);
 				    		this.itemhandler.setStackInSlot(this.getFreeOutputSlot(), result);

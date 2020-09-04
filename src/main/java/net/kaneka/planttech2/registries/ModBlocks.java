@@ -25,7 +25,7 @@ import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.blocks.machines.MachineFacingBlock;
 import net.kaneka.planttech2.blocks.machines.MachineTeleporterEndBlock;
 import net.kaneka.planttech2.blocks.machines.TestCableBlock;
-import net.kaneka.planttech2.librarys.CropListEntry;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
@@ -277,9 +277,9 @@ public class ModBlocks
 		CROPS.clear();
 		CropBaseBlock tempcrop;
 		String name;
-		for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
+		for (CropEntry entry : PlantTechMain.getCropList().values())
 		{
-			name = entry.getString();
+			name = entry.getName();
 			tempcrop = new CropBaseBlock(name);
 			CROPS.put(name, tempcrop);
 			r.register(tempcrop);

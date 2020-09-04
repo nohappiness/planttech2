@@ -1,0 +1,28 @@
+{
+  "crop": "shulker",
+  "enabled": true,
+  "temperature": "cold",
+  "primary_seed": {
+    "item": "planttech2:shulker_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:shulker_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "blaze",
+      "parent_2": "endstone",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

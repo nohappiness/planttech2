@@ -26,7 +26,7 @@ import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableHandItem;
-import net.kaneka.planttech2.librarys.CropListEntry;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -390,9 +390,9 @@ public class ModItems
 
         Item tempseed, tempparticle;
         String name;
-        for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
+        for (CropEntry entry : PlantTechMain.getCropList().values())
         {
-            name = entry.getString();
+            name = entry.getName();
             tempseed = new CropSeedItem(name);
             SEEDS.put(name, tempseed);
             tempseed.setRegistryName(name + "_seeds");

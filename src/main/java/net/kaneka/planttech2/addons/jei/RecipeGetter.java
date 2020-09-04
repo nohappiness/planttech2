@@ -11,9 +11,9 @@ import net.kaneka.planttech2.addons.jei.crossbreeding.CrossbreedingRecipe;
 import net.kaneka.planttech2.addons.jei.machine_growing.MachineGrowingRecipe;
 import net.kaneka.planttech2.addons.jei.machinebulbreprocessor.MachinebulbReprocessorRecipe;
 import net.kaneka.planttech2.items.MachineBulbItem;
-import net.kaneka.planttech2.librarys.CropList;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.librarys.utils.Parents;
+import net.kaneka.planttech2.crops.CropList;
+import net.kaneka.planttech2.crops.CropEntry;
+import net.kaneka.planttech2.crops.ParentPair;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
@@ -83,18 +83,18 @@ public class RecipeGetter
 	public static List<CrossbreedingRecipe> getCrossbreedingRecipes()
 	{
 		List<CrossbreedingRecipe> results = new ArrayList<CrossbreedingRecipe>();
-		CropList croplist = PlantTechMain.croplist;
-		for (CropListEntry entry : croplist.getAllEntries())
+		CropList croplist = PlantTechMain.getCropList();
+		for (CropEntry entry : croplist.values())
 		{
-			if (!entry.isBlacklisted())
+			if (entry.getConfiguration().isEnabled())
 			{
-				if (entry.hasParents())
+				if (!entry.getParents().isEmpty())
 				{
-					ItemStack output = entry.getMainSeed();
-					for (Parents parent : entry.getParents())
+					ItemStack output = entry.getPrimarySeed().getItemStack();
+					for (ParentPair parent : entry.getParents())
 					{
-						results.add(new CrossbreedingRecipe(output, croplist.getEntryByName(parent.getParent(0)).getMainSeed(),
-						        croplist.getEntryByName(parent.getParent(1)).getMainSeed()));
+						results.add(new CrossbreedingRecipe(output, croplist.getByName(parent.getFirstParent()).getPrimarySeed().getItemStack(),
+						        croplist.getByName(parent.getSecondParent()).getPrimarySeed().getItemStack()));
 					}
 				}
 			}

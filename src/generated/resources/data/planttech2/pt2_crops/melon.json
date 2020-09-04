@@ -1,0 +1,24 @@
+{
+  "crop": "melon",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:melon_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:melon_seeds"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:melon",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}
