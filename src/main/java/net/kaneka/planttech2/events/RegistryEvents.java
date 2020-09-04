@@ -1,20 +1,11 @@
 package net.kaneka.planttech2.events;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datagen.DefaultCropConfigProvider;
 import net.kaneka.planttech2.datagen.Languages;
 import net.kaneka.planttech2.datagen.LootTables;
 import net.kaneka.planttech2.datagen.Recipes;
-import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModContainers;
-import net.kaneka.planttech2.registries.ModEffects;
-import net.kaneka.planttech2.registries.ModEntityTypes;
-import net.kaneka.planttech2.registries.ModFluids;
-import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.registries.ModSounds;
-import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityType;
@@ -26,6 +17,7 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -117,25 +109,48 @@ public class RegistryEvents
 	}
 
 	*/
-    @SubscribeEvent
-    public static void gatherData(GatherDataEvent event)
-    {
-        DataGenerator gen = event.getGenerator();
-        if (event.includeClient())
-        {
-            gen.addProvider(new Languages(gen));
-        }
-        if (event.includeServer())
-        {
-            gen.addProvider(new Recipes(gen));
-            gen.addProvider(new LootTables(gen));
-            gen.addProvider(new DefaultCropConfigProvider(gen));
-        }
-    }
+	@SubscribeEvent
+	public static void gatherData(GatherDataEvent event)
+	{
+		DataGenerator gen = event.getGenerator();
+		if (event.includeClient())
+		{
+			gen.addProvider(new Languages(gen));
+		}
+		if (event.includeServer())
+		{
+			gen.addProvider(new Recipes(gen));
+			gen.addProvider(new LootTables(gen));
+			gen.addProvider(new DefaultCropConfigProvider(gen));
+		}
+	}
 
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
 	{
 		ModFluids.register(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public static void onMissingMappings(RegistryEvent.MissingMappings<Item> event)
+	{
+		// Migrates `prismarin_*` to new `prismarine_*`
+		for (MissingMappings.Mapping<Item> mapping : event.getMappings())
+		{
+			String path = mapping.key.getPath();
+			switch (path)
+			{
+				case "prismarin_seeds":
+				{
+					mapping.remap(ModItems.SEEDS.get("prismarine_seeds"));
+					break;
+				}
+				case "prismarin_particles":
+				{
+					mapping.remap(ModItems.PARTICLES.get("prismarine_particles"));
+					break;
+				}
+			}
+		}
 	}
 }
