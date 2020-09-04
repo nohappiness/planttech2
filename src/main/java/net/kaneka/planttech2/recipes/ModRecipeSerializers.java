@@ -12,8 +12,8 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModRecipeSerializers
 {
     @ObjectHolder("compressing") public static CompressorRecipe.Serializer COMPRESSOR;
-    @ObjectHolder("infusing") public static CompressorRecipe.Serializer INFUSER;
-    @ObjectHolder("chipalyzer") public static CompressorRecipe.Serializer CHIPALYZER;
+    @ObjectHolder("infusing") public static InfuserRecipe.Serializer INFUSER;
+    @ObjectHolder("chipalyzer") public static ChipalyzerRecipe.Serializer CHIPALYZER;
 
     public static void registerAll(RegistryEvent.Register<IRecipeSerializer<?>> event)
     {
