@@ -18,6 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 {
 	private int ticksPassed = 0;
@@ -128,12 +130,12 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 
 	public int energyPerTick()
 	{
-		return 4 + (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+		return 4 + (getUpgradeTier(2, SPEED_UPGRADE) * 4);
 	}
 
 	public int ticksPerItem()
 	{
-		return 200 - (getUpgradeTier(2, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
+		return 200 - (getUpgradeTier(2, SPEED_UPGRADE) * 35);
 	}
 
 	@Override

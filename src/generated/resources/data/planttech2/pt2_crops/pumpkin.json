@@ -1,0 +1,24 @@
+{
+  "crop": "pumpkin",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:pumpkin_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:pumpkin_seeds"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:pumpkin",
+      "min": 0,
+      "max": 3
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

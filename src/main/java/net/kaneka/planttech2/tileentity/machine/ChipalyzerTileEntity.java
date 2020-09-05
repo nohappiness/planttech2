@@ -19,6 +19,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 {
 	private int ticksPassed = 0;
@@ -144,12 +146,12 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 
 	public int energyPerTick()
 	{
-		return 4 + (getUpgradeTier(3, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+		return 4 + (getUpgradeTier(3, SPEED_UPGRADE) * 4);
 	}
 
 	public int ticksPerItem()
 	{
-		return 200 - (getUpgradeTier(3, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
+		return 200 - (getUpgradeTier(3, SPEED_UPGRADE) * 35);
 	}
 
 	@Override

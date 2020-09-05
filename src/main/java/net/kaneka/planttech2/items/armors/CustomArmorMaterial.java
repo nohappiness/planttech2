@@ -27,7 +27,7 @@ public enum CustomArmorMaterial implements IArmorMaterial
 	private final float toughness;
 	private final LazyValue<Ingredient> repairMaterial;
 
-	private CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness,
+	CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness,
 	        Supplier<Ingredient> repairMaterial)
 	{
 		this.name = nameIn;

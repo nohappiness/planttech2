@@ -14,13 +14,13 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BiomassContainerItem extends BaseItem
+public class BiomassContainerItem extends Item
 {
 	private static int CAPACITY = 1000;
 
 	public BiomassContainerItem()
 	{
-		super("biomasscontainer", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1));
+		super(new Item.Properties().group(ModCreativeTabs.MAIN).maxStackSize(1));
 	}
 
 	public static float getFillLevelModel(ItemStack stack)

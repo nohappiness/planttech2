@@ -1,15 +1,13 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemGroup;
 
-public class MachineTeleporterEndBlock extends BaseBlock
+public class MachineTeleporterEndBlock extends Block
 {
 
-	public MachineTeleporterEndBlock(String name, Block.Properties builder, ItemGroup tab)
+	public MachineTeleporterEndBlock(Block.Properties builder)
 	{
-		super(builder, name, tab, true);
+		super(builder);
 	}
 
 	/*

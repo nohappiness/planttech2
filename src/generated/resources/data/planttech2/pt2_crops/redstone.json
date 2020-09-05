@@ -1,0 +1,28 @@
+{
+  "crop": "redstone",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:redstone_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:redstone_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "gold",
+      "parent_2": "glowstone",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:redstone_ore"
+  }
+}

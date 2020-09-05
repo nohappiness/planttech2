@@ -1,0 +1,24 @@
+{
+  "crop": "sugarcane",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:sugarcane_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:sugar_cane"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:sugar_cane",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

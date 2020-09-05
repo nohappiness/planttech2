@@ -1,0 +1,22 @@
+{
+  "crop": "fluix_crystal",
+  "enabled": false,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:fluix_crystal_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:fluix_crystal_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -22,12 +22,12 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class WrenchItem extends BaseItem
+public class WrenchItem extends Item
 {
 
 	public WrenchItem()
 	{
-		super("wrench", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
 	}
 
 	@Override

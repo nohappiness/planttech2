@@ -27,6 +27,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {
 	public int[] ticksPassed = new int[6];
@@ -239,12 +241,12 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 
 	public int getEnergyPerTickPerItem()
 	{
-		return 4 + (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 4);
+		return 4 + (getUpgradeTier(12, SPEED_UPGRADE) * 4);
 	}
 
 	public int getTicksPerItem()
 	{
-		return 200 - (getUpgradeTier(12, PlantTechConstants.SPEEDUPGRADE_TYPE) * 35);
+		return 200 - (getUpgradeTier(12, SPEED_UPGRADE) * 35);
 	}
 
 	@Override

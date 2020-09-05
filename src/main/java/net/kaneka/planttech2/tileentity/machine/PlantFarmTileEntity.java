@@ -22,9 +22,11 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
+
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
-	private int[] progress = new int[5]; 
+	private final int[] progress = new int[5];
 	
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -104,7 +106,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	@Override
 	public void doUpdate()
 	{
-		int range = getRange(); 
+		int range = getRange();
 		ItemStack seed = itemhandler.getStackInSlot(0);
 		if(!seed.isEmpty())
 		{
@@ -163,10 +165,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			if(item instanceof BlockItem)
 			{
 				Block block = ((BlockItem) item).getBlock();
-				if(block instanceof CropsBlock)
-				{
-					return true;
-				}
+				return block instanceof CropsBlock;
 			}
 		}
 		return false; 
@@ -232,20 +231,17 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			{
 				HashMapCropTraits traits = new HashMapCropTraits();
 				traits.fromStack(stack);
-				PlantTechMain.croplist.getEntryByName(traits.getType()).calculateDropsReduced(drops, traits, 7);
+				PlantTechMain.getCropList().getByName(traits.getType()).calculateDropsReduced(drops, traits, 7, world.rand);
 				return drops; 
 			}
 			if(item instanceof BlockItem)
 			{
-				Block block = ((BlockItem) item).getBlock(); 
-				if(block != null)
+				Block block = ((BlockItem) item).getBlock();
+				if(block instanceof CropsBlock)
 				{
-					if(block instanceof CropsBlock)
+					if(world instanceof ServerWorld)
 					{
-						if(world instanceof ServerWorld)
-						{
-							drops.addAll(Block.getDrops(block.getDefaultState().with(CropsBlock.AGE, 7), (ServerWorld)world, pos, null));
-						}
+						drops.addAll(Block.getDrops(block.getDefaultState().with(CropsBlock.AGE, 7), (ServerWorld)world, pos, null));
 					}
 				}
 			}
@@ -261,7 +257,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			if (stack.getItem() instanceof TierItem)
 			{
 				TierItem item = (TierItem) stack.getItem();
-				if (item.getItemType() == PlantTechConstants.RANGEUPGRADE_TYPE)
+				if (item.getItemType() == RANGE_UPGRADE)
 				{
 					return item.getTier();
 				}

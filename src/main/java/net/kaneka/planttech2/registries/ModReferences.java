@@ -3,9 +3,10 @@ package net.kaneka.planttech2.registries;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.util.ResourceLocation;
 
+import static net.kaneka.planttech2.PlantTechMain.MODID;
+
 public class ModReferences
 {
-	public static final String MODID = PlantTechMain.MODID; 
 	public static final String COMPRESSORCONTAINER = MODID + ":compressorcontainer"; 
 	public static final String DNACLEANERCONTAINER = MODID + ":dnacleanercontainer"; 
 	public static final String DNACOMBINERCONTAINER = MODID + ":dnacombinercontainer"; 

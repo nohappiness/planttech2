@@ -34,7 +34,6 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	{
 		if (this.world != null && !this.world.isRemote)
 		{
-
 			if ((world.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
 			{
 				Block block = world.getBlockState(pos).getBlock();
@@ -80,13 +79,13 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 
 	public List<ItemStack> addDrops(List<ItemStack> drops, int growstate)
 	{
-		PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate);
+		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate, world.rand);
 		return drops;
 	}
 
 	public void dropsRemoveOneSeed(NonNullList<ItemStack> drops, int growstate)
 	{
-		PlantTechMain.croplist.getEntryByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate);
+		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate, world.rand);
 	}
 
 	@Override

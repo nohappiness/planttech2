@@ -15,12 +15,12 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 public class CableTileEntity extends TileEntity implements ITickableTileEntity
 {
@@ -29,18 +29,18 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	private int[] connections = new int[] { 0, 0, 0, 0, 0, 0 };
 	private int maxTransferRate = 20;
 	private boolean connectionUpdated = true;
-	private List<BlockPos> cables = new ArrayList<BlockPos>();
-	private HashMap<Integer, List<Connection>> connectionsMaster = new HashMap<Integer, List<Connection>>()
+	private final List<BlockPos> cables = new ArrayList<>();
+	private final HashMap<Integer, List<Connection>> connectionsMaster = new HashMap<Integer, List<Connection>>()
 	{
 		private static final long serialVersionUID = 1L;
 		{
 			//0 as consumers, 1 as producers
-			put(0, new ArrayList<Connection>());
-			put(1, new ArrayList<Connection>());
+			put(0, new ArrayList<>());
+			put(1, new ArrayList<>());
 		}
 	};
 
-	HashMap<BlockPos, Direction> producer = new HashMap<BlockPos, Direction>(), consumer = new HashMap<BlockPos, Direction>(), storages = new HashMap<BlockPos, Direction>();
+	HashMap<BlockPos, Direction> producer = new HashMap<>(), consumer = new HashMap<>(), storages = new HashMap<>();
 
 	public CableTileEntity()
 	{
@@ -522,7 +522,7 @@ public class CableTileEntity extends TileEntity implements ITickableTileEntity
 	 */
 	public HashMap<Integer, List> getLists()
 	{
-		HashMap<Integer, List> lists = new HashMap<Integer, List>();
+		HashMap<Integer, List> lists = new HashMap<>();
 		lists.put(0, this.cables);
 		lists.put(1, this.connectionsMaster.get(0));
 		lists.put(2, this.connectionsMaster.get(1));

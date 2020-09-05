@@ -6,7 +6,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -28,9 +27,9 @@ public class WallLight extends FacingWallLightBase
     public static final VoxelShape NEGATIVE_X_BROKE = Block.makeCuboidShape(0.0, 6.0, 10.0, 1.0, 12.0, 6.0);
     public static final VoxelShape POSITIVE_X_BROKE = Block.makeCuboidShape(16.0, 6.0, 6.0, 15.0, 12.0, 10.0);
 
-    public WallLight(Properties property, String name, ItemGroup group, boolean hasItem)
+    public WallLight(Properties property)
     {
-        super(property, name, group, hasItem);
+        super(property);
     }
 
     @Override

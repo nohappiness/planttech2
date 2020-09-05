@@ -13,14 +13,14 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class KnowledgeChip extends BaseItem
+public class KnowledgeChip extends Item
 {		
-	private int tier; 
-	private int maxKnowledge;
+	private final int tier;
+	private final int maxKnowledge;
 	
 	public KnowledgeChip(int tier, int maxKnowledge)
 	{
-		super("knowledgechip_" + String.valueOf(tier), new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain));
+		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
 		this.tier = tier;
 		this.maxKnowledge = maxKnowledge; 
 	}
@@ -51,7 +51,7 @@ public class KnowledgeChip extends BaseItem
 				if(chip.getTier() <= maxTier)
 				{
 					CompoundNBT nbt = stack.getOrCreateTag();
-					int newknowledge = 0; 
+					int newknowledge;
 					if(nbt.contains("knowledge"))
 					{
 						newknowledge = nbt.getInt("knowledge") + amount; 

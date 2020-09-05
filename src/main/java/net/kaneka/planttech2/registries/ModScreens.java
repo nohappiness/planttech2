@@ -7,8 +7,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModScreens
 {
-	@OnlyIn(Dist.CLIENT)
-	public static final void registerGUI()
+	public static void registerGUI()
 	{
 		ScreenManager.registerFactory(ModContainers.COMPRESSOR, CompressorScreen::new);
 		ScreenManager.registerFactory(ModContainers.DNACLEANER, DNACleanerScreen::new);

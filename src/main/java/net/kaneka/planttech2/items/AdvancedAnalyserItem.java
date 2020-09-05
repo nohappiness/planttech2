@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
@@ -19,56 +17,49 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.util.List;
+
 public class AdvancedAnalyserItem extends EnergyStorageItem
 {
 	private static final int capacity = 1000;
 
 	public AdvancedAnalyserItem()
 	{
-		super("advanced_analyser", new Item.Properties().maxStackSize(1).group(ModCreativeTabs.groupmain), capacity);
+		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN), capacity);
 	}
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext ctx)
 	{
 		ItemStack stack = ctx.getItem();
-		if (!stack.isEmpty())
+		World world = ctx.getWorld();
+		BlockPos pos = ctx.getPos();
+		PlayerEntity player = ctx.getPlayer();
+		if (!world.isRemote && !stack.isEmpty() && player != null)
 		{
-			if (stack.getItem() instanceof AdvancedAnalyserItem)
-			{
-				World world = ctx.getWorld();
-				BlockPos pos = ctx.getPos();
-				PlayerEntity player = ctx.getPlayer();
-				if (!world.isRemote)
-				{
-					TileEntity te = world.getTileEntity(pos);
+			TileEntity te = world.getTileEntity(pos);
 
-					if (te instanceof CropsTileEntity)
+			if (te instanceof CropsTileEntity)
+			{
+				CropsTileEntity cte = (CropsTileEntity) te;
+				if (cte.isAnalysed())
+				{
+					HashMapCropTraits traits = cte.getTraits();
+					sendTraits(player, traits);
+				} else
+				{
+					if (currentEnergy(stack) >= getEnergyCosts())
 					{
-						CropsTileEntity cte = (CropsTileEntity) te;
-						if (cte.isAnalysed())
-						{
-							HashMapCropTraits traits =  cte.getTraits();
-							sendTraits(player, traits);
-						}
-						else
-						{
-							if(currentEnergy(stack) >= getEnergyCosts())
-							{
-								extractEnergy(stack, getEnergyCosts(), false); 
-								HashMapCropTraits traits =  cte.setAnalysedAndGetTraits();
-								sendTraits(player, traits);
-							}
-							else
-							{
-								player.sendMessage(new StringTextComponent("Not enough energy"), player.getUniqueID());
-							}
-						}
+						extractEnergy(stack, getEnergyCosts(), false);
+						HashMapCropTraits traits = cte.setAnalysedAndGetTraits();
+						sendTraits(player, traits);
+					} else
+					{
+						player.sendMessage(new StringTextComponent("Not enough energy"), player.getUniqueID());
 					}
 				}
 			}
 		}
-
 		return super.onItemUse(ctx);
 	}
 

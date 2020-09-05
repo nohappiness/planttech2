@@ -18,9 +18,9 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class RangedWeaponItem extends UpgradeableHandItem
 {
-	public RangedWeaponItem(String name, Properties property, int basecapacity, int maxInvSize)
+	public RangedWeaponItem(Properties property, int basecapacity, int maxInvSize)
 	{
-		super(name, property, basecapacity, maxInvSize, 0, 2.4F, UpgradeChipItem.RANGED_WEAPON);
+		super(property, basecapacity, maxInvSize, 0, 2.4F, UpgradeChipItem.RANGED_WEAPON);
 	}
 
 	protected ItemStack findAmmo(PlayerEntity player)

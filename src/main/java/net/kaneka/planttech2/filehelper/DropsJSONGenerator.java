@@ -4,9 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
-import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.PlantTechMain;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class DropsJSONGenerator
 {
@@ -29,7 +31,8 @@ public class DropsJSONGenerator
 				bw.newLine();
 			}
 			bw.close();
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
@@ -50,12 +53,12 @@ public class DropsJSONGenerator
 		addLine("	  \"type\": \"minecraft:block\",");
 		addLine("	  \"pools\": [");
 		addLine("	    {");
-		addLine("		  \"name\": \""+item.getRegistryName()+"\","); 
+		addLine("		  \"name\": \"" + item.getRegistryName() + "\",");
 		addLine("	      \"rolls\": 1,");
 		addLine("	      \"entries\": [");
 		addLine("	        {");
 		addLine("	          \"type\": \"minecraft:item\",");
-		addLine("	          \"name\": \""+ item.getRegistryName()+"\"");
+		addLine("	          \"name\": \"" + item.getRegistryName() + "\"");
 		addLine("	        }");
 		addLine("	      ],");
 		addLine("	      \"conditions\": [");
@@ -72,11 +75,15 @@ public class DropsJSONGenerator
 
 	public void defaultValues()
 	{
-		for(BaseBlock block:ModBlocks.BLOCKITEMS)
+		for (Block b : ForgeRegistries.BLOCKS)
 		{
+			if (!b.getRegistryName().getNamespace().equals(PlantTechMain.MODID))
+			{
+				continue;
+			}
 			@SuppressWarnings("deprecation")
-			Item item = Item.getItemFromBlock(block); 
-			if(item != null)
+			Item item = Item.getItemFromBlock(b);
+			if (item != Items.AIR)
 			{
 				createFile(item);
 			}

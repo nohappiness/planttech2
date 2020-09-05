@@ -1,5 +1,5 @@
 package net.kaneka.planttech2.filehelper;
-
+/*
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.librarys.utils.Drop;
-import net.kaneka.planttech2.librarys.utils.Parents;
+import net.kaneka.planttech2.librarys.CropEntry;
+import net.kaneka.planttech2.librarys.DropEntry;
+import net.kaneka.planttech2.librarys.ParentPair;
 import net.minecraft.item.ItemStack;
 
 public class CropListJSONGenerator
@@ -85,7 +85,7 @@ public class CropListJSONGenerator
 		saveFile(name + "_crop");
 	}
 
-	private void createConfigJSON(CropListEntry entry)
+	private void createConfigJSON(CropEntry entry)
 	{
 		addLine("{");
 		addLine("    \"enabled\": " + !entry.isBlacklisted() +",");
@@ -108,15 +108,15 @@ public class CropListJSONGenerator
 		}
 		addLine("    ],");
 		addLine("    \"drops\":[");
-		Set<Drop> add_drops = entry.getDrops();
+		Set<DropEntry> add_drops = entry.getDrops();
 		i = 0;
 		if(add_drops != null)
 		{
-			for(Drop drop: add_drops)
+			for(DropEntry drop: add_drops)
 			{
 				
 				addLine("        {");
-				addLine("            \"item\": \"" + drop.getItemStack().getItem().getRegistryName() + "\",");
+				addLine("            \"item\": \"" + drop.getItemSupplier().getItem().getRegistryName() + "\",");
 				addLine("            \"min\": " + drop.getMin() + ", ");
 				addLine("            \"max\": " + drop.getMax());
 				String string = "        }";
@@ -130,11 +130,11 @@ public class CropListJSONGenerator
 		}
 		addLine("    ],");
 		addLine("    \"parents\": [");
-		Set<Parents> parents = entry.getParents();
+		Set<ParentPair> parents = entry.getParents();
 		i = 0;
 		if(parents != null)
 		{
-			for(Parents parent_pair: parents)
+			for(ParentPair parent_pair: parents)
 			{
 				
 				addLine("        {");
@@ -160,7 +160,7 @@ public class CropListJSONGenerator
 		}
 		addLine("    }");
 		addLine("}");
-		saveFile(entry.getString());
+		saveFile(entry.getName());
 	}
 
 	private void addEntry(String name, String color, boolean hasParticle)
@@ -235,7 +235,7 @@ public class CropListJSONGenerator
 		addEntry("polarbear", "f6f6f6", true);
 		addEntry("poppy", "ed302c", false);
 		addEntry("potato", "c8a24b", false);
-		addEntry("prismarin", "5ea496", true);
+		addEntry("prismarine", "5ea496", true);
 		addEntry("pumpkin", "e38a1d", false);
 		addEntry("quartz", "d4caba", true);
 		addEntry("redstone", "ff0000", true);
@@ -373,9 +373,10 @@ public class CropListJSONGenerator
 	
 	public void createConfigFiles()
 	{
-		for(CropListEntry entry: PlantTechMain.croplist.getAllEntries())
+		for(CropEntry entry: PlantTechMain.croplist.values())
 		{
 			createConfigJSON(entry);
 		}
 	}
 }
+*/

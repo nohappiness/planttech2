@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
+import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerInventory;
@@ -28,7 +29,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 
 		int l = 0;
-		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, PlantTechConstants.SOLARFOCUS_TYPE))
+		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, TierItem.ItemType.SOLAR_FOCUS))
 		{
 			case 0:l = 0; break;
 			case 1:l = 6; break;

@@ -2,9 +2,6 @@ package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -20,7 +17,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.TickPriority;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -30,16 +26,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class FacingWallLightBase extends BaseBlock
+public class FacingWallLightBase extends Block
 {
     public static final DirectionProperty HORIZONTAL_FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
     //5 -> not damaged, 4-1 -> flashing (broke), 0 -> completely broken
     public static final IntegerProperty LIGHT_STATUS = IntegerProperty.create("status", 0, 5);
     public static final BooleanProperty IS_ON = BooleanProperty.create("is_on");
 
-    public FacingWallLightBase(Properties property, String name, ItemGroup group, boolean hasItem)
+    public FacingWallLightBase(Properties property)
     {
-        super(property.notSolid(), name, group, hasItem);
+        super(property.notSolid());
         setDefaultState(getDefaultState()
                 .with(HORIZONTAL_FACING, Direction.NORTH)
                 .with(LIGHT_STATUS, 5)

@@ -1,0 +1,24 @@
+{
+  "crop": "vine",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:vine_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:vine"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:vine",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,259 +1,422 @@
 package net.kaneka.planttech2.registries;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.*;
-import net.kaneka.planttech2.items.armors.ArmorBaseItem;
+import net.kaneka.planttech2.items.AdvancedAnalyserItem;
+import net.kaneka.planttech2.items.AnalyserItem;
+import net.kaneka.planttech2.items.BiomassContainerItem;
+import net.kaneka.planttech2.items.CreditCardItem;
+import net.kaneka.planttech2.items.CropRemover;
+import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.items.DNAContainerItem;
+import net.kaneka.planttech2.items.EnergyStorageItem;
+import net.kaneka.planttech2.items.FertilizerItem;
+import net.kaneka.planttech2.items.GuideItem;
+import net.kaneka.planttech2.items.KnowledgeChip;
+import net.kaneka.planttech2.items.MachineBulbItem;
+import net.kaneka.planttech2.items.ParticleItem;
+import net.kaneka.planttech2.items.PlantObtainerItem;
+import net.kaneka.planttech2.items.RadiationMetreItem;
+import net.kaneka.planttech2.items.TeleporterItem;
+import net.kaneka.planttech2.items.TestItem;
+import net.kaneka.planttech2.items.ThermometerItem;
+import net.kaneka.planttech2.items.TierItem;
+import net.kaneka.planttech2.items.WrenchItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeableHandItem;
-import net.kaneka.planttech2.librarys.CropListEntry;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.IPosition;
-import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.*;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 
-import static net.kaneka.planttech2.registries.ModReferences.MODID;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.function.Supplier;
 
+import static net.kaneka.planttech2.PlantTechMain.MODID;
+import static net.kaneka.planttech2.items.TierItem.ItemType.*;
+import static net.kaneka.planttech2.utilities.ModCreativeTabs.*;
+
+@ObjectHolder(MODID)
 public class ModItems
 {
-	private static ResourceLocation CropResLoc=new ResourceLocation(MODID, "crops/");
-	public static List<BaseItem> ITEMS = new ArrayList<BaseItem>();
-    public static List<ArmorBaseItem> ITEMSARMOR = new ArrayList<ArmorBaseItem>();
+    //	static ResourceLocation CROPS_RESLOC =new ResourceLocation(MODID, "crops/");
 
-    public static List<MachineBulbItem> MACHINEBULBS = new ArrayList<MachineBulbItem>();
+    public static List<Supplier<MachineBulbItem>> MACHINE_BULBS = new ArrayList<>();
+    public static HashMap<String, Item> SEEDS = new HashMap<>();
+    public static HashMap<String, Item> PARTICLES = new HashMap<>();
 
-    public static Item BIOMASS_BUCKET = new BucketItem(() -> ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ModCreativeTabs.groupToolsAndArmor)).setRegistryName("biomass_bucket");
+    @ObjectHolder("biomass_bucket") public static BucketItem BIOMASS_BUCKET;
 
-    public static BaseItem ANALYSER = new AnalyserItem(),
-    			   ADVANCED_ANALYSER = new AdvancedAnalyserItem(),
-	    		   BIOMASS = new BaseItem("biomass", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   BIOMASSCONTAINER = new BiomassContainerItem(),
-	    		   CROPREMOVER = new CropRemover(),
-	    		   CYBERBOW = new RangedWeaponItem("cyberbow", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10),
-	    		   CYBERDAGGER = new UpgradeableHandItem("cyberdagger", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 1, -1.4F, UpgradeChipItem.MELEE_WEAPON),
-	    		   CYBERKATANA = new UpgradeableHandItem("cyberkatana", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 8, -3.4F, UpgradeChipItem.MELEE_WEAPON),
-	    		   CYBERRAPIER = new UpgradeableHandItem("cyberrapier", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor), 1000, 10, 4, -2.4F, UpgradeChipItem.MELEE_WEAPON),
-	    		   CAPACITYUPGRADE_TIER_1 = new TierItem("capacityupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 3),
-	    		   CAPACITYUPGRADE_TIER_2 = new TierItem("capacityupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 3),
-	    		   CAPACITYUPGRADE_TIER_3 = new TierItem("capacityupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 3),
-	    		   COLOR_PARTICLES = new ParticleItem("color"),
-	    		   DARK_CRYSTAL = new BaseItem("dark_crystal", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   DNA_CONTAINER_EMPTY = new BaseItem("dna_container_empty", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   DNA_CONTAINER = new DNAContainerItem(),
-	    		   DANCIUM_INGOT = new BaseItem("dancium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   DANCIUM_NUGGET = new BaseItem("dancium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   EMPTY_UPGRADECHIP_TIER_1 = new TierItem("empty_upgradechip_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 1, 3),
-	    		   EMPTY_UPGRADECHIP_TIER_2 = new TierItem("empty_upgradechip_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
-	    		   EMPTY_UPGRADECHIP_TIER_3 = new TierItem("empty_upgradechip_3",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
-	    		   CHIP_UPGRADEPACK_CAPACITY_1 = new TierItem("chip_upgradepack_capacity_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
-	    		   CHIP_UPGRADEPACK_CAPACITY_2 = new TierItem("chip_upgradepack_capacity_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
-	    		   CHIP_UPGRADEPACK_HARVESTLEVEL_1 = new TierItem("chip_upgradepack_harvestlevel_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
-	    		   CHIP_UPGRADEPACK_HARVESTLEVEL_2 = new TierItem("chip_upgradepack_harvestlevel_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
-	    		   CHIP_UPGRADEPACK_REACTOR_1 = new TierItem("chip_upgradepack_reactor_1",  new Item.Properties().group(ModCreativeTabs.groupmain), 2, 3),
-	    		   CHIP_UPGRADEPACK_REACTOR_2 = new TierItem("chip_upgradepack_reactor_2",  new Item.Properties().group(ModCreativeTabs.groupmain), 3, 3),
-	    		   ENERGYSTORAGE_TIER_1 = new EnergyStorageItem("energystorage_tier_1", new Item.Properties().group(ModCreativeTabs.groupmain), 500),
-	    		   ENERGYSTORAGE_TIER_2 = new EnergyStorageItem("energystorage_tier_2", new Item.Properties().group(ModCreativeTabs.groupmain), 5000),
-	    		   ENERGYSTORAGE_TIER_3 = new EnergyStorageItem("energystorage_tier_3", new Item.Properties().group(ModCreativeTabs.groupmain), 50000),
-	    		   FERTILIZER_TIER_1 = new FertilizerItem("fertilizer_tier_1", ModCreativeTabs.groupmain),
-	    		   FERTILIZER_TIER_2 = new FertilizerItem("fertilizer_tier_2", ModCreativeTabs.groupmain),
-	    		   FERTILIZER_TIER_3 = new FertilizerItem("fertilizer_tier_3", ModCreativeTabs.groupmain),
-	    		   FERTILIZER_TIER_4 = new FertilizerItem("fertilizer_tier_4", ModCreativeTabs.groupmain),
-	    		   FERTILIZER_CREATIVE = new FertilizerItem("fertilizer_creative", ModCreativeTabs.groupmain),
-	    		   GEAR_KANEKIUM = new BaseItem("gear_kanekium", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_DANCIUM = new BaseItem("gear_dancium", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_LENTHURIUM = new BaseItem("gear_lenthurium", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_KINNOIUM = new BaseItem("gear_kinnoium", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_PLANTIUM = new BaseItem("gear_plantium", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_IRON = new BaseItem("gear_iron", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_KANEKIUM_INFUSED = new BaseItem("gear_kanekium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_DANCIUM_INFUSED = new BaseItem("gear_dancium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_LENTHURIUM_INFUSED = new BaseItem("gear_lenthurium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_KINNOIUM_INFUSED = new BaseItem("gear_kinnoium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_PLANTIUM_INFUSED = new BaseItem("gear_plantium_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GEAR_IRON_INFUSED = new BaseItem("gear_iron_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   REDSTONE_INFUSED = new BaseItem("redstone_infused", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   GUIDE_OVERVIEW = new GuideItem("overview"),
-	    		   GUIDE_PLANTS  = new GuideItem("plants"),
-	    		   GUIDE_GENETIC_ENGINEERING = new GuideItem("genetic_engineering"),
-	    		   KANEKIUM_INGOT = new BaseItem("kanekium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   KANEKIUM_NUGGET = new BaseItem("kanekium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   KINNOIUM_INGOT = new BaseItem("kinnoium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   KINNOIUM_NUGGET = new BaseItem("kinnoium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   KNOWLEDGECHIP_TIER_0 = new KnowledgeChip(0, 50),
-	    		   KNOWLEDGECHIP_TIER_1 = new KnowledgeChip(1, 250),
-	    		   KNOWLEDGECHIP_TIER_2 = new KnowledgeChip(2, 1250),
-	    		   KNOWLEDGECHIP_TIER_3 = new KnowledgeChip(3, 6250),
-	    		   KNOWLEDGECHIP_TIER_4 = new KnowledgeChip(4, 31250),
-	    		   KNOWLEDGECHIP_TIER_5 = new KnowledgeChip(5, 156250),
-	    		   LENTHURIUM_INGOT = new BaseItem("lenthurium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   LENTHURIUM_NUGGET = new BaseItem("lenthurium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   MULTITOOL = new MultitoolItem(),
-	    		   PLANTCARD = new CreditCardItem("plantcard", new Item.Properties().group(ModCreativeTabs.groupmain).maxStackSize(1)),
-	    		   PLANTIUM_INGOT  = new BaseItem("plantium_ingot", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   PLANTIUM_NUGGET = new BaseItem("plantium_nugget", new Item.Properties().group(ModCreativeTabs.groupmain)),
-				   PLANT_OBTAINER = new PlantObtainerItem("plant_obtainer", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-	               RADIATION_METRE= new RadiationMetreItem("radiation_metre", new Item.Properties().group(ModCreativeTabs.groupToolsAndArmor)),
-	    		   RANGEUPGRADE_TIER_1 = new TierItem("rangeupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 1),
-	    		   RANGEUPGRADE_TIER_2 = new TierItem("rangeupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 1),
-	    		   RANGEUPGRADE_TIER_3 = new TierItem("rangeupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 1),
-	    		   RANGEUPGRADE_TIER_4 = new TierItem("rangeupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 1),
-	    		   SOLARFOCUS_TIER_1 = new TierItem("solarfocus_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 0),
-	    		   SOLARFOCUS_TIER_2 = new TierItem("solarfocus_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 0),
-	    		   SOLARFOCUS_TIER_3 = new TierItem("solarfocus_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 0),
-	    		   SOLARFOCUS_TIER_4 = new TierItem("solarfocus_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 0),
-	    		   SPEEDUPGRADE_TIER_1 = new TierItem("speedupgrade_1", new Item.Properties().group(ModCreativeTabs.groupchips), 1, 2),
-	    		   SPEEDUPGRADE_TIER_2 = new TierItem("speedupgrade_2", new Item.Properties().group(ModCreativeTabs.groupchips), 2, 2),
-	    		   SPEEDUPGRADE_TIER_3 = new TierItem("speedupgrade_3", new Item.Properties().group(ModCreativeTabs.groupchips), 3, 2),
-	    		   SPEEDUPGRADE_TIER_4 = new TierItem("speedupgrade_4", new Item.Properties().group(ModCreativeTabs.groupchips), 4, 2),
-	    		   TELEPORTER = new TeleporterItem("teleporter", new Item.Properties().group(ModCreativeTabs.groupmain), 1000),
-	    		   THERMOMETER = new ThermometerItem(),
-	    	       WHITE_CRYSTAL = new BaseItem("white_crystal", new Item.Properties().group(ModCreativeTabs.groupmain)),
-	    		   WRENCH = new WrenchItem(),
-	    		   TESTITEM = new TestItem();
+    @ObjectHolder("analyser") public static AnalyserItem ANALYSER;
+    @ObjectHolder("advanced_analyser") public static AdvancedAnalyserItem ADVANCED_ANALYSER;
+    @ObjectHolder("biomass") public static Item BIOMASS;
+    @ObjectHolder("biomasscontainer") public static BiomassContainerItem BIOMASSCONTAINER;
+    @ObjectHolder("cropremover") public static CropRemover CROPREMOVER;
+    @ObjectHolder("cyberbow") public static RangedWeaponItem CYBERBOW;
+    @ObjectHolder("cyberdagger") public static UpgradeableHandItem CYBERDAGGER;
+    @ObjectHolder("cyberkatana") public static UpgradeableHandItem CYBERKATANA;
+    @ObjectHolder("cyberrapier") public static UpgradeableHandItem CYBERRAPIER;
+    @ObjectHolder("capacityupgrade_1") public static TierItem CAPACITYUPGRADE_TIER_1;
+    @ObjectHolder("capacityupgrade_2") public static TierItem CAPACITYUPGRADE_TIER_2;
+    @ObjectHolder("capacityupgrade_3") public static TierItem CAPACITYUPGRADE_TIER_3;
+    @ObjectHolder("color_particles") public static ParticleItem COLOR_PARTICLES;
+    @ObjectHolder("dark_crystal") public static Item DARK_CRYSTAL;
+    @ObjectHolder("dna_container_empty") public static Item DNA_CONTAINER_EMPTY;
+    @ObjectHolder("dna_container") public static DNAContainerItem DNA_CONTAINER;
+    @ObjectHolder("dancium_ingot") public static Item DANCIUM_INGOT;
+    @ObjectHolder("dancium_nugget") public static Item DANCIUM_NUGGET;
+    @ObjectHolder("empty_upgradechip_1") public static TierItem EMPTY_UPGRADECHIP_TIER_1;
+    @ObjectHolder("empty_upgradechip_2") public static TierItem EMPTY_UPGRADECHIP_TIER_2;
+    @ObjectHolder("empty_upgradechip_3") public static TierItem EMPTY_UPGRADECHIP_TIER_3;
 
-	public static UpgradeChipItem
-				CAPACITYCHIP_TIER_1 = new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(1),
-				CAPACITYCHIP_TIER_2 = new UpgradeChipItem("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(2),
-				CAPACITYCHIP_TIER_3 = new UpgradeChipItem("capacitychip_tier_3").setIncreaseCapacity(10000).setEnergyCost(5),
-				REACTORCHIP_TIER_1 = new UpgradeChipItem("reactorchip_tier_1").setEnergyProduction(1).setEnergyCost(1),
-				REACTORCHIP_TIER_2 = new UpgradeChipItem("reactorchip_tier_2").setEnergyProduction(3).setEnergyCost(2),
-				REACTORCHIP_TIER_3 = new UpgradeChipItem("reactorchip_tier_3").setEnergyProduction(5).setEnergyCost(5),
-				UNLOCKCHIP_SHOVEL = new UpgradeChipItem("unlockchip_shovel").setUnlockShovelFeat().setEnergyCost(2),
-				UNLOCKCHIP_AXE = new UpgradeChipItem("unlockchip_axe").setUnlockAxeFeat().setEnergyCost(2),
-				UNLOCKCHIP_SHEARS = new UpgradeChipItem("unlockchip_shears").setUnlockShearsFeat().setEnergyCost(2),
-				UNLOCKCHIP_HOE = new UpgradeChipItem("unlockchip_hoe").setUnlockHoeFeat().setEnergyCost(2),
-				HARVESTLEVELCHIP_TIER_1 = new UpgradeChipItem("harvestlevelchip_tier_1").setIncreaseHarvestlevel(1).setEnergyCost(2),
-				HARVESTLEVELCHIP_TIER_2 = new UpgradeChipItem("harvestlevelchip_tier_2").setIncreaseHarvestlevel(2).setEnergyCost(6),
-				HARVESTLEVELCHIP_TIER_3 = new UpgradeChipItem("harvestlevelchip_tier_3").setIncreaseHarvestlevel(4).setEnergyCost(15),
-				ATTACKCHIP_TIER_1 = new UpgradeChipItem("attackchip_tier_1").setIncreaseAttack(0.5F).setEnergyCost(1),
-				ATTACKCHIP_TIER_2 = new UpgradeChipItem("attackchip_tier_2").setIncreaseAttack(1F).setEnergyCost(2),
-				ATTACKCHIP_TIER_3 = new UpgradeChipItem("attackchip_tier_3").setIncreaseAttack(2F).setEnergyCost(4),
-				ATTACKSPEEDCHIP_TIER_1 = new UpgradeChipItem("attackspeedchip_tier_1").setIncreaseAttackSpeed(0.1F).setEnergyCost(1),
-				ATTACKSPEEDCHIP_TIER_2 = new UpgradeChipItem("attackspeedchip_tier_2").setIncreaseAttackSpeed(0.25F).setEnergyCost(2),
-				ATTACKSPEEDCHIP_TIER_3 = new UpgradeChipItem("attackspeedchip_tier_3").setIncreaseAttackSpeed(0.5F).setEnergyCost(4),
-				BREAKDOWNRATECHIP_TIER_1 = new UpgradeChipItem("breakdownratechip_tier_1").setIncreaseBreakdownRate(0.5F).setEnergyCost(1),
-				BREAKDOWNRATECHIP_TIER_2 = new UpgradeChipItem("breakdownratechip_tier_2").setIncreaseBreakdownRate(1F).setEnergyCost(3),
-				BREAKDOWNRATECHIP_TIER_3 = new UpgradeChipItem("breakdownratechip_tier_3").setIncreaseBreakdownRate(2.5F).setEnergyCost(8),
-				ARMORCHIP_TIER_1 = new UpgradeChipItem("armorchip_tier_1").setIncreaseArmor(1).setEnergyCost(1),
-				ARMORCHIP_TIER_2 = new UpgradeChipItem("armorchip_tier_2").setIncreaseArmor(2).setEnergyCost(3),
-				ARMORCHIP_TIER_3 = new UpgradeChipItem("armorchip_tier_3").setIncreaseArmor(4).setEnergyCost(7),
-				TOUGHNESSCHIP_TIER_1 = new UpgradeChipItem("toughnesschip_tier_1").setIncreaseToughness(0.5F).setEnergyCost(1),
-				TOUGHNESSCHIP_TIER_2 = new UpgradeChipItem("toughnesschip_tier_2").setIncreaseToughness(1F).setEnergyCost(3),
-				TOUGHNESSCHIP_TIER_3 = new UpgradeChipItem("toughnesschip_tier_3").setIncreaseToughness(2F).setEnergyCost(7),
+    @ObjectHolder("chip_upgradepack_capacity_1") public static TierItem CHIP_UPGRADEPACK_CAPACITY_1;
+    @ObjectHolder("chip_upgradepack_capacity_2") public static TierItem CHIP_UPGRADEPACK_CAPACITY_2;
+    @ObjectHolder("chip_upgradepack_harvestlevel_1") public static TierItem CHIP_UPGRADEPACK_HARVESTLEVEL_1;
+    @ObjectHolder("chip_upgradepack_harvestlevel_2") public static TierItem CHIP_UPGRADEPACK_HARVESTLEVEL_2;
+    @ObjectHolder("chip_upgradepack_reactor_1") public static TierItem CHIP_UPGRADEPACK_REACTOR_1;
+    @ObjectHolder("chip_upgradepack_reactor_2") public static TierItem CHIP_UPGRADEPACK_REACTOR_2;
+    @ObjectHolder("energystorage_tier_1") public static EnergyStorageItem ENERGYSTORAGE_TIER_1;
+    @ObjectHolder("energystorage_tier_2") public static EnergyStorageItem ENERGYSTORAGE_TIER_2;
+    @ObjectHolder("energystorage_tier_3") public static EnergyStorageItem ENERGYSTORAGE_TIER_3;
+    @ObjectHolder("fertilizer_tier_1") public static FertilizerItem FERTILIZER_TIER_1;
+    @ObjectHolder("fertilizer_tier_2") public static FertilizerItem FERTILIZER_TIER_2;
+    @ObjectHolder("fertilizer_tier_3") public static FertilizerItem FERTILIZER_TIER_3;
+    @ObjectHolder("fertilizer_tier_4") public static FertilizerItem FERTILIZER_TIER_4;
+    @ObjectHolder("fertilizer_creative") public static FertilizerItem FERTILIZER_CREATIVE;
+    @ObjectHolder("gear_kanekium") public static Item GEAR_KANEKIUM;
+    @ObjectHolder("gear_dancium") public static Item GEAR_DANCIUM;
+    @ObjectHolder("gear_lenthurium") public static Item GEAR_LENTHURIUM;
+    @ObjectHolder("gear_kinnoium") public static Item GEAR_KINNOIUM;
+    @ObjectHolder("gear_plantium") public static Item GEAR_PLANTIUM;
+    @ObjectHolder("gear_iron") public static Item GEAR_IRON;
+    @ObjectHolder("gear_kanekium_infused") public static Item GEAR_KANEKIUM_INFUSED;
+    @ObjectHolder("gear_dancium_infused") public static Item GEAR_DANCIUM_INFUSED;
+    @ObjectHolder("gear_lenthurium_infused") public static Item GEAR_LENTHURIUM_INFUSED;
+    @ObjectHolder("gear_kinnoium_infused") public static Item GEAR_KINNOIUM_INFUSED;
+    @ObjectHolder("gear_plantium_infused") public static Item GEAR_PLANTIUM_INFUSED;
+    @ObjectHolder("gear_iron_infused") public static Item GEAR_IRON_INFUSED;
+    @ObjectHolder("redstone_infused") public static Item REDSTONE_INFUSED;
+    @ObjectHolder("guide_overview") public static GuideItem GUIDE_OVERVIEW;
+    @ObjectHolder("guide_plants") public static GuideItem GUIDE_PLANTS;
+    @ObjectHolder("guide_genetic_engineering") public static GuideItem GUIDE_GENETIC_ENGINEERING;
+    @ObjectHolder("kanekium_ingot") public static Item KANEKIUM_INGOT;
+    @ObjectHolder("kanekium_nugget") public static Item KANEKIUM_NUGGET;
+    @ObjectHolder("kinnoium_ingot") public static Item KINNOIUM_INGOT;
+    @ObjectHolder("kinnoium_nugget") public static Item KINNOIUM_NUGGET;
+    @ObjectHolder("knowledgechip_0") public static KnowledgeChip KNOWLEDGECHIP_TIER_0;
+    @ObjectHolder("knowledgechip_1") public static KnowledgeChip KNOWLEDGECHIP_TIER_1;
+    @ObjectHolder("knowledgechip_2") public static KnowledgeChip KNOWLEDGECHIP_TIER_2;
+    @ObjectHolder("knowledgechip_3") public static KnowledgeChip KNOWLEDGECHIP_TIER_3;
+    @ObjectHolder("knowledgechip_4") public static KnowledgeChip KNOWLEDGECHIP_TIER_4;
+    @ObjectHolder("knowledgechip_5") public static KnowledgeChip KNOWLEDGECHIP_TIER_5;
+    @ObjectHolder("lenthurium_ingot") public static Item LENTHURIUM_INGOT;
+    @ObjectHolder("lenthurium_nugget") public static Item LENTHURIUM_NUGGET;
+    @ObjectHolder("multitool") public static MultitoolItem MULTITOOL;
+    @ObjectHolder("plantcard") public static CreditCardItem PLANTCARD;
+    @ObjectHolder("plantium_ingot") public static Item PLANTIUM_INGOT;
+    @ObjectHolder("plantium_nugget") public static Item PLANTIUM_NUGGET;
+    @ObjectHolder("plant_obtainer") public static PlantObtainerItem PLANT_OBTAINER;
+    @ObjectHolder("radiation_metre") public static RadiationMetreItem RADIATION_METRE;
+    @ObjectHolder("rangeupgrade_1") public static TierItem RANGEUPGRADE_TIER_1;
+    @ObjectHolder("rangeupgrade_2") public static TierItem RANGEUPGRADE_TIER_2;
+    @ObjectHolder("rangeupgrade_3") public static TierItem RANGEUPGRADE_TIER_3;
+    @ObjectHolder("rangeupgrade_4") public static TierItem RANGEUPGRADE_TIER_4;
+    @ObjectHolder("solarfocus_1") public static TierItem SOLARFOCUS_TIER_1;
+    @ObjectHolder("solarfocus_2") public static TierItem SOLARFOCUS_TIER_2;
+    @ObjectHolder("solarfocus_3") public static TierItem SOLARFOCUS_TIER_3;
+    @ObjectHolder("solarfocus_4") public static TierItem SOLARFOCUS_TIER_4;
+    @ObjectHolder("speedupgrade_1") public static TierItem SPEEDUPGRADE_TIER_1;
+    @ObjectHolder("speedupgrade_2") public static TierItem SPEEDUPGRADE_TIER_2;
+    @ObjectHolder("speedupgrade_3") public static TierItem SPEEDUPGRADE_TIER_3;
+    @ObjectHolder("speedupgrade_4") public static TierItem SPEEDUPGRADE_TIER_4;
+    @ObjectHolder("teleporter") public static TeleporterItem TELEPORTER;
+    @ObjectHolder("thermometer") public static ThermometerItem THERMOMETER;
+    @ObjectHolder("white_crystal") public static Item WHITE_CRYSTAL;
+    @ObjectHolder("wrench") public static WrenchItem WRENCH;
+    @ObjectHolder("testitem") public static TestItem TESTITEM;
 
-            	PROTECTION_CHIP = new UpgradeChipItem("protection_chip").setEnchantment(Enchantments.PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET).addRestriction(UpgradeChipItem.CHEST).addRestriction(UpgradeChipItem.LEGGINGS).addRestriction(UpgradeChipItem.BOOTS),
-            	FIRE_PROTECTION_CHIP = new UpgradeChipItem("fire_protection_chip").setEnchantment(Enchantments.FIRE_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET).addRestriction(UpgradeChipItem.CHEST).addRestriction(UpgradeChipItem.LEGGINGS).addRestriction(UpgradeChipItem.BOOTS),
-            	FEATHER_FALLING_CHIP = new UpgradeChipItem("feather_falling_chip").setEnchantment(Enchantments.FEATHER_FALLING).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS),
-            	BLAST_PROTECTION_CHIP = new UpgradeChipItem("blast_protection_chip").setEnchantment(Enchantments.BLAST_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET).addRestriction(UpgradeChipItem.CHEST).addRestriction(UpgradeChipItem.LEGGINGS).addRestriction(UpgradeChipItem.BOOTS),
-            	PROJECTILE_PROTECTION_CHIP = new UpgradeChipItem("projectile_protection_chip").setEnchantment(Enchantments.PROJECTILE_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET).addRestriction(UpgradeChipItem.CHEST).addRestriction(UpgradeChipItem.LEGGINGS).addRestriction(UpgradeChipItem.BOOTS),
-            	RESPIRATION_CHIP = new UpgradeChipItem("respiration_chip").setEnchantment(Enchantments.RESPIRATION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET),
-            	AQUA_AFFINITY_CHIP = new UpgradeChipItem("aqua_affinity_chip").setEnchantment(Enchantments.AQUA_AFFINITY).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET),
-            	THORNS_CHIP = new UpgradeChipItem("thorns_chip").setEnchantment(Enchantments.THORNS).setEnergyCost(5).addRestriction(UpgradeChipItem.CHEST),
-            	DEPTH_STRIDER_CHIP = new UpgradeChipItem("depth_strider_chip").setEnchantment(Enchantments.DEPTH_STRIDER).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS),
-            	FROST_WALKER_CHIP = new UpgradeChipItem("frost_walker_chip").setEnchantment(Enchantments.FROST_WALKER).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS),
-            	SHARPNESS_CHIP = new UpgradeChipItem("sharpness_chip").setEnchantment(Enchantments.SHARPNESS).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	SMITE_CHIP = new UpgradeChipItem("smite_chip").setEnchantment(Enchantments.SMITE).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	BANE_OF_ARTHROPODS_CHIP = new UpgradeChipItem("bane_of_arthropods_chip").setEnchantment(Enchantments.BANE_OF_ARTHROPODS).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	KNOCKBACK_CHIP = new UpgradeChipItem("knockback_chip").setEnchantment(Enchantments.KNOCKBACK).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	FIRE_ASPECT_CHIP = new UpgradeChipItem("fire_aspect_chip").setEnchantment(Enchantments.FIRE_ASPECT).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	LOOTING_CHIP = new UpgradeChipItem("looting_chip").setEnchantment(Enchantments.LOOTING).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	SWEEPING_CHIP = new UpgradeChipItem("sweeping_chip").setEnchantment(Enchantments.SWEEPING).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON),
-            	EFFICIENCY_CHIP = new UpgradeChipItem("efficiency_chip").setEnchantment(Enchantments.EFFICIENCY).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL),
-            	SILK_TOUCH_CHIP = new UpgradeChipItem("silk_touch_chip").setEnchantment(Enchantments.SILK_TOUCH).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL),
-            	UNBREAKING_CHIP = new UpgradeChipItem("unbreaking_chip").setEnchantment(Enchantments.UNBREAKING).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET).addRestriction(UpgradeChipItem.CHEST).addRestriction(UpgradeChipItem.LEGGINGS).addRestriction(UpgradeChipItem.BOOTS),
-            	FORTUNE_CHIP = new UpgradeChipItem("fortune_chip").setEnchantment(Enchantments.FORTUNE).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL),
-            	POWER_CHIP = new UpgradeChipItem("power_chip").setEnchantment(Enchantments.POWER).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON),
-            	PUNCH_CHIP = new UpgradeChipItem("punch_chip").setEnchantment(Enchantments.PUNCH).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON),
-            	FLAME_CHIP = new UpgradeChipItem("flame_chip").setEnchantment(Enchantments.FLAME).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON),
-            	INFINITY_CHIP = new UpgradeChipItem("infinity_chip").setEnchantment(Enchantments.INFINITY).setEnergyCost(20).addRestriction(UpgradeChipItem.RANGED_WEAPON);
+    @ObjectHolder("capacitychip_tier_1") public static UpgradeChipItem CAPACITYCHIP_TIER_1;
+    @ObjectHolder("capacitychip_tier_2") public static UpgradeChipItem CAPACITYCHIP_TIER_2;
+    @ObjectHolder("capacitychip_tier_3") public static UpgradeChipItem CAPACITYCHIP_TIER_3;
+    @ObjectHolder("reactorchip_tier_1") public static UpgradeChipItem REACTORCHIP_TIER_1;
+    @ObjectHolder("reactorchip_tier_2") public static UpgradeChipItem REACTORCHIP_TIER_2;
+    @ObjectHolder("reactorchip_tier_3") public static UpgradeChipItem REACTORCHIP_TIER_3;
+    @ObjectHolder("unlockchip_shovel") public static UpgradeChipItem UNLOCKCHIP_SHOVEL;
+    @ObjectHolder("unlockchip_axe") public static UpgradeChipItem UNLOCKCHIP_AXE;
+    @ObjectHolder("unlockchip_shears") public static UpgradeChipItem UNLOCKCHIP_SHEARS;
+    @ObjectHolder("unlockchip_hoe") public static UpgradeChipItem UNLOCKCHIP_HOE;
+    @ObjectHolder("harvestlevelchip_tier_1") public static UpgradeChipItem HARVESTLEVELCHIP_TIER_1;
+    @ObjectHolder("harvestlevelchip_tier_2") public static UpgradeChipItem HARVESTLEVELCHIP_TIER_2;
+    @ObjectHolder("harvestlevelchip_tier_3") public static UpgradeChipItem HARVESTLEVELCHIP_TIER_3;
+    @ObjectHolder("attackchip_tier_1") public static UpgradeChipItem ATTACKCHIP_TIER_1;
+    @ObjectHolder("attackchip_tier_2") public static UpgradeChipItem ATTACKCHIP_TIER_2;
+    @ObjectHolder("attackchip_tier_3") public static UpgradeChipItem ATTACKCHIP_TIER_3;
+    @ObjectHolder("attackspeedchip_tier_1") public static UpgradeChipItem ATTACKSPEEDCHIP_TIER_1;
+    @ObjectHolder("attackspeedchip_tier_2") public static UpgradeChipItem ATTACKSPEEDCHIP_TIER_2;
+    @ObjectHolder("attackspeedchip_tier_3") public static UpgradeChipItem ATTACKSPEEDCHIP_TIER_3;
+    @ObjectHolder("breakdownratechip_tier_1") public static UpgradeChipItem BREAKDOWNRATECHIP_TIER_1;
+    @ObjectHolder("breakdownratechip_tier_2") public static UpgradeChipItem BREAKDOWNRATECHIP_TIER_2;
+    @ObjectHolder("breakdownratechip_tier_3") public static UpgradeChipItem BREAKDOWNRATECHIP_TIER_3;
+    @ObjectHolder("armorchip_tier_1") public static UpgradeChipItem ARMORCHIP_TIER_1;
+    @ObjectHolder("armorchip_tier_2") public static UpgradeChipItem ARMORCHIP_TIER_2;
+    @ObjectHolder("armorchip_tier_3") public static UpgradeChipItem ARMORCHIP_TIER_3;
+    @ObjectHolder("toughnesschip_tier_1") public static UpgradeChipItem TOUGHNESSCHIP_TIER_1;
+    @ObjectHolder("toughnesschip_tier_2") public static UpgradeChipItem TOUGHNESSCHIP_TIER_2;
+    @ObjectHolder("toughnesschip_tier_3") public static UpgradeChipItem TOUGHNESSCHIP_TIER_3;
 
+    @ObjectHolder("protection_chip") public static UpgradeChipItem PROTECTION_CHIP;
+    @ObjectHolder("fire_protection_chip") public static UpgradeChipItem FIRE_PROTECTION_CHIP;
+    @ObjectHolder("feather_falling_chip") public static UpgradeChipItem FEATHER_FALLING_CHIP;
+    @ObjectHolder("blast_protection_chip") public static UpgradeChipItem BLAST_PROTECTION_CHIP;
+    @ObjectHolder("projectile_protection_chip") public static UpgradeChipItem PROJECTILE_PROTECTION_CHIP;
+    @ObjectHolder("respiration_chip") public static UpgradeChipItem RESPIRATION_CHIP;
+    @ObjectHolder("aqua_affinity_chip") public static UpgradeChipItem AQUA_AFFINITY_CHIP;
+    @ObjectHolder("thorns_chip") public static UpgradeChipItem THORNS_CHIP;
+    @ObjectHolder("depth_strider_chip") public static UpgradeChipItem DEPTH_STRIDER_CHIP;
+    @ObjectHolder("frost_walker_chip") public static UpgradeChipItem FROST_WALKER_CHIP;
+    @ObjectHolder("sharpness_chip") public static UpgradeChipItem SHARPNESS_CHIP;
+    @ObjectHolder("smite_chip") public static UpgradeChipItem SMITE_CHIP;
+    @ObjectHolder("bane_of_arthropods_chip") public static UpgradeChipItem BANE_OF_ARTHROPODS_CHIP;
+    @ObjectHolder("knockback_chip") public static UpgradeChipItem KNOCKBACK_CHIP;
+    @ObjectHolder("fire_aspect_chip") public static UpgradeChipItem FIRE_ASPECT_CHIP;
+    @ObjectHolder("looting_chip") public static UpgradeChipItem LOOTING_CHIP;
+    @ObjectHolder("sweeping_chip") public static UpgradeChipItem SWEEPING_CHIP;
+    @ObjectHolder("efficiency_chip") public static UpgradeChipItem EFFICIENCY_CHIP;
+    @ObjectHolder("silk_touch_chip") public static UpgradeChipItem SILK_TOUCH_CHIP;
+    @ObjectHolder("unbreaking_chip") public static UpgradeChipItem UNBREAKING_CHIP;
+    @ObjectHolder("fortune_chip") public static UpgradeChipItem FORTUNE_CHIP;
+    @ObjectHolder("power_chip") public static UpgradeChipItem POWER_CHIP;
+    @ObjectHolder("punch_chip") public static UpgradeChipItem PUNCH_CHIP;
+    @ObjectHolder("flame_chip") public static UpgradeChipItem FLAME_CHIP;
+    @ObjectHolder("infinity_chip") public static UpgradeChipItem INFINITY_CHIP;
 
-    public static UpgradeableArmorItem CYBERARMOR_HELMET = new UpgradeableArmorItem("cyberarmor_helmet", "cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET),
-    								   CYBERARMOR_CHEST = new UpgradeableArmorItem("cyberarmor_chest", "cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST),
-    								   CYBERARMOR_LEGGINGS = new UpgradeableArmorItem("cyberarmor_leggings", "cyberarmor", EquipmentSlotType.LEGS, 1000, 10, 2, 0, UpgradeChipItem.LEGGINGS),
-    								   CYBERARMOR_BOOTS = new UpgradeableArmorItem("cyberarmor_boots", "cyberarmor", EquipmentSlotType.FEET, 1000, 10, 1, 0, UpgradeChipItem.BOOTS);
+    @ObjectHolder("cyberarmor_helmet") public static UpgradeableArmorItem CYBERARMOR_HELMET;
+    @ObjectHolder("cyberarmor_chest") public static UpgradeableArmorItem CYBERARMOR_CHEST;
+    @ObjectHolder("cyberarmor_leggings") public static UpgradeableArmorItem CYBERARMOR_LEGGINGS;
+    @ObjectHolder("cyberarmor_boots") public static UpgradeableArmorItem CYBERARMOR_BOOTS;
 
-    public static MachineBulbItem MACHINEBULBREPROCESSOR_BULB = new MachineBulbItem("machinebulbreprocessor_bulb", ModBlocks.MACHINESHELL_IRON, ModBlocks.MACHINEBULBREPROCESSOR_GROWING, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR, 0),
-    							SEEDSQUEEZER_BULB = new MachineBulbItem("seedsqueezer_bulb", ModBlocks.MACHINESHELL_IRON, ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 0),
-    							COMPRESSOR_BULB = new MachineBulbItem("compressor_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.COMPRESSOR_GROWING, PlantTechConstants.MACHINETIER_COMPRESSOR, 100),
-    	                    	IDENTIFIER_BULB = new MachineBulbItem("identifier_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.IDENTIFIER_GROWING, PlantTechConstants.MACHINETIER_IDENTIFIER, 100),
-    	                    	ENERGY_SUPPLIER_BULB = new MachineBulbItem("energy_supplier_bulb", ModBlocks.MACHINESHELL_IRON,  ModBlocks.ENERGY_SUPPLIER_GROWING, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER, 100),
-    	                    	INFUSER_BULB = new MachineBulbItem("infuser_bulb", ModBlocks.MACHINESHELL_IRON ,  ModBlocks.INFUSER_GROWING, PlantTechConstants.MACHINETIER_INFUSER, 1000),
-                        		CHIPALYZER_BULB = new MachineBulbItem("chipalyzer_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.CHIPALYZER_GROWING, PlantTechConstants.MACHINETIER_CHIPALYZER, 1000),
-                            	MEGAFURNACE_BULB = new MachineBulbItem("mega_furnace_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.MEGAFURNACE_GROWING, PlantTechConstants.MACHINETIER_MEGAFURNACE, 1000),
-                    	        DNA_CLEANER_BULB = new MachineBulbItem("dna_cleaner_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_CLEANER_GROWING, PlantTechConstants.MACHINETIER_DNA_CLEANER, 2000),
-                    	        DNA_COMBINER_BULB = new MachineBulbItem("dna_combiner_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_COMBINER_GROWING, PlantTechConstants.MACHINETIER_DNA_COMBINER, 2000),
-                    	        DNA_EXTRACTOR_BULB = new MachineBulbItem("dna_extractor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_EXTRACTOR_GROWING, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR, 2000),
-                    	        DNA_REMOVER_BULB = new MachineBulbItem("dna_remover_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.DNA_REMOVER_GROWING, PlantTechConstants.MACHINETIER_DNA_REMOVER, 2000),
-                    	        SEEDCONSTRUCTOR_BULB = new MachineBulbItem("seedconstructor_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SEEDCONSTRUCTOR_GROWING, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR, 2000),
-                    	        PLANTFARM_BULB = new MachineBulbItem("plantfarm_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.PLANTFARM_GROWING, PlantTechConstants.MACHINETIER_PLANTFARM, 2000),
-                    	        SOLARGENERATOR_BULB = new MachineBulbItem("solargenerator_bulb", ModBlocks.MACHINESHELL_PLANTIUM ,  ModBlocks.SOLARGENERATOR_GROWING, PlantTechConstants.MACHINETIER_SOLARGENERATOR, 2000);
+    @ObjectHolder("machinebulbreprocessor_bulb") public static MachineBulbItem MACHINEBULBREPROCESSOR_BULB;
+    @ObjectHolder("seedsqueezer_bulb") public static MachineBulbItem SEEDSQUEEZER_BULB;
+    @ObjectHolder("compressor_bulb") public static MachineBulbItem COMPRESSOR_BULB;
+    @ObjectHolder("identifier_bulb") public static MachineBulbItem IDENTIFIER_BULB;
+    @ObjectHolder("energy_supplier_bulb") public static MachineBulbItem ENERGY_SUPPLIER_BULB;
+    @ObjectHolder("infuser_bulb") public static MachineBulbItem INFUSER_BULB;
+    @ObjectHolder("chipalyzer_bulb") public static MachineBulbItem CHIPALYZER_BULB;
+    @ObjectHolder("mega_furnace_bulb") public static MachineBulbItem MEGAFURNACE_BULB;
+    @ObjectHolder("dna_cleaner_bulb") public static MachineBulbItem DNA_CLEANER_BULB;
+    @ObjectHolder("dna_combiner_bulb") public static MachineBulbItem DNA_COMBINER_BULB;
+    @ObjectHolder("dna_extractor_bulb") public static MachineBulbItem DNA_EXTRACTOR_BULB;
+    @ObjectHolder("dna_remover_bulb") public static MachineBulbItem DNA_REMOVER_BULB;
+    @ObjectHolder("seedconstructor_bulb") public static MachineBulbItem SEEDCONSTRUCTOR_BULB;
+    @ObjectHolder("plantfarm_bulb") public static MachineBulbItem PLANTFARM_BULB;
+    @ObjectHolder("solargenerator_bulb") public static MachineBulbItem SOLARGENERATOR_BULB;
 
-    public static HashMap<String, BaseItem> SEEDS = new HashMap<String, BaseItem>();
-    public static HashMap<String, BaseItem> PARTICLES = new HashMap<String, BaseItem>();
-
-    public static void register(IForgeRegistry<Item> registry)
+    public static void register(IForgeRegistry<Item> r)
     {
-		for(BaseItem item: ITEMS)
-		{
-			registry.register(item);
-		}
+        r.register(make("biomass_bucket", new BucketItem(() -> ModFluids.BIOMASS, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(TOOLS_AND_ARMOR))));
 
-		registry.register(BIOMASS_BUCKET);
-		for(ArmorBaseItem item: ITEMSARMOR)
-		{
-			registry.register(item);
-		}
+        r.register(make("analyser", new AnalyserItem()));
+        r.register(make("advanced_analyser", new AdvancedAnalyserItem()));
+        r.register(make("biomass", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("biomasscontainer", new BiomassContainerItem()));
+        r.register(make("cropremover", new CropRemover()));
+        r.register(make("cyberbow", new RangedWeaponItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10)));
+        r.register(make("cyberdagger", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 1, -1.4F, UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("cyberkatana", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 8, -3.4F, UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("cyberrapier", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 4, -2.4F, UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("capacityupgrade_1", new TierItem(new Item.Properties().group(CHIPS), 1, UPGRADE_CHIP)));
+        r.register(make("capacityupgrade_2", new TierItem(new Item.Properties().group(CHIPS), 2, UPGRADE_CHIP)));
+        r.register(make("capacityupgrade_3", new TierItem(new Item.Properties().group(CHIPS), 3, UPGRADE_CHIP)));
+        r.register(make("color_particles", new ParticleItem("color")));
+        r.register(make("dark_crystal", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("dna_container_empty", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("dna_container", new DNAContainerItem()));
+        r.register(make("dancium_ingot", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("dancium_nugget", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("empty_upgradechip_1", new TierItem(new Item.Properties().group(MAIN), 1, UPGRADE_CHIP)));
+        r.register(make("empty_upgradechip_2", new TierItem(new Item.Properties().group(MAIN), 2, UPGRADE_CHIP)));
+        r.register(make("empty_upgradechip_3", new TierItem(new Item.Properties().group(MAIN), 3, UPGRADE_CHIP)));
 
-		BaseItem tempseed, tempparticle;
-		String name;
-		for (CropListEntry entry : PlantTechMain.croplist.getAllEntries())
-		{
-			name = entry.getString();
-			tempseed = new CropSeedItem(name);
-			SEEDS.put(name, tempseed);
+        r.register(make("chip_upgradepack_capacity_1", new TierItem(new Item.Properties().group(MAIN), 2, UPGRADE_CHIP)));
+        r.register(make("chip_upgradepack_capacity_2", new TierItem(new Item.Properties().group(MAIN), 3, UPGRADE_CHIP)));
+        r.register(make("chip_upgradepack_harvestlevel_1", new TierItem(new Item.Properties().group(MAIN), 2, UPGRADE_CHIP)));
+        r.register(make("chip_upgradepack_harvestlevel_2", new TierItem(new Item.Properties().group(MAIN), 3, UPGRADE_CHIP)));
+        r.register(make("chip_upgradepack_reactor_1", new TierItem(new Item.Properties().group(MAIN), 2, UPGRADE_CHIP)));
+        r.register(make("chip_upgradepack_reactor_2", new TierItem(new Item.Properties().group(MAIN), 3, UPGRADE_CHIP)));
+        r.register(make("energystorage_tier_1", new EnergyStorageItem(new Item.Properties().group(MAIN), 500)));
+        r.register(make("energystorage_tier_2", new EnergyStorageItem(new Item.Properties().group(MAIN), 5000)));
+        r.register(make("energystorage_tier_3", new EnergyStorageItem(new Item.Properties().group(MAIN), 50000)));
+        r.register(make("fertilizer_tier_1", new FertilizerItem(MAIN)));
+        r.register(make("fertilizer_tier_2", new FertilizerItem(MAIN)));
+        r.register(make("fertilizer_tier_3", new FertilizerItem(MAIN)));
+        r.register(make("fertilizer_tier_4", new FertilizerItem(MAIN)));
+        r.register(make("fertilizer_creative", new FertilizerItem(MAIN)));
+        r.register(make("gear_kanekium", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_dancium", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_lenthurium", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_kinnoium", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_plantium", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_iron", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_kanekium_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_dancium_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_lenthurium_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_kinnoium_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_plantium_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("gear_iron_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("redstone_infused", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("guide_overview", new GuideItem()));
+        r.register(make("guide_plants", new GuideItem()));
+        r.register(make("guide_genetic_engineering", new GuideItem()));
+        r.register(make("kanekium_ingot", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("kanekium_nugget", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("kinnoium_ingot", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("kinnoium_nugget", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("knowledgechip_0", new KnowledgeChip(0, 50)));
+        r.register(make("knowledgechip_1", new KnowledgeChip(1, 250)));
+        r.register(make("knowledgechip_2", new KnowledgeChip(2, 1250)));
+        r.register(make("knowledgechip_3", new KnowledgeChip(3, 6250)));
+        r.register(make("knowledgechip_4", new KnowledgeChip(4, 31250)));
+        r.register(make("knowledgechip_5", new KnowledgeChip(5, 156250)));
+        r.register(make("lenthurium_ingot", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("lenthurium_nugget", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("multitool", new MultitoolItem()));
+        r.register(make("plantcard", new CreditCardItem(new Item.Properties().group(MAIN).maxStackSize(1))));
+        r.register(make("plantium_ingot", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("plantium_nugget", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("plant_obtainer", new PlantObtainerItem(new Item.Properties().group(TOOLS_AND_ARMOR))));
+        r.register(make("radiation_metre", new RadiationMetreItem(new Item.Properties().group(TOOLS_AND_ARMOR))));
+        r.register(make("rangeupgrade_1", new TierItem(new Item.Properties().group(CHIPS), 1, RANGE_UPGRADE)));
+        r.register(make("rangeupgrade_2", new TierItem(new Item.Properties().group(CHIPS), 2, RANGE_UPGRADE)));
+        r.register(make("rangeupgrade_3", new TierItem(new Item.Properties().group(CHIPS), 3, RANGE_UPGRADE)));
+        r.register(make("rangeupgrade_4", new TierItem(new Item.Properties().group(CHIPS), 4, RANGE_UPGRADE)));
+        r.register(make("solarfocus_1", new TierItem(new Item.Properties().group(CHIPS), 1, SOLAR_FOCUS)));
+        r.register(make("solarfocus_2", new TierItem(new Item.Properties().group(CHIPS), 2, SOLAR_FOCUS)));
+        r.register(make("solarfocus_3", new TierItem(new Item.Properties().group(CHIPS), 3, SOLAR_FOCUS)));
+        r.register(make("solarfocus_4", new TierItem(new Item.Properties().group(CHIPS), 4, SOLAR_FOCUS)));
+        r.register(make("speedupgrade_1", new TierItem(new Item.Properties().group(CHIPS), 1, SPEED_UPGRADE)));
+        r.register(make("speedupgrade_2", new TierItem(new Item.Properties().group(CHIPS), 2, SPEED_UPGRADE)));
+        r.register(make("speedupgrade_3", new TierItem(new Item.Properties().group(CHIPS), 3, SPEED_UPGRADE)));
+        r.register(make("speedupgrade_4", new TierItem(new Item.Properties().group(CHIPS), 4, SPEED_UPGRADE)));
+        r.register(make("teleporter", new TeleporterItem(new Item.Properties().group(MAIN), 1000)));
+        r.register(make("thermometer", new ThermometerItem()));
+        r.register(make("white_crystal", new Item(new Item.Properties().group(MAIN))));
+        r.register(make("wrench", new WrenchItem()));
+        r.register(make("testitem", new TestItem()));
 
-			registry.register(tempseed);
-			if (entry.hasParticle())
-			{
-			tempparticle = new ParticleItem(name);
-			PARTICLES.put(name, tempparticle);
-			registry.register(tempparticle);
-			}
-		}
+        r.register(make("capacitychip_tier_1", new UpgradeChipItem("capacitychip_tier_1").setIncreaseCapacity(2000).setEnergyCost(1)));
+        r.register(make("capacitychip_tier_2", new UpgradeChipItem("capacitychip_tier_2").setIncreaseCapacity(5000).setEnergyCost(2)));
+        r.register(make("capacitychip_tier_3", new UpgradeChipItem("capacitychip_tier_3").setIncreaseCapacity(10000).setEnergyCost(5)));
+        r.register(make("reactorchip_tier_1", new UpgradeChipItem("reactorchip_tier_1").setEnergyProduction(1).setEnergyCost(1)));
+        r.register(make("reactorchip_tier_2", new UpgradeChipItem("reactorchip_tier_2").setEnergyProduction(3).setEnergyCost(2)));
+        r.register(make("reactorchip_tier_3", new UpgradeChipItem("reactorchip_tier_3").setEnergyProduction(5).setEnergyCost(5)));
+        r.register(make("unlockchip_shovel", new UpgradeChipItem("unlockchip_shovel").setUnlockShovelFeat().setEnergyCost(2)));
+        r.register(make("unlockchip_axe", new UpgradeChipItem("unlockchip_axe").setUnlockAxeFeat().setEnergyCost(2)));
+        r.register(make("unlockchip_shears", new UpgradeChipItem("unlockchip_shears").setUnlockShearsFeat().setEnergyCost(2)));
+        r.register(make("unlockchip_hoe", new UpgradeChipItem("unlockchip_hoe").setUnlockHoeFeat().setEnergyCost(2)));
+        r.register(make("harvestlevelchip_tier_1", new UpgradeChipItem("harvestlevelchip_tier_1").setIncreaseHarvestlevel(1).setEnergyCost(2)));
+        r.register(make("harvestlevelchip_tier_2", new UpgradeChipItem("harvestlevelchip_tier_2").setIncreaseHarvestlevel(2).setEnergyCost(6)));
+        r.register(make("harvestlevelchip_tier_3", new UpgradeChipItem("harvestlevelchip_tier_3").setIncreaseHarvestlevel(4).setEnergyCost(15)));
+        r.register(make("attackchip_tier_1", new UpgradeChipItem("attackchip_tier_1").setIncreaseAttack(0.5F).setEnergyCost(1)));
+        r.register(make("attackchip_tier_2", new UpgradeChipItem("attackchip_tier_2").setIncreaseAttack(1F).setEnergyCost(2)));
+        r.register(make("attackchip_tier_3", new UpgradeChipItem("attackchip_tier_3").setIncreaseAttack(2F).setEnergyCost(4)));
+        r.register(make("attackspeedchip_tier_1", new UpgradeChipItem("attackspeedchip_tier_1").setIncreaseAttackSpeed(0.1F).setEnergyCost(1)));
+        r.register(make("attackspeedchip_tier_2", new UpgradeChipItem("attackspeedchip_tier_2").setIncreaseAttackSpeed(0.25F).setEnergyCost(2)));
+        r.register(make("attackspeedchip_tier_3", new UpgradeChipItem("attackspeedchip_tier_3").setIncreaseAttackSpeed(0.5F).setEnergyCost(4)));
+        r.register(make("breakdownratechip_tier_1", new UpgradeChipItem("breakdownratechip_tier_1").setIncreaseBreakdownRate(0.5F).setEnergyCost(1)));
+        r.register(make("breakdownratechip_tier_2", new UpgradeChipItem("breakdownratechip_tier_2").setIncreaseBreakdownRate(1F).setEnergyCost(3)));
+        r.register(make("breakdownratechip_tier_3", new UpgradeChipItem("breakdownratechip_tier_3").setIncreaseBreakdownRate(2.5F).setEnergyCost(8)));
+        r.register(make("armorchip_tier_1", new UpgradeChipItem("armorchip_tier_1").setIncreaseArmor(1).setEnergyCost(1)));
+        r.register(make("armorchip_tier_2", new UpgradeChipItem("armorchip_tier_2").setIncreaseArmor(2).setEnergyCost(3)));
+        r.register(make("armorchip_tier_3", new UpgradeChipItem("armorchip_tier_3").setIncreaseArmor(4).setEnergyCost(7)));
+        r.register(make("toughnesschip_tier_1", new UpgradeChipItem("toughnesschip_tier_1").setIncreaseToughness(0.5F).setEnergyCost(1)));
+        r.register(make("toughnesschip_tier_2", new UpgradeChipItem("toughnesschip_tier_2").setIncreaseToughness(1F).setEnergyCost(3)));
+        r.register(make("toughnesschip_tier_3", new UpgradeChipItem("toughnesschip_tier_3").setIncreaseToughness(2F).setEnergyCost(7)));
+
+        r.register(make("protection_chip", new UpgradeChipItem("protection_chip").setEnchantment(Enchantments.PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET, UpgradeChipItem.CHEST, UpgradeChipItem.LEGGINGS, UpgradeChipItem.BOOTS)));
+        r.register(make("fire_protection_chip", new UpgradeChipItem("fire_protection_chip").setEnchantment(Enchantments.FIRE_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET, UpgradeChipItem.CHEST, UpgradeChipItem.LEGGINGS, UpgradeChipItem.BOOTS)));
+        r.register(make("feather_falling_chip", new UpgradeChipItem("feather_falling_chip").setEnchantment(Enchantments.FEATHER_FALLING).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS)));
+        r.register(make("blast_protection_chip", new UpgradeChipItem("blast_protection_chip").setEnchantment(Enchantments.BLAST_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET, UpgradeChipItem.CHEST, UpgradeChipItem.LEGGINGS, UpgradeChipItem.BOOTS)));
+        r.register(make("projectile_protection_chip", new UpgradeChipItem("projectile_protection_chip").setEnchantment(Enchantments.PROJECTILE_PROTECTION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET, UpgradeChipItem.CHEST, UpgradeChipItem.LEGGINGS, UpgradeChipItem.BOOTS)));
+        r.register(make("respiration_chip", new UpgradeChipItem("respiration_chip").setEnchantment(Enchantments.RESPIRATION).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET)));
+        r.register(make("aqua_affinity_chip", new UpgradeChipItem("aqua_affinity_chip").setEnchantment(Enchantments.AQUA_AFFINITY).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET)));
+        r.register(make("thorns_chip", new UpgradeChipItem("thorns_chip").setEnchantment(Enchantments.THORNS).setEnergyCost(5).addRestriction(UpgradeChipItem.CHEST)));
+        r.register(make("depth_strider_chip", new UpgradeChipItem("depth_strider_chip").setEnchantment(Enchantments.DEPTH_STRIDER).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS)));
+        r.register(make("frost_walker_chip", new UpgradeChipItem("frost_walker_chip").setEnchantment(Enchantments.FROST_WALKER).setEnergyCost(5).addRestriction(UpgradeChipItem.BOOTS)));
+        r.register(make("sharpness_chip", new UpgradeChipItem("sharpness_chip").setEnchantment(Enchantments.SHARPNESS).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("smite_chip", new UpgradeChipItem("smite_chip").setEnchantment(Enchantments.SMITE).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("bane_of_arthropods_chip", new UpgradeChipItem("bane_of_arthropods_chip").setEnchantment(Enchantments.BANE_OF_ARTHROPODS).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("knockback_chip", new UpgradeChipItem("knockback_chip").setEnchantment(Enchantments.KNOCKBACK).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("fire_aspect_chip", new UpgradeChipItem("fire_aspect_chip").setEnchantment(Enchantments.FIRE_ASPECT).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("looting_chip", new UpgradeChipItem("looting_chip").setEnchantment(Enchantments.LOOTING).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("sweeping_chip", new UpgradeChipItem("sweeping_chip").setEnchantment(Enchantments.SWEEPING).setEnergyCost(5).addRestriction(UpgradeChipItem.MELEE_WEAPON)));
+        r.register(make("efficiency_chip", new UpgradeChipItem("efficiency_chip").setEnchantment(Enchantments.EFFICIENCY).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL)));
+        r.register(make("silk_touch_chip", new UpgradeChipItem("silk_touch_chip").setEnchantment(Enchantments.SILK_TOUCH).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL)));
+        r.register(make("unbreaking_chip", new UpgradeChipItem("unbreaking_chip").setEnchantment(Enchantments.UNBREAKING).setEnergyCost(5).addRestriction(UpgradeChipItem.HELMET, UpgradeChipItem.CHEST, UpgradeChipItem.LEGGINGS, UpgradeChipItem.BOOTS)));
+        r.register(make("fortune_chip", new UpgradeChipItem("fortune_chip").setEnchantment(Enchantments.FORTUNE).setEnergyCost(5).addRestriction(UpgradeChipItem.TOOL)));
+        r.register(make("power_chip", new UpgradeChipItem("power_chip").setEnchantment(Enchantments.POWER).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
+        r.register(make("punch_chip", new UpgradeChipItem("punch_chip").setEnchantment(Enchantments.PUNCH).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
+        r.register(make("flame_chip", new UpgradeChipItem("flame_chip").setEnchantment(Enchantments.FLAME).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
+        r.register(make("infinity_chip", new UpgradeChipItem("infinity_chip").setEnchantment(Enchantments.INFINITY).setEnergyCost(20).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
+
+        r.register(make("cyberarmor_helmet", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET)));
+        r.register(make("cyberarmor_chest", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST)));
+        r.register(make("cyberarmor_leggings", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.LEGS, 1000, 10, 2, 0, UpgradeChipItem.LEGGINGS)));
+        r.register(make("cyberarmor_boots", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.FEET, 1000, 10, 1, 0, UpgradeChipItem.BOOTS)));
+
+        r.register(makeBulb("machinebulbreprocessor_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.MACHINEBULBREPROCESSOR_GROWING, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR, 0)));
+        r.register(makeBulb("seedsqueezer_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 0)));
+        r.register(makeBulb("compressor_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.COMPRESSOR_GROWING, PlantTechConstants.MACHINETIER_COMPRESSOR, 100)));
+        r.register(makeBulb("identifier_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.IDENTIFIER_GROWING, PlantTechConstants.MACHINETIER_IDENTIFIER, 100)));
+        r.register(makeBulb("energy_supplier_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.ENERGY_SUPPLIER_GROWING, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER, 100)));
+        r.register(makeBulb("infuser_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.INFUSER_GROWING, PlantTechConstants.MACHINETIER_INFUSER, 1000)));
+        r.register(makeBulb("chipalyzer_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.CHIPALYZER_GROWING, PlantTechConstants.MACHINETIER_CHIPALYZER, 1000)));
+        r.register(makeBulb("mega_furnace_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.MEGAFURNACE_GROWING, PlantTechConstants.MACHINETIER_MEGAFURNACE, 1000)));
+        r.register(makeBulb("dna_cleaner_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.DNA_CLEANER_GROWING, PlantTechConstants.MACHINETIER_DNA_CLEANER, 2000)));
+        r.register(makeBulb("dna_combiner_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.DNA_COMBINER_GROWING, PlantTechConstants.MACHINETIER_DNA_COMBINER, 2000)));
+        r.register(makeBulb("dna_extractor_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.DNA_EXTRACTOR_GROWING, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR, 2000)));
+        r.register(makeBulb("dna_remover_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.DNA_REMOVER_GROWING, PlantTechConstants.MACHINETIER_DNA_REMOVER, 2000)));
+        r.register(makeBulb("seedconstructor_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.SEEDCONSTRUCTOR_GROWING, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR, 2000)));
+        r.register(makeBulb("plantfarm_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.PLANTFARM_GROWING, PlantTechConstants.MACHINETIER_PLANTFARM, 2000)));
+        r.register(makeBulb("solargenerator_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_PLANTIUM, () -> ModBlocks.SOLARGENERATOR_GROWING, PlantTechConstants.MACHINETIER_SOLARGENERATOR, 2000)));
+
+        Item tempseed, tempparticle;
+        String name;
+        for (CropEntry entry : PlantTechMain.getCropList().values())
+        {
+            name = entry.getName();
+            tempseed = new CropSeedItem(name);
+            SEEDS.put(name, tempseed);
+            tempseed.setRegistryName(name + "_seeds");
+            r.register(tempseed);
+            if (entry.hasParticle())
+            {
+                tempparticle = new ParticleItem(name);
+                tempparticle.setRegistryName(name + "_particles");
+                PARTICLES.put(name, tempparticle);
+                r.register(tempparticle);
+            }
+        }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void registerItemColorHandler(ColorHandlerEvent.Item event)
+    static <I extends Item> I make(String registryName, I item)
     {
-	for (BaseItem entry : PARTICLES.values())
-	{
-	    event.getItemColors().register(new ParticleItem.ColorHandler(), entry);
-	}
-
-	for (BaseItem entry : SEEDS.values())
-	{
-	    event.getItemColors().register(new CropSeedItem.ColorHandler(), entry);
-	}
+        item.setRegistryName(registryName);
+        return item;
     }
 
+    static <B extends MachineBulbItem> B makeBulb(String registryName, B bulbItem)
+    {
+        make(registryName, bulbItem);
+        MACHINE_BULBS.add(() -> bulbItem);
+        return bulbItem;
+    }
 }

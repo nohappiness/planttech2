@@ -1,0 +1,24 @@
+{
+  "crop": "nether_wart",
+  "enabled": true,
+  "temperature": "extreme_warm",
+  "primary_seed": {
+    "item": "planttech2:nether_wart_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [
+    "minecraft:nether_wart"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:nether_wart",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

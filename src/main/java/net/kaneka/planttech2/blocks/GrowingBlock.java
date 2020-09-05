@@ -1,37 +1,35 @@
 package net.kaneka.planttech2.blocks;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
-
-import net.kaneka.planttech2.blocks.baseclasses.BaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.loot.LootContext.Builder;
 
-public class GrowingBlock extends BaseBlock
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+
+public class GrowingBlock extends Block
 {
 	public static final IntegerProperty GROWINGSTATE = IntegerProperty.create("growingstate", 0, 6);
-	protected final Block block; 
+	protected final Supplier<Block> blockSupplier;
 	protected boolean growAlone; 
 	
-	public GrowingBlock(String name, Block block, boolean growAlone)
+	public GrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
 	{
-		super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F).tickRandomly(), name, ModCreativeTabs.groupmain, false, true);
-		this.block = block; 
+		super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F).tickRandomly());
+		this.blockSupplier = blockSupplier;
 		this.growAlone = growAlone; 
-		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, Integer.valueOf(0)));
+		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, 0));
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -47,7 +45,7 @@ public class GrowingBlock extends BaseBlock
 	
 	public void grow(BlockState state, ServerWorld world, BlockPos pos)
 	{
-		int i = state.get(GROWINGSTATE).intValue();
+		int i = state.get(GROWINGSTATE);
 		if(i < 6)
 		{
 			world.setBlockState(pos, state.with(GROWINGSTATE, i + 1), 2);
@@ -61,7 +59,7 @@ public class GrowingBlock extends BaseBlock
 	
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{
-		world.setBlockState(pos, block.getDefaultState());
+		world.setBlockState(pos, blockSupplier.get().getDefaultState());
 	}
 	
 	@Override
@@ -72,7 +70,7 @@ public class GrowingBlock extends BaseBlock
 	
 	public Block getBlock()
 	{
-		return block; 
+		return blockSupplier.get();
 	}
 	
 	@Override

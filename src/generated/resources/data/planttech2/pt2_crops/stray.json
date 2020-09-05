@@ -1,0 +1,28 @@
+{
+  "crop": "stray",
+  "enabled": true,
+  "temperature": "cold",
+  "primary_seed": {
+    "item": "planttech2:stray_seeds",
+    "min": 0,
+    "max": 4
+  },
+  "seeds": [],
+  "drops": [
+    {
+      "item": "planttech2:stray_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "skeleton",
+      "parent_2": "snow",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

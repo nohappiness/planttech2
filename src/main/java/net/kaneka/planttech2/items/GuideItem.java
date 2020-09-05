@@ -14,29 +14,24 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.DistExecutor;
 
-public class GuideItem extends BaseItem
+public class GuideItem extends Item
 {
 
-    public GuideItem(String name)
+    public GuideItem()
     {
-	super("guide_" + name, new Item.Properties().defaultMaxDamage(1).group(ModCreativeTabs.groupmain));
+	super(new Item.Properties().defaultMaxDamage(1).group(ModCreativeTabs.MAIN));
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
-	if (worldIn.isRemote)
-	{
-	    Screen guiscreen = new GuideScreen(); 
-	    if(this == ModItems.GUIDE_PLANTS)
-	    {
-		guiscreen = new GuidePlantsScreen();
-	    }
-	    Minecraft.getInstance().displayGuiScreen(guiscreen);
-	}
+        if (worldIn.isRemote)
+        {
+            Screen screen = this == ModItems.GUIDE_PLANTS ? new GuidePlantsScreen() : new GuideScreen();
+            DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().displayGuiScreen(screen));
+        }
 	/*
 	if(!worldIn.isRemote)
 	{
@@ -53,9 +48,7 @@ public class GuideItem extends BaseItem
 		//CropListEntryConfiguration test = gson.fromJson(new InputStreamReader(rm.getResource(new ResourceLocation("example", "pt2_crops")).getInputStream()), CropListEntryConfiguration.class);
 		
 		//CropListEntryConfiguration.Serializer.readFromJson(new ResourceLocation("planttech2","example"),  gson.)
-	   
-	
-	return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 
     @Override
@@ -69,5 +62,4 @@ public class GuideItem extends BaseItem
     {
 	return false;
     }
-
 }

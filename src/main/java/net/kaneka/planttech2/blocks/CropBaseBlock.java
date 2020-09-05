@@ -1,11 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
@@ -24,7 +19,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
@@ -42,7 +36,10 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.server.permission.context.BlockPosContext;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CropBaseBlock extends ContainerBlock
 {
@@ -213,27 +210,14 @@ public class CropBaseBlock extends ContainerBlock
 
 	public boolean rightSoil(World world, BlockPos pos, String name)
 	{
-		ItemStack stack = PlantTechMain.croplist.getEntryByName(name).getSoil();
-		if (stack.isEmpty())
-		{
-			return true;
-		} else if (stack.getItem() instanceof BlockItem)
-		{
-			Block block = ((BlockItem) stack.getItem()).getBlock();
-			BlockState state = world.getBlockState(pos.down());
-			if ((state.getBlock() == block) || state.getBlock() == ModBlocks.UNIVERSAL_SOIL_INFUSED)
-			{
-				return true;
-			}
-			return false;
-		}
-		return false;
-
+		Block block = PlantTechMain.getCropList().getByName(name).getConfiguration().getSoil().get();
+		BlockState state = world.getBlockState(pos.down());
+		return state.getBlock() == block || state.getBlock() == ModBlocks.UNIVERSAL_SOIL_INFUSED;
 	}
 
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
 	{
-		EnumTemperature temp = PlantTechMain.croplist.getEntryByName(name).getTemperature();
+		EnumTemperature temp = PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature();
 		return temp.inRange(world.getBiomeManager().getBiome(pos).getTemperature(pos), tolerance);
 	}
 
@@ -337,7 +321,7 @@ public class CropBaseBlock extends ContainerBlock
 		{
 			if (tintindex == 0)
 			{
-				return PlantTechMain.croplist.getEntryByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();
+				return PlantTechMain.getCropList().getByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();
 			}
 			return 0xFFFFFFFF;
 		}

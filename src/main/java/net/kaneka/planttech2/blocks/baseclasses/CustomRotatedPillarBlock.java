@@ -10,13 +10,13 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 
-public class CustomRotatedPillarBlock extends BaseBlock
+public class CustomRotatedPillarBlock extends Block
 {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;
 
-	public CustomRotatedPillarBlock(Properties property, String name, ItemGroup group, boolean hasItem)
+	public CustomRotatedPillarBlock(Properties property)
 	{
-		super(property, name, group, hasItem, true);
+		super(property);
 		this.setDefaultState(this.getDefaultState().with(AXIS, Direction.Axis.Y));
 	}
 

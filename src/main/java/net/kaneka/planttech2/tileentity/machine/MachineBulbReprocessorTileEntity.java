@@ -110,10 +110,10 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	@Override
 	public void doUpdate()
 	{
-		if(selectedId > 0 && selectedId <= ModItems.MACHINEBULBS.size())
+		if(selectedId > 0 && selectedId <= ModItems.MACHINE_BULBS.size())
 		{
 
-			MachineBulbItem bulb = ModItems.MACHINEBULBS.get(selectedId-1);
+			MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId-1).get();
     		if (energystorage.getEnergyStored() >= energyPerItem() && bulb.getTier() <= actualTier && BIOMASS_CAP.getCurrentStorage() >= bulb.getNeededBiomass())
     		{
     			ItemStack input = itemhandler.getStackInSlot(0);

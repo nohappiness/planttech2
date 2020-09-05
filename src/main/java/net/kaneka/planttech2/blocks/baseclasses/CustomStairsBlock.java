@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
 import java.util.Random;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import net.minecraft.block.Block;
@@ -36,15 +37,13 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
+public class CustomStairsBlock extends Block implements IWaterLoggable
 {
-
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 	public static final EnumProperty<Half> HALF = BlockStateProperties.HALF;
 	public static final EnumProperty<StairsShape> SHAPE = BlockStateProperties.STAIRS_SHAPE;
@@ -62,16 +61,11 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	protected static final VoxelShape[] SLAB_TOP_SHAPES = makeShapes(AABB_SLAB_TOP, field_196512_A, field_196516_E, field_196513_B, field_196517_F);
 	protected static final VoxelShape[] SLAB_BOTTOM_SHAPES = makeShapes(AABB_SLAB_BOTTOM, field_196514_C, field_196518_G, field_196515_D, field_196519_H);
 	private static final int[] field_196522_K = new int[] { 12, 5, 3, 10, 14, 13, 7, 11, 13, 7, 11, 14, 8, 4, 1, 2, 4, 1, 2, 8 };
-	private final Block modelBlock;
-	private final BlockState modelState;
+	private final Supplier<BlockState> modelState;
 
 	private static VoxelShape[] makeShapes(VoxelShape p_199779_0_, VoxelShape p_199779_1_, VoxelShape p_199779_2_, VoxelShape p_199779_3_, VoxelShape p_199779_4_)
 	{
-		return IntStream.range(0, 16).mapToObj((p_199780_5_) -> {
-			return combineShapes(p_199780_5_, p_199779_0_, p_199779_1_, p_199779_2_, p_199779_3_, p_199779_4_);
-		}).toArray((p_199778_0_) -> {
-			return new VoxelShape[p_199778_0_];
-		});
+		return IntStream.range(0, 16).mapToObj((p_199780_5_) -> combineShapes(p_199780_5_, p_199779_0_, p_199779_1_, p_199779_2_, p_199779_3_, p_199779_4_)).toArray((p_199778_0_) -> new VoxelShape[p_199778_0_]);
 	}
 
 	private static VoxelShape combineShapes(int p_199781_0_, VoxelShape p_199781_1_, VoxelShape p_199781_2_, VoxelShape p_199781_3_, VoxelShape p_199781_4_, VoxelShape p_199781_5_)
@@ -100,12 +94,11 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 		return voxelshape;
 	}
 
-	public CustomStairsBlock(BlockState state, Properties properties, String name, ItemGroup group, boolean hasItem)
+	public CustomStairsBlock(Supplier<BlockState> state, Properties properties)
 	{
-		super(properties, name, group, hasItem);
+		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(HALF, Half.BOTTOM).with(SHAPE, StairsShape.STRAIGHT).with(WATERLOGGED,
-		        Boolean.valueOf(false)));
-		this.modelBlock = state.getBlock();
+		        false));
 		this.modelState = state;
 	}
 
@@ -127,23 +120,23 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
 	{
-		this.modelBlock.animateTick(stateIn, worldIn, pos, rand);
+		this.modelState.get().getBlock().animateTick(stateIn, worldIn, pos, rand);
 	}
 
 	public void onBlockClicked(BlockState state, World worldIn, BlockPos pos, PlayerEntity player)
 	{
-		this.modelState.onBlockClicked(worldIn, pos, player);
+		this.modelState.get().onBlockClicked(worldIn, pos, player);
 	}
 
 	public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state)
 	{
-		this.modelBlock.onPlayerDestroy(worldIn, pos, state);
+		this.modelState.get().getBlock().onPlayerDestroy(worldIn, pos, state);
 	}
 
 	@SuppressWarnings("deprecation")
 	public float getExplosionResistance()
 	{
-		return this.modelBlock.getExplosionResistance();
+		return this.modelState.get().getBlock().getExplosionResistance();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -151,8 +144,8 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	{
 		if (p_220082_1_.getBlock() != p_220082_1_.getBlock())
 		{
-			this.modelState.neighborChanged(worldIn, pos, Blocks.AIR, pos, false);
-			this.modelBlock.onBlockAdded(this.modelState, worldIn, pos, p_220082_4_, false);
+			this.modelState.get().neighborChanged(worldIn, pos, Blocks.AIR, pos, false);
+			this.modelState.get().getBlock().onBlockAdded(this.modelState.get(), worldIn, pos, p_220082_4_, false);
 		}
 	}
 
@@ -160,28 +153,28 @@ public class CustomStairsBlock extends BaseBlock implements IWaterLoggable
 	{
 		if (state.getBlock() != newState.getBlock())
 		{
-			this.modelState.onReplaced(worldIn, pos, newState, isMoving);
+			this.modelState.get().onReplaced(worldIn, pos, newState, isMoving);
 		}
 	}
 
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn)
 	{
-		this.modelBlock.onEntityWalk(worldIn, pos, entityIn);
+		this.modelState.get().getBlock().onEntityWalk(worldIn, pos, entityIn);
 	}
 
 	@SuppressWarnings("deprecation")
 	public void func_225534_a_(BlockState p_225534_1_, ServerWorld p_225534_2_, BlockPos p_225534_3_, Random p_225534_4_) {
-	      this.modelBlock.tick(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
+	      this.modelState.get().getBlock().tick(p_225534_1_, p_225534_2_, p_225534_3_, p_225534_4_);
 	   }
 
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
 	{
-		return this.modelState.onBlockActivated(worldIn, player, handIn, hit);
+		return this.modelState.get().onBlockActivated(worldIn, player, handIn, hit);
 	}
 
 	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn)
 	{
-		this.modelBlock.onExplosionDestroy(worldIn, pos, explosionIn);
+		this.modelState.get().getBlock().onExplosionDestroy(worldIn, pos, explosionIn);
 	}
 
 	public BlockState getStateForPlacement(BlockItemUseContext context)

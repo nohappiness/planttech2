@@ -1,0 +1,73 @@
+{
+  "_comment": [
+    "This is an example crop configuration file.",
+    ""
+  ],
+  "_crop": "Defines which crop entry this file will configure.",
+  "crop": "potato",
+  "_enabled": "When not enabled, crops will not be shown in the Plant Encyclopedia",
+  "enabled": true,
+  "_conditions": "Conditions for loading this file (see recipe conditions). This can be used to load crop entries only if i.e. a mod is loaded.",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "examplemod",
+      "_comment": "Condition to make sure this file doesn't load during gameplay"
+    }
+  ],
+  "_temperature": "Defines what temperature the crop may grow under. Values are [extreme_cold, cold, normal, warm, extreme_warm].",
+  "temperature": "normal",
+  "_primary_seed": "The primary seed for use in crop bars, along with its drop chances (dependant on fertility trait).",
+  "primary_seed": {
+    "item": "minecraft:carrot",
+    "min": 1,
+    "max": 4
+  },
+  "_seeds": "Additional seed items for use in crop bars. Can be empty.",
+  "seeds": [
+    "minecraft:carrot_seeds",
+    "planttech2:dancium_block"
+  ],
+  "_drops": "Add possible drops and their chances (dependant on productivity trait) to this crop. Can be empty.",
+  "drops": [
+    {
+      "item": "minecraft:diamond",
+      "min": 0,
+      "max": 4
+    },
+    {
+      "item": "minecraft:iron_block",
+      "min": 0,
+      "max": 2
+    },
+    {
+      "item": "planttech2:dancium_block",
+      "min": 1,
+      "max": 5
+    }
+  ],
+  "_parents": "",
+  "parents": [
+    {
+      "_partner": "The order of the parents doesn't matter.",
+      "parent_1": "enderdragon",
+      "parent_2": "enderman",
+      "_chance": "The chance to mutate to this crop in %",
+      "chance": 5
+    },
+    {
+      "partner_1": "dirt",
+      "partner_2": "diamond",
+      "chance": 2.5
+    },
+    {
+      "partner_1": "copper",
+      "partner_2": "tin",
+      "chance": 6
+    }
+  ],
+  "_soil": "The soil block that must be present underneath the crop bars. If not defined, defaults to minecraft:dirt",
+  "soil": {
+    "block": "minecraft:sand"
+  }
+}

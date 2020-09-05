@@ -8,7 +8,7 @@ import java.util.Set;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
-import net.kaneka.planttech2.librarys.CropListEntry;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -163,14 +163,14 @@ public class HashMapCropTraits
 		}
 		if (!this.getType().equals(oldTraits.getType()))
 		{
-			Set<CropListEntry> possibleChilds = PlantTechMain.croplist.getByParents(this.getType(), oldTraits.getType());
+			Set<CropEntry> possibleChilds = PlantTechMain.getCropList().getByParents(this.getType(), oldTraits.getType());
 			if (!possibleChilds.isEmpty())
 			{
 				float sumNewTyp = 0;
 				float sumOldTyp = 0;
-				for (CropListEntry entry : possibleChilds)
+				for (CropEntry entry : possibleChilds)
 				{
-					sumNewTyp += entry.getChance();
+					sumNewTyp += entry.getConfiguration().getMutateChanceForParents(this.getType(), oldTraits.getType());
 				}
 
 				sumOldTyp = sumNewTyp;
@@ -183,12 +183,12 @@ public class HashMapCropTraits
 				if (randomfloat <= sumNewTyp)
 				{
 					float sum2 = 0;
-					for (CropListEntry entry : possibleChilds)
+					for (CropEntry entry : possibleChilds)
 					{
-						sum2 += entry.getChance();
+						sum2 += entry.getConfiguration().getMutateChanceForParents(this.getType(), oldTraits.getType());
 						if (randomfloat <= sum2)
 						{
-							newTraits.setType(entry.getString());
+							newTraits.setType(entry.getName());
 						}
 					}
 				}
