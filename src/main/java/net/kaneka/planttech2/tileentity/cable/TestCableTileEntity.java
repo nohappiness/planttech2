@@ -4,6 +4,8 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.cable.CableInfo.Connection;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -79,6 +81,25 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     {
         super.read(state, nbt);
         this.cableInfo = new CableInfo(nbt.getCompound("cableinfo"));
+    }
+
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket()
+    {
+        return new SUpdateTileEntityPacket(getPos(), 3, getUpdateTag());
+    }
+
+    @Override
+    public CompoundNBT getUpdateTag()
+    {
+        return this.write(new CompoundNBT());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager manager, SUpdateTileEntityPacket packet)
+    {
+        if (world != null)
+            handleUpdateTag(world.getBlockState(packet.getPos()), packet.getNbtCompound());
     }
 
     public void initCable()

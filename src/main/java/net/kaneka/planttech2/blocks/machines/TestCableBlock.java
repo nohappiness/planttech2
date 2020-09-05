@@ -105,7 +105,7 @@ public class TestCableBlock extends BaseBlock
                              }
     }
     
-    private  VoxelShape getCombinedShape(int... states)
+    private VoxelShape getCombinedShape(int... states)
     {
     	VoxelShape shape = POST;
     	if(states.length == 6)
@@ -242,15 +242,12 @@ public class TestCableBlock extends BaseBlock
 
     public BlockState getCurrentState(BlockState state, World world, BlockPos pos)
     {
-        if (!world.isRemote())
+        TestCableTileEntity cable = getTECable(world, pos);
+        if (cable != null)
         {
-            TestCableTileEntity cable = getTECable(world, pos);
-            if (cable != null)
-            {
-                cable.checkConnections();
-                return state.with(UP, cable.getConnection(Direction.UP)).with(DOWN, cable.getConnection(Direction.DOWN)).with(EAST, cable.getConnection(Direction.EAST))
-                        .with(WEST, cable.getConnection(Direction.WEST)).with(NORTH, cable.getConnection(Direction.NORTH)).with(SOUTH, cable.getConnection(Direction.SOUTH));
-            }
+            cable.checkConnections();
+            return state.with(UP, cable.getConnection(Direction.UP)).with(DOWN, cable.getConnection(Direction.DOWN)).with(EAST, cable.getConnection(Direction.EAST))
+                    .with(WEST, cable.getConnection(Direction.WEST)).with(NORTH, cable.getConnection(Direction.NORTH)).with(SOUTH, cable.getConnection(Direction.SOUTH));
         }
         return state;
     }
@@ -271,8 +268,6 @@ public class TestCableBlock extends BaseBlock
 //        }
 //        return shape;
 //    }
-
-    
 
     private TestCableTileEntity getTECable(World world, BlockPos pos)
     {
