@@ -2,6 +2,7 @@ package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FourWayBlock;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
@@ -17,10 +18,10 @@ import net.minecraft.world.World;
 
 public abstract class AbstractCustomFence extends Block
 {
-    public static final BooleanProperty NORTH = BooleanProperty.create("north");
-    public static final BooleanProperty EAST = BooleanProperty.create("east");
-    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty NORTH = FourWayBlock.NORTH;
+    public static final BooleanProperty EAST = FourWayBlock.EAST;
+    public static final BooleanProperty SOUTH = FourWayBlock.SOUTH;
+    public static final BooleanProperty WEST = FourWayBlock.WEST;
 
     public AbstractCustomFence(Properties property)
     {
@@ -71,12 +72,6 @@ public abstract class AbstractCustomFence extends Block
         if (state.get(EAST))
             shape = VoxelShapes.or(shape, getShapeByDirection(Direction.EAST));
         return shape;
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-    {
-        return getShape(state, worldIn, pos, context);
     }
 
     public abstract VoxelShape getShapeByDirection(Direction direction);

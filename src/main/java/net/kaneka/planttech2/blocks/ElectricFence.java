@@ -3,6 +3,8 @@ package net.kaneka.planttech2.blocks;
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FourWayBlock;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -17,10 +19,10 @@ import net.minecraft.world.World;
 
 public class ElectricFence extends BaseElectricFence
 {
-    public static final BooleanProperty NORTH = BooleanProperty.create("north");
-    public static final BooleanProperty EAST = BooleanProperty.create("east");
-    public static final BooleanProperty SOUTH = BooleanProperty.create("south");
-    public static final BooleanProperty WEST = BooleanProperty.create("west");
+    public static final BooleanProperty NORTH = FourWayBlock.NORTH;
+    public static final BooleanProperty EAST = FourWayBlock.EAST;
+    public static final BooleanProperty SOUTH = FourWayBlock.SOUTH;
+    public static final BooleanProperty WEST = FourWayBlock.WEST;
 
     public static final VoxelShape POST = Block.makeCuboidShape(7.5D, 0.10D, 7.5D, 8.5D, 15.90D, 8.5D);
     public static final VoxelShape NEGATIVE_Z = Block.makeCuboidShape(7.0D, 0.10D, 0.10D, 9.0D, 15.90D, 8.5D);
@@ -82,21 +84,13 @@ public class ElectricFence extends BaseElectricFence
     {
         VoxelShape shape = POST;
         if (state.get(NORTH))
-        {
             shape = VoxelShapes.or(shape, POSITIVE_Z);
-        }
         if (state.get(SOUTH))
-        {
             shape = VoxelShapes.or(shape, NEGATIVE_Z);
-        }
         if (state.get(WEST))
-        {
             shape = VoxelShapes.or(shape, POSITIVE_X);
-        }
         if (state.get(EAST))
-        {
             shape = VoxelShapes.or(shape, NEGATIVE_X);
-        }
         return shape;
     }
 }

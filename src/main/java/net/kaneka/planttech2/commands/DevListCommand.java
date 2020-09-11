@@ -29,6 +29,9 @@ public class DevListCommand
             .put("MoonlitLamps", of())
             .put("andrew0030", of("0b37421b-e74e-4852-bf57-23907d295ea1"))
             .build();
+    public static final Map<String, List<String>> SPECIAL_THANKS = new ImmutableMap.Builder<String, List<String>>()
+        .put("Sciwhiz12", of())
+        .build();
 
     public static LiteralArgumentBuilder<CommandSource> register()
     {
@@ -37,15 +40,27 @@ public class DevListCommand
             int online = 0;
             CommandSource src = context.getSource();
             src.sendFeedback(new StringTextComponent("---- Plant Tech 2 Developers ----").mergeStyle(DARK_GREEN, BOLD, UNDERLINE), false);
-            src.sendFeedback(new StringTextComponent("Artists:").mergeStyle(AQUA, BOLD), false);
+            printTitle(src, "Artists:");
             online += printAllFromList(ARTISTS, src);
-            src.sendFeedback(new StringTextComponent("Authors:").mergeStyle(AQUA, BOLD), false);
+            printTitle(src, "Authors:");
             online += printAllFromList(AUTHORS, src);
+            printTitle(src, "Special Thanks:");
+            online += printAllFromList(AUTHORS, src, true);
             return online;
         });
     }
 
+    private static void printTitle(CommandSource source, String message)
+    {
+        source.sendFeedback(new StringTextComponent(message).mergeStyle(AQUA, BOLD), false);
+    }
+
     private static int printAllFromList(Map<String, List<String>> map, CommandSource src)
+    {
+        return printAllFromList(map, src, false);
+    }
+
+    private static int printAllFromList(Map<String, List<String>> map, CommandSource src, boolean contributionDone)
     {
         int online = 0;
         for (Map.Entry<String, List<String>> entry : map.entrySet())
@@ -56,6 +71,8 @@ public class DevListCommand
                 name.append(new StringTextComponent(" (online)").mergeStyle(GREEN));
                 online++;
             }
+            if (contributionDone)
+                name = new StringTextComponent("Thanks " + name + getContribution(entry.getKey()));
             src.sendFeedback(name, false);
         }
         return online;
@@ -65,5 +82,16 @@ public class DevListCommand
     private static boolean isOnline(MinecraftServer server, List<String> uuidList)
     {
         return uuidList.stream().anyMatch(uuid -> server.getPlayerList().getPlayerByUUID(UUID.fromString(uuid)) != null);
+    }
+
+    public static String getContribution(String username)
+    {
+        switch (username)
+        {
+            default:
+                return "";
+            case "Sciwhiz12":
+                return "for greatly improving the code!";
+        }
     }
 }

@@ -49,25 +49,16 @@ public class BaseElectricFence extends Block
             BlockState state = worldIn.getBlockState(pos.offset(direction));
             Block block = state.getBlock();
             if (block instanceof EnergySupplierBlock && state.get(EnergySupplierBlock.SUPPLYING))
-            {
                 return 15;
-            }
             if (block instanceof BaseElectricFence && state.hasProperty(ELECTRIC_POWER))
             {
                 int power = state.get(ELECTRIC_POWER);
                 if (power > fencePower)
-                {
                     fencePower = power - 1;
-                }
             }
         }
         return fencePower;
     }
-//    @Override
-//    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
-//    {
-//        return getShape(state, worldIn, pos, context);
-//    }
 
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
@@ -80,26 +71,20 @@ public class BaseElectricFence extends Block
                 {
                     entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 5.0F);
                     if (worldIn.isRemote)
-                    {
                         doCollideAnimation(pos, worldIn, 1, ParticleTypes.LARGE_SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.75F, 50F);
-                    }
                 }
                 else
                 {
                     entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 2.5F);
                     if (worldIn.isRemote)
-                    {
                         doCollideAnimation(pos, worldIn, 1, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.55F, 20F);
-                    }
                 }
             }
             else
             {
                 entityIn.remove();
                 if (worldIn.isRemote)
-                {
                     doCollideAnimation(pos, worldIn, 7, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.8F, 20F);
-                }
             }
         }
     }
@@ -113,21 +98,15 @@ public class BaseElectricFence extends Block
         // worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
         worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
         for (int i = 0; i < amount; i++)
-        {
             worldIn.addParticle(particle, x + random.nextFloat(), y + random.nextFloat(), z + random.nextFloat(), 0.0D, 0.0D, 0.0D);
-        }
     }
 
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
         if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(300) == 1)
-        {
             if (worldIn.isRemote)
-            {
                 doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
-            }
-        }
     }
 
     @Override
