@@ -1,6 +1,9 @@
 package net.kaneka.planttech2;
 
+import net.kaneka.planttech2.gui.GuidePlantsScreen;
+import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.items.BiomassContainerItem;
+import net.kaneka.planttech2.items.GuideItem;
 import net.kaneka.planttech2.items.PlantObtainerItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
@@ -10,6 +13,8 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModRenderer;
 import net.kaneka.planttech2.registries.ModScreens;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemModelsProperties;
@@ -17,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -63,5 +69,16 @@ public class PlantTechClient
 		ItemModelsProperties.func_239418_a_(
 				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
 				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+	}
+
+	public static void openGuideScreen(GuideItem guide)
+	{
+		Screen screen = guide == ModItems.GUIDE_PLANTS ? new GuidePlantsScreen() : new GuideScreen();
+		openScreen(screen);
+	}
+
+	public static void openScreen(Screen screen)
+	{
+		Minecraft.getInstance().displayGuiScreen(screen);
 	}
 }

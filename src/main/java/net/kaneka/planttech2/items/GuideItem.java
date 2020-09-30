@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.items;
 
+import net.kaneka.planttech2.PlantTechClient;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.registries.ModItems;
@@ -27,11 +28,7 @@ public class GuideItem extends Item
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
-        if (worldIn.isRemote)
-        {
-            Screen screen = this == ModItems.GUIDE_PLANTS ? new GuidePlantsScreen() : new GuideScreen();
-            DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> Minecraft.getInstance().displayGuiScreen(screen));
-        }
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
 	/*
 	if(!worldIn.isRemote)
 	{
