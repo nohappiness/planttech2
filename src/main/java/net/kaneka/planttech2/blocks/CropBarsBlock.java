@@ -25,13 +25,16 @@ public class CropBarsBlock extends Block
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
     {
-    	ItemStack possibleSeedStack = player.inventory.getCurrentItem();
-    	if (CropSeedItem.plant(world, pos, possibleSeedStack))
-    	{
-			if (!world.isRemote && !player.isCreative())
-				possibleSeedStack.shrink(1);
-			return ActionResultType.SUCCESS;
-    	}
+    	ItemStack possibleSeedStack = player.getHeldItemMainhand();
+    	if (!world.isRemote)
+		{
+			if (CropSeedItem.plant(world, pos, possibleSeedStack))
+			{
+				if (!player.abilities.isCreativeMode)
+					possibleSeedStack.shrink(1);
+				return ActionResultType.SUCCESS;
+			}
+		}
     	return ActionResultType.PASS;
     }
 

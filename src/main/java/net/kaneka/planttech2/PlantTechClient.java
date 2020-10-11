@@ -39,7 +39,7 @@ public class PlantTechClient
 			ModRenderer.registerEntityRenderer();
 			ModScreens.registerGUI();
 			for (Supplier<? extends Block> block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-				RenderTypeLookup.setRenderLayer(block.get(), RenderType.getCutoutMipped());
+				RenderTypeLookup.setRenderLayer(block.get(), RenderType.getCutout());
 			RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
 			RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());

@@ -134,8 +134,8 @@ public class CropSeedItem extends Item
 
 	public static String getSoilString(String type)
 	{
-		Block soil = PlantTechMain.getCropList().getByName(type).getConfiguration().getSoil().get();
-		return soil.getTranslatedName().getString();
+		CropEntry soil = PlantTechMain.getCropList().getByName(type);
+		return soil == null ? "" : soil.getConfiguration().getSoil().get().getTranslatedName().getString();
 	}
 
 	public static class ColorHandler implements IItemColor
