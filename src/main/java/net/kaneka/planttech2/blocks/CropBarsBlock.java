@@ -19,7 +19,7 @@ public class CropBarsBlock extends Block
 {
 	public CropBarsBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement());
+		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().notSolid());
 	}
 
 	@Override

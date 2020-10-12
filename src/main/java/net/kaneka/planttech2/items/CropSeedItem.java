@@ -172,6 +172,8 @@ public class CropSeedItem extends Item
 	public static boolean plant(World world, BlockPos pos, ItemStack stack)
 	{
 		CropEntry entry = PlantTechMain.getCropList().getBySeed(stack.getItem());
+//		System.out.println("Seed" + stack.getItem());
+//		System.out.println("Crop list keys" + PlantTechMain.getCropList().keySet());
 		if (entry == null)
 			return false;
 		world.setBlockState(pos, ModBlocks.CROPS.get(entry.getName()).getDefaultState());

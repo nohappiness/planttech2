@@ -284,7 +284,6 @@ public class ModBlocks
 			CROPS.put(name, tempcrop);
 			r.register(tempcrop);
 		}
-		SPECIAL_RENDER_BLOCKS.clear();
 		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values().stream().map(b -> (Supplier<? extends Block>) () -> b).collect(Collectors.toList()));
 	}
 

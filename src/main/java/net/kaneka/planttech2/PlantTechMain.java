@@ -29,7 +29,7 @@ public class PlantTechMain
 
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    private static final CropList croplist = CropList.addDefaultEntries(new CropList());
+    private static CropList CROP_LIST;
     // TODO: find a better place for this
 
     public PlantTechMain()
@@ -45,6 +45,7 @@ public class PlantTechMain
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
         MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
+        CROP_LIST = CropList.addDefaultEntries(new CropList());
     }
 
     private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
@@ -57,14 +58,12 @@ public class PlantTechMain
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        DeferredWorkQueue.runLater(() -> {
-            new ModRecipeTypes();
-            //new ModStructurePieceTypes();
-            CapabilityHandler.registerAll();
-            PlantTech2PacketHandler.register();
-            LootTableHandler.register();
-            registerAllEntityAttributes();
-        });
+        new ModRecipeTypes();
+        //new ModStructurePieceTypes();
+        CapabilityHandler.registerAll();
+        PlantTech2PacketHandler.register();
+        LootTableHandler.register();
+        registerAllEntityAttributes();
     }
 
     private static void registerAllEntityAttributes()
@@ -73,6 +72,6 @@ public class PlantTechMain
     }
 
     public static CropList getCropList() {
-        return croplist;
+        return CROP_LIST;
     }
 }
