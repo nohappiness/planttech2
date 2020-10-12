@@ -125,8 +125,8 @@ public class PlantObtainerItem extends Item
         tooltip.add(new StringTextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-            tooltip.add(new StringTextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getTranslatedName().setStyle(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true))));
+            tooltip.add(new StringTextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getTranslatedName().setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true))));
         else
-            tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.setColor(Color.func_240744_a_(TextFormatting.GREEN)).setBold(true)));
+            tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true)));
     }
 }

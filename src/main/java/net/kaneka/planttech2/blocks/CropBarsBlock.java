@@ -37,12 +37,6 @@ public class CropBarsBlock extends Block
 		}
     	return ActionResultType.PASS;
     }
-
-	@Override
-	public BlockRenderType getRenderType(BlockState iBlockState)
-	{
-		return BlockRenderType.MODEL;
-	}
 	
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)

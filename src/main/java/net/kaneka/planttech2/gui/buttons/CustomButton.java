@@ -31,7 +31,7 @@ public class CustomButton extends Button
 			this.renderBg(mStack, mc, mouseX, mouseY);
 
 			ITextComponent buttonText = this.getNarrationMessage();
-			int strWidth = mc.fontRenderer.func_238414_a_(buttonText);
+			int strWidth = mc.fontRenderer.getStringPropertyWidth(buttonText);
 			int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
 
 			if (strWidth > width - 6 && strWidth > ellipsisWidth)

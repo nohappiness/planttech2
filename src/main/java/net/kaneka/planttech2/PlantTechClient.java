@@ -49,24 +49,24 @@ public class PlantTechClient
 
 	private static void addAllItemModelsOverrides()
 	{
-		ItemModelsProperties.func_239418_a_(
+		ItemModelsProperties.registerProperty(
 				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),
 				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1
 		);
-		ItemModelsProperties.func_239418_a_(
+		ItemModelsProperties.registerProperty(
 				ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
 				(stack, world, entity) -> {
 					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
 					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F;
 				}
 		);
-		ItemModelsProperties.func_239418_a_(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+		ItemModelsProperties.registerProperty(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
 				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
-		ItemModelsProperties.func_239418_a_(
+		ItemModelsProperties.registerProperty(
 				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),
 				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
 		);
-		ItemModelsProperties.func_239418_a_(
+		ItemModelsProperties.registerProperty(
 				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
 				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 	}
