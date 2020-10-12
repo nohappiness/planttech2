@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.RegistryObject;
 
 public class CropEntry implements Comparable<CropEntry>
 {
@@ -66,7 +67,7 @@ public class CropEntry implements Comparable<CropEntry>
 	public boolean isSeed(final Item item)
 	{
 //		getConfiguration().getSeeds().forEach((seed) -> System.out.println(seed.get()));
-		return getConfiguration().getSeeds().stream().anyMatch(sup -> sup.get() == item);
+		return getConfiguration().getSeeds().stream().anyMatch(sup -> sup instanceof RegistryObject && ((RegistryObject<Item>) sup).isPresent() || sup.get() == item);
 	}
 
 	public List<ItemStack> calculateDrops(List<ItemStack> drops, HashMapCropTraits traits, int growstate, Random rand)
