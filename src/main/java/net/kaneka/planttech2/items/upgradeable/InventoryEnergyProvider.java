@@ -17,7 +17,7 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<Compound
 	
 	protected BioEnergyStorage energystorage;
 	private LazyOptional<IEnergyStorage> energyCap;
-	protected ItemStackHandler itemhandler;
+	protected 	ItemStackHandler itemhandler;
     private LazyOptional<IItemHandler> inventoryCap;
 	
 	public InventoryEnergyProvider(int storage, int invSize)

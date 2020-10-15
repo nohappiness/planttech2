@@ -62,21 +62,7 @@ public class ItemUpgradeableContainer extends Container {
 		}
 		this.slot = slot;
 		for (int x = 0; x < 9; x++) {
-			if (x == this.slot) {
-				addSlot(new Slot(playerInv, x, 24 + x * 18, 165) {
-					@Override
-					public boolean canTakeStack(PlayerEntity playerIn) {
-						return false;
-					}
-
-					@Override
-					public boolean isItemValid(ItemStack stack) {
-						return false;
-					}
-				});
-			} else {
-				addSlot(new Slot(playerInv, x, 24 + x * 18, 165));
-			}
+			addSlot(new Slot(playerInv, x, 24 + x * 18, 165));
 		}
 		this.slot = this.inventorySlots.size() - 9 + slot;
 	}
