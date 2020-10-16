@@ -61,17 +61,11 @@ public class CarverBlock extends Block
 			if(checkForGrowable(block))
 			{
 				if(block == Blocks.IRON_BLOCK)
-				{
 					world.setBlockState(pos.offset(direction), ModBlocks.MACHINESHELL_IRON_GROWING.getDefaultState());
-				}
 				else if(block == ModBlocks.PLANTIUM_BLOCK)
-				{
 					world.setBlockState(pos.offset(direction), ModBlocks.MACHINESHELL_PLANTIUM_GROWING.getDefaultState());
-				}
 				else if(block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
-				{
 					((GrowingBlock)block).grow(state2, world, pos.offset(direction));
-				}
 				break;
 			}
 		}
@@ -112,12 +106,12 @@ public class CarverBlock extends Block
 	{
 		switch (mirrorIn)
 		{
-		case LEFT_RIGHT:
-			return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
-		case FRONT_BACK:
-			return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
-		default:
-			return super.mirror(state, mirrorIn);
+			case LEFT_RIGHT:
+				return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
+			case FRONT_BACK:
+				return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
+			default:
+				return super.mirror(state, mirrorIn);
 		}
 	}
 
@@ -129,7 +123,7 @@ public class CarverBlock extends Block
 
 	private boolean checkForGrowable(Block block)
 	{
-		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block  == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ;
+		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ;
 	}
 
 	@SuppressWarnings("deprecation")

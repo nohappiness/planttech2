@@ -36,30 +36,22 @@ public class GrowingBlock extends Block
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
 	{
-		super.tick(state, world, pos, rand);
-		if(growAlone) 
-		{
+		if(growAlone)
     		grow(state, world, pos);
-		}
 	}
 	
 	public void grow(BlockState state, ServerWorld world, BlockPos pos)
 	{
 		int i = state.get(GROWINGSTATE);
-		if(i < 6)
-		{
-			world.setBlockState(pos, state.with(GROWINGSTATE, i + 1), 2);
-		}
-		
-		if(i >= 6)
-		{
+		if (i < 6)
+			world.setBlockState(pos, state.with(GROWINGSTATE, i + 1));
+		else
 			placeBlock(world, pos, state);
-		}
 	}
 	
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{
-		world.setBlockState(pos, blockSupplier.get().getDefaultState());
+		world.setBlockState(pos, getBlock().getDefaultState());
 	}
 	
 	@Override
@@ -78,22 +70,14 @@ public class GrowingBlock extends Block
 	{
 		List<ItemStack> drops = Lists.newArrayList();
 		Block block = state.getBlock();
-		if(block == ModBlocks.COMPRESSOR_GROWING || block == ModBlocks.MACHINEBULBREPROCESSOR_GROWING || block == ModBlocks.SEEDSQUEEZER_GROWING || block == ModBlocks.INFUSER_GROWING || block == ModBlocks.IDENTIFIER_GROWING)
-		{
+		if (block == ModBlocks.COMPRESSOR_GROWING || block == ModBlocks.MACHINEBULBREPROCESSOR_GROWING || block == ModBlocks.SEEDSQUEEZER_GROWING || block == ModBlocks.INFUSER_GROWING || block == ModBlocks.IDENTIFIER_GROWING)
 			drops.add(new ItemStack(ModBlocks.MACHINESHELL_IRON));
-		}
-		else if(block == ModBlocks.MACHINESHELL_IRON_GROWING)
-		{
+		else if (block == ModBlocks.MACHINESHELL_IRON_GROWING)
 			drops.add(new ItemStack(Blocks.IRON_BLOCK));
-		}
-		else if(block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
-		{
+		else if (block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
 			drops.add(new ItemStack(ModBlocks.PLANTIUM_BLOCK));
-		}
 		else
-		{
-			drops.add(new ItemStack(ModBlocks.MACHINESHELL_PLANTIUM)); 
-		}
+			drops.add(new ItemStack(ModBlocks.MACHINESHELL_PLANTIUM));
 		return drops;
 	}
 

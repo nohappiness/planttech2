@@ -36,25 +36,25 @@ public class MachineBulbItem extends Item
 		BlockPos pos = ctx.getPos();
 		Block target = world.getBlockState(pos).getBlock();
 		ItemStack stack = ctx.getItem();
-		if (target.equals(hull))
+		if (target == getHull())
 		{
-			if (crop instanceof FacingGrowingBlock)
+			if (getCrop() instanceof FacingGrowingBlock)
 			{
 				Direction direction = ctx.getFace();
 				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					world.setBlockState(pos, crop.get().getDefaultState().with(FacingGrowingBlock.FACING, direction));
+					world.setBlockState(pos, getCrop().getDefaultState().with(FacingGrowingBlock.FACING, direction));
 					stack.shrink(1);
-					return ActionResultType.CONSUME;
 				}
-			} else
-			{
-				world.setBlockState(pos, crop.get().getDefaultState());
-				stack.shrink(1);
-				return ActionResultType.CONSUME;
 			}
+			else
+			{
+				world.setBlockState(pos, getCrop().getDefaultState());
+				stack.shrink(1);
+			}
+			return ActionResultType.CONSUME;
 		}
-		return ActionResultType.FAIL;
+		return ActionResultType.PASS;
 	}
 
 	public int getTier()
@@ -74,10 +74,6 @@ public class MachineBulbItem extends Item
 
 	public Block getMachine()
 	{
-		if (crop.get() instanceof GrowingBlock)
-		{
-			return crop.get().getBlock();
-		}
 		return crop.get();
 	}
 
