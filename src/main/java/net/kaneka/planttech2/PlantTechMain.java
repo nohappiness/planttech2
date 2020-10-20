@@ -29,7 +29,7 @@ public class PlantTechMain
 
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
-    private static CropList CROP_LIST;
+    private static final CropList CROP_LIST = CropList.addDefaultEntries(new CropList());
     // TODO: find a better place for this
 
     public PlantTechMain()
@@ -45,7 +45,6 @@ public class PlantTechMain
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
         MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
-        CROP_LIST = CropList.addDefaultEntries(new CropList());
     }
 
     private void onServerAboutToStarting(FMLServerAboutToStartEvent event)

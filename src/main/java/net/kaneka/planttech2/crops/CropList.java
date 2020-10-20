@@ -68,6 +68,8 @@ public class CropList
 	@Nullable
 	public CropEntry getBySeed(Item item)
 	{
+//		System.out.println("internal map values: ");
+//		this.internalMap.values().forEach((entry) -> System.out.print(entry.getName()));
 		return this.internalMap.values().stream().filter(entry -> entry.isSeed(item)).findFirst().orElse(null);
 	}
 

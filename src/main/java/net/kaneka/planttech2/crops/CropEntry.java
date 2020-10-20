@@ -66,7 +66,8 @@ public class CropEntry implements Comparable<CropEntry>
 
 	public boolean isSeed(final Item item)
 	{
-//		getConfiguration().getSeeds().forEach((seed) -> System.out.println(seed.get()));
+//		System.out.println(getName() + " seeds :");
+//		getConfiguration().getSeeds().forEach((seed) -> System.out.println("seed: " + seed.get()));
 		return getConfiguration().getSeeds().stream().anyMatch(sup -> sup instanceof RegistryObject && ((RegistryObject<Item>) sup).isPresent() || sup.get() == item);
 	}
 
