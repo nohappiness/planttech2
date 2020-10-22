@@ -1,9 +1,5 @@
 package net.kaneka.planttech2.datagen;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropConfigProvider;
 import net.kaneka.planttech2.crops.CropConfiguration;
@@ -14,6 +10,10 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import static net.minecraft.item.Items.*;
 
@@ -419,11 +419,9 @@ public class DefaultCropConfigProvider extends CropConfigProvider
 	private void addEntryWithSeeds(String crop, final boolean hasParticle, Consumer<CropConfiguration.Builder> config)
 	{
 		addEntry(crop, builder -> {
-			builder.primarySeed(() -> ModItems.SEEDS.get(crop), 0, 4);
+			builder.primarySeed(() -> ModItems.SEEDS.get(crop), 1, 4);
 			if (hasParticle)
-			{
 				builder.drop(() -> ModItems.PARTICLES.get(crop), 0, 8);
-			}
 			config.accept(builder);
 		});
 	}

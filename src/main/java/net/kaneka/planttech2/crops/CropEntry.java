@@ -66,9 +66,7 @@ public class CropEntry implements Comparable<CropEntry>
 
 	public boolean isSeed(final Item item)
 	{
-//		System.out.println(getName() + " seeds :");
-//		getConfiguration().getSeeds().forEach((seed) -> System.out.println("seed: " + seed.get()));
-		return getConfiguration().getSeeds().stream().anyMatch(sup -> sup instanceof RegistryObject && ((RegistryObject<Item>) sup).isPresent() || sup.get() == item);
+		return getConfiguration().getSeeds().stream().anyMatch((sup) -> sup.get() == item) || getPrimarySeed().getItem().get() == item;
 	}
 
 	public List<ItemStack> calculateDrops(List<ItemStack> drops, HashMapCropTraits traits, int growstate, Random rand)

@@ -68,8 +68,6 @@ public class CropList
 	@Nullable
 	public CropEntry getBySeed(Item item)
 	{
-//		System.out.println("internal map values: ");
-//		this.internalMap.values().forEach((entry) -> System.out.print(entry.getName()));
 		return this.internalMap.values().stream().filter(entry -> entry.isSeed(item)).findFirst().orElse(null);
 	}
 
@@ -313,11 +311,9 @@ public class CropList
 	                     final Consumer<CropConfiguration.Builder> config)
 	{
 		CropConfiguration.Builder builder = CropConfiguration.builder();
-		builder.primarySeed(() -> ModItems.SEEDS.get(name), 0, 4);
+		builder.primarySeed(() -> ModItems.SEEDS.get(name), 1, 4);
 		if (hasParticle)
-		{
 			builder.drop(() -> ModItems.PARTICLES.get(name), 0, 8);
-		}
 		config.accept(builder);
 		list.addEntry(name, seedColor, hasParticle, builder.build());
 	}

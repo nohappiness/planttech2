@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.events;
 
+import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.datagen.DefaultCropConfigProvider;
 import net.kaneka.planttech2.datagen.Languages;
 import net.kaneka.planttech2.datagen.LootTables;
