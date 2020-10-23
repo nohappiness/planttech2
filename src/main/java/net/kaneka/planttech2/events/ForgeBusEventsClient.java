@@ -87,18 +87,15 @@ public class ForgeBusEventsClient
         VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
         if (evt.getEntity() instanceof ClientPlayerEntity && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
         {
-            hasSendUpdateAvailable = true;
-
             TextComponent info = new TranslationTextComponent("planttech2.update.available");
             TextComponent link = new TranslationTextComponent("planttech2.update.click");
-            link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+            link.setStyle(link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
                     .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
                     .setFormatting(TextFormatting.BLUE)
-                    .setUnderlined(true);
+                    .setUnderlined(true));
             evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUniqueID());
-            evt.getEntity().sendMessage(info, evt.getEntity().getUniqueID());
-//            TODO
         }
+        hasSendUpdateAvailable = true;
     }
 
 //    @SubscribeEvent
