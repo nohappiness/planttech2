@@ -4,10 +4,11 @@
   "temperature": "warm",
   "primary_seed": {
     "item": "planttech2:cocoa_bean_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
   "seeds": [
+    "planttech2:cocoa_bean_seeds",
     "minecraft:cocoa_beans"
   ],
   "drops": [

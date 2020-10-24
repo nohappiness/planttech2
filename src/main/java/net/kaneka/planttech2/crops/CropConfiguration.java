@@ -137,7 +137,7 @@ public class CropConfiguration
 		public Builder primarySeed(DropEntry primarySeed)
 		{
 			this.primarySeed = primarySeed;
-			return this;
+			return seed(primarySeed.getItem());
 		}
 
 		public Builder primarySeed(Supplier<Item> item, int min, int max)
@@ -220,15 +220,15 @@ public class CropConfiguration
 			this.soil = newSoil;
 			return this;
 		}
-
-		public Builder soil(ResourceLocation newSoil)
-		{
-			return this.soil(of(newSoil, BLOCKS));
-		}
-
-		public Builder soil(String newSoil)
-		{
-			return this.soil(new ResourceLocation(newSoil));
-		}
+//
+//		public Builder soil(ResourceLocation newSoil)
+//		{
+//			return this.soil(of(newSoil, BLOCKS));
+//		}
+//
+//		public Builder soil(String newSoil)
+//		{
+//			return this.soil(new ResourceLocation(newSoil));
+//		}
 	}
 }

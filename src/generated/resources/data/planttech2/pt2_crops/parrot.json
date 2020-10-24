@@ -4,10 +4,12 @@
   "temperature": "warm",
   "primary_seed": {
     "item": "planttech2:parrot_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
-  "seeds": [],
+  "seeds": [
+    "planttech2:parrot_seeds"
+  ],
   "drops": [
     {
       "item": "planttech2:parrot_particles",

@@ -4,10 +4,11 @@
   "temperature": "normal",
   "primary_seed": {
     "item": "planttech2:oxeye_daisy_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
   "seeds": [
+    "planttech2:oxeye_daisy_seeds",
     "minecraft:oxeye_daisy"
   ],
   "drops": [

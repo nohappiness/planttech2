@@ -4,10 +4,12 @@
   "temperature": "extreme_warm",
   "primary_seed": {
     "item": "planttech2:soulsand_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
-  "seeds": [],
+  "seeds": [
+    "planttech2:soulsand_seeds"
+  ],
   "drops": [
     {
       "item": "planttech2:soulsand_particles",

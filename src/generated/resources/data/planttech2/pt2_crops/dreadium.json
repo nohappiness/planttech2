@@ -4,10 +4,12 @@
   "temperature": "normal",
   "primary_seed": {
     "item": "planttech2:dreadium_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
-  "seeds": [],
+  "seeds": [
+    "planttech2:dreadium_seeds"
+  ],
   "drops": [
     {
       "item": "planttech2:dreadium_particles",

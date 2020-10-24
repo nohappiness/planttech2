@@ -47,7 +47,7 @@ public class ModTileEntities
 		registry.register(make("tileentityseedsqueezer", SeedSqueezerTileEntity::new, ModBlocks.SEEDSQUEEZER));
 		registry.register(make("tileentitysolargenerator", SolarGeneratorTileEntity::new, ModBlocks.SOLARGENERATOR));
 		registry.register(make("tileentityplantfarm", PlantFarmTileEntity::new, ModBlocks.PLANTFARM));
-		registry.register(make("tileentitycable", CableTileEntity::new, ModBlocks.CABLE));
+		registry.register(make("tileentitycable", TestCableTileEntity::new, ModBlocks.CABLE));
 		registry.register(make("tileentitydnaextractor", DNAExtractorTileEntity::new, ModBlocks.DNA_EXTRACTOR));
 		registry.register(make("tileentitydnaremover", DNARemoverTileEntity::new, ModBlocks.DNA_REMOVER));
 		registry.register(make("tileentitydnacleaner", DNACleanerTileEntity::new, ModBlocks.DNA_CLEANER));

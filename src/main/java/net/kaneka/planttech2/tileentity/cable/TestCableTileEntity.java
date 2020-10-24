@@ -34,6 +34,10 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     {
         if (world != null && !world.isRemote() && isMaster())
             transferEnergy();
+//        if (world != null && !world.isRemote() && !isMaster())
+//        {
+//            System.out.println(getMasterPos());
+//        }
     }
 
     private void transferEnergy()
@@ -134,6 +138,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         }
         //if there are no neighbor networks, create one instead
         createNetwork();
+        markDirty();
     }
 
     /**
@@ -147,6 +152,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         info().slaves.add(cable.getPos());
         cable.updateMaster(this);
         addMachinesFrom(cable);
+        markDirty();
     }
 
     public List<BlockPos> getAllConnections(BlockPos master)
@@ -205,6 +211,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             }
         });
         addMachinesFrom(this);
+        markDirty();
     }
 
     /**
@@ -293,6 +300,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             else if (getConnection(direction) != 0)
                 setConnection(direction, 0);
         }
+        markDirty();
     }
 
     /**
@@ -320,6 +328,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             if (cable.getMasterPos().equals(BlockPos.ZERO))
                 cable.createNetwork();
         });
+        markDirty();
     }
 
     /**
@@ -400,6 +409,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             if (cable != null)
                 cable.updateMaster(this);
         });
+        markDirty();
     }
 
     /**

@@ -36,8 +36,7 @@ public class CableInfo
 
     public CompoundNBT write()
     {
-        CompoundNBT compound = new CompoundNBT();
-        compound.merge(NBTUtil.writeBlockPos(masterPos));
+        CompoundNBT compound = NBTUtil.writeBlockPos(masterPos);
         compound.putBoolean("ismaster", isMaster);
         compound.putIntArray("connections", connections);
         if (isMaster)

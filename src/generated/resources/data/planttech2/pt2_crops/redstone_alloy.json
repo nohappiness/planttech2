@@ -4,10 +4,12 @@
   "temperature": "normal",
   "primary_seed": {
     "item": "planttech2:redstone_alloy_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
-  "seeds": [],
+  "seeds": [
+    "planttech2:redstone_alloy_seeds"
+  ],
   "drops": [
     {
       "item": "planttech2:redstone_alloy_particles",

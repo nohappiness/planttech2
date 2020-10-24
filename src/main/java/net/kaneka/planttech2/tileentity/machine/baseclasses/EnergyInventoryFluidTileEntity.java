@@ -22,6 +22,7 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 
     public void doFluidLoop()
     {
+    	boolean changesMade = false;
 		ItemStack stack = itemhandler.getStackInSlot(getFluidInSlot());
 		ItemStack stack2 = itemhandler.getStackInSlot(getFluidOutSlot());
 		if (BIOMASS_CAP.getCurrentStorage() < BIOMASS_CAP.getMaxStorage())
@@ -30,12 +31,14 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 			{
 //				BIOMASS_CAP.changeCurrentStorage(BiomassFluidEnergy.getItemStackCap(stack).extractBiomass(1));
 				BIOMASS_CAP.changeCurrentStorage(BiomassContainerItem.extractBiomass(stack, 1));
+				changesMade = true;
 			}
 			else if (stack.getItem() == ModItems.BIOMASS_BUCKET)
 			{
 				stack.shrink(1);
 				itemhandler.setStackInSlot(getFluidInSlot(), new ItemStack(Items.BUCKET));
 				BIOMASS_CAP.recieveBiomass(3000);
+				changesMade = true;
 			}
 		}
 		if(stack2.getItem() instanceof BiomassContainerItem)
@@ -51,6 +54,7 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 					break;
 				}
 			}
+			changesMade = true;
 		}
 		else if (stack2.getItem() == Items.BUCKET)
 		{
@@ -59,8 +63,11 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 				stack2.shrink(1);
 				itemhandler.setStackInSlot(getFluidOutSlot(), new ItemStack(ModItems.BIOMASS_BUCKET));
 				BIOMASS_CAP.extractBiomass(3000);
+				changesMade = true;
 			}
 		}
+		if (changesMade)
+			markDirty();
     }
     
     protected abstract int getFluidInSlot();

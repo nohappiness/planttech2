@@ -4,10 +4,11 @@
   "temperature": "normal",
   "primary_seed": {
     "item": "planttech2:blue_orchid_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
   "seeds": [
+    "planttech2:blue_orchid_seeds",
     "minecraft:blue_orchid"
   ],
   "drops": [

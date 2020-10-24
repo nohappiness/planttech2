@@ -4,10 +4,11 @@
   "temperature": "normal",
   "primary_seed": {
     "item": "planttech2:mushroom_seeds",
-    "min": 0,
+    "min": 1,
     "max": 4
   },
   "seeds": [
+    "planttech2:mushroom_seeds",
     "minecraft:brown_mushroom",
     "minecraft:red_mushroom"
   ],
