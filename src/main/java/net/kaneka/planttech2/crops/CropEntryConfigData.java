@@ -15,6 +15,7 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import static net.minecraftforge.registries.ForgeRegistries.BLOCKS;
@@ -269,11 +270,13 @@ public class CropEntryConfigData
 		{
 			if (element.isJsonPrimitive())
 			{
-				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(element, "soil")), BLOCKS);
+//				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(element, "soil")), BLOCKS);
+				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(element, "soil")));
 			} else if (element.isJsonObject())
 			{
 				JsonObject obj = element.getAsJsonObject();
-				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(obj, "block")), BLOCKS);
+//				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(obj, "block")), BLOCKS);
+				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(obj, "block")));
 			} else
 			{
 				throw new JsonSyntaxException("Expected soil to be a string or JsonObject, was " + JSONUtils.toString(element));
