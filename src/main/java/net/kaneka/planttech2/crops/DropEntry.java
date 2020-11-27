@@ -14,8 +14,6 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -142,7 +140,7 @@ public class DropEntry
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }
             if (min > max) { throw new JsonSyntaxException("min is bigger than max"); }
 
-            return DropEntry.of(RegistryObject.of(itemLocation, ITEMS), min, max);
+            return DropEntry.of(new SeedObjectSupplier<>(itemLocation, ITEMS), min, max);
         }
 
         public void write(DropEntry entry, PacketBuffer buffer)
@@ -157,7 +155,7 @@ public class DropEntry
             final ResourceLocation itemLoc = buffer.readResourceLocation();
             final int min = buffer.readInt();
             final int max = buffer.readInt();
-            return DropEntry.of(RegistryObject.of(itemLoc, ITEMS), min, max);
+            return DropEntry.of(new SeedObjectSupplier<>(itemLoc, ITEMS), min, max);
         }
     }
 }

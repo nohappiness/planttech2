@@ -10,9 +10,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import static net.minecraftforge.fml.RegistryObject.of;
-import static net.minecraftforge.registries.ForgeRegistries.BLOCKS;
 import static net.minecraftforge.registries.ForgeRegistries.ITEMS;
 
 public class CropConfiguration
@@ -147,7 +146,7 @@ public class CropConfiguration
 
 		public Builder primarySeed(ResourceLocation item, int min, int max)
 		{
-			return this.primarySeed(of(item, ITEMS), min, max);
+			return this.primarySeed(new SeedObjectSupplier<>(item, ITEMS), min, max);
 		}
 
 		public Builder primarySeed(String item, int min, int max)
@@ -163,7 +162,7 @@ public class CropConfiguration
 
 		public Builder seed(ResourceLocation item)
 		{
-			return this.seed(of(item, ITEMS));
+			return this.seed(new SeedObjectSupplier<>(item, ITEMS));
 		}
 
 		public Builder seed(String item)
@@ -201,7 +200,7 @@ public class CropConfiguration
 
 		public Builder drop(ResourceLocation item, int min, int max)
 		{
-			return this.drop(of(item, ITEMS), min, max);
+			return this.drop(new SeedObjectSupplier<>(item, ITEMS), min, max);
 		}
 
 		public Builder drop(String item, int min, int max)

@@ -14,8 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import static net.minecraftforge.registries.ForgeRegistries.BLOCKS;
@@ -188,7 +186,7 @@ public class CropEntryConfigData
 			short seedsAmount = buf.readShort();
 			for (int i = 0; i < seedsAmount; i++)
 			{
-				seeds.add(RegistryObject.of(buf.readResourceLocation(), ITEMS));
+				seeds.add(new SeedObjectSupplier<>(buf.readResourceLocation(), ITEMS));
 			}
 
 			short dropsAmount = buf.readShort();
@@ -205,7 +203,7 @@ public class CropEntryConfigData
 				parentPairs.add(ParentPair.Serializer.INSTANCE.read(buf));
 			}
 
-			Supplier<Block> soil = RegistryObject.of(buf.readResourceLocation(), BLOCKS);
+			Supplier<Block> soil = new SeedObjectSupplier<>(buf.readResourceLocation(), BLOCKS);
 
 			return new CropEntryConfigData(cropEntryName, enabled, temperature, primarySeed, seeds, drops, parentPairs, soil);
 		}
@@ -262,7 +260,7 @@ public class CropEntryConfigData
 			return StreamSupport.stream(array.spliterator(), false)
 					.map(JsonElement::getAsString)
 					.map(ResourceLocation::new)
-					.map(loc -> RegistryObject.of(loc, ITEMS))
+					.map(loc -> new SeedObjectSupplier<>(loc, ITEMS))
 					.collect(Collectors.toList());
 		}
 
