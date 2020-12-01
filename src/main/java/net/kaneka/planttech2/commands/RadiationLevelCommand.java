@@ -18,28 +18,13 @@ public class RadiationLevelCommand
 
 	public static LiteralArgumentBuilder<CommandSource> register()
 	{
-		// @formatter:off
 		return literal("radiationlevel")
-			.then(
-				literal("add")
-					.then(
-						argument("amount", floatArg(-2, 2))
-							.executes((context) -> add(context, getFloat(context, "amount")))
-					)
-			).then(
-				literal("set")
-					.then(
-						argument("value", floatArg(0, 2))
-							.executes((context) -> set(context, getFloat(context, "value")))
-					)
-			).then(
-				literal("clear")
-					.executes((context) -> set(context, 0))
-			).then(
-				literal("full")
-					.executes((context) -> set(context, 2))
-			);
-		// @formatter:on
+				.then(literal("add")
+				.then(argument("amount", floatArg(-2, 2))
+				.executes((context) -> add(context, getFloat(context, "amount"))))).then(literal("set").then(argument("value", floatArg(0, 2))
+				.executes((context) -> set(context, getFloat(context, "value")))))
+				.then(literal("clear").executes((context) -> set(context, 0)))
+				.then(literal("full").executes((context) -> set(context, 2)));
 	}
 
 	private static int add(CommandContext<CommandSource> context, float amount) throws CommandSyntaxException

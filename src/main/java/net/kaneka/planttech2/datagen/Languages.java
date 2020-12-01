@@ -41,7 +41,8 @@ public class Languages extends LanguageProvider
         add(MODID + ".update.click", "Click here");
         add(MODID + ".update.tooltip", "View CurseForge");
         add(MODID + ".electric_fence.idle", "Electric fence hums");
-        add(ModEffects.RADIATION_SICKNESS, "Radiation Sickness");
+        //temporary disabled as PlantTopia is not implemented yet
+//        add(ModEffects.RADIATION_SICKNESS, "Radiation Sickness");
 
         add(MODID + ".crossbreeding", "Crossbreeding");
         add(MODID + ".infuser", "Infuser");

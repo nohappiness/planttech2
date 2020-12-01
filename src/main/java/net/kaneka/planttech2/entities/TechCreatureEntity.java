@@ -156,6 +156,7 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
     @Override
     public void onTriggerAffectingPlayer(@Nonnull ServerPlayerEntity player)
     {
-        RadiationEffect.getCap(player).changeLevel(0.001F);
+        //temporary disabled as PlantTopia is not implemented yet
+        //        RadiationEffect.getCap(player).changeLevel(0.001F);
     }
 }

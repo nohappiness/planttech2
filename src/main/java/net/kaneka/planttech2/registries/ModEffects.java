@@ -9,10 +9,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(PlantTechMain.MODID)
 public class ModEffects
 {
-	@ObjectHolder("radiation_sickness") public static Effect RADIATION_SICKNESS;
+	//temporary disabled as PlantTopia is not implemented yet
+//	@ObjectHolder("radiation_sickness") public static Effect RADIATION_SICKNESS;
 
 	public static void registerAll(IForgeRegistry<Effect> registry)
 	{
-		registry.register(new RadiationSickness().setRegistryName("radiation_sickness"));
+//		registry.register(new RadiationSickness().setRegistryName("radiation_sickness"));
 	}
 }

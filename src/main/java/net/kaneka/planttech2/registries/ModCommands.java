@@ -19,7 +19,10 @@ public class ModCommands
         CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
         LiteralArgumentBuilder<CommandSource> pt2command = literal("pt2")
                 .then(DevListCommand.register())
-                .then(RadiationLevelCommand.register())
+
+                // Temporary disabled as PlantTopia is not implemented yet
+//                .then(RadiationLevelCommand.register())
+
                 .then(GuideCommand.register(dispatcher));
 //        if (event.getEnvironment() == Commands.EnvironmentType. INTEGRATED)
 //            pt2command.then(GuideCommand.register(dispatcher));
