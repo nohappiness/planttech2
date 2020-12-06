@@ -30,7 +30,7 @@ public class CustomButton extends Button
 			GuiUtils.drawContinuousTexturedBox(WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
 			this.renderBg(mStack, mc, mouseX, mouseY);
 
-			ITextComponent buttonText = this.getNarrationMessage();
+			ITextComponent buttonText = this.getMessage();
 			int strWidth = mc.fontRenderer.getStringPropertyWidth(buttonText);
 			int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
 
