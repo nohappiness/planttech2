@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.FacingGrowingBlock;
 import net.kaneka.planttech2.blocks.GrowingBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -14,15 +15,18 @@ import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
-public class MachineBulbItem extends Item
+public class MachineBulbItem extends BlockItem
 {
-	private final Supplier<Block> crop, hull;
+	private final Supplier<Block> hull, crop;
 	private final int tier;
 	private final int neededBiomass;
 
 	public MachineBulbItem(Supplier<Block> hull, Supplier<Block> crop, int tier, int neededBiomass)
 	{
-		super(new Item.Properties().group(ModCreativeTabs.SEEDS));
+		//Not quite sure why are we using suppliers here as blocks are usually registered before items,
+		//so it should be working without suppliers.
+		//It should error by the jei recipe here if the block entry is empty.
+		super(crop.get(), new Item.Properties().group(ModCreativeTabs.SEEDS));
 		this.hull = hull;
 		this.crop = crop;
 		this.tier = tier;
@@ -38,18 +42,18 @@ public class MachineBulbItem extends Item
 		ItemStack stack = ctx.getItem();
 		if (target == getHull())
 		{
-			if (getCrop() instanceof FacingGrowingBlock)
+			if (getMachine() instanceof FacingGrowingBlock)
 			{
 				Direction direction = ctx.getFace();
 				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					world.setBlockState(pos, getCrop().getDefaultState().with(FacingGrowingBlock.FACING, direction));
+					world.setBlockState(pos, getMachine().getDefaultState().with(FacingGrowingBlock.FACING, direction));
 					stack.shrink(1);
 				}
 			}
 			else
 			{
-				world.setBlockState(pos, getCrop().getDefaultState());
+				world.setBlockState(pos, getMachine().getDefaultState());
 				stack.shrink(1);
 			}
 			return ActionResultType.CONSUME;
@@ -65,11 +69,6 @@ public class MachineBulbItem extends Item
 	public Block getHull()
 	{
 		return hull.get();
-	}
-
-	public Block getCrop()
-	{
-		return crop.get();
 	}
 
 	public Block getMachine()
