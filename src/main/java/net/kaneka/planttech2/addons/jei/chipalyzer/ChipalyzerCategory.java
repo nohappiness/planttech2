@@ -33,9 +33,9 @@ public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe> {
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, ChipalyzerRecipe recipe, IIngredients ingredients) {
 		IGuiIngredientGroup stacks = recipeLayout.getItemStacks();
-		stacks.init(INPUT1, true, 0, 12);
+		stacks.init(INPUT1, true, 0, 14);
 		stacks.init(INPUT2, true, 20, 0);
-		stacks.init(OUTPUT, false, 40, 12);
+		stacks.init(OUTPUT, false, 40, 14);
 		stacks.set(ingredients);
 	}
 }
