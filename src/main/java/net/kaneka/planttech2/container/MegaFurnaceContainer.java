@@ -22,17 +22,17 @@ public class MegaFurnaceContainer extends BaseContainer
 		
 		for(int y = 0; y < 2; y++)
 		{
-			String usage = "slot.megafurnace.input"; 
+			String usage = "slot.megafurnace.input";
 			if(y == 1)
 			{
-				usage = "slot.util.output"; 
+				usage = "slot.util.output";
 			}
 			for(int x = 0; x < 6; x++)
 			{
 				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 6, 21 + x * 22 , 27 + y * 37, usage));
 			}
 		}
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 109, 85, "slot.util.speedupgrade"));
+		this.addSlot(new SpeedUpgradeSlot(handler, 12, 109, 85));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
@@ -42,7 +42,7 @@ public class MegaFurnaceContainer extends BaseContainer
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = (Slot)this.inventorySlots.get(index);
+		Slot slot = this.inventorySlots.get(index);
 		if(slot != null && slot.getHasStack()) 
 		{
 			ItemStack stack1 = slot.getStack();

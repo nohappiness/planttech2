@@ -1,5 +1,6 @@
 package net.kaneka.planttech2;
 
+import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.items.BiomassContainerItem;
@@ -7,47 +8,15 @@ import net.kaneka.planttech2.items.GuideItem;
 import net.kaneka.planttech2.items.PlantObtainerItem;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.registries.ModRenderer;
-import net.kaneka.planttech2.registries.ModScreens;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import java.util.function.Supplier;
-
-@Mod.EventBusSubscriber(modid = PlantTechMain.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class PlantTechClient
 {
-	@SubscribeEvent
-	static void clientSetup(final FMLClientSetupEvent event)
-	{
-		DeferredWorkQueue.runLater(() ->
-		{
-			addAllItemModelsOverrides();
-		});
-		ModRenderer.registerEntityRenderer();
-		ModScreens.registerGUI();
-		for (Supplier<? extends Block> block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-			RenderTypeLookup.setRenderLayer(block.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
-	}
-
-	private static void addAllItemModelsOverrides()
+	public static void addAllItemModelsOverrides()
 	{
 		ItemModelsProperties.registerProperty(
 				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),

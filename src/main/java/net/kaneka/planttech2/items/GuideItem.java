@@ -1,12 +1,7 @@
 package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.PlantTechClient;
-import net.kaneka.planttech2.gui.GuidePlantsScreen;
-import net.kaneka.planttech2.gui.guide.GuideScreen;
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

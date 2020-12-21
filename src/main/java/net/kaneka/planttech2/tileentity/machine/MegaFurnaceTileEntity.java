@@ -33,12 +33,12 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {
 	public int[] ticksPassed = new int[6];
 	boolean isSmelting;
-	protected ItemStackHandler dummyitemhandler = new ItemStackHandler(1);
+	protected ItemStackHandler dummyitemhandler = new ItemStackHandler();
 	
-	private RangedWrapper inputs; 
-	private RangedWrapper outputs; 
-	private LazyOptional<IItemHandler> inputs_provider;
-	private LazyOptional<IItemHandler> outputs_provider;
+	private final RangedWrapper inputs;
+	private final RangedWrapper outputs;
+	private final LazyOptional<IItemHandler> inputs_provider;
+	private final LazyOptional<IItemHandler> outputs_provider;
 	
 	protected final IIntArray field_array = new IIntArray()
 	{
