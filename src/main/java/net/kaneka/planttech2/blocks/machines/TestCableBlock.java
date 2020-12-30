@@ -97,9 +97,7 @@ public class TestCableBlock extends Block
                      for (int s=0;s<3;s++)
                          for (int w=0;w<3;w++)
                              for (int e=0;e<3;e++)
-                             {
                             	 shapes[d][u][n][s][w][e] = getCombinedShape(d,u,n,s,w,e);
-                             }
     }
     
     private VoxelShape getCombinedShape(int... states)
@@ -169,8 +167,8 @@ public class TestCableBlock extends Block
             TestCableTileEntity te = getTECable(world, pos);
             if (te != null)
             {
-                te.initCable();
                 world.setBlockState(pos, getCurrentState(state, world, pos), BlockFlags.DEFAULT);
+                te.initCable();
             }
         }
     }

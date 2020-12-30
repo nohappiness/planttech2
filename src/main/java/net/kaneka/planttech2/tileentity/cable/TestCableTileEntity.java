@@ -90,7 +90,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()
     {
-        return new SUpdateTileEntityPacket(getPos(), 3, getUpdateTag());
+        return new SUpdateTileEntityPacket(getPos(), 7414, getUpdateTag());
     }
 
     @Override
@@ -138,6 +138,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         }
         //if there are no neighbor networks, create one instead
         createNetwork();
+        getMasterCable().addMachinesFrom(this);
         markDirty();
     }
 
@@ -308,7 +309,11 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void remove()
     {
-        forceReplaceMaster();
+        if (getMasterCable() != null)
+        {
+            getMasterCable().forceReplaceMaster();
+            getMasterCable().getSlaves().remove(getPos());
+        }
     }
 
     /***
@@ -318,11 +323,18 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     {
         if (world == null)
             return;
-        for (BlockPos slave : info().slaves)
+        if (info().slaves.isEmpty())
         {
-            TestCableTileEntity cable = getCableTE(slave);
-            if (cable != null)
-                cable.clear(true);
+            return;
+        }
+        else
+        {
+            for (BlockPos slave : info().slaves)
+            {
+                TestCableTileEntity cable = getCableTE(slave);
+                if (cable != null)
+                    cable.clear(true);
+            }
         }
         getAllConnected((cable) -> {
             if (cable.getMasterPos().equals(BlockPos.ZERO))
@@ -597,11 +609,13 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         checkConnections();
     }
 
+    @Nullable
     public TestCableTileEntity getMasterCable()
     {
         return getCableTE(getMasterPos());
     }
 
+    @Nullable
     public TestCableTileEntity getCableTE(BlockPos pos)
     {
         if (world == null)
