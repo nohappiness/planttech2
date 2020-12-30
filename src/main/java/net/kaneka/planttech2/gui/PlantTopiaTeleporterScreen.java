@@ -33,7 +33,7 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	
 	private void buttonClicked(int buttonid)
 	{
-		if(container.getValue(0) >= ((PlantTopiaTeleporterTileEntity) te).getEnergyPerTeleportation())
+		if(container.getValue(0) >= ((PlantTopiaTeleporterTileEntity) te).energyPerTick())
 		{
 			PlantTech2PacketHandler.sendToServer(new TeleporterBlockButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), buttonid));
 		}

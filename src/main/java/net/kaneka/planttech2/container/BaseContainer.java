@@ -19,7 +19,7 @@ public class BaseContainer extends Container
 	protected final EnergyTileEntity tileentity;
 	protected final IIntArray fieldArray;
 
-	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyTileEntity tileentity)
+	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyTileEntity tileentity, int slots)
 	{
 		super(type, id);
 		for (int y = 0; y < 3; y++)

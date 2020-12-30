@@ -52,7 +52,7 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = container.getValue(4);
-		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).getTicksPerItem() : 0;
+		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).ticksPerItem() : 0;
 	}
 
 	@Override

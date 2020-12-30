@@ -33,7 +33,7 @@ public class IdentifierScreen extends BaseContainerScreen<IdentifierContainer>
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = container.getValue(2);
-		return i != 0 ? i * pixels / ((IdentifierTileEntity) this.te).getTicksPerItem() : 0;
+		return i != 0 ? i * pixels / ((IdentifierTileEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override

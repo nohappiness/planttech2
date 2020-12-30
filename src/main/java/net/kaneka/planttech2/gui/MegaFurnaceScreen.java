@@ -36,7 +36,7 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 	private int getCookProgressScaled(int id, int pixels)
 	{
 		int i = container.getValue(id + 2);
-		return i != 0 ? i * pixels / ((MegaFurnaceTileEntity) this.te).getTicksPerItem() : 0;
+		return i != 0 ? i * pixels / ((MegaFurnaceTileEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override
