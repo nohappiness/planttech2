@@ -45,21 +45,16 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 				PlantTopiaTeleporterTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				BlockPos newPos = new BlockPos(value, PlantTopiaTeleporterTileEntity.this.pos.getY(), PlantTopiaTeleporterTileEntity.this.pos.getZ()); 
-				PlantTopiaTeleporterTileEntity.this.pos = newPos;
+				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(value, PlantTopiaTeleporterTileEntity.this.pos.getY(), PlantTopiaTeleporterTileEntity.this.pos.getZ());
 				break;
 			case 3:
-				BlockPos newPos2 = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), value, PlantTopiaTeleporterTileEntity.this.pos.getZ()); 
-				PlantTopiaTeleporterTileEntity.this.pos = newPos2;
+				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), value, PlantTopiaTeleporterTileEntity.this.pos.getZ());
 				break;
 			case 4:
-				BlockPos newPos3 = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), PlantTopiaTeleporterTileEntity.this.pos.getY(), value); 
-				PlantTopiaTeleporterTileEntity.this.pos = newPos3;
+				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), PlantTopiaTeleporterTileEntity.this.pos.getY(), value);
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 5;
@@ -69,30 +64,6 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 	public PlantTopiaTeleporterTileEntity()
 	{
 		super(ModTileEntities.PLANTTOPIATELEPORTER_TE, 10000, 3, 0);
-	}
-
-	@Override
-	public void doUpdate()
-	{
-		doEnergyLoop();
-	}
-	
-	public int getEnergyPerTeleportation()
-	{
-		return 1000;
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		super.read(state, compound);
 	}
 
 	@Override
@@ -127,7 +98,13 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 
 	public void doTeleportation()
 	{
-		energystorage.extractEnergy(getEnergyPerTeleportation()); 
+		energystorage.extractEnergy(energyPerTick());
+	}
+
+	@Override
+	public int energyPerTick()
+	{
+		return 1000;
 	}
 
 	@Override

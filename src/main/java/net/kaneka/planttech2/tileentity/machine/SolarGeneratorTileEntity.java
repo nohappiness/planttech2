@@ -16,7 +16,6 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 {
-	int workload = 0;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -28,7 +27,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 				case 1:
 					return SolarGeneratorTileEntity.this.energystorage.getMaxEnergyStored();
 				case 2:
-					return SolarGeneratorTileEntity.this.workload;
+					return SolarGeneratorTileEntity.this.ticksPassed;
 				default:
 					return 0;
 			}
@@ -45,13 +44,10 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 					SolarGeneratorTileEntity.this.energystorage.setEnergyMaxStored(value);
 					break;
 				case 2:
-					SolarGeneratorTileEntity.this.workload = value;
-					;
+					SolarGeneratorTileEntity.this.ticksPassed = value;
 					break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 3;
@@ -66,20 +62,20 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
-		if (world.isDaytime() && world.canBlockSeeSky(pos.up()))
+		super.doUpdate();
+		if (world != null && world.isDaytime() && world.canBlockSeeSky(pos))
 		{
 			if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
 			{
-				workload++;
-				if (workload >= getTicksPerAmount())
+				ticksPassed++;
+				if (ticksPassed >= getTicksPerAmount())
 				{
 					energystorage.receiveEnergy(getEnergyPerTick(getUpgradeTier(0, SOLAR_FOCUS)));
-					workload = 0;
+					ticksPassed = 0;
 					addKnowledge();
 				}
 			}
 		}
-		doEnergyLoop();
 	}
 
 	@Override
@@ -107,22 +103,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 
 	public int getTicksPerAmount()
 	{
-		return 80 - (getUpgradeTier(1, SPEED_UPGRADE) * 15);
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("workload", workload);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.workload = compound.getInt("workload");
-		super.read(state, compound);
+		return 80 - getUpgradeTier(SPEED_UPGRADE) * 15;
 	}
 
 	@Override
@@ -159,5 +140,11 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 50;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 1;
 	}
 }

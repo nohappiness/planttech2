@@ -26,10 +26,8 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 {
-	public int ticksPassed = 0;
-	
-	private RangedWrapper inputs; 
-	private LazyOptional<IItemHandler> inputs_provider;
+	private final RangedWrapper inputs;
+	private final LazyOptional<IItemHandler> inputs_provider;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -41,9 +39,9 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				case 1:
 					return SeedSqueezerTileEntity.this.energystorage.getMaxEnergyStored();
 				case 2:
-					return SeedSqueezerTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+					return SeedSqueezerTileEntity.this.biomassCap.getCurrentStorage();
 				case 3:
-					return SeedSqueezerTileEntity.this.BIOMASS_CAP.getMaxStorage();
+					return SeedSqueezerTileEntity.this.biomassCap.getMaxStorage();
 				case 4:
 					return SeedSqueezerTileEntity.this.ticksPassed;
 				default:
@@ -62,18 +60,16 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					SeedSqueezerTileEntity.this.energystorage.setEnergyMaxStored(value);
 					break;
 				case 2:
-					SeedSqueezerTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+					SeedSqueezerTileEntity.this.biomassCap.setCurrentStorage(value);
 					break;
 				case 3:
-					SeedSqueezerTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+					SeedSqueezerTileEntity.this.biomassCap.setMaxStorage(value);
 					break;
 				case 4:
 					SeedSqueezerTileEntity.this.ticksPassed = value;
 					break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 5;
@@ -95,19 +91,18 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
             if (facing != null) return inputs_provider.cast();
             return inventoryCap.cast();
         }
-
         return super.getCapability(capability, facing);
     }
 
 	@Override
 	public void tick()
 	{
-		if (!world.isRemote)
+		if (world != null && !world.isRemote)
 		{
 			if (itemhandler.getStackInSlot(9).isEmpty())
 			{
 				int i = this.getSqueezeableItem();
-				if (i != 100)
+				if (i != -1)
 				{
 					ItemStack stack = itemhandler.getStackInSlot(i);
 					ItemStack stack2 = stack.copy();
@@ -116,35 +111,34 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					stack.shrink(1);
 				}
 			}
-
 			if (!itemhandler.getStackInSlot(9).isEmpty())
 			{
 				ItemStack stack = itemhandler.getStackInSlot(9);
 				if (stack.getCount() == 1 && (stack.getItem() instanceof CropSeedItem))
 				{
-					ticksPassed += getUpgradeTier(10, SPEED_UPGRADE) + 1;
-					if (ticksPassed >= this.getTicksPerItem())
+					ticksPassed += getUpgradeTier(SPEED_UPGRADE) + 1;
+					if (ticksPassed >= ticksPerItem())
 					{
 						squeezeItem();
 						addKnowledge();
-						BIOMASS_CAP.changeCurrentStorage(10);
+						biomassCap.changeCurrentStorage(10);
 						ticksPassed = 0;
 					}
-				} else if (stack.getCount() > 0)
+				}
+				else if (stack.getCount() > 0)
 				{
 					if (!world.isRemote)
 					{
 						world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
 						itemhandler.setStackInSlot(9, ItemStack.EMPTY);
 					}
-				} else if (ticksPassed > 0)
+				}
+				else if (ticksPassed > 0)
 				{
 					ticksPassed = 0;
 				}
 			}
 		}
-		doEnergyLoop();
-		doFluidLoop();
 	}
 	
 	@Override
@@ -161,12 +155,10 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 			if (!stack.isEmpty())
 			{
 				if (stack.getItem() instanceof CropSeedItem)
-				{
 					return i;
-				}
 			}
 		}
-		return 100;
+		return -1;
 	}
 
 	public void squeezeItem()
@@ -175,7 +167,8 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 		itemhandler.setStackInSlot(9, ItemStack.EMPTY);
 	}
 
-	public int getTicksPerItem()
+	@Override
+	public int ticksPerItem()
 	{
 		return 200;
 	}
@@ -189,30 +182,11 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 			{
 				CompoundNBT nbt = stack.getTag();
 				if (nbt != null)
-				{
 					if (nbt.contains("energyvalue"))
-					{
 						return nbt.getInt("energyvalue") * 20;
-					}
-				}
 			}
 		}
 		return 20;
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("cooktime", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("cooktime");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -263,4 +237,9 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 		return 2;
 	}
 
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 10;
+	}
 }

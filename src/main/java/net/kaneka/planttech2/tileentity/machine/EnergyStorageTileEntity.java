@@ -15,7 +15,6 @@ import net.minecraft.util.IIntArray;
 
 public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 {
-
     private int currentTier = -1; // Always forcing a update when loaded
     protected final IIntArray field_array = new IIntArray()
 	{
@@ -43,25 +42,16 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 				EnergyStorageTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 2;
 		}
 	};
 
-
     public EnergyStorageTileEntity()
     {
 	super(ModTileEntities.ENERGYSTORAGE_TE, 1000, 4, 0);
-    }
-    
-    @Override
-    public void doUpdate()
-    {
-    	doEnergyLoop();
     }
     
     @Override
@@ -73,47 +63,24 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
     @Override
     public void onSlotContentChanged()
     {
-	if (world != null)
-	{
-	    if (!world.isRemote)
-	    {
-		int newTier = getUpgradeTier(0, TierItem.ItemType.UPGRADE_CHIP);
-		if (currentTier != newTier)
+		if (world != null)
 		{
-		    switch (newTier)
-		    {
-		    case 0:
-			energystorage.setEnergyMaxStored(1000);
-			break;
-		    case 1:
-			energystorage.setEnergyMaxStored(10000);
-			break;
-		    case 2:
-			energystorage.setEnergyMaxStored(100000);
-			break;
-		    case 3:
-			energystorage.setEnergyMaxStored(1000000);
-			break;
-		    }
-		    BlockState state = world.getBlockState(pos);
-		    if (state != null)
-		    {
-			if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
+			if (!world.isRemote)
 			{
-			    world.setBlockState(pos, state.with(EnergyStorageBlock.TIER, newTier), 2);
-			    markDirty();
+				int newTier = getUpgradeTier(TierItem.ItemType.UPGRADE_CHIP);
+				if (currentTier != newTier)
+				{
+					energystorage.setEnergyMaxStored((int) (1000 * Math.pow(10, newTier)));
+					BlockState state = world.getBlockState(pos);
+					if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
+					{
+						world.setBlockState(pos, state.with(EnergyStorageBlock.TIER, newTier), 3);
+						markDirty();
+					}
+					currentTier = newTier;
+				}
 			}
-		    }
-		    currentTier = newTier;
 		}
-	    }
-	}
-    }
-
-    @Override
-    public void read(BlockState state, CompoundNBT compound)
-    {
-	super.read(state, compound);
     }
 
     @Override
@@ -148,6 +115,12 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 
 	@Override
 	public int getKnowledgePerAction()
+	{
+		return 0;
+	}
+
+	@Override
+	public int getUpgradeSlot()
 	{
 		return 0;
 	}

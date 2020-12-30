@@ -17,46 +17,19 @@ import net.minecraftforge.items.SlotItemHandler;
 public class BaseContainer extends Container
 {
 	protected final EnergyTileEntity tileentity;
-	protected final IIntArray field_array;
+	protected final IIntArray fieldArray;
 
-	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyTileEntity tileentity, int slots)
+	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyTileEntity tileentity)
 	{
 		super(type, id);
 		for (int y = 0; y < 3; y++)
-		{
 			for (int x = 0; x < 9; x++)
-			{
 				addSlot(new Slot(player, x + y * 9 + 9, 23 + x * 18, 106 + y * 18));
-			}
-		}
-
 		for (int x = 0; x < 9; x++)
-		{
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
-		}
-
 		this.tileentity = tileentity;
-		field_array = tileentity.getIntArray();
-		trackIntArray(field_array);
-	}
-
-	@Override
-	public void detectAndSendChanges()
-	{
-		super.detectAndSendChanges();
-		/*
-		for (IContainerListener listener : listeners)
-		{
-			for (int i = 0; i < tileentity.getAmountFields(); i++)
-			{
-				if (fields[i] != tileentity.getField(i))
-				{
-					fields[i] = tileentity.getField(i);
-					listener.sendWindowProperty(this, i, fields[i]);
-				}
-			}
-		}
-		*/
+		fieldArray = tileentity.getIntArray();
+		trackIntArray(fieldArray);
 	}
 
 	@Override
@@ -72,7 +45,7 @@ public class BaseContainer extends Container
 
 	public int getValue(int id)
 	{
-		return field_array.get(id);
+		return fieldArray.get(id);
 	}
 
 	public static class SlotItemHandlerWithInfo extends SlotItemHandler

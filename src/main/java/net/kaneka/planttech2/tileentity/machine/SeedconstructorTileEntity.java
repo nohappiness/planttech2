@@ -19,7 +19,6 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 {
-	private int ticksPassed = 0;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -31,12 +30,11 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return SeedconstructorTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return SeedconstructorTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+			    return SeedconstructorTileEntity.this.biomassCap.getCurrentStorage();
 			case 3:
-			    return SeedconstructorTileEntity.this.BIOMASS_CAP.getMaxStorage();
+			    return SeedconstructorTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
 				return SeedconstructorTileEntity.this.ticksPassed; 
-				
 			default:
 				return 0;
 			}
@@ -53,18 +51,16 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 				SeedconstructorTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				SeedconstructorTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+				SeedconstructorTileEntity.this.biomassCap.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				SeedconstructorTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+				SeedconstructorTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
 				SeedconstructorTileEntity.this.ticksPassed = value; 
 				break; 
 			}
-
 		}
-
 		public int size()
 		{
 			return 5;
@@ -79,20 +75,21 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
-
 			if (!stack1.isEmpty() && stack2.isEmpty())
 			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && BIOMASS_CAP.getCurrentStorage() >= fluidPerItem())
+				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && biomassCap.getCurrentStorage() >= fluidPerItem())
 				{
 					if (ticksPassed < ticksPerItem())
 					{
 						ticksPassed++;
 						energystorage.extractEnergy(energyPerTick(), false);
-					} else
+					}
+					else
 					{
 						ticksPassed = 0;
 						energystorage.extractEnergy(energyPerTick(), false);
@@ -100,29 +97,19 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 						HashMapCropTraits traits = new HashMapCropTraits();
 						traits.setAnalysed(true);
 						if (nbt.contains("type"))
-						{
 							traits.setType(nbt.getString("type"));
-						}
 						for (String key : HashMapCropTraits.getTraitsKeyList())
-						{
 							if (nbt.contains(key))
-							{
 								if (!key.equals("type"))
-								{
 									traits.setTrait(EnumTraitsInt.getByName(key), nbt.getInt(key));
-								}
-							}
-						}
 						ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
 						itemhandler.setStackInSlot(1, traits.addToItemStack(stack));
-						BIOMASS_CAP.extractBiomass(fluidPerItem());
+						biomassCap.extractBiomass(fluidPerItem());
 						addKnowledge();
 					}
 				}
 			}
 		}
-		doEnergyLoop();
-		doFluidLoop();
 	}
 	
 	@Override
@@ -136,35 +123,10 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 		return 500;
 	}
 
-	public int energyPerTick()
-	{
-		return 4 + (getUpgradeTier(2, SPEED_UPGRADE) * 4);
-	}
-
-	public int ticksPerItem()
-	{
-		return 200 - (getUpgradeTier(2, SPEED_UPGRADE) * 35);
-	}
-
 	@Override
 	public String getNameString()
 	{
 		return "seedconstructor";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -209,4 +171,9 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 		return 250;
 	}
 
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 2;
+	}
 }

@@ -27,11 +27,10 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class IdentifierTileEntity extends EnergyInventoryTileEntity
 {
-	public int ticksPassed = 0;
-	private RangedWrapper inputs; 
-	private RangedWrapper outputs; 
-	private LazyOptional<IItemHandler> inputs_provider;
-	private LazyOptional<IItemHandler> outputs_provider;
+	private final RangedWrapper inputs;
+	private final RangedWrapper outputs;
+	private final LazyOptional<IItemHandler> inputs_provider;
+	private final LazyOptional<IItemHandler> outputs_provider;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -63,9 +62,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				IdentifierTileEntity.this.ticksPassed = value;
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 3;
@@ -90,36 +87,30 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
             if (facing != null) return inputs_provider.cast();
             return inventoryCap.cast();
         }
-
         return super.getCapability(capability, facing);
     }
 
 	@Override
 	public void doUpdate()
 	{
-		if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem())
+		super.doUpdate();
+		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			if (this.canIdentify())
 			{
-				this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
+				this.energystorage.extractEnergy(energyPerTick(), false);
 				ticksPassed++;
-				if (ticksPassed >= this.getTicksPerItem())
+				if (ticksPassed >= ticksPerItem())
 				{
 					this.identifyItem();
 					ticksPassed = 0;
 				}
-			} else if (ticksPassed > 0)
-			{
-				ticksPassed = 0;
 			}
-		} else
-		{
-			if (!this.canIdentify() && ticksPassed > 0)
-			{
+			else
 				ticksPassed = 0;
-			}
 		}
-		doEnergyLoop();
+		else if (!this.canIdentify() && ticksPassed > 0)
+			ticksPassed = 0;
 	}
 
 	@Override
@@ -131,10 +122,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	private boolean canIdentify()
 	{
 		if (!this.hasFreeOutputSlot())
-		{
 			return false;
-		}
-
 		for (int i = 0; i < 9; i++)
 		{
 			ItemStack stack = this.itemhandler.getStackInSlot(i);
@@ -144,22 +132,12 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				if (nbt != null)
 				{
 					if (nbt.contains("analysed"))
-					{
 						if (!nbt.getBoolean("analysed"))
-						{
 							return true;
-						}
-					}
 				}
 				else
-				{
-					CropEntry entry = PlantTechMain.getCropList().getBySeed(stack.getItem());
-			    	if (entry != null)
-			    	{
-			    		return true; 
-			    	}
-				}
-				
+					return PlantTechMain.getCropList().getBySeed(stack.getItem()) != null;
+
 			}
 		}
 		return false;
@@ -175,7 +153,6 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				if (!stack.isEmpty())
 				{
 					CompoundNBT nbt = stack.getTag();
-
 					if (nbt != null)
 					{
 						if (nbt.contains("analysed"))
@@ -214,15 +191,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 
 	public boolean hasFreeOutputSlot()
 	{
-		for (int i = 9; i < 18; i++)
-		{
-			ItemStack stack = this.itemhandler.getStackInSlot(i);
-			if (stack.isEmpty())
-			{
-				return true;
-			}
-		}
-		return false;
+		return getFreeOutputSlot() != -1;
 	}
 
 	public int getFreeOutputSlot()
@@ -231,36 +200,9 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 		{
 			ItemStack stack = this.itemhandler.getStackInSlot(i);
 			if (stack.isEmpty())
-			{
 				return i;
-			}
 		}
-		return 9;
-	}
-
-	public int getEnergyPerTickPerItem()
-	{
-		return 4 + (getUpgradeTier(18, SPEED_UPGRADE) * 4);
-	}
-
-	public int getTicksPerItem()
-	{
-		return 200 - (getUpgradeTier(18, SPEED_UPGRADE) * 35);
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("cooktime", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("cooktime");
-		super.read(state, compound);
+		return -1;
 	}
 
 	@Override
@@ -297,5 +239,11 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 5;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 18;
 	}
 }

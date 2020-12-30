@@ -18,7 +18,6 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 {
-    private int ticksPassed = 0;
     protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -51,9 +50,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 				;
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 3;
@@ -62,55 +59,55 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 
     public DNAExtractorTileEntity()
     {
-	super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
+		super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
     }
 
     @Override
     public void doUpdate()
     {
-	if (this.energystorage.getEnergyStored() > energyPerTick())
-	{
-	    ItemStack stack1 = itemhandler.getStackInSlot(0);
-	    ItemStack stack2 = itemhandler.getStackInSlot(1);
-	    ItemStack stack3 = itemhandler.getStackInSlot(2);
-	    if (!stack1.isEmpty() && !stack2.isEmpty())
-	    {
-		if (stack1.getItem() instanceof CropSeedItem && stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
+    	super.doUpdate();
+		if (energystorage.getEnergyStored() > energyPerTick())
 		{
-		    if (stack1.hasTag())
-		    {
-			if (ticksPassed < ticksPerItem())
+			ItemStack stack1 = itemhandler.getStackInSlot(0);
+			ItemStack stack2 = itemhandler.getStackInSlot(1);
+			ItemStack stack3 = itemhandler.getStackInSlot(2);
+			if (!stack1.isEmpty() && !stack2.isEmpty())
 			{
-			    ticksPassed++;
-			    energystorage.extractEnergy(energyPerTick(), false);
-			}
-			else
-			{
-			    if (stack3.isEmpty())
-			    {
-				ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
-				CompoundNBT nbt = stack1.getTag().copy();
-				nbt.remove("analysed");
-				stack.setTag(nbt);
-				itemhandler.setStackInSlot(2, stack);
-				endProcess();
-				addKnowledge();
-			    }
-			    else if (stack3.hasTag() && stack3.getItem() == ModItems.DNA_CONTAINER)
-			    {
-				if (stack3.getTag().equals(stack1.getTag()))
+				if (stack1.getItem() instanceof CropSeedItem && stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
 				{
-				    stack3.grow(1);
-				    addKnowledge();
-				    endProcess();
+					if (stack1.hasTag())
+					{
+						if (ticksPassed < ticksPerItem())
+						{
+							ticksPassed++;
+							energystorage.extractEnergy(energyPerTick(), false);
+						}
+						else
+						{
+							if (stack3.isEmpty())
+							{
+								ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
+								CompoundNBT nbt = stack1.getTag().copy();
+								nbt.remove("analysed");
+								stack.setTag(nbt);
+								itemhandler.setStackInSlot(2, stack);
+								endProcess();
+								addKnowledge();
+							}
+							else if (stack3.hasTag() && stack3.getItem() == ModItems.DNA_CONTAINER)
+							{
+								if (stack3.getTag().equals(stack1.getTag()))
+								{
+									stack3.grow(1);
+									addKnowledge();
+									endProcess();
+								}
+							}
+						}
+					}
 				}
-			    }
 			}
-		    }
 		}
-	    }
-	}
-	doEnergyLoop();
     }
     
     @Override
@@ -121,20 +118,9 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 
     private void endProcess()
     {
-	ticksPassed = 0;
-	//energystorage.extractEnergy(energyPerTick(), false);
-	itemhandler.getStackInSlot(0).shrink(1);
-	itemhandler.getStackInSlot(1).shrink(1);
-    }
-
-    public int energyPerTick()
-    {
-	return 4 + (getUpgradeTier(3, SPEED_UPGRADE) * 4);
-    }
-
-    public int ticksPerItem()
-    {
-	return 200 - (getUpgradeTier(3, SPEED_UPGRADE) * 35);
+		ticksPassed = 0;
+		itemhandler.getStackInSlot(0).shrink(1);
+		itemhandler.getStackInSlot(1).shrink(1);
     }
 
     @Override
@@ -142,23 +128,6 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
     {
 	return "dnaextractor";
     }
-
-    @Override
-    public CompoundNBT write(CompoundNBT compound)
-    {
-	compound.putInt("tickspassed", ticksPassed);
-	super.write(compound);
-	return compound;
-    }
-
-    @Override
-    public void read(BlockState state, CompoundNBT compound)
-    {
-	this.ticksPassed = compound.getInt("tickspassed");
-	super.read(state, compound);
-    }
-
-
 
     @Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
@@ -188,5 +157,11 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 50;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 3;
 	}
 }

@@ -29,6 +29,6 @@ public class TierItem extends Item
 		SOLAR_FOCUS,
 		RANGE_UPGRADE,
 		SPEED_UPGRADE,
-		UPGRADE_CHIP;
+		UPGRADE_CHIP
 	}
 }

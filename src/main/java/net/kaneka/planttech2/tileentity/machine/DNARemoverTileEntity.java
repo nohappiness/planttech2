@@ -22,7 +22,6 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 {
-	private int ticksPassed = 0;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -52,12 +51,9 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 				break;
 			case 2:
 				DNARemoverTileEntity.this.ticksPassed = value;
-				;
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 3;
@@ -72,13 +68,14 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
 			if (!stack1.isEmpty() && stack2.isEmpty())
 			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER)
+				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag())
 				{
 					List<String> traitsList = getAvailableTraits(stack1);
 					if (traitsList.size() > 1)
@@ -87,7 +84,8 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 						{
 							ticksPassed++;
 							energystorage.extractEnergy(energyPerTick(), false);
-						} else
+						}
+						else
 						{
 							Collections.shuffle(traitsList);
 							CompoundNBT nbt = stack1.getTag().copy();
@@ -104,7 +102,6 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 				}
 			}
 		}
-		doEnergyLoop();
 	}
 	
 	@Override
@@ -116,47 +113,17 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	private List<String> getAvailableTraits(ItemStack stack)
 	{
 		List<String> list = new ArrayList<String>();
-		if (stack.hasTag())
-		{
-			CompoundNBT nbt = stack.getTag();
-			for (String key : HashMapCropTraits.getTraitsKeyList())
-			{
-				if (nbt.contains(key))
-					list.add(key);
-			}
-		}
+		CompoundNBT nbt = stack.getOrCreateTag();
+		for (String key : HashMapCropTraits.getTraitsKeyList())
+			if (nbt.contains(key))
+				list.add(key);
 		return list;
-	}
-
-	public int energyPerTick()
-	{
-		return 4 + (getUpgradeTier(2, SPEED_UPGRADE) * 4);
-	}
-
-	public int ticksPerItem()
-	{
-		return 200 - (getUpgradeTier(2, SPEED_UPGRADE) * 35);
 	}
 
 	@Override
 	public String getNameString()
 	{
 		return "dnaremover";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -187,5 +154,11 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 50;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 2;
 	}
 }

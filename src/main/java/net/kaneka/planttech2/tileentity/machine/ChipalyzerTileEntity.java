@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import net.kaneka.planttech2.container.ChipalyzerContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
@@ -23,8 +23,6 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 {
-	private int ticksPassed = 0;
-
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -41,7 +39,6 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 				return 0;
 			}
 		}
-
 		public void set(int index, int value)
 		{
 			switch (index)
@@ -54,12 +51,9 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 				break;
 			case 2:
 				ChipalyzerTileEntity.this.ticksPassed = value;
-				;
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 3;
@@ -74,6 +68,7 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stackChip = itemhandler.getStackInSlot(0);
@@ -81,11 +76,9 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 			ItemStack stackOutput = itemhandler.getStackInSlot(2);
 			if (!stackChip.isEmpty() && !stackInput.isEmpty())
 			{
-
 				List<ChipalyzerRecipe> recipe = getRecipeList(stackChip, stackInput);
 				if (!recipe.isEmpty())
 				{
-
 					if (ticksPassed < ticksPerItem())
 					{
 						ticksPassed++;
@@ -93,10 +86,9 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 					} 
 					else
 					{
-						
 						if (stackOutput.isEmpty())
 						{
-							ItemStack result = recipe.get(new Random().nextInt(recipe.size())).getRecipeOutput().copy();
+							ItemStack result = recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
 							itemhandler.setStackInSlot(2, result);
 							energystorage.extractEnergy(energyPerTick(), false);
 							stackChip.shrink(1);
@@ -107,33 +99,20 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 					}
 				}
 			}
-
 		}
-		doEnergyLoop();
 	}
 
 	private List<ChipalyzerRecipe> getRecipeList(ItemStack chip, ItemStack stack)
 	{
-		List<ChipalyzerRecipe> list = new ArrayList<ChipalyzerRecipe>();
-		if (!stack.isEmpty())
+		if (stack.isEmpty() || world == null)
+			return Collections.emptyList();
+		List<ChipalyzerRecipe> list = new ArrayList<>();
+		for (IRecipe<?> recipe : world.getRecipeManager().getRecipesForType(ModRecipeTypes.CHIPALYZER))
 		{
-			if (world != null)
-			{
-				for (IRecipe<?> recipe : world.getRecipeManager().getRecipes())
-				{
-					if (recipe.getType() == ModRecipeTypes.CHIPALYZER)
-					{
-						ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
-						if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), chip))
-						{
-							if (chipRecipe.compare(chip, stack))
-							{
-								list.add(chipRecipe);
-							}
-						}
-					}
-				}
-			}
+			ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
+			if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), chip))
+				if (chipRecipe.compare(chip, stack))
+					list.add(chipRecipe);
 		}
 		return list;
 	}
@@ -144,35 +123,10 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 		return field_array;
 	}
 
-	public int energyPerTick()
-	{
-		return 4 + (getUpgradeTier(3, SPEED_UPGRADE) * 4);
-	}
-
-	public int ticksPerItem()
-	{
-		return 200 - (getUpgradeTier(3, SPEED_UPGRADE) * 35);
-	}
-
 	@Override
 	public String getNameString()
 	{
 		return "chipalyzer";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -203,5 +157,11 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 100;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 3;
 	}
 }

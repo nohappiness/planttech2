@@ -21,8 +21,7 @@ import net.minecraftforge.common.Tags.Items;
 
 public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEntity
 {
-	private int ticksPassed = 0;
-	private int selectedId = 0; 
+	private int selectedId = 0;
 	private int actualTier = 0; 
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -35,9 +34,9 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 			case 1:
 				return MachineBulbReprocessorTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+			    return MachineBulbReprocessorTileEntity.this.biomassCap.getCurrentStorage();
 			case 3:
-			    return MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.getMaxStorage();
+			    return MachineBulbReprocessorTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
 				return MachineBulbReprocessorTileEntity.this.ticksPassed; 
 			case 5: 
@@ -66,10 +65,10 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 				MachineBulbReprocessorTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+				MachineBulbReprocessorTileEntity.this.biomassCap.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				MachineBulbReprocessorTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+				MachineBulbReprocessorTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
 				MachineBulbReprocessorTileEntity.this.ticksPassed = value; 
@@ -81,21 +80,16 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 				MachineBulbReprocessorTileEntity.this.actualTier = value; 
 				break;
 			case 7:
-				BlockPos newPos = new BlockPos(value, MachineBulbReprocessorTileEntity.this.pos.getY(), MachineBulbReprocessorTileEntity.this.pos.getZ()); 
-				MachineBulbReprocessorTileEntity.this.pos = newPos;
+				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(value, MachineBulbReprocessorTileEntity.this.pos.getY(), MachineBulbReprocessorTileEntity.this.pos.getZ());
 				break;
 			case 8:
-				BlockPos newPos2 = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), value, MachineBulbReprocessorTileEntity.this.pos.getZ()); 
-				MachineBulbReprocessorTileEntity.this.pos = newPos2;
+				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), value, MachineBulbReprocessorTileEntity.this.pos.getZ());
 				break;
 			case 9:
-				BlockPos newPos3 = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), MachineBulbReprocessorTileEntity.this.pos.getY(), value); 
-				MachineBulbReprocessorTileEntity.this.pos = newPos3;
+				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), MachineBulbReprocessorTileEntity.this.pos.getY(), value);
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 10;
@@ -110,11 +104,11 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	@Override
 	public void doUpdate()
 	{
-		if(selectedId > 0 && selectedId <= ModItems.MACHINE_BULBS.size())
+		super.doUpdate();
+		if (selectedId > 0 && selectedId <= ModItems.MACHINE_BULBS.size())
 		{
-
-			MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId-1).get();
-    		if (energystorage.getEnergyStored() >= energyPerItem() && bulb.getTier() <= actualTier && BIOMASS_CAP.getCurrentStorage() >= bulb.getNeededBiomass())
+			MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId - 1).get();
+    		if (energystorage.getEnergyStored() >= energyPerTick() && bulb.getTier() <= actualTier && biomassCap.getCurrentStorage() >= bulb.getNeededBiomass())
     		{
     			ItemStack input = itemhandler.getStackInSlot(0);
     			ItemStack output = itemhandler.getStackInSlot(1);
@@ -122,14 +116,12 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
     			{
     				if(Items.SEEDS.contains(input.getItem()) || input.getItem() instanceof CropSeedItem)
     				{
-    					if(ticksPassed < ticksPerItem())
-    					{
+    					if (ticksPassed < ticksPerItem())
     						ticksPassed++;
-    					}
     					else
     					{
-    						energystorage.extractEnergy(energyPerItem());
-							BIOMASS_CAP.extractBiomass(bulb.getNeededBiomass());
+    						energystorage.extractEnergy(energyPerTick());
+							biomassCap.extractBiomass(bulb.getNeededBiomass());
     						input.shrink(1);
     						ticksPassed = 0;
     						itemhandler.setStackInSlot(1, new ItemStack(bulb));
@@ -137,12 +129,9 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
     					}
     				}
     			}
-
     		}
 		}
 		checkTier();
-		doEnergyLoop();
-		doFluidLoop();
 	}
 	
 	private void checkTier()
@@ -151,13 +140,10 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 		if(!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if(item != null)
+			if (item instanceof KnowledgeChip)
 			{
-				if(item instanceof KnowledgeChip)
-				{
-					actualTier = ((KnowledgeChip) item).getTier();
-					return; 
-				}
+				actualTier = ((KnowledgeChip) item).getTier();
+				return;
 			}
 		}
 		actualTier = 0; 
@@ -169,13 +155,13 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 		return field_array;
 	}
 
-	
-
-	public int energyPerItem()
+	@Override
+	public int energyPerTick()
 	{
 		return 1000;
 	}
 
+	@Override
 	public int ticksPerItem()
 	{
 		return 300;
@@ -185,21 +171,6 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	public String getNameString()
 	{
 		return "machinebulbreprocessor";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override

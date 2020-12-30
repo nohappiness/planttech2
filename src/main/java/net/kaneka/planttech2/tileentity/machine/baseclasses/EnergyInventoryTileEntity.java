@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -20,10 +21,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 {
 	protected ItemStackHandler itemhandler;
 	protected LazyOptional<IItemHandler> inventoryCap;
+	protected int ticksPassed = 0;
 	protected int tier;
 
 	public EnergyInventoryTileEntity(TileEntityType<?> type, int energyStorage, int invSize, int tier)
@@ -41,50 +45,35 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	 */
 	public List<ItemStack> getInventoryContent()
 	{
-		List<ItemStack> stack = new ArrayList<ItemStack>();
-
+		List<ItemStack> stacks = new ArrayList<ItemStack>();
 		for (int i = 0; i < itemhandler.getSlots(); i++)
-		{
-			stack.add(itemhandler.getStackInSlot(i).copy());
-		}
+			stacks.add(itemhandler.getStackInSlot(i).copy());
+		return stacks;
+	}
 
-		return stack;
+	@Override
+	public void doUpdate()
+	{
+		doEnergyLoop();
 	}
 
 	public void doEnergyLoop()
 	{
 		ItemStack stack = itemhandler.getStackInSlot(getEnergyInSlot());
 		ItemStack stack2 = itemhandler.getStackInSlot(getEnergyOutSlot());
-		if (stack != null)
-		{
-			if (stack.getItem() instanceof IItemChargeable)
-			{
-				if (energystorage.getEnergyStored() < energystorage.getMaxEnergyStored())
-				{
-					energystorage.receiveEnergy(((IItemChargeable) stack.getItem()).extractEnergy(stack, 1, false));
-				}
-			}
-		}
-
-		if (stack2 != null)
-		{
-			if (stack2.getItem() instanceof IItemChargeable)
-			{
-				if (energystorage.getEnergyStored() >= 1)
-				{
-					energystorage.extractEnergy(((IItemChargeable) stack2.getItem()).receiveEnergy(stack2, 1, false));
-				}
-			}
-		}
+		if (stack.getItem() instanceof IItemChargeable)
+			if (energystorage.getEnergyStored() < energystorage.getMaxEnergyStored())
+				energystorage.receiveEnergy(((IItemChargeable) stack.getItem()).extractEnergy(stack, 1, false));
+		if (stack2.getItem() instanceof IItemChargeable)
+			if (energystorage.getEnergyStored() >= 1)
+				energystorage.extractEnergy(((IItemChargeable) stack2.getItem()).receiveEnergy(stack2, 1, false));
 	}
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
 			return inventoryCap.cast();
-		}
 		return super.getCapability(capability, facing);
 	}
 
@@ -92,24 +81,24 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	public CompoundNBT write(CompoundNBT compound)
 	{
 		compound.put("inventory", itemhandler.serializeNBT());
-		super.write(compound);
-		return compound;
+		compound.putInt("tickspassed", ticksPassed);
+		return super.write(compound);
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT compound)
 	{
+		super.read(state, compound);
 		int slotamount = itemhandler.getSlots();// prevent crash
 		itemhandler.deserializeNBT(compound.getCompound("inventory"));
 		if (itemhandler.getSlots() != slotamount)
 			itemhandler.setSize(slotamount);// prevent crash when invsize changed while update
-		super.read(state, compound);
+		this.ticksPassed = compound.getInt("tickspassed");
 	}
 
 	public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)
 	{
-		// TODO Implement Gamerule "doTileDrops"
-		if (!worldIn.isRemote && !stack.isEmpty() && !worldIn.restoringBlockSnapshots) // do not drop items while restoring
+		if (worldIn != null && !worldIn.isRemote && !stack.isEmpty() && !worldIn.restoringBlockSnapshots && worldIn.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) // do not drop items while restoring
 		// blockstates, prevents item dupe
 		{
 			double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
@@ -121,16 +110,31 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		}
 	}
 
+	public int energyPerTick()
+	{
+		return 4 + getUpgradeTier(SPEED_UPGRADE) * 4;
+	}
+
+	public int ticksPerItem()
+	{
+		return 200 - getUpgradeTier(SPEED_UPGRADE) * 35;
+	}
+
+	public int getUpgradeTier(TierItem.ItemType itemType)
+	{
+		return getUpgradeTier(getUpgradeSlot(), itemType);
+	}
+
 	public int getUpgradeTier(int slot, TierItem.ItemType itemType)
 	{
+		if (slot == -1)
+			return 0;
 		ItemStack stack = itemhandler.getStackInSlot(slot);
 		if (!stack.isEmpty() && stack.getItem() instanceof TierItem)
 		{
 			TierItem item = (TierItem) stack.getItem();
 			if (item.getItemType() == itemType)
-			{
 				return item.getTier();
-			}
 		}
 		return 0;
 	}
@@ -149,12 +153,8 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		ItemStack chip = getKnowledgeChip();
 		ItemStack newChip = KnowledgeChip.addKnowledge(chip, getKnowledgePerAction(), tier);
 		if (!chip.isEmpty() && !newChip.isEmpty())
-		{
 			if (!chip.getItem().equals(newChip.getItem()))
-			{
 				itemhandler.setStackInSlot(getKnowledgeChipSlot(), newChip);
-			}
-		}
 	}
 
 	public abstract int getKnowledgeChipSlot();

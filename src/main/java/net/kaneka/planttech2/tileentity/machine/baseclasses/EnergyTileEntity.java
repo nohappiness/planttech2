@@ -17,12 +17,17 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import java.util.Random;
+
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
+
 abstract public class EnergyTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider
 {
 
 	protected BioEnergyStorage energystorage;
-	private LazyOptional<IEnergyStorage> energyCap;
+	private final LazyOptional<IEnergyStorage> energyCap;
 	public String customname;
+	protected final Random rand = new Random();
 
 	public EnergyTileEntity(TileEntityType<?> type, int energyStorage)
 	{
@@ -35,35 +40,24 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	public void tick()
 	{
 		if (this.world != null && !this.world.isRemote)
-		{
 			doUpdate();
-		}
 	}
 
 	public void doUpdate()
 	{
-
 	}
 	
-	
-
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing)
 	{
-		if (capability == CapabilityEnergy.ENERGY)
-		{
-			return energyCap.cast();
-		}
-		return super.getCapability(capability, facing);
+		return capability == CapabilityEnergy.ENERGY ? energyCap.cast() : super.getCapability(capability, facing);
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-
 		compound.put("energy", this.energystorage.serializeNBT());
-		super.write(compound);
-		return compound;
+		return super.write(compound);
 	}
 
 	@Override
@@ -90,16 +84,23 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 
 	public boolean isUsableByPlayer(PlayerEntity player)
 	{
-		return this.world.getTileEntity(this.pos) != this ? false
-		        : player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		if (world == null || this.world.getTileEntity(pos) != this)
+			return false;
+		return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
 	}
+
 
 	public void onSlotContentChanged()
 	{
 
 	}
-	
-	public abstract IIntArray getIntArray(); 
+
+	public int getUpgradeSlot()
+	{
+		return -1;
+	}
+
+	public abstract IIntArray getIntArray();
 	
 	@Override
 	public ITextComponent getDisplayName()

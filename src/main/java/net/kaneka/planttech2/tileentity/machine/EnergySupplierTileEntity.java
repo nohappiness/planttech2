@@ -15,11 +15,11 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.Collections;
 import java.util.HashSet;
 
 public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 {
-	private int ticks;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -31,7 +31,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 			case 1:
 				return EnergySupplierTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-				return EnergySupplierTileEntity.this.ticks;
+				return EnergySupplierTileEntity.this.ticksPassed;
 			default:
 				return 0;
 			}
@@ -48,7 +48,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 				EnergySupplierTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				EnergySupplierTileEntity.this.ticks = value;
+				EnergySupplierTileEntity.this.ticksPassed = value;
 				break;
 			}
 
@@ -68,22 +68,20 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (world == null)
 		{
 			return;
 		}
-		ticks++;
+		ticksPassed++;
 		if(energystorage.getEnergyStored() <= 0)
-		{
 			setPower(false);
-		}
-		else if (getConnected() != null && ticks >= ticksPerEnergy())
+		else if (!getConnected().isEmpty() && ticksPassed >= ticksPerEnergy())
 		{
 			energystorage.extractEnergy(1);
 			setPower(true);
-			ticks = 0;
+			ticksPassed = 0;
 		}
-		doEnergyLoop();
 	}
 
 	private void setPower(boolean powered)
@@ -96,48 +94,19 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 		}
 	}
 
-	/*private void setPower(int value)
-	{
-		if (getConnected() == null)
-		{
-			return;
-		}
-		for (BlockPos pos : getConnected())
-		{
-			world.setBlockState(pos, world.getBlockState(pos).
-					getBlock().getDefaultState()
-					.with(ElectricFence.ELECTRIC_POWER, value)
-					.with(ElectricFence.HORIZONTAL_FACING, world.getBlockState(pos)
-							.get(ElectricFence.HORIZONTAL_FACING)));
-		}
-	}*/
-
 	private HashSet<BlockPos> getConnected()
 	{
 		HashSet<BlockPos> list = new HashSet<>();
-		for (Direction direction : Direction.values())
+		if (world != null)
 		{
-			BlockPos blockPos = this.pos.offset(direction);
-			if (world.getBlockState(blockPos).getBlock() instanceof BaseElectricFence)
+			for (Direction direction : Direction.values())
 			{
-				list.add(blockPos);
+				BlockPos blockPos = this.pos.offset(direction);
+				if (world.getBlockState(blockPos).getBlock() instanceof BaseElectricFence)
+					list.add(blockPos);
 			}
 		}
-		return list.isEmpty() ? null : list;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticks = compound.getInt("ticks");
-		super.read(state, compound);
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("ticks", this.ticks);
-		return super.write(compound);
+		return list;
 	}
 
 	public int ticksPerEnergy()

@@ -96,9 +96,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 				MegaFurnaceTileEntity.this.ticksPassed[5] = value;
 				break;
 			}
-
 		}
-
 		public int size()
 		{
 			return 8;
@@ -123,48 +121,41 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
             if (facing != null) return inputs_provider.cast();
             return inventoryCap.cast();
         }
-
         return super.getCapability(capability, facing);
     }
 
 	@Override
 	public void doUpdate()
 	{
-		
+		super.doUpdate();
 		isSmelting = false;
 		for (int i = 0; i < 6; i++)
 		{
-			if (this.energystorage.getEnergyStored() > this.getEnergyPerTickPerItem())
+			if (this.energystorage.getEnergyStored() > this.energyPerTick())
 			{
 				if (this.canSmelt(i))
 				{
 					isSmelting = true;
 					ticksPassed[i]++;
-					if (ticksPassed[i] >= this.getTicksPerItem())
+					if (ticksPassed[i] >= this.ticksPerItem())
 					{
 						this.smeltItem(i);
 						ticksPassed[i] = 0;
 						addKnowledge();
 					}
-				} else if (ticksPassed[i] > 0)
-				{
-					ticksPassed[i] = 0;
 				}
-			} else
+				else if (ticksPassed[i] > 0)
+					ticksPassed[i] = 0;
+			}
+			else
 			{
 				if (!this.canSmelt(i) && ticksPassed[i] > 0)
-				{
 					ticksPassed[i] = 0;
-				}
 				break;
 			}
 		}
 		if (isSmelting)
-		{
-			this.energystorage.extractEnergy(getEnergyPerTickPerItem(), false);
-		}
-		
-		doEnergyLoop();
+			this.energystorage.extractEnergy(energyPerTick(), false);
 	}
 	
 	@Override
@@ -177,31 +168,24 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	{
 		ItemStack itemstack = itemhandler.getStackInSlot(slot);
 		if (itemstack.isEmpty())
-		{
 			return false;
-		} else
+		else
 		{
 			
 			ItemStack output = getOutput(slot);
 			if (output.isEmpty())
-			{
 				return false;
-			} else
+			else
 			{
 				ItemStack outputslot = itemhandler.getStackInSlot(slot + 6);
 				if (outputslot.isEmpty())
-				{
 					return true;
-				} else if (!output.isItemEqual(outputslot))
-				{
+				else if (!output.isItemEqual(outputslot))
 					return false;
-				} else if (outputslot.getCount() + output.getCount() <= 64 && outputslot.getCount() + output.getCount() <= outputslot.getMaxStackSize())
-				{
+				else if (outputslot.getCount() + output.getCount() <= 64 && outputslot.getCount() + output.getCount() <= outputslot.getMaxStackSize())
 					return true;
-				} else
-				{
+				else
 					return outputslot.getCount() + output.getCount() <= output.getMaxStackSize();
-				}
 
 			}
 		}
@@ -209,15 +193,13 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	
 	public ItemStack getOutput(int slot)
 	{
+		if (world == null)
+			return ItemStack.EMPTY;
 		dummyitemhandler.setStackInSlot(0, itemhandler.getStackInSlot(slot));
 		RecipeWrapper wrapper = new RecipeWrapper(dummyitemhandler);
 		Optional<FurnaceRecipe> recipeopt = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, wrapper, world);
 		FurnaceRecipe recipe = recipeopt.orElse(null); 
-		if(recipe != null)
-		{
-			return recipe.getRecipeOutput(); 
-		}
-		return ItemStack.EMPTY; 
+		return recipe == null ? ItemStack.EMPTY : recipe.getRecipeOutput();
 	}
 
 	public void smeltItem(int slot)
@@ -227,47 +209,26 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 			ItemStack itemstack = this.itemhandler.getStackInSlot(slot);
 			ItemStack itemstack1 = getOutput(slot); 
 			ItemStack itemstack2 = this.itemhandler.getStackInSlot(slot + 6);
-
 			if (itemstack2.isEmpty())
-			{
 				this.itemhandler.setStackInSlot(slot + 6, itemstack1.copy());
-			} else if (itemstack2.getItem() == itemstack1.getItem())
-			{
+			else if (itemstack2.getItem() == itemstack1.getItem())
 				itemstack2.grow(itemstack1.getCount());
-			}
 			itemstack.shrink(1);
 		}
-	}
-
-	public int getEnergyPerTickPerItem()
-	{
-		return 4 + (getUpgradeTier(12, SPEED_UPGRADE) * 4);
-	}
-
-	public int getTicksPerItem()
-	{
-		return 200 - (getUpgradeTier(12, SPEED_UPGRADE) * 35);
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		for (int i = 0; i < 6; i++)
-		{
-			compound.putInt("cooktime_" + i, ticksPassed[i]);
-		}
-		super.write(compound);
-		return compound;
+		compound.putIntArray("cooktime", ticksPassed);
+		return super.write(compound);
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT compound)
 	{
-		for (int i = 0; i < 6; i++)
-		{
-			this.ticksPassed[i] = compound.getInt("cooktime_" + i);
-		}
 		super.read(state, compound);
+		ticksPassed = compound.getIntArray("cooktime");
 	}
 
 	@Override
@@ -306,4 +267,9 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		return 50;
 	}
 
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 12;
+	}
 }

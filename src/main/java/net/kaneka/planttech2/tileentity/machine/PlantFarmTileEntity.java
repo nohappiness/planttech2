@@ -22,11 +22,13 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
 
+import java.util.Collections;
+
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
 
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
-	private final int[] progress = new int[5];
+	private int[] progress = new int[5];
 	
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -39,9 +41,9 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return PlantFarmTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return PlantFarmTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+			    return PlantFarmTileEntity.this.biomassCap.getCurrentStorage();
 			case 3:
-			    return PlantFarmTileEntity.this.BIOMASS_CAP.getMaxStorage();
+			    return PlantFarmTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
 				return PlantFarmTileEntity.this.progress[0]; 
 			case 5: 
@@ -68,10 +70,10 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				PlantFarmTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				PlantFarmTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+				PlantFarmTileEntity.this.biomassCap.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				PlantFarmTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+				PlantFarmTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
 				PlantFarmTileEntity.this.progress[0] = value; 
@@ -106,6 +108,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		int range = getRange();
 		ItemStack seed = itemhandler.getStackInSlot(0);
 		if(!seed.isEmpty())
@@ -115,12 +118,10 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				for(int i = 0 ; i <= range; i++)
 	    		{
 	    			if(progress[i] < getTicks(seed))
-	    			{
 	    				progress[i]++;
-	    			}
 	    			else
 	    			{
-	    				if(energystorage.getEnergyStored() > getEnergyPerAction())
+	    				if(energystorage.getEnergyStored() > energyPerTick())
 	    				{
     	    				NonNullList<ItemStack> drops = getDrops(seed);
     	    				if(!drops.isEmpty())
@@ -130,16 +131,12 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
         	    					for (int k = 0; k < 15; k++)
         	    					{
         	    						if (!stack.isEmpty())
-        	    						{
         	    							stack = itemhandler.insertItem(k, stack, false);
-        	    						}
         	    					}
         	    					if (!stack.isEmpty())
-        	    					{
         	    						spawnAsEntity(world, pos.up(), stack);
-        	    					}
         	    				}
-        	    				energystorage.extractEnergy(getEnergyPerAction(), false);
+        	    				energystorage.extractEnergy(energyPerTick(), false);
         	    				progress[i] = 0; 
         	    				addKnowledge();
     	    				}
@@ -148,21 +145,16 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	    		}
 			}
 		}
-		doEnergyLoop();
-		doFluidLoop();
 	}
 	
 	private boolean isSeed(ItemStack stack)
 	{
-		if(!stack.isEmpty())
+		if (!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if(item instanceof CropSeedItem)
-			{
-				return true; 
-			}
-			
-			if(item instanceof BlockItem)
+			if (item instanceof CropSeedItem)
+				return true;
+			if (item instanceof BlockItem)
 			{
 				Block block = ((BlockItem) item).getBlock();
 				return block instanceof CropsBlock;
@@ -179,19 +171,14 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	
 	private int getTicks(ItemStack stack)
 	{
-		if(!stack.isEmpty())
+		if (!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if(item instanceof CropSeedItem)
+			if (item instanceof CropSeedItem)
 			{
-				if (stack.hasTag())
-				{
-					CompoundNBT nbt = stack.getTag();
-					if(nbt.contains("growspeed"))
-					{
-						return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
-					}
-				}
+				CompoundNBT nbt = stack.getOrCreateTag();
+				if(nbt.contains("growspeed"))
+					return (90 - nbt.getInt("growspeed") * 6) * 20 * 7;
 			}
 		}
 		return 90 * 20 * 7; 
@@ -200,31 +187,23 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	public int getTicks()
 	{
 		ItemStack stack = itemhandler.getStackInSlot(0);
-		if(!stack.isEmpty())
+		if (!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if(item instanceof CropSeedItem)
+			if (item instanceof CropSeedItem)
 			{
-				CompoundNBT nbt = stack.getTag();
-				if (nbt != null && nbt.contains("growspeed"))
-				{
+				CompoundNBT nbt = stack.getOrCreateTag();
+				if (nbt.contains("growspeed"))
 					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
-				}
-				
 			}
 		}
 		return 90 * 20 * 7; 
 	}
 
-	private int getEnergyPerAction()
-	{
-		return 400;
-	}
-	
 	private NonNullList<ItemStack> getDrops(ItemStack stack)
 	{
 		NonNullList<ItemStack> drops = NonNullList.create();
-		if(!stack.isEmpty())
+		if(world != null && !stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
 			if(item instanceof CropSeedItem)
@@ -234,16 +213,12 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				PlantTechMain.getCropList().getByName(traits.getType()).calculateDropsReduced(drops, traits, 7, world.rand);
 				return drops; 
 			}
-			if(item instanceof BlockItem)
+			if (item instanceof BlockItem)
 			{
 				Block block = ((BlockItem) item).getBlock();
-				if(block instanceof CropsBlock)
-				{
-					if(world instanceof ServerWorld)
-					{
+				if (block instanceof CropsBlock)
+					if (world instanceof ServerWorld)
 						drops.addAll(Block.getDrops(block.getDefaultState().with(CropsBlock.AGE, 7), (ServerWorld)world, pos, null));
-					}
-				}
 			}
 		}
 		return drops; 
@@ -258,32 +233,30 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			{
 				TierItem item = (TierItem) stack.getItem();
 				if (item.getItemType() == RANGE_UPGRADE)
-				{
 					return item.getTier();
-				}
 			}
 		}
 		return 0;
 	}
 
 	@Override
+	public int energyPerTick()
+	{
+		return 400;
+	}
+
+	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		for(int i = 0; i < progress.length; i++)
-		{
-			compound.putInt("progress_" + i , progress[i]);
-		}
+		compound.putIntArray("progress", progress);
 		return super.write(compound);
 	}
 
 	@Override
 	public void read(BlockState state, CompoundNBT compound)
 	{
-		for(int i = 0; i < progress.length; i++)
-		{
-			progress[i] = compound.getInt("progress_" + i);
-		}
 		super.read(state, compound);
+		progress = compound.getIntArray("progress");
 	}
 
 	@Override

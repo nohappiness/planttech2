@@ -9,7 +9,6 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
-import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,10 +34,10 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	private int fluidTotal = 0; 
 	private Item output = null;
 	
-	private RangedWrapper inputs; 
-	private RangedWrapper outputs; 
-	private LazyOptional<IItemHandler> inputs_provider;
-	private LazyOptional<IItemHandler> outputs_provider;
+	private final RangedWrapper inputs;
+	private final RangedWrapper outputs;
+	private final LazyOptional<IItemHandler> inputs_provider;
+	private final LazyOptional<IItemHandler> outputs_provider;
 	
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -51,14 +50,13 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 			case 1:
 				return InfuserTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-				return InfuserTileEntity.this.BIOMASS_CAP.getCurrentStorage();
+				return InfuserTileEntity.this.biomassCap.getCurrentStorage();
 			case 3:
-				return InfuserTileEntity.this.BIOMASS_CAP.getMaxStorage();
+				return InfuserTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
 				return InfuserTileEntity.this.fluidInfused; 
 			case 5: 
 				return InfuserTileEntity.this.fluidTotal; 
-				
 			default:
 				return 0;
 			}
@@ -75,10 +73,10 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 				InfuserTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				InfuserTileEntity.this.BIOMASS_CAP.setCurrentStorage(value);
+				InfuserTileEntity.this.biomassCap.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				InfuserTileEntity.this.BIOMASS_CAP.setMaxStorage(value);
+				InfuserTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
 				InfuserTileEntity.this.fluidInfused = value; 
@@ -87,9 +85,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 				InfuserTileEntity.this.fluidTotal = value; 
 				break; 
 			}
-
 		}
-
 		public int size()
 		{
 			return 6;
@@ -114,18 +110,17 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
             if (facing != null) return inputs_provider.cast();
             return inventoryCap.cast();
         }
-
         return super.getCapability(capability, facing);
     }
 
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
-
 			if (!stack1.isEmpty())
 			{
 				InfuserRecipe recipe = getOutputRecipe();
@@ -139,14 +134,15 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 							fluidTotal = recipe.getBiomass(); 
 						}
 						int fluidpertick = fluidPerTick();
-						if (BIOMASS_CAP.getCurrentStorage() >= fluidpertick)
+						if (biomassCap.getCurrentStorage() >= fluidpertick)
 						{
 							if (fluidInfused + fluidpertick < fluidTotal)
 							{
 								fluidInfused += fluidpertick;
-								BIOMASS_CAP.extractBiomass(fluidpertick);
+								biomassCap.extractBiomass(fluidpertick);
 								energystorage.extractEnergy(energyPerTick(), false);
-							} else
+							}
+							else
 							{
 								if (stack2.isEmpty())
 								{
@@ -154,31 +150,30 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
-									BIOMASS_CAP.extractBiomass(fluidTotal - fluidInfused);
+									biomassCap.extractBiomass(fluidTotal - fluidInfused);
 									addKnowledge();
-								} else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
+								}
+								else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
 								{
 									stack2.grow(1);
 									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
-									BIOMASS_CAP.extractBiomass(fluidTotal - fluidInfused);
+									biomassCap.extractBiomass(fluidTotal - fluidInfused);
 									addKnowledge();
 								}
 							}
 						}
-					} else
+					}
+					else
 					{
 						fluidInfused = 0;
 						fluidTotal = recipe.getBiomass(); 
 						output = recipe.getOutput();
 					}
 				}
-				
 			}
 		}
-		doEnergyLoop();
-		doFluidLoop();
 	}
 	
 	@Override
@@ -186,44 +181,26 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	{
 		return field_array;
 	}
-	
+
+	@Nullable
 	private InfuserRecipe getOutputRecipe()
 	{
+		if (world == null)
+			return null;
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
 		Optional<InfuserRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
 		return recipe.orElse(null);
 	}
 	
-
-	public int energyPerTick()
-	{
-		return 4 + (getUpgradeTier(2, SPEED_UPGRADE) * 4);
-	}
-
 	public int fluidPerTick()
 	{
-		return 5 + (getUpgradeTier(2, SPEED_UPGRADE) * 3);
+		return 5 + getUpgradeTier(SPEED_UPGRADE) * 3;
 	}
 
 	@Override
 	public String getNameString()
 	{
 		return "infuser";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", fluidInfused);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.fluidInfused = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -266,5 +243,11 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 150;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 2;
 	}
 }

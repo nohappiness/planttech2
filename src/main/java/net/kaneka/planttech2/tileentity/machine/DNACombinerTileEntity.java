@@ -1,14 +1,11 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import java.util.Random;
-
 import net.kaneka.planttech2.container.DNACombinerContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -16,11 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
-
 public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 {
-	private int ticksPassed = 0;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -50,12 +44,10 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 				break;
 			case 2:
 				DNACombinerTileEntity.this.ticksPassed = value;
-				;
 				break;
 			}
 
 		}
-
 		public int size()
 		{
 			return 3;
@@ -70,6 +62,7 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public void doUpdate()
 	{
+		super.doUpdate();
 		if (this.energystorage.getEnergyStored() > energyPerTick())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
@@ -85,7 +78,8 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 					{
 						ticksPassed++;
 						energystorage.extractEnergy(energyPerTick(), false);
-					} else
+					}
+					else
 					{
 						ticksPassed = 0;
 						energystorage.extractEnergy(energyPerTick(), false);
@@ -99,7 +93,6 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 				}
 			}
 		}
-		doEnergyLoop();
 	}
 	
 	@Override
@@ -111,73 +104,39 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	private CompoundNBT getCombinedNBT(CompoundNBT nbt1, CompoundNBT nbt2)
 	{
 		CompoundNBT newNBT = new CompoundNBT();
-		Random rand = new Random();
 		for (String key : HashMapCropTraits.getTraitsKeyList())
 		{
 			if (key.equals("type"))
 			{
 				if (nbt1.contains(key) && !nbt2.contains(key))
-				{
 					newNBT.putString(key, nbt1.getString(key));
-				} else if (!nbt1.contains(key) && nbt2.contains(key))
-				{
+				else if (!nbt1.contains(key) && nbt2.contains(key))
 					newNBT.putString(key, nbt2.getString(key));
-				} else if (nbt1.contains(key) && nbt2.contains(key))
+				else if (nbt1.contains(key) && nbt2.contains(key))
 				{
 					if (rand.nextBoolean())
-					{
 						newNBT.putString(key, nbt1.getString(key));
-					} else
-					{
+					else
 						newNBT.putString(key, nbt2.getString(key));
-					}
 				}
-			} else
+			}
+			else
 			{
 				if (nbt1.contains(key) && !nbt2.contains(key))
-				{
 					newNBT.putInt(key, nbt1.getInt(key));
-				} else if (!nbt1.contains(key) && nbt2.contains(key))
-				{
+				else if (!nbt1.contains(key) && nbt2.contains(key))
 					newNBT.putInt(key, nbt2.getInt(key));
-				} else if (nbt1.contains(key) && nbt2.contains(key))
-				{
+				else if (nbt1.contains(key) && nbt2.contains(key))
 					newNBT.putInt(key, Math.min(nbt1.getInt(key), nbt2.getInt(key)));
-				}
 			}
 		}
 		return newNBT;
-	}
-
-	public int energyPerTick()
-	{
-		return 4 + (getUpgradeTier(4, SPEED_UPGRADE) * 4);
-	}
-
-	public int ticksPerItem()
-	{
-		return 200 - (getUpgradeTier(4, SPEED_UPGRADE) * 35);
 	}
 
 	@Override
 	public String getNameString()
 	{
 		return "dnacombiner";
-	}
-
-	@Override
-	public CompoundNBT write(CompoundNBT compound)
-	{
-		compound.putInt("tickspassed", ticksPassed);
-		super.write(compound);
-		return compound;
-	}
-
-	@Override
-	public void read(BlockState state, CompoundNBT compound)
-	{
-		this.ticksPassed = compound.getInt("tickspassed");
-		super.read(state, compound);
 	}
 
 	@Override
@@ -208,5 +167,11 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	public int getKnowledgePerAction()
 	{
 		return 50;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 4;
 	}
 }
