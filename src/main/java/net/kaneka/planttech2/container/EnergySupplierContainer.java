@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.EnergySupplierTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,9 +19,8 @@ public class EnergySupplierContainer extends BaseContainer
 	{
 		super(id, ModContainers.ENERGYSUPPLIER, player, tileentity, 2);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 	}
 	
 	

@@ -32,12 +32,12 @@ public class SeedSqueezerContainer extends BaseContainer
 		}
 		
 		this.addSlot(new NoAccessSlot(handler, 9, 122, 46, "slot.seedsqueezer.squeeze"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 10, 97, 85, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 23, 38, "slot.util.fluidin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 23, 57, "slot.util.fluidout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createSpeedUpgradeSlot(handler, 10, 97, 85));
+		this.addSlot(createFluidInSlot(handler, 23, 38));
+		this.addSlot(createFluidOutSlot(handler, 23, 57));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 		
 	}
 	

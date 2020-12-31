@@ -24,18 +24,14 @@ public class MegaFurnaceContainer extends BaseContainer
 		{
 			String usage = "slot.megafurnace.input";
 			if(y == 1)
-			{
 				usage = "slot.util.output";
-			}
 			for(int x = 0; x < 6; x++)
-			{
 				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 6, 21 + x * 22 , 27 + y * 37, usage));
-			}
 		}
-		this.addSlot(new SpeedUpgradeSlot(handler, 12, 109, 85));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createSpeedUpgradeSlot(handler, 12, 109, 85));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 	}
 	
 	@Override

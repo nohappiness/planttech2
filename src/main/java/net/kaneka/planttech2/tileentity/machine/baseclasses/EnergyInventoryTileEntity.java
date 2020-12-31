@@ -139,9 +139,9 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		return 0;
 	}
 
-	protected abstract int getEnergyInSlot();
+	public abstract int getEnergyInSlot();
 
-	protected abstract int getEnergyOutSlot();
+	public abstract int getEnergyOutSlot();
 
 	protected ItemStack getKnowledgeChip()
 	{

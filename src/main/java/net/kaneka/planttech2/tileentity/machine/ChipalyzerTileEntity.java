@@ -10,16 +10,12 @@ import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
-
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 {
@@ -84,21 +80,20 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 						ticksPassed++;
 						energystorage.extractEnergy(energyPerTick(), false);
 					} 
-					else
+					else if (stackOutput.isEmpty())
 					{
-						if (stackOutput.isEmpty())
-						{
-							ItemStack result = recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
-							itemhandler.setStackInSlot(2, result);
-							energystorage.extractEnergy(energyPerTick(), false);
-							stackChip.shrink(1);
-							stackInput.shrink(1);
-							addKnowledge();
-							ticksPassed = 0;
-						} 
+						ItemStack result = recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
+						itemhandler.setStackInSlot(2, result);
+						energystorage.extractEnergy(energyPerTick(), false);
+						stackChip.shrink(1);
+						stackInput.shrink(1);
+						addKnowledge();
+						ticksPassed = 0;
 					}
 				}
+				else ticksPassed = 0;
 			}
+			else ticksPassed = 0;
 		}
 	}
 
@@ -110,7 +105,9 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 		for (IRecipe<?> recipe : world.getRecipeManager().getRecipesForType(ModRecipeTypes.CHIPALYZER))
 		{
 			ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
-			if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), chip))
+			ItemStack fake = chip.copy();
+			fake.setCount(1);
+			if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), fake))
 				if (chipRecipe.compare(chip, stack))
 					list.add(chipRecipe);
 		}

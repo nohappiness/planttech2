@@ -140,30 +140,22 @@ public class ElectricFenceGate extends Block
             default:
                 shape = DOOR_CLOSE_Z;
                 if (open)
-                {
                     shape = (top) ? toTopShape(DOOR_NEGATIVE_Z) : DOOR_NEGATIVE_Z;
-                }
                 break;
             case SOUTH:
                 shape = DOOR_CLOSE_Z;
                 if (open)
-                {
                     shape = (top) ? toTopShape(DOOR_POSITIVE_Z) : DOOR_POSITIVE_Z;
-                }
                 break;
             case WEST:
                 shape = DOOR_CLOSE_X;
                 if (open)
-                {
                     shape = (top) ? toTopShape(DOOR_NEGATIVE_X) : DOOR_NEGATIVE_X;
-                }
                 break;
             case EAST:
                 shape = DOOR_CLOSE_X;
                 if (open)
-                {
                     shape = (top) ? toTopShape(DOOR_POSITIVE_X) : DOOR_POSITIVE_X;
-                }
                 break;
         }
         switch (facing.getAxis())
@@ -172,16 +164,12 @@ public class ElectricFenceGate extends Block
             default:
                 shape = add(shape, FRAME_Z);
                 if (top)
-                {
                     shape = add(shape, FRAME_TOP_Z);
-                }
                 break;
             case X:
                 shape = add(shape, FRAME_X);
                 if (top)
-                {
                     shape = add(shape, FRAME_TOP_X);
-                }
                 break;
         }
         return shape;

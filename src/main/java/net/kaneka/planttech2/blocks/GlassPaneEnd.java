@@ -41,20 +41,13 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 		{
 			BlockState blockstate;
 			if (direction.getAxis() == Direction.Axis.Y)
-			{
 				blockstate = this.getDefaultState().with(FACE, direction == Direction.UP ? AttachFace.FLOOR : AttachFace.CEILING).with(HORIZONTAL_FACING,
 				        context.getPlacementHorizontalFacing());
-			} else
-			{
+			else
 				blockstate = this.getDefaultState().with(FACE, AttachFace.WALL).with(HORIZONTAL_FACING, direction);
-			}
-
 			if (blockstate.isValidPosition(context.getWorld(), context.getPos()))
-			{
 				return blockstate;
-			}
 		}
-
 		return null;
 	}
 

@@ -21,11 +21,10 @@ public class PlantTopiaTeleporterContainer extends BaseContainer
 	{
 		super(id, ModContainers.PLANTTOPIATELEPORTER, player, tileentity, 2);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 150, 86, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 168, 86, "slot.util.energyout"));
+		this.addSlot(createEnergyInSlot(handler, 150, 86));
+		this.addSlot(createEnergyOutSlot(handler, 168, 86));
 	}
-	
-	
+
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{

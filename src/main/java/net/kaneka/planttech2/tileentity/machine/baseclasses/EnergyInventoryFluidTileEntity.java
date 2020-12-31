@@ -83,8 +83,8 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 		return 5 + getUpgradeTier(SPEED_UPGRADE) * 3;
 	}
 
-	protected abstract int getFluidInSlot();
+	public abstract int getFluidInSlot();
     
-    protected abstract int getFluidOutSlot();
+    public abstract int getFluidOutSlot();
 
 }

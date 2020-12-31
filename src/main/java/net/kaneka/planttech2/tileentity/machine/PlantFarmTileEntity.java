@@ -22,8 +22,6 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
 
-import java.util.Collections;
-
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
 
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity

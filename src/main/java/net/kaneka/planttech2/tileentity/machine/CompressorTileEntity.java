@@ -16,7 +16,6 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -32,8 +31,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class CompressorTileEntity extends EnergyInventoryTileEntity
 {
@@ -216,7 +213,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			Item particle = particleStack.getItem(); 
 			if(world != null)
 			{
-        		 for (IRecipe<?> recipe :this.world.getRecipeManager().getRecipesForType(ModRecipeTypes.COMPRESSING))
+        		 for (IRecipe<?> recipe : this.world.getRecipeManager().getRecipesForType(ModRecipeTypes.COMPRESSING))
         		 {
 					 CompressorRecipe compRecipe = (CompressorRecipe) recipe;
 					 if (compRecipe.getInput().getItem() == particle)

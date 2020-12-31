@@ -25,13 +25,12 @@ public class ChipalyzerContainer extends BaseContainer
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.chipalyzer.chipinput"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 68, 27, "slot.chipalyzer.iteminput"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 95, 47, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 68, 69, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createSpeedUpgradeSlot(handler, 3, 68, 69));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 	}
-	
-	
+
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{
@@ -84,5 +83,4 @@ public class ChipalyzerContainer extends BaseContainer
 		}
 		return stack;
 	}
-
 }

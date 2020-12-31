@@ -44,7 +44,7 @@ import java.util.List;
 public class CropBaseBlock extends ContainerBlock
 {
 	public static final IntegerProperty GROWSTATE = IntegerProperty.create("growstate", 0, 7);
-	private String entryName;
+	private final String entryName;
 
 	public CropBaseBlock(String entryName)
 	{
@@ -70,7 +70,7 @@ public class CropBaseBlock extends ContainerBlock
 		BlockState state = world.getBlockState(pos);
 		int growstate = state.get(GROWSTATE);
 		if (growstate < 7)
-				world.setBlockState(pos, state.with(GROWSTATE, growstate + 1));
+			world.setBlockState(pos, state.with(GROWSTATE, growstate + 1));
 		else
 		{
 			List<BlockPos> neighborpos = getNeighborBlockPosRandom(pos);
@@ -81,11 +81,13 @@ public class CropBaseBlock extends ContainerBlock
 					List<BlockPos> cropbarneighbors = getNeighborBlockPosRandomExeptOne(blockpos, pos);
 					for (BlockPos possiblePartner : cropbarneighbors)
 					{
-						if (world.getBlockState(possiblePartner).getBlock() instanceof CropBaseBlock)
+						BlockState partnerState = world.getBlockState(possiblePartner);
+						if (partnerState.getBlock() instanceof CropBaseBlock)
 						{
-							if (world.getTileEntity(possiblePartner) instanceof CropsTileEntity)
+							TileEntity tileEntity = world.getTileEntity(possiblePartner);
+							if (tileEntity instanceof CropsTileEntity)
 							{
-								HashMapCropTraits partnertraits = ((CropsTileEntity) world.getTileEntity(possiblePartner)).getTraits();
+								HashMapCropTraits partnertraits = ((CropsTileEntity) tileEntity).getTraits();
 								world.setBlockState(blockpos, getDefaultState());
 								if (world.getTileEntity(blockpos) instanceof CropsTileEntity && world.getTileEntity(pos) instanceof CropsTileEntity)
 								{
@@ -100,9 +102,7 @@ public class CropBaseBlock extends ContainerBlock
 					{
 						world.setBlockState(blockpos, getDefaultState());
 						if (world.getTileEntity(blockpos) instanceof CropsTileEntity && world.getTileEntity(pos) instanceof CropsTileEntity)
-						{
 							((CropsTileEntity) world.getTileEntity(blockpos)).setTraits(((CropsTileEntity) world.getTileEntity(pos)).getTraits().copy());
-						}
 					}
 					break;
 				}
@@ -113,11 +113,9 @@ public class CropBaseBlock extends ContainerBlock
 	public void updateCreative(World world, BlockPos pos)
 	{
 		BlockState state = world.getBlockState(pos);
-		int growstate = state.get(GROWSTATE).intValue();
+		int growstate = state.get(GROWSTATE);
 		if (growstate < 7)
-		{
 			world.setBlockState(pos, state.with(GROWSTATE, 7));
-		}
 	}
 
 	private List<BlockPos> getNeighborBlockPosRandom(BlockPos pos)
@@ -146,9 +144,7 @@ public class CropBaseBlock extends ContainerBlock
 			return false;
 		if (!rightSoil(world, pos, traits.getType()))
 			return false;
-		if (!rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE)))
-			return false;
-		return true;
+		return rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE));
 	}
 
 	public String[] canGrowString(World world, BlockPos pos)
@@ -166,24 +162,17 @@ public class CropBaseBlock extends ContainerBlock
 				messages[3] = "Not right soil";
 			if (!rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE)))
 				messages[4] = "Not right temperature";
-		} else
-		{
-			messages[0] = "error";
 		}
+		else
+			messages[0] = "error";
 		return messages;
 	}
 
 	public boolean enoughLight(World world, BlockPos pos, int lightsensitivity)
 	{
 		if (!world.isAreaLoaded(pos, 1))// prevent loading unloaded chunks
-		{
 			return false;
-		}
-		if (world.getNeighborAwareLightSubtracted(pos, 0) >= (14 - lightsensitivity))
-		{
-			return true;
-		}
-		return false;
+		return world.getNeighborAwareLightSubtracted(pos, 0) >= (14 - lightsensitivity);
 	}
 
 	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity)
@@ -191,20 +180,10 @@ public class CropBaseBlock extends ContainerBlock
 		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
 		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
 		{
-			if (world.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER )
-			{
+			BlockState state = world.getBlockState(blockpos$mutableblockpos);
+			if (state.getMaterial() == Material.WATER || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.get(BlockStateProperties.WATERLOGGED)))
 				return true;
-			}
-			
-			if(world.getBlockState(blockpos$mutableblockpos).hasProperty(BlockStateProperties.WATERLOGGED))
-			{
-				if(world.getBlockState(blockpos$mutableblockpos).get(BlockStateProperties.WATERLOGGED))
-				{
-					return true; 
-				}
-			}
 		}
-
 		return false;
 	}
 
@@ -230,34 +209,28 @@ public class CropBaseBlock extends ContainerBlock
 	@Override
 	public boolean removedByPlayer(BlockState state, World world, BlockPos pos, PlayerEntity player, boolean willHarvest, FluidState fluid)
 	{
-		if (willHarvest && !player.isCreative())
-		{
-			return true;
-		}
-		return super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
+		return willHarvest && !player.isCreative() || super.removedByPlayer(state, world, pos, player, willHarvest, fluid);
 	}
 
 	@Override
 	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
 	{
 		super.harvestBlock(world, player, pos, state, te, stack);
-		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
+		world.destroyBlock(pos, false);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
-		int growstate = state.get(GROWSTATE).intValue();
+		int growstate = state.get(GROWSTATE);
 		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
 		{
 			ItemStack holdItem = player.getHeldItem(Hand.MAIN_HAND);
 			if (!holdItem.isEmpty())
 			{
 				if (holdItem.getItem() instanceof AnalyserItem || holdItem.getItem() instanceof AdvancedAnalyserItem || holdItem.getItem() instanceof CropRemover)
-				{
-					return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
-				}
+					return ActionResultType.PASS;
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
 			TileEntity te = worldIn.getTileEntity(pos);
@@ -265,9 +238,7 @@ public class CropBaseBlock extends ContainerBlock
 			{
 				((CropsTileEntity) te).dropsRemoveOneSeed(drops, growstate);
 				for (ItemStack stack : drops)
-				{
 					spawnAsEntity(worldIn, pos, stack);
-				}
 				worldIn.setBlockState(pos, state.with(GROWSTATE, 0));
 			}
 		}
@@ -301,7 +272,6 @@ public class CropBaseBlock extends ContainerBlock
 		return BlockRenderType.MODEL;
 	}
 
-
 	public String getEntryName()
 	{
 		return entryName;
@@ -312,17 +282,13 @@ public class CropBaseBlock extends ContainerBlock
 		return true;
 	}
 	
-	
-
 	public static class ColorHandler implements IBlockColor
 	{
 		@Override
 		public int getColor(BlockState state, IBlockDisplayReader blockDisplayReader, BlockPos pos, int tintindex)
 		{
 			if (tintindex == 0)
-			{
 				return PlantTechMain.getCropList().getByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();
-			}
 			return 0xFFFFFFFF;
 		}
 

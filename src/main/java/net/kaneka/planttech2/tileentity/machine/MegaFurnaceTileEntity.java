@@ -27,8 +27,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
-
 public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 {
 	public int[] ticksPassed = new int[6];

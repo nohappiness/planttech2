@@ -19,9 +19,7 @@ public class RadiationSickness extends Effect
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
     {
         if (entityLivingBaseIn instanceof PlayerEntity && !entityLivingBaseIn.getEntityWorld().isRemote())
-        {
             entityLivingBaseIn.attackEntityFrom(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayerEntity) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
-        }
     }
 
     @Override
@@ -29,12 +27,7 @@ public class RadiationSickness extends Effect
     {
         int i = 60 >> amplifier;
         if (i > 0)
-        {
             return duration % i == 0;
-        }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 }

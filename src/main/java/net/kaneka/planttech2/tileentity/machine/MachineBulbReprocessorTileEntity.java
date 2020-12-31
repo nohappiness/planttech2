@@ -8,13 +8,11 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.Tags.Items;
@@ -174,13 +172,13 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	}
 
 	@Override
-	protected int getFluidInSlot()
+	public int getFluidInSlot()
 	{
 		return 2;
 	}
 
 	@Override
-	protected int getFluidOutSlot()
+	public int getFluidOutSlot()
 	{
 		return 3;
 	}

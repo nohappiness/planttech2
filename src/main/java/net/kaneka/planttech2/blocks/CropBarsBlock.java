@@ -8,6 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -47,6 +48,6 @@ public class CropBarsBlock extends Block
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos)
 	{
-		return world.getBlockState(pos.down()).isSolid();
+		return world.getBlockState(pos.down()).isSolidSide(world, pos, Direction.UP);
 	}
 }

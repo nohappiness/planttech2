@@ -17,6 +17,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.ArrayList;
@@ -137,13 +138,13 @@ public class CarverBlock extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		IBlockReader iblockreader = context.getWorld();
-		BlockPos blockpos = context.getPos();
-		return super.getStateForPlacement(context)
-		        .with(NORTH, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.north()))))
-		        .with(EAST, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.east()))))
-		        .with(SOUTH, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.south()))))
-		        .with(WEST, Boolean.valueOf(this.checkForConnection(iblockreader.getBlockState(blockpos.west()))));
+		World world = context.getWorld();
+		BlockPos pos = context.getPos();
+		return getDefaultState()
+		        .with(NORTH, this.checkForConnection(world.getBlockState(pos.north())))
+		        .with(EAST, this.checkForConnection(world.getBlockState(pos.east())))
+		        .with(SOUTH, this.checkForConnection(world.getBlockState(pos.south())))
+		        .with(WEST, this.checkForConnection(world.getBlockState(pos.west())));
 	}
 
 	@Override
@@ -151,6 +152,4 @@ public class CarverBlock extends Block
 	{
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}
-
-
 }

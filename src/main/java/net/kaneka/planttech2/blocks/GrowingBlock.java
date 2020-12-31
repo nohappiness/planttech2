@@ -36,7 +36,7 @@ public class GrowingBlock extends Block
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
 	{
-		if(growAlone)
+		if (growAlone)
     		grow(state, world, pos);
 	}
 	

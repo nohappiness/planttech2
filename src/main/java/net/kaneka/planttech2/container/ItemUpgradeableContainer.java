@@ -28,52 +28,44 @@ public class ItemUpgradeableContainer extends Container {
 		}
 	};
 	private int slot;
-	private ItemStack stack;
+	private final ItemStack stack;
 
 	public ItemUpgradeableContainer(int id, PlayerInventory inv) {
 		this(id, inv, new ItemStack(ModItems.CYBERBOW), -1);
 	}
 
-	public ItemUpgradeableContainer(int id, PlayerInventory playerInv, ItemStack itemInv, int slot) {
+	public ItemUpgradeableContainer(int id, PlayerInventory playerInv, ItemStack itemInv, int slot)
+	{
 		super(ModContainers.UPGRADEABLEITEM, id);
 		this.stack = itemInv;
 		LazyOptional<IItemHandler> provider = itemInv.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-		if (provider != null) {
-			IItemHandler handler = provider.orElse(null);
-			if (handler != null) {
-				int invsize = handler.getSlots();
-				Integer[] setting = settings.get(invsize);
-				if (setting != null) {
-					for (int y = 0; y < setting[0]; y++) {
-						for (int x = 0; x < setting[1]; x++) {
-							addSlot(new ChangeCheckSlot(itemInv, handler, x + y * setting[1], 47 + x * 18, 39 + y * 18, "slot.upgradeableitem.chipslot"));
-						}
-					}
-				}
-			}
-		}
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 9; x++) {
+		IItemHandler handler = provider.orElseThrow(NullPointerException::new);
+		int invsize = handler.getSlots();
+		Integer[] setting = settings.get(invsize);
+		if (setting != null)
+			for (int y = 0; y < setting[0]; y++)
+				for (int x = 0; x < setting[1]; x++)
+					addSlot(new ChangeCheckSlot(itemInv, handler, x + y * setting[1], 47 + x * 18, 39 + y * 18, "slot.upgradeableitem.chipslot"));
+		for (int y = 0; y < 3; y++)
+			for (int x = 0; x < 9; x++)
 				addSlot(new Slot(playerInv, x + y * 9 + 9, 24 + x * 18, 107 + y * 18));
-			}
-		}
-		if (slot == -1) {
+		if (slot == -1)
 			slot = playerInv.getSlotFor(stack) + 1;
-		}
 		this.slot = slot;
-		for (int x = 0; x < 9; x++) {
+		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(playerInv, x, 24 + x * 18, 165));
-		}
 		this.slot = this.inventorySlots.size() - 9 + slot;
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean canInteractWith(PlayerEntity playerIn)
+	{
 		return true;
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	{
 //		System.out.println("world isremote:" + player.getEntityWorld().isRemote + "slot: " + this.slot + "clicked slot: " + slotId);
 		return slotId == this.slot ? ItemStack.EMPTY : super.slotClick(slotId, dragType, clickTypeIn, player);
 	}

@@ -7,15 +7,12 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
-
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 {
@@ -130,13 +127,13 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	protected int getFluidInSlot()
+	public int getFluidInSlot()
 	{
 		return 3;
 	}
 
 	@Override
-	protected int getFluidOutSlot()
+	public int getFluidOutSlot()
 	{
 		return 4;
 	}

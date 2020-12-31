@@ -43,16 +43,9 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         if (!checkValid(currentPos, (World) worldIn))
-        {
             worldIn.destroyBlock(currentPos, !stateIn.get(IS_TOP));
-        }
         BlockState state = worldIn.getBlockState(stateIn.get(IS_TOP) ? currentPos.down() : currentPos.up());
-        if (state.getBlock() == this)
-        {
-            return getDefaultState()
-                    .with(IS_TOP, stateIn.get(IS_TOP));
-        }
-        return stateIn;
+        return state.getBlock() == this ? getDefaultState().with(IS_TOP, stateIn.get(IS_TOP)) : stateIn;
     }
 
     @Override
@@ -60,10 +53,8 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     {
         BlockPos blockpos = context.getPos();
         if (blockpos.getY() < 255 && context.getWorld().getBlockState(blockpos.up()).isReplaceable(context))
-        {
             return getDefaultState()
                     .with(IS_TOP, false);
-        }
         return null;
     }
 

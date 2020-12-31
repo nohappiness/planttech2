@@ -26,13 +26,12 @@ public class DNACombinerContainer extends BaseContainer
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 113, 37, "slot.dnacombiner.container"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 121, 56, "slot.dnacombiner.empty_container"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 95, 73, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 54, 50, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createSpeedUpgradeSlot(handler, 4, 54, 50));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler,167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 	}
-	
-	
+
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{
@@ -50,24 +49,20 @@ public class DNACombinerContainer extends BaseContainer
                     return ItemStack.EMPTY;
                 }
 			}
-			else if(index < 36)
+			else
 			{
-				if(!this.mergeItemStack(stack1, 36, 39, false)) 
+				if(!this.mergeItemStack(stack1, 36, 39, false))
 				{
 					return ItemStack.EMPTY;
 				}
-				else if(index >= 0 && index < 27)
+				else if(index < 27)
 				{
 					if(!this.mergeItemStack(stack1, 27, 35, false)) return ItemStack.EMPTY;
 				}
-				else if(index >= 27 && index < 36 && !this.mergeItemStack(stack1, 0, 26, false))
+				else if(!this.mergeItemStack(stack1, 0, 26, false))
 				{
 					return ItemStack.EMPTY;
 				}
-			}
-			else if(!this.mergeItemStack(stack1, 0, 35, false)) 
-			{
-				return ItemStack.EMPTY;
 			}
 			
 			

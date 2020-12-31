@@ -20,25 +20,17 @@ public class PlantFarmContainer extends BaseContainer
 	{
 		super(id, ModContainers.PLANTFARM, player, tileentity, 17);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-		
-		
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 84, 41, "slot.plantfarm.seed"));
-		
 		for(int y = 0; y < 2; y++)
-		{
 			for(int x = 0; x < 5; x++)
-			{
 				this.addSlot(new SlotItemHandlerWithInfo(handler, 1 + x + y * 5, 59 + x * 18, 67 + y * 18, "slot.plantfarm.storage"));
-			}
-		}
-		
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 11, 59, 41, "slot.util.squeezerupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 12, 131, 41, "slot.util.rangeupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidInSlot(), 23, 38, "slot.util.fluidin")); 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getFluidOutSlot(), 23, 57, "slot.util.fluidout")); 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createRangeUpgradeSlot(handler, 12, 131, 41));
+		this.addSlot(createFluidInSlot(handler, 23, 38));
+		this.addSlot(createFluidOutSlot(handler, 23, 57));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 		
 		
 	}

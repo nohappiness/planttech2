@@ -24,19 +24,13 @@ public class CompressorContainer extends BaseContainer
 
 		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 34, 83, "slot.compressor.input"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 126, 83, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 78, 87, "slot.util.speedupgrade"));
-
+		this.addSlot(createSpeedUpgradeSlot(handler, 2, 78, 87));
 		for (int y = 0; y < 3; y++)
-		{
 			for (int x = 0; x < 6; x++)
-			{
 				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 35 + x * 18, 26 + y * 18, "slot.compressor.select"));
-			}
-		}
-
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 	}
 
 	@Override

@@ -25,10 +25,10 @@ public class DNAExtractorContainer extends BaseContainer
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 58, 40, "slot.dnaextractor.seeds"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 130, 40, "slot.dnaextractor.empty_container"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 130, 67, "slot.util.output"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 94, 66, "slot.util.speedupgrade"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyInSlot(), 167, 38, "slot.util.energyin"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getEnergyOutSlot(), 167, 57, "slot.util.energyout"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, tileentity.getKnowledgeChipSlot(), 12, 9, "slot.util.knowledgechip"));
+		this.addSlot(createSpeedUpgradeSlot(handler, 3, 94, 66));
+		this.addSlot(createEnergyInSlot(handler, 167, 38));
+		this.addSlot(createEnergyOutSlot(handler, 167, 57));
+		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 		
 	}
 	

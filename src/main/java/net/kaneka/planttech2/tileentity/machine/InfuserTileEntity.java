@@ -9,13 +9,11 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.common.capabilities.Capability;
@@ -204,13 +202,13 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	protected int getFluidInSlot()
+	public int getFluidInSlot()
 	{
 		return 3;
 	}
 
 	@Override
-	protected int getFluidOutSlot()
+	public int getFluidOutSlot()
 	{
 		return 4;
 	}
