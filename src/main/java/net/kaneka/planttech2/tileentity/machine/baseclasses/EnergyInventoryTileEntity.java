@@ -57,6 +57,11 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		doEnergyLoop();
 	}
 
+	protected void resetProgress()
+	{
+		ticksPassed = 0;
+	}
+
 	public void doEnergyLoop()
 	{
 		ItemStack stack = itemhandler.getStackInSlot(getEnergyInSlot());

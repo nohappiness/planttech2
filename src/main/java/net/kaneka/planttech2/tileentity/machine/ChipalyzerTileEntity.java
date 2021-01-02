@@ -88,12 +88,12 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 						stackChip.shrink(1);
 						stackInput.shrink(1);
 						addKnowledge();
-						ticksPassed = 0;
+						resetProgress();
 					}
 				}
-				else ticksPassed = 0;
+				else resetProgress();
 			}
-			else ticksPassed = 0;
+			else resetProgress();
 		}
 	}
 

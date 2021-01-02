@@ -153,7 +153,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 									itemhandler.setStackInSlot(1, stackOutput);
 									energystorage.extractEnergy(energyPerTick(), false);
 									stack1.shrink(neededInput);
-									ticksPassed = 0;
+									resetProgress();
 								}
 								else if (stack2.getItem() == stackOutput.getItem())
 								{
@@ -162,7 +162,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 										stack2.grow(stackOutput.getCount());
 										energystorage.extractEnergy(energyPerTick(), false);
 										stack1.shrink(neededInput);
-										ticksPassed = 0;
+										resetProgress();
 										addKnowledge();
 									}
 								}
@@ -173,6 +173,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 				}
 				else initRecipeList();
 			}
+			else resetProgress();
 		}
 	}
 	
@@ -191,7 +192,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	{
 		if (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
 		{
-			this.selectedId = -2;
+			this.selectedId = -1;
 			initRecipeList();
 		}
 	}
@@ -200,6 +201,8 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	public void initRecipeList()
 	{
 		// reset old values
+		if (world == null || world.isRemote)
+			return;
 		for (int i = 0; i < 20; i++)
 			itemhandler.setStackInSlot(i + 3, ItemStack.EMPTY);
 
@@ -231,7 +234,7 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 			recipeList.put(i, temprecipeList.get(keys.get(i)));
 			itemhandler.setStackInSlot(i + 3, temprecipeList.get(keys.get(i)).getLeft());
 		}
-		ticksPassed = 0;
+		resetProgress();
 	}
 
 	@Override
@@ -296,6 +299,6 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 	@Override
 	public int getUpgradeSlot()
 	{
-		return 3;
+		return 2;
 	}
 }

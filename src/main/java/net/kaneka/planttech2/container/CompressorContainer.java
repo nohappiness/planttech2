@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -82,22 +81,21 @@ public class CompressorContainer extends BaseContainer
 		return stack;
 	}
 
-}
-
-class ChangeCheckSlot extends SlotItemHandlerWithInfo
-{
-	private CompressorTileEntity te;
-
-	public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+	class ChangeCheckSlot extends SlotItemHandlerWithInfo
 	{
-		super(itemHandler, index, xPosition, yPosition, usage);
-		this.te = te;
-	}
+		private final CompressorTileEntity te;
+		public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+		{
+			super(itemHandler, index, xPosition, yPosition, usage);
+			this.te = te;
+		}
 
-	@Override
-	public void onSlotChanged()
-	{
-		te.setRecipe();
-		super.onSlotChanged();
+		@Override
+		public void onSlotChanged()
+		{
+			super.onSlotChanged();
+			CompressorContainer.this.detectAndSendChanges();
+			te.setRecipe();
+		}
 	}
 }

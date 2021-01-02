@@ -60,36 +60,34 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (!stack1.isEmpty())
+			if (stack1.getItem() == ModItems.DNA_CONTAINER)
 			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER)
+				if (ticksPassed < ticksPerItem())
 				{
-					if (ticksPassed < ticksPerItem())
+					ticksPassed++;
+					energystorage.extractEnergy(energyPerTick(), false);
+				}
+				else
+				{
+					if (stack2.isEmpty())
 					{
-						ticksPassed++;
+						itemhandler.setStackInSlot(1, new ItemStack(ModItems.DNA_CONTAINER_EMPTY));
 						energystorage.extractEnergy(energyPerTick(), false);
+						stack1.shrink(1);
+						resetProgress();
+						addKnowledge();
 					}
-					else
+					else if (stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
 					{
-						if (stack2.isEmpty())
-						{
-							itemhandler.setStackInSlot(1, new ItemStack(ModItems.DNA_CONTAINER_EMPTY));
-							energystorage.extractEnergy(energyPerTick(), false);
-							stack1.shrink(1);
-							ticksPassed = 0;
-							addKnowledge();
-						}
-						else if (stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
-						{
-							stack2.grow(1);
-							energystorage.extractEnergy(energyPerTick(), false);
-							stack1.shrink(1);
-							ticksPassed = 0;
-							addKnowledge();
-						}
+						stack2.grow(1);
+						energystorage.extractEnergy(energyPerTick(), false);
+						stack1.shrink(1);
+						resetProgress();
+						addKnowledge();
 					}
 				}
 			}
+			else resetProgress();
 		}
     }
     
