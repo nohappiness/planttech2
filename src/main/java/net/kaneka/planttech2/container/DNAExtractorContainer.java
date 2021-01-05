@@ -23,8 +23,8 @@ public class DNAExtractorContainer extends BaseContainer
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 58, 40, "slot.dnaextractor.seeds"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 130, 40, "slot.dnaextractor.empty_container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 130, 67, "slot.util.output"));
+		this.addSlot(createDNAContainerSlot(handler, 1, 130, 40, "slot.dnaextractor.empty_container", true));
+		this.addSlot(createOutoutSlot(handler, 2, 130, 67));
 		this.addSlot(createSpeedUpgradeSlot(handler, 3, 94, 66));
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));

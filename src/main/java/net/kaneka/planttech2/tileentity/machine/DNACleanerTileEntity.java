@@ -1,8 +1,10 @@
 package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.DNACleanerContainer;
+import net.kaneka.planttech2.items.DNAContainerItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +13,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
 
-public class DNACleanerTileEntity extends EnergyInventoryTileEntity
+public class DNACleanerTileEntity extends ConvertEnergyInventoryTileEntity
 {
     protected final IIntArray field_array = new IIntArray()
 	{
@@ -52,46 +54,19 @@ public class DNACleanerTileEntity extends EnergyInventoryTileEntity
 		super(ModTileEntities.DNACLEANER_TE,1000, 6, PlantTechConstants.MACHINETIER_DNA_CLEANER);
     }
 
-    @Override
-    public void doUpdate()
-    {
-    	super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
-		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (stack1.getItem() == ModItems.DNA_CONTAINER)
-			{
-				if (ticksPassed < ticksPerItem())
-				{
-					ticksPassed++;
-					energystorage.extractEnergy(energyPerTick(), false);
-				}
-				else
-				{
-					if (stack2.isEmpty())
-					{
-						itemhandler.setStackInSlot(1, new ItemStack(ModItems.DNA_CONTAINER_EMPTY));
-						energystorage.extractEnergy(energyPerTick(), false);
-						stack1.shrink(1);
-						resetProgress();
-						addKnowledge();
-					}
-					else if (stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
-					{
-						stack2.grow(1);
-						energystorage.extractEnergy(energyPerTick(), false);
-						stack1.shrink(1);
-						resetProgress();
-						addKnowledge();
-					}
-				}
-			}
-			else resetProgress();
-		}
-    }
-    
-    @Override
+	@Override
+	protected boolean canProceed(ItemStack input, ItemStack output)
+	{
+		return input.getItem() instanceof DNAContainerItem;
+	}
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		return new ItemStack(ModItems.DNA_CONTAINER_EMPTY);
+	}
+
+	@Override
 	public IIntArray getIntArray()
 	{
 		return field_array;

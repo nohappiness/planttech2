@@ -4,6 +4,8 @@ package net.kaneka.planttech2.container;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
@@ -11,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,6 +21,7 @@ import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 public class BaseContainer extends Container
@@ -56,33 +60,42 @@ public class BaseContainer extends Container
 
 	protected LimitedItemInfoSlot createSpeedUpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.speedupgrade", (stack) -> {
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.speedupgrade").setConditions((stack) -> {
 			Item item = stack.getItem();
 			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.SPEED_UPGRADE;
-		});
+		}).setLimited();
 	}
 
 	protected LimitedItemInfoSlot createRangeUpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.rangeupgrade", (stack) -> {
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.rangeupgrade").setConditions((stack) -> {
 			Item item = stack.getItem();
 			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.RANGE_UPGRADE;
-		});
+		}).setLimited();
 	}
 
 	protected LimitedItemInfoSlot createKnowledgeChipSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip", (stack) -> stack.getItem() instanceof KnowledgeChip);
+		return new LimitedItemInfoSlot(itemHandler, tileentity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
+	}
+
+
+	protected LimitedItemInfoSlot createCapacityChipSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
+	{
+		return (LimitedItemInfoSlot) new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.energystorageupgrade").setConditions((stack) -> 			{
+			Item item = stack.getItem();
+			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.CAPACITY_UPGRADE;
+		}).setLimited().setShouldListen();
 	}
 
 	protected LimitedItemInfoSlot createEnergyInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin", (stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createEnergyOutSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout", (stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createFluidInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
@@ -95,9 +108,26 @@ public class BaseContainer extends Container
 		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidTileEntity) tileentity).getFluidOutSlot(), xPosition, yPosition, "slot.util.fluidout");
 	}
 
-	public static class SlotItemHandlerWithInfo extends SlotItemHandler
+	protected LimitedItemInfoSlot createFakeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+	{
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.output").setConditions(false);
+	}
+
+	protected LimitedItemInfoSlot createOutoutSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
+	{
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.output").setConditions(false);
+	}
+
+	protected LimitedItemInfoSlot createDNAContainerSlot(IItemHandler handler, int index, int xPosition, int yPosition, String usage, boolean isEmpty)
+	{
+		return new LimitedItemInfoSlot(handler, index, xPosition, yPosition, usage).setConditions(
+				(stack) -> (isEmpty && stack.getItem() == ModItems.DNA_CONTAINER_EMPTY) || (!isEmpty && stack.getItem() == ModItems.DNA_CONTAINER && stack.hasTag()));
+	}
+
+	public class SlotItemHandlerWithInfo extends SlotItemHandler
 	{
 		private final String usage;
+		protected boolean listening = false;
 
 		public SlotItemHandlerWithInfo(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 		{
@@ -109,21 +139,33 @@ public class BaseContainer extends Container
 		{
 			return usage;
 		}
+
+		@Override
+		public void onSlotChanged()
+		{
+			super.onSlotChanged();
+			if (listening)
+			{
+				BaseContainer.this.detectAndSendChanges();
+				BaseContainer.this.tileentity.onContainerUpdated();
+			}
+		}
+
+		public SlotItemHandlerWithInfo setShouldListen()
+		{
+			listening = true;
+			return this;
+		}
 	}
 
-	public static class LimitedItemInfoSlot extends SlotItemHandlerWithInfo
+	public class LimitedItemInfoSlot extends SlotItemHandlerWithInfo
 	{
-		private final Predicate<ItemStack> conditions;
+		private Predicate<ItemStack> conditions = (stack) -> true;
+		private boolean limited = false;
 
 		public LimitedItemInfoSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 		{
-			this(itemHandler, index, xPosition, yPosition, usage, (stack) -> true);
-		}
-
-		public LimitedItemInfoSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage, Predicate<ItemStack> conditions)
-		{
 			super(itemHandler, index, xPosition, yPosition, usage);
-			this.conditions = conditions;
 		}
 
 		@Override
@@ -135,7 +177,31 @@ public class BaseContainer extends Container
 		@Override
 		public int getItemStackLimit(ItemStack stack)
 		{
-			return 1;
+			return limited ? 1 : super.getItemStackLimit(stack);
+		}
+
+		public LimitedItemInfoSlot setLimited()
+		{
+			limited = true;
+			return this;
+		}
+
+		public LimitedItemInfoSlot setConditions(boolean enabled)
+		{
+			this.conditions = (stack) -> enabled;
+			return this;
+		}
+
+		public LimitedItemInfoSlot setConditions(Item... acceptableItems)
+		{
+			this.conditions = (stack) -> acceptableItems.length == 0 || Arrays.stream(acceptableItems).anyMatch((item) -> stack.getItem() == item);
+			return this;
+		}
+
+		public LimitedItemInfoSlot setConditions(Predicate<ItemStack> conditions)
+		{
+			this.conditions = conditions;
+			return this;
 		}
 	}
 }

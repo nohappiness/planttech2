@@ -8,6 +8,7 @@ import net.kaneka.planttech2.container.DNARemoverContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
-public class DNARemoverTileEntity extends EnergyInventoryTileEntity
+public class DNARemoverTileEntity extends ConvertEnergyInventoryTileEntity
 {
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -63,44 +64,23 @@ public class DNARemoverTileEntity extends EnergyInventoryTileEntity
 	}
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
-		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (!stack1.isEmpty() && stack2.isEmpty())
-			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag())
-				{
-					List<String> traitsList = getAvailableTraits(stack1);
-					if (traitsList.size() > 1)
-					{
-						if (ticksPassed < ticksPerItem())
-						{
-							ticksPassed++;
-							energystorage.extractEnergy(energyPerTick(), false);
-						}
-						else
-						{
-							Collections.shuffle(traitsList);
-							CompoundNBT nbt = stack1.getTag().copy();
-							nbt.remove(traitsList.get(0));
-							ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
-							stack.setTag(nbt);
-							itemhandler.setStackInSlot(1, stack);
-							stack1.shrink(1);
-							energystorage.extractEnergy(energyPerTick(), false);
-							ticksPassed = 0;
-							addKnowledge();
-						}
-					}
-				}
-			}
-		}
+		return !input.isEmpty() && input.hasTag() && !getAvailableTraits(input).isEmpty();
 	}
-	
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		List<String> traitsList = getAvailableTraits(input);
+		Collections.shuffle(traitsList);
+		CompoundNBT nbt = input.getTag().copy();
+		nbt.remove(traitsList.get(0));
+		ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
+		stack.setTag(nbt);
+		return stack;
+	}
+
 	@Override
 	public IIntArray getIntArray()
 	{

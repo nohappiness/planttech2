@@ -22,8 +22,7 @@ public class EnergySupplierContainer extends BaseContainer
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 	}
-	
-	
+
 	@Override
 	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
 	{

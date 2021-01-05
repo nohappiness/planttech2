@@ -106,7 +106,7 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 		if (selectedId > 0 && selectedId <= ModItems.MACHINE_BULBS.size())
 		{
 			MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId - 1).get();
-    		if (energystorage.getEnergyStored() >= energyPerTick() && bulb.getTier() <= actualTier && biomassCap.getCurrentStorage() >= bulb.getNeededBiomass())
+    		if (energystorage.getEnergyStored() >= energyPerAction() && bulb.getTier() <= actualTier && biomassCap.getCurrentStorage() >= bulb.getNeededBiomass())
     		{
     			ItemStack input = itemhandler.getStackInSlot(0);
     			ItemStack output = itemhandler.getStackInSlot(1);
@@ -118,7 +118,7 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
     						ticksPassed++;
     					else
     					{
-    						energystorage.extractEnergy(energyPerTick());
+    						energystorage.extractEnergy(energyPerAction());
 							biomassCap.extractBiomass(bulb.getNeededBiomass());
     						input.shrink(1);
     						ticksPassed = 0;
@@ -154,7 +154,7 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	}
 
 	@Override
-	public int energyPerTick()
+	public int energyPerAction()
 	{
 		return 1000;
 	}

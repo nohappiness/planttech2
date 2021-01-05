@@ -233,9 +233,9 @@ public class ModItems
         r.register(make("cyberdagger", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 1, -1.4F, UpgradeChipItem.MELEE_WEAPON)));
         r.register(make("cyberkatana", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 8, -3.4F, UpgradeChipItem.MELEE_WEAPON)));
         r.register(make("cyberrapier", new UpgradeableHandItem(new Item.Properties().group(TOOLS_AND_ARMOR), 1000, 10, 4, -2.4F, UpgradeChipItem.MELEE_WEAPON)));
-        r.register(make("capacityupgrade_1", new TierItem(new Item.Properties().group(CHIPS), 1, UPGRADE_CHIP)));
-        r.register(make("capacityupgrade_2", new TierItem(new Item.Properties().group(CHIPS), 2, UPGRADE_CHIP)));
-        r.register(make("capacityupgrade_3", new TierItem(new Item.Properties().group(CHIPS), 3, UPGRADE_CHIP)));
+        r.register(make("capacityupgrade_1", new TierItem(new Item.Properties().group(CHIPS), 1, CAPACITY_UPGRADE)));
+        r.register(make("capacityupgrade_2", new TierItem(new Item.Properties().group(CHIPS), 2, CAPACITY_UPGRADE)));
+        r.register(make("capacityupgrade_3", new TierItem(new Item.Properties().group(CHIPS), 3, CAPACITY_UPGRADE)));
         r.register(make("color_particles", new ParticleItem("color")));
         r.register(make("dark_crystal", new Item(new Item.Properties().group(MAIN))));
         r.register(make("dna_container_empty", new Item(new Item.Properties().group(MAIN))));

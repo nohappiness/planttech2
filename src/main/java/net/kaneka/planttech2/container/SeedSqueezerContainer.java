@@ -91,26 +91,26 @@ public class SeedSqueezerContainer extends BaseContainer
 		}
 		return stack;
 	}
-}
 
-class NoAccessSlot extends SlotItemHandlerWithInfo
-{
+	class NoAccessSlot extends SlotItemHandlerWithInfo
+	{
 
-	public NoAccessSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
-	{
-		super(itemHandler, index, xPosition, yPosition, usage);
+		public NoAccessSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+		{
+			super(itemHandler, index, xPosition, yPosition, usage);
+		}
+
+		@Override
+		public boolean canTakeStack(PlayerEntity playerIn)
+		{
+			return false;
+		}
+
+		@Override
+		public boolean isItemValid(ItemStack stack)
+		{
+			return false;
+		}
+
 	}
-	
-	@Override
-	public boolean canTakeStack(PlayerEntity playerIn)
-	{
-		return false; 
-	}
-	
-	@Override
-	public boolean isItemValid(ItemStack stack)
-	{
-	    return false; 
-	}
-	
 }

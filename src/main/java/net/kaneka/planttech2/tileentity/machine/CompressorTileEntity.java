@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.kaneka.planttech2.container.CompressorContainer;
@@ -32,7 +35,7 @@ import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class CompressorTileEntity extends EnergyInventoryTileEntity
+public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 {
 	private int selectedId = -1;
 	private HashMap<Integer, Pair<ItemStack, Integer>> recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
@@ -122,61 +125,36 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
     }
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
+		boolean recipeDone = false;
+		boolean inputDone = false;
+		if (selectedId >= 0)
 		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (!stack1.isEmpty() && selectedId >= 0)
+			if (recipeList == null)
+				initRecipeList();
+			else
 			{
-				if (recipeList != null)
+				if (!recipeList.isEmpty() && recipeList.size() > selectedId)
 				{
-					if (!recipeList.isEmpty() && recipeList.size() > selectedId)
-					{
-						Pair<ItemStack, Integer> recipe = recipeList.get(selectedId);
-						int neededInput = recipe.getValue();
-						ItemStack stackOutput = recipe.getKey().copy();
-						if (neededInput <= stack1.getCount())
-						{
-							previousInput = stack1; 
-							if (ticksPassed < ticksPerItem())
-							{
-								ticksPassed++;
-								energystorage.extractEnergy(energyPerTick(), false);
-							}
-							else
-							{
-								if (stack2.isEmpty())
-								{
-									itemhandler.setStackInSlot(1, stackOutput);
-									energystorage.extractEnergy(energyPerTick(), false);
-									stack1.shrink(neededInput);
-									resetProgress();
-								}
-								else if (stack2.getItem() == stackOutput.getItem())
-								{
-									if (stack2.getMaxStackSize() >= stack2.getCount() + stackOutput.getCount())
-									{
-										stack2.grow(stackOutput.getCount());
-										energystorage.extractEnergy(energyPerTick(), false);
-										stack1.shrink(neededInput);
-										resetProgress();
-										addKnowledge();
-									}
-								}
-							}
-						}
-					}
-					else selectedId = -1;
+					recipeDone = true;
+					inputDone = recipeList.get(selectedId).getValue() <= input.getCount();
+					if (inputDone)
+						previousInput = input;
 				}
-				else initRecipeList();
+				else
+					selectedId = -1;
 			}
-			else resetProgress();
 		}
+		return selectedId >= 0 && recipeDone && inputDone;
 	}
-	
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		return recipeList.get(selectedId).getKey().copy();
+	}
+
 	@Override
 	public IIntArray getIntArray()
 	{
@@ -188,13 +166,11 @@ public class CompressorTileEntity extends EnergyInventoryTileEntity
 		this.selectedId = selectedId;
 	}
 
-	public void setRecipe()
+	@Override
+	public void onContainerUpdated()
 	{
-		if (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem())
-		{
-			this.selectedId = -1;
+		if (world != null && (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem()))
 			initRecipeList();
-		}
 	}
 
 	@SuppressWarnings("resource")

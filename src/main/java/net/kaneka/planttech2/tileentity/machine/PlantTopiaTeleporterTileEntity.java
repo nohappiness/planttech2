@@ -96,11 +96,11 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 
 	public void doTeleportation()
 	{
-		energystorage.extractEnergy(energyPerTick());
+		energystorage.extractEnergy(energyPerAction());
 	}
 
 	@Override
-	public int energyPerTick()
+	public int energyPerAction()
 	{
 		return 1000;
 	}

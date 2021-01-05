@@ -7,6 +7,7 @@ import net.kaneka.planttech2.container.IdentifierContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -91,11 +92,11 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
+		if (this.energystorage.getEnergyStored() > energyPerAction())
 		{
 			if (this.canIdentify())
 			{
-				this.energystorage.extractEnergy(energyPerTick(), false);
+				this.energystorage.extractEnergy(energyPerAction(), false);
 				ticksPassed++;
 				if (ticksPassed >= ticksPerItem())
 				{

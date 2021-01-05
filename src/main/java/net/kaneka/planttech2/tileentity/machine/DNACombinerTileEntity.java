@@ -4,6 +4,7 @@ import net.kaneka.planttech2.container.DNACombinerContainer;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
-public class DNACombinerTileEntity extends EnergyInventoryTileEntity
+public class DNACombinerTileEntity extends ConvertEnergyInventoryTileEntity
 {
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -60,41 +61,30 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	}
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
-		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			ItemStack stack3 = itemhandler.getStackInSlot(2);
-			ItemStack stack4 = itemhandler.getStackInSlot(3);
-			if (!stack1.isEmpty() && !stack2.isEmpty() && !stack3.isEmpty() && stack4.isEmpty())
-			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack2.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && stack2.hasTag()
-				        && stack3.getItem() == ModItems.DNA_CONTAINER_EMPTY)
-				{
-					if (ticksPassed < ticksPerItem())
-					{
-						ticksPassed++;
-						energystorage.extractEnergy(energyPerTick(), false);
-					}
-					else
-					{
-						ticksPassed = 0;
-						energystorage.extractEnergy(energyPerTick(), false);
-						CompoundNBT nbt = getCombinedNBT(stack1.getTag(), stack2.getTag());
-						ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
-						stack.setTag(nbt);
-						itemhandler.setStackInSlot(3, stack);
-						stack3.shrink(1);
-						addKnowledge();
-					}
-				}
-			}
-		}
+		return !input.isEmpty() && !getInput2().isEmpty() && !getInput3().isEmpty();
 	}
-	
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		CompoundNBT nbt = getCombinedNBT(getInput2().getTag(), getInput3().getTag());
+		ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
+		stack.setTag(nbt);
+		return stack;
+	}
+
+	private ItemStack getInput2()
+	{
+		return itemhandler.getStackInSlot(0);
+	}
+
+	private ItemStack getInput3()
+	{
+		return itemhandler.getStackInSlot(1);
+	}
+
 	@Override
 	public IIntArray getIntArray()
 	{
@@ -143,6 +133,18 @@ public class DNACombinerTileEntity extends EnergyInventoryTileEntity
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
 		return new DNACombinerContainer(id, inv, this);
+	}
+
+	@Override
+	public int getInputSlotIndex()
+	{
+		return 2;
+	}
+
+	@Override
+	public int getOutputSlotIndex()
+	{
+		return 3;
 	}
 
 	@Override

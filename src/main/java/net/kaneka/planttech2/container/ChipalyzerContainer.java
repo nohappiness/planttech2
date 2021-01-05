@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.container;
 
 import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,9 +23,9 @@ public class ChipalyzerContainer extends BaseContainer
 		super(id, ModContainers.CHIPALYZER, player, tileentity, 5);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.chipalyzer.chipinput"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 68, 27, "slot.chipalyzer.iteminput"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 95, 47, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.chipalyzer.chipinput").setShouldListen());
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 68, 27, "slot.chipalyzer.iteminput").setShouldListen());
+		this.addSlot(createOutoutSlot(handler, tileentity.getOutputSlotIndex(), 95, 47));
 		this.addSlot(createSpeedUpgradeSlot(handler, 3, 68, 69));
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));

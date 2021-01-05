@@ -21,12 +21,12 @@ public class CompressorContainer extends BaseContainer
 		super(id, ModContainers.COMPRESSOR, player, tileentity, 25);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
-		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 34, 83, "slot.compressor.input"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 126, 83, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 34, 83, "slot.compressor.input").setShouldListen());
+		this.addSlot(createOutoutSlot(handler, tileentity.getOutputSlotIndex(), 126, 83));
 		this.addSlot(createSpeedUpgradeSlot(handler, 2, 78, 87));
 		for (int y = 0; y < 3; y++)
 			for (int x = 0; x < 6; x++)
-				addSlot(new NoAccessSlot(handler, x + y * 6 + 3, 35 + x * 18, 26 + y * 18, "slot.compressor.select"));
+				addSlot(createFakeSlot(handler, x + y * 6 + 3, 35 + x * 18, 26 + y * 18, "slot.compressor.select"));
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
@@ -79,23 +79,5 @@ public class CompressorContainer extends BaseContainer
 			slot.onTake(playerIn, stack1);
 		}
 		return stack;
-	}
-
-	class ChangeCheckSlot extends SlotItemHandlerWithInfo
-	{
-		private final CompressorTileEntity te;
-		public ChangeCheckSlot(CompressorTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
-		{
-			super(itemHandler, index, xPosition, yPosition, usage);
-			this.te = te;
-		}
-
-		@Override
-		public void onSlotChanged()
-		{
-			super.onSlotChanged();
-			CompressorContainer.this.detectAndSendChanges();
-			te.setRecipe();
-		}
 	}
 }

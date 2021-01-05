@@ -119,7 +119,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	    				progress[i]++;
 	    			else
 	    			{
-	    				if(energystorage.getEnergyStored() > energyPerTick())
+	    				if(energystorage.getEnergyStored() > energyPerAction())
 	    				{
     	    				NonNullList<ItemStack> drops = getDrops(seed);
     	    				if(!drops.isEmpty())
@@ -134,7 +134,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
         	    					if (!stack.isEmpty())
         	    						spawnAsEntity(world, pos.up(), stack);
         	    				}
-        	    				energystorage.extractEnergy(energyPerTick(), false);
+        	    				energystorage.extractEnergy(energyPerAction(), false);
         	    				progress[i] = 0; 
         	    				addKnowledge();
     	    				}
@@ -238,7 +238,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	public int energyPerTick()
+	public int energyPerAction()
 	{
 		return 400;
 	}

@@ -10,6 +10,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIntArray;
 
 public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
@@ -59,17 +60,17 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 		return field_array;
 	}
 
-    @Override
-    public void onSlotContentChanged()
+	@Override
+    public void onContainerUpdated()
     {
 		if (world != null)
 		{
 			if (!world.isRemote)
 			{
-				int newTier = getUpgradeTier(TierItem.ItemType.UPGRADE_CHIP);
+				int newTier = getUpgradeTier(TierItem.ItemType.CAPACITY_UPGRADE);
 				if (currentTier != newTier)
 				{
-					energystorage.setEnergyMaxStored((int) (1000 * Math.pow(10, newTier)));
+					energystorage.setEnergyMaxStored(getTotalCapacity());
 					BlockState state = world.getBlockState(pos);
 					if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
 					{

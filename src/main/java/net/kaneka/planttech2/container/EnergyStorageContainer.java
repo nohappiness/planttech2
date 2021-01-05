@@ -21,7 +21,7 @@ public class EnergyStorageContainer extends BaseContainer
     {
 		super(id, ModContainers.ENERGYSTORAGE,player, tileentity, 3);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-		this.addSlot(new ChangeCheckSlot(tileentity, handler, 0, 132, 64, "slot.util.energystorageupgrade"));
+		this.addSlot(createCapacityChipSlot(handler, 0, 132, 64));
 		this.addSlot(createEnergyInSlot(handler, 150, 86));
 		this.addSlot(createEnergyOutSlot(handler, 168, 86));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));

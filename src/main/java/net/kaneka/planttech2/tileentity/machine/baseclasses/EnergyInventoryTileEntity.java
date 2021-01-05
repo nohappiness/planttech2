@@ -6,6 +6,7 @@ import java.util.List;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -115,7 +116,13 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		}
 	}
 
-	public int energyPerTick()
+	/**
+	 * Gets energy needed per action, normally used for:
+	 * -> energy required per tick
+	 * -> energy required per process
+	 * @return amount of energy
+	 */
+	public int energyPerAction()
 	{
 		return 4 + getUpgradeTier(SPEED_UPGRADE) * 4;
 	}
@@ -123,6 +130,11 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	public int ticksPerItem()
 	{
 		return 200 - getUpgradeTier(SPEED_UPGRADE) * 35;
+	}
+
+	public int getCapacityUpgrade()
+	{
+		return getUpgradeTier(TierItem.ItemType.CAPACITY_UPGRADE);
 	}
 
 	public int getUpgradeTier(TierItem.ItemType itemType)
@@ -142,6 +154,11 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 				return item.getTier();
 		}
 		return 0;
+	}
+
+	public void onContainerUpdated()
+	{
+
 	}
 
 	public abstract int getEnergyInSlot();
@@ -165,4 +182,20 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	public abstract int getKnowledgeChipSlot();
 
 	public abstract int getKnowledgePerAction();
+
+	public int getTotalCapacity()
+	{
+		return getTotalCapacity(getUpgradeSlot());
+	}
+
+	public int getTotalCapacity(int capacityChipSlot)
+	{
+		return (int) (1000 * Math.pow(10, getUpgradeTier(capacityChipSlot, TierItem.ItemType.CAPACITY_UPGRADE)));
+	}
+
+	enum EnergyConsumptionType
+	{
+		PER_TICK,
+		PER_PROCESS
+	}
 }

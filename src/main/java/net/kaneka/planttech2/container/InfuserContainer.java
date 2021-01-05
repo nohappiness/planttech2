@@ -23,11 +23,11 @@ public class InfuserContainer extends BaseContainer
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 68, 47, "slot.infuser.input")); 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 122, 47, "slot.util.output")); 
+		this.addSlot(createOutoutSlot(handler, 1, 122, 47));
 		this.addSlot(createSpeedUpgradeSlot(handler, 2, 95, 69));
 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 23, 38, "slot.util.fluidin")); 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 4, 23, 57, "slot.util.fluidout")); 
+		this.addSlot(createFluidInSlot(handler, 23, 38));
+		this.addSlot(createFluidOutSlot(handler, 23, 57));
 		
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));

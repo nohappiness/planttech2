@@ -115,7 +115,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (energystorage.getEnergyStored() > energyPerTick())
+		if (energystorage.getEnergyStored() > energyPerAction())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -138,14 +138,14 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 							{
 								fluidInfused += fluidpertick;
 								biomassCap.extractBiomass(fluidpertick);
-								energystorage.extractEnergy(energyPerTick(), false);
+								energystorage.extractEnergy(energyPerAction(), false);
 							}
 							else
 							{
 								if (stack2.isEmpty())
 								{
 									itemhandler.setStackInSlot(1, recipe.getRecipeOutput());
-									energystorage.extractEnergy(energyPerTick(), false);
+									energystorage.extractEnergy(energyPerAction(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
 									biomassCap.extractBiomass(fluidTotal - fluidInfused);
@@ -154,7 +154,7 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 								else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
 								{
 									stack2.grow(1);
-									energystorage.extractEnergy(energyPerTick(), false);
+									energystorage.extractEnergy(energyPerAction(), false);
 									stack1.shrink(1);
 									fluidInfused = 0;
 									biomassCap.extractBiomass(fluidTotal - fluidInfused);

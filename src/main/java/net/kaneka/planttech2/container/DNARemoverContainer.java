@@ -22,8 +22,8 @@ public class DNARemoverContainer extends BaseContainer
 		super(id, ModContainers.DNAREMOVER,player, tileentity, 5);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 41, 47, "slot.dnaremover.container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 95, 47, "slot.util.output"));
+		this.addSlot(createDNAContainerSlot(handler, 0, 41, 47, "slot.dnaremover.container", false));
+		this.addSlot(createOutoutSlot(handler, 1, 95, 47));
 		this.addSlot(createSpeedUpgradeSlot(handler, 2, 68, 69));
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));

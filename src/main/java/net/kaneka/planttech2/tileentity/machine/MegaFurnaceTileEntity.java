@@ -129,7 +129,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 		isSmelting = false;
 		for (int i = 0; i < 6; i++)
 		{
-			if (this.energystorage.getEnergyStored() > this.energyPerTick())
+			if (this.energystorage.getEnergyStored() > this.energyPerAction())
 			{
 				if (this.canSmelt(i))
 				{
@@ -153,7 +153,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 			}
 		}
 		if (isSmelting)
-			this.energystorage.extractEnergy(energyPerTick(), false);
+			this.energystorage.extractEnergy(energyPerAction(), false);
 	}
 	
 	@Override

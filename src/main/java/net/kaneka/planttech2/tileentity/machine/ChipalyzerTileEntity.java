@@ -8,7 +8,7 @@ import net.kaneka.planttech2.container.ChipalyzerContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -17,8 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.IIntArray;
 
-public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
+public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 {
+	protected List<ChipalyzerRecipe> recipes = null;
 	protected final IIntArray field_array = new IIntArray()
 	{
 		public int get(int index)
@@ -65,53 +66,73 @@ public class ChipalyzerTileEntity extends EnergyInventoryTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (this.energystorage.getEnergyStored() > energyPerTick())
-		{
-			ItemStack stackChip = itemhandler.getStackInSlot(0);
-			ItemStack stackInput = itemhandler.getStackInSlot(1);
-			ItemStack stackOutput = itemhandler.getStackInSlot(2);
-			if (!stackChip.isEmpty() && !stackInput.isEmpty())
-			{
-				List<ChipalyzerRecipe> recipe = getRecipeList(stackChip, stackInput);
-				if (!recipe.isEmpty())
-				{
-					if (ticksPassed < ticksPerItem())
-					{
-						ticksPassed++;
-						energystorage.extractEnergy(energyPerTick(), false);
-					} 
-					else if (stackOutput.isEmpty())
-					{
-						ItemStack result = recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
-						itemhandler.setStackInSlot(2, result);
-						energystorage.extractEnergy(energyPerTick(), false);
-						stackChip.shrink(1);
-						stackInput.shrink(1);
-						addKnowledge();
-						resetProgress();
-					}
-				}
-				else resetProgress();
-			}
-			else resetProgress();
-		}
 	}
 
-	private List<ChipalyzerRecipe> getRecipeList(ItemStack chip, ItemStack stack)
+	@Override
+	protected boolean onProcessFinished(ItemStack input, ItemStack output)
+	{
+		boolean finished = super.onProcessFinished(input, output);
+		if (finished)
+			getChip().shrink(1);
+		return finished;
+	}
+
+	@Override
+	protected boolean canProceed(ItemStack input, ItemStack output)
+	{
+		return !getChip().isEmpty() && !getRecipeList(getChip(), input, false).isEmpty();
+	}
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		List<ChipalyzerRecipe> recipe = getRecipeList(getChip(), input, false);
+		return recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
+	}
+
+	private ItemStack getChip()
+	{
+		return itemhandler.getStackInSlot(0);
+	}
+
+	private List<ChipalyzerRecipe> getRecipeList(ItemStack chip, ItemStack stack, boolean forceUpdate)
 	{
 		if (stack.isEmpty() || world == null)
 			return Collections.emptyList();
-		List<ChipalyzerRecipe> list = new ArrayList<>();
-		for (IRecipe<?> recipe : world.getRecipeManager().getRecipesForType(ModRecipeTypes.CHIPALYZER))
+		if (recipes == null || forceUpdate)
 		{
-			ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
-			ItemStack fake = chip.copy();
-			fake.setCount(1);
-			if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), fake))
-				if (chipRecipe.compare(chip, stack))
-					list.add(chipRecipe);
+			List<ChipalyzerRecipe> list = new ArrayList<>();
+			for (IRecipe<?> recipe : world.getRecipeManager().getRecipesForType(ModRecipeTypes.CHIPALYZER))
+			{
+				ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
+				ItemStack fake = chip.copy();
+				fake.setCount(1);
+				if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), fake))
+					if (chipRecipe.compare(chip, stack))
+						list.add(chipRecipe);
+			}
+			recipes = list;
+			return list;
 		}
-		return list;
+		return recipes;
+	}
+
+	@Override
+	public void onContainerUpdated()
+	{
+		getRecipeList(getChip(), getInput(), true);
+	}
+
+	@Override
+	public int getInputSlotIndex()
+	{
+		return 1;
+	}
+
+	@Override
+	public int getOutputSlotIndex()
+	{
+		return 2;
 	}
 
 	@Override

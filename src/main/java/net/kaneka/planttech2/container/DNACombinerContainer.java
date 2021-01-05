@@ -22,10 +22,10 @@ public class DNACombinerContainer extends BaseContainer
 		super(id, ModContainers.DNACOMBINER, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 77, 37, "slot.dnacombiner.container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 113, 37, "slot.dnacombiner.container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 121, 56, "slot.dnacombiner.empty_container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 95, 73, "slot.util.output"));
+		this.addSlot(createDNAContainerSlot(handler, 0, 77, 37, "slot.dnacombiner.container", false));
+		this.addSlot(createDNAContainerSlot(handler, 1, 113, 37, "slot.dnacombiner.container", false));
+		this.addSlot(createDNAContainerSlot(handler, 2, 121, 56, "slot.dnacombiner.empty_container", true));
+		this.addSlot(createOutoutSlot(handler, 3, 95, 73));
 		this.addSlot(createSpeedUpgradeSlot(handler, 4, 54, 50));
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler,167, 57));
@@ -33,7 +33,7 @@ public class DNACombinerContainer extends BaseContainer
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index)
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot)this.inventorySlots.get(index);

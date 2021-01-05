@@ -63,7 +63,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
     public void doUpdate()
     {
     	super.doUpdate();
-		if (energystorage.getEnergyStored() > energyPerTick())
+		if (energystorage.getEnergyStored() > energyPerAction())
 		{
 			ItemStack stack1 = itemhandler.getStackInSlot(0);
 			ItemStack stack2 = itemhandler.getStackInSlot(1);
@@ -77,7 +77,7 @@ public class DNAExtractorTileEntity extends EnergyInventoryTileEntity
 						if (ticksPassed < ticksPerItem())
 						{
 							ticksPassed++;
-							energystorage.extractEnergy(energyPerTick(), false);
+							energystorage.extractEnergy(energyPerAction(), false);
 						}
 						else
 						{

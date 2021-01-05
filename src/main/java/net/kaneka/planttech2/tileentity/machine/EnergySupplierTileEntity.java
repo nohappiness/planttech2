@@ -67,17 +67,15 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 	{
 		super.doUpdate();
 		if (world == null)
-		{
 			return;
-		}
 		ticksPassed++;
 		if(energystorage.getEnergyStored() <= 0)
 			setPower(false);
-		else if (!getConnected().isEmpty() && ticksPassed >= ticksPerEnergy())
+		else if (!getConnected().isEmpty() && ticksPassed >= ticksPerItem())
 		{
-			energystorage.extractEnergy(1);
+			energystorage.extractEnergy(energyPerAction());
 			setPower(true);
-			ticksPassed = 0;
+			resetProgress();
 		}
 	}
 
@@ -106,9 +104,16 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 		return list;
 	}
 
-	public int ticksPerEnergy()
+	@Override
+	public int energyPerAction()
 	{
-		return 20;
+		return 1;
+	}
+
+	@Override
+	public int ticksPerItem()
+	{
+		return 10;
 	}
 
 	@Override

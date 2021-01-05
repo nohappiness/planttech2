@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,7 +109,7 @@ public class ItemUpgradeableContainer extends Container {
 		return stack;
 	}
 
-	static class ChangeCheckSlot extends SlotItemHandlerWithInfo {
+	class ChangeCheckSlot extends SlotItemHandlerWithInfo {
 		private ItemStack stack;
 
 		public ChangeCheckSlot(ItemStack stack, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage) {
@@ -125,6 +126,22 @@ public class ItemUpgradeableContainer extends Container {
 		public void onSlotChanged() {
 			if (stack.getItem() instanceof IUpgradeable) ((IUpgradeable) stack.getItem()).updateNBTValues(stack);
 			super.onSlotChanged();
+		}
+	}
+
+	public class SlotItemHandlerWithInfo extends SlotItemHandler
+	{
+		private final String usage;
+
+		public SlotItemHandlerWithInfo(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
+		{
+			super(itemHandler, index, xPosition, yPosition);
+			this.usage = usage;
+		}
+
+		public String getUsageString()
+		{
+			return usage;
 		}
 	}
 
