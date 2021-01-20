@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.container;
 
-import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
@@ -24,17 +23,12 @@ public class SeedSqueezerContainer extends BaseContainer
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		for(int y = 0; y < 3; y++)
-		{
 			for(int x = 0; x < 3; x++)
-			{
-				this.addSlot(new SlotItemHandlerWithInfo(handler, x + y * 3, 59 + x * 18, 28 + y * 18, "slot.seedsqueezer.input"));
-			}
-		}
-		
+				this.addSlot(new LimitedItemInfoSlot(handler, x + y * 3, 59 + x * 18, 28 + y * 18, "slot.seedsqueezer.input").setConditions((stack) -> stack.getItem() instanceof CropSeedItem));
 		this.addSlot(new NoAccessSlot(handler, 9, 122, 46, "slot.seedsqueezer.squeeze"));
 		this.addSlot(createSpeedUpgradeSlot(handler, 10, 97, 85));
-		this.addSlot(createFluidInSlot(handler, 23, 38));
-		this.addSlot(createFluidOutSlot(handler, 23, 57));
+		this.addSlot(createFluidInSlot(handler, 23, 38).setShouldListen());
+		this.addSlot(createFluidOutSlot(handler, 23, 57).setShouldListen());
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));

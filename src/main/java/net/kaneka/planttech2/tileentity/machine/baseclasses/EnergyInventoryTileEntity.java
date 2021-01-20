@@ -132,9 +132,19 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		return 200 - getUpgradeTier(SPEED_UPGRADE) * 35;
 	}
 
+	protected EnergyConsumptionType getEnergyConsumptionType()
+	{
+		return EnergyConsumptionType.PER_TICK;
+	}
+
 	public int getCapacityUpgrade()
 	{
 		return getUpgradeTier(TierItem.ItemType.CAPACITY_UPGRADE);
+	}
+
+	protected void increaseProgress()
+	{
+		ticksPassed++;
 	}
 
 	public int getUpgradeTier(TierItem.ItemType itemType)
@@ -193,9 +203,17 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		return (int) (1000 * Math.pow(10, getUpgradeTier(capacityChipSlot, TierItem.ItemType.CAPACITY_UPGRADE)));
 	}
 
-	enum EnergyConsumptionType
+	public enum EnergyConsumptionType
 	{
 		PER_TICK,
-		PER_PROCESS
+		PER_PROCESS,
+		NONE
+	}
+
+	public enum FluidConsumptionType
+	{
+		PER_TICK,
+		PER_PROCESS,
+		NONE
 	}
 }

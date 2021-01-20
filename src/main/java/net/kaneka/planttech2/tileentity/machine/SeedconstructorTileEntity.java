@@ -1,10 +1,11 @@
 package net.kaneka.planttech2.tileentity.machine;
 
-import net.kaneka.planttech2.container.SeedconstructorContainer;
+import net.kaneka.planttech2.container.SeedConstructorContainer;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
-public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
+public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEntity
 {
 	protected final IIntArray field_array = new IIntArray()
 	{
@@ -70,52 +71,55 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (energystorage.getEnergyStored() > energyPerAction())
-		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (!stack1.isEmpty() && stack2.isEmpty())
-			{
-				if (stack1.getItem() == ModItems.DNA_CONTAINER && stack1.hasTag() && biomassCap.getCurrentStorage() >= fluidPerItem())
-				{
-					if (ticksPassed < ticksPerItem())
-					{
-						ticksPassed++;
-						energystorage.extractEnergy(energyPerAction(), false);
-					}
-					else
-					{
-						ticksPassed = 0;
-						energystorage.extractEnergy(energyPerAction(), false);
-						CompoundNBT nbt = stack1.getTag();
-						HashMapCropTraits traits = new HashMapCropTraits();
-						traits.setAnalysed(true);
-						if (nbt.contains("type"))
-							traits.setType(nbt.getString("type"));
-						for (String key : HashMapCropTraits.getTraitsKeyList())
-							if (nbt.contains(key))
-								if (!key.equals("type"))
-									traits.setTrait(EnumTraitsInt.getByName(key), nbt.getInt(key));
-						ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
-						itemhandler.setStackInSlot(1, traits.addToItemStack(stack));
-						biomassCap.extractBiomass(fluidPerItem());
-						addKnowledge();
-					}
-				}
-			}
-		}
+		return (input.hasTag() && input.getItem() == ModItems.DNA_CONTAINER);
 	}
-	
+
+	@Override
+	protected boolean onProcessFinished(ItemStack input, ItemStack output)
+	{
+		return itemhandler.insertItem(getOutputSlotIndex(), getResult(input, output), false).isEmpty();
+	}
+
+	@Override
+	protected EnergyConsumptionType getEnergyConsumptionType()
+	{
+		return EnergyConsumptionType.PER_TICK;
+	}
+
+	@Override
+	protected FluidConsumptionType getFluidConsumptionType()
+	{
+		return FluidConsumptionType.PER_PROCESS;
+	}
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		CompoundNBT nbt = input.getTag();
+		if (nbt == null)
+			return ItemStack.EMPTY;
+		HashMapCropTraits traits = new HashMapCropTraits();
+		traits.setAnalysed(true);
+		if (nbt.contains("type"))
+			traits.setType(nbt.getString("type"));
+		for (String key : HashMapCropTraits.getTraitsKeyList())
+			if (nbt.contains(key))
+				if (!key.equals("type"))
+					traits.setTrait(EnumTraitsInt.getByName(key), nbt.getInt(key));
+		ItemStack stack = new ItemStack(ModItems.SEEDS.get(traits.getType()));
+		return traits.addToItemStack(stack);
+	}
+
 	@Override
 	public IIntArray getIntArray()
 	{
 		return field_array;
 	}
 
-	public int fluidPerItem()
+	@Override
+	public int fluidPerAction()
 	{
 		return 500;
 	}
@@ -141,7 +145,7 @@ public class SeedconstructorTileEntity extends EnergyInventoryFluidTileEntity
 	@Override
 	public Container createMenu(int id, PlayerInventory inv, PlayerEntity player)
 	{
-		return new SeedconstructorContainer(id, inv, this);
+		return new SeedConstructorContainer(id, inv, this);
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import net.kaneka.planttech2.container.MegaFurnaceContainer;
 import net.kaneka.planttech2.container.PlantFarmContainer;
 import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
 import net.kaneka.planttech2.container.SeedSqueezerContainer;
-import net.kaneka.planttech2.container.SeedconstructorContainer;
+import net.kaneka.planttech2.container.SeedConstructorContainer;
 import net.kaneka.planttech2.container.SolarGeneratorContainer;
 import net.kaneka.planttech2.container.TeleporterContainer;
 import net.kaneka.planttech2.container.entities.TechVillagerContainer;
@@ -44,7 +44,7 @@ public class ModContainers
 	@ObjectHolder(UPGRADEABLEITEMCONTAINER) public static ContainerType<ItemUpgradeableContainer> UPGRADEABLEITEM;
 	@ObjectHolder(MEGAFURNACECONTAINER) public static ContainerType<MegaFurnaceContainer> MEGAFURNACE;
 	@ObjectHolder(PLANTFARMCONTAINER) public static ContainerType<PlantFarmContainer> PLANTFARM;
-	@ObjectHolder(SEEDCONSTRUCTORCONTAINER) public static ContainerType<SeedconstructorContainer> SEEDCONSTRUCTOR;
+	@ObjectHolder(SEEDCONSTRUCTORCONTAINER) public static ContainerType<SeedConstructorContainer> SEEDCONSTRUCTOR;
 	@ObjectHolder(SEEDQUEEZERCONTAINER) public static ContainerType<SeedSqueezerContainer> SEEDQUEEZER;
 	@ObjectHolder(SOLARGENERATORCONTAINER) public static ContainerType<SolarGeneratorContainer> SOLARGENERATOR;
 	@ObjectHolder(CHIPALYZERCONTAINER) public static ContainerType<ChipalyzerContainer> CHIPALYZER;
@@ -68,7 +68,7 @@ public class ModContainers
 		registry.register(make(UPGRADEABLEITEMCONTAINER, new ContainerType<>(ItemUpgradeableContainer::new)));
 		registry.register(make(MEGAFURNACECONTAINER, new ContainerType<>(MegaFurnaceContainer::new)));
 		registry.register(make(PLANTFARMCONTAINER, new ContainerType<>(PlantFarmContainer::new)));
-		registry.register(make(SEEDCONSTRUCTORCONTAINER, new ContainerType<>(SeedconstructorContainer::new)));
+		registry.register(make(SEEDCONSTRUCTORCONTAINER, new ContainerType<>(SeedConstructorContainer::new)));
 		registry.register(make(SEEDQUEEZERCONTAINER, new ContainerType<>(SeedSqueezerContainer::new)));
 		registry.register(make(SOLARGENERATORCONTAINER, new ContainerType<>(SolarGeneratorContainer::new)));
 		registry.register(make(CHIPALYZERCONTAINER, new ContainerType<>(ChipalyzerContainer::new)));

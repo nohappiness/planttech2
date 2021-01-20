@@ -1,25 +1,14 @@
 package net.kaneka.planttech2.fluids.capability;
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.entities.capabilities.player.IPlayerRenderRGB;
-import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.packets.SyncBiomassFluidEnergyMessage;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,8 +43,7 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
 
     public static IBiomassFluidEnergy getItemStackCap(ItemStack stack)
     {
-        IBiomassFluidEnergy cap = stack.getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(() -> new NullPointerException("getting capability for itemstack"));
-        return cap;
+        return stack.getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(() -> new NullPointerException("getting capability for itemstack"));
     }
 
     @Override
@@ -105,17 +93,11 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
     public void changeCurrentStorage(int amount)
     {
         if (this.currentStorage + amount < 0)
-        {
             this.currentStorage = 0;
-        }
         else if (this.currentStorage + amount > this.maxStorage)
-        {
             this.currentStorage = this.maxStorage;
-        }
         else
-        {
             this.currentStorage += amount;
-        }
     }
 
     @Override

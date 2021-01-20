@@ -29,7 +29,7 @@ public class PlantTechClient
 					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F;
 				}
 		);
-		ItemModelsProperties.registerProperty(ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+		ItemModelsProperties.registerProperty(ModItems.BIOMASSCONTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
 				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
 		ItemModelsProperties.registerProperty(
 				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),

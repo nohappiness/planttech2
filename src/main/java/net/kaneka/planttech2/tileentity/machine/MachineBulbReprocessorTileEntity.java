@@ -6,6 +6,7 @@ import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.MachineBulbItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,7 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.Tags.Items;
 
-public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEntity
+public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFluidTileEntity
 {
 	private int selectedId = 0;
 	private int actualTier = 0; 
@@ -100,39 +101,51 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	}
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (selectedId > 0 && selectedId <= ModItems.MACHINE_BULBS.size())
-		{
-			MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId - 1).get();
-    		if (energystorage.getEnergyStored() >= energyPerAction() && bulb.getTier() <= actualTier && biomassCap.getCurrentStorage() >= bulb.getNeededBiomass())
-    		{
-    			ItemStack input = itemhandler.getStackInSlot(0);
-    			ItemStack output = itemhandler.getStackInSlot(1);
-    			if(!input.isEmpty() && output.isEmpty())
-    			{
-    				if(Items.SEEDS.contains(input.getItem()) || input.getItem() instanceof CropSeedItem)
-    				{
-    					if (ticksPassed < ticksPerItem())
-    						ticksPassed++;
-    					else
-    					{
-    						energystorage.extractEnergy(energyPerAction());
-							biomassCap.extractBiomass(bulb.getNeededBiomass());
-    						input.shrink(1);
-    						ticksPassed = 0;
-    						itemhandler.setStackInSlot(1, new ItemStack(bulb));
-    						addKnowledge();
-    					}
-    				}
-    			}
-    		}
-		}
+		if (selectedId < 1 || selectedId > ModItems.MACHINE_BULBS.size())
+			return false;
+		MachineBulbItem bulb = ModItems.MACHINE_BULBS.get(selectedId - 1).get();
+		if (bulb.getTier() > actualTier)
+			return false;
+		return Items.SEEDS.contains(input.getItem()) || input.getItem() instanceof CropSeedItem;
+	}
+
+	@Override
+	protected EnergyConsumptionType getEnergyConsumptionType()
+	{
+		return EnergyConsumptionType.PER_PROCESS;
+	}
+
+	@Override
+	protected FluidConsumptionType getFluidConsumptionType()
+	{
+		return FluidConsumptionType.PER_PROCESS;
+	}
+
+	@Override
+	public int fluidPerAction()
+	{
+		if (selectedId < 1)
+			return 0;
+		return ModItems.MACHINE_BULBS.get(selectedId - 1).get().getNeededBiomass();
+	}
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		if (selectedId < 1)
+			return ItemStack.EMPTY;
+		return new ItemStack(ModItems.MACHINE_BULBS.get(selectedId - 1).get());
+	}
+
+	@Override
+	public void onContainerUpdated()
+	{
 		checkTier();
 	}
-	
-	private void checkTier()
+
+	public void checkTier()
 	{
 		ItemStack stack = itemhandler.getStackInSlot(getKnowledgeChipSlot()); 
 		if(!stack.isEmpty())
@@ -194,7 +207,8 @@ public class MachineBulbReprocessorTileEntity extends EnergyInventoryFluidTileEn
 	{
 		return 5;
 	}
-	
+
+	@Override
 	public int getKnowledgeChipSlot()
 	{
 		return 6; 

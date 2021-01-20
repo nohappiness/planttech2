@@ -94,8 +94,9 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
     }
 
 	@Override
-	public void tick()
+	public void doUpdate()
 	{
+		super.doUpdate();
 		if (world != null && !world.isRemote)
 		{
 			if (itemhandler.getStackInSlot(9).isEmpty())
@@ -121,7 +122,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 						squeezeItem();
 						addKnowledge();
 						biomassCap.changeCurrentStorage(10);
-						ticksPassed = 0;
+						resetProgress();
 					}
 				}
 				else if (stack.getCount() > 0)
@@ -133,13 +134,11 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					}
 				}
 				else if (ticksPassed > 0)
-				{
-					ticksPassed = 0;
-				}
+					resetProgress();
 			}
 		}
 	}
-	
+
 	@Override
 	public IIntArray getIntArray()
 	{
