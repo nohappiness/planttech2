@@ -11,6 +11,7 @@ import net.kaneka.planttech2.blocks.FacingGrowingBlock;
 import net.kaneka.planttech2.blocks.GlassPaneEnd;
 import net.kaneka.planttech2.blocks.GlassPanePillar;
 import net.kaneka.planttech2.blocks.GrowingBlock;
+import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.blocks.ObtainableTallBushBlock;
 import net.kaneka.planttech2.blocks.WallLight;
 import net.kaneka.planttech2.blocks.baseclasses.BaseOreBlock;
@@ -44,7 +45,9 @@ import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -69,6 +72,7 @@ public class ModBlocks
 {
 	public static List<Supplier<? extends Block>> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
 	public static List<Supplier<? extends Item>> BLOCK_ITEM_SUPPLIERS = new ArrayList<>();
+	public static List<Hedge> HEDGE_BLOCKS = new ArrayList<>();
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<>();
 
 	@ObjectHolder("biomassfluid_block") public static FlowingFluidBlock BIOMASSFLUIDBLOCK;
@@ -136,6 +140,44 @@ public class ModBlocks
 	@ObjectHolder("wall_light") public static WallLight WALL_LIGHT;
 
 	@ObjectHolder("testblock") public static ObtainableNaturalPlants TEST_BLOCK;
+	
+	@ObjectHolder("hedge_oak_spruce") public static Hedge OAK_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_oak_birch") public static Hedge OAK_BIRCH_HEDGE;
+	@ObjectHolder("hedge_oak_jungle") public static Hedge OAK_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_oak_acacia") public static Hedge OAK_ACACIA_HEDGE;
+	@ObjectHolder("hedge_oak_dark_oak") public static Hedge OAK_DARK_OAK_HEDGE;
+	@ObjectHolder("hedge_spruce_oak") public static Hedge SPRUCE_OAK_HEDGE;
+	@ObjectHolder("hedge_spruce_spruce") public static Hedge SPRUCE_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_spruce_birch") public static Hedge SPRUCE_BIRCH_HEDGE;
+	@ObjectHolder("hedge_spruce_jungle") public static Hedge SPRUCE_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_spruce_acacia") public static Hedge SPRUCE_ACACIA_HEDGE;
+	@ObjectHolder("hedge_spruce_dark_oak") public static Hedge SPRUCE_DARK_OAK_HEDGE;
+	@ObjectHolder("hedge_birch_oak") public static Hedge BIRCH_OAK_HEDGE;
+	@ObjectHolder("hedge_birch_spruce") public static Hedge BIRCH_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_birch_birch") public static Hedge BIRCH_BIRCH_HEDGE;
+	@ObjectHolder("hedge_birch_jungle") public static Hedge BIRCH_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_birch_acacia") public static Hedge BIRCH_ACACIA_HEDGE;
+	@ObjectHolder("hedge_birch_dark_oak") public static Hedge BIRCH_DARK_OAK_HEDGE;
+	@ObjectHolder("hedge_jungle_oak") public static Hedge JUNGLE_OAK_HEDGE;
+	@ObjectHolder("hedge_jungle_spruce") public static Hedge JUNGLE_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_jungle_birch") public static Hedge JUNGLE_BIRCH_HEDGE;
+	@ObjectHolder("hedge_jungle_jungle") public static Hedge JUNGLE_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_jungle_acacia") public static Hedge JUNGLE_ACACIA_HEDGE;
+	@ObjectHolder("hedge_jungle_dark_oak") public static Hedge JUNGLE_DARK_OAK_HEDGE;
+	@ObjectHolder("hedge_acacia_oak") public static Hedge ACACIA_OAK_HEDGE;
+	@ObjectHolder("hedge_acacia_spruce") public static Hedge ACACIA_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_acacia_birch") public static Hedge ACACIA_BIRCH_HEDGE;
+	@ObjectHolder("hedge_acacia_jungle") public static Hedge ACACIA_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_acacia_acacia") public static Hedge ACACIA_ACACIA_HEDGE;
+	@ObjectHolder("hedge_acacia_dark_oak") public static Hedge ACACIA_DARK_OAK_HEDGE;
+	@ObjectHolder("hedge_dark_oak_oak") public static Hedge DARK_OAK_OAK_HEDGE;
+	@ObjectHolder("hedge_dark_oak_spruce") public static Hedge DARK_OAK_SPRUCE_HEDGE;
+	@ObjectHolder("hedge_dark_oak_birch") public static Hedge DARK_OAK_BIRCH_HEDGE;
+	@ObjectHolder("hedge_dark_oak_jungle") public static Hedge DARK_OAK_JUNGLE_HEDGE;
+	@ObjectHolder("hedge_dark_oak_acacia") public static Hedge DARK_OAK_ACACIA_HEDGE;
+	@ObjectHolder("hedge_dark_oak_dark_oak") public static Hedge DARK_OAK_DARK_OAK_HEDGE;
+
+	@ObjectHolder("hedge_oak_oak") public static Hedge OAK_OAK_HEDGE;
 
 	@ObjectHolder("mutated_dandelion") public static ObtainableNaturalPlants MUTATED_DANDELION;
 	@ObjectHolder("mutated_poppy") public static ObtainableNaturalPlants MUTATED_POPPY;
@@ -239,6 +281,45 @@ public class ModBlocks
 		r.register(makeWithItem("wall_light", BLOCKS, new WallLight(create(Material.ROCK).sound(SoundType.GLASS))));
 
 		r.register(makeSpecialWithItem("testblock", BLOCKS, new ObtainableNaturalPlants(4, 6)));
+		
+
+        r.register(makeHedge("hedge_oak_oak", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_oak_spruce", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_oak_birch", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_oak_jungle", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_oak_acacia", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_oak_dark_oak", BLOCKS, new Hedge(Blocks.OAK_LEAVES, Blocks.DARK_OAK_LOG)));
+        r.register(makeHedge("hedge_spruce_oak", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_spruce_spruce", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_spruce_birch", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_spruce_jungle", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_spruce_acacia", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_spruce_dark_oak", BLOCKS, new Hedge(Blocks.SPRUCE_LEAVES, Blocks.DARK_OAK_LOG)));
+        r.register(makeHedge("hedge_birch_oak", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_birch_spruce", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_birch_birch", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_birch_jungle", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_birch_acacia", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_birch_dark_oak", BLOCKS, new Hedge(Blocks.BIRCH_LEAVES, Blocks.DARK_OAK_LOG)));
+        r.register(makeHedge("hedge_jungle_oak", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_jungle_spruce", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_jungle_birch", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_jungle_jungle", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_jungle_acacia", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES , Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_jungle_dark_oak", BLOCKS, new Hedge(Blocks.JUNGLE_LEAVES, Blocks.DARK_OAK_LOG)));
+        r.register(makeHedge("hedge_acacia_oak", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_acacia_spruce", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_acacia_birch", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_acacia_jungle", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_acacia_acacia", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_acacia_dark_oak", BLOCKS, new Hedge(Blocks.ACACIA_LEAVES, Blocks.DARK_OAK_LOG)));
+        r.register(makeHedge("hedge_dark_oak_oak", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.OAK_LOG)));
+        r.register(makeHedge("hedge_dark_oak_spruce", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.SPRUCE_LOG)));
+        r.register(makeHedge("hedge_dark_oak_birch", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.BIRCH_LOG)));
+        r.register(makeHedge("hedge_dark_oak_jungle", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.JUNGLE_LOG)));
+        r.register(makeHedge("hedge_dark_oak_acacia", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.ACACIA_LOG)));
+        r.register(makeHedge("hedge_dark_oak_dark_oak", BLOCKS, new Hedge(Blocks.DARK_OAK_LEAVES, Blocks.DARK_OAK_LOG)));
+
 
 		r.register(makeSpecialWithItem("mutated_dandelion", BLOCKS, new ObtainableNaturalPlants()));
 		r.register(makeSpecialWithItem("mutated_poppy", BLOCKS, new ObtainableNaturalPlants()));
@@ -300,6 +381,13 @@ public class ModBlocks
 		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
 		return b;
 	}
+	
+	static <B extends Hedge> B makeHedge(String registryName, ItemGroup group, B block)
+	{
+		final B b = makeSpecialWithItem(registryName, group, block);
+		HEDGE_BLOCKS.add(b); 
+		return b;
+	}
 
 	static <B extends Block> B makeBlock(String registryName, B block)
 	{
@@ -313,6 +401,8 @@ public class ModBlocks
 		SPECIAL_RENDER_BLOCKS.add(() -> block);
 		return block;
 	}
+	
+	
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{

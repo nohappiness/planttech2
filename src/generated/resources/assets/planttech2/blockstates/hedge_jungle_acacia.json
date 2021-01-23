@@ -1,0 +1,79 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_base"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_adding",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "north": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_none",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_adding"
+      }
+    },
+    {
+      "when": {
+        "east": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_none"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_adding",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_none",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_adding",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/jungle_acacia_none",
+        "y": 180
+      }
+    }
+  ]
+}

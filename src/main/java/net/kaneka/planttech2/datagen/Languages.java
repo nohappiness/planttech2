@@ -26,6 +26,7 @@ public class Languages extends LanguageProvider
     protected void addTranslations()
     {
         addBlocks();
+        addHedges(); 
         addCrops();
         addGuides();
         addGUIs();
@@ -329,6 +330,8 @@ public class Languages extends LanguageProvider
         add(ModBlocks.WHITE_CRYSTAL_GLASSPANE_MIDDLE, "White Crystal Glasspane Middle");
         add(ModBlocks.WHITE_CRYSTAL_GLASSPANE_CROSS, "White Crystal Glasspane Cross");
         add(ModBlocks.WHITE_CRYSTAL_ORE, "White Crystal Ore");
+        
+        
     }
 
     public void addCrops()
@@ -350,6 +353,18 @@ public class Languages extends LanguageProvider
             }
         }
         langKeys.forEach(this::add);
+    }
+    
+    public void addHedges()
+    {
+    	String[] types = new String[] {"oak", "spruce", "birch", "jungle", "acacia", "dark_oak"}; 
+        for(String type_1: types)
+		{
+			for(String type_2: types)
+			{
+				add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, "Hedge");
+			}
+		}
     }
 
     public void addGUIs()

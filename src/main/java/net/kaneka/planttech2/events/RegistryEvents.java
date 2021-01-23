@@ -2,7 +2,9 @@ package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropList;
+import net.kaneka.planttech2.datagen.BlockModelGenerator;
 import net.kaneka.planttech2.datagen.DefaultCropConfigProvider;
+import net.kaneka.planttech2.datagen.ItemModelGenerator;
 import net.kaneka.planttech2.datagen.Languages;
 import net.kaneka.planttech2.datagen.LootTables;
 import net.kaneka.planttech2.datagen.Recipes;
@@ -18,6 +20,7 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -115,9 +118,12 @@ public class RegistryEvents
 	public static void gatherData(GatherDataEvent event)
 	{
 		DataGenerator gen = event.getGenerator();
+		ExistingFileHelper eFH = event.getExistingFileHelper();
 		if (event.includeClient())
 		{
 			gen.addProvider(new Languages(gen));
+			gen.addProvider(new BlockModelGenerator(gen, eFH));
+			gen.addProvider(new ItemModelGenerator(gen, eFH));
 		}
 		if (event.includeServer())
 		{

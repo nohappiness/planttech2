@@ -1,0 +1,7 @@
+{
+  "parent": "planttech2:block/hedge/base/hedge_base",
+  "textures": {
+    "leaves": "minecraft:block/spruce_leaves",
+    "wood": "minecraft:block/birch_log"
+  }
+}
