@@ -22,8 +22,8 @@ public class MachineBulbReprocessorContainer extends BaseContainer
 		super(id, ModContainers.MACHINEBULBREPROCESSOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 68, 85, "slot.machinebulbreprocessor.input"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 122, 85, "slot.util.output"));
+		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 68, 85, "slot.machinebulbreprocessor.input").setShouldListen());
+		this.addSlot(createOutoutSlot(handler, 1, 122, 85));
 
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 2, 23, 38, "slot.util.fluidin"));
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 3, 23, 57, "slot.util.fluidout"));

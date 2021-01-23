@@ -8,6 +8,7 @@ import net.kaneka.planttech2.container.InfuserContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,10 +27,9 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 import static net.kaneka.planttech2.utilities.PlantTechConstants.*;
 
-public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
+public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 {
-	private int fluidInfused = 0;
-	private int fluidTotal = 0; 
+	private int fluidTotal = 0;
 	private Item output = null;
 	
 	private final RangedWrapper inputs;
@@ -52,9 +52,9 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 			case 3:
 				return InfuserTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
-				return InfuserTileEntity.this.fluidInfused; 
-			case 5: 
-				return InfuserTileEntity.this.fluidTotal; 
+				return InfuserTileEntity.this.ticksPassed;
+			case 5:
+				return InfuserTileEntity.this.fluidTotal;
 			default:
 				return 0;
 			}
@@ -77,11 +77,11 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 				InfuserTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
-				InfuserTileEntity.this.fluidInfused = value; 
-				break; 
-			case 5: 
-				InfuserTileEntity.this.fluidTotal = value; 
-				break; 
+				InfuserTileEntity.this.ticksPassed = value;
+				break;
+			case 5:
+				InfuserTileEntity.this.fluidTotal = value;
+				break;
 			}
 		}
 		public int size()
@@ -112,68 +112,48 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
     }
 
 	@Override
-	public void doUpdate()
+	protected boolean canProceed(ItemStack input, ItemStack output)
 	{
-		super.doUpdate();
-		if (energystorage.getEnergyStored() > energyPerAction())
+		if (input.isEmpty())
+			return false;
+		InfuserRecipe recipe = getOutputRecipe();
+		if (recipe == null)
+			return false;
+		if (recipe.getOutput() == this.output || this.output == null)
 		{
-			ItemStack stack1 = itemhandler.getStackInSlot(0);
-			ItemStack stack2 = itemhandler.getStackInSlot(1);
-			if (!stack1.isEmpty())
+			if (this.output == null)
 			{
-				InfuserRecipe recipe = getOutputRecipe();
-				if (recipe != null)
-				{
-					if (recipe.getOutput() == output || output == null)
-					{
-						if (output == null)
-						{
-							output = recipe.getOutput();
-							fluidTotal = recipe.getBiomass(); 
-						}
-						int fluidpertick = fluidPerTick();
-						if (biomassCap.getCurrentStorage() >= fluidpertick)
-						{
-							if (fluidInfused + fluidpertick < fluidTotal)
-							{
-								fluidInfused += fluidpertick;
-								biomassCap.extractBiomass(fluidpertick);
-								energystorage.extractEnergy(energyPerAction(), false);
-							}
-							else
-							{
-								if (stack2.isEmpty())
-								{
-									itemhandler.setStackInSlot(1, recipe.getRecipeOutput());
-									energystorage.extractEnergy(energyPerAction(), false);
-									stack1.shrink(1);
-									fluidInfused = 0;
-									biomassCap.extractBiomass(fluidTotal - fluidInfused);
-									addKnowledge();
-								}
-								else if (stack2.getItem() == recipe.getOutput() && stack2.getCount() < stack2.getMaxStackSize())
-								{
-									stack2.grow(1);
-									energystorage.extractEnergy(energyPerAction(), false);
-									stack1.shrink(1);
-									fluidInfused = 0;
-									biomassCap.extractBiomass(fluidTotal - fluidInfused);
-									addKnowledge();
-								}
-							}
-						}
-					}
-					else
-					{
-						fluidInfused = 0;
-						fluidTotal = recipe.getBiomass(); 
-						output = recipe.getOutput();
-					}
-				}
+				this.output = recipe.getOutput();
+				fluidTotal = recipe.getBiomass();
 			}
+			return ticksPassed + fluidPerAction() < fluidTotal;
 		}
+		else
+		{
+			fluidTotal = recipe.getBiomass();
+			this.output = recipe.getOutput();
+		}
+		return false;
 	}
-	
+
+	@Override
+	protected void increaseProgress()
+	{
+		ticksPassed += fluidPerAction();
+	}
+
+	@Override
+	protected ItemStack getResult(ItemStack input, ItemStack output)
+	{
+		return getOutputRecipe() == null ? ItemStack.EMPTY : getOutputRecipe().getRecipeOutput();
+	}
+
+	@Override
+	protected boolean shouldResetProgressIfNotProcessing()
+	{
+		return false;
+	}
+
 	@Override
 	public IIntArray getIntArray()
 	{
@@ -188,11 +168,6 @@ public class InfuserTileEntity extends EnergyInventoryFluidTileEntity
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
 		Optional<InfuserRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
 		return recipe.orElse(null);
-	}
-	
-	public int fluidPerTick()
-	{
-		return 5 + getUpgradeTier(SPEED_UPGRADE) * 3;
 	}
 
 	@Override

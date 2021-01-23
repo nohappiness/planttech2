@@ -3,17 +3,17 @@ package net.kaneka.planttech2.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.SeedconstructorContainer;
+import net.kaneka.planttech2.container.SeedConstructorContainer;
 import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-public class SeedconstructorScreen extends BaseContainerScreen<SeedconstructorContainer>
+public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
 
-	public SeedconstructorScreen(SeedconstructorContainer container, PlayerInventory player, ITextComponent name)
+	public SeedconstructorScreen(SeedConstructorContainer container, PlayerInventory player, ITextComponent name)
     {
     	super(container, player, name);
     }

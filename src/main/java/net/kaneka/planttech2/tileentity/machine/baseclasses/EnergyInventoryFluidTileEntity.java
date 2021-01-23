@@ -37,8 +37,13 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 		{
 			if (stack.getItem() instanceof BiomassContainerItem)
 			{
-//				BIOMASS_CAP.changeCurrentStorage(BiomassFluidEnergy.getItemStackCap(stack).extractBiomass(1));
-				biomassCap.changeCurrentStorage(BiomassContainerItem.extractBiomass(stack, 1));
+				if (biomassCap.getCurrentStorage() < biomassCap.getMaxStorage())
+				{
+					biomassCap.changeCurrentStorage(BiomassFluidEnergy.getItemStackCap(stack).extractBiomass(1));
+//					BiomassContainerItem.changeCurrentStorage(stack, -1);
+					itemhandler.setStackInSlot(getFluidInSlot(), stack);
+				}
+//				biomassCap.changeCurrentStorage(BiomassContainerItem.extractBiomass(stack, 1));
 				changesMade = true;
 			}
 			else if (stack.getItem() == ModItems.BIOMASS_BUCKET)
@@ -49,19 +54,15 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 				changesMade = true;
 			}
 		}
-		if(stack2.getItem() instanceof BiomassContainerItem)
+		if (stack2.getItem() instanceof BiomassContainerItem)
 		{
-//			IBiomassFluidEnergy capability = BiomassFluidEnergy.getItemStackCap(stack2);
-			for (int i=4;i>1;i--)
-			{
-//				if (capability.getMaxStorage() - capability.getCurrentStorage() >= i && BIOMASS_CAP.getCurrentStorage() >= i)
-				if (BiomassContainerItem.getCapacity() - BiomassContainerItem.getCurrentStorage(stack2) >= i && biomassCap.getCurrentStorage() >= i)
-				{
-//					capability.recieveBiomass(BIOMASS_CAP.extractBiomass(i));
-					BiomassContainerItem.receiveBiomass(stack2, biomassCap.extractBiomass(i));
-					break;
-				}
-			}
+			IBiomassFluidEnergy capability = BiomassFluidEnergy.getItemStackCap(stack2);
+			int need = capability.getMaxStorage() - capability.getCurrentStorage();
+			int have = biomassCap.getCurrentStorage();
+			int amount = biomassCap.extractBiomass(Math.min(Math.min(need, have), 4));
+			capability.recieveBiomass(amount);
+//			BiomassContainerItem.changeCurrentStorage(stack2, amount);
+			itemhandler.setStackInSlot(getFluidOutSlot(), stack2);
 			changesMade = true;
 		}
 		else if (stack2.getItem() == Items.BUCKET)
@@ -75,13 +76,10 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 			}
 		}
 		if (changesMade)
+		{
 			markDirty();
+		}
     }
-
-	public int fluidPerTick()
-	{
-		return 5 + getUpgradeTier(SPEED_UPGRADE) * 3;
-	}
 
 	public abstract int getFluidInSlot();
     

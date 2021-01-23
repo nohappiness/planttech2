@@ -10,20 +10,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class SeedconstructorContainer extends BaseContainer
+public class SeedConstructorContainer extends BaseContainer
 {
-	public SeedconstructorContainer(int id, PlayerInventory inv)
+	public SeedConstructorContainer(int id, PlayerInventory inv)
 	{
 		this(id, inv, new SeedconstructorTileEntity()); 
 	}
 	
-	public SeedconstructorContainer(int id, PlayerInventory player, SeedconstructorTileEntity tileentity) 
+	public SeedConstructorContainer(int id, PlayerInventory player, SeedconstructorTileEntity tileentity)
 	{
 		super(id, ModContainers.SEEDCONSTRUCTOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 		
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 95, 29, "slot.seedconstructor.container"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 1, 95, 66, "slot.util.output"));
+		this.addSlot(createOutoutSlot(handler, 1, 95, 66));
 		this.addSlot(createSpeedUpgradeSlot(handler, 2, 71, 43));
 		this.addSlot(createFluidInSlot(handler, 23, 38));
 		this.addSlot(createFluidOutSlot(handler, 23, 57));
