@@ -2,6 +2,7 @@
   "parent": "planttech2:block/hedge/base/hedge_adding",
   "textures": {
     "leaves": "minecraft:block/birch_leaves",
-    "wood": "minecraft:block/oak_log"
+    "wood": "minecraft:block/oak_log",
+    "particle": "minecraft:block/oak_log"
   }
 }

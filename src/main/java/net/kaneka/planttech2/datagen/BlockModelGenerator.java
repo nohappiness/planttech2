@@ -6,6 +6,7 @@ import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -58,17 +59,24 @@ public class BlockModelGenerator extends BlockStateProvider
 			i++;
 			for(String type_2: types)
 			{
-				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_base");
-				temp.parent(hedge_base).texture("leaves", mcLoc("block/" + type_1 + "_leaves"))
-										.texture("wood", mcLoc("block/" + type_2 + "_log"));
+				String hedge = "block/hedge/";
+				String woodType = type_1 + "_" + type_2;
+				ResourceLocation leavesTexture = mcLoc("block/" + type_1 + "_leaves");
+				ResourceLocation woodsTexture = mcLoc("block/" + type_2 + "_log");
+				temp = models().getBuilder(hedge + woodType + "_base");
+				temp.parent(hedge_base).texture("leaves", leavesTexture)
+										.texture("wood", woodsTexture)
+										.texture("particle", woodsTexture);
 				
 				
-				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_none");
-				temp.parent(hedge_none).texture("wood", mcLoc("block/" + type_2 + "_log"));
+				temp = models().getBuilder(hedge + woodType + "_none");
+				temp.parent(hedge_none).texture("wood", woodsTexture)
+										.texture("particle", woodsTexture);
 				
-				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_adding");
-				temp.parent(hedge_adding).texture("leaves", mcLoc("block/" + type_1 + "_leaves"))
-										.texture("wood", mcLoc("block/" + type_2 + "_log"));
+				temp = models().getBuilder(hedge + woodType + "_adding");
+				temp.parent(hedge_adding).texture("leaves", leavesTexture)
+										.texture("wood", woodsTexture)
+										.texture("particle", woodsTexture);
 			}
 		}
 		
