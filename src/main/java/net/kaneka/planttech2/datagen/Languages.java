@@ -363,15 +363,16 @@ public class Languages extends LanguageProvider
 		{
 			for(String type_2: types)
 			{
-				add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, capitalize(type_1) + " Leafed " + capitalize(type_2) + " Hedge");
+//                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, capitalize(type_1) + " Leafed " + capitalize(type_2) + " Hedge");
+                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, "Hedge");
 			}
 		}
     }
 
-    private static String capitalize(String str)
-    {
-        return StringUtils.capitalize(str.toLowerCase());
-    }
+//    private static String capitalize(String str)
+//    {
+//        return StringUtils.capitalize(str.toLowerCase());
+//    }
 
     public void addGUIs()
     {

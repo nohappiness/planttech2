@@ -18,7 +18,7 @@ import net.minecraft.world.biome.BiomeColors;
 
 public class Hedge extends CustomFenceBlock
 {
-	private Block leaves, wood;
+	private final Block leaves, wood;
 
 	public Hedge(Block leaves, Block wood)
 	{
@@ -39,7 +39,7 @@ public class Hedge extends CustomFenceBlock
 
 	public static class ColorHandler implements IBlockColor
 	{
-		private Block leaves;
+		private final Block leaves;
 
 		public ColorHandler(Block leaves)
 		{
@@ -72,7 +72,7 @@ public class Hedge extends CustomFenceBlock
 
 	public static class ColorHandlerItem implements IItemColor
 	{
-		private Block leaves;
+		private final Block leaves;
 
 		public ColorHandlerItem(Block leaves)
 		{

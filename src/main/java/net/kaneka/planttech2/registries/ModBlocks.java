@@ -51,9 +51,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -384,8 +389,16 @@ public class ModBlocks
 	
 	static <B extends Hedge> B makeHedge(String registryName, ItemGroup group, B block)
 	{
-		final B b = makeSpecialWithItem(registryName, group, block);
-		HEDGE_BLOCKS.add(b); 
+		final B b = makeSpecial(registryName, block);
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)){
+			@Override
+			public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+			{
+				tooltip.add(new StringTextComponent("Base (Log): " + block.getWood().getTranslatedName()));
+				tooltip.add(new StringTextComponent("Leaf: " + block.getLeaves().getTranslatedName()));
+			}
+		}.setRegistryName(registryName));
+		HEDGE_BLOCKS.add(b);
 		return b;
 	}
 
