@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " A ",
+    "BCB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:oak_leaves"
+    },
+    "B": {
+      "item": "minecraft:oak_log"
+    },
+    "C": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "planttech2:hedge_oak_oak_dirt",
+    "count": 6
+  }
+}

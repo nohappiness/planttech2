@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "planttech2:hedge_dark_oak_acacia_dirt"
+    ]
+  },
+  "criteria": {
+    "leaves": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:dark_oak_leaves"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "planttech2:hedge_dark_oak_acacia_dirt"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "leaves",
+      "has_the_recipe"
+    ]
+  ]
+}

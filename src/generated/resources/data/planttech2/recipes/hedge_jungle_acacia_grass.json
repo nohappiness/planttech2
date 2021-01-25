@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " A ",
+    "BCB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:jungle_leaves"
+    },
+    "B": {
+      "item": "minecraft:acacia_log"
+    },
+    "C": {
+      "item": "minecraft:grass_block"
+    }
+  },
+  "result": {
+    "item": "planttech2:hedge_jungle_acacia_grass",
+    "count": 6
+  }
+}

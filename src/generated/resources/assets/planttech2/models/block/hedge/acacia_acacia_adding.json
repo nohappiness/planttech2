@@ -1,7 +1,0 @@
-{
-  "parent": "planttech2:block/hedge/base/hedge_adding",
-  "textures": {
-    "leaves": "minecraft:block/acacia_leaves",
-    "wood": "minecraft:block/acacia_log"
-  }
-}

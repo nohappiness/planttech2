@@ -13,18 +13,20 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.FoliageColors;
+import net.minecraft.world.GrassColors;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.biome.BiomeColors;
 
 public class Hedge extends CustomFenceBlock
 {
-	private Block leaves, wood;
+	private Block leaves, wood, soil;
 
-	public Hedge(Block leaves, Block wood)
+	public Hedge(Block leaves, Block wood, Block soil)
 	{
 		super(AbstractBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());
 		this.leaves = leaves;
 		this.wood = wood; 
+		this.soil = soil; 
 	}
 
 	public Block getLeaves()
@@ -36,14 +38,20 @@ public class Hedge extends CustomFenceBlock
 	{
 		return wood;
 	}
+	
+	public Block getSoil()
+	{
+		return soil;
+	}
 
 	public static class ColorHandler implements IBlockColor
 	{
-		private Block leaves;
+		private Block leaves, soil;
 
-		public ColorHandler(Block leaves)
+		public ColorHandler(Block leaves, Block soil)
 		{
 			this.leaves = leaves;
+			this.soil = soil; 
 		}
 
 		@Override
@@ -64,6 +72,10 @@ public class Hedge extends CustomFenceBlock
 				if (leaves == Blocks.DARK_OAK_LEAVES)
 					return BiomeColors.getFoliageColor(reader, pos);
 
+			}
+			else if (tintindex == 1 && soil == Blocks.GRASS_BLOCK)
+			{ 
+				return reader != null && pos != null ? BiomeColors.getGrassColor(reader, pos) : GrassColors.get(0.5D, 1.0D);
 			}
 			return 0xFFFFFFFF;
 		}

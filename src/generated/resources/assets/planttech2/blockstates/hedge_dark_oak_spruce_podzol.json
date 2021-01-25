@@ -1,0 +1,79 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_podzol_base"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_podzol_adding",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "north": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_none",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_podzol_adding"
+      }
+    },
+    {
+      "when": {
+        "east": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_none"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_podzol_adding",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "south": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_none",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_podzol_adding",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "west": "false"
+      },
+      "apply": {
+        "model": "planttech2:block/hedge/dark_oak_spruce_none",
+        "y": 180
+      }
+    }
+  ]
+}
