@@ -359,12 +359,16 @@ public class Languages extends LanguageProvider
     public void addHedges()
     {
     	String[] types = new String[] {"oak", "spruce", "birch", "jungle", "acacia", "dark_oak"}; 
+    	String[] soils = new String[] {"dirt", "grass", "podzol"}; 
+     	
         for(String type_1: types)
 		{
 			for(String type_2: types)
 			{
-//                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, capitalize(type_1) + " Leafed " + capitalize(type_2) + " Hedge");
-                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, "Hedge");
+				for(String soil: soils)
+				{
+					add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2 + "_" + soil, "Hedge");
+				}
 			}
 		}
     }

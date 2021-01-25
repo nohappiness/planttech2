@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.blocks;
 
+import java.util.List;
+
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -9,11 +11,16 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.IBlockDisplayReader;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 
 public class Hedge extends CustomFenceBlock
@@ -25,7 +32,9 @@ public class Hedge extends CustomFenceBlock
 		super(AbstractBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());
 		this.leaves = leaves;
 		this.wood = wood; 
-		this.soil = soil; 
+		this.soil = soil;
+		this.collisionShapes = this.makeShapes(3.0F, 3.0F, 24.0F, 0.0F, 24.0F);
+		this.shapes = this.makeShapes(3.0F, 3.0F, 16.0F, 0.0F, 16.0F);
 	}
 
 	public Block getLeaves()
@@ -41,6 +50,14 @@ public class Hedge extends CustomFenceBlock
 	public Block getSoil()
 	{
 		return soil;
+	}
+	
+	@Override
+	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	{
+		tooltip.add(new StringTextComponent("Log: " + getWood().getTranslatedName().getString()));
+		tooltip.add(new StringTextComponent("Leaf: " + getLeaves().getTranslatedName().getString()));
+		tooltip.add(new StringTextComponent("Soil: " + getSoil().getTranslatedName().getString()));
 	}
 
 	public static class ColorHandler implements IBlockColor

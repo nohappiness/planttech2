@@ -536,14 +536,7 @@ public class ModBlocks
 	static <B extends Hedge> B makeHedge(String registryName, ItemGroup group, B block)
 	{
 		final B b = makeSpecial(registryName, block);
-		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)){
-			@Override
-			public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
-			{
-				tooltip.add(new StringTextComponent("Base (Log): " + block.getWood().getTranslatedName()));
-				tooltip.add(new StringTextComponent("Leaf: " + block.getLeaves().getTranslatedName()));
-			}
-		}.setRegistryName(registryName));
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
 		HEDGE_BLOCKS.add(b);
 		return b;
 	}
