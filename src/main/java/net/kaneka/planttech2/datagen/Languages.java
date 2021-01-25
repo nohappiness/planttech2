@@ -12,6 +12,7 @@ import net.kaneka.planttech2.registries.ModEffects;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
+import org.apache.commons.lang3.StringUtils;
 
 import static net.kaneka.planttech2.PlantTechMain.MODID;
 
@@ -68,7 +69,7 @@ public class Languages extends LanguageProvider
         add("temp.cold", "Cold");
         add("temp.normal", "Normal");
         add("temp.warm", "Warm");
-        add("temp.extreme_hot", "Extremely Hot");
+        add("temp.extreme_warm", "Extremely Warm");
     }
 
     private void addItemGroups()
@@ -362,10 +363,16 @@ public class Languages extends LanguageProvider
 		{
 			for(String type_2: types)
 			{
-				add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, "Hedge");
+//                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, capitalize(type_1) + " Leafed " + capitalize(type_2) + " Hedge");
+                add("block." + PlantTechMain.MODID + ".hedge_" + type_1 + "_" + type_2, "Hedge");
 			}
 		}
     }
+
+//    private static String capitalize(String str)
+//    {
+//        return StringUtils.capitalize(str.toLowerCase());
+//    }
 
     public void addGUIs()
     {

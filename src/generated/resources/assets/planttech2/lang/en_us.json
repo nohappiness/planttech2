@@ -990,7 +990,7 @@
   "techvillager.profession.scientist": "Scientist",
   "temp.cold": "Cold",
   "temp.extreme_cold": "Extremely Cold",
-  "temp.extreme_hot": "Extremely Hot",
+  "temp.extreme_warm": "Extremely Warm",
   "temp.normal": "Normal",
   "temp.warm": "Warm",
   "text.biometemperature": "temperature"

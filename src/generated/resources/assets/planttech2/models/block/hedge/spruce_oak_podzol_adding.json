@@ -3,6 +3,7 @@
   "textures": {
     "leaves": "minecraft:block/spruce_leaves",
     "wood": "minecraft:block/oak_log",
-    "soil": "minecraft:block/podzol_top"
+    "soil": "minecraft:block/podzol_top",
+    "particle": "minecraft:block/oak_log"
   }
 }

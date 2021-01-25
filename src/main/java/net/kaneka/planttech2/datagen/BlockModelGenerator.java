@@ -1,12 +1,11 @@
 package net.kaneka.planttech2.datagen;
 
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -54,29 +53,39 @@ public class BlockModelGenerator extends BlockStateProvider
 		String[] soils = new String[] {"dirt", "grass_block_top", "podzol_top"}; 
 		
 		BlockModelBuilder temp; 
-
-		int i = -1; 
+		String hedge, woodType, soilType;
+		ResourceLocation leavesTexture, woodsTexture, soilTexture;
+		
 		
 		for(String type_1: types)
 		{
-			i++;
 			for(String type_2: types)
 			{
+				
+				hedge = "block/hedge/";
+				woodType = type_1 + "_" + type_2;
+				leavesTexture = mcLoc("block/" + type_1 + "_leaves");
+				woodsTexture = mcLoc("block/" + type_2 + "_log");
 				for(String soil: soils)
 				{
-    				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_" + soil.replace("_block", "").replace("_top", "") + "_base");
-    				temp.parent(hedge_base).texture("leaves", mcLoc("block/" + type_1 + "_leaves"))
-    										.texture("wood", mcLoc("block/" + type_2 + "_log"))
-    										.texture("soil", mcLoc("block/" + soil));
+					soilType = soil.replace("_block", "").replace("_top", "");
+					soilTexture = mcLoc("block/" + soil); 
+    				temp = models().getBuilder(hedge + woodType + "_" + soilType + "_base");
+    				temp.parent(hedge_base).texture("leaves", leavesTexture)
+    										.texture("wood", woodsTexture)
+    										.texture("soil", soilTexture)
+    										.texture("particle", woodsTexture);
     				
-    				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_" + soil.replace("_block", "").replace("_top", "") + "_adding");
-    				temp.parent(hedge_adding).texture("leaves", mcLoc("block/" + type_1 + "_leaves"))
-    										.texture("wood", mcLoc("block/" + type_2 + "_log"))
-    										.texture("soil", mcLoc("block/" + soil));
+    				temp = models().getBuilder(hedge + woodType + "_" + soil.replace("_block", "").replace("_top", "") + "_adding");
+    				temp.parent(hedge_adding).texture("leaves", leavesTexture)
+    										.texture("wood", woodsTexture)
+    										.texture("soil", soilTexture)
+    										.texture("particle", woodsTexture);
 				}
 
-				temp = models().getBuilder("block/hedge/" + type_1 + "_" + type_2 + "_none");
-				temp.parent(hedge_none).texture("wood", mcLoc("block/" + type_2 + "_log"));
+				temp = models().getBuilder(hedge + woodType + "_none");
+				temp.parent(hedge_none).texture("wood", woodsTexture)
+										.texture("particle", woodsTexture);
 			}
 		}
 

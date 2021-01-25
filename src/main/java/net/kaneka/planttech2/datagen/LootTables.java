@@ -86,6 +86,7 @@ public class LootTables extends LootTableProvider
         silkFortuneBlockTable(ModBlocks.DARK_CRYSTAL_ORE, ModItems.DARK_CRYSTAL);
         silkFortuneBlockTable(ModBlocks.WHITE_CRYSTAL_ORE, ModItems.WHITE_CRYSTAL);
 
+        ModBlocks.HEDGE_BLOCKS.forEach(this::standardDropTable);
         return tables;
     }
 

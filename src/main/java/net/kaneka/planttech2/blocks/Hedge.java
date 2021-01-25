@@ -9,7 +9,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.FoliageColors;
@@ -19,7 +18,7 @@ import net.minecraft.world.biome.BiomeColors;
 
 public class Hedge extends CustomFenceBlock
 {
-	private Block leaves, wood, soil;
+	private final Block leaves, wood, soil;
 
 	public Hedge(Block leaves, Block wood, Block soil)
 	{
@@ -46,7 +45,8 @@ public class Hedge extends CustomFenceBlock
 
 	public static class ColorHandler implements IBlockColor
 	{
-		private Block leaves, soil;
+		private final Block leaves, soil;
+
 
 		public ColorHandler(Block leaves, Block soil)
 		{
@@ -84,7 +84,7 @@ public class Hedge extends CustomFenceBlock
 
 	public static class ColorHandlerItem implements IItemColor
 	{
-		private Block leaves;
+		private final Block leaves;
 
 		public ColorHandlerItem(Block leaves)
 		{

@@ -3,6 +3,7 @@
   "textures": {
     "leaves": "minecraft:block/acacia_leaves",
     "wood": "minecraft:block/jungle_log",
-    "soil": "minecraft:block/grass_block_top"
+    "soil": "minecraft:block/grass_block_top",
+    "particle": "minecraft:block/jungle_log"
   }
 }
