@@ -122,7 +122,8 @@ public class CustomFenceBlock extends Block
 	@Override
 	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
-		return this.renderShapes[this.getIndex(state)];
+//		return this.renderShapes[this.getIndex(state)];
+		return this.collisionShapes[this.getIndex(state)];
 	}
 
 	@SuppressWarnings("deprecation")

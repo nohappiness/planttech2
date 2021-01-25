@@ -69,7 +69,7 @@ public class Languages extends LanguageProvider
         add("temp.cold", "Cold");
         add("temp.normal", "Normal");
         add("temp.warm", "Warm");
-        add("temp.extreme_hot", "Extremely Hot");
+        add("temp.extreme_warm", "Extremely Warm");
     }
 
     private void addItemGroups()
