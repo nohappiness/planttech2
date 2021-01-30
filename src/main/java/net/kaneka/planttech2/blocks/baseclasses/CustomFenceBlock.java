@@ -31,18 +31,16 @@ public class CustomFenceBlock extends Block
 	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
 	public static final BooleanProperty WEST = SixWayBlock.WEST;
 	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((p_199775_0_) -> p_199775_0_.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
-	protected final VoxelShape[] collisionShapes;
-	protected final VoxelShape[] shapes;
-	private final VoxelShape[] renderShapes;
+	protected VoxelShape[] collisionShapes;
+	protected VoxelShape[] shapes;
 	private final Object2IntMap<BlockState> field_223008_i = new Object2IntOpenHashMap<>();
 
 	public CustomFenceBlock(Properties property)
 	{
 		super(property);
 		this.setDefaultState(this.stateContainer.getBaseState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
-		this.renderShapes = this.makeShapes(2.0F, 1.0F, 16.0F, 6.0F, 15.0F);
-		this.collisionShapes = this.makeShapes(2.0F, 2.0F, 24.0F, 0.0F, 24.0F);
-		this.shapes = this.makeShapes(2.0F, 2.0F, 16.0F, 0.0F, 16.0F);
+		this.collisionShapes = this.makeShapes(1.0F, 1.0F, 24.0F, 0.0F, 24.0F);
+		this.shapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
 	}
 
 	public boolean func_220111_a(BlockState p_220111_1_, boolean p_220111_2_, Direction p_220111_3_)

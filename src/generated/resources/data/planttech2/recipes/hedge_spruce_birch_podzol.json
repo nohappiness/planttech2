@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " A ",
+    "BCB"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:spruce_leaves"
+    },
+    "B": {
+      "item": "minecraft:birch_log"
+    },
+    "C": {
+      "item": "minecraft:podzol"
+    }
+  },
+  "result": {
+    "item": "planttech2:hedge_spruce_birch_podzol",
+    "count": 6
+  }
+}

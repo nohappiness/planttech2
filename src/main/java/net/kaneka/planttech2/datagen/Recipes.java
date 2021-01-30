@@ -38,9 +38,10 @@ public class Recipes extends RecipeProvider
 			ShapedRecipeBuilder.shapedRecipe(block, 6)
 			.patternLine(" A ")
 			.patternLine(" A ")
-			.patternLine("BAB")
+			.patternLine("BCB")
 			.key('A', block.getLeaves())
 			.key('B', block.getWood())
+			.key('C', block.getSoil())
 			.addCriterion("leaves", InventoryChangeTrigger.Instance.forItems(block.getLeaves()))
 			.build(cons);
 		}

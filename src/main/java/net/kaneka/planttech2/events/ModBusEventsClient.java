@@ -56,6 +56,6 @@ public class ModBusEventsClient
 		for (CropBaseBlock block : ModBlocks.CROPS.values())
 			event.getBlockColors().register(new CropBaseBlock.ColorHandler(), block);
 		for(Hedge block: ModBlocks.HEDGE_BLOCKS)
-			event.getBlockColors().register(new Hedge.ColorHandler(block.getLeaves()), block);
+			event.getBlockColors().register(new Hedge.ColorHandler(block.getLeaves(), block.getSoil()), block);
 	}
 }

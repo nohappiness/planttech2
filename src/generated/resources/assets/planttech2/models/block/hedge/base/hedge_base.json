@@ -4,7 +4,7 @@
     {
       "from": [
         5,
-        0,
+        5,
         5
       ],
       "to": [
@@ -164,6 +164,44 @@
         },
         "east": {
           "texture": "#wood"
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        4,
+        11
+      ],
+      "faces": {
+        "down": {
+          "texture": "#soil",
+          "tintindex": 1
+        },
+        "up": {
+          "texture": "#soil",
+          "tintindex": 1
+        },
+        "north": {
+          "texture": "#soil",
+          "tintindex": 1
+        },
+        "south": {
+          "texture": "#soil",
+          "tintindex": 1
+        },
+        "west": {
+          "texture": "#soil",
+          "tintindex": 1
+        },
+        "east": {
+          "texture": "#soil",
+          "tintindex": 1
         }
       }
     }

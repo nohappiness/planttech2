@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.datagen;
 
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
@@ -32,53 +31,64 @@ public class BlockModelGenerator extends BlockStateProvider
 	{
 		BlockModelBuilder hedge_base = models().getBuilder("block/hedge/base/hedge_base");
 		hedge_base.parent(models().getExistingFile(mcLoc("block/block")));
-		createCube(hedge_base, 5,0,5,11,16,11, "#leaves", 0);
+		createCube(hedge_base, 5,5,5,11,16,11, "#leaves", 0);
 		createCube(hedge_base, 4,0,4,5,4,5, "#wood");
 		createCube(hedge_base, 4,0,11,5,4,12, "#wood");
 		createCube(hedge_base, 11,0,11,12,4,12, "#wood");
 		createCube(hedge_base, 11,0,4,12,4,5, "#wood");
+		createCube(hedge_base, 5,0,5,11,4,11, "#soil", 1);
 		
 		BlockModelBuilder hedge_adding = models().getBuilder("block/hedge/base/hedge_adding");
-		createCube(hedge_adding, 11,0,5,16,16,11, "#leaves", 0);
+		createCube(hedge_adding, 11,5,5,16,16,11, "#leaves", 0);
 		createCube(hedge_adding, 12,0,11,16,4,12, "#wood");
 		createCube(hedge_adding, 12,0,4,16,4,5, "#wood");
+		createCube(hedge_adding, 11,0,5,16,4,11, "#soil", 1);
 		
 		BlockModelBuilder hedge_none = models().getBuilder("block/hedge/base/hedge_none");
 		createCube(hedge_none, 11,0,5,12,4,11, "#wood");
 		
+		
 		String[] types = new String[] {"oak", "spruce", "birch", "jungle", "acacia", "dark_oak"}; 
 		
-		//List<BlockModelBuilder> hedge_list = new ArrayList<BlockModelBuilder>(); 
+		String[] soils = new String[] {"dirt", "grass_block_top", "podzol_top"}; 
 		
 		BlockModelBuilder temp; 
-
-		int i = -1; 
+		String hedge, woodType, soilType;
+		ResourceLocation leavesTexture, woodsTexture, soilTexture;
+		
 		
 		for(String type_1: types)
 		{
-			i++;
 			for(String type_2: types)
 			{
-				String hedge = "block/hedge/";
-				String woodType = type_1 + "_" + type_2;
-				ResourceLocation leavesTexture = mcLoc("block/" + type_1 + "_leaves");
-				ResourceLocation woodsTexture = mcLoc("block/" + type_2 + "_log");
-				temp = models().getBuilder(hedge + woodType + "_base");
-				temp.parent(hedge_base).texture("leaves", leavesTexture)
-										.texture("wood", woodsTexture)
-										.texture("particle", woodsTexture);
 				
-				
+				hedge = "block/hedge/";
+				woodType = type_1 + "_" + type_2;
+				leavesTexture = mcLoc("block/" + type_1 + "_leaves");
+				woodsTexture = mcLoc("block/" + type_2 + "_log");
+				for(String soil: soils)
+				{
+					soilType = soil.replace("_block", "").replace("_top", "");
+					soilTexture = mcLoc("block/" + soil); 
+    				temp = models().getBuilder(hedge + woodType + "_" + soilType + "_base");
+    				temp.parent(hedge_base).texture("leaves", leavesTexture)
+    										.texture("wood", woodsTexture)
+    										.texture("soil", soilTexture)
+    										.texture("particle", woodsTexture);
+    				
+    				temp = models().getBuilder(hedge + woodType + "_" + soil.replace("_block", "").replace("_top", "") + "_adding");
+    				temp.parent(hedge_adding).texture("leaves", leavesTexture)
+    										.texture("wood", woodsTexture)
+    										.texture("soil", soilTexture)
+    										.texture("particle", woodsTexture);
+				}
+
 				temp = models().getBuilder(hedge + woodType + "_none");
 				temp.parent(hedge_none).texture("wood", woodsTexture)
 										.texture("particle", woodsTexture);
-				
-				temp = models().getBuilder(hedge + woodType + "_adding");
-				temp.parent(hedge_adding).texture("leaves", leavesTexture)
-										.texture("wood", woodsTexture)
-										.texture("particle", woodsTexture);
 			}
 		}
+
 		
 		MultiPartBlockStateBuilder builder; 
 		
@@ -86,17 +96,18 @@ public class BlockModelGenerator extends BlockStateProvider
 		{
 			builder = getMultipartBuilder(b);
 			String s = b.getRegistryName().toString().replace("planttech2:hedge_", "block/hedge/");
-			//System.out.println(b.getRegistryName().toString().replace("planttech2:hedge_", "block/hedge/") + "_base"); 
 			builder.part().modelFile(models().getExistingFile(modLoc(s + "_base"))).addModel(); 
 			ModelFile adding = models().getExistingFile(modLoc(s + "_adding"));
-			ModelFile none = models().getExistingFile(modLoc(s + "_none"));
-			
+			ModelFile none = models().getExistingFile(modLoc(s.replace("_dirt", "").replace("_grass", "").replace("_podzol", "") + "_none"));
 			builder.part().modelFile(adding).rotationY(270).addModel().condition(CustomFenceBlock.NORTH, true);
 			builder.part().modelFile(none).rotationY(270).addModel().condition(CustomFenceBlock.NORTH, false);
+			
 			builder.part().modelFile(adding).addModel().condition(CustomFenceBlock.EAST, true);
 			builder.part().modelFile(none).addModel().condition(CustomFenceBlock.EAST, false);
+			
 			builder.part().modelFile(adding).rotationY(90).addModel().condition(CustomFenceBlock.SOUTH, true);
 			builder.part().modelFile(none).rotationY(90).addModel().condition(CustomFenceBlock.SOUTH, false);
+			
 			builder.part().modelFile(adding).rotationY(180).addModel().condition(CustomFenceBlock.WEST, true);
 			builder.part().modelFile(none).rotationY(180).addModel().condition(CustomFenceBlock.WEST, false);
 		}
@@ -111,7 +122,7 @@ public class BlockModelGenerator extends BlockStateProvider
 	
 	private void createCube(BlockModelBuilder builder, float fx, float fy, float fz, float tx, float ty, float tz, String texture, int tint) 
 	{
-        builder.element().from(fx, fy, fz).to(tx, ty, tz).allFaces((dir, faceB) -> faceB.texture(texture).tintindex(0)).end();
+        builder.element().from(fx, fy, fz).to(tx, ty, tz).allFaces((dir, faceB) -> faceB.texture(texture).tintindex(tint)).end();
     }
 	
 	/*
