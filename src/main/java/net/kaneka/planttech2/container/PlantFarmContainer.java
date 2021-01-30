@@ -23,8 +23,8 @@ public class PlantFarmContainer extends BaseContainer
 		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 84, 41, "slot.plantfarm.seed"));
 		for(int y = 0; y < 2; y++)
 			for(int x = 0; x < 5; x++)
-				this.addSlot(new SlotItemHandlerWithInfo(handler, 1 + x + y * 5, 59 + x * 18, 67 + y * 18, "slot.plantfarm.storage"));
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 11, 59, 41, "slot.util.squeezerupgrade"));
+				this.addSlot(new LimitedItemInfoSlot(handler, 1 + x + y * 5, 59 + x * 18, 67 + y * 18, "slot.plantfarm.storage").setConditions(false));
+		this.addSlot(createSpeedUpgradeSlot(handler, 11, 59, 41));
 		this.addSlot(createRangeUpgradeSlot(handler, 12, 131, 41));
 		this.addSlot(createFluidInSlot(handler, 23, 38));
 		this.addSlot(createFluidOutSlot(handler, 23, 57));

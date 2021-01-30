@@ -429,7 +429,7 @@ public class Languages extends LanguageProvider
         add("slot.util.speedupgrade", "Insert Speed Upgrade to speed up the process");
         add("slot.util.rangeupgrade", "Insert Range Upgrade to increase the production");
         add("slot.util.energystorageupgrade", "Insert Storage Upgrade to increase the energy storage");
-        add("slot.util.squeezerupgrade", "Not implemented yet");
+//        add("slot.util.squeezerupgrade", "Not implemented yet");
         add("slot.util.knowledgechip", "Insert Knowledge Chip to collect knowledge while machine is active (limited by the tier of the machine)");
         add("slot.util.output", "Output slot");
         add("slot.util.fluidin", "Insert biomass container to insert biomass");

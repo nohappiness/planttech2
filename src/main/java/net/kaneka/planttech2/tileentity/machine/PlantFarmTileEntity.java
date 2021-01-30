@@ -6,6 +6,7 @@ import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.Block;
@@ -23,6 +24,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.server.ServerWorld;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
+import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 {
@@ -107,58 +109,62 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		int range = getRange();
 		ItemStack seed = itemhandler.getStackInSlot(0);
-		if(!seed.isEmpty())
+		if (isSeed(seed))
 		{
-			if(isSeed(seed))
+			for (int i = 0 ; i <= getRange(); i++)
 			{
-				for(int i = 0 ; i <= range; i++)
-	    		{
-	    			if(progress[i] < getTicks(seed))
-	    				progress[i]++;
-	    			else
-	    			{
-	    				if(energystorage.getEnergyStored() > energyPerAction())
-	    				{
-    	    				NonNullList<ItemStack> drops = getDrops(seed);
-    	    				if(!drops.isEmpty())
-    	    				{
-        	    				for (ItemStack stack : drops)
-        	    				{
-        	    					for (int k = 0; k < 15; k++)
-        	    					{
-        	    						if (!stack.isEmpty())
-        	    							stack = itemhandler.insertItem(k, stack, false);
-        	    					}
-        	    					if (!stack.isEmpty())
-        	    						spawnAsEntity(world, pos.up(), stack);
-        	    				}
-        	    				energystorage.extractEnergy(energyPerAction(), false);
-        	    				progress[i] = 0; 
-        	    				addKnowledge();
-    	    				}
-	    				}
-	    			}
-	    		}
+				if (progress[i] < getTicks(seed))
+					progress[i] += getUpgradeTier(SPEED_UPGRADE) * 5 + 1;
+				else if (energystorage.getEnergyStored() > energyPerAction())
+				{
+					NonNullList<ItemStack> drops = getDrops(seed);
+					if (!drops.isEmpty())
+					{
+						for (ItemStack stack : drops)
+						{
+							for (int k = 0; k < 15; k++)
+							{
+								if (!stack.isEmpty())
+									stack = itemhandler.insertItem(k, stack, false);
+							}
+							if (!stack.isEmpty())
+								spawnAsEntity(world, pos.up(), stack);
+						}
+						energystorage.extractEnergy(energyPerAction(), false);
+						progress[i] = 0;
+						addKnowledge();
+					}
+				}
+				else
+				{
+					resetProgress();
+					break;
+				}
 			}
 		}
+		else
+			resetProgress();
 	}
-	
+
+	@Override
+	protected void resetProgress()
+	{
+		for (int i = 0; i <= getRange(); i++)
+			progress[i] = 0;
+	}
+
 	private boolean isSeed(ItemStack stack)
 	{
-		if (!stack.isEmpty())
+		Item item = stack.getItem();
+		if (item instanceof CropSeedItem)
+			return true;
+		if (item instanceof BlockItem)
 		{
-			Item item = stack.getItem(); 
-			if (item instanceof CropSeedItem)
-				return true;
-			if (item instanceof BlockItem)
-			{
-				Block block = ((BlockItem) item).getBlock();
-				return block instanceof CropsBlock;
-			}
+			Block block = ((BlockItem) item).getBlock();
+			return block instanceof CropsBlock;
 		}
-		return false; 
+		return false;
 	}
 	
 	@Override
@@ -184,27 +190,16 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	
 	public int getTicks()
 	{
-		ItemStack stack = itemhandler.getStackInSlot(0);
-		if (!stack.isEmpty())
-		{
-			Item item = stack.getItem(); 
-			if (item instanceof CropSeedItem)
-			{
-				CompoundNBT nbt = stack.getOrCreateTag();
-				if (nbt.contains("growspeed"))
-					return ((90 - nbt.getInt("growspeed") * 6) * 20) * 7;
-			}
-		}
-		return 90 * 20 * 7; 
+		return getTicks(itemhandler.getStackInSlot(0));
 	}
 
 	private NonNullList<ItemStack> getDrops(ItemStack stack)
 	{
 		NonNullList<ItemStack> drops = NonNullList.create();
-		if(world != null && !stack.isEmpty())
+		if(world != null)
 		{
 			Item item = stack.getItem(); 
-			if(item instanceof CropSeedItem)
+			if (item instanceof CropSeedItem)
 			{
 				HashMapCropTraits traits = new HashMapCropTraits();
 				traits.fromStack(stack);
@@ -235,6 +230,12 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			}
 		}
 		return 0;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 11;
 	}
 
 	@Override

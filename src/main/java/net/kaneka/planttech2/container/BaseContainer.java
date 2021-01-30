@@ -110,7 +110,7 @@ public class BaseContainer extends Container
 
 	protected LimitedItemInfoSlot createFakeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.output").setConditions(false);
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, usage).setConditions(false);
 	}
 
 	protected LimitedItemInfoSlot createOutoutSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
