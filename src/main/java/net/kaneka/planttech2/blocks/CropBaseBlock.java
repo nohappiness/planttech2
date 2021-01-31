@@ -69,7 +69,7 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		BlockState state = world.getBlockState(pos);
 		int growstate = state.get(GROWSTATE);
-		if (growstate < 7)
+		if (growstate < 7 && canGrow(world, pos, traits))
 			world.setBlockState(pos, state.with(GROWSTATE, growstate + 1));
 		else
 		{

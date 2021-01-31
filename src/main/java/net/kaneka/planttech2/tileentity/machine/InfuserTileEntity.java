@@ -24,7 +24,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 import static net.kaneka.planttech2.utilities.PlantTechConstants.*;
 
 public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity

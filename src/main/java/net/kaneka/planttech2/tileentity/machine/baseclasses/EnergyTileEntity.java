@@ -19,8 +19,6 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Random;
 
-import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
-
 abstract public class EnergyTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider
 {
 

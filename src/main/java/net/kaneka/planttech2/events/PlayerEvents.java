@@ -1,9 +1,11 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.crops.CropListReloadListener;
 import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
+import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.minecraft.entity.Entity;
@@ -19,31 +21,34 @@ import org.apache.logging.log4j.core.jmx.Server;
 @Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class PlayerEvents
 {
-//	@SubscribeEvent
-//	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
-//	{
-		/*
-		
-		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
-		{
-			ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
-			syncRadiationCapWithClient(player);
-			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(PlantTechMain.croplist.getConfigs()), player);
+	@SubscribeEvent
+	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
+	{
+	    PlayerEntity player = event.getPlayer();
+//	    if (!player.world.isRemote())
+//	        PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(), (ServerPlayerEntity) player);
+//		/*
+//
+//		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
+//		{
+//			ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+//			syncRadiationCapWithClient(player);
+//			PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(PlantTechMain.croplist.getConfigs()), player);
+//		}
+//		if (event.getPlayer().getEntityWorld().isRemote() && event.getPlayer().getEntityWorld().getDimension().getType() == ModDimensions.getPlantTopiaDimensionType())
+//		{
+//			PlayerEntity player = event.getPlayer();
+//			IPlayerRenderRGB capability = PlayerRenderRGB.getCap(player);
+//			Biome biome = player.getEntityWorld().getBiome(player.getPosition());
+//			if (biome instanceof PlantTopiaBaseBiome)
+//			{
+//				PlantTopiaBaseBiome pt2biome = (PlantTopiaBaseBiome) biome;
+//				float[] rgb = new float[]{pt2biome.getFogRed(), pt2biome.getFogGreen(), pt2biome.getFogBlue()};
+//				capability.setCurrentFogDensity(pt2biome.getFogDensity());
+//				capability.setRGB(rgb);
+//			}
 		}
-		if (event.getPlayer().getEntityWorld().isRemote() && event.getPlayer().getEntityWorld().getDimension().getType() == ModDimensions.getPlantTopiaDimensionType())
-		{
-			PlayerEntity player = event.getPlayer();
-			IPlayerRenderRGB capability = PlayerRenderRGB.getCap(player);
-			Biome biome = player.getEntityWorld().getBiome(player.getPosition());
-			if (biome instanceof PlantTopiaBaseBiome)
-			{
-				PlantTopiaBaseBiome pt2biome = (PlantTopiaBaseBiome) biome;
-				float[] rgb = new float[]{pt2biome.getFogRed(), pt2biome.getFogGreen(), pt2biome.getFogBlue()};
-				capability.setCurrentFogDensity(pt2biome.getFogDensity());
-				capability.setRGB(rgb);
-			}
-		}
-		*/
+//		*/
 //	}
 
 //	@SubscribeEvent

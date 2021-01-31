@@ -23,9 +23,6 @@ public class MachineBulbItem extends BlockItem
 
 	public MachineBulbItem(Supplier<Block> hull, Supplier<Block> crop, int tier, int neededBiomass)
 	{
-		//Not quite sure why are we using suppliers here as blocks are usually registered before items,
-		//so it should be working without suppliers.
-		//It should error by the jei recipe here if the block entry is empty.
 		super(crop.get(), new Item.Properties().group(ModCreativeTabs.SEEDS));
 		this.hull = hull;
 		this.crop = crop;

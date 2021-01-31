@@ -83,12 +83,6 @@ public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEn
 	}
 
 	@Override
-	protected EnergyConsumptionType getEnergyConsumptionType()
-	{
-		return EnergyConsumptionType.PER_TICK;
-	}
-
-	@Override
 	protected FluidConsumptionType getFluidConsumptionType()
 	{
 		return FluidConsumptionType.PER_PROCESS;
