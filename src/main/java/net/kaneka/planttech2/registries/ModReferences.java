@@ -27,7 +27,8 @@ public class ModReferences
 	public static final String TELEPORTERBLOCKCONTAINER = MODID + ":teleporterblockcontainer";
 	public static final String TELEPORTERITEMCONTAINER = MODID + ":teleporteritemcontainer";
 	public static final String TECHVILLAGERCONTAINER = MODID + ":techvillagercontainer";
-	
+	public static final String CROPAURAGENERATORCONTAINER = MODID + ":cropaurageneratorcontainer";
+
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 	public static final ResourceLocation PLANTTOPIA_RESLOC = new ResourceLocation(PLANTTOPIA);
 	

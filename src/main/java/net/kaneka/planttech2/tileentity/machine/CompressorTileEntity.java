@@ -8,15 +8,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.kaneka.planttech2.container.CompressorContainer;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -167,7 +164,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	}
 
 	@Override
-	public void onContainerUpdated()
+	public void onContainerUpdated(int slotIndex)
 	{
 		if (world != null && (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem()))
 			initRecipeList();

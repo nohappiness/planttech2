@@ -1,26 +1,8 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.items.AdvancedAnalyserItem;
-import net.kaneka.planttech2.items.AnalyserItem;
-import net.kaneka.planttech2.items.BiomassContainerItem;
-import net.kaneka.planttech2.items.CreditCardItem;
-import net.kaneka.planttech2.items.CropRemover;
-import net.kaneka.planttech2.items.CropSeedItem;
-import net.kaneka.planttech2.items.DNAContainerItem;
-import net.kaneka.planttech2.items.EnergyStorageItem;
-import net.kaneka.planttech2.items.FertilizerItem;
-import net.kaneka.planttech2.items.GuideItem;
-import net.kaneka.planttech2.items.KnowledgeChip;
-import net.kaneka.planttech2.items.MachineBulbItem;
-import net.kaneka.planttech2.items.ParticleItem;
-import net.kaneka.planttech2.items.PlantObtainerItem;
-import net.kaneka.planttech2.items.RadiationMetreItem;
-import net.kaneka.planttech2.items.TeleporterItem;
-import net.kaneka.planttech2.items.TestItem;
-import net.kaneka.planttech2.items.ThermometerItem;
-import net.kaneka.planttech2.items.TierItem;
-import net.kaneka.planttech2.items.WrenchItem;
+import net.kaneka.planttech2.enums.EnumTemperature;
+import net.kaneka.planttech2.items.*;
 import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
@@ -199,6 +181,12 @@ public class ModItems
     @ObjectHolder("flame_chip") public static UpgradeChipItem FLAME_CHIP;
     @ObjectHolder("infinity_chip") public static UpgradeChipItem INFINITY_CHIP;
 
+    @ObjectHolder("aura_chip_temperature_extreme_cold") public static AuraChipItem AURA_CHIP_TEMPERATURE_EXTREME_COLD;
+    @ObjectHolder("aura_chip_temperature_cold") public static AuraChipItem AURA_CHIP_TEMPERATURE_COLD;
+    @ObjectHolder("aura_chip_temperature_normal") public static AuraChipItem AURA_CHIP_TEMPERATURE_NORMAL;
+    @ObjectHolder("aura_chip_temperature_warm") public static AuraChipItem AURA_CHIP_TEMPERATURE_WARM;
+    @ObjectHolder("aura_chip_temperature_extreme_warm") public static AuraChipItem AURA_CHIP_TEMPERATURE_EXTREME_WARM;
+
     @ObjectHolder("cyberarmor_helmet") public static UpgradeableArmorItem CYBERARMOR_HELMET;
     @ObjectHolder("cyberarmor_chest") public static UpgradeableArmorItem CYBERARMOR_CHEST;
     @ObjectHolder("cyberarmor_leggings") public static UpgradeableArmorItem CYBERARMOR_LEGGINGS;
@@ -366,6 +354,17 @@ public class ModItems
         r.register(make("punch_chip", new UpgradeChipItem("punch_chip").setEnchantment(Enchantments.PUNCH).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
         r.register(make("flame_chip", new UpgradeChipItem("flame_chip").setEnchantment(Enchantments.FLAME).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
         r.register(make("infinity_chip", new UpgradeChipItem("infinity_chip").setEnchantment(Enchantments.INFINITY).setEnergyCost(20).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
+
+        r.register(make("aura_chip_light_increase", new AuraChipItem(null, -5, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_light_decrease", new AuraChipItem(null, 5, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_water_range_decrease", new AuraChipItem(null, 0, 5,null, 0, 0, 10)));
+        r.register(make("aura_chip_temperature_extreme_cold", new AuraChipItem(EnumTemperature.EXTREME_COLD, 0, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_temperature_cold", new AuraChipItem(EnumTemperature.COLD, 0, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_temperature_normal", new AuraChipItem(EnumTemperature.NORMAL, 0, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_temperature_warm", new AuraChipItem(EnumTemperature.WARM, 0, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_temperature_extreme_warm", new AuraChipItem(EnumTemperature.EXTREME_WARM, 0, 0,null, 0, 0, 10)));
+        r.register(make("aura_chip_fertility_increase", new AuraChipItem(null, 0, 0, null, 2, 0, 10)));
+        r.register(make("aura_chip_productivity_increase", new AuraChipItem(null, 0, 0, null, 0, 2, 10)));
 
         r.register(make("cyberarmor_helmet", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET)));
         r.register(make("cyberarmor_chest", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST)));

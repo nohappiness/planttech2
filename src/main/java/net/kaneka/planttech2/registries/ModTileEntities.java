@@ -38,6 +38,7 @@ public class ModTileEntities
 	@ObjectHolder("tileentitymachinebulbreprocessor") public static TileEntityType<MachineBulbReprocessorTileEntity> MACHINEBULBREPROCESSOR_TE;
 	@ObjectHolder("tileentitycrops") public static TileEntityType<PlantTopiaTeleporterTileEntity> PLANTTOPIATELEPORTER_TE;
 	@ObjectHolder("tileentityenergysupplier") public static TileEntityType<EnergySupplierTileEntity> ENERGY_SUPPLIER_TE;
+	@ObjectHolder("tileentitycropauragenerator") public static TileEntityType<CropAuraGeneratorTileEntity> CROP_AURA_GENERATOR_TE;
 
 	public static void register(IForgeRegistry<TileEntityType<?>> registry)
 	{
@@ -60,6 +61,7 @@ public class ModTileEntities
 		registry.register(make("tileentitymachinebulbreprocessor", MachineBulbReprocessorTileEntity::new, ModBlocks.MACHINEBULBREPROCESSOR));
 		registry.register(make("tileentityplanttopiateleporter", MachineBulbReprocessorTileEntity::new, ModBlocks.PLANTTOPIA_TELEPORTER, ModBlocks.PLANTTOPIA_TELEPORTER_END));
 		registry.register(make("tileentityenergysupplier", EnergySupplierTileEntity::new, ModBlocks.ENERGY_SUPPLIER));
+		registry.register(make("tileentitycropauragenerator", CropAuraGeneratorTileEntity::new, ModBlocks.CROP_AURA_GENERATOR));
 	}
 
 	static <T extends TileEntity> TileEntityType<T> make(String registryName, Supplier<T> factory, Block... validBlocks) {

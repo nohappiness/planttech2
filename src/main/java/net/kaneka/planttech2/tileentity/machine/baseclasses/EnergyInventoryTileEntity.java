@@ -6,7 +6,6 @@ import java.util.List;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
-import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -166,7 +165,7 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		return 0;
 	}
 
-	public void onContainerUpdated()
+	public void onContainerUpdated(int slotIndex)
 	{
 
 	}

@@ -63,12 +63,6 @@ public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 	}
 
 	@Override
-	public void doUpdate()
-	{
-		super.doUpdate();
-	}
-
-	@Override
 	protected boolean onProcessFinished(ItemStack input, ItemStack output)
 	{
 		boolean finished = super.onProcessFinished(input, output);
@@ -118,7 +112,7 @@ public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 	}
 
 	@Override
-	public void onContainerUpdated()
+	public void onContainerUpdated(int slotIndex)
 	{
 		getRecipeList(getChip(), getInput(), true);
 	}

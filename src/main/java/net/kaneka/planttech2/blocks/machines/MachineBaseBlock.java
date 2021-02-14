@@ -1,26 +1,7 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNACombinerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNAExtractorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
-import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
-import net.kaneka.planttech2.tileentity.machine.EnergySupplierTileEntity;
-import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
-import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
-import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -28,7 +9,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -80,9 +60,7 @@ public class MachineBaseBlock extends Block
 		{
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof EnergyTileEntity)
-			{
 				player.openContainer((EnergyTileEntity) te);
-			}
 		}
 
 		return ActionResultType.SUCCESS;

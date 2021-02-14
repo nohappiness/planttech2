@@ -6,6 +6,7 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ItemModelGenerator extends ItemModelProvider
@@ -20,14 +21,31 @@ public class ItemModelGenerator extends ItemModelProvider
 	protected void registerModels()
 	{
 		registerBlockModels();
+		registerItemModels();
 	}
-	
+
 	private void registerBlockModels()
 	{
 		for(Hedge b: ModBlocks.HEDGE_BLOCKS)
 		{
-			blockHedge(b); 
+			blockHedge(b);
 		}
+	}
+
+	private void registerItemModels()
+	{
+		generatedItemModel("aura_chip_temperature_extreme_cold");
+		generatedItemModel("aura_chip_temperature_cold");
+		generatedItemModel("aura_chip_temperature_normal");
+		generatedItemModel("aura_chip_temperature_warm");
+		generatedItemModel("aura_chip_temperature_extreme_warm");
+	}
+
+	private void generatedItemModel(String name)
+	{
+		getBuilder(name)
+				.parent(new ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", modLoc("item/" + name));
 	}
 	
 	private void block(Block b)

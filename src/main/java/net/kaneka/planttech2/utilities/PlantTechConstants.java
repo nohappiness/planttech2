@@ -15,6 +15,7 @@ public class PlantTechConstants
     public static final int MACHINETIER_DNA_EXTRACTOR = 4; 
     public static final int MACHINETIER_DNA_REMOVER = 4; 
     public static final int MACHINETIER_SEEDCONSTRUCTOR = 4; 
-    public static final int MACHINETIER_PLANTFARM = 5; 
+    public static final int MACHINETIER_PLANTFARM = 5;
     public static final int MACHINETIER_SOLARGENERATOR = 5;
+    public static final int MACHINETIER_CROP_AURA_GENERATOR = 5;
 }

@@ -1,25 +1,7 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.ChipalyzerContainer;
-import net.kaneka.planttech2.container.CompressorContainer;
-import net.kaneka.planttech2.container.DNACleanerContainer;
-import net.kaneka.planttech2.container.DNACombinerContainer;
-import net.kaneka.planttech2.container.DNAExtractorContainer;
-import net.kaneka.planttech2.container.DNARemoverContainer;
-import net.kaneka.planttech2.container.EnergyStorageContainer;
-import net.kaneka.planttech2.container.EnergySupplierContainer;
-import net.kaneka.planttech2.container.IdentifierContainer;
-import net.kaneka.planttech2.container.InfuserContainer;
-import net.kaneka.planttech2.container.ItemUpgradeableContainer;
-import net.kaneka.planttech2.container.MachineBulbReprocessorContainer;
-import net.kaneka.planttech2.container.MegaFurnaceContainer;
-import net.kaneka.planttech2.container.PlantFarmContainer;
-import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
-import net.kaneka.planttech2.container.SeedSqueezerContainer;
-import net.kaneka.planttech2.container.SeedConstructorContainer;
-import net.kaneka.planttech2.container.SolarGeneratorContainer;
-import net.kaneka.planttech2.container.TeleporterContainer;
+import net.kaneka.planttech2.container.*;
 import net.kaneka.planttech2.container.entities.TechVillagerContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
@@ -53,6 +35,7 @@ public class ModContainers
 	@ObjectHolder(TELEPORTERITEMCONTAINER) public static ContainerType<TeleporterContainer> TELEPORTERITEM;
 	@ObjectHolder(TECHVILLAGERCONTAINER) public static ContainerType<TechVillagerContainer> TECHVILLAGER;
 	@ObjectHolder(ENERGYSUPPLIERCONTAINER) public static ContainerType<EnergySupplierContainer> ENERGYSUPPLIER;
+	@ObjectHolder(CROPAURAGENERATORCONTAINER) public static ContainerType<CropAuraGeneratorContainer> CROPAURAGENERATOR;
 
 	public static void registerAll(RegistryEvent.Register<ContainerType<?>> event)
 	{
@@ -77,6 +60,7 @@ public class ModContainers
 		registry.register(make(TELEPORTERITEMCONTAINER, new ContainerType<>(TeleporterContainer::new)));
 		registry.register(make(TECHVILLAGERCONTAINER, IForgeContainerType.create(TechVillagerContainer::new)));
 		registry.register(make(ENERGYSUPPLIERCONTAINER, new ContainerType<>(EnergySupplierContainer::new)));
+		registry.register(make(CROPAURAGENERATORCONTAINER, new ContainerType<>(CropAuraGeneratorContainer::new)));
 	}
 
 	static <C extends Container> ContainerType<C> make(String registryName, ContainerType<C> containerType)

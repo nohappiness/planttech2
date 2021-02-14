@@ -10,6 +10,7 @@ import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
+import net.kaneka.planttech2.tileentity.machine.CropAuraGeneratorTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -40,6 +41,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CropBaseBlock extends ContainerBlock
 {
@@ -198,6 +200,24 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		EnumTemperature temp = PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature();
 		return temp.inRange(world.getBiomeManager().getBiome(pos).getTemperature(pos), tolerance);
+	}
+
+	private List<CropAuraGeneratorTileEntity> getCropAuraGeneratorsInRadius(World world, BlockPos centre, int radius)
+	{
+		List<CropAuraGeneratorTileEntity> list = new ArrayList<>();
+		for (int x = centre.getX() - radius; x < centre.getX() + radius; x++)
+			for (int y = centre.getY() - radius; y < centre.getY() + radius; y++)
+				for (int z = centre.getZ() - radius; z < centre.getZ() + radius; z++)
+				{
+					BlockPos itr = new BlockPos(x, y, z);
+					if (world.getBlockState(itr).getBlock() == ModBlocks.CROP_AURA_GENERATOR)
+					{
+						TileEntity te = world.getTileEntity(itr);
+						if (te instanceof CropAuraGeneratorTileEntity)
+							list.add((CropAuraGeneratorTileEntity) te);
+					}
+				}
+		return list;
 	}
 
 	@Override

@@ -29,5 +29,6 @@ public class ModScreens
 		ScreenManager.registerFactory(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
 		ScreenManager.registerFactory(ModContainers.PLANTTOPIATELEPORTER, PlantTopiaTeleporterScreen::new);
 		ScreenManager.registerFactory(ModContainers.TECHVILLAGER, TechVillagerScreen::new);
+		ScreenManager.registerFactory(ModContainers.CROPAURAGENERATOR, CropAuraGeneratorScreen::new);
 	}
 }

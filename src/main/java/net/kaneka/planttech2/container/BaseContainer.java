@@ -79,7 +79,6 @@ public class BaseContainer extends Container
 		return new LimitedItemInfoSlot(itemHandler, tileentity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
 	}
 
-
 	protected LimitedItemInfoSlot createCapacityChipSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
 		return (LimitedItemInfoSlot) new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.energystorageupgrade").setConditions((stack) -> 			{
@@ -147,7 +146,7 @@ public class BaseContainer extends Container
 			if (listening)
 			{
 				BaseContainer.this.detectAndSendChanges();
-				BaseContainer.this.tileentity.onContainerUpdated();
+				BaseContainer.this.tileentity.onContainerUpdated(getSlotIndex());
 			}
 		}
 

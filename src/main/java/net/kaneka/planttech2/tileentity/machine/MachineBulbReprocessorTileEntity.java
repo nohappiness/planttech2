@@ -7,7 +7,6 @@ import net.kaneka.planttech2.items.MachineBulbItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -140,7 +139,7 @@ public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFlui
 	}
 
 	@Override
-	public void onContainerUpdated()
+	public void onContainerUpdated(int slotIndex)
 	{
 		checkTier();
 	}
