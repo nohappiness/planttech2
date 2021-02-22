@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
+import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -19,6 +20,7 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import static net.kaneka.planttech2.PlantTechMain.LOGGER;
@@ -65,14 +67,9 @@ public class CropListReloadListener extends JsonReloadListener
 
 		PlantTechMain.getCropList().configureFromConfigData(configs.values());
 
+		// Check if the server is up
 		if (ServerLifecycleHooks.getCurrentServer() != null)
-		{
-			for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers())
-			{
-				PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(configs), player);
-			}
-			// TODO: sync data on a player's first join
-		}
+			PlantTech2PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new CropListSyncMessage());
 	}
 
 	public static JsonElement toJson(CropEntryConfigData data)

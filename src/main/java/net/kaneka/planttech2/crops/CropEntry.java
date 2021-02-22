@@ -6,19 +6,30 @@ import java.util.function.Supplier;
 
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.utilities.ISerializable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class CropEntry implements Comparable<CropEntry>
+public class CropEntry implements Comparable<CropEntry>, ISerializable
 {
 	private final String name;
 	private final int seedColor;
 	private final boolean hasParticle;
 	private final CropConfiguration defaultConfig;
 	private CropConfiguration currentConfig;
+
+	public CropEntry(CompoundNBT compound)
+	{
+		this(compound.getString("name"),
+				compound.getInt("colour"),
+				compound.getBoolean("hasparticle"),
+				new CropConfiguration(compound.getCompound("defaultconfig")));
+		currentConfig = new CropConfiguration(compound.getCompound("currentconfig"));
+	}
 
 	public CropEntry(String name, int seedColor, boolean hasParticle, CropConfiguration defaultConfig)
 	{
@@ -27,6 +38,18 @@ public class CropEntry implements Comparable<CropEntry>
 		this.hasParticle = hasParticle;
 		this.defaultConfig = defaultConfig;
 		this.currentConfig = this.defaultConfig;
+	}
+
+	@Override
+	public CompoundNBT write()
+	{
+		CompoundNBT compound = new CompoundNBT();
+		compound.putString("name", name);
+		compound.putInt("colour", seedColor);
+		compound.putBoolean("hasparticle", hasParticle);
+		compound.put("defaultconfig", defaultConfig.write());
+		compound.put("currentconfig", currentConfig.write());
+		return compound;
 	}
 
 	public String getName()

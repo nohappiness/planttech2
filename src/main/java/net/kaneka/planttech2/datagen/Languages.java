@@ -248,11 +248,11 @@ public class Languages extends LanguageProvider
         add(ModItems.FLAME_CHIP, "Flame Chip");
         add(ModItems.INFINITY_CHIP, "Infinity Chip");
 
-        add(ModItems.AURA_CHIP_TEMPERATURE_EXTREME_COLD, "Temperature Aura Chip");
-        add(ModItems.AURA_CHIP_TEMPERATURE_COLD, "Temperature Aura Chip");
-        add(ModItems.AURA_CHIP_TEMPERATURE_NORMAL, "Temperature Aura Chip");
-        add(ModItems.AURA_CHIP_TEMPERATURE_WARM, "Temperature Aura Chip");
-        add(ModItems.AURA_CHIP_TEMPERATURE_EXTREME_WARM, "Temperature Aura Chip");
+//        add(ModItems.AURA_CHIP_TEMPERATURE_EXTREME_COLD, "Temperature Aura Chip");
+//        add(ModItems.AURA_CHIP_TEMPERATURE_COLD, "Temperature Aura Chip");
+//        add(ModItems.AURA_CHIP_TEMPERATURE_NORMAL, "Temperature Aura Chip");
+//        add(ModItems.AURA_CHIP_TEMPERATURE_WARM, "Temperature Aura Chip");
+//        add(ModItems.AURA_CHIP_TEMPERATURE_EXTREME_WARM, "Temperature Aura Chip");
         //        add(ModItems.CHESTPLATE_DANCIUM, "Dancium Chestplate");
         //        add(ModItems.BOOTS_DANCIUM, "Dancium Boots");
         //        add(ModItems.HELMET_DANCIUM, "Dancium Helmet");

@@ -5,10 +5,12 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 
 import com.google.gson.*;
+import net.kaneka.planttech2.utilities.ISerializable;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 
-public class ParentPair implements BiPredicate<String, String>
+public class ParentPair implements BiPredicate<String, String>, ISerializable
 {
     private final String parent1;
     private final String parent2;
@@ -19,6 +21,16 @@ public class ParentPair implements BiPredicate<String, String>
         this.parent1 = parent1;
         this.parent2 = parent2;
         this.mutationChance = mutationChance;
+    }
+
+    @Override
+    public CompoundNBT write()
+    {
+        CompoundNBT compound = new CompoundNBT();
+        compound.putString("parent1", parent1);
+        compound.putString("parent2", parent2);
+        compound.putFloat("mutation", mutationChance);
+        return compound;
     }
 
     @Override
@@ -79,6 +91,11 @@ public class ParentPair implements BiPredicate<String, String>
                 ", parent2='" + parent2 + '\'' +
                 ", mutationChance=" + mutationChance +
                 '}';
+    }
+
+    public static ParentPair of(CompoundNBT compound)
+    {
+        return new ParentPair(compound.getString("parent1"), compound.getString("parent2"), compound.getFloat("mutation"));
     }
 
     public static ParentPair of(String firstParent, String secondParent, float mutationChance)

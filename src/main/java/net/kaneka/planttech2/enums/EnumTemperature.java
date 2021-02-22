@@ -36,15 +36,9 @@ public enum EnumTemperature
 	public boolean inRange(float value, int tolerance)
 	{
 		for (EnumTemperature temp : EnumTemperature.values())
-		{
 			if (ordinal() - tolerance <= temp.ordinal() && temp.ordinal() <= this.ordinal() + tolerance)
-			{
 				if (temp.min <= value && temp.max > value)
-				{
 					return true;
-				}
-			}
-		}
 		return false;
 	}
 
@@ -56,12 +50,8 @@ public enum EnumTemperature
 	public static EnumTemperature byValue(float value)
 	{
 		for (EnumTemperature temp : EnumTemperature.values())
-		{
 			if (temp.min <= value && temp.max > value)
-			{
 				return temp;
-			}
-		}
 		return NORMAL;
 	}
 
@@ -69,12 +59,8 @@ public enum EnumTemperature
 	public static EnumTemperature byName(String name)
 	{
 		for (EnumTemperature temp : EnumTemperature.values())
-		{
 			if (temp.name().equals(name))
-			{
 				return temp;
-			}
-		}
 		return null;
 	}
 }

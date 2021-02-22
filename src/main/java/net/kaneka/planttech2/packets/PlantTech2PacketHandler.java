@@ -13,7 +13,7 @@ import static java.util.Optional.of;
 public class PlantTech2PacketHandler
 {
 	private static final String PROTOCOL_VERSION = Integer.toString(1);
-	private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(PlantTechMain.MODID, "main_channel"))
+	public static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(PlantTechMain.MODID, "main_channel"))
 	        .clientAcceptedVersions(PROTOCOL_VERSION::equals).serverAcceptedVersions(PROTOCOL_VERSION::equals).networkProtocolVersion(() -> PROTOCOL_VERSION).simpleChannel();
 	static int ID = 0;
 
@@ -35,6 +35,8 @@ public class PlantTech2PacketHandler
 				SyncRadiationLevelMessage::decode, SyncRadiationLevelMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
 		INSTANCE.registerMessage(ID++, SyncBiomassFluidEnergyMessage.class, SyncBiomassFluidEnergyMessage::encode,
 				SyncBiomassFluidEnergyMessage::decode, SyncBiomassFluidEnergyMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
+		INSTANCE.registerMessage(ID++, CropListSyncMessage.class, CropListSyncMessage::encode,
+				CropListSyncMessage::decode, CropListSyncMessage::handle, of(NetworkDirection.PLAY_TO_CLIENT));
 	}
 
 	public static void sendToServer(Object msg)

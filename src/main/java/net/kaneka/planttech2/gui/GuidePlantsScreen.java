@@ -52,6 +52,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 		{
 			blit(mStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.ordinal(), 16, 16, 512, 512);
 			renderItem(this.primarySeed, 261, 32);
+
 //			RenderHelper.disableStandardItemLighting();
 //			RenderSystem.enableDepthTest();
 			if (!soil.isEmpty())

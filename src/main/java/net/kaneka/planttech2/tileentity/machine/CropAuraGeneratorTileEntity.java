@@ -2,7 +2,7 @@ package net.kaneka.planttech2.tileentity.machine;
 
 import net.kaneka.planttech2.container.CropAuraGeneratorContainer;
 import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.items.AuraChipItem;
+import net.kaneka.planttech2.items.AuraCoreItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -67,8 +67,8 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
     @Override
     public void doUpdate()
     {
-        super.doUpdate();
-        energystorage.extractEnergy(energyPerTick);
+//        super.doUpdate();
+//        energystorage.extractEnergy(energyPerTick);
     }
 
     public boolean canApplyEffect()
@@ -131,37 +131,37 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
      */
     public int getLight()
     {
-        light = AuraChipItem.getLightValueDecrease(itemhandler.getStackInSlot(0));
+        light = AuraCoreItem.getLightValueDecrease(itemhandler.getStackInSlot(0));
         return light;
     }
 
     public int getWater()
     {
-        water = AuraChipItem.getWaterRangeDecrease(itemhandler.getStackInSlot(1));
+        water = AuraCoreItem.getWaterRangeDecrease(itemhandler.getStackInSlot(1));
         return water;
     }
 
     public EnumTemperature getTemperature()
     {
-        temperature = AuraChipItem.getTemperature(itemhandler.getStackInSlot(2));
+        temperature = AuraCoreItem.getTemperature(itemhandler.getStackInSlot(2));
         return temperature;
     }
 
     public Block getSoil()
     {
-        soil = AuraChipItem.getSoil(itemhandler.getStackInSlot(3));
+        soil = AuraCoreItem.getSoil(itemhandler.getStackInSlot(3));
         return soil;
     }
 
     public int getFertility()
     {
-        fertility = AuraChipItem.getFertilityValueIncrease(itemhandler.getStackInSlot(4));
+        fertility = AuraCoreItem.getFertilityValueIncrease(itemhandler.getStackInSlot(4));
         return fertility;
     }
 
     public int getProductivity()
     {
-        productivity = AuraChipItem.getProductivityValueIncrease(itemhandler.getStackInSlot(5));
+        productivity = AuraCoreItem.getProductivityValueIncrease(itemhandler.getStackInSlot(5));
         return productivity;
     }
 
@@ -169,7 +169,7 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
     {
         energyPerTick = 0;
         for (int i=0;i<6;i++)
-            energyPerTick += AuraChipItem.getEnergyCostPerTick(itemhandler.getStackInSlot(i));
+            energyPerTick += AuraCoreItem.getEnergyCostPerTick(itemhandler.getStackInSlot(i));
         return energyPerTick;
     }
     //----------------------------------------------------------------------------------------------------------------------

@@ -1,10 +1,15 @@
 package net.kaneka.planttech2.items;
 
 
+import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public class TestItem extends Item
 {
@@ -31,6 +36,14 @@ public class TestItem extends Item
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
+			CropEntry entry = PlantTechMain.getCropList().getByName("coal");
+			System.out.println(entry);
+			if (entry != null)
+			{
+				List<Supplier<Item>> seeds = entry.getSeeds();
+				for (Supplier<Item> seed : seeds)
+					System.out.println(seed.get());
+			}
 			/*
 			System.out.println(Feature.STRUCTURES); 
 			

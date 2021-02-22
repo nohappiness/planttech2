@@ -6,6 +6,7 @@ import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
 import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.kaneka.planttech2.packets.CropConfigChangeMessage;
+import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
 import net.minecraft.entity.Entity;
@@ -24,10 +25,13 @@ public class PlayerEvents
 	@SubscribeEvent
 	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
 	{
-	    PlayerEntity player = event.getPlayer();
-//	    if (!player.world.isRemote())
-//	        PlantTech2PacketHandler.sendTo(new CropConfigChangeMessage(), (ServerPlayerEntity) player);
-//		/*
+		PlayerEntity player = event.getPlayer();
+		if (!player.world.isRemote())
+		{
+			PlantTechMain.LOGGER.info(event.getPlayer().getDisplayName().getString() + " has logged in, sending crop list");
+			PlantTech2PacketHandler.sendTo(new CropListSyncMessage(), (ServerPlayerEntity) player);
+		}
+		/*
 //
 //		if (event.getEntity() instanceof ServerPlayerEntity && !event.getEntity().getEntityWorld().isRemote())
 //		{
@@ -49,7 +53,7 @@ public class PlayerEvents
 //			}
 		}
 //		*/
-//	}
+	}
 
 //	@SubscribeEvent
 //	public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event)

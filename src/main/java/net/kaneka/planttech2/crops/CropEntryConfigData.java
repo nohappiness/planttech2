@@ -186,7 +186,7 @@ public class CropEntryConfigData
 			short seedsAmount = buf.readShort();
 			for (int i = 0; i < seedsAmount; i++)
 			{
-				seeds.add(new SeedObjectSupplier<>(buf.readResourceLocation(), ITEMS));
+				seeds.add(ObjectSupplier.of(buf.readResourceLocation(), ITEMS));
 			}
 
 			short dropsAmount = buf.readShort();
@@ -203,7 +203,7 @@ public class CropEntryConfigData
 				parentPairs.add(ParentPair.Serializer.INSTANCE.read(buf));
 			}
 
-			Supplier<Block> soil = new SeedObjectSupplier<>(buf.readResourceLocation(), BLOCKS);
+			Supplier<Block> soil = ObjectSupplier.of(buf.readResourceLocation(), BLOCKS);
 
 			return new CropEntryConfigData(cropEntryName, enabled, temperature, primarySeed, seeds, drops, parentPairs, soil);
 		}
@@ -260,7 +260,7 @@ public class CropEntryConfigData
 			return StreamSupport.stream(array.spliterator(), false)
 					.map(JsonElement::getAsString)
 					.map(ResourceLocation::new)
-					.map(loc -> new SeedObjectSupplier<>(loc, ITEMS))
+					.map(loc -> ObjectSupplier.of(loc, ITEMS))
 					.collect(Collectors.toList());
 		}
 

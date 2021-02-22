@@ -8,12 +8,16 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
+import net.kaneka.planttech2.utilities.ISerializable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -22,7 +26,7 @@ import java.util.function.Supplier;
 
 import static net.minecraftforge.registries.ForgeRegistries.ITEMS;
 
-public class DropEntry
+public class DropEntry implements ISerializable
 {
     public static final DropEntry EMPTY = DropEntry.of(() -> Items.AIR, 0, 0);
 
@@ -34,6 +38,16 @@ public class DropEntry
         this.drop = item;
         this.min = min;
         this.max = max;
+    }
+
+    @Override
+    public CompoundNBT write()
+    {
+        CompoundNBT compound = new CompoundNBT();
+        compound.putInt("min", min);
+        compound.putInt("max", max);
+        compound.putString("drop", drop.get().getRegistryName().toString());
+        return compound;
     }
 
     public int getAmountDropped(int traitBase, int traitMax, Random rand)
@@ -96,6 +110,11 @@ public class DropEntry
         return new DropEntry(item, min, max);
     }
 
+    public static DropEntry of(CompoundNBT compound)
+    {
+        return new DropEntry(() -> ITEMS.getValue(new ResourceLocation(compound.getString("drop"))), compound.getInt("min"), compound.getInt("max"));
+    }
+
     public static class Serializer implements JsonSerializer<DropEntry>, JsonDeserializer<DropEntry>
     {
         public static final Serializer INSTANCE = new Serializer();
@@ -140,7 +159,7 @@ public class DropEntry
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }
             if (min > max) { throw new JsonSyntaxException("min is bigger than max"); }
 
-            return DropEntry.of(new SeedObjectSupplier<>(itemLocation, ITEMS), min, max);
+            return DropEntry.of(ObjectSupplier.of(itemLocation, ITEMS), min, max);
         }
 
         public void write(DropEntry entry, PacketBuffer buffer)
@@ -155,7 +174,7 @@ public class DropEntry
             final ResourceLocation itemLoc = buffer.readResourceLocation();
             final int min = buffer.readInt();
             final int max = buffer.readInt();
-            return DropEntry.of(new SeedObjectSupplier<>(itemLoc, ITEMS), min, max);
+            return DropEntry.of(ObjectSupplier.of(itemLoc, ITEMS), min, max);
         }
     }
 }

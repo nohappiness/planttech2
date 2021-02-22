@@ -3,22 +3,55 @@ package net.kaneka.planttech2.crops;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.utilities.ISerializable;
+import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
+import net.minecraftforge.common.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class CropList
+public class CropList implements ISerializable
 {
 	public static final Logger LOGGER = LogManager.getLogger();
 	// Crop name -> CropEntry
 	private final HashMap<String, CropEntry> internalMap = new HashMap<>();
 
-	public List<CropEntry> values(boolean includeDisabled)
+	@Override
+	public CompoundNBT write()
+	{
+		CompoundNBT compound = new CompoundNBT();
+		ListNBT keyList = new ListNBT();
+		for (String key : internalMap.keySet())
+		{
+			keyList.add(StringNBT.valueOf(key));
+			compound.put(key, internalMap.get(key).write());
+		}
+		compound.put("keys", keyList);
+		return compound;
+	}
+
+    @Override
+    public void read(CompoundNBT compound)
+    {
+        internalMap.clear();
+        ListNBT list = compound.getList("keys", Constants.NBT.TAG_STRING);
+        for (int i=0;i<list.size();i++)
+        {
+			String key = list.getString(i);
+            internalMap.put(key, new CropEntry(compound.getCompound(key)));
+        }
+    }
+
+    public List<CropEntry> values(boolean includeDisabled)
 	{
 		return internalMap.values().stream().filter(entry -> includeDisabled || entry.getConfiguration().isEnabled())
 				.sorted().collect(ImmutableList.toImmutableList());
@@ -310,8 +343,7 @@ public class CropList
 	static void addEntry(final CropList list, final String name, final int seedColor, final boolean hasParticle,
 	                     final Consumer<CropConfiguration.Builder> config)
 	{
-		CropConfiguration.Builder builder = CropConfiguration.builder();
-		builder.primarySeed(() -> ModItems.SEEDS.get(name), 1, 4);
+		CropConfiguration.Builder builder = CropConfiguration.builder(DropEntry.of(() -> ModItems.SEEDS.get(name), 1, 4));
 		if (hasParticle)
 			builder.drop(() -> ModItems.PARTICLES.get(name), 0, 8);
 		config.accept(builder);
@@ -320,8 +352,7 @@ public class CropList
 
 	static void addEntry(final CropList list, final String name, final int seedColor, final boolean hasParticle)
 	{
-		addEntry(list, name, seedColor, hasParticle, b -> {
-		});
+		addEntry(list, name, seedColor, hasParticle, b -> {});
 	}
 
 	static void addEntry(final CropList list, final String name, final int seedColor)

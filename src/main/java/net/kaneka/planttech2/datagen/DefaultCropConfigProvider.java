@@ -4,6 +4,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropConfigProvider;
 import net.kaneka.planttech2.crops.CropConfiguration;
 import net.kaneka.planttech2.crops.CropEntryConfigData;
+import net.kaneka.planttech2.crops.DropEntry;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
@@ -419,16 +420,15 @@ public class DefaultCropConfigProvider extends CropConfigProvider
 	private void addEntryWithSeeds(String crop, final boolean hasParticle, Consumer<CropConfiguration.Builder> config)
 	{
 		addEntry(crop, builder -> {
-			builder.primarySeed(() -> ModItems.SEEDS.get(crop), 1, 4);
 			if (hasParticle)
 				builder.drop(() -> ModItems.PARTICLES.get(crop), 0, 8);
 			config.accept(builder);
-		});
+		}, DropEntry.of(() -> ModItems.SEEDS.get(crop), 1, 4));
 	}
 
-	private void addEntry(String crop, Consumer<CropConfiguration.Builder> config)
+	private void addEntry(String crop, Consumer<CropConfiguration.Builder> config, DropEntry primarySeed)
 	{
-		CropConfiguration.Builder builder = CropConfiguration.builder();
+		CropConfiguration.Builder builder = CropConfiguration.builder(primarySeed);
 		config.accept(builder);
 		data.put(modLoc(crop), CropEntryConfigData.create(crop, builder.build()));
 	}
