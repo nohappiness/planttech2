@@ -29,13 +29,21 @@ public class CropList implements ISerializable
 	public CompoundNBT write()
 	{
 		CompoundNBT compound = new CompoundNBT();
-		ListNBT keyList = new ListNBT();
-		for (String key : internalMap.keySet())
+		try
 		{
-			keyList.add(StringNBT.valueOf(key));
-			compound.put(key, internalMap.get(key).write());
+			ListNBT keyList = new ListNBT();
+			for (String key : internalMap.keySet())
+			{
+				keyList.add(StringNBT.valueOf(key));
+				compound.put(key, internalMap.get(key).write());
+			}
+			compound.put("keys", keyList);
 		}
-		compound.put("keys", keyList);
+		catch (Exception e)
+		{
+			PlantTechMain.LOGGER.error("Crop list is broken, cannot write the data");
+			return new CompoundNBT();
+		}
 		return compound;
 	}
 

@@ -2,10 +2,7 @@ package net.kaneka.planttech2.utilities;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.*;
 import net.minecraftforge.common.util.Constants;
 
 import java.util.ArrayList;
@@ -74,6 +71,11 @@ public class NBTHelper
 	public static <E> List<E> constructListFromString(CompoundNBT compound, String key, Function<String, E> constructor)
 	{
 		return constructListNotNull(compound, key, (nbt) -> ((StringNBT) nbt).getString(), constructor, Constants.NBT.TAG_STRING);
+	}
+
+	public static <E> List<E> constructListFromInteger(CompoundNBT compound, String key, Function<Integer, E> constructor)
+	{
+		return constructListNotNull(compound, key, (nbt) -> ((IntNBT) nbt).getInt(), constructor, Constants.NBT.TAG_INT);
 	}
 
 	private static <E, T> List<E> constructListNotNull(CompoundNBT compound, String key, Function<INBT, T> typeGetter, Function<T, E> constructor, int type)

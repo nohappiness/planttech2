@@ -69,7 +69,11 @@ public class CropListReloadListener extends JsonReloadListener
 
 		// Check if the server is up
 		if (ServerLifecycleHooks.getCurrentServer() != null)
+		{
+			LOGGER.info("syncing crop list to clients");
 			PlantTech2PacketHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new CropListSyncMessage());
+		}
+		else LOGGER.info("Server is not up yet, will not send the changes to clients");
 	}
 
 	public static JsonElement toJson(CropEntryConfigData data)

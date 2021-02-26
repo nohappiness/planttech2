@@ -109,7 +109,7 @@ public class BaseContainer extends Container
 
 	protected LimitedItemInfoSlot createFakeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, usage).setConditions(false);
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, usage).setConditions(false).setCanTake(false);
 	}
 
 	protected LimitedItemInfoSlot createOutoutSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
@@ -160,6 +160,8 @@ public class BaseContainer extends Container
 	public class LimitedItemInfoSlot extends SlotItemHandlerWithInfo
 	{
 		private Predicate<ItemStack> conditions = (stack) -> true;
+		private Predicate<PlayerEntity> canTake = (stack) -> true;
+
 		private boolean limited = false;
 
 		public LimitedItemInfoSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
@@ -171,6 +173,12 @@ public class BaseContainer extends Container
 		public boolean isItemValid(ItemStack stack)
 		{
 			return conditions.test(stack);
+		}
+
+		@Override
+		public boolean canTakeStack(PlayerEntity playerIn)
+		{
+			return canTake.test(playerIn);
 		}
 
 		@Override
@@ -187,19 +195,28 @@ public class BaseContainer extends Container
 
 		public LimitedItemInfoSlot setConditions(boolean enabled)
 		{
-			this.conditions = (stack) -> enabled;
-			return this;
+			return setConditions((stack) -> enabled);
 		}
 
 		public LimitedItemInfoSlot setConditions(Item... acceptableItems)
 		{
-			this.conditions = (stack) -> acceptableItems.length == 0 || Arrays.stream(acceptableItems).anyMatch((item) -> stack.getItem() == item);
-			return this;
+			return setConditions((stack) -> acceptableItems.length == 0 || Arrays.stream(acceptableItems).anyMatch((item) -> stack.getItem() == item));
 		}
 
 		public LimitedItemInfoSlot setConditions(Predicate<ItemStack> conditions)
 		{
 			this.conditions = conditions;
+			return this;
+		}
+
+		public LimitedItemInfoSlot setCanTake(boolean enabled)
+		{
+			return setCanTake((stack) -> enabled);
+		}
+
+		public LimitedItemInfoSlot setCanTake(Predicate<PlayerEntity> conditions)
+		{
+			this.canTake = conditions;
 			return this;
 		}
 	}

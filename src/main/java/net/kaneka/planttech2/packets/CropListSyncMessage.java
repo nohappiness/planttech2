@@ -38,8 +38,17 @@ public class CropListSyncMessage
     public static void handle(final CropListSyncMessage pkt, Supplier<NetworkEvent.Context> ctx)
     {
         ctx.get().enqueueWork(() -> {
-            PlantTechMain.LOGGER.debug("Syncing crop configurations from server");
-            PlantTechMain.getCropList().read(pkt.cropList);
+            PlantTechMain.LOGGER.debug("Reading crop configurations sent from server");
+            try
+            {
+                PlantTechMain.getCropList().read(pkt.cropList);
+            }
+            catch (Exception e)
+            {
+                PlantTechMain.LOGGER.error("An error has occurred during the processing with crop list syncing" +
+                        ", report this to the server.");
+                PlantTechMain.LOGGER.error(e.getMessage());
+            }
         });
         ctx.get().setPacketHandled(true);
     }

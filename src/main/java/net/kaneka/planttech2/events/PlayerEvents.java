@@ -28,7 +28,7 @@ public class PlayerEvents
 		PlayerEntity player = event.getPlayer();
 		if (!player.world.isRemote())
 		{
-			PlantTechMain.LOGGER.info(event.getPlayer().getDisplayName().getString() + " has logged in, sending crop list");
+			PlantTechMain.LOGGER.info(event.getPlayer().getDisplayName().getString() + " has logged in, syncing crop list");
 			PlantTech2PacketHandler.sendTo(new CropListSyncMessage(), (ServerPlayerEntity) player);
 		}
 		/*
