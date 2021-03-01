@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryTileEntity;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.kaneka.planttech2.container.CompressorContainer;
@@ -147,6 +149,18 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	}
 
 	@Override
+	protected boolean onProcessFinished(ItemStack input, ItemStack output)
+	{
+		ItemStack result = getResult(input, output);
+		if (itemhandler.insertItem(getOutputSlotIndex(), result, false).isEmpty())
+		{
+			input.shrink(recipeList.get(selectedId).getValue());
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	protected ItemStack getResult(ItemStack input, ItemStack output)
 	{
 		return recipeList.get(selectedId).getKey().copy();
@@ -223,6 +237,26 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 		for (int i = 0; i < 3; i++)
 			stacks.add(itemhandler.getStackInSlot(i).copy());
 		return stacks;
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		return write(new CompoundNBT());
+	}
+
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		return new SUpdateTileEntityPacket(pos, 7414, getUpdateTag());
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+	{
+		if (world == null)
+			return;
+		handleUpdateTag(world.getBlockState(pos), pkt.getNbtCompound());
 	}
 
 	@Override

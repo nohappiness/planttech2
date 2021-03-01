@@ -4,16 +4,16 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumTraitsInt implements IStringSerializable
 {
-    GROWSPEED(0, "growspeed", 0, 10, 0.04F), 
-    SENSITIVITY(1, "sensitivity", 0, 10, 0.04F), 
-    LIGHTSENSITIVITY(2, "lightsensitivity", 0, 14, 0.06F), 
-    WATERSENSITIVITY(3, "watersensitivity", 0, 8, 0.06F), 
-    TEMPERATURETOLERANCE(4, "temperaturetolerance", 0, 4, 0.03F), 
-    PRODUCTIVITY(5, "productivity", 0, 5, 0.04F), 
-    FERTILITY(6, "fertility", 0, 5, 0.04F), 
-    SPREEDINGSPEED(7, "spreedingspeed", 0, 10, 0.04F), 
-    GENESTRENGHT(8, "genestrenght", 0, 10, 0.04F), 
-    ENERGYVALUE(9, "energyvalue", 1, 10, 0.04F);
+    GROWSPEED(           0, "growspeed",            0, 10, 0.04F),
+    SENSITIVITY(         1, "sensitivity",          0, 10, 0.04F),
+    LIGHTSENSITIVITY(    2, "lightsensitivity",     0, 14, 0.06F),
+    WATERSENSITIVITY(    3, "watersensitivity",     0, 8,  0.06F),
+    TEMPERATURETOLERANCE(4, "temperaturetolerance", 0, 4,  0.03F),
+    PRODUCTIVITY(        5, "productivity",         0, 5,  0.04F),
+    FERTILITY(           6, "fertility",            0, 5,  0.04F),
+    SPREEDINGSPEED(      7, "spreedingspeed",       0, 10, 0.04F),
+    GENESTRENGHT(        8, "genestrenght",         0, 10, 0.04F),
+    ENERGYVALUE(         9, "energyvalue",          1, 10, 0.04F);
 
     private final int meta, min, max;
     private final float transitionpossibility;

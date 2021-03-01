@@ -161,21 +161,18 @@ public class BiomassContainerItem extends Item
 	@Override
 	public CompoundNBT getShareTag(ItemStack stack)
 	{
-		CompoundNBT compound = super.getShareTag(stack);
-		if (compound != null)
-		{
-			IBiomassFluidEnergy cap = stack.getCapability(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY).orElseThrow(NullPointerException::new);
-			INBT compound2 = BiomassFluidEnergy.BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY, cap, null);
-			if (compound2 != null)
-				compound.put("biomass", compound2);
-		}
+		CompoundNBT compound = stack.getOrCreateTag();
+		IBiomassFluidEnergy cap = stack.getCapability(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY).orElseThrow(NullPointerException::new);
+		INBT compound2 = BiomassFluidEnergy.BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY, cap, null);
+		if (compound2 != null)
+			compound.put("biomass", compound2);
 		return compound;
 	}
 
 	@Override
 	public void readShareTag(ItemStack stack, CompoundNBT nbt)
 	{
-		if (nbt != null)
+		if (nbt != null && nbt.contains("biomass"))
 		{
 			IBiomassFluidEnergy cap = stack.getCapability(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY).orElseThrow(NullPointerException::new);
 			BiomassFluidEnergy.BIOMASS_FLUID_ENERGY.getStorage().readNBT(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY, cap, null, nbt.getCompound("biomass"));
