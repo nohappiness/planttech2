@@ -253,9 +253,9 @@ public class ModBlocks
 	@ObjectHolder("mutated_oxeye_daisy") public static ObtainableNaturalPlants MUTATED_OXEYE_DAISY;
 	@ObjectHolder("mutated_cornflower") public static ObtainableNaturalPlants MUTATED_CORNFLOWER;
 	@ObjectHolder("mutated_lily_of_the_valley") public static ObtainableNaturalPlants MUTATED_LILY_OF_THE_VALLEY;
-	@ObjectHolder("mutated_lilac") public static ObtainableNaturalPlants MUTATED_LILAC;
-	@ObjectHolder("mutated_rose_bush") public static ObtainableNaturalPlants MUTATED_ROSE_BUSH;
-	@ObjectHolder("mutated_peony") public static ObtainableNaturalPlants MUTATED_PEONY;
+	@ObjectHolder("mutated_lilac") public static ObtainableTallBushBlock MUTATED_LILAC;
+	@ObjectHolder("mutated_rose_bush") public static ObtainableTallBushBlock MUTATED_ROSE_BUSH;
+	@ObjectHolder("mutated_peony") public static ObtainableTallBushBlock MUTATED_PEONY;
 
 	@ObjectHolder("machinebulbreprocessor_growing") public static GrowingBlock MACHINEBULBREPROCESSOR_GROWING;
 	@ObjectHolder("machineshell_iron_growing") public static GrowingBlock MACHINESHELL_IRON_GROWING;

@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.datagen;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.datagen.blocks.BlockStateGenerator;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +18,7 @@ public class DataGeneration {
         if (event.includeClient())
         {
             gen.addProvider(new Languages(gen));
+            gen.addProvider(new BlockStateGenerator(gen, existingFileHelper));
             gen.addProvider(new BlockModelGenerator(gen, existingFileHelper));
             gen.addProvider(new ItemModelGenerator(gen, existingFileHelper));
         }
