@@ -34,11 +34,11 @@ public class ItemModelGenerator extends ItemModelProvider
 
 	private void registerItemModels()
 	{
-		generatedItemModel("aura_chip_temperature_extreme_cold");
-		generatedItemModel("aura_chip_temperature_cold");
-		generatedItemModel("aura_chip_temperature_normal");
-		generatedItemModel("aura_chip_temperature_warm");
-		generatedItemModel("aura_chip_temperature_extreme_warm");
+//		generatedItemModel("aura_chip_temperature_extreme_cold");
+//		generatedItemModel("aura_chip_temperature_cold");
+//		generatedItemModel("aura_chip_temperature_normal");
+//		generatedItemModel("aura_chip_temperature_warm");
+//		generatedItemModel("aura_chip_temperature_extreme_warm");
 	}
 
 	private void generatedItemModel(String name)
