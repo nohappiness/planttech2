@@ -1,0 +1,8 @@
+{
+  "parent": "planttech2:block/basic/crops",
+  "textures": {
+    "bars": "planttech2:blocks/cropbars",
+    "crops": "planttech2:blocks/crop_4",
+    "particles": "planttech2:blocks/crop_4_blooms"
+  }
+}

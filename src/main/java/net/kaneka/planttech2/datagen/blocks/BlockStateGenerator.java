@@ -8,6 +8,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 public class BlockStateGenerator extends BlockStateProvider
 {
 	private final MutatedPlantModels mutatedPlants = new MutatedPlantModels(this);
+	private final CropModels crops = new CropModels(this, PlantTechMain.getCropList());
 
 	public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper)
 	{
@@ -18,5 +19,6 @@ public class BlockStateGenerator extends BlockStateProvider
 	protected void registerStatesAndModels()
 	{
 		mutatedPlants.registerStatesAndModels();
+		crops.registerStatesAndModels();
 	}
 }
