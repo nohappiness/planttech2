@@ -80,6 +80,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             args '--mod', 'planttech2', '--all', '--output', file('src/generated/resources/')
+            args '--existing', sourceSets.main.resources.srcDirs[0]
 
             mods {
                 planttech2 {
