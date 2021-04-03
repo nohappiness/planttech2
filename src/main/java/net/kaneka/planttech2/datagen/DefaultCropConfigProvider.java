@@ -429,6 +429,7 @@ public class DefaultCropConfigProvider extends CropConfigProvider
 	private void addEntry(String crop, Consumer<CropConfiguration.Builder> config, DropEntry primarySeed)
 	{
 		CropConfiguration.Builder builder = CropConfiguration.builder(primarySeed);
+		builder.seed(primarySeed.getItem()); // Explicitly add the primary seed to the seed list
 		config.accept(builder);
 		data.put(modLoc(crop), CropEntryConfigData.create(crop, builder.build()));
 	}
