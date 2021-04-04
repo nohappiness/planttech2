@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.datagen;
 
+import net.kaneka.planttech2.PlantTechClient;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.IItemProvider;
@@ -28,6 +29,7 @@ public class ItemModels extends ItemModelProvider
 	{
 		addCrops();
 		addBulbs();
+		addBiomassContainer();
 		addChipsUpgrades();
 	}
 
@@ -43,6 +45,25 @@ public class ItemModels extends ItemModelProvider
 				singleTexture(name + "_particles", generated, "layer0", particlesTexture);
 			}
 		});
+	}
+
+	private void addBiomassContainer()
+	{
+		final String basePath = BIOMASSCONTAINER.getRegistryName().getPath();
+		ItemModelBuilder baseContainerItem = withExistingParent(basePath, generated);
+		ItemModelBuilder empty = withExistingParent(basePath + "_empty", generated);
+
+		baseContainerItem.override().predicate(PlantTechClient.FILLED_PREDICATE, 0).model(empty);
+		baseContainerItem.texture("layer0", itemPrefix("biomasscontainer_empty"));
+		empty.texture("layer0", itemPrefix("biomasscontainer_empty"));
+
+		int max = 9;
+		for (int i = 0; i < max; i++)
+		{
+			ItemModelBuilder override = withExistingParent(basePath + "_" + i, generated);
+			override.texture("layer0", itemPrefix("biomasscontainer_" + i));
+			baseContainerItem.override().predicate(PlantTechClient.FILLED_PREDICATE, (float) i + 1).model(override);
+		}
 	}
 
 	private void addChipsUpgrades() {
