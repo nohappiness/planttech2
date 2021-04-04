@@ -20,7 +20,7 @@ public class ItemModelGenerator extends ItemModelProvider
 	@Override
 	protected void registerModels()
 	{
-		registerBlockModels();
+//		registerBlockModels();
 		registerItemModels();
 	}
 
@@ -52,10 +52,10 @@ public class ItemModelGenerator extends ItemModelProvider
 	{
 		withExistingParent(b.getRegistryName().getPath(), modLoc("block/" + b.getRegistryName().getPath())); 
 	}
-	
+
 	private void blockHedge(Hedge b)
 	{
-		withExistingParent(b.getRegistryName().getPath(), modLoc("block/hedge/" + b.getRegistryName().getPath().replace("hedge_", "") + "_base")); 
+		withExistingParent(b.getRegistryName().getPath(), modLoc("block/hedge/" + b.getRegistryName().getPath().replace("hedge_", "") + "_base"));
 	}
 	
 	@Override

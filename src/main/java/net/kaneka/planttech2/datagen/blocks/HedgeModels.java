@@ -96,6 +96,10 @@ public class HedgeModels
 
 					.part().modelFile(adding).rotationY(180).addModel().condition(CustomFenceBlock.WEST, true).end()
 					.part().modelFile(none).rotationY(180).addModel().condition(CustomFenceBlock.WEST, false).end();
+
+			// Item model
+			states.itemModels().getBuilder(hedgeBlock.getRegistryName().getPath())
+					.parent(base);
 		}
 	}
 
