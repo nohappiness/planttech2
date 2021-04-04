@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "planttech2:items/chips/template_tier_3"
+  }
+}

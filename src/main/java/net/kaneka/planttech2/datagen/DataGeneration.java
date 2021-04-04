@@ -19,7 +19,7 @@ public class DataGeneration {
         {
             gen.addProvider(new Languages(gen));
             gen.addProvider(new BlockStateGenerator(gen, existingFileHelper));
-            gen.addProvider(new ItemModelGenerator(gen, existingFileHelper));
+            gen.addProvider(new ItemModels(gen, existingFileHelper));
         }
         if (event.includeServer())
         {
