@@ -17,8 +17,6 @@ import net.kaneka.planttech2.blocks.WallLight;
 import net.kaneka.planttech2.blocks.baseclasses.BaseOreBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomDoorBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomSlabBlock;
-import net.kaneka.planttech2.blocks.baseclasses.CustomStairsBlock;
 import net.kaneka.planttech2.blocks.baseclasses.ObtainableNaturalPlants;
 import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
@@ -29,11 +27,7 @@ import net.kaneka.planttech2.blocks.machines.TestCableBlock;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.tileentity.machine.*;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
@@ -111,8 +105,8 @@ public class ModBlocks
 	@ObjectHolder("dark_crystal_fence") public static CustomFenceBlock DARK_CRYSTAL_FENCE;
 	@ObjectHolder("dark_crystal_lamp") public static Block DARK_CRYSTAL_LAMP;
 	@ObjectHolder("dark_crystal_door") public static CustomDoorBlock DARK_CRYSTAL_DOOR;
-	@ObjectHolder("dark_crystal_stairs") public static CustomStairsBlock DARK_CRYSTAL_STAIRS;
-	@ObjectHolder("dark_crystal_slab") public static CustomSlabBlock DARK_CRYSTAL_SLAB;
+	@ObjectHolder("dark_crystal_stairs") public static StairsBlock DARK_CRYSTAL_STAIRS;
+	@ObjectHolder("dark_crystal_slab") public static SlabBlock DARK_CRYSTAL_SLAB;
 	@ObjectHolder("dark_crystal_ore") public static BaseOreBlock DARK_CRYSTAL_ORE;
 
 	@ObjectHolder("white_crystal_glasspane_cross") public static GlassPanePillar WHITE_CRYSTAL_GLASSPANE_CROSS;
@@ -123,8 +117,8 @@ public class ModBlocks
 	@ObjectHolder("white_crystal_tiling") public static Block WHITE_CRYSTAL_TILING;
 	@ObjectHolder("white_crystal_fence") public static CustomFenceBlock WHITE_CRYSTAL_FENCE;
 	@ObjectHolder("white_crystal_door") public static CustomDoorBlock WHITE_CRYSTAL_DOOR;
-	@ObjectHolder("white_crystal_stairs") public static CustomStairsBlock WHITE_CRYSTAL_STAIRS;
-	@ObjectHolder("white_crystal_slab") public static CustomSlabBlock WHITE_CRYSTAL_SLAB;
+	@ObjectHolder("white_crystal_stairs") public static StairsBlock WHITE_CRYSTAL_STAIRS;
+	@ObjectHolder("white_crystal_slab") public static SlabBlock WHITE_CRYSTAL_SLAB;
 	@ObjectHolder("white_crystal_ore") public static BaseOreBlock WHITE_CRYSTAL_ORE;
 
 	@ObjectHolder("wall_light") public static WallLight WALL_LIGHT;
@@ -324,8 +318,8 @@ public class ModBlocks
 		r.register(makeWithItem("dark_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
 		r.register(makeWithItem("dark_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
 		r.register(makeSpecialWithItem("dark_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("dark_crystal_stairs", BLOCKS, new CustomStairsBlock(() -> DARK_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("dark_crystal_slab", BLOCKS, new CustomSlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("dark_crystal_stairs", BLOCKS, new StairsBlock(() -> DARK_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("dark_crystal_slab", BLOCKS, new SlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
 		r.register(makeWithItem("dark_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
 
 		r.register(makeSpecialWithItem("white_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
@@ -337,8 +331,8 @@ public class ModBlocks
 		r.register(makeWithItem("white_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
 		r.register(makeWithItem("white_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
 		r.register(makeSpecialWithItem("white_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("white_crystal_stairs", BLOCKS, new CustomStairsBlock(() -> WHITE_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("white_crystal_slab", BLOCKS, new CustomSlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("white_crystal_stairs", BLOCKS, new StairsBlock(() -> WHITE_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
+		r.register(makeWithItem("white_crystal_slab", BLOCKS, new SlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
 		r.register(makeWithItem("white_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
 
 		r.register(makeWithItem("wall_light", BLOCKS, new WallLight(create(Material.ROCK).sound(SoundType.GLASS))));
