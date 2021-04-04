@@ -9,6 +9,7 @@ public class BlockStateGenerator extends BlockStateProvider
 {
 	private final MutatedPlantModels mutatedPlants = new MutatedPlantModels(this);
 	private final CropModels crops = new CropModels(this, PlantTechMain.getCropList());
+	private final HedgeModels hedges = new HedgeModels(this);
 
 	public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper)
 	{
@@ -20,5 +21,6 @@ public class BlockStateGenerator extends BlockStateProvider
 	{
 		mutatedPlants.registerStatesAndModels();
 		crops.registerStatesAndModels();
+		hedges.registerStatesAndModels();
 	}
 }

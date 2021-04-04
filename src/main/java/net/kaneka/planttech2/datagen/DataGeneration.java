@@ -19,7 +19,6 @@ public class DataGeneration {
         {
             gen.addProvider(new Languages(gen));
             gen.addProvider(new BlockStateGenerator(gen, existingFileHelper));
-            gen.addProvider(new BlockModelGenerator(gen, existingFileHelper));
             gen.addProvider(new ItemModelGenerator(gen, existingFileHelper));
         }
         if (event.includeServer())
