@@ -57,8 +57,6 @@ public class HedgeModels
 			String soil = strip(soilLoc.getPath());
 			ResourceLocation soilTexture = new ResourceLocation(soilLoc.getNamespace(), "block/" + soilToTexture.getOrDefault(soil, soilLoc.getPath()));
 
-			System.out.printf("Leaves: %s (%s), Wood: %s (%s), Soil: %s (%s)%n", leaves, leavesTexture, wood, woodTexture, soil, soilTexture);
-
 			String combinedType = leaves + "_" + wood;
 
 			// Models
