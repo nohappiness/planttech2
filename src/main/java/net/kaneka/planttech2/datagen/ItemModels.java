@@ -31,6 +31,61 @@ public class ItemModels extends ItemModelProvider
 		addBulbs();
 		addBiomassContainer();
 		addChipsUpgrades();
+
+
+		singleTexturedItem(ADVANCED_ANALYSER);
+		singleTexturedItem(ANALYSER);
+		singleTexturedItem(BIOMASS);
+		singleTexturedItem(BIOMASS_BUCKET);
+		singleTexture("cable", generated, "layer0", itemPrefix("cable"));
+		singleTexturedItem(COLOR_PARTICLES);
+		// TODO: crop? crop_seeds?
+		singleTexturedItem(CROPREMOVER);
+		singleTexturedItem(CYBERARMOR_BOOTS, "armor/cyberarmor_boots");
+		singleTexturedItem(CYBERARMOR_CHEST, "armor/cyberarmor_chest");
+		singleTexturedItem(CYBERARMOR_HELMET, "armor/cyberarmor_helmet");
+		singleTexturedItem(CYBERARMOR_LEGGINGS, "armor/cyberarmor_leggings");
+		// TODO: cyberbow
+		singleTexturedItem(CYBERDAGGER, handheld, "weapons/cyberdagger");
+		singleTexturedItem(CYBERKATANA, handheld, "weapons/cyberkatana");
+		singleTexturedItem(CYBERRAPIER, handheld, "weapons/cyberrapier");
+		singleTexturedItem(DANCIUM_INGOT);
+		singleTexturedItem(DANCIUM_NUGGET);
+		singleTexturedItem(DARK_CRYSTAL);
+		singleTexturedItem(ENERGYSTORAGE_TIER_1);
+		singleTexturedItem(ENERGYSTORAGE_TIER_2);
+		singleTexturedItem(ENERGYSTORAGE_TIER_3);
+		singleTexturedItem(FERTILIZER_TIER_1, "fert_1");
+		singleTexturedItem(FERTILIZER_TIER_2, "fert_2");
+		singleTexturedItem(FERTILIZER_TIER_3, "fert_3");
+		singleTexturedItem(FERTILIZER_TIER_4, "fert_4");
+		singleTexturedItem(FERTILIZER_CREATIVE, "fert_creative");
+		// TODO: dna_container ; gears ; guides
+		// TODO: more kanekium
+		singleTexturedItem(KANEKIUM_INGOT);
+		singleTexturedItem(KANEKIUM_NUGGET);
+		singleTexturedItem(KINNOIUM_INGOT);
+		singleTexturedItem(KINNOIUM_NUGGET);
+		singleTexturedItem(LENTHURIUM_INGOT);
+		singleTexturedItem(LENTHURIUM_NUGGET);
+		// TODO: multitool ; mutated plants
+		// TODO: particles?
+		// TODO: plant obtainer
+		singleTexturedItem(PLANTCARD);
+		singleTexturedItem(PLANTIUM_INGOT);
+		singleTexturedItem(PLANTIUM_NUGGET);
+		// TODO: radiation_metre
+		singleTexturedItem(RANGEUPGRADE_TIER_1);
+		singleTexturedItem(RANGEUPGRADE_TIER_2);
+		singleTexturedItem(RANGEUPGRADE_TIER_3);
+		singleTexturedItem(RANGEUPGRADE_TIER_4);
+		singleTexturedItem(REDSTONE_INFUSED);
+		singleTexturedItem(TELEPORTER, mcLoc(ITEM_FOLDER + "/barrier"));
+		singleTexturedItem(TESTITEM, mcLoc(ITEM_FOLDER + "/barrier"));
+		singleTexturedItem(THERMOMETER);
+		// TODO: wall light
+		singleTexturedItem(WHITE_CRYSTAL);
+
 	}
 
 	private void addCrops()
