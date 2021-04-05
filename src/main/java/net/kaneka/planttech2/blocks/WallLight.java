@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class WallLight extends FacingWallLightBase
 {
     public static final VoxelShape NEGATIVE_Z = Block.makeCuboidShape(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 4.0D);

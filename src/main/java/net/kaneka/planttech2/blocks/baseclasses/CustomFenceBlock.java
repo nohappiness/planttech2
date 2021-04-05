@@ -24,16 +24,18 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CustomFenceBlock extends Block
 {
 	public static final BooleanProperty NORTH = SixWayBlock.NORTH;
 	public static final BooleanProperty EAST = SixWayBlock.EAST;
 	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
 	public static final BooleanProperty WEST = SixWayBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((p_199775_0_) -> p_199775_0_.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((facingProperty) -> facingProperty.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
 	protected VoxelShape[] collisionShapes;
 	protected VoxelShape[] shapes;
-	private final Object2IntMap<BlockState> field_223008_i = new Object2IntOpenHashMap<>();
+	private final Object2IntMap<BlockState> statePaletteMap = new Object2IntOpenHashMap<>();
 
 	public CustomFenceBlock(Properties property)
 	{
@@ -43,13 +45,13 @@ public class CustomFenceBlock extends Block
 		this.shapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
 	}
 
-	public boolean func_220111_a(BlockState p_220111_1_, boolean p_220111_2_, Direction p_220111_3_)
+	public boolean canConnect(BlockState state, boolean isSideSolid, Direction direction)
 	{
-		Block block = p_220111_1_.getBlock();
-		boolean flag = block.isIn(BlockTags.FENCES) && p_220111_1_.getMaterial() == this.material;
-		boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(p_220111_1_, p_220111_3_);
+		Block block = state.getBlock();
+		boolean flag = block.isIn(BlockTags.FENCES) && state.getMaterial() == this.material;
+		boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(state, direction);
 		boolean flag2 = block instanceof CustomFenceBlock;
-		return !cannotAttach(block) && p_220111_2_ || flag || flag1 || flag2;
+		return !cannotAttach(block) && isSideSolid || flag || flag1 || flag2;
 	}
 
 	@Override
@@ -66,10 +68,10 @@ public class CustomFenceBlock extends Block
 		BlockState blockstate2 = iblockreader.getBlockState(blockpos3);
 		BlockState blockstate3 = iblockreader.getBlockState(blockpos4);
 		return super.getStateForPlacement(context)
-				.with(NORTH, this.func_220111_a(blockstate, Block.hasEnoughSolidSide(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
-				.with(EAST, this.func_220111_a(blockstate1, Block.hasEnoughSolidSide(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
-				.with(SOUTH, this.func_220111_a(blockstate2, Block.hasEnoughSolidSide(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
-				.with(WEST, this.func_220111_a(blockstate3, Block.hasEnoughSolidSide(iblockreader, blockpos4, Direction.EAST), Direction.EAST));
+				.with(NORTH, this.canConnect(blockstate, Block.hasEnoughSolidSide(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
+				.with(EAST, this.canConnect(blockstate1, Block.hasEnoughSolidSide(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
+				.with(SOUTH, this.canConnect(blockstate2, Block.hasEnoughSolidSide(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
+				.with(WEST, this.canConnect(blockstate3, Block.hasEnoughSolidSide(iblockreader, blockpos4, Direction.EAST), Direction.EAST));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -131,28 +133,28 @@ public class CustomFenceBlock extends Block
 
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL
 				? stateIn.with(FACING_TO_PROPERTY_MAP.get(facing),
-				this.func_220111_a(facingState, Block.hasEnoughSolidSide(worldIn, facingPos, facing.getOpposite()), facing.getOpposite())
+				this.canConnect(facingState, Block.hasEnoughSolidSide(worldIn, facingPos, facing.getOpposite()), facing.getOpposite())
 		)
 				: super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	protected int getIndex(BlockState state)
 	{
-		return this.field_223008_i.computeIntIfAbsent(state, (p_223007_0_) -> {
+		return this.statePaletteMap.computeIntIfAbsent(state, (stateIn) -> {
 			int i = 0;
-			if (p_223007_0_.get(NORTH)) {
+			if (stateIn.get(NORTH)) {
 				i |= getMask(Direction.NORTH);
 			}
 
-			if (p_223007_0_.get(EAST)) {
+			if (stateIn.get(EAST)) {
 				i |= getMask(Direction.EAST);
 			}
 
-			if (p_223007_0_.get(SOUTH)) {
+			if (stateIn.get(SOUTH)) {
 				i |= getMask(Direction.SOUTH);
 			}
 
-			if (p_223007_0_.get(WEST)) {
+			if (stateIn.get(WEST)) {
 				i |= getMask(Direction.WEST);
 			}
 
@@ -171,17 +173,17 @@ public class CustomFenceBlock extends Block
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}
 
-	protected VoxelShape[] makeShapes(float nodeWidth, float extensionWidth, float p_196408_3_, float p_196408_4_, float p_196408_5_)
+	protected VoxelShape[] makeShapes(float nodeWidth, float extensionWidth, float nodeHeight, float extensionBottom, float extensionHeight)
 	{
 		float f = 8.0F - nodeWidth;
 		float f1 = 8.0F + nodeWidth;
 		float f2 = 8.0F - extensionWidth;
 		float f3 = 8.0F + extensionWidth;
-		VoxelShape voxelshape = Block.makeCuboidShape(f, 0.0D, f, f1, p_196408_3_, f1);
-		VoxelShape voxelshape1 = Block.makeCuboidShape(f2, p_196408_4_, 0.0D, f3, p_196408_5_, f3);
-		VoxelShape voxelshape2 = Block.makeCuboidShape(f2, p_196408_4_, f2, f3, p_196408_5_, 16.0D);
-		VoxelShape voxelshape3 = Block.makeCuboidShape(0.0D, p_196408_4_, f2, f3, p_196408_5_, f3);
-		VoxelShape voxelshape4 = Block.makeCuboidShape(f2, p_196408_4_, f2, 16.0D, p_196408_5_, f3);
+		VoxelShape voxelshape = Block.makeCuboidShape(f, 0.0D, f, f1, nodeHeight, f1);
+		VoxelShape voxelshape1 = Block.makeCuboidShape(f2, extensionBottom, 0.0D, f3, extensionHeight, f3);
+		VoxelShape voxelshape2 = Block.makeCuboidShape(f2, extensionBottom, f2, f3, extensionHeight, 16.0D);
+		VoxelShape voxelshape3 = Block.makeCuboidShape(0.0D, extensionBottom, f2, f3, extensionHeight, f3);
+		VoxelShape voxelshape4 = Block.makeCuboidShape(f2, extensionBottom, f2, 16.0D, extensionHeight, f3);
 		VoxelShape voxelshape5 = VoxelShapes.or(voxelshape1, voxelshape4);
 		VoxelShape voxelshape6 = VoxelShapes.or(voxelshape2, voxelshape3);
 		VoxelShape[] avoxelshape = new VoxelShape[] { VoxelShapes.empty(), voxelshape2, voxelshape3, voxelshape6, voxelshape1, VoxelShapes.or(voxelshape2, voxelshape1), VoxelShapes.or(voxelshape3, voxelshape1), VoxelShapes.or(voxelshape6, voxelshape1), voxelshape4, VoxelShapes.or(voxelshape2, voxelshape4), VoxelShapes.or(voxelshape3, voxelshape4), VoxelShapes.or(voxelshape6, voxelshape4), voxelshape5, VoxelShapes.or(voxelshape2, voxelshape5), VoxelShapes.or(voxelshape3, voxelshape5),

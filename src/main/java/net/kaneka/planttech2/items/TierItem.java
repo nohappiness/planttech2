@@ -2,6 +2,8 @@ package net.kaneka.planttech2.items;
 
 import net.minecraft.item.Item;
 
+import net.minecraft.item.Item.Properties;
+
 public class TierItem extends Item
 {
 	private int tier;

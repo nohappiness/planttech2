@@ -9,6 +9,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+import net.minecraft.client.gui.widget.button.Button.IPressable;
+
 public class CustomButton extends Button
 {
 	protected static final ResourceLocation BUTTON_TEXTURES = new ResourceLocation("planttech2:textures/gui/button.png");
@@ -20,7 +22,7 @@ public class CustomButton extends Button
 	}
 
 	@Override
-	public void renderButton(MatrixStack mStack, int mouseX, int mouseY, float partial)
+	public void renderWidget(MatrixStack mStack, int mouseX, int mouseY, float partial)
 	{
 		if (this.visible)
 		{

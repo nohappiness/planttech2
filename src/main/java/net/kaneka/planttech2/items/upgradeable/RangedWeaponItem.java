@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.item.Item.Properties;
+
 public class RangedWeaponItem extends UpgradeableHandItem
 {
 	public RangedWeaponItem(Properties property, int basecapacity, int maxInvSize)

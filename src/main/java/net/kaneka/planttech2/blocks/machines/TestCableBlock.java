@@ -30,6 +30,8 @@ import java.util.function.Consumer;
 
 import static net.minecraftforge.common.util.Constants.BlockFlags;
 
+import net.minecraftforge.common.util.Constants.BlockFlags;
+
 public class TestCableBlock extends Block
 {
     public static final IntegerProperty

@@ -41,6 +41,8 @@ import net.minecraftforge.items.IItemHandler;
 import java.util.HashMap;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class BaseUpgradeableItem extends Item implements IItemChargeable, IUpgradeable
 {
 	private final int basecapacity, maxInvSize, slotId;

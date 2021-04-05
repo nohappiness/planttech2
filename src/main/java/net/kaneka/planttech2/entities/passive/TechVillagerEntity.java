@@ -50,7 +50,7 @@ public class TechVillagerEntity extends AgeableEntity
 
 	@Nullable
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity ageableEntity)
+	public AgeableEntity createChild(ServerWorld world, AgeableEntity ageableEntity)
 	{
 		return new TechVillagerEntity(ModEntityTypes.TECHVILLAGERENTITY, this.world);
 	}
@@ -143,7 +143,7 @@ public class TechVillagerEntity extends AgeableEntity
 	}
 
 	@Override
-	protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
+	protected ActionResultType getEntityInteractionResult(PlayerEntity player, Hand hand)
 	{
 		if (hand == Hand.MAIN_HAND && !world.isRemote)
 		{
@@ -161,7 +161,7 @@ public class TechVillagerEntity extends AgeableEntity
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.func_230254_b_(player, hand);
+		return super.getEntityInteractionResult(player, hand);
 	}
 
 	@Override

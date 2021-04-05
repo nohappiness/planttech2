@@ -17,6 +17,9 @@ import net.minecraft.util.IIntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.Tags.Items;
 
+import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity.EnergyConsumptionType;
+import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity.FluidConsumptionType;
+
 public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFluidTileEntity
 {
 	private int selectedId = 0;

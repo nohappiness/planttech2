@@ -72,7 +72,7 @@ public class CropSeedItem extends Item
 			{
 				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getString() + ": " + nbt.getString("type")));
 				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getString() + ": " + getSoilString(nbt.getString("type"))));
-				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").append(temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
+				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").appendSibling(temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "growspeed") + new TranslationTextComponent("info.growspeed").getString() + ": " + nbt.getInt("growspeed")));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "sensitivity") + new TranslationTextComponent("info.sensitivity").getString() + ": " + nbt.getInt("sensitivity")));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "lightsensitivity") + new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + (14 - nbt.getInt("lightsensitivity"))));
@@ -105,7 +105,7 @@ public class CropSeedItem extends Item
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.sensitivity").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + 14));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.waterrange").getString() + ": " + 1));
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getString() + ": ").append(temperatureString(entryName, 0)));
+			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getString() + ": ").appendSibling(temperatureString(entryName, 0)));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.productivity").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.fertility").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.spreedingspeed").getString() + ": " + 0));
@@ -129,7 +129,7 @@ public class CropSeedItem extends Item
 		{
 			max = 4;
 		}
-		return EnumTemperature.values()[min].getDisplayString().appendString(" - ").append(EnumTemperature.values()[max].getDisplayString());
+		return EnumTemperature.values()[min].getDisplayString().appendString(" - ").appendSibling(EnumTemperature.values()[max].getDisplayString());
 	}
 
 	public static String getSoilString(String type)

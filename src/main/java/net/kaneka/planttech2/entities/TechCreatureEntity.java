@@ -68,7 +68,7 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
     }
 
     @Override
-    protected ActionResultType func_230254_b_(PlayerEntity player, Hand hand)
+    protected ActionResultType getEntityInteractionResult(PlayerEntity player, Hand hand)
     {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() == ModItems.BIOMASS)
@@ -80,7 +80,7 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
                 this.spawnParticles(ParticleTypes.HAPPY_VILLAGER);
                 return ActionResultType.CONSUME;
             }
-        return super.func_230254_b_(player, hand);
+        return super.getEntityInteractionResult(player, hand);
     }
 
     protected boolean matchPassiveCriteria()

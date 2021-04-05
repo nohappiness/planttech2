@@ -27,6 +27,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BaseElectricFence extends Block
 {
     public static final IntegerProperty ELECTRIC_POWER = IntegerProperty.create("electric_power", 0, 15);

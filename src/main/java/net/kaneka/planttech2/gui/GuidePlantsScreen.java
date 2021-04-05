@@ -189,7 +189,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 
 				if (drops[i] != DropEntry.EMPTY)
 					this.drawTooltip(mStack, new StringTextComponent("").appendString(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
-									.append(drops[i].getItem().get().asItem().getName()), mouseX, mouseY,
+									.appendSibling(drops[i].getItem().get().asItem().getName()), mouseX, mouseY,
 							189 + 18 * i, 131);
 			}
 

@@ -306,7 +306,7 @@ public class UpgradeChipItem extends Item
 		
 		if(enchantment != null)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.add").appendString(" ").append(enchantment.getDisplayName(0)));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.add").appendString(" ").appendSibling(enchantment.getDisplayName(0)));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.stackable"));
 		}
 		

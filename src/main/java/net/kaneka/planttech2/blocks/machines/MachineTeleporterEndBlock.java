@@ -12,7 +12,7 @@ public class MachineTeleporterEndBlock extends Block
 
 	/*
 	@Override
-	public ActionResultType func_225533_a_(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts)
 	{
 		
 		if (!worldIn.isRemote)

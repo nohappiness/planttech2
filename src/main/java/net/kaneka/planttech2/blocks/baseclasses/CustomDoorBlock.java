@@ -39,6 +39,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CustomDoorBlock extends Block
 {
 
@@ -162,11 +164,11 @@ public class CustomDoorBlock extends Block
 		worldIn.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
-	private DoorHingeSide getHingeSide(BlockItemUseContext p_208073_1_)
+	private DoorHingeSide getHingeSide(BlockItemUseContext context)
 	{
-		IBlockReader iblockreader = p_208073_1_.getWorld();
-		BlockPos blockpos = p_208073_1_.getPos();
-		Direction direction = p_208073_1_.getPlacementHorizontalFacing();
+		IBlockReader iblockreader = context.getWorld();
+		BlockPos blockpos = context.getPos();
+		Direction direction = context.getPlacementHorizontalFacing();
 		BlockPos blockpos1 = blockpos.up();
 		Direction direction1 = direction.rotateYCCW();
 		BlockPos blockpos2 = blockpos.offset(direction1);
@@ -178,15 +180,15 @@ public class CustomDoorBlock extends Block
 		BlockState blockstate2 = iblockreader.getBlockState(blockpos4);
 		BlockPos blockpos5 = blockpos1.offset(direction2);
 		BlockState blockstate3 = iblockreader.getBlockState(blockpos5);
-		int i = (isOpaque(blockstate.getCollisionShape(iblockreader, blockpos2)) ? -1 : 0) + (isOpaque(blockstate1.getCollisionShape(iblockreader, blockpos3)) ? -1 : 0)
-				+ (isOpaque(blockstate2.getCollisionShape(iblockreader, blockpos4)) ? 1 : 0) + (isOpaque(blockstate3.getCollisionShape(iblockreader, blockpos5)) ? 1 : 0);
+		int i = (isOpaque(blockstate.getCollisionShapeUncached(iblockreader, blockpos2)) ? -1 : 0) + (isOpaque(blockstate1.getCollisionShapeUncached(iblockreader, blockpos3)) ? -1 : 0)
+				+ (isOpaque(blockstate2.getCollisionShapeUncached(iblockreader, blockpos4)) ? 1 : 0) + (isOpaque(blockstate3.getCollisionShapeUncached(iblockreader, blockpos5)) ? 1 : 0);
 		boolean flag = blockstate.getBlock() == this && blockstate.get(HALF) == DoubleBlockHalf.LOWER;
 		boolean flag1 = blockstate2.getBlock() == this && blockstate2.get(HALF) == DoubleBlockHalf.LOWER;
 		if ((!flag || flag1) && i <= 0) {
 			if ((!flag1 || flag) && i >= 0) {
 				int j = direction.getXOffset();
 				int k = direction.getZOffset();
-				Vector3d vec3d = p_208073_1_.getHitVec();
+				Vector3d vec3d = context.getHitVec();
 				double d0 = vec3d.x - (double) blockpos.getX();
 				double d1 = vec3d.z - (double) blockpos.getZ();
 				return (j >= 0 || !(d1 < 0.5D)) && (j <= 0 || !(d1 > 0.5D)) && (k >= 0 || !(d0 > 0.5D)) && (k <= 0 || !(d0 < 0.5D)) ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
@@ -203,7 +205,7 @@ public class CustomDoorBlock extends Block
 		if (this.material == Material.IRON) {
 			return ActionResultType.FAIL;
 		} else {
-			state = state.func_235896_a_(OPEN);
+			state = state.cycleValue(OPEN);
 			worldIn.setBlockState(pos, state, 10);
 			worldIn.playEvent(player, state.get(OPEN) ? this.getOpenSound() : this.getCloseSound(), pos, 0);
 			return ActionResultType.SUCCESS;
@@ -256,7 +258,7 @@ public class CustomDoorBlock extends Block
 
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		return mirrorIn == Mirror.NONE ? state : state.rotate(mirrorIn.toRotation(state.get(FACING))).func_235896_a_(HINGE);
+		return mirrorIn == Mirror.NONE ? state : state.rotate(mirrorIn.toRotation(state.get(FACING))).cycleValue(HINGE);
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 
 import java.util.HashSet;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+
 public class NaturalPlants extends Block
 {
 	//    private float width;
