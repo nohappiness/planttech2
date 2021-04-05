@@ -5,13 +5,11 @@ import net.kaneka.planttech2.blocks.baseclasses.ObtainableNaturalPlants;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
-public class MutatedPlantModels
+public class MutatedPlantModels extends BlockModelBase
 {
-	private final BlockStateGenerator states;
-
 	MutatedPlantModels(BlockStateGenerator states)
 	{
-		this.states = states;
+		super(states);
 	}
 
 	public void registerStatesAndModels()

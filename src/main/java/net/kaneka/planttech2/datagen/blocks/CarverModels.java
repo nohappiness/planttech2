@@ -5,17 +5,15 @@ import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
 
-public class CarverModels
+public class CarverModels extends BlockModelBase
 {
-	private final BlockStateGenerator states;
-
 	CarverModels(BlockStateGenerator states)
 	{
-		this.states = states;
+		super(states);
 	}
 	
+	@Override
 	public void registerStatesAndModels()
 	{
 		BlockModelBuilder carver_block_base = models().withExistingParent("block/basic/carver_block_base", "block/block")
@@ -244,12 +242,5 @@ public class CarverModels
 				 	.partialState()
 				 		.with(CarverBlock.EAST, true).with(CarverBlock.NORTH, true).with(CarverBlock.SOUTH, true).with(CarverBlock.WEST, true)
 				 		.modelForState().modelFile(carver_block_ensw).addModel();
-	}
-	
-	
-	
-	private BlockModelProvider models()
-	{
-		return this.states.models();
 	}
 }

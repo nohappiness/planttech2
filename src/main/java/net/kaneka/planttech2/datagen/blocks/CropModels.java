@@ -3,23 +3,21 @@ package net.kaneka.planttech2.datagen.blocks;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import org.apache.commons.lang3.Validate;
 
-public class CropModels
+public class CropModels extends BlockModelBase
 {
-	private final BlockStateProvider states;
 	private final CropList crops;
 
 	CropModels(BlockStateGenerator states, CropList crops)
 	{
-		this.states = states;
+		super(states);
 		this.crops = crops;
 	}
 
+	@Override
 	public void registerStatesAndModels()
 	{
 		ModelFile cropBase = models().getExistingFile(models().modLoc("block/basic/crops"));
@@ -45,10 +43,5 @@ public class CropModels
 							new ConfiguredModel(models().getBuilder("crop_" + state.get(CropBaseBlock.GROWSTATE)))
 					});
 		});
-	}
-
-	private BlockModelProvider models()
-	{
-		return states.models();
 	}
 }

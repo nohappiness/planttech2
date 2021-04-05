@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Direction.Axis;
 
 public class JsonFileConverter
 {
@@ -25,23 +24,19 @@ public class JsonFileConverter
 	
 	public static void act()
 	{
-		//parseModel("planttech2:models/block/basic/carver_block_base.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_base.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_e.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_en.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_ens.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_ensw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_enw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_es.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_esw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_ew.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_n.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_ns.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_nsw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_nw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_s.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_sw.json"); 
-		parseModel("planttech2:models/block/carver/carver_block_w.json"); 
+		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_opened.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_top_opened.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_top.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_gate.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_post.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_powered.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_side_powered.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_side.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_top_powered.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence_top.json");
+		parseModel("planttech2:models/block/electric_fences/electric_fence.json");
+		
+		
 		/*
 		parseModel("planttech2:models/block/basic/crops.json");
 		parseModel("planttech2:models/block/basic/carver_block_base.json"); 

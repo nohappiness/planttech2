@@ -6,19 +6,17 @@ import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
 
 import java.util.Map;
 
-public class HedgeModels
+public class HedgeModels extends BlockModelBase
 {
-	private final BlockStateGenerator states;
-
 	HedgeModels(BlockStateGenerator states)
 	{
-		this.states = states;
+		super(states);
 	}
 
+	@Override
 	public void registerStatesAndModels()
 	{
 		// Base models
@@ -99,11 +97,6 @@ public class HedgeModels
 			states.itemModels().getBuilder(hedgeBlock.getRegistryName().getPath())
 					.parent(base);
 		}
-	}
-
-	private BlockModelProvider models()
-	{
-		return this.states.models();
 	}
 
 	private String strip(String str)
