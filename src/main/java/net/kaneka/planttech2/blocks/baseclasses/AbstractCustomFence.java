@@ -16,6 +16,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public abstract class AbstractCustomFence extends Block
 {
     public static final BooleanProperty NORTH = FourWayBlock.NORTH;

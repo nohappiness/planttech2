@@ -124,8 +124,9 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 			{
 				this.output = recipe.getOutput();
 				fluidTotal = recipe.getBiomass();
-			}
-			return ticksPassed + fluidPerAction() < fluidTotal;
+			} 
+			
+			return true;
 		}
 		else
 		{
@@ -134,11 +135,24 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 		}
 		return false;
 	}
+	
+	@Override
+	public int ticksPerItem()
+	{
+		
+		return fluidTotal > 0 ? fluidTotal: 100;
+	}
 
 	@Override
 	protected void increaseProgress()
 	{
 		ticksPassed += fluidPerAction();
+	}
+	
+	@Override
+	protected int remainingFluid()
+	{
+		return fluidTotal - ticksPassed;
 	}
 
 	@Override
@@ -162,6 +176,7 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 	@Nullable
 	private InfuserRecipe getOutputRecipe()
 	{
+		
 		if (world == null)
 			return null;
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);

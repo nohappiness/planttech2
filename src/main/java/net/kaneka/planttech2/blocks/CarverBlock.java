@@ -32,8 +32,8 @@ public class CarverBlock extends Block
 	public static final BooleanProperty EAST = SixWayBlock.EAST;
 	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
 	public static final BooleanProperty WEST = SixWayBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((p_199775_0_) -> {
-		return p_199775_0_.getKey().getAxis().isHorizontal();
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((facingProperty) -> {
+		return facingProperty.getKey().getAxis().isHorizontal();
 	}).collect(Util.toMapCollector());
 
 	public CarverBlock()

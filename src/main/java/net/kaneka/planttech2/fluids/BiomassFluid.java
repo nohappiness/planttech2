@@ -73,9 +73,9 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected boolean canDisplace(FluidState p_215665_1_, IBlockReader p_215665_2_, BlockPos p_215665_3_, Fluid p_215665_4_, Direction p_215665_5_)
+	protected boolean canDisplace(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction)
 	{
-		return p_215665_5_ == Direction.DOWN && !p_215665_4_.isIn(FluidTags.WATER);
+		return direction == Direction.DOWN && !fluid.isIn(FluidTags.WATER);
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public class DevListCommand
             StringTextComponent name = new StringTextComponent(entry.getKey());
             if (isOnline(src.getServer(), entry.getValue()))
             {
-                name.append(new StringTextComponent(" (online)").mergeStyle(GREEN));
+                name.appendSibling(new StringTextComponent(" (online)").mergeStyle(GREEN));
                 online++;
             }
             if (contributionDone)

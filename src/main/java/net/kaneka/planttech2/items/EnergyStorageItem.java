@@ -20,6 +20,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
+import net.minecraft.item.Item.Properties;
+
 public class EnergyStorageItem extends Item implements IItemChargeable
 {
 	private int basecapacity; 

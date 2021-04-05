@@ -6,6 +6,8 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public class ArmorBaseItem extends ArmorItem
 {
     private final String resString;

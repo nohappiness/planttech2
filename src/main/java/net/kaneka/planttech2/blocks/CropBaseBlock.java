@@ -270,7 +270,7 @@ public class CropBaseBlock extends ContainerBlock
 	{
 		List<ItemStack> drops = Lists.newArrayList();
 		int growstate = state.get(GROWSTATE);
-		Vector3d vec3d = builder.get(LootParameters.field_237457_g_);
+		Vector3d vec3d = builder.get(LootParameters.ORIGIN);
 		if (vec3d != null)
 		{
 			BlockPos pos = new BlockPos(vec3d);

@@ -75,7 +75,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 		{
 			energystorage.extractEnergy(energyPerAction());
 			setPower(true);
-			resetProgress();
+			resetProgress(true);
 		}
 	}
 

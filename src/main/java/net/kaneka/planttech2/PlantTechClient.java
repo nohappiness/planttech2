@@ -16,27 +16,32 @@ import net.minecraft.util.ResourceLocation;
 
 public class PlantTechClient
 {
+	public static final ResourceLocation DRILLING_PREDICATE = new ResourceLocation(PlantTechMain.MODID, "drilling");
+	public static final ResourceLocation FILLED_PREDICATE = new ResourceLocation(PlantTechMain.MODID, "filled");
+	public static final ResourceLocation PULL_PREDICATE = new ResourceLocation(PlantTechMain.MODID, "pull");
+	public static final ResourceLocation PULLING_PREDICATE = new ResourceLocation(PlantTechMain.MODID, "pulling");
+
 	public static void addAllItemModelsOverrides()
 	{
 		ItemModelsProperties.registerProperty(
-				ModItems.MULTITOOL, new ResourceLocation(PlantTechMain.MODID, "drilling"),
+				ModItems.MULTITOOL, DRILLING_PREDICATE,
 				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1
 		);
 		ItemModelsProperties.registerProperty(
-				ModItems.PLANT_OBTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+				ModItems.PLANT_OBTAINER, FILLED_PREDICATE,
 				(stack, world, entity) -> {
 					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
 					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F;
 				}
 		);
-		ItemModelsProperties.registerProperty(ModItems.BIOMASSCONTAINER, new ResourceLocation(PlantTechMain.MODID, "filled"),
+		ItemModelsProperties.registerProperty(ModItems.BIOMASSCONTAINER, FILLED_PREDICATE,
 				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
 		ItemModelsProperties.registerProperty(
-				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pull"),
+				ModItems.CYBERBOW, PULL_PREDICATE,
 				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
 		);
 		ItemModelsProperties.registerProperty(
-				ModItems.CYBERBOW, new ResourceLocation(PlantTechMain.MODID, "pulling"),
+				ModItems.CYBERBOW, PULLING_PREDICATE,
 				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
 	}
 

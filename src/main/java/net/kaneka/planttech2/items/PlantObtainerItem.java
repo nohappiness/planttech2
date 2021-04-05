@@ -19,6 +19,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import net.minecraft.item.Item.Properties;
+
 public class PlantObtainerItem extends Item
 {
     public PlantObtainerItem(Properties property)
@@ -125,7 +127,7 @@ public class PlantObtainerItem extends Item
         tooltip.add(new StringTextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-            tooltip.add(new StringTextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getTranslatedName().setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true))));
+            tooltip.add(new StringTextComponent("Plant Obtained: ").appendSibling(getBlockStateFilled(stack).getBlock().getTranslatedName().setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true))));
         else
             tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true)));
     }

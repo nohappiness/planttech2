@@ -31,11 +31,11 @@ public abstract class ConvertEnergyInventoryTileEntity extends EnergyInventoryTi
                 {
                     if (getEnergyConsumptionType() != EnergyConsumptionType.NONE)
                         energystorage.extractEnergy(energyPerAction(), false);
-                    resetProgress();
+                    resetProgress(true);
                     addKnowledge();
                 }
             }
-            else resetProgress();
+            else resetProgress(false);
         }
     }
 
@@ -55,10 +55,10 @@ public abstract class ConvertEnergyInventoryTileEntity extends EnergyInventoryTi
     }
 
     @Override
-    protected void resetProgress()
+    protected void resetProgress(boolean forced)
     {
-        if (shouldResetProgressIfNotProcessing())
-            super.resetProgress();
+        if (shouldResetProgressIfNotProcessing() || forced)
+            super.resetProgress(forced);
     }
 
     protected boolean shouldResetProgressIfNotProcessing()

@@ -23,7 +23,7 @@ public class ThermometerItem extends Item
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
 		if (worldIn.isRemote)
-			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getString()).appendString(": ").append(EnumTemperature.byValue(worldIn.getBiomeManager().getBiome(playerIn.getPosition()).getTemperature(playerIn.getPosition())).getDisplayString()), playerIn.getUniqueID());
+			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getString()).appendString(": ").appendSibling(EnumTemperature.byValue(worldIn.getBiomeManager().getBiome(playerIn.getPosition()).getTemperature(playerIn.getPosition())).getDisplayString()), playerIn.getUniqueID());
 		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
 	}
 }

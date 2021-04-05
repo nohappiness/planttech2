@@ -72,7 +72,7 @@ public class AdvancedAnalyserItem extends EnergyStorageItem
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.sensitivity").getString() + ": " + traits.getTrait(EnumTraitsInt.SENSITIVITY)), player.getUniqueID());
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + (14 - traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY))), player.getUniqueID());
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.waterrange").getString() + ": " + (1 + traits.getTrait(EnumTraitsInt.WATERSENSITIVITY))), player.getUniqueID());
-		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").append(CropSeedItem.temperatureString(traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE))), player.getUniqueID());
+		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").appendSibling(CropSeedItem.temperatureString(traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE))), player.getUniqueID());
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.productivity").getString() + ": " + traits.getTrait(EnumTraitsInt.PRODUCTIVITY)), player.getUniqueID());
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.fertility").getString() + ": " + traits.getTrait(EnumTraitsInt.FERTILITY)), player.getUniqueID());
 		player.sendMessage(new StringTextComponent(new TranslationTextComponent("info.spreedingspeed").getString() + ": " + traits.getTrait(EnumTraitsInt.SPREEDINGSPEED)), player.getUniqueID());

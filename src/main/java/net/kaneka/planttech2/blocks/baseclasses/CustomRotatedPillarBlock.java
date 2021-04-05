@@ -10,6 +10,8 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Rotation;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class CustomRotatedPillarBlock extends Block
 {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.AXIS;

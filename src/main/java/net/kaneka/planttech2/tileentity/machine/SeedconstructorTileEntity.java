@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
+import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity.FluidConsumptionType;
+
 public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEntity
 {
 	protected final IIntArray field_array = new IIntArray()

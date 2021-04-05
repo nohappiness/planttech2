@@ -57,7 +57,7 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 		doEnergyLoop();
 	}
 
-	protected void resetProgress()
+	protected void resetProgress(boolean forced)
 	{
 		ticksPassed = 0;
 	}

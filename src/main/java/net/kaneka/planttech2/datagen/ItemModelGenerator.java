@@ -20,7 +20,7 @@ public class ItemModelGenerator extends ItemModelProvider
 	@Override
 	protected void registerModels()
 	{
-		registerBlockModels();
+//		registerBlockModels();
 		registerItemModels();
 	}
 
@@ -34,11 +34,11 @@ public class ItemModelGenerator extends ItemModelProvider
 
 	private void registerItemModels()
 	{
-		generatedItemModel("aura_chip_temperature_extreme_cold");
-		generatedItemModel("aura_chip_temperature_cold");
-		generatedItemModel("aura_chip_temperature_normal");
-		generatedItemModel("aura_chip_temperature_warm");
-		generatedItemModel("aura_chip_temperature_extreme_warm");
+//		generatedItemModel("aura_chip_temperature_extreme_cold");
+//		generatedItemModel("aura_chip_temperature_cold");
+//		generatedItemModel("aura_chip_temperature_normal");
+//		generatedItemModel("aura_chip_temperature_warm");
+//		generatedItemModel("aura_chip_temperature_extreme_warm");
 	}
 
 	private void generatedItemModel(String name)
@@ -52,10 +52,10 @@ public class ItemModelGenerator extends ItemModelProvider
 	{
 		withExistingParent(b.getRegistryName().getPath(), modLoc("block/" + b.getRegistryName().getPath())); 
 	}
-	
+
 	private void blockHedge(Hedge b)
 	{
-		withExistingParent(b.getRegistryName().getPath(), modLoc("block/hedge/" + b.getRegistryName().getPath().replace("hedge_", "") + "_base")); 
+		withExistingParent(b.getRegistryName().getPath(), modLoc("block/hedge/" + b.getRegistryName().getPath().replace("hedge_", "") + "_base"));
 	}
 	
 	@Override

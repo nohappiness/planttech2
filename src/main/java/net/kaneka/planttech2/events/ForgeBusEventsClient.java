@@ -93,7 +93,7 @@ public class ForgeBusEventsClient
                     .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
                     .setFormatting(TextFormatting.BLUE)
                     .setUnderlined(true));
-            evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUniqueID());
+            evt.getEntity().sendMessage(info.appendSibling(link), evt.getEntity().getUniqueID());
         }
         hasSendUpdateAvailable = true;
     }
