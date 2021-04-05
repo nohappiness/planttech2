@@ -1,17 +1,8 @@
 package net.kaneka.planttech2.events;
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.crops.CropList;
-import net.kaneka.planttech2.datagen.BlockModelGenerator;
-import net.kaneka.planttech2.datagen.DefaultCropConfigProvider;
-import net.kaneka.planttech2.datagen.ItemModelGenerator;
-import net.kaneka.planttech2.datagen.Languages;
-import net.kaneka.planttech2.datagen.LootTables;
-import net.kaneka.planttech2.datagen.Recipes;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
 import net.minecraft.block.Block;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
@@ -20,12 +11,10 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistryEvents
@@ -114,24 +103,6 @@ public class RegistryEvents
 	}
 
 	*/
-	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event)
-	{
-		DataGenerator gen = event.getGenerator();
-		ExistingFileHelper eFH = event.getExistingFileHelper();
-		if (event.includeClient())
-		{
-			gen.addProvider(new Languages(gen));
-			gen.addProvider(new BlockModelGenerator(gen, eFH));
-			gen.addProvider(new ItemModelGenerator(gen, eFH));
-		}
-		if (event.includeServer())
-		{
-			gen.addProvider(new Recipes(gen));
-			gen.addProvider(new LootTables(gen));
-			gen.addProvider(new DefaultCropConfigProvider(gen));
-		}
-	}
 
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
