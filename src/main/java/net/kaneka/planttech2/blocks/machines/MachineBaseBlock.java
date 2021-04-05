@@ -60,9 +60,14 @@ public class MachineBaseBlock extends Block
 		{
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof EnergyTileEntity)
-				player.openContainer((EnergyTileEntity) te);
+			{
+				EnergyTileEntity energyTileEntity = (EnergyTileEntity) te;
+				player.openContainer(energyTileEntity);
+				if (energyTileEntity.requireSyncOnOpen())
+					world.notifyBlockUpdate(pos, state, state, 3);
+			}
+			return ActionResultType.CONSUME;
 		}
-
 		return ActionResultType.SUCCESS;
 	}
 	

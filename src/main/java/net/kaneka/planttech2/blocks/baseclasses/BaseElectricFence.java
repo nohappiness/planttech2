@@ -63,7 +63,7 @@ public class BaseElectricFence extends Block
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
-        if (state.get(ELECTRIC_POWER) > 0)
+        if (state.get(ELECTRIC_POWER) > 0 && worldIn.getGameTime() % 4L == 0L)
         {
             if (entityIn instanceof LivingEntity)
             {
@@ -104,7 +104,7 @@ public class BaseElectricFence extends Block
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(300) == 1)
+        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(325) == 1)
             if (worldIn.isRemote)
                 doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
     }

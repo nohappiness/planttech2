@@ -8,6 +8,7 @@ import net.minecraftforge.common.util.Constants;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static net.minecraftforge.common.util.Constants.NBT.TAG_ANY_NUMERIC;
@@ -21,9 +22,8 @@ public class NBTHelper
 
 	public static int getInt(CompoundNBT nbt, String key, int defaultValue)
 	{
-		if (nbt != null && nbt.contains(key, TAG_ANY_NUMERIC))
-			return nbt.getInt(key);
-		return defaultValue;
+		return get(nbt, key, CompoundNBT::getInt, defaultValue, TAG_ANY_NUMERIC);
+
 	}
 
 	public static float getFloat(ItemStack stack, String key, int defaultValue)
@@ -33,9 +33,7 @@ public class NBTHelper
 
 	public static float getFloat(CompoundNBT nbt, String key, float defaultValue)
 	{
-		if (nbt != null && nbt.contains(key, TAG_ANY_NUMERIC))
-			return nbt.getFloat(key);
-		return defaultValue;
+		return get(nbt, key, CompoundNBT::getFloat, defaultValue, TAG_ANY_NUMERIC);
 	}
 
 	public static boolean getBoolean(ItemStack stack, String key, boolean defaultValue)
@@ -45,9 +43,17 @@ public class NBTHelper
 
 	public static boolean getBoolean(CompoundNBT nbt, String key, boolean defaultValue)
 	{
-		if (nbt != null && nbt.contains(key))
-			return nbt.getBoolean(key);
-		return defaultValue;
+		return get(nbt, key, CompoundNBT::getBoolean, defaultValue);
+	}
+
+	private static <T> T get(CompoundNBT compound, String key, BiFunction<CompoundNBT, String, T> getter, T defaultValue)
+	{
+		return compound != null && compound.contains(key) ? getter.apply(compound, key) : defaultValue;
+	}
+
+	private static <T> T get(CompoundNBT compound, String key, BiFunction<CompoundNBT, String, T> getter, T defaultValue, Integer type)
+	{
+		return compound != null && compound.contains(key, type) ? getter.apply(compound, key) : defaultValue;
 	}
 
 	public static <E extends ISerializable> void putSerilizableList(CompoundNBT compound, String key, Collection<E> collection)

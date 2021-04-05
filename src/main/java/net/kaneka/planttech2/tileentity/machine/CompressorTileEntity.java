@@ -83,7 +83,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 				CompressorTileEntity.this.ticksPassed = value;
 				break;
 			case 3:
-				CompressorTileEntity.this.selectedId = value;
+				CompressorTileEntity.this.setSelectedId(value);
 				break; 
 			case 4:
 				CompressorTileEntity.this.pos = new BlockPos(value, CompressorTileEntity.this.pos.getY(), CompressorTileEntity.this.pos.getZ());
@@ -141,8 +141,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 					if (inputDone)
 						previousInput = input;
 				}
-				else
-					selectedId = -1;
+				else setSelectedId(-1);
 			}
 		}
 		return selectedId >= 0 && recipeDone && inputDone;
@@ -175,6 +174,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	public void setSelectedId(int selectedId)
 	{ 
 		this.selectedId = selectedId;
+		notifyClient();
 	}
 
 	@Override
@@ -262,7 +262,8 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	@Override
 	public CompoundNBT write(CompoundNBT compound)
 	{
-		compound.putInt("selectedId", selectedId);
+		if (world != null && !world.isRemote())
+			compound.putInt("selectedId", selectedId);
 		return super.write(compound);
 	}
 
@@ -270,7 +271,12 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	public void read(BlockState state, CompoundNBT compound)
 	{
 		super.read(state, compound);
-		this.selectedId = compound.getInt("selectedId");
+		if (compound.contains("selectedId"))
+		{
+			this.selectedId = compound.getInt("selectedId");
+			if (world != null && world.isRemote)
+				selectedId++;
+		}
 	}
 
 	@Override
@@ -307,5 +313,11 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	public int getUpgradeSlot()
 	{
 		return 2;
+	}
+
+	@Override
+	public boolean requireSyncOnOpen()
+	{
+		return true;
 	}
 }

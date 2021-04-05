@@ -105,5 +105,18 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	{
 		return new TranslationTextComponent("container." + getNameString());
 	}
-	 
+
+	public void notifyClient()
+	{
+		if (world != null && !world.isRemote())
+		{
+			BlockState state = world.getBlockState(getPos());
+			world.notifyBlockUpdate(getPos(), state, state, 3);
+		}
+	}
+
+	public boolean requireSyncOnOpen()
+	{
+		return false;
+	}
 }
