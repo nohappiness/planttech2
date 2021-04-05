@@ -26,6 +26,23 @@ public class JsonFileConverter
 	public static void act()
 	{
 		parseModel("planttech2:models/block/basic/crops.json");
+		parseModel("planttech2:models/block/basic/carver_block_base.json"); 
+		parseModel("planttech2:models/block/basic/crops.json"); 
+		parseModel("planttech2:models/block/basic/door_item.json"); 
+		parseModel("planttech2:models/block/basic/door_top_hinged.json"); 
+		parseModel("planttech2:models/block/basic/door_top.json"); 
+		parseModel("planttech2:models/block/basic/door.json"); 
+		parseModel("planttech2:models/block/basic/fence_core.json"); 
+		parseModel("planttech2:models/block/basic/fence_west.json"); 
+		parseModel("planttech2:models/block/basic/glasspane_cross.json"); 
+		parseModel("planttech2:models/block/basic/glasspane_end.json"); 
+		parseModel("planttech2:models/block/basic/glasspane_middle.json"); 
+		parseModel("planttech2:models/block/basic/machineshell_infused.json"); 
+		parseModel("planttech2:models/block/basic/machineshell.json"); 
+		parseModel("planttech2:models/block/basic/straight_tube.json"); 
+		parseModel("planttech2:models/block/basic/three_layered_six_sided_nubs.json"); 
+		parseModel("planttech2:models/block/basic/three_layered_six_sided.json"); 
+		parseModel("planttech2:models/block/basic/two_layered_six_sided.json"); 
 	}
 	
 	public static void parseModel(String path)

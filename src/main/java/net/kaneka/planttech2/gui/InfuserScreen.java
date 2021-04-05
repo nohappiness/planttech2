@@ -35,7 +35,8 @@ public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = container.getValue(4);
-		return i != 0 ? i * pixels / container.getValue(5) : 0;
+		int k = container.getValue(5); 
+		return i != 0 && k  != 0 ? i * pixels / k : 0;
 	}
 	
 	@Override

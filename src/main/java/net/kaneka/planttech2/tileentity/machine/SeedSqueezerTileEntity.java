@@ -122,7 +122,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 						squeezeItem();
 						addKnowledge();
 						biomassCap.changeCurrentStorage(10);
-						resetProgress();
+						resetProgress(true);
 					}
 				}
 				else if (stack.getCount() > 0)
@@ -134,7 +134,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					}
 				}
 				else if (ticksPassed > 0)
-					resetProgress();
+					resetProgress(false);
 			}
 		}
 	}

@@ -36,12 +36,12 @@ public abstract class ConvertEnergyInventoryFluidTileEntity extends EnergyInvent
                     if (getEnergyConsumptionType() != EnergyConsumptionType.NONE)
                         energystorage.extractEnergy(energyPerAction(), false);
                     if (getFluidConsumptionType() != FluidConsumptionType.NONE)
-                        biomassCap.extractBiomass(fluidPerAction());
-                    resetProgress();
+                        biomassCap.extractBiomass(remainingFluid());
+                    resetProgress(true);
                     addKnowledge();
                 }
             }
-            else resetProgress();
+            else resetProgress(false);
         }
     }
 
@@ -53,6 +53,11 @@ public abstract class ConvertEnergyInventoryFluidTileEntity extends EnergyInvent
     protected abstract boolean canProceed(ItemStack input, ItemStack output);
 
     protected abstract ItemStack getResult(ItemStack input, ItemStack output);
+    
+    protected int remainingFluid()
+    {
+    	return fluidPerAction(); 
+    }
 
     protected boolean onProcessFinished(ItemStack input, ItemStack output)
     {
@@ -66,10 +71,10 @@ public abstract class ConvertEnergyInventoryFluidTileEntity extends EnergyInvent
     }
 
     @Override
-    protected void resetProgress()
+    protected void resetProgress(boolean forced)
     {
-        if (shouldResetProgressIfNotProcessing())
-            super.resetProgress();
+        if (shouldResetProgressIfNotProcessing() || forced)
+            super.resetProgress(forced);
     }
 
     protected boolean shouldResetProgressIfNotProcessing()

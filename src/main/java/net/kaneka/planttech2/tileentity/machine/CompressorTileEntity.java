@@ -221,7 +221,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 			recipeList.put(i, temprecipeList.get(keys.get(i)));
 			itemhandler.setStackInSlot(i + 3, temprecipeList.get(keys.get(i)).getLeft());
 		}
-		resetProgress();
+		resetProgress(false);
 	}
 
 	@Override

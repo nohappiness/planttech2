@@ -138,17 +138,17 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				}
 				else
 				{
-					resetProgress();
+					resetProgress(false);
 					break;
 				}
 			}
 		}
 		else
-			resetProgress();
+			resetProgress(false);
 	}
 
 	@Override
-	protected void resetProgress()
+	protected void resetProgress(boolean forced)
 	{
 		for (int i = 0; i <= getRange(); i++)
 			progress[i] = 0;
