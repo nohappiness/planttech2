@@ -38,7 +38,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 {
 	private int selectedId = -1;
 	private HashMap<Integer, Pair<ItemStack, Integer>> recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
-	private ItemStack previousInput = null;
+	private Item previousInput = null;
 	private final RangedWrapper inputs;
 	private final RangedWrapper outputs;
 	private final LazyOptional<IItemHandler> inputs_provider;
@@ -139,21 +139,22 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	{
 		boolean recipeDone = false;
 		boolean inputDone = false;
+		
+		if (recipeList == null || previousInput != input.getItem())
+		{
+			initRecipeList();
+		}
+		
 		if (getSelectedId() >= 0)
 		{
-			if (recipeList == null)
-				initRecipeList();
-			else
+			if (!recipeList.isEmpty() && recipeList.size() > getSelectedId())
 			{
-				if (!recipeList.isEmpty() && recipeList.size() > getSelectedId())
-				{
-					recipeDone = true;
-					inputDone = recipeList.get(getSelectedId()).getValue() <= input.getCount();
-					if (inputDone)
-						previousInput = input;
-				}
-				else setSelectedId(-1);
+				recipeDone = true;
+				inputDone = recipeList.get(getSelectedId()).getValue() <= input.getCount();
+				if (inputDone)
+					previousInput = input.getItem();
 			}
+			else setSelectedId(-1);
 		}
 		return getSelectedId() >= 0 && recipeDone && inputDone;
 	}
@@ -213,6 +214,8 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 			return;
 		for (int i = 0; i < 20; i++)
 			itemhandler.setStackInSlot(i + 3, ItemStack.EMPTY);
+		selectedId = -1; 
+		previousInput = null; 
 
 		// set new values
 		HashMap<Integer, Pair<ItemStack, Integer>> temprecipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
@@ -227,11 +230,14 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
         		 for (IRecipe<?> recipe : this.world.getRecipeManager().getRecipesForType(ModRecipeTypes.COMPRESSING))
         		 {
 					 CompressorRecipe compRecipe = (CompressorRecipe) recipe;
+					 
 					 if (compRecipe.getInput().getItem() == particle)
 					 {
 						 temprecipeList.put(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()),
 						 Pair.of(compRecipe.getRecipeOutput(), compRecipe.getAmountInput()));
 						 keys.add(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()));
+						 
+						 previousInput = particle;
 					 }
         		 }
 			}
