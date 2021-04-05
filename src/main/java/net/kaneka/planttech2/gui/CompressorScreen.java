@@ -18,8 +18,8 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     {
     	super(container, player, name);
     }
-    
-    @Override
+
+	@Override
     public boolean mouseClicked(double mouseX, double mouseY, int p_mouseClicked_5_)
     {
 	for(int y = 0; y < 3; y++)
@@ -45,7 +45,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 
 		int k = this.getEnergyStoredScaled(55);
 		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
-		int i = container.getValue(3);
+		int i = container.getValue(3) - 2;
 		if(i >= 0)
 			blit(mStack, this.guiLeft + 34 + (i % 6) * 18, this.guiTop + 25 + (i / 6) * 18, 224, 0, 18, 18);
 	}
