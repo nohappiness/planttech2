@@ -11,6 +11,7 @@ public class BlockStateGenerator extends BlockStateProvider
 	private final CropModels crops = new CropModels(this, PlantTechMain.getCropList());
 	private final HedgeModels hedges = new HedgeModels(this);
 	private final BuildingBlockModels buildingBlocks = new BuildingBlockModels(this);
+	private final CarverModels carver = new CarverModels(this);
 
 	public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper)
 	{
@@ -24,5 +25,6 @@ public class BlockStateGenerator extends BlockStateProvider
 		crops.registerStatesAndModels();
 		hedges.registerStatesAndModels();
 		buildingBlocks.registerStatesAndModels();
+		carver.registerStatesAndModels();
 	}
 }

@@ -3,6 +3,7 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntry;
+import net.kaneka.planttech2.datagen.helper.JsonFileConverter;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
@@ -36,6 +37,9 @@ public class TestItem extends Item
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if(!ctx.getWorld().isRemote)
 		{
+			JsonFileConverter.act();
+		}
+			/*
 			CropEntry entry = PlantTechMain.getCropList().getByName("coal");
 			System.out.println(entry);
 			if (entry != null)
@@ -44,7 +48,6 @@ public class TestItem extends Item
 				for (Supplier<Item> seed : seeds)
 					System.out.println(seed.get());
 			}
-			/*
 			System.out.println(Feature.STRUCTURES); 
 			
 			System.out.println(" ");
@@ -69,7 +72,7 @@ public class TestItem extends Item
 		
 		*/
 		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
-		}
+		
 		
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
 		/*

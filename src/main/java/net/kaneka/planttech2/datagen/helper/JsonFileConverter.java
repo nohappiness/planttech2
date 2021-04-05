@@ -25,6 +25,24 @@ public class JsonFileConverter
 	
 	public static void act()
 	{
+		//parseModel("planttech2:models/block/basic/carver_block_base.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_base.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_e.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_en.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_ens.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_ensw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_enw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_es.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_esw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_ew.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_n.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_ns.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_nsw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_nw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_s.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_sw.json"); 
+		parseModel("planttech2:models/block/carver/carver_block_w.json"); 
+		/*
 		parseModel("planttech2:models/block/basic/crops.json");
 		parseModel("planttech2:models/block/basic/carver_block_base.json"); 
 		parseModel("planttech2:models/block/basic/crops.json"); 
@@ -43,6 +61,7 @@ public class JsonFileConverter
 		parseModel("planttech2:models/block/basic/three_layered_six_sided_nubs.json"); 
 		parseModel("planttech2:models/block/basic/three_layered_six_sided.json"); 
 		parseModel("planttech2:models/block/basic/two_layered_six_sided.json"); 
+		*/
 	}
 	
 	public static void parseModel(String path)
@@ -55,16 +74,16 @@ public class JsonFileConverter
 		
 		if(jObj != null)
 		{
-			output.add("BlockModelBuilder " + filename + " = builder(\"" + pathShort + "\");");
+			output.add("BlockModelBuilder " + filename + " = models().getBuilder(\"" + pathShort + "\")");
 		
 		
     		if(jObj.has("parent"))
     		{
-    			output.add("parent(" + filename + ", \""+ jObj.get("parent").getAsString() + "\");"); 
+    			output.add(".parent(carver_base_block)"); 
     				
     		}
     		
-    		output.add(filename); 
+    		//output.add(filename); 
     		
     		if(jObj.has("textures"))
     		{
