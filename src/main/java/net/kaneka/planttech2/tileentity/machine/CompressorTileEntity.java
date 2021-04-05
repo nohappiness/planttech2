@@ -110,7 +110,18 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 		inputs_provider = LazyOptional.of(() -> inputs);
 		outputs_provider = LazyOptional.of(() -> outputs);
 	}
-	
+
+//	@Override
+//	public void tick()
+//	{
+//		super.tick();
+//		if (world != null && world.getGameTime() % 20 == 0)
+//		{
+//			System.out.println(world.isRemote);
+//			System.out.println(selectedId);
+//		}
+//	}
+
 	@Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
     {
@@ -128,23 +139,28 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	{
 		boolean recipeDone = false;
 		boolean inputDone = false;
-		if (selectedId >= 0)
+		if (getSelectedId() >= 0)
 		{
 			if (recipeList == null)
 				initRecipeList();
 			else
 			{
-				if (!recipeList.isEmpty() && recipeList.size() > selectedId)
+				if (!recipeList.isEmpty() && recipeList.size() > getSelectedId())
 				{
 					recipeDone = true;
-					inputDone = recipeList.get(selectedId).getValue() <= input.getCount();
+					inputDone = recipeList.get(getSelectedId()).getValue() <= input.getCount();
 					if (inputDone)
 						previousInput = input;
 				}
 				else setSelectedId(-1);
 			}
 		}
-		return selectedId >= 0 && recipeDone && inputDone;
+		return getSelectedId() >= 0 && recipeDone && inputDone;
+	}
+
+	private int getSelectedId()
+	{
+		return selectedId - 1;
 	}
 
 	@Override
@@ -153,7 +169,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 		ItemStack result = getResult(input, output);
 		if (itemhandler.insertItem(getOutputSlotIndex(), result, false).isEmpty())
 		{
-			input.shrink(recipeList.get(selectedId).getValue());
+			input.shrink(recipeList.get(getSelectedId()).getValue());
 			return true;
 		}
 		return false;
@@ -162,7 +178,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	@Override
 	protected ItemStack getResult(ItemStack input, ItemStack output)
 	{
-		return recipeList.get(selectedId).getKey().copy();
+		return recipeList.get(getSelectedId()).getKey().copy();
 	}
 
 	@Override
@@ -172,8 +188,13 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	}
 
 	public void setSelectedId(int selectedId)
-	{ 
-		this.selectedId = selectedId;
+	{
+//		if (world != null)
+//		{
+//			System.out.println(world.isRemote);
+//			System.out.println("set" + selectedId);
+//		}
+		this.selectedId = selectedId + 1;
 		notifyClient();
 	}
 
@@ -263,7 +284,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	public CompoundNBT write(CompoundNBT compound)
 	{
 		if (world != null && !world.isRemote())
-			compound.putInt("selectedId", selectedId);
+			compound.putInt("selectedId", getSelectedId());
 		return super.write(compound);
 	}
 
@@ -272,11 +293,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	{
 		super.read(state, compound);
 		if (compound.contains("selectedId"))
-		{
-			this.selectedId = compound.getInt("selectedId");
-			if (world != null && world.isRemote)
-				selectedId++;
-		}
+			setSelectedId(compound.getInt("selectedId"));
 	}
 
 	@Override
