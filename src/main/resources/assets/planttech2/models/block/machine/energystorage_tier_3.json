@@ -1,9 +1,0 @@
-{
-    "parent": "block/orientable",
-    "textures": 
-    {
-        "top": "planttech2:blocks/machines/machines_side_top",
-        "front": "planttech2:blocks/machines/energystorage_front_tier_3",
-        "side": "planttech2:blocks/machines/machines_side_top"
-    }
-}

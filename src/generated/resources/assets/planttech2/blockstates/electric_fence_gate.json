@@ -7,7 +7,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened",
         "y": 90
       }
     },
@@ -18,7 +18,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top"
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened"
       }
     },
     {
@@ -28,7 +28,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened",
         "y": 180
       }
     },
@@ -39,7 +39,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top_opened",
         "y": 270
       }
     },
@@ -50,7 +50,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top",
         "y": 90
       }
     },
@@ -61,7 +61,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top"
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top"
       }
     },
     {
@@ -71,7 +71,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top",
         "y": 180
       }
     },
@@ -82,7 +82,7 @@
         "is_top": "true"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_top",
         "y": 270
       }
     },
@@ -93,7 +93,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_opened",
         "y": 90
       }
     },
@@ -104,7 +104,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top"
+        "model": "planttech2:block/electric_fences/electric_fence_gate_opened"
       }
     },
     {
@@ -114,7 +114,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_opened",
         "y": 180
       }
     },
@@ -125,7 +125,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate_opened",
         "y": 270
       }
     },
@@ -136,7 +136,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate",
         "y": 90
       }
     },
@@ -147,7 +147,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top"
+        "model": "planttech2:block/electric_fences/electric_fence_gate"
       }
     },
     {
@@ -157,7 +157,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate",
         "y": 180
       }
     },
@@ -168,7 +168,7 @@
         "is_top": "false"
       },
       "apply": {
-        "model": "planttech2:block/electric_fences/electric_fence_top",
+        "model": "planttech2:block/electric_fences/electric_fence_gate",
         "y": 270
       }
     }

@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "growingstate=0": {
+      "model": "planttech2:block/machine/machine_iron_growing_0"
+    },
+    "growingstate=1": {
+      "model": "planttech2:block/machine/machine_iron_growing_1"
+    },
+    "growingstate=2": {
+      "model": "planttech2:block/machine/machine_iron_growing_2"
+    },
+    "growingstate=3": {
+      "model": "planttech2:block/machine/machine_iron_growing_3"
+    },
+    "growingstate=4": {
+      "model": "planttech2:block/machine/machine_iron_growing_4"
+    },
+    "growingstate=5": {
+      "model": "planttech2:block/machine/machine_iron_growing_5"
+    },
+    "growingstate=6": {
+      "model": "planttech2:block/machine/machine_iron_growing_6"
+    }
+  }
+}

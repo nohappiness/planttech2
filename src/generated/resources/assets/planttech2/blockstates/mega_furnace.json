@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "planttech2:block/machine/mega_furnace"
+    },
+    "facing=south": {
+      "model": "planttech2:block/machine/mega_furnace",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "planttech2:block/machine/mega_furnace",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "planttech2:block/machine/mega_furnace",
+      "y": 90
+    }
+  }
+}
