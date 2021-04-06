@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.container;
 
+import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.items.ParticleItem;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +23,7 @@ public class CompressorContainer extends BaseContainer
 		super(id, ModContainers.COMPRESSOR, player, tileentity, 25);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
 
-		this.addSlot(new SlotItemHandlerWithInfo(handler, 0, 34, 83, "slot.compressor.input").setShouldListen());
+		this.addSlot(new LimitedItemInfoSlot(handler, 0, 34, 83, "slot.compressor.input").setConditions((stack) -> stack.getItem() instanceof ParticleItem).setShouldListen());
 		this.addSlot(createOutoutSlot(handler, tileentity.getOutputSlotIndex(), 126, 83));
 		this.addSlot(createSpeedUpgradeSlot(handler, 2, 78, 87));
 		for (int y = 0; y < 3; y++)
