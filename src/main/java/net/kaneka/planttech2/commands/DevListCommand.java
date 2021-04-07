@@ -19,8 +19,9 @@ public class DevListCommand
     // Vanity name, [list of UUIDs]
     public static final Map<String, List<String>> AUTHORS = new ImmutableMap.Builder<String, List<String>>()
             .put("Kaneka", of("df361308-a4b8-469c-a3b6-63bb8b2ec7e3"))
-            .put("Poopoodice", of("f0c9774d-e79f-4a58-b524-3f3d014e58ed", "b3fd2b3b-df09-4790-8187-650219671a69"))
+            .put("pupudice", of("f0c9774d-e79f-4a58-b524-3f3d014e58ed", "b3fd2b3b-df09-4790-8187-650219671a69"))
             .put("Setrion", of("c5beef70-7f28-44c8-a1cc-91a1cc8836e6"))
+            .put("mthwzrd", of("d23dfef7-36a5-40aa-b851-6b8201e0c779"))
             .build();
     public static final Map<String, List<String>> ARTISTS = new ImmutableMap.Builder<String, List<String>>()
             .put("VeyezX (Vex)", of("8ea51d9d-ccc9-4ce4-a9fd-9e8b5d1ceaf3"))
@@ -29,9 +30,9 @@ public class DevListCommand
             .put("MoonlitLamps", of())
             .put("andrew0030", of("0b37421b-e74e-4852-bf57-23907d295ea1"))
             .build();
-    public static final Map<String, List<String>> SPECIAL_THANKS = new ImmutableMap.Builder<String, List<String>>()
-        .put("Sciwhiz12", of())
-        .build();
+//    public static final Map<String, List<String>> SPECIAL_THANKS = new ImmutableMap.Builder<String, List<String>>()
+//        .put("Sciwhiz12", of())
+//        .build();
 
     public static LiteralArgumentBuilder<CommandSource> register()
     {

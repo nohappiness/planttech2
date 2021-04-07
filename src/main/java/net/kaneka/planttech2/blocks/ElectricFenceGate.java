@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks;
 
+import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -23,6 +24,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -70,9 +72,7 @@ public class ElectricFenceGate extends Block
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         if (!checkValid(currentPos, (World) worldIn))
-        {
             worldIn.destroyBlock(currentPos, !stateIn.get(IS_TOP));
-        }
         BlockState state = worldIn.getBlockState(stateIn.get(IS_TOP) ? currentPos.down() : currentPos.up());
         if (state.getBlock() instanceof ElectricFenceGate)
         {
@@ -83,6 +83,13 @@ public class ElectricFenceGate extends Block
         }
         return stateIn;
     }
+
+//    @Override
+//    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving)
+//    {
+//        if (!isPowered(worldIn, pos))
+//            worldIn.setBlockState(pos, state.with(OPEN, true));
+//    }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
@@ -106,12 +113,21 @@ public class ElectricFenceGate extends Block
             worldIn.destroyBlock(pos, !state.get(IS_TOP));
             return ActionResultType.FAIL;
         }
-        worldIn.setBlockState(pos, getDefaultState()
-                .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                .with(OPEN, !state.get(OPEN))
-                .with(IS_TOP, state.get(IS_TOP)));
+        if (isPowered(worldIn, pos))
+        {
+            worldIn.setBlockState(pos, getDefaultState()
+                    .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
+                    .with(OPEN, !state.get(OPEN))
+                    .with(IS_TOP, state.get(IS_TOP)));
+        }
+        else return ActionResultType.FAIL;
         worldIn.playEvent(player, state.get(OPEN) ? 1005 : 1011, pos, 0);
         return ActionResultType.SUCCESS;
+    }
+
+    private boolean isPowered(World world, BlockPos pos)
+    {
+        return BaseElectricFence.calculatePower(world, pos) > 0;
     }
 
     @Override
