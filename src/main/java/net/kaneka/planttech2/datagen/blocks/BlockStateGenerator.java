@@ -13,6 +13,7 @@ public class BlockStateGenerator extends BlockStateProvider
 	private final BuildingBlockModels buildingBlocks = new BuildingBlockModels(this);
 	private final CarverModels carver = new CarverModels(this);
 	private final ElectricFenceModels electric_fence = new ElectricFenceModels(this); 
+	private final MachineModels machines = new MachineModels(this); 
 
 	public BlockStateGenerator(DataGenerator gen, ExistingFileHelper exFileHelper)
 	{
@@ -28,5 +29,6 @@ public class BlockStateGenerator extends BlockStateProvider
 		buildingBlocks.registerStatesAndModels();
 		carver.registerStatesAndModels();
 		electric_fence.registerStatesAndModels();
+		machines.registerStatesAndModels();
 	}
 }

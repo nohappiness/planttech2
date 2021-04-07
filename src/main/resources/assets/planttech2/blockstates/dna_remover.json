@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "facing=north": { "model": "planttech2:block/machine/dna_remover" },
-        "facing=south": { "model": "planttech2:block/machine/dna_remover", "y": 180 },
-        "facing=west":  { "model": "planttech2:block/machine/dna_remover", "y": 270 },
-        "facing=east":  { "model": "planttech2:block/machine/dna_remover", "y": 90 }
-    }
-}

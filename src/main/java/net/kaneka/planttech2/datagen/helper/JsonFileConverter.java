@@ -24,18 +24,45 @@ public class JsonFileConverter
 	
 	public static void act()
 	{
+		parseModel("planttech2:models/block/basic/three_layered_six_sided_nubs.json");
+		parseModel("planttech2:models/block/basic/three_layered_six_sided.json");
 		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_opened.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_top_opened.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_top.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_gate.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_post.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_powered.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_side_powered.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_side.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_top_powered.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_top.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence.json");
-		
+		parseModel("planttech2:models/block/machine/chipalyzer.json");
+		parseModel("planttech2:models/block/machine/compressor.json");
+		parseModel("planttech2:models/block/machine/dna_cleaner.json");
+		parseModel("planttech2:models/block/machine/dna_combiner.json");
+		parseModel("planttech2:models/block/machine/dna_extractor.json");
+		parseModel("planttech2:models/block/machine/dna_remover.json");
+		parseModel("planttech2:models/block/machine/energy_supplier.json");
+		parseModel("planttech2:models/block/machine/energystorage_tier_1.json");
+		parseModel("planttech2:models/block/machine/energystorage_tier_2.json");
+		parseModel("planttech2:models/block/machine/energystorage_tier_3.json");
+		parseModel("planttech2:models/block/machine/energystorage_tier_4.json");
+		parseModel("planttech2:models/block/machine/identifier.json");
+		parseModel("planttech2:models/block/machine/infuser.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_0.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_1.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_2.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_3.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_4.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_5.json");
+		parseModel("planttech2:models/block/machine/machine_iron_growing_6.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_0.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_1.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_2.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_3.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_4.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_5.json");
+		parseModel("planttech2:models/block/machine/machine_plantium_growing_6.json");
+		parseModel("planttech2:models/block/machine/machinebulbreprocessor.json");
+		parseModel("planttech2:models/block/machine/mega_furnace.json");
+		parseModel("planttech2:models/block/machine/plantfarm.json");
+		parseModel("planttech2:models/block/machine/planttopia_teleporter_end.json");
+		parseModel("planttech2:models/block/machine/planttopia_teleporter.json");
+		parseModel("planttech2:models/block/machine/seedconstructor.json");
+		parseModel("planttech2:models/block/machine/seedsqueezer_growing_7.json");
+		parseModel("planttech2:models/block/machine/seedsqueezer.json");
+		parseModel("planttech2:models/block/machine/solargenerator.json");
 		
 		/*
 		parseModel("planttech2:models/block/basic/crops.json");
@@ -74,7 +101,7 @@ public class JsonFileConverter
 		
     		if(jObj.has("parent"))
     		{
-    			output.add(".parent(carver_base_block)"); 
+    			output.add(".parent(\"" + jObj.get("parent").getAsString() + "\")"); 
     				
     		}
     		

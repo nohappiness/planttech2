@@ -1566,21 +1566,21 @@ public class ElectricFenceModels extends BlockModelBase
 		 } 
 		
 		states.getMultipartBuilder(ModBlocks.ELECTRIC_FENCE_GATE)
-				.part().modelFile(electric_fence_top).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, true).end()
-				.part().modelFile(electric_fence_top).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP,false).end()
-				.part().modelFile(electric_fence_top).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, false).end()
-				.part().modelFile(electric_fence_top).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, false).end();
+				.part().modelFile(electric_fence_gate_top_opened).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top_opened).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top_opened).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top_opened).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_top).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, true).end()
+				.part().modelFile(electric_fence_gate_opened).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate_opened).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate_opened).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate_opened).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, true).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP,false).end()
+				.part().modelFile(electric_fence_gate).rotationY(90).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.EAST).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.NORTH).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate).rotationY(180).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.SOUTH).condition(ElectricFenceGate.IS_TOP, false).end()
+				.part().modelFile(electric_fence_gate).rotationY(270).addModel().condition(ElectricFenceGate.OPEN, false).condition(ElectricFenceGate.HORIZONTAL_FACING, Direction.WEST).condition(ElectricFenceGate.IS_TOP, false).end();
 	}
 }
