@@ -61,7 +61,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (world != null && world.isDaytime() && world.canBlockSeeSky(pos))
+		if (world != null && world.isDaytime() && world.canSeeSky(pos.up()))
 		{
 			if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
 			{
