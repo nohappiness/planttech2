@@ -25,6 +25,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import net.minecraft.block.AbstractBlock.Properties;
@@ -43,7 +44,7 @@ public class BaseElectricFence extends Block
         builder.add(ELECTRIC_POWER);
     }
 
-    protected int calculatePower(World worldIn, BlockPos pos)
+    public static int calculatePower(World worldIn, BlockPos pos)
     {
         int fencePower = 0;
         for (Direction direction : Direction.values())
@@ -65,7 +66,7 @@ public class BaseElectricFence extends Block
     @Override
     public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
-        if (state.get(ELECTRIC_POWER) > 0 && worldIn.getGameTime() % 4L == 0L)
+        if (state.get(ELECTRIC_POWER) > 0 && worldIn.getGameTime() % 8L == 0L)
         {
             if (entityIn instanceof LivingEntity)
             {
@@ -106,7 +107,7 @@ public class BaseElectricFence extends Block
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(325) == 1)
+        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(350) == 1)
             if (worldIn.isRemote)
                 doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
     }
