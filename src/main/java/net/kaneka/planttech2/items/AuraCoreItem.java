@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.crops.CropConfiguration;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.block.Block;
@@ -12,6 +11,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 public class AuraCoreItem extends Item
 {
@@ -39,67 +40,80 @@ public class AuraCoreItem extends Item
 
     public static boolean doesModifyTemperature(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).temperature != null;
+        return getTemperature(stack).isPresent();
     }
 
     public static boolean doesModifyLightValue(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).lightValueDecrease != 0;
+        return getLightValueDecrease(stack).isPresent();
     }
 
     public static boolean doesModifyWaterRange(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).waterRangeDecrease != 0;
+        return getWaterRangeDecrease(stack).isPresent();
     }
 
     public static boolean doesModifySoil(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).soil != Blocks.AIR;
+        return getSoil(stack).isPresent();
     }
 
     public static boolean doesModifyFertility(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).fertility != 0;
+        return getFertilityValueIncrease(stack).isPresent();
     }
 
     public static boolean doesModifyProductivity(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem && ((AuraCoreItem) stack.getItem()).productivity != 0;
+        return getProductivityValueIncrease(stack).isPresent();
     }
 
-    public static EnumTemperature getTemperature(ItemStack stack)
+    public static Optional<EnumTemperature> getTemperature(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).temperature : null;
+        return check(stack, (item) -> item.temperature, null);
     }
 
-    public static int getLightValueDecrease(ItemStack stack)
+    public static Optional<Integer> getLightValueDecrease(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).lightValueDecrease : 0;
+        return check(stack, (item) -> item.lightValueDecrease, 0);
     }
 
-    public static int getWaterRangeDecrease(ItemStack stack)
+    public static Optional<Integer> getWaterRangeDecrease(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).waterRangeDecrease : 0;
+        return check(stack, (item) -> item.waterRangeDecrease, 0);
     }
 
-    public static Block getSoil(ItemStack stack)
+    public static Optional<Block> getSoil(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).soil : null;
+        return check(stack, (block) -> block.soil, Blocks.AIR);
     }
 
-    public static int getFertilityValueIncrease(ItemStack stack)
+    public static Optional<Integer> getFertilityValueIncrease(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).fertility : 0;
+        return check(stack, (item) -> item.fertility, 0);
     }
 
-    public static int getProductivityValueIncrease(ItemStack stack)
+    public static Optional<Integer> getProductivityValueIncrease(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).productivity : 0;
+        return check(stack, (item) -> item.productivity, 0);
     }
 
-    public static int getEnergyCostPerTick(ItemStack stack)
+    public static Optional<Integer> getEnergyCostPerTick(ItemStack stack)
     {
-        return stack.getItem() instanceof AuraCoreItem ? ((AuraCoreItem) stack.getItem()).energyCostPerTick : 0;
+        return check(stack, (item) -> item.energyCostPerTick, 0);
+    }
+
+    private static boolean checkExist(ItemStack stack, Function<AuraCoreItem, Boolean> exist)
+    {
+        return stack.getItem() instanceof AuraCoreItem && exist.apply((AuraCoreItem) stack.getItem());
+    }
+
+    private static <V> Optional<V> check(ItemStack stack, Function<AuraCoreItem, V> getter, V defaultV)
+    {
+        V value = null;
+        if (stack.getItem() instanceof AuraCoreItem)
+            value = getter.apply((AuraCoreItem) stack.getItem());
+        return value != null && value != defaultV ? Optional.of(value) : Optional.empty();
     }
 
     @Override
@@ -150,13 +164,13 @@ public class AuraCoreItem extends Item
             return this;
         }
 
-        public Builder setFertility(int fertility)
+        public Builder setIncreaseFertility(int fertility)
         {
             this.fertility = fertility;
             return this;
         }
 
-        public Builder setProductivity(int productivity)
+        public Builder setIncreaseProductivity(int productivity)
         {
             this.productivity = productivity;
             return this;

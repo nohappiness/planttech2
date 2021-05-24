@@ -11,11 +11,7 @@ import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.tileentity.CropsTileEntity;
 import net.kaneka.planttech2.tileentity.machine.CropAuraGeneratorTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,10 +34,10 @@ import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class CropBaseBlock extends ContainerBlock
 {
@@ -140,13 +136,14 @@ public class CropBaseBlock extends ContainerBlock
 
 	private boolean canGrow(World world, BlockPos pos, HashMapCropTraits traits)
 	{
-		if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
+		List<CropAuraGeneratorTileEntity> generators = getCropAuraGeneratorInRadius(world, pos, 8);
+		if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY), generators))
 			return false;
-		if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
+		if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY), generators))
 			return false;
-		if (!rightSoil(world, pos, traits.getType()))
+		if (!rightSoil(world, pos, traits.getType(), generators))
 			return false;
-		return rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE));
+		return rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE), generators);
 	}
 
 	public String[] canGrowString(World world, BlockPos pos)
@@ -156,13 +153,14 @@ public class CropBaseBlock extends ContainerBlock
 		if (te instanceof CropsTileEntity)
 		{
 			HashMapCropTraits traits = ((CropsTileEntity) te).getTraits();
-			if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY)))
+			List<CropAuraGeneratorTileEntity> generators = getCropAuraGeneratorInRadius(world, pos, 8);
+			if (!enoughLight(world, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY), generators))
 				messages[1] = "Not enough light";
-			if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY)))
+			if (!enoughWater(world, pos, traits.getTrait(EnumTraitsInt.WATERSENSITIVITY), generators))
 				messages[2] = "Not enough water";
-			if (!rightSoil(world, pos, traits.getType()))
+			if (!rightSoil(world, pos, traits.getType(), generators))
 				messages[3] = "Not right soil";
-			if (!rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE)))
+			if (!rightTemperature(world, pos, traits.getType(), traits.getTrait(EnumTraitsInt.TEMPERATURETOLERANCE), generators))
 				messages[4] = "Not right temperature";
 		}
 		else
@@ -170,17 +168,20 @@ public class CropBaseBlock extends ContainerBlock
 		return messages;
 	}
 
-	public boolean enoughLight(World world, BlockPos pos, int lightsensitivity)
+	public boolean enoughLight(World world, BlockPos pos, int lightsensitivity,  List<CropAuraGeneratorTileEntity> generators)
 	{
 		if (!world.isAreaLoaded(pos, 1))// prevent loading unloaded chunks
 			return false;
-		return world.getNeighborAwareLightSubtracted(pos, 0) >= (14 - lightsensitivity);
+		int extraLightValueDecrease = getCropAuraInRadiusInt(generators, (generator) -> generator.lightValueDecrease);
+		return world.getNeighborAwareLightSubtracted(pos, 0) >= 14 - lightsensitivity - extraLightValueDecrease;
 	}
 
-	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity)
+	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity, List<CropAuraGeneratorTileEntity> generators)
 	{
-		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(((-1) * (waterSensitivity + 1)), 0, ((-1) * (waterSensitivity + 1))),
-		        pos.add((waterSensitivity + 1), -1, (waterSensitivity + 1))))
+		int extraWaterRangeDecrease = getCropAuraInRadiusInt(generators, (generator) -> generator.waterRangeDecrease);
+		System.out.println(extraWaterRangeDecrease);
+		waterSensitivity += extraWaterRangeDecrease + 1;
+		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-waterSensitivity, 0, waterSensitivity), pos.add(waterSensitivity, -1, waterSensitivity)))
 		{
 			BlockState state = world.getBlockState(blockpos$mutableblockpos);
 			if (state.getMaterial() == Material.WATER || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.get(BlockStateProperties.WATERLOGGED)))
@@ -189,35 +190,71 @@ public class CropBaseBlock extends ContainerBlock
 		return false;
 	}
 
-	public boolean rightSoil(World world, BlockPos pos, String name)
+	public boolean rightSoil(World world, BlockPos pos, String name, List<CropAuraGeneratorTileEntity> generators)
 	{
 		Block block = PlantTechMain.getCropList().getByName(name).getConfiguration().getSoil().get();
-		BlockState state = world.getBlockState(pos.down());
-		return state.getBlock() == block || state.getBlock() == ModBlocks.UNIVERSAL_SOIL_INFUSED;
+		Block soil = world.getBlockState(pos.down()).getBlock();
+		List<Block> extraSoils = getCropAuraInRadiusList(generators, (generator) -> generator.soil, (block2) -> block2 != Blocks.AIR && block2 != Blocks.CAVE_AIR && block2 != Blocks.VOID_AIR);
+		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil);
 	}
 
-	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance)
+	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance, List<CropAuraGeneratorTileEntity> generators)
 	{
-		EnumTemperature temp = PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature();
-		return temp.inRange(world.getBiomeManager().getBiome(pos).getTemperature(pos), tolerance);
+		EnumTemperature originalRequiredTemp = PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature();
+		List<EnumTemperature> extraTemperatures = getCropAuraInRadiusNonnullList(generators, (generator) -> generator.temperature);
+		float biomeTemp = world.getBiomeManager().getBiome(pos).getTemperature(pos);
+		return EnumTemperature.inRange(biomeTemp, tolerance, extraTemperatures) || originalRequiredTemp.inRange(biomeTemp, tolerance);
 	}
 
-	private List<CropAuraGeneratorTileEntity> getCropAuraGeneratorsInRadius(World world, BlockPos centre, int radius)
+	private List<CropAuraGeneratorTileEntity> getCropAuraGeneratorInRadius(World world, BlockPos centre, int radius)
 	{
-		List<CropAuraGeneratorTileEntity> list = new ArrayList<>();
+		List<CropAuraGeneratorTileEntity> generators = new ArrayList<>();
 		for (int x = centre.getX() - radius; x < centre.getX() + radius; x++)
 			for (int y = centre.getY() - radius; y < centre.getY() + radius; y++)
 				for (int z = centre.getZ() - radius; z < centre.getZ() + radius; z++)
 				{
-					BlockPos itr = new BlockPos(x, y, z);
-					if (world.getBlockState(itr).getBlock() == ModBlocks.CROP_AURA_GENERATOR)
-					{
-						TileEntity te = world.getTileEntity(itr);
-						if (te instanceof CropAuraGeneratorTileEntity)
-							list.add((CropAuraGeneratorTileEntity) te);
-					}
+					TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+					if (te instanceof CropAuraGeneratorTileEntity)
+						generators.add((CropAuraGeneratorTileEntity) te);
 				}
-		return list;
+		return generators;
+	}
+
+	private int getCropAuraInRadiusInt(List<CropAuraGeneratorTileEntity> generators, Function<CropAuraGeneratorTileEntity, Integer> aura)
+	{
+		return getCropAuraInRadius(generators, aura, (present) -> true, (max, present) -> present > max).orElse(0);
+	}
+
+	private <T> Optional<T> getCropAuraInRadius(List<CropAuraGeneratorTileEntity> generators, Function<CropAuraGeneratorTileEntity, T> aura, Predicate<T> predicate, BiPredicate<T, T> compare)
+	{
+		Optional<T> highestAura = Optional.empty();
+		for (T machineAura : getCropAuraInRadiusList(generators, aura, predicate))
+		{
+			if (highestAura.isPresent())
+			{
+				if (compare.test(highestAura.get(), machineAura))
+					highestAura = Optional.of(machineAura);
+			}
+			else highestAura = Optional.of(machineAura);
+		}
+		return highestAura;
+	}
+
+	private <T> List<T> getCropAuraInRadiusNonnullList(List<CropAuraGeneratorTileEntity> generators, Function<CropAuraGeneratorTileEntity, T> aura)
+	{
+		return getCropAuraInRadiusList(generators, aura, Objects::nonNull);
+	}
+
+	private <T> List<T> getCropAuraInRadiusList(List<CropAuraGeneratorTileEntity> generators, Function<CropAuraGeneratorTileEntity, T> aura, Predicate<T> predicate)
+	{
+		List<T> auras = new ArrayList<>();
+		for (CropAuraGeneratorTileEntity generator : generators)
+		{
+			T present = aura.apply(generator);
+			if (predicate.test(present))
+				auras.add(present);
+		}
+		return auras;
 	}
 
 	@Override

@@ -187,6 +187,24 @@ public class ModItems
 //    @ObjectHolder("aura_core_temperature_warm") public static AuraCoreItem AURA_CHIP_TEMPERATURE_WARM;
 //    @ObjectHolder("aura_core_temperature_extreme_warm") public static AuraCoreItem AURA_CHIP_TEMPERATURE_EXTREME_WARM;
 
+	@ObjectHolder("aura_core_light_decrease_i") public static AuraCoreItem AURA_CORE_LIGHT_DECREASE_I;
+	@ObjectHolder("aura_core_light_decrease_ii") public static AuraCoreItem AURA_CORE_LIGHT_DECREASE_II;
+	@ObjectHolder("aura_core_light_decrease_iii") public static AuraCoreItem AURA_CORE_LIGHT_DECREASE_III;
+	@ObjectHolder("aura_core_water_range_decrease_i") public static AuraCoreItem AURA_CORE_WATER_RANGE_DECREASE_I;
+	@ObjectHolder("aura_core_water_range_decrease_ii") public static AuraCoreItem AURA_CORE_WATER_RANGE_DECREASE_II;
+	@ObjectHolder("aura_core_water_range_decrease_iii") public static AuraCoreItem AURA_CORE_WATER_RANGE_DECREASE_III;
+	@ObjectHolder("aura_core_temperature_extreme_cold") public static AuraCoreItem AURA_CORE_TEMPERATURE_EXTREME_COLD;
+	@ObjectHolder("aura_core_temperature_cold") public static AuraCoreItem AURA_CORE_TEMPERATURE_COLD;
+	@ObjectHolder("aura_core_temperature_normal") public static AuraCoreItem AURA_CORE_TEMPERATURE_NORMAL;
+	@ObjectHolder("aura_core_temperature_warm") public static AuraCoreItem AURA_CORE_TEMPERATURE_WARM;
+	@ObjectHolder("aura_core_temperature_extreme_warm") public static AuraCoreItem AURA_CORE_TEMPERATURE_EXTREME_WARM;
+	@ObjectHolder("aura_core_fertility_increase_i") public static AuraCoreItem AURA_CORE_FERTILITY_INCREASE_I;
+	@ObjectHolder("aura_core_fertility_increase_ii") public static AuraCoreItem AURA_CORE_FERTILITY_INCREASE_II;
+	@ObjectHolder("aura_core_fertility_increase_iii") public static AuraCoreItem AURA_CORE_FERTILITY_INCREASE_III;
+	@ObjectHolder("aura_core_productivity_increase_i") public static AuraCoreItem AURA_CORE_PRODUCTIVITY_INCREASE_I;
+	@ObjectHolder("aura_core_productivity_increase_ii") public static AuraCoreItem AURA_CORE_PRODUCTIVITY_INCREASE_II;
+	@ObjectHolder("aura_core_productivity_increase_iii") public static AuraCoreItem AURA_CORE_PRODUCTIVITY_INCREASE_III;
+
     @ObjectHolder("cyberarmor_helmet") public static UpgradeableArmorItem CYBERARMOR_HELMET;
     @ObjectHolder("cyberarmor_chest") public static UpgradeableArmorItem CYBERARMOR_CHEST;
     @ObjectHolder("cyberarmor_leggings") public static UpgradeableArmorItem CYBERARMOR_LEGGINGS;
@@ -355,16 +373,23 @@ public class ModItems
         r.register(make("flame_chip", new UpgradeChipItem("flame_chip").setEnchantment(Enchantments.FLAME).setEnergyCost(5).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
         r.register(make("infinity_chip", new UpgradeChipItem("infinity_chip").setEnchantment(Enchantments.INFINITY).setEnergyCost(20).addRestriction(UpgradeChipItem.RANGED_WEAPON)));
 
-        r.register(make("aura_core_light_increase", new AuraCoreItem(new AuraCoreItem.Builder(1).setLightValueDecrease(-2))));
-        r.register(make("aura_core_light_decrease", new AuraCoreItem(new AuraCoreItem.Builder(1).setLightValueDecrease(-2))));
-        r.register(make("aura_core_water_range_decrease", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_temperature_extreme_cold", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_temperature_cold", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_temperature_normal", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_temperature_warm", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_temperature_extreme_warm", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_fertility_increase", new AuraCoreItem(new AuraCoreItem.Builder(1))));
-        r.register(make("aura_core_productivity_increase", new AuraCoreItem(new AuraCoreItem.Builder(1))));
+        r.register(make("aura_core_light_decrease_i", new AuraCoreItem(new AuraCoreItem.Builder(1).setLightValueDecrease(2))));
+        r.register(make("aura_core_light_decrease_ii", new AuraCoreItem(new AuraCoreItem.Builder(2).setLightValueDecrease(4))));
+        r.register(make("aura_core_light_decrease_iii", new AuraCoreItem(new AuraCoreItem.Builder(3).setLightValueDecrease(6))));
+        r.register(make("aura_core_water_range_decrease_i", new AuraCoreItem(new AuraCoreItem.Builder(1).setWaterRangeDecrease(2))));
+        r.register(make("aura_core_water_range_decrease_ii", new AuraCoreItem(new AuraCoreItem.Builder(2).setWaterRangeDecrease(4))));
+        r.register(make("aura_core_water_range_decrease_iii", new AuraCoreItem(new AuraCoreItem.Builder(3).setWaterRangeDecrease(6))));
+        r.register(make("aura_core_temperature_extreme_cold", new AuraCoreItem(new AuraCoreItem.Builder(1).setTemperature(EnumTemperature.EXTREME_COLD))));
+        r.register(make("aura_core_temperature_cold", new AuraCoreItem(new AuraCoreItem.Builder(1).setTemperature(EnumTemperature.COLD))));
+        r.register(make("aura_core_temperature_normal", new AuraCoreItem(new AuraCoreItem.Builder(1).setTemperature(EnumTemperature.NORMAL))));
+        r.register(make("aura_core_temperature_warm", new AuraCoreItem(new AuraCoreItem.Builder(1).setTemperature(EnumTemperature.WARM))));
+        r.register(make("aura_core_temperature_extreme_warm", new AuraCoreItem(new AuraCoreItem.Builder(1).setTemperature(EnumTemperature.EXTREME_WARM))));
+        r.register(make("aura_core_fertility_increase_i", new AuraCoreItem(new AuraCoreItem.Builder(1).setIncreaseFertility(1))));
+        r.register(make("aura_core_fertility_increase_ii", new AuraCoreItem(new AuraCoreItem.Builder(2).setIncreaseFertility(2))));
+        r.register(make("aura_core_fertility_increase_iii", new AuraCoreItem(new AuraCoreItem.Builder(3).setIncreaseFertility(3))));
+        r.register(make("aura_core_productivity_increase_i", new AuraCoreItem(new AuraCoreItem.Builder(1).setIncreaseProductivity(1))));
+        r.register(make("aura_core_productivity_increase_ii", new AuraCoreItem(new AuraCoreItem.Builder(2).setIncreaseProductivity(2))));
+        r.register(make("aura_core_productivity_increase_iii", new AuraCoreItem(new AuraCoreItem.Builder(3).setIncreaseProductivity(3))));
 
         r.register(make("cyberarmor_helmet", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET)));
         r.register(make("cyberarmor_chest", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST)));
