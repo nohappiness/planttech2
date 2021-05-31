@@ -790,18 +790,31 @@ public class MachineModels extends BlockModelBase
 				 
 				 
                  facingBlock(ModBlocks.CHIPALYZER, chipalyzer);
+                 blockItem(ModBlocks.CHIPALYZER, chipalyzer); 
                  growingMachineFacing(ModBlocks.CHIPALYZER_GROWING, growing_plantium);
+                 
                  facingBlock(ModBlocks.COMPRESSOR, compressor);
+                 blockItem(ModBlocks.COMPRESSOR, compressor);
                  growingMachineFacing(ModBlocks.COMPRESSOR_GROWING, growing_iron);
+                 
                  facingBlock(ModBlocks.DNA_CLEANER, dna_cleaner);
+                 blockItem(ModBlocks.DNA_CLEANER, dna_cleaner);
                  growingMachineFacing(ModBlocks.DNA_CLEANER_GROWING, growing_plantium);
+                 
                  facingBlock(ModBlocks.DNA_COMBINER, dna_combiner);
+                 blockItem(ModBlocks.DNA_COMBINER, dna_combiner);
                  growingMachineFacing(ModBlocks.DNA_COMBINER_GROWING, growing_plantium);
+                 
                  facingBlock(ModBlocks.DNA_EXTRACTOR, dna_extractor);
+                 blockItem(ModBlocks.DNA_EXTRACTOR, dna_extractor);
                  growingMachineFacing(ModBlocks.DNA_EXTRACTOR_GROWING, growing_plantium);
+                 
                  facingBlock(ModBlocks.DNA_REMOVER, dna_remover);
+                 blockItem(ModBlocks.DNA_REMOVER, dna_remover);
                  growingMachineFacing(ModBlocks.DNA_REMOVER_GROWING, growing_plantium);
+                 
                  simpleBlock(ModBlocks.ENERGY_SUPPLIER, energy_supplier);
+                 blockItem(ModBlocks.ENERGY_SUPPLIER, energy_supplier);
                  growingMachine(ModBlocks.ENERGY_SUPPLIER_GROWING, growing_iron);
                  
                 
@@ -825,23 +838,42 @@ public class MachineModels extends BlockModelBase
          		
                  
                  facingBlock(ModBlocks.IDENTIFIER, identifier);
+                 blockItem(ModBlocks.IDENTIFIER, identifier);
                  growingMachineFacing(ModBlocks.IDENTIFIER_GROWING, growing_iron);
+                 
                  facingBlock(ModBlocks.INFUSER, infuser);
+                 blockItem(ModBlocks.INFUSER, infuser);
                  growingMachineFacing(ModBlocks.INFUSER_GROWING, growing_iron);
+                 
                  simpleBlock(ModBlocks.MACHINEBULBREPROCESSOR, machinebulbreprocessor);
+                 blockItem(ModBlocks.MACHINEBULBREPROCESSOR, machinebulbreprocessor);
                  growingMachine(ModBlocks.MACHINEBULBREPROCESSOR_GROWING, growing_iron);
+                 
                  facingBlock(ModBlocks.MEGAFURNACE, mega_furnace);
+                 blockItem(ModBlocks.MEGAFURNACE, mega_furnace);
                  growingMachineFacing(ModBlocks.MEGAFURNACE_GROWING, growing_plantium);
+                 
                  simpleBlock(ModBlocks.PLANTFARM, plantfarm);
+                 blockItem(ModBlocks.PLANTFARM, plantfarm);
                  growingMachine(ModBlocks.PLANTFARM_GROWING, growing_plantium);
+                 
                  simpleBlock(ModBlocks.PLANTTOPIA_TELEPORTER_END, planttopia_teleporter_end);
+                 blockItem(ModBlocks.PLANTTOPIA_TELEPORTER_END, planttopia_teleporter_end);
                  simpleBlock(ModBlocks.PLANTTOPIA_TELEPORTER, planttopia_teleporter);
+                 
                  facingBlock(ModBlocks.SEEDCONSTRUCTOR, seedconstructor);
+                 blockItem(ModBlocks.SEEDCONSTRUCTOR, seedconstructor);
                  growingMachineFacing(ModBlocks.SEEDCONSTRUCTOR_GROWING, growing_plantium);
+                 
                  facingBlock(ModBlocks.SEEDSQUEEZER, seedsqueezer);
+                 blockItem(ModBlocks.SEEDSQUEEZER, seedsqueezer);
                  growingMachineFacing(ModBlocks.SEEDSQUEEZER_GROWING, growing_iron);
+                 
                  simpleBlock(ModBlocks.SOLARGENERATOR, solargenerator);
+                 blockItem(ModBlocks.SOLARGENERATOR, solargenerator);
                  growingMachine(ModBlocks.SOLARGENERATOR_GROWING, growing_plantium);
+                 
+                 
 				 
 
 	}

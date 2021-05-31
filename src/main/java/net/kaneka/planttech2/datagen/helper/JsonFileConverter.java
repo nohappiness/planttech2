@@ -24,45 +24,6 @@ public class JsonFileConverter
 	
 	public static void act()
 	{
-		parseModel("planttech2:models/block/basic/three_layered_six_sided_nubs.json");
-		parseModel("planttech2:models/block/basic/three_layered_six_sided.json");
-		parseModel("planttech2:models/block/electric_fences/electric_fence_gate_opened.json");
-		parseModel("planttech2:models/block/machine/chipalyzer.json");
-		parseModel("planttech2:models/block/machine/compressor.json");
-		parseModel("planttech2:models/block/machine/dna_cleaner.json");
-		parseModel("planttech2:models/block/machine/dna_combiner.json");
-		parseModel("planttech2:models/block/machine/dna_extractor.json");
-		parseModel("planttech2:models/block/machine/dna_remover.json");
-		parseModel("planttech2:models/block/machine/energy_supplier.json");
-		parseModel("planttech2:models/block/machine/energystorage_tier_1.json");
-		parseModel("planttech2:models/block/machine/energystorage_tier_2.json");
-		parseModel("planttech2:models/block/machine/energystorage_tier_3.json");
-		parseModel("planttech2:models/block/machine/energystorage_tier_4.json");
-		parseModel("planttech2:models/block/machine/identifier.json");
-		parseModel("planttech2:models/block/machine/infuser.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_0.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_1.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_2.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_3.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_4.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_5.json");
-		parseModel("planttech2:models/block/machine/machine_iron_growing_6.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_0.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_1.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_2.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_3.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_4.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_5.json");
-		parseModel("planttech2:models/block/machine/machine_plantium_growing_6.json");
-		parseModel("planttech2:models/block/machine/machinebulbreprocessor.json");
-		parseModel("planttech2:models/block/machine/mega_furnace.json");
-		parseModel("planttech2:models/block/machine/plantfarm.json");
-		parseModel("planttech2:models/block/machine/planttopia_teleporter_end.json");
-		parseModel("planttech2:models/block/machine/planttopia_teleporter.json");
-		parseModel("planttech2:models/block/machine/seedconstructor.json");
-		parseModel("planttech2:models/block/machine/seedsqueezer_growing_7.json");
-		parseModel("planttech2:models/block/machine/seedsqueezer.json");
-		parseModel("planttech2:models/block/machine/solargenerator.json");
 		
 		/*
 		parseModel("planttech2:models/block/basic/crops.json");
@@ -86,7 +47,7 @@ public class JsonFileConverter
 		*/
 	}
 	
-	public static void parseModel(String path)
+	public static void parseBlockModel(String path)
 	{
 		List<String> output = new ArrayList<String>();  
 		
@@ -241,6 +202,20 @@ public class JsonFileConverter
 			}
 			System.out.println(s); 
 			i++; 
+		}
+	}
+	
+	private static void parseItemModel(String path)
+	{
+		List<String> output = new ArrayList<String>();  
+		
+		String filename = path.substring(path.lastIndexOf("/")+1).replace(".json", ""); 
+		String pathShort = path.replace("planttech2:models/", "").replace(".json", "");
+		JsonObject jObj = getJsonObject(path); 
+		
+		if(jObj != null)
+		{
+			
 		}
 	}
 	

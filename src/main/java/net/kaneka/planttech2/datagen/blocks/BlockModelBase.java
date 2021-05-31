@@ -37,4 +37,9 @@ public abstract class BlockModelBase
 	{
 		states.getVariantBuilder(b).partialState().modelForState().modelFile(model).addModel();
 	}
+	
+	protected void blockItem(Block b, BlockModelBuilder model)
+	{
+		states.itemModels().getBuilder(b.getRegistryName().getPath()).parent(model);
+	}
 }
