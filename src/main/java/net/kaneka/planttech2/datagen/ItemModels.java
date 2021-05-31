@@ -31,7 +31,7 @@ public class ItemModels extends ItemModelProvider
 		addBulbs();
 		addBiomassContainer();
 		addChipsUpgrades();
-
+		addAuraCores();
 
 		singleTexturedItem(ADVANCED_ANALYSER);
 		singleTexturedItem(ANALYSER);
@@ -121,7 +121,8 @@ public class ItemModels extends ItemModelProvider
 		}
 	}
 
-	private void addChipsUpgrades() {
+	private void addChipsUpgrades()
+	{
 		singleTexturedItem(AQUA_AFFINITY_CHIP, "chips/enchantment_chip");
 		singleTexturedItem(ARMORCHIP_TIER_1, "chips/armor_tier_1");
 		singleTexturedItem(ARMORCHIP_TIER_2, "chips/armor_tier_2");
@@ -203,7 +204,29 @@ public class ItemModels extends ItemModelProvider
 		singleTexturedItem(UNLOCKCHIP_SHOVEL, "chips/shovel");
 	}
 
-	private void addBulbs() {
+	private void addAuraCores()
+	{
+		singleTexturedItem(AURA_CORE_LIGHT_DECREASE_I);
+		singleTexturedItem(AURA_CORE_LIGHT_DECREASE_II);
+		singleTexturedItem(AURA_CORE_LIGHT_DECREASE_III);
+		singleTexturedItem(AURA_CORE_WATER_RANGE_DECREASE_I);
+		singleTexturedItem(AURA_CORE_WATER_RANGE_DECREASE_II);
+		singleTexturedItem(AURA_CORE_WATER_RANGE_DECREASE_III);
+		singleTexturedItem(AURA_CORE_TEMPERATURE_EXTREME_COLD);
+		singleTexturedItem(AURA_CORE_TEMPERATURE_COLD);
+		singleTexturedItem(AURA_CORE_TEMPERATURE_NORMAL);
+		singleTexturedItem(AURA_CORE_TEMPERATURE_WARM);
+		singleTexturedItem(AURA_CORE_TEMPERATURE_EXTREME_WARM);
+		singleTexturedItem(AURA_CORE_FERTILITY_INCREASE_I);
+		singleTexturedItem(AURA_CORE_FERTILITY_INCREASE_II);
+		singleTexturedItem(AURA_CORE_FERTILITY_INCREASE_III);
+		singleTexturedItem(AURA_CORE_PRODUCTIVITY_INCREASE_I);
+		singleTexturedItem(AURA_CORE_PRODUCTIVITY_INCREASE_II);
+		singleTexturedItem(AURA_CORE_PRODUCTIVITY_INCREASE_III);
+	}
+
+	private void addBulbs()
+	{
 		bulbItem("chipalyzer");
 		bulbItem("compressor");
 		bulbItem("dna_cleaner");

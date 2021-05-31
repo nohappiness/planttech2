@@ -7,6 +7,7 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -14,8 +15,8 @@ import net.minecraft.util.IIntArray;
 
 public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
 {
-    public int light;
-    public int water;
+    public int lightValueDecrease;
+    public int waterRangeDecrease;
     public EnumTemperature temperature;
     public Block soil;
     public int fertility;
@@ -61,19 +62,17 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
 
     public CropAuraGeneratorTileEntity()
     {
-        super(ModTileEntities.CROP_AURA_GENERATOR_TE, 10000, 6, PlantTechConstants.MACHINETIER_CROP_AURA_GENERATOR);
+        super(ModTileEntities.CROP_AURA_GENERATOR_TE, 10000, 9, PlantTechConstants.MACHINETIER_CROP_AURA_GENERATOR);
     }
 
-    @Override
-    public void doUpdate()
+    public boolean consumeEnergy(int requiredEnergy)
     {
-//        super.doUpdate();
-//        energystorage.extractEnergy(energyPerTick);
-    }
-
-    public boolean canApplyEffect()
-    {
-        return energystorage.getEnergyStored() >= energyPerTick;
+        if (energystorage.getEnergyStored() >= requiredEnergy)
+        {
+            energystorage.extractEnergy(requiredEnergy);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -109,19 +108,27 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
     @Override
     public void onContainerUpdated(int slotIndex)
     {
-        if (slotIndex == 0)
-            getLight();
-        else if (slotIndex == 1)
-            getWater();
-        else if (slotIndex == 2)
-            getTemperature();
-        else if (slotIndex == 3)
-            getSoil();
-        else if (slotIndex == 4)
-            getFertility();
-        else if (slotIndex == 5)
-            getProductivity();
-        getEnergyPerTick();
+        switch (slotIndex)
+        {
+            case 0:
+                getTemperature();
+                break;
+            case 1:
+                getLightValueDecrease();
+                break;
+            case 2:
+                getWaterRangeDecrease();
+                break;
+            case 3:
+                getSoil();
+                break;
+            case 4:
+                getFertility();
+                break;
+            case 5:
+                getProductivity();
+                break;
+        }
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -129,54 +136,46 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
      * Updates and gets the value, access the fields
      * directly if update is not needed
      */
-    public int getLight()
+    public int getLightValueDecrease()
     {
-        light = AuraCoreItem.getLightValueDecrease(itemhandler.getStackInSlot(0));
-        return light;
+        lightValueDecrease = AuraCoreItem.getLightValueDecrease(itemhandler.getStackInSlot(0)).orElse(0);
+        return lightValueDecrease;
     }
 
-    public int getWater()
+    public int getWaterRangeDecrease()
     {
-        water = AuraCoreItem.getWaterRangeDecrease(itemhandler.getStackInSlot(1));
-        return water;
+        waterRangeDecrease = AuraCoreItem.getWaterRangeDecrease(itemhandler.getStackInSlot(1)).orElse(0);
+        return waterRangeDecrease;
     }
 
     public EnumTemperature getTemperature()
     {
-        temperature = AuraCoreItem.getTemperature(itemhandler.getStackInSlot(2));
+        temperature = AuraCoreItem.getTemperature(itemhandler.getStackInSlot(2)).orElse(null);
         return temperature;
     }
 
     public Block getSoil()
     {
-        soil = AuraCoreItem.getSoil(itemhandler.getStackInSlot(3));
+        soil = AuraCoreItem.getSoil(itemhandler.getStackInSlot(3)).orElse(Blocks.AIR);
         return soil;
     }
 
     public int getFertility()
     {
-        fertility = AuraCoreItem.getFertilityValueIncrease(itemhandler.getStackInSlot(4));
+        fertility = AuraCoreItem.getFertilityValueIncrease(itemhandler.getStackInSlot(4)).orElse(0);
         return fertility;
     }
 
     public int getProductivity()
     {
-        productivity = AuraCoreItem.getProductivityValueIncrease(itemhandler.getStackInSlot(5));
+        productivity = AuraCoreItem.getProductivityValueIncrease(itemhandler.getStackInSlot(5)).orElse(0);
         return productivity;
-    }
-
-    public int getEnergyPerTick()
-    {
-        energyPerTick = 0;
-        for (int i=0;i<6;i++)
-            energyPerTick += AuraCoreItem.getEnergyCostPerTick(itemhandler.getStackInSlot(i));
-        return energyPerTick;
     }
     //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_)
+    public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player)
     {
-        return new CropAuraGeneratorContainer(p_createMenu_1_, p_createMenu_2_, this);
+        return new CropAuraGeneratorContainer(id, inventory, this);
     }
 }

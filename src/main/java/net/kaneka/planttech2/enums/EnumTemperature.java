@@ -6,6 +6,8 @@ import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.List;
+
 public enum EnumTemperature
 {
 
@@ -31,6 +33,14 @@ public enum EnumTemperature
 	public IFormattableTextComponent getDisplayString()
 	{
 		return new TranslationTextComponent("temp." + this.name().toLowerCase()).mergeStyle(color);
+	}
+
+	public static boolean inRange(float value, int tolerance, List<EnumTemperature> temperatures)
+	{
+		for (EnumTemperature temperature : temperatures)
+			if (!temperature.inRange(value, tolerance))
+				return false;
+		return true;
 	}
 
 	public boolean inRange(float value, int tolerance)

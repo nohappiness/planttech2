@@ -38,9 +38,7 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 			{
 				Block block = world.getBlockState(pos).getBlock();
 				if (block instanceof CropBaseBlock)
-				{
 					((CropBaseBlock) block).updateCrop(this.world, this.pos, this.traits);
-				}
 			}
 		}
 
