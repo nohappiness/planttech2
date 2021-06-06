@@ -27,10 +27,10 @@ public abstract class BlockModelBase
 	protected void facingBlock(Block b, BlockModelBuilder model)
 	{
 		states.getVariantBuilder(b)
-			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).modelForState().modelFile(model).rotationY(90).addModel()
-			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).modelForState().modelFile(model).addModel()
-			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).modelForState().modelFile(model).rotationY(180).addModel()
-			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).modelForState().modelFile(model).rotationY(270).addModel();
+			.partialState().with(HorizontalBlock.FACING, Direction.EAST).modelForState().modelFile(model).rotationY(90).addModel()
+			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).modelForState().modelFile(model).addModel()
+			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).modelForState().modelFile(model).rotationY(180).addModel()
+			.partialState().with(HorizontalBlock.FACING, Direction.WEST).modelForState().modelFile(model).rotationY(270).addModel();
 	}
 	
 	protected void simpleBlock(Block b, BlockModelBuilder model)

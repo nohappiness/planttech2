@@ -14,9 +14,9 @@ import net.minecraft.world.gen.NoiseChunkGenerator;
 public class PlanttopiaChunkGenerator extends NoiseChunkGenerator
 {
 	public static final Codec<PlanttopiaChunkGenerator> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
-			BiomeProvider.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeProvider),
+			BiomeProvider.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeSource),
 			Codec.LONG.fieldOf("seed").stable().orElseGet(() -> ModDimensions.seed).forGetter((chunkGen) -> chunkGen.getSeed()),
-			DimensionSettings.DIMENSION_SETTINGS_CODEC.fieldOf("settings").forGetter((chunkGen) -> chunkGen.getDimensionSettings())
+			DimensionSettings.CODEC.fieldOf("settings").forGetter((chunkGen) -> chunkGen.getDimensionSettings())
 	).apply(instance, instance.stable(PlanttopiaChunkGenerator::new)));
 	
 
@@ -26,19 +26,19 @@ public class PlanttopiaChunkGenerator extends NoiseChunkGenerator
 	}
 	
 	@Override
-	protected Codec<? extends ChunkGenerator> func_230347_a_() 
+	protected Codec<? extends ChunkGenerator> codec() 
 	{
 		return CODEC;
 	}
 	
 	private Supplier<DimensionSettings> getDimensionSettings() 
 	{
-		return this.field_236080_h_;
+		return this.settings;
 	}
 	
 	private long getSeed()
 	{
-		return this.field_236084_w_; 
+		return this.seed; 
 	}
 
 }

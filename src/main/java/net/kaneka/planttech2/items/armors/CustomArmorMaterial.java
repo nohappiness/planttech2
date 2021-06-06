@@ -14,8 +14,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 
 public enum CustomArmorMaterial implements IArmorMaterial
 {
-	UNNECESSARY("unnecessary", 0, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
-		return Ingredient.fromItems(ModItems.PLANTIUM_INGOT);
+	UNNECESSARY("unnecessary", 0, new int[] { 1, 1, 1, 1 }, 0, SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0F, () -> {
+		return Ingredient.of(ModItems.PLANTIUM_INGOT);
 	});
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
@@ -39,19 +39,19 @@ public enum CustomArmorMaterial implements IArmorMaterial
 		this.repairMaterial = new LazyValue<>(repairMaterial);
 	}
 
-	public int getEnchantability()
+	public int getEnchantmentValue()
 	{
 		return this.enchantability;
 	}
 
-	public SoundEvent getSoundEvent()
+	public SoundEvent getEquipSound()
 	{
 		return this.soundEvent;
 	}
 
-	public Ingredient getRepairMaterial()
+	public Ingredient getRepairIngredient()
 	{
-		return this.repairMaterial.getValue();
+		return this.repairMaterial.get();
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -66,13 +66,13 @@ public enum CustomArmorMaterial implements IArmorMaterial
 	}
 
 	@Override
-	public int getDurability(EquipmentSlotType slotIn)
+	public int getDurabilityForSlot(EquipmentSlotType slotIn)
 	{
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slotIn)
+	public int getDefenseForSlot(EquipmentSlotType slotIn)
 	{
 		return this.damageReductionAmountArray[slotIn.getIndex()];
 	}

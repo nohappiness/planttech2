@@ -33,10 +33,10 @@ public class ModBusEventsClient
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
 		for (Supplier<? extends Block> block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-			RenderTypeLookup.setRenderLayer(block.get(), RenderType.getCutout());
-		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.getTranslucent());
-		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.getTranslucent());
+			RenderTypeLookup.setRenderLayer(block.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.translucent());
 	}
 
 	@SubscribeEvent

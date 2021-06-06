@@ -21,7 +21,7 @@ public class TechGhoulRenderer extends MobRenderer<TechGhoulEntity, TechGhoulMod
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TechGhoulEntity entity)
+	public ResourceLocation getTextureLocation(TechGhoulEntity entity)
 	{
 		return TEXTURE;
 	}

@@ -94,7 +94,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 
 		}
 
-		public int size()
+		public int getCount()
 		{
 			return 9;
 		}
@@ -129,7 +129,7 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 									stack = itemhandler.insertItem(k, stack, false);
 							}
 							if (!stack.isEmpty())
-								spawnAsEntity(world, pos.up(), stack);
+								spawnAsEntity(level, worldPosition.above(), stack);
 						}
 						energystorage.extractEnergy(energyPerAction(), false);
 						progress[i] = 0;
@@ -196,22 +196,22 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	private NonNullList<ItemStack> getDrops(ItemStack stack)
 	{
 		NonNullList<ItemStack> drops = NonNullList.create();
-		if(world != null)
+		if(level != null)
 		{
 			Item item = stack.getItem(); 
 			if (item instanceof CropSeedItem)
 			{
 				HashMapCropTraits traits = new HashMapCropTraits();
 				traits.fromStack(stack);
-				PlantTechMain.getCropList().getByName(traits.getType()).calculateDropsReduced(drops, traits, 7, world.rand);
+				PlantTechMain.getCropList().getByName(traits.getType()).calculateDropsReduced(drops, traits, 7, level.random);
 				return drops; 
 			}
 			if (item instanceof BlockItem)
 			{
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof CropsBlock)
-					if (world instanceof ServerWorld)
-						drops.addAll(Block.getDrops(block.getDefaultState().with(CropsBlock.AGE, 7), (ServerWorld)world, pos, null));
+					if (level instanceof ServerWorld)
+						drops.addAll(Block.getDrops(block.defaultBlockState().setValue(CropsBlock.AGE, 7), (ServerWorld)level, worldPosition, null));
 			}
 		}
 		return drops; 
@@ -245,16 +245,16 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
 		compound.putIntArray("progress", progress);
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		progress = compound.getIntArray("progress");
 	}
 

@@ -32,18 +32,18 @@ public class CarverBlock extends Block
 	public static final BooleanProperty EAST = SixWayBlock.EAST;
 	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
 	public static final BooleanProperty WEST = SixWayBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((facingProperty) -> {
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
 		return facingProperty.getKey().getAxis().isHorizontal();
-	}).collect(Util.toMapCollector());
+	}).collect(Util.toMap());
 
 	public CarverBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f).tickRandomly());
-		this.setDefaultState(this.stateContainer.getBaseState()
-				.with(NORTH, false)
-				.with(EAST, false)
-				.with(SOUTH, false)
-		        .with(WEST, false));
+		super(Block.Properties.of(Material.WOOD).noCollission().strength(0.5f).randomTicks());
+		this.registerDefaultState(this.stateDefinition.any()
+				.setValue(NORTH, false)
+				.setValue(EAST, false)
+				.setValue(SOUTH, false)
+		        .setValue(WEST, false));
 	}
 
 	@Override
@@ -57,16 +57,16 @@ public class CarverBlock extends Block
 		Collections.shuffle(directions);
 		for(Direction direction: directions)
 		{
-			BlockState state2 = world.getBlockState(pos.offset(direction));
+			BlockState state2 = world.getBlockState(pos.relative(direction));
 			Block block = state2.getBlock();
 			if(checkForGrowable(block))
 			{
 				if(block == Blocks.IRON_BLOCK)
-					world.setBlockState(pos.offset(direction), ModBlocks.MACHINESHELL_IRON_GROWING.getDefaultState());
+					world.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_IRON_GROWING.defaultBlockState());
 				else if(block == ModBlocks.PLANTIUM_BLOCK)
-					world.setBlockState(pos.offset(direction), ModBlocks.MACHINESHELL_PLANTIUM_GROWING.getDefaultState());
+					world.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_PLANTIUM_GROWING.defaultBlockState());
 				else if(block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
-					((GrowingBlock)block).grow(state2, world, pos.offset(direction));
+					((GrowingBlock)block).grow(state2, world, pos.relative(direction));
 				break;
 			}
 		}
@@ -74,7 +74,7 @@ public class CarverBlock extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState iBlockState)
+	public BlockRenderType getRenderShape(BlockState iBlockState)
 	{
 		return BlockRenderType.MODEL;
 	}
@@ -91,11 +91,11 @@ public class CarverBlock extends Block
 		switch (rot)
 		{
 		case CLOCKWISE_180:
-			return state.with(NORTH, state.get(SOUTH)).with(EAST, state.get(WEST)).with(SOUTH, state.get(NORTH)).with(WEST, state.get(EAST));
+			return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
 		case COUNTERCLOCKWISE_90:
-			return state.with(NORTH, state.get(EAST)).with(EAST, state.get(SOUTH)).with(SOUTH, state.get(WEST)).with(WEST, state.get(NORTH));
+			return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
 		case CLOCKWISE_90:
-			return state.with(NORTH, state.get(WEST)).with(EAST, state.get(NORTH)).with(SOUTH, state.get(EAST)).with(WEST, state.get(SOUTH));
+			return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
 		default:
 			return state;
 		}
@@ -108,9 +108,9 @@ public class CarverBlock extends Block
 		switch (mirrorIn)
 		{
 			case LEFT_RIGHT:
-				return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
+				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
 			case FRONT_BACK:
-				return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
+				return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
 			default:
 				return super.mirror(state, mirrorIn);
 		}
@@ -129,26 +129,26 @@ public class CarverBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL ? stateIn.with(FACING_TO_PROPERTY_MAP.get(facing), Boolean.valueOf(this.checkForConnection(facingState)))
-		        : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL ? stateIn.setValue(FACING_TO_PROPERTY_MAP.get(facing), Boolean.valueOf(this.checkForConnection(facingState)))
+		        : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
-		return getDefaultState()
-		        .with(NORTH, this.checkForConnection(world.getBlockState(pos.north())))
-		        .with(EAST, this.checkForConnection(world.getBlockState(pos.east())))
-		        .with(SOUTH, this.checkForConnection(world.getBlockState(pos.south())))
-		        .with(WEST, this.checkForConnection(world.getBlockState(pos.west())));
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		return defaultBlockState()
+		        .setValue(NORTH, this.checkForConnection(world.getBlockState(pos.north())))
+		        .setValue(EAST, this.checkForConnection(world.getBlockState(pos.east())))
+		        .setValue(SOUTH, this.checkForConnection(world.getBlockState(pos.south())))
+		        .setValue(WEST, this.checkForConnection(world.getBlockState(pos.west())));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}

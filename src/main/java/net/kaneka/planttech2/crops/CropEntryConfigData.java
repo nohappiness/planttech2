@@ -141,8 +141,8 @@ public class CropEntryConfigData
 		{
 			JsonObject obj = json.getAsJsonObject();
 
-			String name = JSONUtils.getString(obj, "crop");
-			boolean enabled = JSONUtils.getBoolean(obj, "enabled");
+			String name = JSONUtils.getAsString(obj, "crop");
+			boolean enabled = JSONUtils.getAsBoolean(obj, "enabled");
 
 			EnumTemperature temp = getTemperature(obj.get("temperature"));
 			DropEntry primarySeed = context.deserialize(obj.get("primary_seed"), DropEntry.class);
@@ -156,9 +156,9 @@ public class CropEntryConfigData
 
 		public void write(CropEntryConfigData data, PacketBuffer buf)
 		{
-			buf.writeString(data.getCropEntryName(), 64);
+			buf.writeUtf(data.getCropEntryName(), 64);
 			buf.writeBoolean(data.isEnabled());
-			buf.writeEnumValue(data.getTemperature());
+			buf.writeEnum(data.getTemperature());
 
 			DropEntry.Serializer.INSTANCE.write(data.primarySeed, buf);
 			buf.writeShort(data.getSeeds().size());
@@ -176,9 +176,9 @@ public class CropEntryConfigData
 
 		public CropEntryConfigData read(PacketBuffer buf)
 		{
-			String cropEntryName = buf.readString(64);
+			String cropEntryName = buf.readUtf(64);
 			boolean enabled = buf.readBoolean();
-			EnumTemperature temperature = buf.readEnumValue(EnumTemperature.class);
+			EnumTemperature temperature = buf.readEnum(EnumTemperature.class);
 
 			DropEntry primarySeed = DropEntry.Serializer.INSTANCE.read(buf);
 
@@ -210,13 +210,13 @@ public class CropEntryConfigData
 
 		private EnumTemperature getTemperature(JsonElement element)
 		{
-			String tempStr = JSONUtils.getString(element, "temperature").toUpperCase(Locale.ROOT);
+			String tempStr = JSONUtils.convertToString(element, "temperature").toUpperCase(Locale.ROOT);
 			EnumTemperature temp = EnumTemperature.byName(tempStr);
 			if (temp == null)
 			{
 				throw new JsonSyntaxException(
 						"Expected temperature to have a value of " + Arrays.toString(EnumTemperature.values()).toLowerCase(Locale.ROOT) + ", got " + JSONUtils
-								.toString(element));
+								.getType(element));
 			}
 			return temp;
 		}
@@ -232,7 +232,7 @@ public class CropEntryConfigData
 				dropsElement.getAsJsonArray().forEach(el -> drops.add(context.deserialize(el, DropEntry.class)));
 			} else
 			{
-				throw new JsonSyntaxException("Expected drops to be a string, JsonObject or JsonArray, was " + JSONUtils.toString(dropsElement));
+				throw new JsonSyntaxException("Expected drops to be a string, JsonObject or JsonArray, was " + JSONUtils.getType(dropsElement));
 			}
 			return drops;
 		}
@@ -249,14 +249,14 @@ public class CropEntryConfigData
 				array.forEach(el -> parents.add(context.deserialize(el, ParentPair.class)));
 			} else
 			{
-				throw new JsonSyntaxException("Expected parents to be a JsonObject or JsonArray, was " + JSONUtils.toString(pairElement));
+				throw new JsonSyntaxException("Expected parents to be a JsonObject or JsonArray, was " + JSONUtils.getType(pairElement));
 			}
 			return parents;
 		}
 
 		private List<Supplier<Item>> getSeeds(JsonElement element)
 		{
-			JsonArray array = JSONUtils.getJsonArray(element, "seeds");
+			JsonArray array = JSONUtils.convertToJsonArray(element, "seeds");
 			return StreamSupport.stream(array.spliterator(), false)
 					.map(JsonElement::getAsString)
 					.map(ResourceLocation::new)
@@ -269,15 +269,15 @@ public class CropEntryConfigData
 			if (element.isJsonPrimitive())
 			{
 //				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(element, "soil")), BLOCKS);
-				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(element, "soil")));
+				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.convertToString(element, "soil")));
 			} else if (element.isJsonObject())
 			{
 				JsonObject obj = element.getAsJsonObject();
 //				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(obj, "block")), BLOCKS);
-				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getString(obj, "block")));
+				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getAsString(obj, "block")));
 			} else
 			{
-				throw new JsonSyntaxException("Expected soil to be a string or JsonObject, was " + JSONUtils.toString(element));
+				throw new JsonSyntaxException("Expected soil to be a string or JsonObject, was " + JSONUtils.getType(element));
 			}
 		}
 	}

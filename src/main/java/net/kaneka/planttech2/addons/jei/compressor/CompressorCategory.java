@@ -32,7 +32,7 @@ public class CompressorCategory extends AbstractJeiCategory<CompressorRecipe>
 	public void setIngredients(CompressorRecipe recipe, IIngredients ingredients)
 	{
 		ingredients.setInput(VanillaTypes.ITEM, recipe.getInput());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 

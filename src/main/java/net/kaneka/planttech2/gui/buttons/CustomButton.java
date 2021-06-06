@@ -22,7 +22,7 @@ public class CustomButton extends Button
 	}
 
 	@Override
-	public void renderWidget(MatrixStack mStack, int mouseX, int mouseY, float partial)
+	public void renderButton(MatrixStack mStack, int mouseX, int mouseY, float partial)
 	{
 		if (this.visible)
 		{
@@ -33,14 +33,14 @@ public class CustomButton extends Button
 			this.renderBg(mStack, mc, mouseX, mouseY);
 
 			ITextComponent buttonText = this.getMessage();
-			int strWidth = mc.fontRenderer.getStringPropertyWidth(buttonText);
-			int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
+			int strWidth = mc.font.width(buttonText);
+			int ellipsisWidth = mc.font.width("...");
 
 			if (strWidth > width - 6 && strWidth > ellipsisWidth)
 				//TODO, srg names make it hard to figure out how to append to an ITextProperties from this trim operation, wraping this in StringTextComponent is kinda dirty.
-				buttonText = new StringTextComponent(mc.fontRenderer.func_238417_a_(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+				buttonText = new StringTextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 
-			AbstractGui.drawCenteredString(mStack, mc.fontRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor());
+			AbstractGui.drawCenteredString(mStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor());
 		}
 	}
 

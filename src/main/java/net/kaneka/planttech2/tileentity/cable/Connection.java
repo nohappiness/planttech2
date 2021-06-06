@@ -33,7 +33,7 @@ public class Connection
 	
 	public BlockPos getConnectedPos()
 	{
-		return this.pos.offset(this.facing);
+		return this.pos.relative(this.facing);
 	}
 	
 	public boolean areEqual(Connection con2)
@@ -60,14 +60,14 @@ public class Connection
 		nbt.putInt("posx", this.pos.getX());
 		nbt.putInt("posy", this.pos.getY());
 		nbt.putInt("posz", this.pos.getZ());
-		nbt.putInt("facing", this.facing.getIndex());
+		nbt.putInt("facing", this.facing.get3DDataValue());
 		return nbt; 
 	}
 	
 	public Connection deserializeConnection(CompoundNBT nbt)
 	{
 		this.pos = new BlockPos(nbt.getInt("posx"),nbt.getInt("posy"), nbt.getInt("posz"));
-		this.facing = Direction.byIndex(nbt.getInt("facing")); 
+		this.facing = Direction.from3DDataValue(nbt.getInt("facing")); 
 		return this; 
 	}
 }

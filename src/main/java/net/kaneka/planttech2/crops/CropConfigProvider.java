@@ -28,7 +28,7 @@ public abstract class CropConfigProvider implements IDataProvider
 	public abstract Map<ResourceLocation, CropEntryConfigData> getCropData();
 
 	@Override
-	public void act(DirectoryCache cache)
+	public void run(DirectoryCache cache)
 	{
 		Path path = this.dataGenerator.getOutputFolder();
 		Map<ResourceLocation, CropEntryConfigData> cropEntryData = this.getCropData();

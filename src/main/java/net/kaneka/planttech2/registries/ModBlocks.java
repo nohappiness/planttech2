@@ -48,7 +48,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static net.kaneka.planttech2.utilities.ModCreativeTabs.*;
-import static net.minecraft.block.AbstractBlock.Properties.create;
+import static net.minecraft.block.AbstractBlock.Properties;
 
 @ObjectHolder(PlantTechMain.MODID)
 public class ModBlocks
@@ -269,7 +269,7 @@ public class ModBlocks
 
 	public static void register(IForgeRegistry<Block> r)
 	{
-		r.register(makeBlock("biomassfluid_block", new FlowingFluidBlock(() -> ModFluids.BIOMASS, create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())));
+		r.register(makeBlock("biomassfluid_block", new FlowingFluidBlock(() -> ModFluids.BIOMASS, AbstractBlock.Properties.of(Material.WATER).noCollission().strength(100.0F).noDrops())));
 
 		r.register(makeSpecialWithItem("cable", BLOCKS, new TestCableBlock()));
 		r.register(makeSpecialWithItem("carver", MAIN, new CarverBlock()));
@@ -277,63 +277,63 @@ public class ModBlocks
 		r.register(makeSpecialWithItem("compressor", MACHINES, new MachineFacingBlock(CompressorTileEntity::new, PlantTechConstants.MACHINETIER_COMPRESSOR)));
 		r.register(makeSpecialWithItem("crop_aura_generator", MACHINES, new MachineFacingBlock(CropAuraGeneratorTileEntity::new, PlantTechConstants.MACHINETIER_CROP_AURA_GENERATOR)));
 		r.register(makeSpecialWithItem("cropbars", MAIN, new CropBarsBlock()));
-		r.register(makeWithItem("dancium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("dancium_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
 		r.register(makeSpecialWithItem("dna_cleaner", MACHINES, new MachineFacingBlock(DNACleanerTileEntity::new, PlantTechConstants.MACHINETIER_DNA_CLEANER)));
 		r.register(makeSpecialWithItem("dna_combiner", MACHINES, new MachineFacingBlock(DNACombinerTileEntity::new, PlantTechConstants.MACHINETIER_DNA_COMBINER)));
 		r.register(makeSpecialWithItem("dna_extractor", MACHINES, new MachineFacingBlock(DNAExtractorTileEntity::new, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR)));
 		r.register(makeSpecialWithItem("dna_remover", MACHINES, new MachineFacingBlock(DNARemoverTileEntity::new, PlantTechConstants.MACHINETIER_DNA_REMOVER)));
-		r.register(makeWithItem("electric_fence", BLOCKS, new ElectricFence(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
-		r.register(makeWithItem("electric_fence_top", BLOCKS, new ElectricFenceTop(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
-		r.register(makeWithItem("electric_fence_gate", BLOCKS, new ElectricFenceGate(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(30.0F))));
+		r.register(makeWithItem("electric_fence", BLOCKS, new ElectricFence(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(30.0F))));
+		r.register(makeWithItem("electric_fence_top", BLOCKS, new ElectricFenceTop(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(30.0F))));
+		r.register(makeWithItem("electric_fence_gate", BLOCKS, new ElectricFenceGate(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(30.0F))));
 		r.register(makeSpecialWithItem("energystorage", MACHINES, new EnergyStorageBlock(EnergyStorageTileEntity::new)));
 		r.register(makeSpecialWithItem("energy_supplier", MACHINES, new EnergySupplierBlock(EnergySupplierTileEntity::new, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER)));
-		r.register(makeWithItem("fibre_fence", BLOCKS, new Block(create(Material.WOOD).sound(SoundType.WOOD))));
+		r.register(makeWithItem("fibre_fence", BLOCKS, new Block(AbstractBlock.Properties.of(Material.WOOD).sound(SoundType.WOOD))));
 		r.register(makeSpecialWithItem("identifier", MACHINES, new MachineFacingBlock(IdentifierTileEntity::new, PlantTechConstants.MACHINETIER_IDENTIFIER)));
 		r.register(makeSpecialWithItem("infuser", MACHINES, new MachineFacingBlock(InfuserTileEntity::new, PlantTechConstants.MACHINETIER_INFUSER)));
-		r.register(makeWithItem("kanekium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("kinnoium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("lenthurium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("kanekium_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
+		r.register(makeWithItem("kinnoium_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
+		r.register(makeWithItem("lenthurium_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
 		r.register(makeSpecialWithItem("machinebulbreprocessor", MACHINES, new MachineBaseBlock(MachineBulbReprocessorTileEntity::new, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR)));
-		r.register(makeSpecialWithItem("machineshell_iron", MAIN, new Block(create(Material.IRON).hardnessAndResistance(0.9F).notSolid())));
-		r.register(makeSpecialWithItem("machineshell_plantium", MAIN, new Block(create(Material.IRON).hardnessAndResistance(0.9F).notSolid())));
+		r.register(makeSpecialWithItem("machineshell_iron", MAIN, new Block(AbstractBlock.Properties.of(Material.METAL).strength(0.9F).noOcclusion())));
+		r.register(makeSpecialWithItem("machineshell_plantium", MAIN, new Block(AbstractBlock.Properties.of(Material.METAL).strength(0.9F).noOcclusion())));
 		r.register(makeSpecialWithItem("mega_furnace", MACHINES, new MachineFacingBlock(MegaFurnaceTileEntity::new, PlantTechConstants.MACHINETIER_MEGAFURNACE)));
 		r.register(makeSpecialWithItem("plantfarm", MACHINES, new MachineBaseBlock(PlantFarmTileEntity::new, PlantTechConstants.MACHINETIER_PLANTFARM)));
-		r.register(makeWithItem("plantium_block", BLOCKS, new Block(create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F))));
+		r.register(makeWithItem("plantium_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
 		r.register(makeSpecialWithItem("seedconstructor", MACHINES, new MachineFacingBlock(SeedconstructorTileEntity::new, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR)));
 		r.register(makeSpecialWithItem("seedsqueezer", MACHINES, new MachineFacingBlock(SeedSqueezerTileEntity::new, PlantTechConstants.MACHINETIER_SEEDSQUEEZER)));
 		r.register(makeSpecialWithItem("solargenerator", MACHINES, new MachineBaseBlock(SolarGeneratorTileEntity::new, PlantTechConstants.MACHINETIER_SOLARGENERATOR)));
 		r.register(makeSpecialWithItem("planttopia_teleporter", MACHINES, new MachineBaseBlock(PlantTopiaTeleporterTileEntity::new)));
-		r.register(makeWithItem("planttopia_teleporter_end", MACHINES, new MachineTeleporterEndBlock(create(Material.IRON).hardnessAndResistance(0.5f))));
-		r.register(makeWithItem("universal_soil", BLOCKS, new Block(create(Material.EARTH).hardnessAndResistance(0.5F))));
-		r.register(makeWithItem("universal_soil_infused", BLOCKS, new Block(create(Material.EARTH).hardnessAndResistance(0.7F))));
+		r.register(makeWithItem("planttopia_teleporter_end", MACHINES, new MachineTeleporterEndBlock(AbstractBlock.Properties.of(Material.METAL).strength(0.5f))));
+		r.register(makeWithItem("universal_soil", BLOCKS, new Block(AbstractBlock.Properties.of(Material.DIRT).strength(0.5F))));
+		r.register(makeWithItem("universal_soil_infused", BLOCKS, new Block(AbstractBlock.Properties.of(Material.DIRT).strength(0.7F))));
 
-		r.register(makeSpecialWithItem("dark_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeSpecialWithItem("dark_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeSpecialWithItem("dark_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), Color.WHITE.getRGB())));
-		r.register(makeWithItem("dark_crystal_block", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("dark_crystal_brick", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("dark_crystal_tiling", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("dark_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("dark_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
-		r.register(makeSpecialWithItem("dark_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("dark_crystal_stairs", BLOCKS, new StairsBlock(() -> DARK_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("dark_crystal_slab", BLOCKS, new SlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("dark_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeSpecialWithItem("dark_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F), Color.WHITE.getRGB())));
+		r.register(makeWithItem("dark_crystal_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("dark_crystal_brick", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("dark_crystal_tiling", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("dark_crystal_fence", BLOCKS, new CustomFenceBlock(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("dark_crystal_lamp", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F).lightLevel((p) -> {return 15;}).noOcclusion())));
+		r.register(makeSpecialWithItem("dark_crystal_door", BLOCKS, new CustomDoorBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeWithItem("dark_crystal_stairs", BLOCKS, new StairsBlock(() -> DARK_CRYSTAL_BLOCK.defaultBlockState(), AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.2F))));
+		r.register(makeWithItem("dark_crystal_slab", BLOCKS, new SlabBlock(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.2F))));
+		r.register(makeWithItem("dark_crystal_ore", BLOCKS, new BaseOreBlock(AbstractBlock.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(0.2F), 1, 3)));
 
-		r.register(makeSpecialWithItem("white_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeSpecialWithItem("white_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeSpecialWithItem("white_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F), Color.WHITE.getRGB())));
-		r.register(makeWithItem("white_crystal_block", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("white_crystal_brick", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("white_crystal_tiling", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("white_crystal_fence", BLOCKS, new CustomFenceBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F))));
-		r.register(makeWithItem("white_crystal_lamp", BLOCKS, new Block(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.9F).setLightLevel((p) -> {return 15;}).notSolid())));
-		r.register(makeSpecialWithItem("white_crystal_door", BLOCKS, new CustomDoorBlock(create(Material.GLASS).sound(SoundType.GLASS).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("white_crystal_stairs", BLOCKS, new StairsBlock(() -> WHITE_CRYSTAL_BLOCK.getDefaultState(), create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("white_crystal_slab", BLOCKS, new SlabBlock(create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(0.2F))));
-		r.register(makeWithItem("white_crystal_ore", BLOCKS, new BaseOreBlock(create(Material.EARTH).sound(SoundType.GROUND).hardnessAndResistance(0.2F), 1, 3)));
+		r.register(makeSpecialWithItem("white_crystal_glasspane_cross", BLOCKS, new GlassPanePillar(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeSpecialWithItem("white_crystal_glasspane_middle", BLOCKS, new GlassPanePillar(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeSpecialWithItem("white_crystal_glasspane_end", BLOCKS, new GlassPaneEnd(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F), Color.WHITE.getRGB())));
+		r.register(makeWithItem("white_crystal_block", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("white_crystal_brick", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("white_crystal_tiling", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("white_crystal_fence", BLOCKS, new CustomFenceBlock(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F))));
+		r.register(makeWithItem("white_crystal_lamp", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.9F).lightLevel((p) -> {return 15;}).noOcclusion())));
+		r.register(makeSpecialWithItem("white_crystal_door", BLOCKS, new CustomDoorBlock(AbstractBlock.Properties.of(Material.GLASS).sound(SoundType.GLASS).strength(0.2F))));
+		r.register(makeWithItem("white_crystal_stairs", BLOCKS, new StairsBlock(() -> WHITE_CRYSTAL_BLOCK.defaultBlockState(), AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.2F))));
+		r.register(makeWithItem("white_crystal_slab", BLOCKS, new SlabBlock(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.STONE).strength(0.2F))));
+		r.register(makeWithItem("white_crystal_ore", BLOCKS, new BaseOreBlock(AbstractBlock.Properties.of(Material.DIRT).sound(SoundType.GRAVEL).strength(0.2F), 1, 3)));
 
-		r.register(makeWithItem("wall_light", BLOCKS, new WallLight(create(Material.ROCK).sound(SoundType.GLASS))));
+		r.register(makeWithItem("wall_light", BLOCKS, new WallLight(AbstractBlock.Properties.of(Material.STONE).sound(SoundType.GLASS))));
 
 		r.register(makeSpecialWithItem("testblock", BLOCKS, new ObtainableNaturalPlants(4, 6)));
 		
@@ -500,21 +500,21 @@ public class ModBlocks
 	static <B extends Block> B makeWithItem(String registryName, ItemGroup group, B block)
 	{
 		final B b = makeBlock(registryName, block);
-		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().tab(group)).setRegistryName(registryName));
 		return b;
 	}
 
 	static <B extends Block> B makeSpecialWithItem(String registryName, ItemGroup group, B block)
 	{
 		final B b = makeSpecial(registryName, block);
-		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().tab(group)).setRegistryName(registryName));
 		return b;
 	}
 	
 	static <B extends Hedge> B makeHedge(String registryName, ItemGroup group, B block)
 	{
 		final B b = makeSpecial(registryName, block);
-		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().group(group)).setRegistryName(registryName));
+		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().tab(group)).setRegistryName(registryName));
 		HEDGE_BLOCKS.add(b);
 		return b;
 	}

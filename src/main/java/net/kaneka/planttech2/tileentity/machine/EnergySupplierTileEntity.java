@@ -51,7 +51,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 
 		}
 
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}
@@ -66,7 +66,7 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (world == null)
+		if (level == null)
 			return;
 		ticksPassed++;
 		if(energystorage.getEnergyStored() <= 0)
@@ -81,23 +81,23 @@ public class EnergySupplierTileEntity extends EnergyInventoryTileEntity
 
 	private void setPower(boolean powered)
 	{
-		if (world != null && world.getBlockState(pos).getBlock() instanceof EnergySupplierBlock)
+		if (level != null && level.getBlockState(worldPosition).getBlock() instanceof EnergySupplierBlock)
 		{
-			world.setBlockState(pos, world.getBlockState(pos).
-					getBlock().getDefaultState()
-					.with(EnergySupplierBlock.SUPPLYING, powered));
+			level.setBlockAndUpdate(worldPosition, level.getBlockState(worldPosition).
+					getBlock().defaultBlockState()
+					.setValue(EnergySupplierBlock.SUPPLYING, powered));
 		}
 	}
 
 	private HashSet<BlockPos> getConnected()
 	{
 		HashSet<BlockPos> list = new HashSet<>();
-		if (world != null)
+		if (level != null)
 		{
 			for (Direction direction : Direction.values())
 			{
-				BlockPos blockPos = this.pos.offset(direction);
-				if (world.getBlockState(blockPos).getBlock() instanceof BaseElectricFence)
+				BlockPos blockPos = this.worldPosition.relative(direction);
+				if (level.getBlockState(blockPos).getBlock() instanceof BaseElectricFence)
 					list.add(blockPos);
 			}
 		}

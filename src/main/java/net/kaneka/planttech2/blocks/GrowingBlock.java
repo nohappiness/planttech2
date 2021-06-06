@@ -26,10 +26,10 @@ public class GrowingBlock extends Block
 	
 	public GrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
 	{
-		super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(0.9F).tickRandomly());
+		super(Block.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F).randomTicks());
 		this.blockSupplier = blockSupplier;
 		this.growAlone = growAlone; 
-		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, 0));
+		this.registerDefaultState(this.stateDefinition.any().setValue(GROWINGSTATE, 0));
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -42,20 +42,20 @@ public class GrowingBlock extends Block
 	
 	public void grow(BlockState state, ServerWorld world, BlockPos pos)
 	{
-		int i = state.get(GROWINGSTATE);
+		int i = state.getValue(GROWINGSTATE);
 		if (i < 6)
-			world.setBlockState(pos, state.with(GROWINGSTATE, i + 1));
+			world.setBlockAndUpdate(pos, state.setValue(GROWINGSTATE, i + 1));
 		else
 			placeBlock(world, pos, state);
 	}
 	
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{
-		world.setBlockState(pos, getBlock().getDefaultState());
+		world.setBlockAndUpdate(pos, getBlock().defaultBlockState());
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) 
 	{
 		builder.add(GROWINGSTATE);
 	}

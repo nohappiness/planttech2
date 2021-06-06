@@ -32,7 +32,7 @@ public class MachineBaseBlock extends Block
 	private final int tier;
 	public MachineBaseBlock(Supplier<? extends TileEntity> teCreator, int tier)
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(5.0f, 10.0f).notSolid());
+		super(Block.Properties.of(Material.METAL).strength(5.0f, 10.0f).noOcclusion());
 		this.teCreator = teCreator;
 		this.tier = tier;
 	}
@@ -54,17 +54,17 @@ public class MachineBaseBlock extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
-			TileEntity te = world.getTileEntity(pos);
+			TileEntity te = world.getBlockEntity(pos);
 			if (te instanceof EnergyTileEntity)
 			{
 				EnergyTileEntity energyTileEntity = (EnergyTileEntity) te;
-				player.openContainer(energyTileEntity);
+				player.openMenu(energyTileEntity);
 				if (energyTileEntity.requireSyncOnOpen())
-					world.notifyBlockUpdate(pos, state, state, 3);
+					world.sendBlockUpdated(pos, state, state, 3);
 			}
 			return ActionResultType.CONSUME;
 		}
@@ -84,36 +84,36 @@ public class MachineBaseBlock extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (state.getBlock() != newState.getBlock())
 		{
-			if (worldIn.getTileEntity(pos) instanceof EnergyInventoryTileEntity)
+			if (worldIn.getBlockEntity(pos) instanceof EnergyInventoryTileEntity)
 			{
-				EnergyInventoryTileEntity te = (EnergyInventoryTileEntity) worldIn.getTileEntity(pos);
+				EnergyInventoryTileEntity te = (EnergyInventoryTileEntity) worldIn.getBlockEntity(pos);
 				List<ItemStack> toSpawn = te.getInventoryContent();
 				for (ItemStack stack : toSpawn)
 				{
-					worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+					worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
 				}
 			}
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, worldIn, pos, newState, isMoving);
 		}
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.tier").getString() + ": " + tier));
 		
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 }

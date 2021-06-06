@@ -1,5 +1,7 @@
 package net.kaneka.planttech2.items.upgradeable;
 
+
+import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
@@ -28,13 +30,13 @@ public class UpgradeChipItem extends Item
 
 	public UpgradeChipItem(String name)
 	{
-		super(new Item.Properties().group(ModCreativeTabs.CHIPS));
+		super(new Item.Properties().tab(ModCreativeTabs.CHIPS));
 	}
 
 
 	public int getEnergyCost()
 	{
-		return energyCost;
+		return (int) (((float)energyCost) * PlantTech2Configuration.MULTIPLIER_ENERGYCOSTS.get());
 	}
 
 
@@ -46,7 +48,7 @@ public class UpgradeChipItem extends Item
 
 	public int getIncreaseCapacity()
 	{
-		return increaseCapacity;
+		return (int) (((float)increaseCapacity) * PlantTech2Configuration.MULTIPLIER_CAPACITY.get());
 	}
 
 
@@ -58,12 +60,12 @@ public class UpgradeChipItem extends Item
 
 	public static int getCapacityMax()
 	{
-		return 50000; 
+		return (int) ((float)50000 * PlantTech2Configuration.MULTIPLIER_CAPACITY_MAX.get()); 
 	}
 
 	public int getEnergyProduction()
 	{
-		return energyProduction;
+		return (int) ((float)energyProduction * PlantTech2Configuration.MULTIPLIER_ENERGYPRODUCTION.get());
 	}
 
 	public UpgradeChipItem setEnergyProduction(int energyProduction)
@@ -85,7 +87,7 @@ public class UpgradeChipItem extends Item
 
 	public float getIncreaseAttack()
 	{
-		return increaseAttack;
+		return (float) (increaseAttack * PlantTech2Configuration.MULTIPLIER_ATTACK.get());
 	}
 
 	public UpgradeChipItem setIncreaseAttack(float increaseAttack)
@@ -97,12 +99,12 @@ public class UpgradeChipItem extends Item
 
 	public static float getAttackMax()
 	{
-		return 20;
+		return (float) (20F * PlantTech2Configuration.MULTIPLIER_ATTACK_MAX.get());
 	}
 
 	public float getIncreaseAttackSpeed()
 	{
-		return increaseAttackSpeed;
+		return (float) (increaseAttackSpeed * PlantTech2Configuration.MULTIPLIER_ATTACKSPEED.get());
 	}
 
 
@@ -114,12 +116,12 @@ public class UpgradeChipItem extends Item
 
 	public static float getAttackSpeedMax()
 	{
-		return 2F;
+		return (float) (2F * PlantTech2Configuration.MULTIPLIER_ATTACKSPEED_MAX.get());
 	}
 
 	public float getIncreaseBreakdownRate()
 	{
-		return increaseBreakdownRate;
+		return (float) (increaseBreakdownRate * PlantTech2Configuration.MULTIPLIER_BREAKDOWNRATE.get());
 	}
 
 	public UpgradeChipItem setIncreaseBreakdownRate(float increaseBreakdownRate)
@@ -130,7 +132,7 @@ public class UpgradeChipItem extends Item
 
 	public static float getBreakdownRateMax()
 	{
-		return 10;
+		return (float) (10F * PlantTech2Configuration.MULTIPLIER_BREAKDOWNRATE_MAX.get());
 	}
 
 	public UpgradeChipItem setIncreaseArmor(int increaseArmor)
@@ -141,7 +143,7 @@ public class UpgradeChipItem extends Item
 
 	public int getIncreaseArmor()
 	{
-		return increaseArmor;
+		return (int) ((float)increaseArmor * PlantTech2Configuration.MULTIPLIER_ARMOR.get());
 	}
 
 	public UpgradeChipItem setIncreaseToughness(float increaseToughness)
@@ -152,12 +154,12 @@ public class UpgradeChipItem extends Item
 
 	public float getIncreaseToughness()
 	{
-		return increaseToughness;
+		return (float) (increaseToughness * PlantTech2Configuration.MULTIPLIER_THOUGHNESS.get());
 	}
 
 	public static float getToughnessMax()
 	{
-		return 6;
+		return (float) (6 * PlantTech2Configuration.MULTIPLIER_THOUGHNESS_MAX.get());
 	}
 
 	public boolean isUnlockShovelFeat()
@@ -243,16 +245,16 @@ public class UpgradeChipItem extends Item
 
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		if (increaseCapacity > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasecapacity", increaseCapacity));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increasecapacity", getIncreaseCapacity()));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.increasecapacitymax", getCapacityMax()));
 		}
 		if (energyProduction > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.energyproduction", energyProduction));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.energyproduction", getEnergyProduction()));
 		}
 		if (increaseHarvestlevel > 0)
 		{
@@ -260,30 +262,30 @@ public class UpgradeChipItem extends Item
 		}
 		if (increaseArmor > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasearmor", increaseArmor));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increasearmor", getIncreaseArmor()));
 		}
 
 		if (increaseAttack > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattack", increaseAttack));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattack", getIncreaseAttack()));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackmax", getAttackMax()));
 		}
 		
 		if (increaseAttackSpeed > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackspeed", increaseAttackSpeed));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackspeed", getIncreaseAttackSpeed()));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackspeedmax", getAttackSpeedMax()));
 		}
 		
 		if (increaseBreakdownRate > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasebreakdownrate", increaseBreakdownRate));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increasebreakdownrate", getIncreaseBreakdownRate()));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.increasebreakdownratemax", getBreakdownRateMax()));
 		}
 		
 		if (increaseToughness > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasetougness", increaseToughness));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.increasetougness", getIncreaseToughness()));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.increasetougnessmax", getToughnessMax()));
 		}
 		
@@ -306,16 +308,16 @@ public class UpgradeChipItem extends Item
 		
 		if(enchantment != null)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.add").appendString(" ").appendSibling(enchantment.getDisplayName(0)));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.add").append(" ").append(enchantment.getFullname(0)));
 			tooltip.add(new TranslationTextComponent("info.upgradechip.stackable"));
 		}
 		
 		if (energyCost > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.energycosts", energyCost));
+			tooltip.add(new TranslationTextComponent("info.upgradechip.energycosts", getEnergyCost()));
 		}
 
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 }

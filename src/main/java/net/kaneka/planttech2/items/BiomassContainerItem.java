@@ -28,7 +28,7 @@ public class BiomassContainerItem extends Item
 	private static final int CAPACITY = 1000;
 	public BiomassContainerItem()
 	{
-		super(new Item.Properties().group(ModCreativeTabs.MAIN).maxStackSize(1));
+		super(new Item.Properties().tab(ModCreativeTabs.MAIN).stacksTo(1));
 	}
 
 	public static float getFillLevelModel(ItemStack stack)
@@ -146,7 +146,7 @@ public class BiomassContainerItem extends Item
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		IBiomassFluidEnergy cap = BiomassFluidEnergy.getItemStackCap(stack);
 //		if (cap.getCurrentStorage() > 0)
@@ -181,9 +181,9 @@ public class BiomassContainerItem extends Item
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) 
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) 
 	{
-		if (group == this.group)
+		if (group == this.category)
 		{
 			items.add(new ItemStack(ModItems.BIOMASSCONTAINER)); 
 			ItemStack full = new ItemStack(ModItems.BIOMASSCONTAINER);

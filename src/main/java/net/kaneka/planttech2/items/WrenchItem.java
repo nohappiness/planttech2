@@ -27,19 +27,19 @@ public class WrenchItem extends Item
 
 	public WrenchItem()
 	{
-		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().stacksTo(1).tab(ModCreativeTabs.MAIN));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx)
+	public ActionResultType useOn(ItemUseContext ctx)
 	{
-		World world = ctx.getWorld();
-		BlockPos pos = ctx.getPos();
+		World world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
 		PlayerEntity player = ctx.getPlayer();
-		if (!world.isRemote)
+		if (!world.isClientSide)
 		{
 			BlockState target = world.getBlockState(pos);
-			ItemStack stack = player.getHeldItem(Hand.MAIN_HAND);
+			ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
 
 			if (stack.getItem() instanceof WrenchItem && player.isCrouching())
 			{
@@ -48,18 +48,18 @@ public class WrenchItem extends Item
 				{
 					if (block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 					{
-						if (!player.addItemStackToInventory(new ItemStack(block)))
+						if (!player.addItem(new ItemStack(block)))
 						{
-							Block.spawnAsEntity(world, player.getPosition(), new ItemStack(block));
+							Block.popResource(world, player.blockPosition(), new ItemStack(block));
 						}
 						return ActionResultType.SUCCESS;
 					}
-					Block.spawnAsEntity(world, pos, new ItemStack(target.getBlock()));
+					Block.popResource(world, pos, new ItemStack(target.getBlock()));
 					return ActionResultType.SUCCESS;
 				}
 			}
 		}
-		return super.onItemUse(ctx);
+		return super.useOn(ctx);
 	}
 
 	private boolean removeIfValid(Block block, World world, BlockPos pos)
@@ -73,7 +73,7 @@ public class WrenchItem extends Item
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_cable").getString()));
 		tooltip.add(new StringTextComponent(""));

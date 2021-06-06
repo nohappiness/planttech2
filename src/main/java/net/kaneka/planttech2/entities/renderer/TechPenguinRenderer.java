@@ -21,7 +21,7 @@ public class TechPenguinRenderer extends MobRenderer<TechPenguinEntity, TechPeng
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TechPenguinEntity entity)
+	public ResourceLocation getTextureLocation(TechPenguinEntity entity)
 	{
 		return TEXTURE;
 	}

@@ -74,7 +74,7 @@ public class ForgeBusEventsClient
                 }
                 if (screen != null)
                 {
-                    Minecraft.getInstance().displayGuiScreen(screen);
+                    Minecraft.getInstance().setScreen(screen);
                     data.putInt("planttech2_screen_delay", 0);
                 }
             }
@@ -89,11 +89,11 @@ public class ForgeBusEventsClient
         {
             TextComponent info = new TranslationTextComponent("planttech2.update.available");
             TextComponent link = new TranslationTextComponent("planttech2.update.click");
-            link.setStyle(link.getStyle().setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
-                    .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
-                    .setFormatting(TextFormatting.BLUE)
+            link.setStyle(link.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
+                    .withColor(TextFormatting.BLUE)
                     .setUnderlined(true));
-            evt.getEntity().sendMessage(info.appendSibling(link), evt.getEntity().getUniqueID());
+            evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUUID());
         }
         hasSendUpdateAvailable = true;
     }

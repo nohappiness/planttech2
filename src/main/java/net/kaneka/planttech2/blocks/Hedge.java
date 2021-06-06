@@ -29,7 +29,7 @@ public class Hedge extends CustomFenceBlock
 
 	public Hedge(Block leaves, Block wood, Block soil)
 	{
-		super(AbstractBlock.Properties.create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());
+		super(AbstractBlock.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion());
 		this.leaves = leaves;
 		this.wood = wood; 
 		this.soil = soil;
@@ -53,11 +53,11 @@ public class Hedge extends CustomFenceBlock
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent("Log: " + getWood().getTranslatedName().getString()));
-		tooltip.add(new StringTextComponent("Leaf: " + getLeaves().getTranslatedName().getString()));
-		tooltip.add(new StringTextComponent("Soil: " + getSoil().getTranslatedName().getString()));
+		tooltip.add(new StringTextComponent("Log: " + getWood().getName().getString()));
+		tooltip.add(new StringTextComponent("Leaf: " + getLeaves().getName().getString()));
+		tooltip.add(new StringTextComponent("Soil: " + getSoil().getName().getString()));
 	}
 
 	public static class ColorHandler implements IBlockColor
@@ -77,22 +77,22 @@ public class Hedge extends CustomFenceBlock
 			if (tintindex == 0)
 			{
 				if (leaves == Blocks.OAK_LEAVES)
-					return BiomeColors.getFoliageColor(reader, pos);
+					return BiomeColors.getAverageFoliageColor(reader, pos);
 				if (leaves == Blocks.SPRUCE_LEAVES)
-					return FoliageColors.getSpruce();
+					return FoliageColors.getEvergreenColor();
 				if (leaves == Blocks.BIRCH_LEAVES)
-					return FoliageColors.getBirch();
+					return FoliageColors.getBirchColor();
 				if (leaves == Blocks.JUNGLE_LEAVES)
-					return BiomeColors.getFoliageColor(reader, pos);
+					return BiomeColors.getAverageFoliageColor(reader, pos);
 				if (leaves == Blocks.ACACIA_LEAVES)
-					return BiomeColors.getFoliageColor(reader, pos);
+					return BiomeColors.getAverageFoliageColor(reader, pos);
 				if (leaves == Blocks.DARK_OAK_LEAVES)
-					return BiomeColors.getFoliageColor(reader, pos);
+					return BiomeColors.getAverageFoliageColor(reader, pos);
 
 			}
 			else if (tintindex == 1 && soil == Blocks.GRASS_BLOCK)
 			{ 
-				return reader != null && pos != null ? BiomeColors.getGrassColor(reader, pos) : GrassColors.get(0.5D, 1.0D);
+				return reader != null && pos != null ? BiomeColors.getAverageGrassColor(reader, pos) : GrassColors.get(0.5D, 1.0D);
 			}
 			return 0xFFFFFFFF;
 		}
@@ -114,9 +114,9 @@ public class Hedge extends CustomFenceBlock
 			if (leaves == Blocks.OAK_LEAVES)
 				return FoliageColors.get(0.5, 0.5);
 			if (leaves == Blocks.SPRUCE_LEAVES)
-				return FoliageColors.getSpruce();
+				return FoliageColors.getEvergreenColor();
 			if (leaves == Blocks.BIRCH_LEAVES)
-				return FoliageColors.getBirch();
+				return FoliageColors.getBirchColor();
 			if (leaves == Blocks.JUNGLE_LEAVES)
 				return FoliageColors.get(0.5, 0.5);
 			if (leaves == Blocks.ACACIA_LEAVES)

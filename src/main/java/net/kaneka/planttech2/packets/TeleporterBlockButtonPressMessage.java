@@ -40,9 +40,9 @@ public class TeleporterBlockButtonPressMessage
 		ctx.get().enqueueWork(() -> {
 			ServerPlayerEntity serverPlayer = ctx.get().getSender();
 			BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
-			if (serverPlayer != null && serverPlayer.world.isAreaLoaded(pos, 0))
+			if (serverPlayer != null && serverPlayer.level.isAreaLoaded(pos, 0))
 			{
-				TileEntity te = serverPlayer.world.getTileEntity(pos);
+				TileEntity te = serverPlayer.level.getBlockEntity(pos);
 				if (te != null)
 				{
 					if (te instanceof PlantTopiaTeleporterTileEntity)

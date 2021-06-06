@@ -92,23 +92,23 @@ public class LootTables extends LootTableProvider
 
     void silkFortuneBlockTable(Block b, IItemProvider item)
     {
-        LootPool.Builder pool = LootPool.builder();
-        pool.rolls(ConstantRange.of(1));
+        LootPool.Builder pool = LootPool.lootPool();
+        pool.setRolls(ConstantRange.exactly(1));
 
-        StandaloneLootEntry.Builder<?> silk = ItemLootEntry.builder(b)
-                .acceptCondition(MatchTool.builder(ItemPredicate.Builder.create().enchantment(new EnchantmentPredicate(
+        StandaloneLootEntry.Builder<?> silk = ItemLootEntry.lootTableItem(b)
+                .when(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(
                         Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)))));
-        StandaloneLootEntry.Builder<?> fortune = ItemLootEntry.builder(item).acceptFunction(ExplosionDecay.builder())
-                .acceptFunction(ApplyBonus.oreDrops(Enchantments.FORTUNE));
+        StandaloneLootEntry.Builder<?> fortune = ItemLootEntry.lootTableItem(item).apply(ExplosionDecay.explosionDecay())
+                .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
 
-        pool.addEntry(AlternativesLootEntry.builder(silk, fortune));
+        pool.add(AlternativesLootEntry.alternatives(silk, fortune));
 
-        blockTable(b, LootTable.builder().addLootPool(pool));
+        blockTable(b, LootTable.lootTable().withPool(pool));
     }
 
     void standardDropTable(Block b)
     {
-        blockTable(b, LootTable.builder().addLootPool(createStandardDrops(b)));
+        blockTable(b, LootTable.lootTable().withPool(createStandardDrops(b)));
     }
 
     void blockTable(Block b, LootTable.Builder lootTable)
@@ -123,14 +123,14 @@ public class LootTables extends LootTableProvider
 
     LootPool.Builder createStandardDrops(IItemProvider itemProvider)
     {
-        return LootPool.builder().rolls(ConstantRange.of(1)).acceptCondition(SurvivesExplosion.builder())
-                .addEntry(ItemLootEntry.builder(itemProvider));
+        return LootPool.lootPool().setRolls(ConstantRange.exactly(1)).when(SurvivesExplosion.survivesExplosion())
+                .add(ItemLootEntry.lootTableItem(itemProvider));
     }
 
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker)
     {
         map.forEach(
-                (p_218436_2_, p_218436_3_) -> LootTableManager.validateLootTable(validationtracker, p_218436_2_, p_218436_3_));
+                (p_218436_2_, p_218436_3_) -> LootTableManager.validate(validationtracker, p_218436_2_, p_218436_3_));
     }
 }

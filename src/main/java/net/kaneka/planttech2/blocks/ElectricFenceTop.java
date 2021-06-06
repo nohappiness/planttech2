@@ -20,60 +20,60 @@ import net.minecraft.block.AbstractBlock.Properties;
 
 public class ElectricFenceTop extends BaseElectricFence
 {
-    public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.FACING;
     public static final VoxelShape TOP_X_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(7.0D, 0.10D, 0.10D, 9.0D, 5.0D, 15.90D),
-            Block.makeCuboidShape(6.0D, 5.0D, 0.10D, 10.0D, 7.0D, 15.90D),
+            Block.box(7.0D, 0.10D, 0.10D, 9.0D, 5.0D, 15.90D),
+            Block.box(6.0D, 5.0D, 0.10D, 10.0D, 7.0D, 15.90D),
 
-            Block.makeCuboidShape(0.10D, 10.0D, 0.10D, 3.0D, 13.0D, 15.90D),
-            Block.makeCuboidShape(3.0D, 7.0D, 0.10D, 6.0D, 10.0D, 15.90D),
-            Block.makeCuboidShape(10.0D, 7.0D, 0.10D, 13.0D, 10.0D, 15.90D),
-            Block.makeCuboidShape(13.0D, 10.0D, 0.10D, 15.90D, 13.0D, 15.90D));
+            Block.box(0.10D, 10.0D, 0.10D, 3.0D, 13.0D, 15.90D),
+            Block.box(3.0D, 7.0D, 0.10D, 6.0D, 10.0D, 15.90D),
+            Block.box(10.0D, 7.0D, 0.10D, 13.0D, 10.0D, 15.90D),
+            Block.box(13.0D, 10.0D, 0.10D, 15.90D, 13.0D, 15.90D));
     public static final VoxelShape TOP_Z_AXIS = VoxelShapes.or(
-            Block.makeCuboidShape(0.10D, 0.10D, 7.0D, 15.90D, 5.0D, 9.0D),
-            Block.makeCuboidShape(0.10D, 5.0D, 6.0D, 15.90D, 7.0D, 10.0D),
+            Block.box(0.10D, 0.10D, 7.0D, 15.90D, 5.0D, 9.0D),
+            Block.box(0.10D, 5.0D, 6.0D, 15.90D, 7.0D, 10.0D),
 
-            Block.makeCuboidShape(0.10D, 10.0D, 0.10D, 15.90D, 13.0D, 3.0D),
-            Block.makeCuboidShape(0.10D, 7.0D, 3.0D, 15.90D, 10.0D, 6.0D),
-            Block.makeCuboidShape(0.10D, 7.0D, 10.0D, 15.90D, 10.0D, 13.0D),
-            Block.makeCuboidShape(0.10D, 10.0D, 13.0D, 15.90D, 13.0D, 15.90D));
+            Block.box(0.10D, 10.0D, 0.10D, 15.90D, 13.0D, 3.0D),
+            Block.box(0.10D, 7.0D, 3.0D, 15.90D, 10.0D, 6.0D),
+            Block.box(0.10D, 7.0D, 10.0D, 15.90D, 10.0D, 13.0D),
+            Block.box(0.10D, 10.0D, 13.0D, 15.90D, 13.0D, 15.90D));
 
     public ElectricFenceTop(Properties property)
     {
         super(property);
-        setDefaultState(getDefaultState()
-                .with(ELECTRIC_POWER, 0)
-                .with(HORIZONTAL_FACING, Direction.NORTH));
+        registerDefaultState(defaultBlockState()
+                .setValue(ELECTRIC_POWER, 0)
+                .setValue(HORIZONTAL_FACING, Direction.NORTH));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
-        super.fillStateContainer(builder);
+        super.createBlockStateDefinition(builder);
         builder.add(HORIZONTAL_FACING);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        return getDefaultState()
-                .with(HORIZONTAL_FACING, stateIn.get(HORIZONTAL_FACING))
-                .with(ELECTRIC_POWER, calculatePower((World) worldIn, currentPos));
+        return defaultBlockState()
+                .setValue(HORIZONTAL_FACING, stateIn.getValue(HORIZONTAL_FACING))
+                .setValue(ELECTRIC_POWER, calculatePower((World) worldIn, currentPos));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return this.getDefaultState()
-                .with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing())
-                .with(ELECTRIC_POWER, calculatePower(context.getWorld(), context.getPos()));
+        return this.defaultBlockState()
+                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
+                .setValue(ELECTRIC_POWER, calculatePower(context.getLevel(), context.getClickedPos()));
     }
 
     @SuppressWarnings("deprecation")
 	@Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
-        switch (state.get(HORIZONTAL_FACING).getAxis())
+        switch (state.getValue(HORIZONTAL_FACING).getAxis())
         {
             case X:
             default:

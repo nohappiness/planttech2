@@ -39,18 +39,18 @@ public class CropSeedItem extends Item
 
 	public CropSeedItem(String entryName)
 	{
-		super(new Item.Properties().group(ModCreativeTabs.SEEDS));
+		super(new Item.Properties().tab(ModCreativeTabs.SEEDS));
 		this.entryName = entryName;
-		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override
-			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
+			protected ItemStack execute(IBlockSource source, ItemStack stack)
 			{
-				World world = source.getWorld();
-				BlockPos target = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-				this.setSuccessful(plant(world, target, stack));
-				if (!world.isRemote() && this.isSuccessful())
-					world.playEvent(2005, target, 0);
+				World world = source.getLevel();
+				BlockPos target = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				this.setSuccess(plant(world, target, stack));
+				if (!world.isClientSide() && this.isSuccess())
+					world.levelEvent(2005, target, 0);
 				return stack;
 			}
 		});
@@ -63,7 +63,7 @@ public class CropSeedItem extends Item
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		CompoundNBT nbt = stack.getTag();
 		if (nbt != null)
@@ -72,7 +72,7 @@ public class CropSeedItem extends Item
 			{
 				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.type").getString() + ": " + nbt.getString("type")));
 				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.soil").getString() + ": " + getSoilString(nbt.getString("type"))));
-				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").appendSibling(temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
+				tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperature").getString() + ": ").append(temperatureString(nbt.getString("type"), nbt.getInt("temperaturetolerance"))));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "growspeed") + new TranslationTextComponent("info.growspeed").getString() + ": " + nbt.getInt("growspeed")));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "sensitivity") + new TranslationTextComponent("info.sensitivity").getString() + ": " + nbt.getInt("sensitivity")));
 				tooltip.add(new StringTextComponent(getTraitColor(nbt, "lightsensitivity") + new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + (14 - nbt.getInt("lightsensitivity"))));
@@ -105,7 +105,7 @@ public class CropSeedItem extends Item
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.sensitivity").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.needed_lightlevel").getString() + ": " + 14));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.waterrange").getString() + ": " + 1));
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getString() + ": ").appendSibling(temperatureString(entryName, 0)));
+			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.temperaturetolerance").getString() + ": ").append(temperatureString(entryName, 0)));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.productivity").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.fertility").getString() + ": " + 0));
 			tooltip.add(new StringTextComponent(getTraitColor(TRAIT_MIN) + new TranslationTextComponent("info.spreedingspeed").getString() + ": " + 0));
@@ -129,14 +129,14 @@ public class CropSeedItem extends Item
 		{
 			max = 4;
 		}
-		return EnumTemperature.values()[min].getDisplayString().appendString(" - ").appendSibling(EnumTemperature.values()[max].getDisplayString());
+		return EnumTemperature.values()[min].getDisplayString().append(" - ").append(EnumTemperature.values()[max].getDisplayString());
 	}
 
 	public static String getSoilString(String type)
 	{
 		CropEntry soil = PlantTechMain.getCropList().getByName(type);
 		
-		return soil == null ? "" : new TranslationTextComponent(soil.getConfiguration().getSoil().get().getTranslationKey()).getUnformattedComponentText();
+		return soil == null ? "" : new TranslationTextComponent(soil.getConfiguration().getSoil().get().getDescriptionId()).getContents();
 	}
 
 	public static class ColorHandler implements IItemColor
@@ -177,8 +177,8 @@ public class CropSeedItem extends Item
 //		System.out.println("Crop list keys" + PlantTechMain.getCropList().keySet());
 		if (entry == null)
 			return false;
-		world.setBlockState(pos, ModBlocks.CROPS.get(entry.getName()).getDefaultState());
-		TileEntity tileentity = world.getTileEntity(pos);
+		world.setBlockAndUpdate(pos, ModBlocks.CROPS.get(entry.getName()).defaultBlockState());
+		TileEntity tileentity = world.getBlockEntity(pos);
 		if (tileentity instanceof CropsTileEntity)
 		{
 			HashMapCropTraits toPass = new HashMapCropTraits();

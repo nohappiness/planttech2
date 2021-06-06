@@ -20,13 +20,13 @@ public class SyncTrustMessage
 
 	public static void encode(SyncTrustMessage pkt, PacketBuffer buf)
 	{
-		buf.writeString(pkt.profession);
+		buf.writeUtf(pkt.profession);
 		buf.writeInt(pkt.value);
 	}
 
 	public static SyncTrustMessage decode(PacketBuffer buf)
 	{
-		return new SyncTrustMessage(buf.readString(), buf.readInt());
+		return new SyncTrustMessage(buf.readUtf(), buf.readInt());
 	}
 
 	public static void handle(final SyncTrustMessage pkt, Supplier<NetworkEvent.Context> ctx)

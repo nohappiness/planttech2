@@ -31,7 +31,7 @@ public class RecipeGetter
 {
 	public static List<ChipalyzerRecipe> getChipalyzerRecipes() {
 		List<ChipalyzerRecipe> results = new ArrayList<>();
-		ClientWorld world = Minecraft.getInstance().world;
+		ClientWorld world = Minecraft.getInstance().level;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext()) {
@@ -47,7 +47,7 @@ public class RecipeGetter
 	public static List<CompressorRecipe> getCompressorRecipes()
 	{
 		List<CompressorRecipe> results = new ArrayList<CompressorRecipe>();
-		ClientWorld world = Minecraft.getInstance().world;
+		ClientWorld world = Minecraft.getInstance().level;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext())
@@ -65,7 +65,7 @@ public class RecipeGetter
 	public static List<InfuserRecipe> getInfuserRecipes()
 	{
 		List<InfuserRecipe> results = new ArrayList<InfuserRecipe>();
-		ClientWorld world = Minecraft.getInstance().world;
+		ClientWorld world = Minecraft.getInstance().level;
 		RecipeManager recipeManager = world.getRecipeManager();
 		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext())

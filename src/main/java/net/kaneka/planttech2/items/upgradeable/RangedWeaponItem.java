@@ -27,19 +27,19 @@ public class RangedWeaponItem extends UpgradeableHandItem
 
 	protected ItemStack findAmmo(PlayerEntity player)
 	{
-		if (this.isArrow(player.getHeldItem(Hand.OFF_HAND)))
+		if (this.isArrow(player.getItemInHand(Hand.OFF_HAND)))
 		{
-			return player.getHeldItem(Hand.OFF_HAND);
+			return player.getItemInHand(Hand.OFF_HAND);
 		} 
-		else if (this.isArrow(player.getHeldItem(Hand.MAIN_HAND)))
+		else if (this.isArrow(player.getItemInHand(Hand.MAIN_HAND)))
 		{
-			return player.getHeldItem(Hand.MAIN_HAND);
+			return player.getItemInHand(Hand.MAIN_HAND);
 		} 
 		else
 		{
-			for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
+			for (int i = 0; i < player.inventory.getContainerSize(); ++i)
 			{
-				ItemStack itemstack = player.inventory.getStackInSlot(i);
+				ItemStack itemstack = player.inventory.getItem(i);
 				if (this.isArrow(itemstack))
 				{
 					return itemstack;
@@ -56,13 +56,13 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	}
 
 	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
+	public void releaseUsing(ItemStack stack, World worldIn, LivingEntity entityLiving, int timeLeft)
 	{
 		
 		if (entityLiving instanceof PlayerEntity)
 		{
 			PlayerEntity PlayerEntity = (PlayerEntity) entityLiving;
-			boolean flag = PlayerEntity.abilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+			boolean flag = PlayerEntity.abilities.instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 			ItemStack itemstack = this.findAmmo(PlayerEntity);
 
 			int i = this.getUseDuration(stack) - timeLeft;
@@ -80,54 +80,54 @@ public class RangedWeaponItem extends UpgradeableHandItem
 				float f = getArrowVelocity(i);
 				if (!((double) f < 0.1D))
 				{
-					boolean flag1 = PlayerEntity.abilities.isCreativeMode
+					boolean flag1 = PlayerEntity.abilities.instabuild
 					        || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, PlayerEntity));
-					if (!worldIn.isRemote)
+					if (!worldIn.isClientSide)
 					{
 						ArrowItem itemarrow = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
 						AbstractArrowEntity entityarrow = itemarrow.createArrow(worldIn, itemstack, PlayerEntity);
 						entityarrow = customizeArrow(entityarrow);
-						entityarrow.shoot(PlayerEntity.rotationPitch, PlayerEntity.rotationYaw, 0.0F, f * 3.0F, 1.0F);
+						entityarrow.shoot(PlayerEntity.xRot, PlayerEntity.yRot, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F)
 						{
-							entityarrow.setIsCritical(true);
+							entityarrow.setCritArrow(true);
 						}
 
-						int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, stack);
+						int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stack);
 						if (j > 0)
 						{
-							entityarrow.setDamage(entityarrow.getDamage() + (double) j * 0.5D + 0.5D);
+							entityarrow.setBaseDamage(entityarrow.getBaseDamage() + (double) j * 0.5D + 0.5D);
 						}
 
-						int k = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, stack);
+						int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stack);
 						if (k > 0)
 						{
-							entityarrow.setKnockbackStrength(k);
+							entityarrow.setKnockback(k);
 						}
 
-						if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, stack) > 0)
+						if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, stack) > 0)
 						{
-							entityarrow.setFire(100);
+							entityarrow.setSecondsOnFire(100);
 						}
 
 						if(!PlayerEntity.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
-						if (flag1 || PlayerEntity.abilities.isCreativeMode && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
+						if (flag1 || PlayerEntity.abilities.instabuild && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
 						{
-							entityarrow.pickupStatus = ArrowEntity.PickupStatus.CREATIVE_ONLY;
+							entityarrow.pickup = ArrowEntity.PickupStatus.CREATIVE_ONLY;
 						}
 
-						worldIn.addEntity(entityarrow);
+						worldIn.addFreshEntity(entityarrow);
 						extractEnergy(stack, getEnergyCost(stack), false);
 					}
 
-					worldIn.playSound((PlayerEntity) null, PlayerEntity.getPosX(), PlayerEntity.getPosY(), PlayerEntity.getPosZ(), SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
+					worldIn.playSound((PlayerEntity) null, PlayerEntity.getX(), PlayerEntity.getY(), PlayerEntity.getZ(), SoundEvents.ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
 					        1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !PlayerEntity.abilities.isCreativeMode)
+					if (!flag1 && !PlayerEntity.abilities.instabuild)
 					{
 						itemstack.shrink(1);
 						if (itemstack.isEmpty())
 						{
-							PlayerEntity.inventory.deleteStack(itemstack);
+							PlayerEntity.inventory.removeItem(itemstack);
 						}
 					}
 				}
@@ -154,15 +154,15 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack)
+	public UseAction getUseAnimation(ItemStack stack)
 	{
 		return UseAction.BOW;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		if(!player.isCrouching())
 		{
 			System.out.println(getEnergyCost(stack));
@@ -175,21 +175,21 @@ public class RangedWeaponItem extends UpgradeableHandItem
         		if (ret != null)
         			return ret;
         
-        		if (!player.abilities.isCreativeMode && !flag)
+        		if (!player.abilities.instabuild && !flag)
         		{
         			return flag ? new ActionResult<>(ActionResultType.PASS, stack) : new ActionResult<>(ActionResultType.FAIL, stack);
         		} else
         		{
-        			player.setActiveHand(hand);
+        			player.startUsingItem(hand);
         			return new ActionResult<>(ActionResultType.SUCCESS, stack);
         		}
     		}
 		}
 		else
 		{
-			if (!worldIn.isRemote && player instanceof ServerPlayerEntity) 
+			if (!worldIn.isClientSide && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.currentItem), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.selected), buffer -> buffer.writeItem(stack));
 			}
 		}
 		return new ActionResult<>(ActionResultType.FAIL, stack);

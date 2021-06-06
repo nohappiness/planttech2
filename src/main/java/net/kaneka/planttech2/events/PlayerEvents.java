@@ -26,7 +26,7 @@ public class PlayerEvents
 	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
 	{
 		PlayerEntity player = event.getPlayer();
-		if (!player.world.isRemote())
+		if (!player.level.isClientSide())
 		{
 			PlantTechMain.LOGGER.info(event.getPlayer().getDisplayName().getString() + " has logged in, syncing crop list");
 			PlantTech2PacketHandler.sendTo(new CropListSyncMessage(), (ServerPlayerEntity) player);

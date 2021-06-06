@@ -23,13 +23,13 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
     }
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerForegroundLayer(mStack, mouseX, mouseY);
+		super.renderLabels(mStack, mouseX, mouseY);
 
 		this.setBlitOffset(this.getBlitOffset() + 300);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND);
+		minecraft.getTextureManager().bind(BACKGROUND);
 		int l = this.getCookProgressScaled(7);
 		blit(mStack, 122, 36, 0, 202 + 8 - l, 16, l + 12);
 
@@ -38,27 +38,27 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
 
 		int j = this.getFluidStoredScaled(55);
-		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, j);
+		blit(mStack, this.leftPos + 41, this.topPos + 28 + (55-j), 224, 55-j, 16, j);
 	}
 
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = container.getValue(4);
+		int i = menu.getValue(4);
 		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).ticksPerItem() : 0;
 	}
 
 	@Override
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		drawTooltip(mStack, container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
+		drawTooltip(mStack, menu.getValue(2) + "/" + menu.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 
 	    super.drawTooltips(mStack, mouseX, mouseY);
 	}

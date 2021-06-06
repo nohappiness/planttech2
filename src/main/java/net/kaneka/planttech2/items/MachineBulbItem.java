@@ -23,7 +23,7 @@ public class MachineBulbItem extends BlockItem
 
 	public MachineBulbItem(Supplier<Block> hull, Supplier<Block> crop, int tier, int neededBiomass)
 	{
-		super(crop.get(), new Item.Properties().group(ModCreativeTabs.SEEDS));
+		super(crop.get(), new Item.Properties().tab(ModCreativeTabs.SEEDS));
 		this.hull = hull;
 		this.crop = crop;
 		this.tier = tier;
@@ -31,26 +31,26 @@ public class MachineBulbItem extends BlockItem
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx)
+	public ActionResultType useOn(ItemUseContext ctx)
 	{
-		World world = ctx.getWorld();
-		BlockPos pos = ctx.getPos();
+		World world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
 		Block target = world.getBlockState(pos).getBlock();
-		ItemStack stack = ctx.getItem();
+		ItemStack stack = ctx.getItemInHand();
 		if (target == getHull())
 		{
 			if (getMachine() instanceof FacingGrowingBlock)
 			{
-				Direction direction = ctx.getFace();
+				Direction direction = ctx.getClickedFace();
 				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					world.setBlockState(pos, getMachine().getDefaultState().with(FacingGrowingBlock.FACING, direction));
+					world.setBlockAndUpdate(pos, getMachine().defaultBlockState().setValue(FacingGrowingBlock.FACING, direction));
 					stack.shrink(1);
 				}
 			}
 			else
 			{
-				world.setBlockState(pos, getMachine().getDefaultState());
+				world.setBlockAndUpdate(pos, getMachine().defaultBlockState());
 				stack.shrink(1);
 			}
 			return ActionResultType.CONSUME;

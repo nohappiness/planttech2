@@ -16,10 +16,10 @@ public class ModBiomes
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, PlantTechMain.MODID);
 	
 	static {
-		 create(ModReferences.FLOWER_MEADOW, BiomeMaker::makeVoidBiome);
-		 create(ModReferences.RADIATED_WASTELAND, BiomeMaker::makeVoidBiome);
-		 create(ModReferences.DRIED_LAKE, BiomeMaker::makeVoidBiome);
-		 create(ModReferences.LAKE, BiomeMaker::makeVoidBiome); 
+		 create(ModReferences.FLOWER_MEADOW, BiomeMaker::theVoidBiome);
+		 create(ModReferences.RADIATED_WASTELAND, BiomeMaker::theVoidBiome);
+		 create(ModReferences.DRIED_LAKE, BiomeMaker::theVoidBiome);
+		 create(ModReferences.LAKE, BiomeMaker::theVoidBiome); 
 	}
 	
 	private static void create(String name, Supplier<Biome> biome) 
@@ -30,6 +30,6 @@ public class ModBiomes
 	
 	public static RegistryKey<Biome> getRegistryKey(String name)
 	{
-		return RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(name));
+		return RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(name));
 	}
 }

@@ -19,7 +19,7 @@ public class CustomRotatedPillarBlock extends Block
 	public CustomRotatedPillarBlock(Properties property)
 	{
 		super(property);
-		this.setDefaultState(this.getDefaultState().with(AXIS, Direction.Axis.Y));
+		this.registerDefaultState(this.defaultBlockState().setValue(AXIS, Direction.Axis.Y));
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public class CustomRotatedPillarBlock extends Block
 		{
 		case COUNTERCLOCKWISE_90:
 		case CLOCKWISE_90:
-			switch ((Direction.Axis) state.get(AXIS))
+			switch ((Direction.Axis) state.getValue(AXIS))
 			{
 			case X:
-				return state.with(AXIS, Direction.Axis.Z);
+				return state.setValue(AXIS, Direction.Axis.Z);
 			case Z:
-				return state.with(AXIS, Direction.Axis.X);
+				return state.setValue(AXIS, Direction.Axis.X);
 			default:
 				return state;
 			}
@@ -44,7 +44,7 @@ public class CustomRotatedPillarBlock extends Block
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(AXIS);
 	}
@@ -52,6 +52,6 @@ public class CustomRotatedPillarBlock extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(AXIS, context.getFace().getAxis());
+		return this.defaultBlockState().setValue(AXIS, context.getClickedFace().getAxis());
 	}
 }

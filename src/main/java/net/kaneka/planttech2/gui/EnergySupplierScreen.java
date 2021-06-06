@@ -19,12 +19,12 @@ public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierCont
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
 
 //	@Override

@@ -52,7 +52,7 @@ public class DNARemoverTileEntity extends ConvertEnergyInventoryTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}

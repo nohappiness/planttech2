@@ -25,21 +25,21 @@ public class PlantObtainerItem extends Item
 {
     public PlantObtainerItem(Properties property)
     {
-        super(property.maxStackSize(1));
+        super(property.stacksTo(1));
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context)
+    public ActionResultType useOn(ItemUseContext context)
     {
-        World world = context.getWorld();
-        BlockPos pos = context.getPos();
+        World world = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         BlockState state = world.getBlockState(pos);
         PlayerEntity player = context.getPlayer();
         if (player == null)
         {
             return ActionResultType.FAIL;
         }
-        ItemStack stack = player.getHeldItemMainhand();
+        ItemStack stack = player.getMainHandItem();
         initTags(stack);
         if (state.getBlock() instanceof IObtainable)
         {
@@ -55,7 +55,7 @@ public class PlantObtainerItem extends Item
         else if (isFilled(stack))
         {
             IObtainable block = (IObtainable) getBlockStateFilled(stack).getBlock();
-            if (((NaturalPlants) block).canPlaceAt(world, pos.offset(context.getFace())))
+            if (((NaturalPlants) block).canPlaceAt(world, pos.relative(context.getClickedFace())))
             {
                 block.onReleased(context, getBlockStateFilled(stack));
                 setBlockFilled(stack, null);
@@ -70,14 +70,14 @@ public class PlantObtainerItem extends Item
     public static ItemStack setBlockFilled(ItemStack stack, BlockState state)
     {
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
-        if (state == Blocks.AIR.getDefaultState() || state != null)
+        if (state == Blocks.AIR.defaultBlockState() || state != null)
         {
             compound.merge(NBTUtil.writeBlockState(state));
             setFilled(stack, true);
         }
         else
         {
-            NBTUtil.writeBlockState(Blocks.AIR.getDefaultState());
+            NBTUtil.writeBlockState(Blocks.AIR.defaultBlockState());
             setFilled(stack, false);
         }
         stack.setTag(compound);
@@ -101,7 +101,7 @@ public class PlantObtainerItem extends Item
         CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (!filled)
         {
-            compound.merge(NBTUtil.writeBlockState(Blocks.AIR.getDefaultState()));
+            compound.merge(NBTUtil.writeBlockState(Blocks.AIR.defaultBlockState()));
         }
         compound.putBoolean("filled", filled);
         stack.setTag(compound);
@@ -121,14 +121,14 @@ public class PlantObtainerItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         tooltip.add(new StringTextComponent("Right click on an unique plants found planttopia to obtain and store it in the void"));
         tooltip.add(new StringTextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-            tooltip.add(new StringTextComponent("Plant Obtained: ").appendSibling(getBlockStateFilled(stack).getBlock().getTranslatedName().setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true))));
+            tooltip.add(new StringTextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getName().setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true))));
         else
-            tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GREEN)).setBold(true)));
+            tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true)));
     }
 }

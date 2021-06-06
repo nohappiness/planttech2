@@ -51,7 +51,7 @@ public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}
@@ -81,7 +81,7 @@ public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 	protected ItemStack getResult(ItemStack input, ItemStack output)
 	{
 		List<ChipalyzerRecipe> recipe = getRecipeList(getChip(), input, false);
-		return recipe.get(rand.nextInt(recipe.size())).getRecipeOutput().copy();
+		return recipe.get(rand.nextInt(recipe.size())).getResultItem().copy();
 	}
 
 	private ItemStack getChip()
@@ -91,17 +91,17 @@ public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity
 
 	private List<ChipalyzerRecipe> getRecipeList(ItemStack chip, ItemStack stack, boolean forceUpdate)
 	{
-		if (stack.isEmpty() || world == null)
+		if (stack.isEmpty() || level == null)
 			return Collections.emptyList();
 		if (recipes == null || forceUpdate)
 		{
 			List<ChipalyzerRecipe> list = new ArrayList<>();
-			for (IRecipe<?> recipe : world.getRecipeManager().getRecipesForType(ModRecipeTypes.CHIPALYZER))
+			for (IRecipe<?> recipe : level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.CHIPALYZER))
 			{
 				ChipalyzerRecipe chipRecipe = (ChipalyzerRecipe) recipe;
 				ItemStack fake = chip.copy();
 				fake.setCount(1);
-				if (ItemStack.areItemStacksEqual(chipRecipe.getChip(), fake))
+				if (ItemStack.matches(chipRecipe.getChip(), fake))
 					if (chipRecipe.compare(chip, stack))
 						list.add(chipRecipe);
 			}

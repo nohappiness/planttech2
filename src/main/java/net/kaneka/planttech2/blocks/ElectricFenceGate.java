@@ -38,48 +38,48 @@ public class ElectricFenceGate extends Block
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty IS_TOP = BooleanProperty.create("is_top");
     public static final VoxelShape FRAME_Z = VoxelShapes.or(
-            Block.makeCuboidShape(0.0D, 0.0D, 6.0D, 1.0D, 16.0D, 10.0D),
-            Block.makeCuboidShape(15.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D));
+            Block.box(0.0D, 0.0D, 6.0D, 1.0D, 16.0D, 10.0D),
+            Block.box(15.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D));
     public static final VoxelShape FRAME_X = VoxelShapes.or(
-            Block.makeCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 1.0D),
-            Block.makeCuboidShape(6.0D, 0.0D, 15.0D, 10.0D, 16.0D, 16.0D));
-    public static final VoxelShape FRAME_TOP_Z = Block.makeCuboidShape(0.0D, 15.0D, 6.0D, 16.0D, 16.0D, 10.0D);
-    public static final VoxelShape FRAME_TOP_X = Block.makeCuboidShape(6.0D, 15.0D, 0.0D, 10.0D, 16.0D, 16.0D);
+            Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 1.0D),
+            Block.box(6.0D, 0.0D, 15.0D, 10.0D, 16.0D, 16.0D));
+    public static final VoxelShape FRAME_TOP_Z = Block.box(0.0D, 15.0D, 6.0D, 16.0D, 16.0D, 10.0D);
+    public static final VoxelShape FRAME_TOP_X = Block.box(6.0D, 15.0D, 0.0D, 10.0D, 16.0D, 16.0D);
 
-    public static final VoxelShape DOOR_CLOSE_Z = Block.makeCuboidShape(1.0D, 0.0D, 7.0D, 15.0D, 16.0D, 9.0D);
-    public static final VoxelShape DOOR_CLOSE_X = Block.makeCuboidShape(7.0D, 0.0D, 1.0D, 9.0D, 16.0D, 15.0D);
+    public static final VoxelShape DOOR_CLOSE_Z = Block.box(1.0D, 0.0D, 7.0D, 15.0D, 16.0D, 9.0D);
+    public static final VoxelShape DOOR_CLOSE_X = Block.box(7.0D, 0.0D, 1.0D, 9.0D, 16.0D, 15.0D);
 
-    public static final VoxelShape DOOR_NEGATIVE_Z = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 3.0D, 16.0D, 15.0D);
-    public static final VoxelShape DOOR_POSITIVE_Z = Block.makeCuboidShape(13.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
-    public static final VoxelShape DOOR_NEGATIVE_X = Block.makeCuboidShape(1.0D, 0.0D, 13.0D, 15.0D, 16.0D, 15.0D);
-    public static final VoxelShape DOOR_POSITIVE_X = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 3.0D);
+    public static final VoxelShape DOOR_NEGATIVE_Z = Block.box(1.0D, 0.0D, 1.0D, 3.0D, 16.0D, 15.0D);
+    public static final VoxelShape DOOR_POSITIVE_Z = Block.box(13.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
+    public static final VoxelShape DOOR_NEGATIVE_X = Block.box(1.0D, 0.0D, 13.0D, 15.0D, 16.0D, 15.0D);
+    public static final VoxelShape DOOR_POSITIVE_X = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 3.0D);
     public ElectricFenceGate(Properties property)
     {
-        super(property.notSolid());
-        setDefaultState(getDefaultState()
-                .with(HORIZONTAL_FACING, Direction.NORTH)
-                .with(OPEN, false)
-                .with(IS_TOP, false));
+        super(property.noOcclusion());
+        registerDefaultState(defaultBlockState()
+                .setValue(HORIZONTAL_FACING, Direction.NORTH)
+                .setValue(OPEN, false)
+                .setValue(IS_TOP, false));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(HORIZONTAL_FACING, OPEN, IS_TOP);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         if (!checkValid(currentPos, (World) worldIn))
-            worldIn.destroyBlock(currentPos, !stateIn.get(IS_TOP));
-        BlockState state = worldIn.getBlockState(stateIn.get(IS_TOP) ? currentPos.down() : currentPos.up());
+            worldIn.destroyBlock(currentPos, !stateIn.getValue(IS_TOP));
+        BlockState state = worldIn.getBlockState(stateIn.getValue(IS_TOP) ? currentPos.below() : currentPos.above());
         if (state.getBlock() instanceof ElectricFenceGate)
         {
-            return getDefaultState()
-                    .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                    .with(OPEN, state.get(OPEN))
-                    .with(IS_TOP, stateIn.get(IS_TOP));
+            return defaultBlockState()
+                    .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                    .setValue(OPEN, state.getValue(OPEN))
+                    .setValue(IS_TOP, stateIn.getValue(IS_TOP));
         }
         return stateIn;
     }
@@ -94,34 +94,34 @@ public class ElectricFenceGate extends Block
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        BlockPos blockpos = context.getPos();
-        if (blockpos.getY() < 255 && context.getWorld().getBlockState(blockpos.up()).isReplaceable(context))
+        BlockPos blockpos = context.getClickedPos();
+        if (blockpos.getY() < 255 && context.getLevel().getBlockState(blockpos.above()).canBeReplaced(context))
         {
-            return getDefaultState()
-                    .with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing())
-                    .with(OPEN, false)
-                    .with(IS_TOP, false);
+            return defaultBlockState()
+                    .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
+                    .setValue(OPEN, false)
+                    .setValue(IS_TOP, false);
         }
         return null;
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
     {
         if (!checkValid(pos, worldIn))
         {
-            worldIn.destroyBlock(pos, !state.get(IS_TOP));
+            worldIn.destroyBlock(pos, !state.getValue(IS_TOP));
             return ActionResultType.FAIL;
         }
         if (isPowered(worldIn, pos))
         {
-            worldIn.setBlockState(pos, getDefaultState()
-                    .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                    .with(OPEN, !state.get(OPEN))
-                    .with(IS_TOP, state.get(IS_TOP)));
+            worldIn.setBlockAndUpdate(pos, defaultBlockState()
+                    .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                    .setValue(OPEN, !state.getValue(OPEN))
+                    .setValue(IS_TOP, state.getValue(IS_TOP)));
         }
         else return ActionResultType.FAIL;
-        worldIn.playEvent(player, state.get(OPEN) ? 1005 : 1011, pos, 0);
+        worldIn.levelEvent(player, state.getValue(OPEN) ? 1005 : 1011, pos, 0);
         return ActionResultType.SUCCESS;
     }
 
@@ -131,12 +131,12 @@ public class ElectricFenceGate extends Block
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos.up(), state
-                .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                .with(OPEN, state.get(OPEN))
-                .with(IS_TOP, true));
+        worldIn.setBlockAndUpdate(pos.above(), state
+                .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                .setValue(OPEN, state.getValue(OPEN))
+                .setValue(IS_TOP, true));
     }
 
     @Override
@@ -149,9 +149,9 @@ public class ElectricFenceGate extends Block
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         VoxelShape shape;
-        Direction facing = state.get(HORIZONTAL_FACING);
-        boolean open = state.get(OPEN);
-        boolean top = state.get(IS_TOP);
+        Direction facing = state.getValue(HORIZONTAL_FACING);
+        boolean open = state.getValue(OPEN);
+        boolean top = state.getValue(IS_TOP);
         switch (facing)
         {
             case NORTH:
@@ -200,19 +200,19 @@ public class ElectricFenceGate extends Block
 
     private VoxelShape toTopShape(VoxelShape shape)
     {
-        AxisAlignedBB aabb = shape.getBoundingBox();
-        return Block.makeCuboidShape(aabb.minX * 16, aabb.minY * 16 - 1, aabb.minZ * 16, aabb.maxX * 16, aabb.maxY * 16 - 1, aabb.maxZ * 16);
+        AxisAlignedBB aabb = shape.bounds();
+        return Block.box(aabb.minX * 16, aabb.minY * 16 - 1, aabb.minZ * 16, aabb.maxX * 16, aabb.maxY * 16 - 1, aabb.maxZ * 16);
     }
 
     private boolean checkValid(BlockPos pos, World world)
     {
         BlockState state = world.getBlockState(pos);
-        BlockState state2 = world.getBlockState(state.get(IS_TOP) ? pos.down() : pos.up());
-        return state2.getBlock() instanceof ElectricFenceGate && (state.get(IS_TOP) != state2.get(IS_TOP));
+        BlockState state2 = world.getBlockState(state.getValue(IS_TOP) ? pos.below() : pos.above());
+        return state2.getBlock() instanceof ElectricFenceGate && (state.getValue(IS_TOP) != state2.getValue(IS_TOP));
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         tooltip.add(new StringTextComponent("can be dismantled by wrench"));
     }

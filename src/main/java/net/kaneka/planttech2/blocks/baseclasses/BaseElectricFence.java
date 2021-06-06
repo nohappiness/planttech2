@@ -35,11 +35,11 @@ public class BaseElectricFence extends Block
     public static final IntegerProperty ELECTRIC_POWER = IntegerProperty.create("electric_power", 0, 15);
     public BaseElectricFence(Properties property)
 	{
-		super(property.notSolid().setLightLevel((p) -> 6));
+		super(property.noOcclusion().lightLevel((p) -> 6));
 	}
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(ELECTRIC_POWER);
     }
@@ -49,13 +49,13 @@ public class BaseElectricFence extends Block
         int fencePower = 0;
         for (Direction direction : Direction.values())
         {
-            BlockState state = worldIn.getBlockState(pos.offset(direction));
+            BlockState state = worldIn.getBlockState(pos.relative(direction));
             Block block = state.getBlock();
-            if (block instanceof EnergySupplierBlock && state.get(EnergySupplierBlock.SUPPLYING))
+            if (block instanceof EnergySupplierBlock && state.getValue(EnergySupplierBlock.SUPPLYING))
                 return 15;
             if (block instanceof BaseElectricFence && state.hasProperty(ELECTRIC_POWER))
             {
-                int power = state.get(ELECTRIC_POWER);
+                int power = state.getValue(ELECTRIC_POWER);
                 if (power > fencePower)
                     fencePower = power - 1;
             }
@@ -64,30 +64,30 @@ public class BaseElectricFence extends Block
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
+    public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
     {
-        if (state.get(ELECTRIC_POWER) > 0 && worldIn.getGameTime() % 8L == 0L)
+        if (state.getValue(ELECTRIC_POWER) > 0 && worldIn.getGameTime() % 8L == 0L)
         {
             if (entityIn instanceof LivingEntity)
             {
                 if (worldIn.isRaining() && worldIn.canSeeSky(pos))
                 {
-                    entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 5.0F);
-                    if (worldIn.isRemote)
-                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.LARGE_SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.75F, 50F);
+                    entityIn.hurt(ModDamageSources.ELECTRIC_FENCE, 5.0F);
+                    if (worldIn.isClientSide)
+                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.LARGE_SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.75F, 50F);
                 }
                 else
                 {
-                    entityIn.attackEntityFrom(ModDamageSources.ELECTRIC_FENCE, 2.5F);
-                    if (worldIn.isRemote)
-                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.55F, 20F);
+                    entityIn.hurt(ModDamageSources.ELECTRIC_FENCE, 2.5F);
+                    if (worldIn.isClientSide)
+                        doCollideAnimation(pos, worldIn, 1, ParticleTypes.SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.55F, 20F);
                 }
             }
             else
             {
                 entityIn.remove();
-                if (worldIn.isRemote)
-                    doCollideAnimation(pos, worldIn, 7, ParticleTypes.SMOKE, SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.8F, 20F);
+                if (worldIn.isClientSide)
+                    doCollideAnimation(pos, worldIn, 7, ParticleTypes.SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.8F, 20F);
             }
         }
     }
@@ -99,7 +99,7 @@ public class BaseElectricFence extends Block
         double z = pos.getZ();
         Random random = new Random();
         // worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
-        worldIn.playSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
+        worldIn.playLocalSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
         for (int i = 0; i < amount; i++)
             worldIn.addParticle(particle, x + random.nextFloat(), y + random.nextFloat(), z + random.nextFloat(), 0.0D, 0.0D, 0.0D);
     }
@@ -107,13 +107,13 @@ public class BaseElectricFence extends Block
     @Override
     public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
     {
-        if (stateIn.get(ELECTRIC_POWER) > 0 && rand.nextInt(350) == 1)
-            if (worldIn.isRemote)
+        if (stateIn.getValue(ELECTRIC_POWER) > 0 && rand.nextInt(350) == 1)
+            if (worldIn.isClientSide)
                 doCollideAnimation(pos, worldIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         tooltip.add(new StringTextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }

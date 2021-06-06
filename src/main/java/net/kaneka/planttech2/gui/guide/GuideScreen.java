@@ -228,7 +228,7 @@ public class GuideScreen extends Screen
 	{
 		this.renderBackground(mStack);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND);
+		minecraft.getTextureManager().bind(BACKGROUND);
 		
 		this.drawBackground(mStack);
 		this.drawForeground(mStack);
@@ -260,7 +260,7 @@ public class GuideScreen extends Screen
 				RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 				for(GuidePicture pic: pics)
 				{
-    				minecraft.getTextureManager().bindTexture(pic.getResloc());
+    				minecraft.getTextureManager().bind(pic.getResloc());
     				blit(mStack, this.guiLeft + pic.getXStart() + 25, this.guiTop + pic.getYStart() + 30, 0, 0, pic.getWidth(), pic.getHeight(), pic.getWidth(), pic.getHeight());
 				}
 			}
@@ -306,12 +306,12 @@ public class GuideScreen extends Screen
 	
 	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
 	{
-		font.drawString(mStack, string, posX - (font.getStringWidth(string) / 2), posY, Integer.parseInt("000000", 16));
+		font.draw(mStack, string, posX - (font.width(string) / 2), posY, Integer.parseInt("000000", 16));
 	}
 	
 	protected void drawLine(MatrixStack mStack, String text, int x, int y)
 	{
-	    font.drawString(mStack, text, x, y, Integer.parseInt("000000",16));
+	    font.draw(mStack, text, x, y, Integer.parseInt("000000",16));
 	}
 	
 	protected void loadEntry()

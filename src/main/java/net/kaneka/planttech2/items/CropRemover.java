@@ -29,21 +29,21 @@ public class CropRemover extends Item
 {
 	public CropRemover()
 	{
-		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN).maxDamage(1024));
-		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
+		super(new Item.Properties().stacksTo(1).tab(ModCreativeTabs.MAIN).durability(1024));
+		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override
-			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
+			protected ItemStack execute(IBlockSource source, ItemStack stack)
 			{
-				World world = source.getWorld();
-				BlockPos target = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-				this.setSuccessful(applyCropRemove(world, target, stack));
-				if (!world.isRemote() && this.isSuccessful())
+				World world = source.getLevel();
+				BlockPos target = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				this.setSuccess(applyCropRemove(world, target, stack));
+				if (!world.isClientSide() && this.isSuccess())
 				{
-					stack.setDamage(stack.getDamage() + 1);
-					if (stack.getDamage() >= stack.getMaxDamage())
+					stack.setDamageValue(stack.getDamageValue() + 1);
+					if (stack.getDamageValue() >= stack.getMaxDamage())
 						stack.shrink(1);
-					world.playEvent(2005, target, 0);
+					world.levelEvent(2005, target, 0);
 				}
 				return stack;
 			}
@@ -51,44 +51,44 @@ public class CropRemover extends Item
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context)
+	public ActionResultType useOn(ItemUseContext context)
 	{
-	    World world = context.getWorld();
-	    BlockPos pos = context.getPos();
-	    ItemStack stack = context.getItem();
+	    World world = context.getLevel();
+	    BlockPos pos = context.getClickedPos();
+	    ItemStack stack = context.getItemInHand();
 		PlayerEntity player = context.getPlayer();
-		if(!world.isRemote && applyCropRemove(world, pos, stack))
+		if(!world.isClientSide && applyCropRemove(world, pos, stack))
 		{
-			if (player != null && !player.abilities.isCreativeMode)
+			if (player != null && !player.abilities.instabuild)
 			{
-				stack.damageItem(1, player, (player2) -> player2.sendBreakAnimation(context.getHand()));
-				if (stack.getDamage() >= stack.getMaxDamage())
+				stack.hurtAndBreak(1, player, (player2) -> player2.broadcastBreakEvent(context.getHand()));
+				if (stack.getDamageValue() >= stack.getMaxDamage())
 					stack.shrink(1);
 			}
 			return ActionResultType.CONSUME;
 		}
-		return super.onItemUse(context);
+		return super.useOn(context);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(new StringTextComponent("Rightclick on cropbars to remove crop"));
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	public static boolean applyCropRemove(World world, BlockPos pos, ItemStack stack)
 	{
 		BlockState state = world.getBlockState(pos);
-		TileEntity tileentity = world.getTileEntity(pos);
+		TileEntity tileentity = world.getBlockEntity(pos);
 		if(tileentity instanceof CropsTileEntity)
 		{
 			List<ItemStack> drops = Lists.newArrayList();
-			int growstate = state.get(CropBaseBlock.GROWSTATE);
+			int growstate = state.getValue(CropBaseBlock.GROWSTATE);
 			((CropsTileEntity) tileentity).addDrops(drops, growstate);
 			for(ItemStack drop : drops)
-				Block.spawnAsEntity(world, pos, drop);
-			world.setBlockState(pos, ModBlocks.CROPBARS.getDefaultState());
+				Block.popResource(world, pos, drop);
+			world.setBlockAndUpdate(pos, ModBlocks.CROPBARS.defaultBlockState());
 			return true;
 		}
 		return false;

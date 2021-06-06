@@ -138,22 +138,22 @@ public class DropEntry implements ISerializable
             int min = 1, max = 1;
             if (json.isJsonPrimitive())
             {
-                itemLocation = new ResourceLocation(JSONUtils.getString(json, "drops"));
+                itemLocation = new ResourceLocation(JSONUtils.convertToString(json, "drops"));
             } else if (json.isJsonObject())
             {
                 JsonObject obj = json.getAsJsonObject();
-                itemLocation = new ResourceLocation(JSONUtils.getString(obj, "item"));
+                itemLocation = new ResourceLocation(JSONUtils.getAsString(obj, "item"));
                 if (obj.has("min"))
                 {
-                    min = JSONUtils.getInt(obj, "min");
+                    min = JSONUtils.getAsInt(obj, "min");
                 }
                 if (obj.has("max"))
                 {
-                    max = JSONUtils.getInt(obj, "max");
+                    max = JSONUtils.getAsInt(obj, "max");
                 }
             } else
             {
-                throw new JsonSyntaxException("Expected either a string or an object, got " + JSONUtils.toString(json));
+                throw new JsonSyntaxException("Expected either a string or an object, got " + JSONUtils.getType(json));
             }
             if (min < 0) { throw new JsonSyntaxException("min has a negative value"); }
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }

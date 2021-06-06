@@ -42,11 +42,11 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean matches(IInventory inv, World worldIn)
 	{
-		return input.getItem() == inv.getStackInSlot(0).getItem();
+		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory inv)
+	public ItemStack assemble(IInventory inv)
 	{
 		return output.copy();
 	}
@@ -57,13 +57,13 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
+	public ItemStack getResultItem()
 	{
 		return output.copy();
 	}
@@ -98,7 +98,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "compressing");
 
 		@Override
-		public CompressorRecipe read(ResourceLocation recipeId, JsonObject json)
+		public CompressorRecipe fromJson(ResourceLocation recipeId, JsonObject json)
 		{
 			
 			JsonObject inputobject = json.getAsJsonObject("input");
@@ -121,7 +121,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			ItemStack inputstack = null;
 			if (inputitem != null)
 			{
-				inputstack = new ItemStack(inputitem, JSONUtils.getInt(inputobject, "amount", 1));
+				inputstack = new ItemStack(inputitem, JSONUtils.getAsInt(inputobject, "amount", 1));
 			}
 
 			JsonObject resultobject = json.getAsJsonObject("result");
@@ -137,7 +137,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 				if (resultobject.has("enchantment")) {
 				 	JsonObject enchantment = resultobject.getAsJsonObject("enchantment");
 					enchantType = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.get("type").getAsString()));
-					enchantLevel = JSONUtils.getInt(enchantment, "level", 1);
+					enchantLevel = JSONUtils.getAsInt(enchantment, "level", 1);
 				}
 
 			} else if (resultobject.has("block"))// Just in case
@@ -152,9 +152,9 @@ public class CompressorRecipe implements IRecipe<IInventory>
 			ItemStack resultstack = null;
 			if (resultitem != null)
 			{
-				resultstack = new ItemStack(resultitem, JSONUtils.getInt(resultobject, "amount", 1));
-				if (effect != null) { PotionUtils.addPotionToItemStack(resultstack, effect); }
-				else if (enchantType != null) { resultstack.addEnchantment(enchantType, enchantLevel); }
+				resultstack = new ItemStack(resultitem, JSONUtils.getAsInt(resultobject, "amount", 1));
+				if (effect != null) { PotionUtils.setPotion(resultstack, effect); }
+				else if (enchantType != null) { resultstack.enchant(enchantType, enchantLevel); }
 			}
 
 			if (inputstack != null && resultstack != null)
@@ -168,18 +168,18 @@ public class CompressorRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public CompressorRecipe read(ResourceLocation recipeId, PacketBuffer buffer)
+		public CompressorRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
 		{
-			ItemStack input = buffer.readItemStack();
-			ItemStack result = buffer.readItemStack();
+			ItemStack input = buffer.readItem();
+			ItemStack result = buffer.readItem();
 			return new CompressorRecipe(recipeId, input, result);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, CompressorRecipe recipe)
+		public void toNetwork(PacketBuffer buffer, CompressorRecipe recipe)
 		{
-			buffer.writeItemStack(recipe.input);
-			buffer.writeItemStack(recipe.output);
+			buffer.writeItem(recipe.input);
+			buffer.writeItem(recipe.output);
 		}
 	}
 }

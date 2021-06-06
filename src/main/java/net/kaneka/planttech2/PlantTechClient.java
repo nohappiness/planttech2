@@ -23,26 +23,26 @@ public class PlantTechClient
 
 	public static void addAllItemModelsOverrides()
 	{
-		ItemModelsProperties.registerProperty(
+		ItemModelsProperties.register(
 				ModItems.MULTITOOL, DRILLING_PREDICATE,
-				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.ticksExisted % 4) + 1
+				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.tickCount % 4) + 1
 		);
-		ItemModelsProperties.registerProperty(
+		ItemModelsProperties.register(
 				ModItems.PLANT_OBTAINER, FILLED_PREDICATE,
 				(stack, world, entity) -> {
 					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
 					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F;
 				}
 		);
-		ItemModelsProperties.registerProperty(ModItems.BIOMASSCONTAINER, FILLED_PREDICATE,
+		ItemModelsProperties.register(ModItems.BIOMASSCONTAINER, FILLED_PREDICATE,
 				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
-		ItemModelsProperties.registerProperty(
+		ItemModelsProperties.register(
 				ModItems.CYBERBOW, PULL_PREDICATE,
-				(stack, world, entity) -> entity == null || !(entity.getActiveItemStack().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getItemInUseCount()) / 20.0F
+				(stack, world, entity) -> entity == null || !(entity.getUseItem().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F
 		);
-		ItemModelsProperties.registerProperty(
+		ItemModelsProperties.register(
 				ModItems.CYBERBOW, PULLING_PREDICATE,
-				(stack, world, entity) -> entity != null && entity.isHandActive() && entity.getActiveItemStack() == stack ? 1.0F : 0.0F);
+				(stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
 	}
 
 	public static void openGuideScreen(GuideItem guide)
@@ -53,6 +53,6 @@ public class PlantTechClient
 
 	public static void openScreen(Screen screen)
 	{
-		Minecraft.getInstance().displayGuiScreen(screen);
+		Minecraft.getInstance().setScreen(screen);
 	}
 }

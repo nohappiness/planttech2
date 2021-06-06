@@ -95,7 +95,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 8;
 		}
@@ -178,7 +178,7 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 				ItemStack outputslot = itemhandler.getStackInSlot(slot + 6);
 				if (outputslot.isEmpty())
 					return true;
-				else if (!output.isItemEqual(outputslot))
+				else if (!output.sameItem(outputslot))
 					return false;
 				else if (outputslot.getCount() + output.getCount() <= 64 && outputslot.getCount() + output.getCount() <= outputslot.getMaxStackSize())
 					return true;
@@ -191,13 +191,13 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	
 	public ItemStack getOutput(int slot)
 	{
-		if (world == null)
+		if (level == null)
 			return ItemStack.EMPTY;
 		dummyitemhandler.setStackInSlot(0, itemhandler.getStackInSlot(slot));
 		RecipeWrapper wrapper = new RecipeWrapper(dummyitemhandler);
-		Optional<FurnaceRecipe> recipeopt = world.getRecipeManager().getRecipe(IRecipeType.SMELTING, wrapper, world);
+		Optional<FurnaceRecipe> recipeopt = level.getRecipeManager().getRecipeFor(IRecipeType.SMELTING, wrapper, level);
 		FurnaceRecipe recipe = recipeopt.orElse(null); 
-		return recipe == null ? ItemStack.EMPTY : recipe.getRecipeOutput();
+		return recipe == null ? ItemStack.EMPTY : recipe.getResultItem();
 	}
 
 	public void smeltItem(int slot)
@@ -216,16 +216,16 @@ public class MegaFurnaceTileEntity extends EnergyInventoryTileEntity
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
 		compound.putIntArray("cooktime", ticksPassed);
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		ticksPassed = compound.getIntArray("cooktime");
 	}
 

@@ -37,7 +37,7 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	@Override
 	public void tick()
 	{
-		if (this.world != null && !this.world.isRemote)
+		if (this.level != null && !this.level.isClientSide)
 			doUpdate();
 	}
 
@@ -52,16 +52,16 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
 		compound.put("energy", this.energystorage.serializeNBT());
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		this.energystorage.deserializeNBT(compound.getCompound("energy"));
 	}
 
@@ -82,9 +82,9 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 
 	public boolean isUsableByPlayer(PlayerEntity player)
 	{
-		if (world == null || this.world.getTileEntity(pos) != this)
+		if (level == null || this.level.getBlockEntity(worldPosition) != this)
 			return false;
-		return player.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D, (double) this.pos.getZ() + 0.5D) <= 64.0D;
+		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 
 
@@ -108,10 +108,10 @@ abstract public class EnergyTileEntity extends TileEntity implements ITickableTi
 
 	public void notifyClient()
 	{
-		if (world != null && !world.isRemote())
+		if (level != null && !level.isClientSide())
 		{
-			BlockState state = world.getBlockState(getPos());
-			world.notifyBlockUpdate(getPos(), state, state, 3);
+			BlockState state = level.getBlockState(getBlockPos());
+			level.sendBlockUpdated(getBlockPos(), state, state, 3);
 		}
 	}
 

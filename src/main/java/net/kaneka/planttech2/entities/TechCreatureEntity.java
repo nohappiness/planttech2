@@ -43,7 +43,7 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
             this.onPassiveEnds();
         else if (this.isPassiveActive())
             this.onPassiveActive();
-        if (!world.isRemote())
+        if (!level.isClientSide())
         {
             if (this.matchPassiveCriteria())
                 if (this.onPassiveActivate())
@@ -56,11 +56,11 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
                 if (modifier != null && (this.isPassiveActive() || modifier.getAmount() != amount))
                     attribute.removeModifier(MOVEMENT_SPEED_MODIFIER);
                 else if (modifier == null)
-                    attribute.applyPersistentModifier(new AttributeModifier(MOVEMENT_SPEED_MODIFIER, "Speed Modifier", -amount, AttributeModifier.Operation.ADDITION));
+                    attribute.addPermanentModifier(new AttributeModifier(MOVEMENT_SPEED_MODIFIER, "Speed Modifier", -amount, AttributeModifier.Operation.ADDITION));
             }
         }
-        this.idleTime++;
-        if (this.getHealth() < this.getMaxHealth() && this.idleTime > 300 && this.idleTime % 12 == 0)
+        this.noActionTime++;
+        if (this.getHealth() < this.getMaxHealth() && this.noActionTime > 300 && this.noActionTime % 12 == 0)
         {
             this.heal(Math.max(0.5F, (this.getMaxHealth() - this.getHealth()) / 30));
             this.spawnParticles(ParticleTypes.HAPPY_VILLAGER);
@@ -68,19 +68,19 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
     }
 
     @Override
-    protected ActionResultType getEntityInteractionResult(PlayerEntity player, Hand hand)
+    protected ActionResultType mobInteract(PlayerEntity player, Hand hand)
     {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem() == ModItems.BIOMASS)
             if (this.getHealth() < this.getMaxHealth())
             {
                 this.heal(this.getMaxHealth() / 4);
-                if (!player.abilities.isCreativeMode)
+                if (!player.abilities.instabuild)
                     stack.shrink(1);
                 this.spawnParticles(ParticleTypes.HAPPY_VILLAGER);
                 return ActionResultType.CONSUME;
             }
-        return super.getEntityInteractionResult(player, hand);
+        return super.mobInteract(player, hand);
     }
 
     protected boolean matchPassiveCriteria()
@@ -91,8 +91,8 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
     protected boolean onPassiveActivate()
     {
         this.spawnParticles(ParticleTypes.EXPLOSION);
-        this.addPotionEffect(new EffectInstance(Effects.SPEED, 60));
-        this.addPotionEffect(new EffectInstance(Effects.REGENERATION, 100));
+        this.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 60));
+        this.addEffect(new EffectInstance(Effects.REGENERATION, 100));
         return true;
     }
 
@@ -108,23 +108,23 @@ public abstract class TechCreatureEntity extends CreatureEntity implements IAffe
 
     protected void spawnParticles(IParticleData particle)
     {
-        if (world.isRemote())
+        if (level.isClientSide())
             for (int i=0;i<7;i++)
-                world.addParticle(particle, this.getPosX() - this.getWidth() / 2 + this.rand.nextFloat() * this.getWidth(), this.getPosY() + this.rand.nextFloat() * this.getWidth(), this.getPosZ() - this.getWidth() / 2 + this.rand.nextFloat() * this.getWidth(), 0.0F, 0.0F, 0.0F);
+                level.addParticle(particle, this.getX() - this.getBbWidth() / 2 + this.random.nextFloat() * this.getBbWidth(), this.getY() + this.random.nextFloat() * this.getBbWidth(), this.getZ() - this.getBbWidth() / 2 + this.random.nextFloat() * this.getBbWidth(), 0.0F, 0.0F, 0.0F);
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound)
+    public void addAdditionalSaveData(CompoundNBT compound)
     {
         compound.putInt("passivecooldown", this.passiveCooldown);
-        super.writeAdditional(compound);
+        super.addAdditionalSaveData(compound);
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound)
+    public void readAdditionalSaveData(CompoundNBT compound)
     {
         this.passiveCooldown = compound.getInt("passivecooldown");
-        super.readAdditional(compound);
+        super.readAdditionalSaveData(compound);
     }
 
     protected int getPassiveDuration()

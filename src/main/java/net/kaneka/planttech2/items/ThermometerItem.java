@@ -16,14 +16,14 @@ public class ThermometerItem extends Item
 
 	public ThermometerItem()
 	{
-		super(new Item.Properties().group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().tab(ModCreativeTabs.MAIN));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
-		if (worldIn.isRemote)
-			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getString()).appendString(": ").appendSibling(EnumTemperature.byValue(worldIn.getBiomeManager().getBiome(playerIn.getPosition()).getTemperature(playerIn.getPosition())).getDisplayString()), playerIn.getUniqueID());
-		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+		if (worldIn.isClientSide)
+			playerIn.sendMessage(new StringTextComponent(new TranslationTextComponent("text.biometemperature").getString()).append(": ").append(EnumTemperature.byValue(worldIn.getBiomeManager().getBiome(playerIn.blockPosition()).getTemperature(playerIn.blockPosition())).getDisplayString()), playerIn.getUUID());
+		return ActionResult.pass(playerIn.getItemInHand(handIn));
 	}
 }

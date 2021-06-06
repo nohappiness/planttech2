@@ -12,7 +12,7 @@ public class TagUtils
 	public static Item getAnyTagItem(ResourceLocation res)
 	{
 		Item result = Items.AIR;
-		Collection<Item> items = ItemTags.getCollection().get(res).getAllElements();
+		Collection<Item> items = ItemTags.getAllTags().getTag(res).getValues();
 		for (Item item : items)
 		{
 			result = item;

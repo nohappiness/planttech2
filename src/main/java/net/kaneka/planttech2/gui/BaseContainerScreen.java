@@ -38,10 +38,10 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 	public void init()
     {
         super.init();
-        this.xSize = 208; 
-        this.ySize = 200; 
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
+        this.imageWidth = 208; 
+        this.imageHeight = 200; 
+        this.leftPos = (this.width - this.imageWidth) / 2;
+        this.topPos = (this.height - this.imageHeight) / 2;
     }
 	
 	@Override
@@ -51,7 +51,7 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
 //	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
-	        this.renderHoveredTooltip(mStack, mouseX, mouseY);
+	        this.renderTooltip(mStack, mouseX, mouseY);
 	}
 	
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
@@ -62,8 +62,8 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		
-		posX += this.guiLeft;
-		posY += this.guiTop; 
+		posX += this.leftPos;
+		posY += this.topPos; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
         	renderTooltip(mStack, new StringTextComponent(lines), mouseX, mouseY);
@@ -71,43 +71,43 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(getBackgroundTexture());
-		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		minecraft.getTextureManager().bind(getBackgroundTexture());
+		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack mStack, int mouseX, int mouseY)
 	{
 		String tileName = title.getString();
 		int textcolor = Integer.parseInt("000000",16);
-		font.drawString(mStack, tileName, (this.xSize / 2.0F - font.getStringWidth(tileName) / 2.0F) + 1, 14, textcolor);
+		font.draw(mStack, tileName, (this.imageWidth / 2.0F - font.width(tileName) / 2.0F) + 1, 14, textcolor);
 	}
 	
 	protected int getEnergyStoredScaled(int pixels)
 	{
-		int i = container.getValue(0);
-		int j = container.getValue(1);
+		int i = menu.getValue(0);
+		int j = menu.getValue(1);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 	
 	protected int getFluidStoredScaled(int pixels)
 	{
-		int i = container.getValue(2);
-		int j = container.getValue(3);
+		int i = menu.getValue(2);
+		int j = menu.getValue(3);
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}
 
 	//renderHoveredToolTip
 	@Override
-	protected void renderHoveredTooltip(MatrixStack mStack, int x, int y)
+	protected void renderTooltip(MatrixStack mStack, int x, int y)
 	{
-		if (minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.getHasStack() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
+		if (minecraft.player.inventory.getCarried().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.hasItem() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
 			this.renderTooltip(mStack, new TranslationTextComponent(((SlotItemHandlerWithInfo) this.hoveredSlot).getUsageString()), x, y);
 		else
-			super.renderHoveredTooltip(mStack, x, y);
+			super.renderTooltip(mStack, x, y);
 	}
 
 //	@Override
@@ -126,12 +126,12 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 	@Override
 	public boolean mouseClicked(double posX, double posY, int buttonid)
 	{
-		if(posX - guiLeft >= 190 && posX - guiLeft <= 190 + 10 && posY - guiTop >= 15 && posY - guiTop <= 15 + 11)
+		if(posX - leftPos >= 190 && posX - leftPos <= 190 + 10 && posY - topPos >= 15 && posY - topPos <= 15 + 11)
 		{
 			Guide guide = new Guide();
 			int menu = guide.getMenuByName(getGuideMenuString()); 
 			int entry = guide.getEntryByName(menu, getGuideEntryString()); 
-			Minecraft.getInstance().displayGuiScreen(new GuideScreen(menu, entry));
+			Minecraft.getInstance().setScreen(new GuideScreen(menu, entry));
 			return true; 
 		}
 		return super.mouseClicked(posX, posY, buttonid);

@@ -31,7 +31,7 @@ public class TechVillagerEntity extends AgeableEntity
 	public static final int HEADHUNTER = 2; 
 	public static final int ENGINEER = 3; 
 	
-	private static final DataParameter<Integer> PROFESSION = EntityDataManager.createKey(TechVillagerEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> PROFESSION = EntityDataManager.defineId(TechVillagerEntity.class, DataSerializers.INT);
 
 	private List<TechVillagerTrade> offers;
 
@@ -50,21 +50,21 @@ public class TechVillagerEntity extends AgeableEntity
 
 	@Nullable
 	@Override
-	public AgeableEntity createChild(ServerWorld world, AgeableEntity ageableEntity)
+	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity ageableEntity)
 	{
-		return new TechVillagerEntity(ModEntityTypes.TECHVILLAGERENTITY, this.world);
+		return new TechVillagerEntity(ModEntityTypes.TECHVILLAGERENTITY, this.level);
 	}
 
 	@Override
-	protected void registerData()
+	protected void defineSynchedData()
 	{
-		super.registerData();
-		this.dataManager.register(PROFESSION, 0);
+		super.defineSynchedData();
+		this.entityData.define(PROFESSION, 0);
 	}
 	
 	public int getProfession()
 	{
-		return dataManager.get(PROFESSION); 
+		return entityData.get(PROFESSION); 
 	}
 	
 	public static String getProfessionString(int profession)
@@ -113,9 +113,9 @@ public class TechVillagerEntity extends AgeableEntity
 	}
 	
 	@Override
-	public void readAdditional(CompoundNBT compound)
+	public void readAdditionalSaveData(CompoundNBT compound)
 	{
-		super.readAdditional(compound);
+		super.readAdditionalSaveData(compound);
 		offers = new ArrayList<>();
 		for (int i = 0; i < compound.getInt("length_trades"); i++)
 		{
@@ -125,9 +125,9 @@ public class TechVillagerEntity extends AgeableEntity
 
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound)
+	public void addAdditionalSaveData(CompoundNBT compound)
 	{
-		super.writeAdditional(compound);
+		super.addAdditionalSaveData(compound);
 		if(offers != null)
 		{
     		compound.putInt("length_trades", offers.size());
@@ -143,9 +143,9 @@ public class TechVillagerEntity extends AgeableEntity
 	}
 
 	@Override
-	protected ActionResultType getEntityInteractionResult(PlayerEntity player, Hand hand)
+	protected ActionResultType mobInteract(PlayerEntity player, Hand hand)
 	{
-		if (hand == Hand.MAIN_HAND && !world.isRemote)
+		if (hand == Hand.MAIN_HAND && !level.isClientSide)
 		{
 			if (player instanceof ServerPlayerEntity)
 			{
@@ -161,11 +161,11 @@ public class TechVillagerEntity extends AgeableEntity
 				return ActionResultType.SUCCESS;
 			}
 		}
-		return super.getEntityInteractionResult(player, hand);
+		return super.mobInteract(player, hand);
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer)
+	public boolean removeWhenFarAway(double distanceToClosestPlayer)
 	{
 		return false;
 	}

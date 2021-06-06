@@ -12,7 +12,7 @@ public class ParticleItem extends Item
 	
 	public ParticleItem(String name)
 	{
-		super(new Item.Properties().group(ModCreativeTabs.PARTICLES));
+		super(new Item.Properties().tab(ModCreativeTabs.PARTICLES));
 		this.entryName = name; 
 	}
 	

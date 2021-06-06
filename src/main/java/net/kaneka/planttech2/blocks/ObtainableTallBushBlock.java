@@ -24,8 +24,8 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     public ObtainableTallBushBlock(float width, float height)
     {
         super(width, height);
-        setDefaultState(getDefaultState()
-                .with(IS_TOP, false));
+        registerDefaultState(defaultBlockState()
+                .setValue(IS_TOP, false));
     }
 
     public ObtainableTallBushBlock()
@@ -34,54 +34,54 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(IS_TOP);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
         if (!checkValid(currentPos, (World) worldIn))
-            worldIn.destroyBlock(currentPos, !stateIn.get(IS_TOP));
-        BlockState state = worldIn.getBlockState(stateIn.get(IS_TOP) ? currentPos.down() : currentPos.up());
-        return state.getBlock() == this ? getDefaultState().with(IS_TOP, stateIn.get(IS_TOP)) : stateIn;
+            worldIn.destroyBlock(currentPos, !stateIn.getValue(IS_TOP));
+        BlockState state = worldIn.getBlockState(stateIn.getValue(IS_TOP) ? currentPos.below() : currentPos.above());
+        return state.getBlock() == this ? defaultBlockState().setValue(IS_TOP, stateIn.getValue(IS_TOP)) : stateIn;
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        BlockPos blockpos = context.getPos();
-        if (blockpos.getY() < 255 && context.getWorld().getBlockState(blockpos.up()).isReplaceable(context))
-            return getDefaultState()
-                    .with(IS_TOP, false);
+        BlockPos blockpos = context.getClickedPos();
+        if (blockpos.getY() < 255 && context.getLevel().getBlockState(blockpos.above()).canBeReplaced(context))
+            return defaultBlockState()
+                    .setValue(IS_TOP, false);
         return null;
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
-        worldIn.setBlockState(pos.up(), state
-                .with(IS_TOP, true));
+        worldIn.setBlockAndUpdate(pos.above(), state
+                .setValue(IS_TOP, true));
     }
 
     private boolean checkValid(BlockPos pos, World world)
     {
         BlockState state = world.getBlockState(pos);
-        BlockState state2 = world.getBlockState(state.get(IS_TOP) ? pos.down() : pos.up());
-        return state2.getBlock() == this && (state.get(IS_TOP) != state2.get(IS_TOP));
+        BlockState state2 = world.getBlockState(state.getValue(IS_TOP) ? pos.below() : pos.above());
+        return state2.getBlock() == this && (state.getValue(IS_TOP) != state2.getValue(IS_TOP));
     }
 
     @Override
     public boolean canPlaceAt(World world, BlockPos pos)
     {
-        return super.canPlaceAt(world, pos) && pos.getY() < 255 && world.isAirBlock(pos.up());
+        return super.canPlaceAt(world, pos) && pos.getY() < 255 && world.isEmptyBlock(pos.above());
     }
 
     @Override
     public void onReleased(ItemUseContext context, BlockState state)
     {
-        context.getWorld().setBlockState(context.getPos().offset(context.getFace()), getDefaultState());
-        onBlockPlacedBy(context.getWorld(), context.getPos().offset(context.getFace()), state, context.getPlayer(), context.getItem());
+        context.getLevel().setBlockAndUpdate(context.getClickedPos().relative(context.getClickedFace()), defaultBlockState());
+        setPlacedBy(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), state, context.getPlayer(), context.getItemInHand());
     }
 }

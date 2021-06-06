@@ -79,7 +79,7 @@ public class PlantTechMain
 
     private static void registerAllEntityAttributes()
     {
-        GlobalEntityTypeAttributes.put(ModEntityTypes.TECHGHOULENTITY, TechGhoulEntity.getAttributes().create());
+        //GlobalEntityTypeAttributes.put(ModEntityTypes.TECHGHOULENTITY, TechGhoulEntity.getAttributes().build());
     }
 
     public static CropList getCropList() {

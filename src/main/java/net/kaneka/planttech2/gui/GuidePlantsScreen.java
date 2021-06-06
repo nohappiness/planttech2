@@ -175,21 +175,21 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	{
 		if (hasSelection)
 		{
-			this.drawTooltip(mStack, primarySeed.getDisplayName(), mouseX, mouseY, 261, 32);
+			this.drawTooltip(mStack, primarySeed.getHoverName(), mouseX, mouseY, 261, 32);
 			if (!soil.isEmpty())
 			{
-				this.drawTooltip(mStack, soil.getDisplayName(), mouseX, mouseY, 217, 65);
+				this.drawTooltip(mStack, soil.getHoverName(), mouseX, mouseY, 217, 65);
 			}
 			this.drawTooltip(mStack, temp.getDisplayString(), mouseX, mouseY, 307, 65);
 
 			for (int i = 0; i < 9; i++)
 			{
 				if (!seeds[i].isEmpty())
-					this.drawTooltip(mStack, seeds[i].getDisplayName(), mouseX, mouseY, 189 + 18 * i, 98);
+					this.drawTooltip(mStack, seeds[i].getHoverName(), mouseX, mouseY, 189 + 18 * i, 98);
 
 				if (drops[i] != DropEntry.EMPTY)
-					this.drawTooltip(mStack, new StringTextComponent("").appendString(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
-									.appendSibling(drops[i].getItem().get().asItem().getName()), mouseX, mouseY,
+					this.drawTooltip(mStack, new StringTextComponent("").append(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
+									.append(drops[i].getItem().get().asItem().getDescription()), mouseX, mouseY,
 							189 + 18 * i, 131);
 			}
 
@@ -197,8 +197,8 @@ public class GuidePlantsScreen extends GuideBaseScreen
 			{
 				if (!parents[i][0].isEmpty())
 				{
-					this.drawTooltip(mStack, parents[i][0].getDisplayName(), mouseX, mouseY, 162 + 56 * i, 164);
-					this.drawTooltip(mStack, parents[i][1].getDisplayName(), mouseX, mouseY, 192 + 56 * i, 164);
+					this.drawTooltip(mStack, parents[i][0].getHoverName(), mouseX, mouseY, 162 + 56 * i, 164);
+					this.drawTooltip(mStack, parents[i][1].getHoverName(), mouseX, mouseY, 192 + 56 * i, 164);
 				}
 			}
 		}

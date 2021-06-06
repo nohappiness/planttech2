@@ -819,22 +819,22 @@ public class MachineModels extends BlockModelBase
                  
                 
             	 states.getVariantBuilder(ModBlocks.ENERGYSTORAGE)
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(90).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(180).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(270).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(90).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(180).addModel()
-         			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(270).addModel()
-                	.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(90).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(180).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(270).addModel()
-                	.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(90).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(180).addModel()
-          			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(270).addModel();;
+         			.partialState().with(HorizontalBlock.FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(90).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(180).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 0).modelForState().modelFile(energystorage_tier_0).rotationY(270).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(90).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(180).addModel()
+         			.partialState().with(HorizontalBlock.FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 1).modelForState().modelFile(energystorage_tier_1).rotationY(270).addModel()
+                	.partialState().with(HorizontalBlock.FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(90).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(180).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 2).modelForState().modelFile(energystorage_tier_2).rotationY(270).addModel()
+                	.partialState().with(HorizontalBlock.FACING, Direction.EAST).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(90).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(180).addModel()
+          			.partialState().with(HorizontalBlock.FACING, Direction.WEST).with(EnergyStorageBlock.TIER, 3).modelForState().modelFile(energystorage_tier_3).rotationY(270).addModel();;
          		
                  
                  facingBlock(ModBlocks.IDENTIFIER, identifier);
@@ -883,10 +883,10 @@ public class MachineModels extends BlockModelBase
 		for(int i = 0; i < 7; i++)
 		{
     		states.getVariantBuilder(b)
-    			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.EAST).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
-    			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.NORTH).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
-    			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
-    			.partialState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.WEST).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel();
+    			.partialState().with(HorizontalBlock.FACING, Direction.EAST).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
+    			.partialState().with(HorizontalBlock.FACING, Direction.NORTH).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
+    			.partialState().with(HorizontalBlock.FACING, Direction.SOUTH).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel()
+    			.partialState().with(HorizontalBlock.FACING, Direction.WEST).with(GrowingBlock.GROWINGSTATE, i).modelForState().modelFile(model[i]).addModel();
 		}
 	}
 	

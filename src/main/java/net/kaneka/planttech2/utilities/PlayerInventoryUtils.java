@@ -18,7 +18,7 @@ public class PlayerInventoryUtils
 		int freeSlots = 0;
 		for (int i = 0; i < 36; i++)
 		{
-			if (inv.getStackInSlot(i).isEmpty())
+			if (inv.getItem(i).isEmpty())
 			{
 				freeSlots++;
 				if (freeSlots >= neededSpace)
@@ -37,7 +37,7 @@ public class PlayerInventoryUtils
 			ItemStack stack = stacks.get(i);
 			if (!stack.isEmpty())
 			{
-				if (inv.count(stack.getItem()) < stack.getCount())
+				if (inv.countItem(stack.getItem()) < stack.getCount())
 				{
 					return false;
 				}
@@ -51,7 +51,7 @@ public class PlayerInventoryUtils
 		boolean flag = true; 
 		for(ItemStack stack: stacks)
 		{
-			if(!inv.addItemStackToInventory(stack))
+			if(!inv.add(stack))
 			{
 				flag = false; 
 			}
@@ -77,7 +77,7 @@ public class PlayerInventoryUtils
 		int count = stack.getCount();
 		for (int j = 0; j < 36; j++)
 		{
-			ItemStack invstack = inv.getStackInSlot(j);
+			ItemStack invstack = inv.getItem(j);
 			if (!invstack.isEmpty())
 			{
 				if (invstack.getItem() == stack.getItem())
@@ -87,7 +87,7 @@ public class PlayerInventoryUtils
 					invstack.shrink(k);
 					if (invstack.isEmpty())
 					{
-						inv.setInventorySlotContents(j, ItemStack.EMPTY);
+						inv.setItem(j, ItemStack.EMPTY);
 					}
 					
 					if(count <= 0)
@@ -110,7 +110,7 @@ public class PlayerInventoryUtils
 		int count = 0;
 		for (int i = 0; i < 36; i++)
 		{
-			ItemStack invstack = inv.getStackInSlot(i);
+			ItemStack invstack = inv.getItem(i);
 			if (!invstack.isEmpty())
 			{
 				if(invstack.getItem() instanceof CreditCardItem)
@@ -135,7 +135,7 @@ public class PlayerInventoryUtils
 		}
 		for (int i = 0; i < 36; i++)
 		{
-			ItemStack invstack = inv.getStackInSlot(i);
+			ItemStack invstack = inv.getItem(i);
 			if (!invstack.isEmpty())
 			{
 				if(invstack.getItem() instanceof CreditCardItem)
@@ -157,7 +157,7 @@ public class PlayerInventoryUtils
 	{
 		for (int i = 0; i < 36; i++)
 		{
-			ItemStack invstack = inv.getStackInSlot(i);
+			ItemStack invstack = inv.getItem(i);
 			if (!invstack.isEmpty())
 			{
 				if(invstack.getItem() instanceof CreditCardItem)

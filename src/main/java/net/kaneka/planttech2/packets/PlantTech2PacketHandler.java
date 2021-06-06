@@ -48,7 +48,7 @@ public class PlantTech2PacketHandler
 	{
 		if (!(player instanceof FakePlayer))
 		{
-			INSTANCE.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			INSTANCE.sendTo(msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class DNACombinerTileEntity extends ConvertEnergyInventoryTileEntity
 			}
 
 		}
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}

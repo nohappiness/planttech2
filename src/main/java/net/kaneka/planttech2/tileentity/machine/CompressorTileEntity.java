@@ -59,11 +59,11 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 			case 3:
 				return CompressorTileEntity.this.selectedId;
 			case 4: 
-				return CompressorTileEntity.this.pos.getX(); 
+				return CompressorTileEntity.this.worldPosition.getX(); 
 			case 5: 
-				return CompressorTileEntity.this.pos.getY(); 
+				return CompressorTileEntity.this.worldPosition.getY(); 
 			case 6: 
-				return CompressorTileEntity.this.pos.getZ(); 
+				return CompressorTileEntity.this.worldPosition.getZ(); 
 			default:
 				return 0;
 			}
@@ -86,17 +86,17 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 				CompressorTileEntity.this.setSelectedId(value);
 				break; 
 			case 4:
-				CompressorTileEntity.this.pos = new BlockPos(value, CompressorTileEntity.this.pos.getY(), CompressorTileEntity.this.pos.getZ());
+				CompressorTileEntity.this.worldPosition = new BlockPos(value, CompressorTileEntity.this.worldPosition.getY(), CompressorTileEntity.this.worldPosition.getZ());
 				break;
 			case 5:
-				CompressorTileEntity.this.pos = new BlockPos(CompressorTileEntity.this.pos.getX(), value, CompressorTileEntity.this.pos.getZ());
+				CompressorTileEntity.this.worldPosition = new BlockPos(CompressorTileEntity.this.worldPosition.getX(), value, CompressorTileEntity.this.worldPosition.getZ());
 				break;
 			case 6:
-				CompressorTileEntity.this.pos = new BlockPos(CompressorTileEntity.this.pos.getX(), CompressorTileEntity.this.pos.getY(), value);
+				CompressorTileEntity.this.worldPosition = new BlockPos(CompressorTileEntity.this.worldPosition.getX(), CompressorTileEntity.this.worldPosition.getY(), value);
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 7;
 		}
@@ -202,7 +202,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	@Override
 	public void onContainerUpdated(int slotIndex)
 	{
-		if (world != null && (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem()))
+		if (level != null && (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem()))
 			initRecipeList();
 	}
 
@@ -210,7 +210,7 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	public void initRecipeList()
 	{
 		// reset old values
-		if (world == null || world.isRemote)
+		if (level == null || level.isClientSide)
 			return;
 		for (int i = 0; i < 20; i++)
 			itemhandler.setStackInSlot(i + 3, ItemStack.EMPTY);
@@ -225,17 +225,17 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 		if(!particleStack.isEmpty())
 		{
 			Item particle = particleStack.getItem(); 
-			if(world != null)
+			if(level != null)
 			{
-        		 for (IRecipe<?> recipe : this.world.getRecipeManager().getRecipesForType(ModRecipeTypes.COMPRESSING))
+        		 for (IRecipe<?> recipe : this.level.getRecipeManager().getAllRecipesFor(ModRecipeTypes.COMPRESSING))
         		 {
 					 CompressorRecipe compRecipe = (CompressorRecipe) recipe;
 					 
 					 if (compRecipe.getInput().getItem() == particle)
 					 {
-						 temprecipeList.put(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()),
-						 Pair.of(compRecipe.getRecipeOutput(), compRecipe.getAmountInput()));
-						 keys.add(Item.getIdFromItem(compRecipe.getRecipeOutput().getItem()));
+						 temprecipeList.put(Item.getId(compRecipe.getResultItem().getItem()),
+						 Pair.of(compRecipe.getResultItem(), compRecipe.getAmountInput()));
+						 keys.add(Item.getId(compRecipe.getResultItem().getItem()));
 						 
 						 previousInput = particle;
 					 }
@@ -269,35 +269,35 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 	@Override
 	public CompoundNBT getUpdateTag()
 	{
-		return write(new CompoundNBT());
+		return save(new CompoundNBT());
 	}
 
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
-		return new SUpdateTileEntityPacket(pos, 7414, getUpdateTag());
+		return new SUpdateTileEntityPacket(worldPosition, 7414, getUpdateTag());
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
 	{
-		if (world == null)
+		if (level == null)
 			return;
-		handleUpdateTag(world.getBlockState(pos), pkt.getNbtCompound());
+		handleUpdateTag(level.getBlockState(worldPosition), pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
-		if (world != null && !world.isRemote())
+		if (level != null && !level.isClientSide())
 			compound.putInt("selectedId", getSelectedId());
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		if (compound.contains("selectedId"))
 			setSelectedId(compound.getInt("selectedId"));
 	}

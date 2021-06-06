@@ -42,7 +42,7 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 2;
 		}
@@ -62,19 +62,19 @@ public class EnergyStorageTileEntity extends EnergyInventoryTileEntity
 	@Override
     public void onContainerUpdated(int slotIndex)
     {
-		if (world != null)
+		if (level != null)
 		{
-			if (!world.isRemote)
+			if (!level.isClientSide)
 			{
 				int newTier = getUpgradeTier(TierItem.ItemType.CAPACITY_UPGRADE);
 				if (currentTier != newTier)
 				{
 					energystorage.setEnergyMaxStored(getTotalCapacity());
-					BlockState state = world.getBlockState(pos);
+					BlockState state = level.getBlockState(worldPosition);
 					if (state.getBlock() == ModBlocks.ENERGYSTORAGE)
 					{
-						world.setBlockState(pos, state.with(EnergyStorageBlock.TIER, newTier), 3);
-						markDirty();
+						level.setBlock(worldPosition, state.setValue(EnergyStorageBlock.TIER, newTier), 3);
+						setChanged();
 					}
 					currentTier = newTier;
 				}

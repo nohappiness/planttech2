@@ -21,12 +21,12 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 
 		int l = 0;
 		switch(((SolarGeneratorTileEntity) this.te).getUpgradeTier(0, TierItem.ItemType.SOLAR_FOCUS))
@@ -38,12 +38,12 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 			case 4:l = 35; break;
 		}
 		int j = getWorkLoadScaled(17);
-		blit(mStack, this.guiLeft + 133, this.guiTop + 36, 205, 56, j, l);
+		blit(mStack, this.leftPos + 133, this.topPos + 36, 205, 56, j, l);
 	}
 
 	private int getWorkLoadScaled(int pixels)
 	{
-		int i = container.getValue(2);
+		int i = menu.getValue(2);
 		int j = ((SolarGeneratorTileEntity) this.te).getTicksPerAmount();
 		return i != 0 && j != 0 ? i * pixels / j : 0; 
 	}

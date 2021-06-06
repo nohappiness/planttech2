@@ -37,15 +37,15 @@ public class FacingWallLightBase extends Block
 
     public FacingWallLightBase(Properties property)
     {
-        super(property.notSolid());
-        setDefaultState(getDefaultState()
-                .with(HORIZONTAL_FACING, Direction.NORTH)
-                .with(LIGHT_STATUS, 5)
-                .with(IS_ON, true));
+        super(property.noOcclusion());
+        registerDefaultState(defaultBlockState()
+                .setValue(HORIZONTAL_FACING, Direction.NORTH)
+                .setValue(LIGHT_STATUS, 5)
+                .setValue(IS_ON, true));
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(HORIZONTAL_FACING, LIGHT_STATUS, IS_ON);
     }
@@ -53,57 +53,57 @@ public class FacingWallLightBase extends Block
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return getDefaultState()
-                .with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing())
-                .with(LIGHT_STATUS, 5)
-                .with(IS_ON, true);
+        return defaultBlockState()
+                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
+                .setValue(LIGHT_STATUS, 5)
+                .setValue(IS_ON, true);
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving)
+    public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving)
     {
-        int status = state.get(LIGHT_STATUS);
+        int status = state.getValue(LIGHT_STATUS);
         if (status < 5 && status > 0)
         {
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, new Random().nextInt(20), TickPriority.VERY_LOW);
+            worldIn.getBlockTicks().scheduleTick(pos, this, new Random().nextInt(20), TickPriority.VERY_LOW);
         }
     }
     
     @Override
-    public void onProjectileCollision(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile)
+    public void onProjectileHit(World worldIn, BlockState state, BlockRayTraceResult hit, ProjectileEntity projectile)
     {
-        if (state.get(LIGHT_STATUS) != 0)
+        if (state.getValue(LIGHT_STATUS) != 0)
         {
             /*if (!projectile.removed && projectile.isAlive())
             {
                 projectile.remove();
             }*/
-            worldIn.playSound((PlayerEntity) null, hit.getPos(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 0.8F, 1.0F);
-            worldIn.setBlockState(hit.getPos(), getDefaultState()
-                    .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                    .with(LIGHT_STATUS, state.get(LIGHT_STATUS) - 1)
-                    .with(IS_ON, state.get(IS_ON)));
+            worldIn.playSound((PlayerEntity) null, hit.getBlockPos(), SoundEvents.GLASS_BREAK, SoundCategory.BLOCKS, 0.8F, 1.0F);
+            worldIn.setBlockAndUpdate(hit.getBlockPos(), defaultBlockState()
+                    .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                    .setValue(LIGHT_STATUS, state.getValue(LIGHT_STATUS) - 1)
+                    .setValue(IS_ON, state.getValue(IS_ON)));
         }
     }
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand)
     {
-        int status = state.get(LIGHT_STATUS);
+        int status = state.getValue(LIGHT_STATUS);
         if (status < 5 && status > 0)
         {
-            worldIn.setBlockState(pos, getDefaultState()
-                    .with(HORIZONTAL_FACING, state.get(HORIZONTAL_FACING))
-                    .with(LIGHT_STATUS, state.get(LIGHT_STATUS))
-                    .with(IS_ON, !state.get(IS_ON)));
-            worldIn.getPendingBlockTicks().scheduleTick(pos, this, rand.nextInt(200), TickPriority.VERY_LOW);
+            worldIn.setBlockAndUpdate(pos, defaultBlockState()
+                    .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
+                    .setValue(LIGHT_STATUS, state.getValue(LIGHT_STATUS))
+                    .setValue(IS_ON, !state.getValue(IS_ON)));
+            worldIn.getBlockTicks().scheduleTick(pos, this, rand.nextInt(200), TickPriority.VERY_LOW);
         }
     }
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos)
     {
-        return state.get(IS_ON) ? state.get(LIGHT_STATUS) * 3 : 0;
+        return state.getValue(IS_ON) ? state.getValue(LIGHT_STATUS) * 3 : 0;
     }
 
     @SuppressWarnings("deprecation")
@@ -116,19 +116,19 @@ public class FacingWallLightBase extends Block
     @Override
     public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
     {
-        return state.get(LIGHT_STATUS) == 0 ? Collections.emptyList() : super.getDrops(state, builder);
+        return state.getValue(LIGHT_STATUS) == 0 ? Collections.emptyList() : super.getDrops(state, builder);
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rotation)
     {
-        return state.with(HORIZONTAL_FACING, rotation.rotate(state.get(HORIZONTAL_FACING)));
+        return state.setValue(HORIZONTAL_FACING, rotation.rotate(state.getValue(HORIZONTAL_FACING)));
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror)
     {
-        return state.rotate(mirror.toRotation(state.get(HORIZONTAL_FACING)));
+        return state.rotate(mirror.getRotation(state.getValue(HORIZONTAL_FACING)));
     }
 
 }

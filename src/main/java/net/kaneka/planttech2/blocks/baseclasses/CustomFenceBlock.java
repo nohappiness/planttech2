@@ -32,7 +32,7 @@ public class CustomFenceBlock extends Block
 	public static final BooleanProperty EAST = SixWayBlock.EAST;
 	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
 	public static final BooleanProperty WEST = SixWayBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().stream().filter((facingProperty) -> facingProperty.getKey().getAxis().isHorizontal()).collect(Util.toMapCollector());
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> facingProperty.getKey().getAxis().isHorizontal()).collect(Util.toMap());
 	protected VoxelShape[] collisionShapes;
 	protected VoxelShape[] shapes;
 	private final Object2IntMap<BlockState> statePaletteMap = new Object2IntOpenHashMap<>();
@@ -40,7 +40,7 @@ public class CustomFenceBlock extends Block
 	public CustomFenceBlock(Properties property)
 	{
 		super(property);
-		this.setDefaultState(this.stateContainer.getBaseState().with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));
 		this.collisionShapes = this.makeShapes(1.0F, 1.0F, 24.0F, 0.0F, 24.0F);
 		this.shapes = this.makeShapes(1.0F, 1.0F, 16.0F, 0.0F, 16.0F);
 	}
@@ -48,17 +48,17 @@ public class CustomFenceBlock extends Block
 	public boolean canConnect(BlockState state, boolean isSideSolid, Direction direction)
 	{
 		Block block = state.getBlock();
-		boolean flag = block.isIn(BlockTags.FENCES) && state.getMaterial() == this.material;
-		boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.isParallel(state, direction);
+		boolean flag = block.is(BlockTags.FENCES) && state.getMaterial() == this.material;
+		boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.connectsToDirection(state, direction);
 		boolean flag2 = block instanceof CustomFenceBlock;
-		return !cannotAttach(block) && isSideSolid || flag || flag1 || flag2;
+		return !isExceptionForConnection(block) && isSideSolid || flag || flag1 || flag2;
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		World iblockreader = context.getWorld();
-		BlockPos blockpos = context.getPos();
+		World iblockreader = context.getLevel();
+		BlockPos blockpos = context.getClickedPos();
 		BlockPos blockpos1 = blockpos.north();
 		BlockPos blockpos2 = blockpos.east();
 		BlockPos blockpos3 = blockpos.south();
@@ -68,10 +68,10 @@ public class CustomFenceBlock extends Block
 		BlockState blockstate2 = iblockreader.getBlockState(blockpos3);
 		BlockState blockstate3 = iblockreader.getBlockState(blockpos4);
 		return super.getStateForPlacement(context)
-				.with(NORTH, this.canConnect(blockstate, Block.hasEnoughSolidSide(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
-				.with(EAST, this.canConnect(blockstate1, Block.hasEnoughSolidSide(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
-				.with(SOUTH, this.canConnect(blockstate2, Block.hasEnoughSolidSide(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
-				.with(WEST, this.canConnect(blockstate3, Block.hasEnoughSolidSide(iblockreader, blockpos4, Direction.EAST), Direction.EAST));
+				.setValue(NORTH, this.canConnect(blockstate, Block.canSupportCenter(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
+				.setValue(EAST, this.canConnect(blockstate1, Block.canSupportCenter(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
+				.setValue(SOUTH, this.canConnect(blockstate2, Block.canSupportCenter(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
+				.setValue(WEST, this.canConnect(blockstate3, Block.canSupportCenter(iblockreader, blockpos4, Direction.EAST), Direction.EAST));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -80,11 +80,11 @@ public class CustomFenceBlock extends Block
 	{
 		switch (rot) {
 			case CLOCKWISE_180:
-				return state.with(NORTH, state.get(SOUTH)).with(EAST, state.get(WEST)).with(SOUTH, state.get(NORTH)).with(WEST, state.get(EAST));
+				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
 			case COUNTERCLOCKWISE_90:
-				return state.with(NORTH, state.get(EAST)).with(EAST, state.get(SOUTH)).with(SOUTH, state.get(WEST)).with(WEST, state.get(NORTH));
+				return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
 			case CLOCKWISE_90:
-				return state.with(NORTH, state.get(WEST)).with(EAST, state.get(NORTH)).with(SOUTH, state.get(EAST)).with(WEST, state.get(SOUTH));
+				return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
 			default:
 				return state;
 		}
@@ -96,9 +96,9 @@ public class CustomFenceBlock extends Block
 	{
 		switch (mirrorIn) {
 			case LEFT_RIGHT:
-				return state.with(NORTH, state.get(SOUTH)).with(SOUTH, state.get(NORTH));
+				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
 			case FRONT_BACK:
-				return state.with(EAST, state.get(WEST)).with(WEST, state.get(EAST));
+				return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
 			default:
 				return super.mirror(state, mirrorIn);
 		}
@@ -120,7 +120,7 @@ public class CustomFenceBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos)
+	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos)
 	{
 //		return this.renderShapes[this.getIndex(state)];
 		return this.collisionShapes[this.getIndex(state)];
@@ -128,33 +128,33 @@ public class CustomFenceBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
 
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL
-				? stateIn.with(FACING_TO_PROPERTY_MAP.get(facing),
-				this.canConnect(facingState, Block.hasEnoughSolidSide(worldIn, facingPos, facing.getOpposite()), facing.getOpposite())
+				? stateIn.setValue(FACING_TO_PROPERTY_MAP.get(facing),
+				this.canConnect(facingState, Block.canSupportCenter(worldIn, facingPos, facing.getOpposite()), facing.getOpposite())
 		)
-				: super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+				: super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	protected int getIndex(BlockState state)
 	{
 		return this.statePaletteMap.computeIntIfAbsent(state, (stateIn) -> {
 			int i = 0;
-			if (stateIn.get(NORTH)) {
+			if (stateIn.getValue(NORTH)) {
 				i |= getMask(Direction.NORTH);
 			}
 
-			if (stateIn.get(EAST)) {
+			if (stateIn.getValue(EAST)) {
 				i |= getMask(Direction.EAST);
 			}
 
-			if (stateIn.get(SOUTH)) {
+			if (stateIn.getValue(SOUTH)) {
 				i |= getMask(Direction.SOUTH);
 			}
 
-			if (stateIn.get(WEST)) {
+			if (stateIn.getValue(WEST)) {
 				i |= getMask(Direction.WEST);
 			}
 
@@ -164,11 +164,11 @@ public class CustomFenceBlock extends Block
 
 	private static int getMask(Direction facing)
 	{
-		return 1 << facing.getHorizontalIndex();
+		return 1 << facing.get2DDataValue();
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}
@@ -179,11 +179,11 @@ public class CustomFenceBlock extends Block
 		float f1 = 8.0F + nodeWidth;
 		float f2 = 8.0F - extensionWidth;
 		float f3 = 8.0F + extensionWidth;
-		VoxelShape voxelshape = Block.makeCuboidShape(f, 0.0D, f, f1, nodeHeight, f1);
-		VoxelShape voxelshape1 = Block.makeCuboidShape(f2, extensionBottom, 0.0D, f3, extensionHeight, f3);
-		VoxelShape voxelshape2 = Block.makeCuboidShape(f2, extensionBottom, f2, f3, extensionHeight, 16.0D);
-		VoxelShape voxelshape3 = Block.makeCuboidShape(0.0D, extensionBottom, f2, f3, extensionHeight, f3);
-		VoxelShape voxelshape4 = Block.makeCuboidShape(f2, extensionBottom, f2, 16.0D, extensionHeight, f3);
+		VoxelShape voxelshape = Block.box(f, 0.0D, f, f1, nodeHeight, f1);
+		VoxelShape voxelshape1 = Block.box(f2, extensionBottom, 0.0D, f3, extensionHeight, f3);
+		VoxelShape voxelshape2 = Block.box(f2, extensionBottom, f2, f3, extensionHeight, 16.0D);
+		VoxelShape voxelshape3 = Block.box(0.0D, extensionBottom, f2, f3, extensionHeight, f3);
+		VoxelShape voxelshape4 = Block.box(f2, extensionBottom, f2, 16.0D, extensionHeight, f3);
 		VoxelShape voxelshape5 = VoxelShapes.or(voxelshape1, voxelshape4);
 		VoxelShape voxelshape6 = VoxelShapes.or(voxelshape2, voxelshape3);
 		VoxelShape[] avoxelshape = new VoxelShape[] { VoxelShapes.empty(), voxelshape2, voxelshape3, voxelshape6, voxelshape1, VoxelShapes.or(voxelshape2, voxelshape1), VoxelShapes.or(voxelshape3, voxelshape1), VoxelShapes.or(voxelshape6, voxelshape1), voxelshape4, VoxelShapes.or(voxelshape2, voxelshape4), VoxelShapes.or(voxelshape3, voxelshape4), VoxelShapes.or(voxelshape6, voxelshape4), voxelshape5, VoxelShapes.or(voxelshape2, voxelshape5), VoxelShapes.or(voxelshape3, voxelshape5),

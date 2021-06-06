@@ -12,11 +12,11 @@ import net.minecraft.block.AbstractBlock.Properties;
 
 public class FibreFence extends AbstractCustomFence
 {
-    public static final VoxelShape POST = Block.makeCuboidShape(7.5D, 0.10D, 7.5D, 8.5D, 15.90D, 8.5D);
-    public static final VoxelShape NEGATIVE_Z = Block.makeCuboidShape(7.0D, 0.10D, 0.10D, 9.0D, 15.90D, 8.5D);
-    public static final VoxelShape POSITIVE_Z = Block.makeCuboidShape(7.0D, 0.10D, 7.5D, 9.0D, 15.90D, 15.90D);
-    public static final VoxelShape NEGATIVE_X = Block.makeCuboidShape(0.10D, 0.10D, 7.0D, 8.5D, 15.90D, 9.0D);
-    public static final VoxelShape POSITIVE_X = Block.makeCuboidShape(7.5D, 0.10D, 7.0D, 15.90D, 15.90D, 9.0D);
+    public static final VoxelShape POST = Block.box(7.5D, 0.10D, 7.5D, 8.5D, 15.90D, 8.5D);
+    public static final VoxelShape NEGATIVE_Z = Block.box(7.0D, 0.10D, 0.10D, 9.0D, 15.90D, 8.5D);
+    public static final VoxelShape POSITIVE_Z = Block.box(7.0D, 0.10D, 7.5D, 9.0D, 15.90D, 15.90D);
+    public static final VoxelShape NEGATIVE_X = Block.box(0.10D, 0.10D, 7.0D, 8.5D, 15.90D, 9.0D);
+    public static final VoxelShape POSITIVE_X = Block.box(7.5D, 0.10D, 7.0D, 15.90D, 15.90D, 9.0D);
 
     public FibreFence(Properties property)
     {
@@ -26,7 +26,7 @@ public class FibreFence extends AbstractCustomFence
     @Override
     public boolean canConnectTo(World world, BlockPos pos, Direction direction)
     {
-        BlockState state = world.getBlockState(pos.offset(direction));
+        BlockState state = world.getBlockState(pos.relative(direction));
         Block block = state.getBlock();
         return (block instanceof FibreFence || super.canConnectTo(world, pos, direction));
     }

@@ -20,18 +20,18 @@ public class CropBarsBlock extends Block
 {
 	public CropBarsBlock()
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().notSolid());
+		super(Block.Properties.of(Material.WOOD).noCollission().noOcclusion());
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) 
     {
-    	ItemStack possibleSeedStack = player.getHeldItemMainhand();
-    	if (!world.isRemote)
+    	ItemStack possibleSeedStack = player.getMainHandItem();
+    	if (!world.isClientSide)
 		{
 			if (CropSeedItem.plant(world, pos, possibleSeedStack))
 			{
-				if (!player.abilities.isCreativeMode)
+				if (!player.abilities.instabuild)
 					possibleSeedStack.shrink(1);
 				return ActionResultType.SUCCESS;
 			}
@@ -46,8 +46,8 @@ public class CropBarsBlock extends Block
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos)
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos)
 	{
-		return world.getBlockState(pos.down()).isSolidSide(world, pos, Direction.UP);
+		return world.getBlockState(pos.below()).isFaceSturdy(world, pos, Direction.UP);
 	}
 }

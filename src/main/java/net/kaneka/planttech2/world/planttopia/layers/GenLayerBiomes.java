@@ -18,10 +18,10 @@ public class GenLayerBiomes implements IAreaTransformer0
 	private Registry<Biome> registry;
 	
 	protected static final List<RegistryKey<Biome>> biomes = ImmutableList.of(
-			RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(ModReferences.FLOWER_MEADOW)), 
-			RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(ModReferences.RADIATED_WASTELAND)),
-			RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(ModReferences.LAKE)),
-			RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(ModReferences.DRIED_LAKE))
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.FLOWER_MEADOW)), 
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.RADIATED_WASTELAND)),
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.LAKE)),
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.DRIED_LAKE))
 	);
 	
 	public GenLayerBiomes setup(Registry<Biome> registry) {
@@ -29,7 +29,7 @@ public class GenLayerBiomes implements IAreaTransformer0
 		return this;
 	}
 	@Override
-	public int apply(INoiseRandom rand, int x_, int y)
+	public int applyPixel(INoiseRandom rand, int x_, int y)
 	{
 		//TODO different rarities of biomes. s
 		return getRandomBiome(rand, biomes);
@@ -38,6 +38,6 @@ public class GenLayerBiomes implements IAreaTransformer0
 	
 	private int getRandomBiome(INoiseRandom random, List<RegistryKey<Biome>> biomes) 
 	{
-		return PlanttopiaBiomeProvider.getBiomeId(biomes.get(random.random(biomes.size())), registry);
+		return PlanttopiaBiomeProvider.getBiomeId(biomes.get(random.nextRandom(biomes.size())), registry);
 	}
 }

@@ -20,15 +20,15 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int l = this.getCookProgressScaled(32);
-		blit(mStack, this.guiLeft + 60, this.guiTop + 48, 0, 200, l, 14);
+		blit(mStack, this.leftPos + 60, this.topPos + 48, 0, 200, l, 14);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
 
 //	@Override
@@ -45,7 +45,7 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = container.getValue(2);
+		int i = menu.getValue(2);
 		return i != 0 ? i * pixels / ((DNACleanerTileEntity) this.te).ticksPerItem() : 0;
 	}
 

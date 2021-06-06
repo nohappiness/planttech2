@@ -39,11 +39,11 @@ public class BaseContainer extends Container
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
 		this.tileentity = tileentity;
 		fieldArray = tileentity.getIntArray();
-		trackIntArray(fieldArray);
+		addDataSlots(fieldArray);
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
 		return tileentity.isUsableByPlayer(playerIn);
 	}
@@ -140,12 +140,12 @@ public class BaseContainer extends Container
 		}
 
 		@Override
-		public void onSlotChanged()
+		public void setChanged()
 		{
-			super.onSlotChanged();
+			super.setChanged();
 			if (listening)
 			{
-				BaseContainer.this.detectAndSendChanges();
+				BaseContainer.this.broadcastChanges();
 				BaseContainer.this.tileentity.onContainerUpdated(getSlotIndex());
 			}
 		}
@@ -170,21 +170,21 @@ public class BaseContainer extends Container
 		}
 
 		@Override
-		public boolean isItemValid(ItemStack stack)
+		public boolean mayPlace(ItemStack stack)
 		{
 			return conditions.test(stack);
 		}
 
 		@Override
-		public boolean canTakeStack(PlayerEntity playerIn)
+		public boolean mayPickup(PlayerEntity playerIn)
 		{
 			return canTake.test(playerIn);
 		}
 
 		@Override
-		public int getItemStackLimit(ItemStack stack)
+		public int getMaxStackSize(ItemStack stack)
 		{
-			return limited ? 1 : super.getItemStackLimit(stack);
+			return limited ? 1 : super.getMaxStackSize(stack);
 		}
 
 		public LimitedItemInfoSlot setLimited()

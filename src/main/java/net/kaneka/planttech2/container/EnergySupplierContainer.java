@@ -24,7 +24,7 @@ public class EnergySupplierContainer extends BaseContainer
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) 
 	{
 		return ItemStack.EMPTY;
 	}

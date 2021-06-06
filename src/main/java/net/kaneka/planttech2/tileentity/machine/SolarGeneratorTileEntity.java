@@ -46,7 +46,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 					break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}
@@ -61,7 +61,7 @@ public class SolarGeneratorTileEntity extends EnergyInventoryTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (world != null && world.isDaytime() && world.canSeeSky(pos.up()))
+		if (level != null && level.isDay() && level.canSeeSky(worldPosition.above()))
 		{
 			if (energystorage.getMaxEnergyStored() - energystorage.getEnergyStored() > 0)
 			{

@@ -17,7 +17,7 @@ public class TestItem extends Item
 
 	public TestItem()
 	{
-		super(new Item.Properties().group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().tab(ModCreativeTabs.MAIN));
 
 	}
 
@@ -32,10 +32,10 @@ public class TestItem extends Item
 	}*/
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx)
+	public ActionResultType useOn(ItemUseContext ctx)
 	{
 //		System.out.println(ModDimensions.getPlantTopiaDimensionType());
-		if(!ctx.getWorld().isRemote)
+		if(!ctx.getLevel().isClientSide)
 		{
 			JsonFileConverter.act();
 		}
@@ -92,6 +92,6 @@ public class TestItem extends Item
 		// place(Sets.newHashSet(), ctx.getWorld(), new Random(), ctx.getPos().up(),
 		// MutableBoundingBox.getNewBoundingBox());
 //		 System.out.println(ModDimensionPlantTopia.getDimensionType());
-		return super.onItemUse(ctx);
+		return super.useOn(ctx);
 	}
 }

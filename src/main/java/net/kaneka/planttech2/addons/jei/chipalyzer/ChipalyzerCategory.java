@@ -27,7 +27,7 @@ public class ChipalyzerCategory extends AbstractJeiCategory<ChipalyzerRecipe> {
 	@Override
 	public void setIngredients(ChipalyzerRecipe recipe, IIngredients ingredients) {
 		ingredients.setInputs(VanillaTypes.ITEM, recipe.getComponents());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override

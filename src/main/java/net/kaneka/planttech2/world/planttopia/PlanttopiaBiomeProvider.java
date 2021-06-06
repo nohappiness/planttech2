@@ -30,7 +30,7 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 	
 	public static final Codec<PlanttopiaBiomeProvider> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
 			Codec.LONG.fieldOf("seed").stable().orElseGet(() -> ModDimensions.seed).forGetter((obj) -> obj.seed),
-			RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter(provider -> provider.biomeReg)
+			RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter(provider -> provider.biomeReg)
 	).apply(instance, instance.stable(PlanttopiaBiomeProvider::new)));
 	
 	private final Registry<Biome> biomeReg;
@@ -43,8 +43,8 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 	
 	public PlanttopiaBiomeProvider(long seed, Registry<Biome> registryIn)
 	{
-		super(registryIn.getEntries().stream()
-                .filter(entry -> entry.getKey().getLocation().getNamespace().equals(PlantTechMain.MODID))
+		super(registryIn.entrySet().stream()
+                .filter(entry -> entry.getKey().location().getNamespace().equals(PlantTechMain.MODID))
                 .map(Map.Entry::getValue).collect(Collectors.toList()));
 		genLayer = genLayers(seed, registryIn);
 		this.biomeReg = registryIn;
@@ -53,13 +53,13 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 	
 	public static int getBiomeId(RegistryKey<Biome> biome, Registry<Biome> registry) 
 	{
-		return registry.getId(registry.getValueForKey(biome));
+		return registry.getId(registry.get(biome));
 	}
 
 	private static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry)
 	{
-		IAreaFactory<T> biomes = new GenLayerBiomes().setup(registry).apply(seed.apply(1L));
-		biomes = ZoomLayer.FUZZY.apply(seed.apply(2000L), biomes);
+		IAreaFactory<T> biomes = new GenLayerBiomes().setup(registry).run(seed.apply(1L));
+		biomes = ZoomLayer.FUZZY.run(seed.apply(2000L), biomes);
 		biomes = repeat(1000L, ZoomLayer.NORMAL, biomes, 6, seed);
 
 		return biomes;
@@ -78,7 +78,7 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 
 		for (int i = 0; i < count; ++i)
 		{
-			iareafactory = parent.apply(contextFactory.apply(seed + (long) i), iareafactory);
+			iareafactory = parent.run(contextFactory.apply(seed + (long) i), iareafactory);
 		}
 
 		return iareafactory;
@@ -87,17 +87,17 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z)
 	{
-		return this.genLayer.func_242936_a(biomeReg, x, z);
+		return this.genLayer.get(biomeReg, x, z);
 	}
 
 	@Override
-	protected Codec<? extends BiomeProvider> getBiomeProviderCodec()
+	protected Codec<? extends BiomeProvider> codec()
 	{
 		return CODEC;
 	}
 
 	@Override
-	public BiomeProvider getBiomeProvider(long seed)
+	public BiomeProvider withSeed(long seed)
 	{
 		return new PlanttopiaBiomeProvider(seed, biomeReg);
 	}

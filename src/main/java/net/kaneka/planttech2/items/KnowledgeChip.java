@@ -20,7 +20,7 @@ public class KnowledgeChip extends Item
 	
 	public KnowledgeChip(int tier, int maxKnowledge)
 	{
-		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().stacksTo(1).tab(ModCreativeTabs.MAIN));
 		this.tier = tier;
 		this.maxKnowledge = maxKnowledge; 
 	}
@@ -101,7 +101,7 @@ public class KnowledgeChip extends Item
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		CompoundNBT nbt = stack.getOrCreateTag();
 		if(nbt.contains("knowledge"))

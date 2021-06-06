@@ -77,7 +77,7 @@ public abstract class EnergyInventoryFluidTileEntity extends EnergyInventoryTile
 		}
 		if (changesMade)
 		{
-			markDirty();
+			setChanged();
 		}
     }
 

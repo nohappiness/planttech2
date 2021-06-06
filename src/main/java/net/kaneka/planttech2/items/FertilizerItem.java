@@ -24,36 +24,36 @@ public class FertilizerItem extends Item
 
     public FertilizerItem(ItemGroup group)
     {
-		super(new Item.Properties().group(group));
-		DispenserBlock.registerDispenseBehavior(this, new OptionalDispenseBehavior()
+		super(new Item.Properties().tab(group));
+		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override
-			protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
+			protected ItemStack execute(IBlockSource source, ItemStack stack)
 			{
-				World world = source.getWorld();
-				BlockPos target = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
-				this.setSuccessful(applyFertillizer(world, target, stack));
-				if (!world.isRemote() && this.isSuccessful())
-					world.playEvent(2005, target, 0);
+				World world = source.getLevel();
+				BlockPos target = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+				this.setSuccess(applyFertillizer(world, target, stack));
+				if (!world.isClientSide() && this.isSuccess())
+					world.levelEvent(2005, target, 0);
 				return stack;
 			}
 		});
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context)
+    public ActionResultType useOn(ItemUseContext context)
     {
-		ItemStack stack = context.getItem();
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
-		if (!world.isRemote())
+		ItemStack stack = context.getItemInHand();
+		BlockPos pos = context.getClickedPos();
+		World world = context.getLevel();
+		if (!world.isClientSide())
 			if (applyFertillizer(world, pos, stack))
 			{
-				if (context.getPlayer() != null && !context.getPlayer().abilities.isCreativeMode)
+				if (context.getPlayer() != null && !context.getPlayer().abilities.instabuild)
 					stack.shrink(1);
 				return ActionResultType.CONSUME;
 			}
-		return super.onItemUse(context);
+		return super.useOn(context);
     }
 
     public static float getIncreaseChance(Item item)
@@ -72,7 +72,7 @@ public class FertilizerItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
 		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer").getString() + ": " + (int) (getIncreaseChance(stack.getItem()) * 100) + "%"));
 		if(stack.getItem() == ModItems.FERTILIZER_CREATIVE)
@@ -88,7 +88,7 @@ public class FertilizerItem extends Item
 			{
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{
-					TileEntity te = world.getTileEntity(pos);
+					TileEntity te = world.getBlockEntity(pos);
 					if (te instanceof CropsTileEntity)
 						((CropBaseBlock) block).updateCrop(world, pos, ((CropsTileEntity) te).getTraits());
 				}

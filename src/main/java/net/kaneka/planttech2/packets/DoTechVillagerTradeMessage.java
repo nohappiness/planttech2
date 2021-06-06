@@ -49,7 +49,7 @@ public class DoTechVillagerTradeMessage
 				success = success && PlayerInventoryUtils.enoughCredits(inv, trade.getCreditsBuy());
 				if (success)
 				{
-					if (trade.getCreditsSell() > 0 && inv.count(ModItems.PLANTCARD) > 0)
+					if (trade.getCreditsSell() > 0 && inv.countItem(ModItems.PLANTCARD) > 0)
 					{
 						if (PlayerInventoryUtils.removeCredits(inv, trade.getCreditsBuy())
 								&& PlayerInventoryUtils.removeList(inv, trade.getInputs()))

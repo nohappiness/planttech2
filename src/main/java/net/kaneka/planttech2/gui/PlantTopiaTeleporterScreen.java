@@ -25,7 +25,7 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	public void init()
 	{
 		super.init();
-		addButton(new CustomButton(1, this.guiLeft + 15, this.guiTop + 35, 140, 20, "To PlantTopia (1000 BE)", (button) -> 
+		addButton(new CustomButton(1, this.leftPos + 15, this.topPos + 35, 140, 20, "To PlantTopia (1000 BE)", (button) -> 
 		{
 			PlantTopiaTeleporterScreen.this.buttonClicked(0);
 		})); 
@@ -33,9 +33,9 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	
 	private void buttonClicked(int buttonid)
 	{
-		if(container.getValue(0) >= ((PlantTopiaTeleporterTileEntity) te).energyPerAction())
+		if(menu.getValue(0) >= ((PlantTopiaTeleporterTileEntity) te).energyPerAction())
 		{
-			PlantTech2PacketHandler.sendToServer(new TeleporterBlockButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), buttonid));
+			PlantTech2PacketHandler.sendToServer(new TeleporterBlockButtonPressMessage(te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ(), buttonid));
 		}
 		else
 		{
@@ -44,12 +44,12 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 159, this.guiTop + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
+		blit(mStack, this.leftPos + 159, this.topPos + 28 + (55 - k), 205, 55 - k, 16, 0 + k);
 	}
 
 	@Override

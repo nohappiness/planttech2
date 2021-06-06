@@ -17,7 +17,7 @@ public class RadiationMetreItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand handIn)
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand handIn)
     {
 //        if (player instanceof ServerPlayerEntity)
 //        {
@@ -30,6 +30,6 @@ public class RadiationMetreItem extends Item
 //            Biome biome = worldIn.getBiome(player.getPosition());
 //            player.sendMessage(new StringTextComponent("Biome Radiation Level: " + BiomeRadiation.getText(biome instanceof PlantTopiaBaseBiome ? ((PlantTopiaBaseBiome) biome).getRadiationLevel() : BiomeRadiation.NONE, true).getFormattedText()), player.getUniqueID());
 //        }
-        return ActionResult.resultSuccess(player.getHeldItem(handIn));
+        return ActionResult.success(player.getItemInHand(handIn));
     }
 }

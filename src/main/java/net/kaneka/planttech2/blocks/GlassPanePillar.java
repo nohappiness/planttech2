@@ -8,6 +8,6 @@ public class GlassPanePillar extends CustomRotatedPillarBlock
 {
 	public GlassPanePillar(Properties property)
 	{
-		super(property.notSolid());
+		super(property.noOcclusion());
 	}
 }

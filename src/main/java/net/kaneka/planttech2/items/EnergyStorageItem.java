@@ -28,7 +28,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 
 	public EnergyStorageItem(Properties property, int basecapacity)
 	{
-		super(property.maxStackSize(1));
+		super(property.stacksTo(1));
 		this.basecapacity = basecapacity;
 	}
 	
@@ -113,7 +113,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
@@ -125,7 +125,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 			updateEnergy(stack);
 		}
 
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -157,9 +157,9 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
 	{
-		if(group == this.group)
+		if(group == this.category)
 		{
 			items.add(new ItemStack(this));
 			ItemStack full = new ItemStack(this);

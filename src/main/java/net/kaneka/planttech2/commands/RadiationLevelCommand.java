@@ -33,15 +33,15 @@ public class RadiationLevelCommand
 
 	private static int add(CommandContext<CommandSource> context, float amount) throws CommandSyntaxException
 	{
-		RadiationEffect.getCap(context.getSource().asPlayer()).changeLevel(amount);
-		context.getSource().sendFeedback(new StringTextComponent((amount >= 0 ? "added " : "removed ") + amount + " radiation level on ").appendSibling(context.getSource().getDisplayName()), false);
+		RadiationEffect.getCap(context.getSource().getPlayerOrException()).changeLevel(amount);
+		context.getSource().sendSuccess(new StringTextComponent((amount >= 0 ? "added " : "removed ") + amount + " radiation level on ").append(context.getSource().getDisplayName()), false);
 		return (int) amount;
 	}
 
 	private static int set(CommandContext<CommandSource> context, float amount) throws CommandSyntaxException
 	{
-		RadiationEffect.getCap(context.getSource().asPlayer()).setLevel(amount);
-		context.getSource().sendFeedback(new StringTextComponent("set ").appendSibling(context.getSource().getDisplayName()).appendString("'s radiation to " + amount), false);
+		RadiationEffect.getCap(context.getSource().getPlayerOrException()).setLevel(amount);
+		context.getSource().sendSuccess(new StringTextComponent("set ").append(context.getSource().getDisplayName()).append("'s radiation to " + amount), false);
 		return (int) amount;
 	}
 }

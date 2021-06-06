@@ -60,7 +60,7 @@ public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEn
 				break; 
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 5;
 		}

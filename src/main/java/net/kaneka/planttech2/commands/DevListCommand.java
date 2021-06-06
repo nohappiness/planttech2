@@ -41,7 +41,7 @@ public class DevListCommand
         {
             int online = 0;
             CommandSource src = context.getSource();
-            src.sendFeedback(new StringTextComponent("---- Plant Tech 2 Developers ----").mergeStyle(DARK_GREEN, BOLD, UNDERLINE), false);
+            src.sendSuccess(new StringTextComponent("---- Plant Tech 2 Developers ----").withStyle(DARK_GREEN, BOLD, UNDERLINE), false);
             printTitle(src, "Artists:");
             online += printAllFromList(ARTISTS, src);
             printTitle(src, "Authors:");
@@ -54,7 +54,7 @@ public class DevListCommand
 
     private static void printTitle(CommandSource source, String message)
     {
-        source.sendFeedback(new StringTextComponent(message).mergeStyle(AQUA, BOLD), false);
+        source.sendSuccess(new StringTextComponent(message).withStyle(AQUA, BOLD), false);
     }
 
     private static int printAllFromList(Map<String, List<String>> map, CommandSource src)
@@ -70,12 +70,12 @@ public class DevListCommand
             StringTextComponent name = new StringTextComponent(entry.getKey());
             if (isOnline(src.getServer(), entry.getValue()))
             {
-                name.appendSibling(new StringTextComponent(" (online)").mergeStyle(GREEN));
+                name.append(new StringTextComponent(" (online)").withStyle(GREEN));
                 online++;
             }
             if (contributionDone)
                 name = new StringTextComponent("Thanks " + name + getContribution(entry.getKey()));
-            src.sendFeedback(name, false);
+            src.sendSuccess(name, false);
         }
         return online;
     }
@@ -83,7 +83,7 @@ public class DevListCommand
     // Returns true if any of the given UUIDs in the list is online
     private static boolean isOnline(MinecraftServer server, List<String> uuidList)
     {
-        return uuidList.stream().anyMatch(uuid -> server.getPlayerList().getPlayerByUUID(UUID.fromString(uuid)) != null);
+        return uuidList.stream().anyMatch(uuid -> server.getPlayerList().getPlayer(UUID.fromString(uuid)) != null);
     }
 
     public static String getContribution(String username)

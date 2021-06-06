@@ -22,11 +22,11 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 			case 1:
 				return PlantTopiaTeleporterTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2: 
-				return PlantTopiaTeleporterTileEntity.this.pos.getX(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getX(); 
 			case 3: 
-				return PlantTopiaTeleporterTileEntity.this.pos.getY(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getY(); 
 			case 4: 
-				return PlantTopiaTeleporterTileEntity.this.pos.getZ(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getZ(); 
 			default:
 				return 0;
 			}
@@ -43,17 +43,17 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 				PlantTopiaTeleporterTileEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(value, PlantTopiaTeleporterTileEntity.this.pos.getY(), PlantTopiaTeleporterTileEntity.this.pos.getZ());
+				PlantTopiaTeleporterTileEntity.this.worldPosition = new BlockPos(value, PlantTopiaTeleporterTileEntity.this.worldPosition.getY(), PlantTopiaTeleporterTileEntity.this.worldPosition.getZ());
 				break;
 			case 3:
-				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), value, PlantTopiaTeleporterTileEntity.this.pos.getZ());
+				PlantTopiaTeleporterTileEntity.this.worldPosition = new BlockPos(PlantTopiaTeleporterTileEntity.this.worldPosition.getX(), value, PlantTopiaTeleporterTileEntity.this.worldPosition.getZ());
 				break;
 			case 4:
-				PlantTopiaTeleporterTileEntity.this.pos = new BlockPos(PlantTopiaTeleporterTileEntity.this.pos.getX(), PlantTopiaTeleporterTileEntity.this.pos.getY(), value);
+				PlantTopiaTeleporterTileEntity.this.worldPosition = new BlockPos(PlantTopiaTeleporterTileEntity.this.worldPosition.getX(), PlantTopiaTeleporterTileEntity.this.worldPosition.getY(), value);
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 5;
 		}

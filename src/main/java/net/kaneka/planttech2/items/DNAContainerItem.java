@@ -24,12 +24,12 @@ public class DNAContainerItem extends Item
 
 	public DNAContainerItem()
 	{
-		super(new Item.Properties().group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().tab(ModCreativeTabs.MAIN));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		CompoundNBT nbt = stack.getTag();
 		if (nbt != null) {
 			if (nbt.contains("type")) {

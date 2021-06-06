@@ -28,7 +28,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 	    {
     		if(inArea(mouseX, mouseY, 35 + x * 18, 26 + y * 18))
     		{ 
-    		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), x + y * 6));
+    		    PlantTech2PacketHandler.sendToServer(new ButtonPressMessage(te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ(), x + y * 6));
     		}
 	    }
 	}
@@ -36,29 +36,29 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int l = this.getCookProgressScaled(70);
-		blit(mStack, this.guiLeft + 53, this.guiTop + 81, 0, 200, l, 8);
+		blit(mStack, this.leftPos + 53, this.topPos + 81, 0, 200, l, 8);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, k);
-		int i = container.getValue(3) - 2;
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
+		int i = menu.getValue(3) - 2;
 		if(i >= 0)
-			blit(mStack, this.guiLeft + 34 + (i % 6) * 18, this.guiTop + 25 + (i / 6) * 18, 224, 0, 18, 18);
+			blit(mStack, this.leftPos + 34 + (i % 6) * 18, this.topPos + 25 + (i / 6) * 18, 224, 0, 18, 18);
 	}
 
     private int getCookProgressScaled(int pixels)
     {
-	int i = container.getValue(2);
+	int i = menu.getValue(2);
 	return i != 0 ? i * pixels / ((CompressorTileEntity) this.te).ticksPerItem() : 0;
     }
     private boolean inArea(double mouseX, double mouseY, int posX, int posY)
     {
-		posX += this.guiLeft;
-		posY += this.guiTop;
+		posX += this.leftPos;
+		posY += this.topPos;
 		return mouseX >= posX && mouseX <= posX + 18 && mouseY >= posY && mouseY <= posY + 18;
     }
 

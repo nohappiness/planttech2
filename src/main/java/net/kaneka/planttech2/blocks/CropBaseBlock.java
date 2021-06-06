@@ -46,7 +46,7 @@ public class CropBaseBlock extends ContainerBlock
 
 	public CropBaseBlock(String entryName)
 	{
-		super(Block.Properties.create(Material.WOOD).doesNotBlockMovement().hardnessAndResistance(0.5f));
+		super(Block.Properties.of(Material.WOOD).noCollission().strength(0.5f));
 		this.entryName = entryName;
 		setRegistryName(entryName + "_crop");
 	}
@@ -58,7 +58,7 @@ public class CropBaseBlock extends ContainerBlock
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn)
+	public TileEntity newBlockEntity(IBlockReader worldIn)
 	{
 		return new CropsTileEntity();
 	}
@@ -66,9 +66,9 @@ public class CropBaseBlock extends ContainerBlock
 	public void updateCrop(World world, BlockPos pos, HashMapCropTraits traits)
 	{
 		BlockState state = world.getBlockState(pos);
-		int growstate = state.get(GROWSTATE);
+		int growstate = state.getValue(GROWSTATE);
 		if (growstate < 7 && canGrow(world, pos, traits))
-			world.setBlockState(pos, state.with(GROWSTATE, growstate + 1));
+			world.setBlockAndUpdate(pos, state.setValue(GROWSTATE, growstate + 1));
 		else
 		{
 			List<BlockPos> neighborpos = getNeighborBlockPosRandom(pos);
@@ -82,15 +82,15 @@ public class CropBaseBlock extends ContainerBlock
 						BlockState partnerState = world.getBlockState(possiblePartner);
 						if (partnerState.getBlock() instanceof CropBaseBlock)
 						{
-							TileEntity tileEntity = world.getTileEntity(possiblePartner);
+							TileEntity tileEntity = world.getBlockEntity(possiblePartner);
 							if (tileEntity instanceof CropsTileEntity)
 							{
 								HashMapCropTraits partnertraits = ((CropsTileEntity) tileEntity).getTraits();
-								world.setBlockState(blockpos, getDefaultState());
-								if (world.getTileEntity(blockpos) instanceof CropsTileEntity && world.getTileEntity(pos) instanceof CropsTileEntity)
+								world.setBlockAndUpdate(blockpos, defaultBlockState());
+								if (world.getBlockEntity(blockpos) instanceof CropsTileEntity && world.getBlockEntity(pos) instanceof CropsTileEntity)
 								{
-									((CropsTileEntity) world.getTileEntity(blockpos))
-									        .setTraits(((CropsTileEntity) world.getTileEntity(pos)).getTraits().calculateNewTraits(partnertraits));
+									((CropsTileEntity) world.getBlockEntity(blockpos))
+									        .setTraits(((CropsTileEntity) world.getBlockEntity(pos)).getTraits().calculateNewTraits(partnertraits));
 									break;
 								}
 							}
@@ -98,9 +98,9 @@ public class CropBaseBlock extends ContainerBlock
 					}
 					if (!(world.getBlockState(blockpos).getBlock() instanceof CropBaseBlock))
 					{
-						world.setBlockState(blockpos, getDefaultState());
-						if (world.getTileEntity(blockpos) instanceof CropsTileEntity && world.getTileEntity(pos) instanceof CropsTileEntity)
-							((CropsTileEntity) world.getTileEntity(blockpos)).setTraits(((CropsTileEntity) world.getTileEntity(pos)).getTraits().copy());
+						world.setBlockAndUpdate(blockpos, defaultBlockState());
+						if (world.getBlockEntity(blockpos) instanceof CropsTileEntity && world.getBlockEntity(pos) instanceof CropsTileEntity)
+							((CropsTileEntity) world.getBlockEntity(blockpos)).setTraits(((CropsTileEntity) world.getBlockEntity(pos)).getTraits().copy());
 					}
 					break;
 				}
@@ -111,9 +111,9 @@ public class CropBaseBlock extends ContainerBlock
 	public void updateCreative(World world, BlockPos pos)
 	{
 		BlockState state = world.getBlockState(pos);
-		int growstate = state.get(GROWSTATE);
+		int growstate = state.getValue(GROWSTATE);
 		if (growstate < 7)
-			world.setBlockState(pos, state.with(GROWSTATE, 7));
+			world.setBlockAndUpdate(pos, state.setValue(GROWSTATE, 7));
 	}
 
 	private List<BlockPos> getNeighborBlockPosRandom(BlockPos pos)
@@ -148,7 +148,7 @@ public class CropBaseBlock extends ContainerBlock
 
 	public String[] canGrowString(World world, BlockPos pos)
 	{
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 		String[] messages = new String[10];
 		if (te instanceof CropsTileEntity)
 		{
@@ -173,7 +173,7 @@ public class CropBaseBlock extends ContainerBlock
 		if (!world.isAreaLoaded(pos, 1))// prevent loading unloaded chunks
 			return false;
 		int extraLightValueDecrease = getCropAuraInRadiusInt(generators, (generator) -> generator.lightValueDecrease);
-		return world.getNeighborAwareLightSubtracted(pos, 0) >= 14 - lightsensitivity - extraLightValueDecrease;
+		return world.getMaxLocalRawBrightness(pos, 0) >= 14 - lightsensitivity - extraLightValueDecrease;
 	}
 
 	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity, List<CropAuraGeneratorTileEntity> generators)
@@ -181,10 +181,10 @@ public class CropBaseBlock extends ContainerBlock
 		int extraWaterRangeDecrease = getCropAuraInRadiusInt(generators, (generator) -> generator.waterRangeDecrease);
 		System.out.println(extraWaterRangeDecrease);
 		waterSensitivity += extraWaterRangeDecrease + 1;
-		for (BlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-waterSensitivity, 0, waterSensitivity), pos.add(waterSensitivity, -1, waterSensitivity)))
+		for (BlockPos blockpos$mutableblockpos : BlockPos.betweenClosed(pos.offset(-waterSensitivity, 0, waterSensitivity), pos.offset(waterSensitivity, -1, waterSensitivity)))
 		{
 			BlockState state = world.getBlockState(blockpos$mutableblockpos);
-			if (state.getMaterial() == Material.WATER || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.get(BlockStateProperties.WATERLOGGED)))
+			if (state.getMaterial() == Material.WATER || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED)))
 				return true;
 		}
 		return false;
@@ -193,7 +193,7 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean rightSoil(World world, BlockPos pos, String name, List<CropAuraGeneratorTileEntity> generators)
 	{
 		Block block = PlantTechMain.getCropList().getByName(name).getConfiguration().getSoil().get();
-		Block soil = world.getBlockState(pos.down()).getBlock();
+		Block soil = world.getBlockState(pos.below()).getBlock();
 		List<Block> extraSoils = getCropAuraInRadiusList(generators, (generator) -> generator.soil, (block2) -> block2 != Blocks.AIR && block2 != Blocks.CAVE_AIR && block2 != Blocks.VOID_AIR);
 		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil);
 	}
@@ -213,7 +213,7 @@ public class CropBaseBlock extends ContainerBlock
 			for (int y = centre.getY() - radius; y < centre.getY() + radius; y++)
 				for (int z = centre.getZ() - radius; z < centre.getZ() + radius; z++)
 				{
-					TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
+					TileEntity te = world.getBlockEntity(new BlockPos(x, y, z));
 					if (te instanceof CropAuraGeneratorTileEntity)
 						generators.add((CropAuraGeneratorTileEntity) te);
 				}
@@ -258,7 +258,7 @@ public class CropBaseBlock extends ContainerBlock
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(GROWSTATE);
 	}
@@ -270,48 +270,48 @@ public class CropBaseBlock extends ContainerBlock
 	}
 
 	@Override
-	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
+	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack)
 	{
-		super.harvestBlock(world, player, pos, state, te, stack);
+		super.playerDestroy(world, player, pos, state, te, stack);
 		world.destroyBlock(pos, false);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
-		int growstate = state.get(GROWSTATE);
-		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isRemote)
+		int growstate = state.getValue(GROWSTATE);
+		if (growstate > 6 && hand.equals(Hand.MAIN_HAND) && !worldIn.isClientSide)
 		{
-			ItemStack holdItem = player.getHeldItem(Hand.MAIN_HAND);
+			ItemStack holdItem = player.getItemInHand(Hand.MAIN_HAND);
 			if (!holdItem.isEmpty())
 			{
 				if (holdItem.getItem() instanceof AnalyserItem || holdItem.getItem() instanceof AdvancedAnalyserItem || holdItem.getItem() instanceof CropRemover)
 					return ActionResultType.PASS;
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
-			TileEntity te = worldIn.getTileEntity(pos);
+			TileEntity te = worldIn.getBlockEntity(pos);
 			if (te instanceof CropsTileEntity)
 			{
 				((CropsTileEntity) te).dropsRemoveOneSeed(drops, growstate);
 				for (ItemStack stack : drops)
-					spawnAsEntity(worldIn, pos, stack);
-				worldIn.setBlockState(pos, state.with(GROWSTATE, 0));
+					popResource(worldIn, pos, stack);
+				worldIn.setBlockAndUpdate(pos, state.setValue(GROWSTATE, 0));
 			}
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, hand, ray);
+		return super.use(state, worldIn, pos, player, hand, ray);
 	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
 	{
 		List<ItemStack> drops = Lists.newArrayList();
-		int growstate = state.get(GROWSTATE);
-		Vector3d vec3d = builder.get(LootParameters.ORIGIN);
+		int growstate = state.getValue(GROWSTATE);
+		Vector3d vec3d = builder.getOptionalParameter(LootParameters.ORIGIN);
 		if (vec3d != null)
 		{
 			BlockPos pos = new BlockPos(vec3d);
-			TileEntity te = builder.getWorld().getTileEntity(pos);
+			TileEntity te = builder.getLevel().getBlockEntity(pos);
 			if (te instanceof CropsTileEntity)
 			{
 				((CropsTileEntity) te).addDrops(drops, growstate);
@@ -324,7 +324,7 @@ public class CropBaseBlock extends ContainerBlock
 	/*----------------------RENDERING------------------*/
 
 	@Override
-	public BlockRenderType getRenderType(BlockState iBlockState)
+	public BlockRenderType getRenderShape(BlockState iBlockState)
 	{
 		return BlockRenderType.MODEL;
 	}

@@ -44,7 +44,7 @@ public class DNACleanerTileEntity extends ConvertEnergyInventoryTileEntity
            }
 
         }
-        public int size() {
+        public int getCount() {
            return 3;
         }
 	};

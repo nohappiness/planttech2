@@ -14,7 +14,7 @@ public abstract class ConvertEnergyInventoryTileEntity extends EnergyInventoryTi
     public void doUpdate()
     {
         super.doUpdate();
-        if (world == null || world.isRemote) return;
+        if (level == null || level.isClientSide) return;
         if (energystorage.getEnergyStored() >= energyPerAction())
         {
             ItemStack input = getInput();

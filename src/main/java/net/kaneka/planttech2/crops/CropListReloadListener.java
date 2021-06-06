@@ -53,7 +53,7 @@ public class CropListReloadListener extends JsonReloadListener
 			try
 			{
 				JsonElement element = elementMap.get(key);
-				if (!CraftingHelper.processConditions(JSONUtils.getJsonObject(element, "top element"), "conditions"))
+				if (!CraftingHelper.processConditions(JSONUtils.convertToJsonObject(element, "top element"), "conditions"))
 				{
 					LOGGER.debug("Skipping loading crop configuration {} as it's conditions were not met", key);
 					continue;

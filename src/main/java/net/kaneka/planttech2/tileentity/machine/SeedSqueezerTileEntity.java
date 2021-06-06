@@ -69,7 +69,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 					break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 5;
 		}
@@ -97,7 +97,7 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 	public void doUpdate()
 	{
 		super.doUpdate();
-		if (world != null && !world.isRemote)
+		if (level != null && !level.isClientSide)
 		{
 			if (itemhandler.getStackInSlot(9).isEmpty())
 			{
@@ -127,9 +127,9 @@ public class SeedSqueezerTileEntity extends EnergyInventoryFluidTileEntity
 				}
 				else if (stack.getCount() > 0)
 				{
-					if (!world.isRemote)
+					if (!level.isClientSide)
 					{
-						world.addEntity(new ItemEntity(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack));
+						level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ(), stack));
 						itemhandler.setStackInSlot(9, ItemStack.EMPTY);
 					}
 				}

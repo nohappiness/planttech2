@@ -31,7 +31,7 @@ public class GuideString
 	
 	public boolean appendWord(FontRenderer font, String word)
 	{
-		if(font.getStringWidth(string) + font.getStringWidth(" ") + font.getStringWidth(word) <= width)
+		if(font.width(string) + font.width(" ") + font.width(word) <= width)
 		{
 			string += " " + word; 
 			return true; 
@@ -44,7 +44,7 @@ public class GuideString
 		String string = ""; 
 		for(int i = 0; i < 100; i++)
 		{
-			if(font.getStringWidth(string) + font.getStringWidth("X") < width)
+			if(font.width(string) + font.width("X") < width)
 			{
 				string += "X"; 
 			}

@@ -27,7 +27,7 @@ public class AuraCoreItem extends Item
 
     public AuraCoreItem(Builder builder)
     {
-        super(new Item.Properties().group(ModCreativeTabs.CHIPS));
+        super(new Item.Properties().tab(ModCreativeTabs.CHIPS));
         tier = builder.tier;
         temperature = builder.temperature;
         lightValueDecrease = builder.lightValueDecrease;
@@ -117,7 +117,7 @@ public class AuraCoreItem extends Item
     }
 
     @Override
-    public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltips, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltips, ITooltipFlag flagIn)
     {
         String tooltip = "";
         if (doesModifyTemperature(stack))

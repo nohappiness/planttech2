@@ -51,56 +51,56 @@ public class ItemUpgradeableContainer extends Container {
 			for (int x = 0; x < 9; x++)
 				addSlot(new Slot(playerInv, x + y * 9 + 9, 24 + x * 18, 107 + y * 18));
 		if (slot == -1)
-			slot = playerInv.getSlotFor(stack) + 1;
+			slot = playerInv.findSlotMatchingItem(stack) + 1;
 		this.slot = slot;
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(playerInv, x, 24 + x * 18, 165));
-		this.slot = this.inventorySlots.size() - 9 + slot;
+		this.slot = this.slots.size() - 9 + slot;
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn)
+	public boolean stillValid(PlayerEntity playerIn)
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
 	{
 //		System.out.println("world isremote:" + player.getEntityWorld().isRemote + "slot: " + this.slot + "clicked slot: " + slotId);
-		return slotId == this.slot ? ItemStack.EMPTY : super.slotClick(slotId, dragType, clickTypeIn, player);
+		return slotId == this.slot ? ItemStack.EMPTY : super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stack1 = slot.getStack();
+		Slot slot = (Slot) this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack stack1 = slot.getItem();
 			stack = stack1.copy();
 			int invsize = BaseUpgradeableItem.getInventorySize(stack);
 
 			if (index > 35) {
-				if (!this.mergeItemStack(stack1, 0, 35, true)) {
+				if (!this.moveItemStackTo(stack1, 0, 35, true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (index < 36) {
-				if (!this.mergeItemStack(stack1, 36, 36 + invsize, false)) {
+				if (!this.moveItemStackTo(stack1, 36, 36 + invsize, false)) {
 					return ItemStack.EMPTY;
 				} else if (index >= 0 && index < 27) {
-					if (!this.mergeItemStack(stack1, 27, 35, false)) return ItemStack.EMPTY;
-				} else if (index >= 27 && index < 36 && !this.mergeItemStack(stack1, 0, 26, false)) {
+					if (!this.moveItemStackTo(stack1, 27, 35, false)) return ItemStack.EMPTY;
+				} else if (index >= 27 && index < 36 && !this.moveItemStackTo(stack1, 0, 26, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(stack1, 0, 35, false)) {
+			} else if (!this.moveItemStackTo(stack1, 0, 35, false)) {
 				return ItemStack.EMPTY;
 			}
 
 
 			if (stack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 
 			}
 			if (stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;
@@ -118,14 +118,14 @@ public class ItemUpgradeableContainer extends Container {
 		}
 
 		@Override
-		public int getSlotStackLimit() {
+		public int getMaxStackSize() {
 			return 1;
 		}
 
 		@Override
-		public void onSlotChanged() {
+		public void setChanged() {
 			if (stack.getItem() instanceof IUpgradeable) ((IUpgradeable) stack.getItem()).updateNBTValues(stack);
-			super.onSlotChanged();
+			super.setChanged();
 		}
 	}
 

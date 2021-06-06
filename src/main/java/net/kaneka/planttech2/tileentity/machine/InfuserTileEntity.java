@@ -83,7 +83,7 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 6;
 		}
@@ -158,7 +158,7 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 	@Override
 	protected ItemStack getResult(ItemStack input, ItemStack output)
 	{
-		return getOutputRecipe() == null ? ItemStack.EMPTY : getOutputRecipe().getRecipeOutput();
+		return getOutputRecipe() == null ? ItemStack.EMPTY : getOutputRecipe().getResultItem();
 	}
 
 	@Override
@@ -177,10 +177,10 @@ public class InfuserTileEntity extends ConvertEnergyInventoryFluidTileEntity
 	private InfuserRecipe getOutputRecipe()
 	{
 		
-		if (world == null)
+		if (level == null)
 			return null;
 		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
-		Optional<InfuserRecipe> recipe = world.getRecipeManager().getRecipe(ModRecipeTypes.INFUSING, wrapper, world);
+		Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSING, wrapper, level);
 		return recipe.orElse(null);
 	}
 

@@ -69,7 +69,7 @@ public class ModTileEntities
 	}
 
 	static <T extends TileEntity> TileEntityType<T> make(String registryName, Supplier<T> factory, Type<?> dataFixer, Block... validBlocks) {
-		TileEntityType<T> result = TileEntityType.Builder.create(factory, validBlocks).build(dataFixer);
+		TileEntityType<T> result = TileEntityType.Builder.of(factory, validBlocks).build(dataFixer);
 		result.setRegistryName(registryName);
 		return result;
 	}

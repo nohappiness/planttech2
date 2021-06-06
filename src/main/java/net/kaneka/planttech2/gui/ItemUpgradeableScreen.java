@@ -42,10 +42,10 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	public void init()
     {
         super.init();
-        this.xSize = 205; 
-        this.ySize = 202;     
-        this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
+        this.imageWidth = 205; 
+        this.imageHeight = 202;     
+        this.leftPos = (this.width - this.imageWidth) / 2;
+        this.topPos = (this.height - this.imageHeight) / 2;
     }
 	
 	@Override
@@ -54,7 +54,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 			this.renderBackground(mStack);
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
-	        this.renderHoveredTooltip(mStack, mouseX, mouseY);
+	        this.renderTooltip(mStack, mouseX, mouseY);
 	}
 
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
@@ -65,22 +65,22 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	
 	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
-		posX += this.guiLeft;
-		posY += this.guiTop;
+		posX += this.leftPos;
+		posY += this.topPos;
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 			renderComponentHoverEffect(mStack, null, mouseX, mouseY);
 //            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int x, int y)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int x, int y)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND.get(invsize));
-		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+		minecraft.getTextureManager().bind(BACKGROUND.get(invsize));
+		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 
 	protected int getEnergyStoredScaled(int pixels)
@@ -96,7 +96,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 	}
 
 	@Override
-	protected boolean itemStackMoved(int keyCode, int scanCode)
+	protected boolean checkHotbarKeyPressed(int keyCode, int scanCode)
 	{
 		return false;
 	}

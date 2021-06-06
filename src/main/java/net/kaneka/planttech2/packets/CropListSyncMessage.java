@@ -27,12 +27,12 @@ public class CropListSyncMessage
 
     public static void encode(CropListSyncMessage pkt, PacketBuffer buf)
     {
-        buf.writeCompoundTag(pkt.cropList);
+        buf.writeNbt(pkt.cropList);
     }
 
     public static CropListSyncMessage decode(PacketBuffer buf)
     {
-        return new CropListSyncMessage(buf.readCompoundTag());
+        return new CropListSyncMessage(buf.readNbt());
     }
 
     public static void handle(final CropListSyncMessage pkt, Supplier<NetworkEvent.Context> ctx)

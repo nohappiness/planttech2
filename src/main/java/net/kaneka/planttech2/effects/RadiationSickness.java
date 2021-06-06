@@ -16,14 +16,14 @@ public class RadiationSickness extends Effect
     }
 
     @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier)
+    public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier)
     {
-        if (entityLivingBaseIn instanceof PlayerEntity && !entityLivingBaseIn.getEntityWorld().isRemote())
-            entityLivingBaseIn.attackEntityFrom(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayerEntity) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
+        if (entityLivingBaseIn instanceof PlayerEntity && !entityLivingBaseIn.getCommandSenderWorld().isClientSide())
+            entityLivingBaseIn.hurt(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayerEntity) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
     }
 
     @Override
-    public boolean isReady(int duration, int amplifier)
+    public boolean isDurationEffectTick(int duration, int amplifier)
     {
         int i = 60 >> amplifier;
         if (i > 0)

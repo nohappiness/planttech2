@@ -45,11 +45,11 @@ public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFlui
 			case 6: 
 				return MachineBulbReprocessorTileEntity.this.actualTier; 
 			case 7: 
-				return MachineBulbReprocessorTileEntity.this.pos.getX(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getX(); 
 			case 8: 
-				return MachineBulbReprocessorTileEntity.this.pos.getY(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getY(); 
 			case 9: 
-				return MachineBulbReprocessorTileEntity.this.pos.getZ(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getZ(); 
 			default:
 				return 0;
 			}
@@ -81,17 +81,17 @@ public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFlui
 				MachineBulbReprocessorTileEntity.this.actualTier = value; 
 				break;
 			case 7:
-				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(value, MachineBulbReprocessorTileEntity.this.pos.getY(), MachineBulbReprocessorTileEntity.this.pos.getZ());
+				MachineBulbReprocessorTileEntity.this.worldPosition = new BlockPos(value, MachineBulbReprocessorTileEntity.this.worldPosition.getY(), MachineBulbReprocessorTileEntity.this.worldPosition.getZ());
 				break;
 			case 8:
-				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), value, MachineBulbReprocessorTileEntity.this.pos.getZ());
+				MachineBulbReprocessorTileEntity.this.worldPosition = new BlockPos(MachineBulbReprocessorTileEntity.this.worldPosition.getX(), value, MachineBulbReprocessorTileEntity.this.worldPosition.getZ());
 				break;
 			case 9:
-				MachineBulbReprocessorTileEntity.this.pos = new BlockPos(MachineBulbReprocessorTileEntity.this.pos.getX(), MachineBulbReprocessorTileEntity.this.pos.getY(), value);
+				MachineBulbReprocessorTileEntity.this.worldPosition = new BlockPos(MachineBulbReprocessorTileEntity.this.worldPosition.getX(), MachineBulbReprocessorTileEntity.this.worldPosition.getY(), value);
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 10;
 		}

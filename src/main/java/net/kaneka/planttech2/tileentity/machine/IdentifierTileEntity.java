@@ -61,7 +61,7 @@ public class IdentifierTileEntity extends EnergyInventoryTileEntity
 				break;
 			}
 		}
-		public int size()
+		public int getCount()
 		{
 			return 3;
 		}

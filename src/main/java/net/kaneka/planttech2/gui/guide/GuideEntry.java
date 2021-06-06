@@ -39,7 +39,7 @@ public class GuideEntry
 	
 	public ITextComponent getHeader()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".header").mergeStyle(TextFormatting.UNDERLINE, TextFormatting.ITALIC);
+		return new TranslationTextComponent("guide.planttech2." + name + ".header").withStyle(TextFormatting.UNDERLINE, TextFormatting.ITALIC);
 	}
 	
 	public GuideMenu getMenu()
@@ -82,7 +82,7 @@ public class GuideEntry
         			{
         				for(GuidePicture pic: piclist)
         				{ 
-        					if(pic.isIn(x, line * 10 + y * font.FONT_HEIGHT))
+        					if(pic.isIn(x, line * 10 + y * font.lineHeight))
         					{
         						isInPic = true; 
         					}

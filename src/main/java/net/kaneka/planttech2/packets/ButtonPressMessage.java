@@ -43,9 +43,9 @@ public class ButtonPressMessage
 			ServerPlayerEntity serverPlayer = ctx.get().getSender();
 			BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
 			int buttonId = pkt.buttonId;
-			if (serverPlayer != null && serverPlayer.world.isBlockLoaded(pos))
+			if (serverPlayer != null && serverPlayer.level.hasChunkAt(pos))
 			{
-				TileEntity te = serverPlayer.world.getTileEntity(pos);
+				TileEntity te = serverPlayer.level.getBlockEntity(pos);
 				if (te != null)
 				{
 					if (te instanceof CompressorTileEntity)

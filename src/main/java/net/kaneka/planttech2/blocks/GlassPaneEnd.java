@@ -25,13 +25,13 @@ import net.minecraft.block.AbstractBlock.Properties;
 public class GlassPaneEnd extends Block implements IColoredBlock
 {
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final EnumProperty<AttachFace> FACE = BlockStateProperties.FACE;
+	public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
 	private final int colorInt;  
 
 	public GlassPaneEnd(Properties property, int color)
 	{
-		super(property.notSolid());
-		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(FACE, AttachFace.WALL));
+		super(property.noOcclusion());
+		this.registerDefaultState(this.stateDefinition.any().setValue(HORIZONTAL_FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL));
 		this.colorInt = color; 
 	}
 
@@ -43,11 +43,11 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 		{
 			BlockState blockstate;
 			if (direction.getAxis() == Direction.Axis.Y)
-				blockstate = this.getDefaultState().with(FACE, direction == Direction.UP ? AttachFace.FLOOR : AttachFace.CEILING).with(HORIZONTAL_FACING,
-				        context.getPlacementHorizontalFacing());
+				blockstate = this.defaultBlockState().setValue(FACE, direction == Direction.UP ? AttachFace.FLOOR : AttachFace.CEILING).setValue(HORIZONTAL_FACING,
+				        context.getHorizontalDirection());
 			else
-				blockstate = this.getDefaultState().with(FACE, AttachFace.WALL).with(HORIZONTAL_FACING, direction);
-			if (blockstate.isValidPosition(context.getWorld(), context.getPos()))
+				blockstate = this.defaultBlockState().setValue(FACE, AttachFace.WALL).setValue(HORIZONTAL_FACING, direction);
+			if (blockstate.canSurvive(context.getLevel(), context.getClickedPos()))
 				return blockstate;
 		}
 		return null;
@@ -55,40 +55,40 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		return getFacing(stateIn).getOpposite() == facing && !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState()
-		        : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return getFacing(stateIn).getOpposite() == facing && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState()
+		        : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		return state.with(HORIZONTAL_FACING, rot.rotate(state.get(HORIZONTAL_FACING)));
+		return state.setValue(HORIZONTAL_FACING, rot.rotate(state.getValue(HORIZONTAL_FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(HORIZONTAL_FACING)));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
 	{
 		builder.add(HORIZONTAL_FACING, FACE);
 	}
 
 	protected static Direction getFacing(BlockState state)
 	{
-		switch ((AttachFace) state.get(FACE))
+		switch ((AttachFace) state.getValue(FACE))
 		{
 		case CEILING:
 			return Direction.DOWN;
 		case FLOOR:
 			return Direction.UP;
 		default:
-			return state.get(HORIZONTAL_FACING);
+			return state.getValue(HORIZONTAL_FACING);
 		}
 	}
 
@@ -100,7 +100,7 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 	
 	@Override 
 	@OnlyIn(Dist.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) 
 	{
 	   return true;
 	}

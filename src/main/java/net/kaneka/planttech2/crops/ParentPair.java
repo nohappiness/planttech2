@@ -123,24 +123,24 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
         public ParentPair deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
         {
             JsonObject obj = json.getAsJsonObject();
-            String parent1 = JSONUtils.getString(obj, "parent_1");
-            String parent2 = JSONUtils.getString(obj, "parent_2");
-            float mutateChance = JSONUtils.getFloat(obj, "chance");
+            String parent1 = JSONUtils.getAsString(obj, "parent_1");
+            String parent2 = JSONUtils.getAsString(obj, "parent_2");
+            float mutateChance = JSONUtils.getAsFloat(obj, "chance");
             return new ParentPair(parent1, parent2, mutateChance);
         }
 
         public ParentPair read(PacketBuffer buf)
         {
-            String parent1 = buf.readString();
-            String parent2 = buf.readString();
+            String parent1 = buf.readUtf();
+            String parent2 = buf.readUtf();
             float chance = buf.readFloat();
             return ParentPair.of(parent1, parent2, chance);
         }
 
         public void write(ParentPair pair, PacketBuffer buf)
         {
-            buf.writeString(pair.getFirstParent());
-            buf.writeString(pair.getSecondParent());
+            buf.writeUtf(pair.getFirstParent());
+            buf.writeUtf(pair.getSecondParent());
             buf.writeFloat(pair.getMutationChance());
         }
     }

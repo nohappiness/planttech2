@@ -38,10 +38,10 @@ public abstract class GuideBaseScreen extends Screen
 	public void init()
 	{
 		super.init();
-		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof GuideItem)
+		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.getMainHandItem().getItem() instanceof GuideItem)
 		{
 			// TODO: move this to use a custom item property
-			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(1);
+			Minecraft.getInstance().player.getMainHandItem().setDamageValue(1);
 		}
 		hasSelection = false;
 		this.guiLeft = (this.width - 400) / 2;
@@ -55,7 +55,7 @@ public abstract class GuideBaseScreen extends Screen
 	{
 		this.renderBackground(mStack);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND);
+		minecraft.getTextureManager().bind(BACKGROUND);
 		if (fadeInTimer > 0)
 		{
 			fadeInTimer--;
@@ -112,7 +112,7 @@ public abstract class GuideBaseScreen extends Screen
 
 	public void renderItem(ItemStack itemstack, int x, int y)
 	{
-		itemRenderer.renderItemAndEffectIntoGUI(itemstack, this.guiLeft + x, this.guiTop + y);
+		itemRenderer.renderAndDecorateItem(itemstack, this.guiLeft + x, this.guiTop + y);
 	}
 
 	public void drawTooltip(MatrixStack mStack, ITextComponent lines, int mouseX, int mouseY, int posX, int posY)
@@ -134,12 +134,12 @@ public abstract class GuideBaseScreen extends Screen
 
 	@SuppressWarnings("resource")
 	@Override
-	public void onClose()
+	public void removed()
 	{
-		if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof GuideItem)
+		if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof GuideItem)
 		{
-			Minecraft.getInstance().player.getHeldItemMainhand().setDamage(0);
+			Minecraft.getInstance().player.getMainHandItem().setDamageValue(0);
 		}
-		super.onClose();
+		super.removed();
 	}
 }

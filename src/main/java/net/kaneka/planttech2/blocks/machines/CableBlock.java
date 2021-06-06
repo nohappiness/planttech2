@@ -51,17 +51,17 @@ public class CableBlock extends Block
 		}
 	};
 
-	private static final VoxelShape core_voxel = Block.makeCuboidShape(7F, 7F, 7F, 9F, 9F, 9F);
+	private static final VoxelShape core_voxel = Block.box(7F, 7F, 7F, 9F, 9F, 9F);
 	private static final Map<Direction, VoxelShape> connection_voxels = new HashMap<Direction, VoxelShape>()
 	{
 		private static final long serialVersionUID = 1L;
 		{
-			put(Direction.DOWN, Block.makeCuboidShape(6F, 0F, 6F, 10F, 2F, 10F)); // DOWN
-			put(Direction.UP, Block.makeCuboidShape(6F, 14F, 6F, 10F, 16F, 10F)); // UP
-			put(Direction.NORTH, Block.makeCuboidShape(6F, 6F, 0F, 10F, 10F, 2F)); // NORTH
-			put(Direction.SOUTH, Block.makeCuboidShape(6F, 6F, 14F, 10F, 10F, 16F)); // SOUTH
-			put(Direction.WEST, Block.makeCuboidShape(0F, 6F, 6F, 2F, 10F, 10F)); // WEST
-			put(Direction.EAST, Block.makeCuboidShape(14F, 6F, 6F, 16F, 10F, 10F));// EAST
+			put(Direction.DOWN, Block.box(6F, 0F, 6F, 10F, 2F, 10F)); // DOWN
+			put(Direction.UP, Block.box(6F, 14F, 6F, 10F, 16F, 10F)); // UP
+			put(Direction.NORTH, Block.box(6F, 6F, 0F, 10F, 10F, 2F)); // NORTH
+			put(Direction.SOUTH, Block.box(6F, 6F, 14F, 10F, 10F, 16F)); // SOUTH
+			put(Direction.WEST, Block.box(0F, 6F, 6F, 2F, 10F, 10F)); // WEST
+			put(Direction.EAST, Block.box(14F, 6F, 6F, 16F, 10F, 10F));// EAST
 		}
 	};
 
@@ -69,44 +69,44 @@ public class CableBlock extends Block
 	{
 		private static final long serialVersionUID = 1L;
 		{
-			put(Direction.DOWN, Block.makeCuboidShape(7F, 0F, 7F, 9F, 7F, 9F)); // DOWN
-			put(Direction.UP, Block.makeCuboidShape(7F, 9F, 7F, 9F, 16F, 9F)); // UP
-			put(Direction.NORTH, Block.makeCuboidShape(7F, 7F, 0F, 9F, 9F, 7F)); // NORTH
-			put(Direction.SOUTH, Block.makeCuboidShape(7F, 7F, 9F, 9F, 9F, 16F)); // SOUTH
-			put(Direction.WEST, Block.makeCuboidShape(0F, 7F, 7F, 7F, 9F, 9F)); // WEST
-			put(Direction.EAST, Block.makeCuboidShape(9F, 7F, 7F, 16F, 9F, 9F));// EAST
+			put(Direction.DOWN, Block.box(7F, 0F, 7F, 9F, 7F, 9F)); // DOWN
+			put(Direction.UP, Block.box(7F, 9F, 7F, 9F, 16F, 9F)); // UP
+			put(Direction.NORTH, Block.box(7F, 7F, 0F, 9F, 9F, 7F)); // NORTH
+			put(Direction.SOUTH, Block.box(7F, 7F, 9F, 9F, 9F, 16F)); // SOUTH
+			put(Direction.WEST, Block.box(0F, 7F, 7F, 7F, 9F, 9F)); // WEST
+			put(Direction.EAST, Block.box(9F, 7F, 7F, 16F, 9F, 9F));// EAST
 		}
 	};
 
 	public CableBlock()
 	{
-		super(Block.Properties.create(Material.IRON).hardnessAndResistance(0.5F));
-		this.setDefaultState(stateContainer.getBaseState().with(NORTH, 0).with(EAST, 0).with(SOUTH, 0).with(WEST, 0).with(UP, 0).with(DOWN, 0));
+		super(Block.Properties.of(Material.METAL).strength(0.5F));
+		this.registerDefaultState(stateDefinition.any().setValue(NORTH, 0).setValue(EAST, 0).setValue(SOUTH, 0).setValue(WEST, 0).setValue(UP, 0).setValue(DOWN, 0));
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
 	{
-		if (!worldIn.isRemote && hand.equals(Hand.MAIN_HAND) && player.getHeldItemMainhand().getItem().equals(ModItems.WRENCH))
+		if (!worldIn.isClientSide && hand.equals(Hand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
 		{
-			Vector3d hitvec = ray.getHitVec();
+			Vector3d hitvec = ray.getLocation();
 			hitvec = hitvec.add(-pos.getX(), -pos.getY(), -pos.getZ());
 			VoxelShape tempshape;
 			for (Direction dir : Direction.values())
 			{
 				tempshape = connection_voxels.get(dir);
-				if (tempshape.getStart(Axis.X) <= hitvec.x && tempshape.getEnd(Axis.X) >= hitvec.x)
+				if (tempshape.min(Axis.X) <= hitvec.x && tempshape.max(Axis.X) >= hitvec.x)
 				{
-					if (tempshape.getStart(Axis.Y) <= hitvec.y && tempshape.getEnd(Axis.Y) >= hitvec.y)
+					if (tempshape.min(Axis.Y) <= hitvec.y && tempshape.max(Axis.Y) >= hitvec.y)
 					{
-						if (tempshape.getStart(Axis.Z) <= hitvec.z && tempshape.getEnd(Axis.Z) >= hitvec.z)
+						if (tempshape.min(Axis.Z) <= hitvec.z && tempshape.max(Axis.Z) >= hitvec.z)
 						{
 							CableTileEntity te = getTECable(worldIn, pos);
 							if (te != null)
 							{
 								te.rotateConnection(dir);
-								worldIn.setBlockState(pos, getCurrentState(state, worldIn, pos));
+								worldIn.setBlockAndUpdate(pos, getCurrentState(state, worldIn, pos));
 								return ActionResultType.SUCCESS;
 							}
 						}
@@ -126,13 +126,13 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
+	public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
 	{
 		CableTileEntity te = getTECable(world, pos);
 		if (te != null)
 		{
 			te.initCable(state);
-			world.setBlockState(pos, getCurrentState(state, world, pos));
+			world.setBlockAndUpdate(pos, getCurrentState(state, world, pos));
 		}
 	}
 
@@ -150,18 +150,18 @@ public class CableBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		CableTileEntity te = getTECable(worldIn, pos);
 		if (te != null)
 		{
 			te.deleteCable();
 		}
-		super.onReplaced(state, worldIn, pos, newState, isMoving);
+		super.onRemove(state, worldIn, pos, newState, isMoving);
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state)
+	public BlockRenderType getRenderShape(BlockState state)
 	{
 		return BlockRenderType.MODEL;
 	}
@@ -229,37 +229,37 @@ public class CableBlock extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		IBlockReader world = context.getWorld();
-		BlockPos pos = context.getPos();
-		BlockState state = getDefaultState();
+		IBlockReader world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		BlockState state = defaultBlockState();
 		for (Direction facing : Direction.values())
 		{
 
-			BlockState stateDirection = world.getBlockState(pos.offset(facing));
-			TileEntity te = world.getTileEntity(pos.offset(facing));
+			BlockState stateDirection = world.getBlockState(pos.relative(facing));
+			TileEntity te = world.getBlockEntity(pos.relative(facing));
 
 			if (stateDirection.getBlock() instanceof CableBlock)
 			{
-				state.with(directions.get(facing), 1);
+				state.setValue(directions.get(facing), 1);
 			}
 			else if (te != null)
 			{
 				if (te.getCapability(CapabilityEnergy.ENERGY).isPresent())
 				{
 
-					state.with(directions.get(facing), 2);
+					state.setValue(directions.get(facing), 2);
 				}
 			}
 			else
 			{
-				state.with(directions.get(facing), 0);
+				state.setValue(directions.get(facing), 0);
 			}
 		}
 		return state;
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos)
 	{
 		return getCurrentState(state, world, currentPos);
 	}
@@ -270,14 +270,14 @@ public class CableBlock extends Block
 		if (te != null)
 		{
 			te.checkConnections(false);
-			return state.with(UP, te.getConnection(Direction.UP)).with(DOWN, te.getConnection(Direction.DOWN)).with(EAST, te.getConnection(Direction.EAST))
-					.with(WEST, te.getConnection(Direction.WEST)).with(NORTH, te.getConnection(Direction.NORTH)).with(SOUTH, te.getConnection(Direction.SOUTH));
+			return state.setValue(UP, te.getConnection(Direction.UP)).setValue(DOWN, te.getConnection(Direction.DOWN)).setValue(EAST, te.getConnection(Direction.EAST))
+					.setValue(WEST, te.getConnection(Direction.WEST)).setValue(NORTH, te.getConnection(Direction.NORTH)).setValue(SOUTH, te.getConnection(Direction.SOUTH));
 		}
 		return state;
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
 	}
@@ -299,7 +299,7 @@ public class CableBlock extends Block
 		VoxelShape shape = core_voxel;
 		for (Direction dir : Direction.values())
 		{
-			int value = state.get(directions.get(dir));
+			int value = state.getValue(directions.get(dir));
 			if (value > 0)
 			{
 				shape = VoxelShapes.or(shape, cable_voxels.get(dir));
@@ -314,7 +314,7 @@ public class CableBlock extends Block
 
 	private CableTileEntity getTECable(World world, BlockPos pos)
 	{
-		TileEntity te = world.getTileEntity(pos);
+		TileEntity te = world.getBlockEntity(pos);
 		return te instanceof CableTileEntity ? (CableTileEntity) te : null;
 	}
 }

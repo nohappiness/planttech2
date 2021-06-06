@@ -40,7 +40,7 @@ public class CropModels extends BlockModelBase
 			Validate.notNull(b, "Crop list entry %s does not have corresponding block", cropBase);
 			states.getVariantBuilder(b)
 					.forAllStates(state -> new ConfiguredModel[]{
-							new ConfiguredModel(models().getBuilder("crop_" + state.get(CropBaseBlock.GROWSTATE)))
+							new ConfiguredModel(models().getBuilder("crop_" + state.getValue(CropBaseBlock.GROWSTATE)))
 					});
 		});
 	}

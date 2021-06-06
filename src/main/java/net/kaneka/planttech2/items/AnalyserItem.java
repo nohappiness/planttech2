@@ -16,16 +16,16 @@ public class AnalyserItem extends Item
 
 	public AnalyserItem()
 	{
-		super(new Item.Properties().maxStackSize(1).group(ModCreativeTabs.MAIN));
+		super(new Item.Properties().stacksTo(1).tab(ModCreativeTabs.MAIN));
 	}
 	
 	@Override
-	public ActionResultType onItemUse(ItemUseContext ctx)
+	public ActionResultType useOn(ItemUseContext ctx)
 	{
-	    World world = ctx.getWorld(); 
-	    BlockPos pos = ctx.getPos(); 
+	    World world = ctx.getLevel(); 
+	    BlockPos pos = ctx.getClickedPos(); 
 	    PlayerEntity player = ctx.getPlayer(); 
-		if(!world.isRemote && player != null)
+		if(!world.isClientSide && player != null)
 		{
 			Block targetBlock = world.getBlockState(pos).getBlock(); 
 
@@ -37,16 +37,16 @@ public class AnalyserItem extends Item
 				{
 					if(messages[i] != null)
 					{
-						player.sendMessage(new StringTextComponent(messages[i]), player.getUniqueID());
+						player.sendMessage(new StringTextComponent(messages[i]), player.getUUID());
 						ok = false; 
 					}
 				}
 				if(ok)
 				{
-					player.sendMessage(new StringTextComponent("Everything ok"), player.getUniqueID());
+					player.sendMessage(new StringTextComponent("Everything ok"), player.getUUID());
 				}
 			}
 		}
-		return super.onItemUse(ctx);
+		return super.useOn(ctx);
 	}
 }

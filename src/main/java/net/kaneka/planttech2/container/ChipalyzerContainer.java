@@ -33,38 +33,38 @@ public class ChipalyzerContainer extends BaseContainer
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) 
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) 
 	{
 		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = (Slot)this.inventorySlots.get(index);
-		if(slot != null && slot.getHasStack()) 
+		Slot slot = (Slot)this.slots.get(index);
+		if(slot != null && slot.hasItem()) 
 		{
-			ItemStack stack1 = slot.getStack();
+			ItemStack stack1 = slot.getItem();
 			stack = stack1.copy();
 			
 			if(index > 35)
 			{
-				if (!this.mergeItemStack(stack1, 0, 34, true))
+				if (!this.moveItemStackTo(stack1, 0, 34, true))
                 {
                     return ItemStack.EMPTY;
                 }
 			}
 			else if(index < 36)
 			{
-				if(!this.mergeItemStack(stack1, 36, 37, false) && stack1.getItem() instanceof CropSeedItem) 
+				if(!this.moveItemStackTo(stack1, 36, 37, false) && stack1.getItem() instanceof CropSeedItem) 
 				{
 					return ItemStack.EMPTY;
 				}
 				else if(index >= 0 && index < 27)
 				{
-					if(!this.mergeItemStack(stack1, 27, 35, false)) return ItemStack.EMPTY;
+					if(!this.moveItemStackTo(stack1, 27, 35, false)) return ItemStack.EMPTY;
 				}
-				else if(index >= 27 && index < 36 && !this.mergeItemStack(stack1, 0, 26, false))
+				else if(index >= 27 && index < 36 && !this.moveItemStackTo(stack1, 0, 26, false))
 				{
 					return ItemStack.EMPTY;
 				}
 			}
-			else if(!this.mergeItemStack(stack1, 0, 35, false)) 
+			else if(!this.moveItemStackTo(stack1, 0, 35, false)) 
 			{
 				return ItemStack.EMPTY;
 			}
@@ -72,11 +72,11 @@ public class ChipalyzerContainer extends BaseContainer
 			
 			if(stack1.isEmpty())
 			{
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			}
 			else
 			{
-				slot.onSlotChanged();
+				slot.setChanged();
 
 			}
 			if(stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;

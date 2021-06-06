@@ -83,17 +83,17 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
 		compound.put("inventory", itemhandler.serializeNBT());
 		compound.putInt("tickspassed", ticksPassed);
-		return super.write(compound);
+		return super.save(compound);
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		int slotamount = itemhandler.getSlots();// prevent crash
 		itemhandler.deserializeNBT(compound.getCompound("inventory"));
 		if (itemhandler.getSlots() != slotamount)
@@ -103,15 +103,15 @@ abstract public class EnergyInventoryTileEntity extends EnergyTileEntity
 
 	public static void spawnAsEntity(World worldIn, BlockPos pos, ItemStack stack)
 	{
-		if (worldIn != null && !worldIn.isRemote && !stack.isEmpty() && !worldIn.restoringBlockSnapshots && worldIn.getGameRules().getBoolean(GameRules.DO_TILE_DROPS)) // do not drop items while restoring
+		if (worldIn != null && !worldIn.isClientSide && !stack.isEmpty() && !worldIn.restoringBlockSnapshots && worldIn.getGameRules().getBoolean(GameRules.RULE_DOBLOCKDROPS)) // do not drop items while restoring
 		// blockstates, prevents item dupe
 		{
-			double d0 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
-			double d1 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
-			double d2 = (double) (worldIn.rand.nextFloat() * 0.5F) + 0.25D;
+			double d0 = (double) (worldIn.random.nextFloat() * 0.5F) + 0.25D;
+			double d1 = (double) (worldIn.random.nextFloat() * 0.5F) + 0.25D;
+			double d2 = (double) (worldIn.random.nextFloat() * 0.5F) + 0.25D;
 			ItemEntity entityitem = new ItemEntity(worldIn, (double) pos.getX() + d0, (double) pos.getY() + d1, (double) pos.getZ() + d2, stack);
-			entityitem.setDefaultPickupDelay();
-			worldIn.addEntity(entityitem);
+			entityitem.setDefaultPickUpDelay();
+			worldIn.addFreshEntity(entityitem);
 		}
 	}
 

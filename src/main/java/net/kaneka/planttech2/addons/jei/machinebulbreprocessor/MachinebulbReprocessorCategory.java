@@ -98,9 +98,9 @@ public class MachinebulbReprocessorCategory implements IRecipeCategory<Machinebu
 		if (biomass > 0) {
 			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getString();
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			int stringWidth = fontRenderer.getStringWidth(biomassString);
-			fontRenderer.drawString(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
+			FontRenderer fontRenderer = minecraft.font;
+			int stringWidth = fontRenderer.width(biomassString);
+			fontRenderer.draw(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
 		}
 		
 	}

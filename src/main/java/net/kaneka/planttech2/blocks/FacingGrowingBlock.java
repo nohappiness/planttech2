@@ -16,40 +16,40 @@ import java.util.function.Supplier;
 
 public class FacingGrowingBlock extends GrowingBlock
 {
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
 	public FacingGrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
 	{
 		super(blockSupplier, growAlone);
-		this.setDefaultState(this.stateContainer.getBaseState().with(GROWINGSTATE, 0).with(FACING, Direction.NORTH));
+		this.registerDefaultState(this.stateDefinition.any().setValue(GROWINGSTATE, 0).setValue(FACING, Direction.NORTH));
 	}
 
 	@Override
 	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
 	{
-		world.setBlockState(pos, blockSupplier.get().getDefaultState().with(FACING, state.get(FACING)));
+		world.setBlockAndUpdate(pos, blockSupplier.get().defaultBlockState().setValue(FACING, state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		return state.with(FACING, rot.rotate((Direction) state.get(FACING)));
+		return state.setValue(FACING, rot.rotate((Direction) state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		return state.rotate(mirrorIn.toRotation((Direction) state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation((Direction) state.getValue(FACING)));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(GROWINGSTATE, FACING);
 	}

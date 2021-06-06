@@ -23,7 +23,7 @@ public class TechVillagerRenderer extends MobRenderer<TechVillagerEntity, TechVi
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(TechVillagerEntity entity)
+	public ResourceLocation getTextureLocation(TechVillagerEntity entity)
 	{
 		return TEXTURE;
 	}

@@ -40,17 +40,17 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	public void init()
 	{
 		super.init();
-		this.xSize = 441; 
-        this.ySize = 197; 
-		this.guiLeft = (this.width - this.xSize) / 2;
-		this.guiTop = (this.height - this.ySize) / 2;
-		if (Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof TeleporterItem)
+		this.imageWidth = 441; 
+        this.imageHeight = 197; 
+		this.guiLeft = (this.width - this.imageWidth) / 2;
+		this.guiTop = (this.height - this.imageHeight) / 2;
+		if (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof TeleporterItem)
 		{
-			stack = Minecraft.getInstance().player.getHeldItemMainhand();
+			stack = Minecraft.getInstance().player.getMainHandItem();
 		}
 		else
 		{
-			this.onClose();
+			this.removed();
 		}
 		
 		int buttonwidth = 300; 
@@ -97,7 +97,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 //		drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 		this.drawButtons(mStack, mouseX, mouseY, partialTicks);
 		this.drawTooltips(mStack, mouseX, mouseY);
-        this.renderHoveredTooltip(mStack, mouseX, mouseY);
+        this.renderTooltip(mStack, mouseX, mouseY);
 	}
 	
 	private void buttonClicked(int id)
@@ -117,11 +117,11 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND);
-		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
+		minecraft.getTextureManager().bind(BACKGROUND);
+		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.imageWidth, this.imageHeight, 512, 512);
 
 		int k = this.getEnergyStoredScaled(157);
 		blit(mStack, this.guiLeft + 396, this.guiTop + 23 + (157 - k), 441, 157 - k, 16, k, 512, 512);

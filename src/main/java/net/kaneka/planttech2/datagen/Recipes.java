@@ -18,7 +18,7 @@ public class Recipes extends RecipeProvider
 	}
 	
 	@Override
-	protected void registerRecipes(Consumer<IFinishedRecipe> cons)
+	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> cons)
 	{
 		/*ShapedRecipeBuilder
 		.shapedRecipe(ModBlocks.DARK_CRYSTAL_DOOR)
@@ -35,15 +35,15 @@ public class Recipes extends RecipeProvider
 	{
 		for(Hedge block: ModBlocks.HEDGE_BLOCKS)
 		{
-			ShapedRecipeBuilder.shapedRecipe(block, 6)
-			.patternLine(" A ")
-			.patternLine(" A ")
-			.patternLine("BCB")
-			.key('A', block.getLeaves())
-			.key('B', block.getWood())
-			.key('C', block.getSoil())
-			.addCriterion("leaves", InventoryChangeTrigger.Instance.forItems(block.getLeaves()))
-			.build(cons);
+			ShapedRecipeBuilder.shaped(block, 6)
+			.pattern(" A ")
+			.pattern(" A ")
+			.pattern("BCB")
+			.define('A', block.getLeaves())
+			.define('B', block.getWood())
+			.define('C', block.getSoil())
+			.unlockedBy("leaves", InventoryChangeTrigger.Instance.hasItems(block.getLeaves()))
+			.save(cons);
 		}
 	}
 }

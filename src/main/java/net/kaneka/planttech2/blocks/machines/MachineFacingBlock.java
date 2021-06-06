@@ -15,12 +15,12 @@ import net.minecraft.util.Rotation;
 
 public class MachineFacingBlock extends MachineBaseBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
     public MachineFacingBlock(Supplier<? extends TileEntity> teCreator, int tier)
     {
         super(teCreator, tier);
-        this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
 	public MachineFacingBlock(Supplier<? extends TileEntity> teCreator)
@@ -31,23 +31,23 @@ public class MachineFacingBlock extends MachineBaseBlock
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-	    return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+	    return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot)
     {
-	    return state.with(FACING, rot.rotate(state.get(FACING)));
+	    return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
 	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn)
     {
-        return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
     
     @Override
-    protected void fillStateContainer(Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
     {
         builder.add(FACING);
     }

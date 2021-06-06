@@ -19,15 +19,15 @@ import net.minecraft.block.AbstractBlock.Properties;
 
 public class WallLight extends FacingWallLightBase
 {
-    public static final VoxelShape NEGATIVE_Z = Block.makeCuboidShape(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 4.0D);
-    public static final VoxelShape POSITIVE_Z = Block.makeCuboidShape(10.0, 6.0, 16.0, 6.0, 12.0, 12.0);
-    public static final VoxelShape NEGATIVE_X = Block.makeCuboidShape(0.0, 6.0, 10.0, 4.0, 12.0, 6.0);
-    public static final VoxelShape POSITIVE_X = Block.makeCuboidShape(16.0, 6.0, 6.0, 12.0, 12.0, 10.0);
+    public static final VoxelShape NEGATIVE_Z = Block.box(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 4.0D);
+    public static final VoxelShape POSITIVE_Z = Block.box(10.0, 6.0, 16.0, 6.0, 12.0, 12.0);
+    public static final VoxelShape NEGATIVE_X = Block.box(0.0, 6.0, 10.0, 4.0, 12.0, 6.0);
+    public static final VoxelShape POSITIVE_X = Block.box(16.0, 6.0, 6.0, 12.0, 12.0, 10.0);
 
-    public static final VoxelShape NEGATIVE_Z_BROKE = Block.makeCuboidShape(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 1.0D);
-    public static final VoxelShape POSITIVE_Z_BROKE = Block.makeCuboidShape(10.0, 6.0, 16.0, 6.0, 12.0, 15.0);
-    public static final VoxelShape NEGATIVE_X_BROKE = Block.makeCuboidShape(0.0, 6.0, 10.0, 1.0, 12.0, 6.0);
-    public static final VoxelShape POSITIVE_X_BROKE = Block.makeCuboidShape(16.0, 6.0, 6.0, 15.0, 12.0, 10.0);
+    public static final VoxelShape NEGATIVE_Z_BROKE = Block.box(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 1.0D);
+    public static final VoxelShape POSITIVE_Z_BROKE = Block.box(10.0, 6.0, 16.0, 6.0, 12.0, 15.0);
+    public static final VoxelShape NEGATIVE_X_BROKE = Block.box(0.0, 6.0, 10.0, 1.0, 12.0, 6.0);
+    public static final VoxelShape POSITIVE_X_BROKE = Block.box(16.0, 6.0, 6.0, 15.0, 12.0, 10.0);
 
     public WallLight(Properties property)
     {
@@ -37,8 +37,8 @@ public class WallLight extends FacingWallLightBase
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
-        boolean broke = state.get(LIGHT_STATUS) == 0;
-        switch (state.get(HORIZONTAL_FACING))
+        boolean broke = state.getValue(LIGHT_STATUS) == 0;
+        switch (state.getValue(HORIZONTAL_FACING))
         {
             case NORTH:
             default:
@@ -55,12 +55,12 @@ public class WallLight extends FacingWallLightBase
     @Override
     public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity)
     {
-        return state.get(LIGHT_STATUS) == 0 ? SoundType.STONE : super.getSoundType(state, world, pos, entity);
+        return state.getValue(LIGHT_STATUS) == 0 ? SoundType.STONE : super.getSoundType(state, world, pos, entity);
     }
 
     @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
+    public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        super.onBlockHarvested(worldIn, pos, state, player);
+        super.playerWillDestroy(worldIn, pos, state, player);
     }
 }

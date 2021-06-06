@@ -27,30 +27,30 @@ public abstract class AbstractCustomFence extends Block
 
     public AbstractCustomFence(Properties property)
     {
-        super(property.notSolid());
+        super(property.noOcclusion());
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(NORTH, EAST, SOUTH, WEST);
     }
 
     @Override
-    public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
     {
-        return getState(this.getDefaultState(), (World) worldIn, currentPos);
+        return getState(this.defaultBlockState(), (World) worldIn, currentPos);
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return getState(this.getDefaultState(), context.getWorld(), context.getPos());
+        return getState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
 
     public boolean canConnectTo(World world, BlockPos pos, Direction direction)
     {
-        return canAttachToSolid() && world.getBlockState(pos.offset(direction)).isSolidSide(world, pos.offset(direction), direction.getOpposite());
+        return canAttachToSolid() && world.getBlockState(pos.relative(direction)).isFaceSturdy(world, pos.relative(direction), direction.getOpposite());
     }
 
     /**
@@ -65,13 +65,13 @@ public abstract class AbstractCustomFence extends Block
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
     {
         VoxelShape shape = getPostShape();
-        if (state.get(NORTH))
+        if (state.getValue(NORTH))
             shape = VoxelShapes.or(shape, getShapeByDirection(Direction.NORTH));
-        if (state.get(SOUTH))
+        if (state.getValue(SOUTH))
             shape = VoxelShapes.or(shape, getShapeByDirection(Direction.SOUTH));
-        if (state.get(WEST))
+        if (state.getValue(WEST))
             shape = VoxelShapes.or(shape, getShapeByDirection(Direction.WEST));
-        if (state.get(EAST))
+        if (state.getValue(EAST))
             shape = VoxelShapes.or(shape, getShapeByDirection(Direction.EAST));
         return shape;
     }
@@ -83,9 +83,9 @@ public abstract class AbstractCustomFence extends Block
     private BlockState getState(BlockState state, World worldIn, BlockPos pos)
     {
         return state
-                .with(NORTH, canConnectTo(worldIn, pos, Direction.SOUTH))
-                .with(EAST, canConnectTo(worldIn, pos, Direction.WEST))
-                .with(SOUTH, canConnectTo(worldIn, pos, Direction.NORTH))
-                .with(WEST, canConnectTo(worldIn, pos, Direction.EAST));
+                .setValue(NORTH, canConnectTo(worldIn, pos, Direction.SOUTH))
+                .setValue(EAST, canConnectTo(worldIn, pos, Direction.WEST))
+                .setValue(SOUTH, canConnectTo(worldIn, pos, Direction.NORTH))
+                .setValue(WEST, canConnectTo(worldIn, pos, Direction.EAST));
     }
 }

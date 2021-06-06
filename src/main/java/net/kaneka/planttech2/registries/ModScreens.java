@@ -9,26 +9,26 @@ public class ModScreens
 {
 	public static void registerGUI()
 	{
-		ScreenManager.registerFactory(ModContainers.COMPRESSOR, CompressorScreen::new);
-		ScreenManager.registerFactory(ModContainers.DNACLEANER, DNACleanerScreen::new);
-		ScreenManager.registerFactory(ModContainers.DNACOMBINER, DNACombinerScreen::new);
-		ScreenManager.registerFactory(ModContainers.DNAEXTRACTOR, DNAExtractorScreen::new);
-		ScreenManager.registerFactory(ModContainers.DNAREMOVER, DNARemoverScreen::new);
-		ScreenManager.registerFactory(ModContainers.ENERGYSTORAGE, EnergyStorageScreen::new);
-		ScreenManager.registerFactory(ModContainers.ENERGYSUPPLIER, EnergySupplierScreen::new);
-		ScreenManager.registerFactory(ModContainers.IDENTIFIER, IdentifierScreen::new);
-		ScreenManager.registerFactory(ModContainers.INFUSER, InfuserScreen::new);
-		ScreenManager.registerFactory(ModContainers.UPGRADEABLEITEM, ItemUpgradeableScreen::new);
-		ScreenManager.registerFactory(ModContainers.MEGAFURNACE, MegaFurnaceScreen::new);
-		ScreenManager.registerFactory(ModContainers.PLANTFARM, PlantFarmScreen::new);
-		ScreenManager.registerFactory(ModContainers.SEEDCONSTRUCTOR, SeedconstructorScreen::new);
-		ScreenManager.registerFactory(ModContainers.SEEDQUEEZER, SeedSqueezerScreen::new);
-		ScreenManager.registerFactory(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
-		ScreenManager.registerFactory(ModContainers.CHIPALYZER, ChipalyzerScreen::new);
-		ScreenManager.registerFactory(ModContainers.MACHINEBULBREPROCESSOR, MachineBulbReprocessorScreen::new);
-		ScreenManager.registerFactory(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
-		ScreenManager.registerFactory(ModContainers.PLANTTOPIATELEPORTER, PlantTopiaTeleporterScreen::new);
-		ScreenManager.registerFactory(ModContainers.TECHVILLAGER, TechVillagerScreen::new);
-		ScreenManager.registerFactory(ModContainers.CROPAURAGENERATOR, CropAuraGeneratorScreen::new);
+		ScreenManager.register(ModContainers.COMPRESSOR, CompressorScreen::new);
+		ScreenManager.register(ModContainers.DNACLEANER, DNACleanerScreen::new);
+		ScreenManager.register(ModContainers.DNACOMBINER, DNACombinerScreen::new);
+		ScreenManager.register(ModContainers.DNAEXTRACTOR, DNAExtractorScreen::new);
+		ScreenManager.register(ModContainers.DNAREMOVER, DNARemoverScreen::new);
+		ScreenManager.register(ModContainers.ENERGYSTORAGE, EnergyStorageScreen::new);
+		ScreenManager.register(ModContainers.ENERGYSUPPLIER, EnergySupplierScreen::new);
+		ScreenManager.register(ModContainers.IDENTIFIER, IdentifierScreen::new);
+		ScreenManager.register(ModContainers.INFUSER, InfuserScreen::new);
+		ScreenManager.register(ModContainers.UPGRADEABLEITEM, ItemUpgradeableScreen::new);
+		ScreenManager.register(ModContainers.MEGAFURNACE, MegaFurnaceScreen::new);
+		ScreenManager.register(ModContainers.PLANTFARM, PlantFarmScreen::new);
+		ScreenManager.register(ModContainers.SEEDCONSTRUCTOR, SeedconstructorScreen::new);
+		ScreenManager.register(ModContainers.SEEDQUEEZER, SeedSqueezerScreen::new);
+		ScreenManager.register(ModContainers.SOLARGENERATOR, SolarGeneratorScreen::new);
+		ScreenManager.register(ModContainers.CHIPALYZER, ChipalyzerScreen::new);
+		ScreenManager.register(ModContainers.MACHINEBULBREPROCESSOR, MachineBulbReprocessorScreen::new);
+		ScreenManager.register(ModContainers.TELEPORTERITEM, TeleporterScreen::new);
+		ScreenManager.register(ModContainers.PLANTTOPIATELEPORTER, PlantTopiaTeleporterScreen::new);
+		ScreenManager.register(ModContainers.TECHVILLAGER, TechVillagerScreen::new);
+		ScreenManager.register(ModContainers.CROPAURAGENERATOR, CropAuraGeneratorScreen::new);
 	}
 }

@@ -49,7 +49,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 
 	public UpgradeableArmorItem(String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
 	{
-		super(resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().group(ModCreativeTabs.TOOLS_AND_ARMOR));
+		super(resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().tab(ModCreativeTabs.TOOLS_AND_ARMOR));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize;
 		this.baseDamageReduction = baseDamageReduction; 
@@ -226,15 +226,15 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 
 		if(player.isCrouching())
 		{
-			if (!world.isRemote && player instanceof ServerPlayerEntity) 
+			if (!world.isClientSide && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.currentItem), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.selected), buffer -> buffer.writeItem(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
@@ -284,17 +284,17 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 				}
 			}
 			
-			stack.getEnchantmentTagList().clear();
+			stack.getEnchantmentTags().clear();
 			for (Enchantment ench: enchantments.keySet())
 			{
 				int level = enchantments.get(ench);  
 				if(ench.getMaxLevel() < level)
 				{
-					stack.addEnchantment(ench, ench.getMaxLevel());
+					stack.enchant(ench, ench.getMaxLevel());
 				}
 				else
 				{
-					stack.addEnchantment(ench, level);
+					stack.enchant(ench, level);
 				}
 			}
 
@@ -346,7 +346,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 	
 	@Override
-	public boolean isDamageable()
+	public boolean canBeDepleted()
 	{
 		return false;
 	}
@@ -354,7 +354,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player)
 	{
-		if(!world.isRemote)
+		if(!world.isClientSide)
 		{
 			if(!stack.isEmpty())
 			{
@@ -367,7 +367,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
@@ -377,7 +377,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
 		}
 
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override

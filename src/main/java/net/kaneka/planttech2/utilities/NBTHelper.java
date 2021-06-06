@@ -76,12 +76,12 @@ public class NBTHelper
 
 	public static <E> List<E> constructListFromString(CompoundNBT compound, String key, Function<String, E> constructor)
 	{
-		return constructListNotNull(compound, key, (nbt) -> ((StringNBT) nbt).getString(), constructor, Constants.NBT.TAG_STRING);
+		return constructListNotNull(compound, key, (nbt) -> ((StringNBT) nbt).getAsString(), constructor, Constants.NBT.TAG_STRING);
 	}
 
 	public static <E> List<E> constructListFromInteger(CompoundNBT compound, String key, Function<Integer, E> constructor)
 	{
-		return constructListNotNull(compound, key, (nbt) -> ((IntNBT) nbt).getInt(), constructor, Constants.NBT.TAG_INT);
+		return constructListNotNull(compound, key, (nbt) -> ((IntNBT) nbt).getAsInt(), constructor, Constants.NBT.TAG_INT);
 	}
 
 	private static <E, T> List<E> constructListNotNull(CompoundNBT compound, String key, Function<INBT, T> typeGetter, Function<T, E> constructor, int type)

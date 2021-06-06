@@ -30,28 +30,28 @@ public abstract class BiomassFluid extends FlowingFluid
 	public static final FluidAttributes ATTRIBUTE_FLOWING = FluidAttributes.builder(BIOMASS_STILL, BIOMASS_FLOWING).build(new Flowing());
 
 	@Override
-	public Fluid getFlowingFluid()
+	public Fluid getFlowing()
 	{
 		return ModFluids.BIOMASS_FLOWING;
 	}
 
 	@Override
-	public Fluid getStillFluid()
+	public Fluid getSource()
 	{
 		return ModFluids.BIOMASS;
 	}
 
 	@Override
-	protected boolean canSourcesMultiply()
+	protected boolean canConvertToSource()
 	{
 		return false;
 	}
 
 	@Override
-	protected void beforeReplacingBlock(IWorld worldIn, BlockPos pos, BlockState state)
+	protected void beforeDestroyingBlock(IWorld worldIn, BlockPos pos, BlockState state)
 	{
-		TileEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getTileEntity(pos) : null;
-		Block.spawnDrops(state, worldIn , pos, tileentity);
+		TileEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getBlockEntity(pos) : null;
+		Block.dropResources(state, worldIn , pos, tileentity);
 	}
 
 	@Override
@@ -61,25 +61,25 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected int getLevelDecreasePerBlock(IWorldReader worldIn)
+	protected int getDropOff(IWorldReader worldIn)
 	{
 		return 1;
 	}
 
 	@Override
-	public Item getFilledBucket()
+	public Item getBucket()
 	{
 		return ModItems.BIOMASS_BUCKET;
 	}
 
 	@Override
-	protected boolean canDisplace(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction)
+	protected boolean canBeReplacedWith(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction)
 	{
-		return direction == Direction.DOWN && !fluid.isIn(FluidTags.WATER);
+		return direction == Direction.DOWN && !fluid.is(FluidTags.WATER);
 	}
 
 	@Override
-	public int getTickRate(IWorldReader p_205569_1_)
+	public int getTickDelay(IWorldReader p_205569_1_)
 	{
 		return 5;
 	}
@@ -91,13 +91,13 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected BlockState getBlockState(FluidState state)
+	protected BlockState createLegacyBlock(FluidState state)
 	{
-		return ModBlocks.BIOMASSFLUIDBLOCK.getDefaultState().with(FlowingFluidBlock.LEVEL, getLevelFromState(state));
+		return ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, getLegacyLevel(state));
 	}
 
 	@Override
-	public boolean isEquivalentTo(Fluid fluidIn)
+	public boolean isSame(Fluid fluidIn)
 	{
 		return fluidIn == ModFluids.BIOMASS || fluidIn == ModFluids.BIOMASS_FLOWING;
 	}
@@ -106,18 +106,18 @@ public abstract class BiomassFluid extends FlowingFluid
 	{
 		public Flowing()
 		{
-			setDefaultState(getStateContainer().getBaseState().with(LEVEL_1_8, 7));
+			registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
 		}
 
-		protected void fillStateContainer(StateContainer.Builder<Fluid, FluidState> builder)
+		protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder)
 		{
-			super.fillStateContainer(builder);
-			builder.add(LEVEL_1_8);
+			super.createFluidStateDefinition(builder);
+			builder.add(LEVEL);
 		}
 
-		public int getLevel(FluidState state)
+		public int getAmount(FluidState state)
 		{
-			return state.get(LEVEL_1_8);
+			return state.getValue(LEVEL);
 		}
 
 		public boolean isSource(FluidState state)
@@ -134,7 +134,7 @@ public abstract class BiomassFluid extends FlowingFluid
 
 	public static class Source extends BiomassFluid
 	{
-		 public int getLevel(FluidState state) 
+		 public int getAmount(FluidState state) 
 		 {
              return 8;
          }

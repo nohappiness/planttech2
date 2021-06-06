@@ -82,7 +82,7 @@ public class DropsJSONGenerator
 				continue;
 			}
 			@SuppressWarnings("deprecation")
-			Item item = Item.getItemFromBlock(b);
+			Item item = Item.byBlock(b);
 			if (item != Items.AIR)
 			{
 				createFile(item);

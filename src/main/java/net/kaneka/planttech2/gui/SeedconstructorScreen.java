@@ -19,30 +19,30 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorCo
     }
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(mStack, partialTicks, mouseX, mouseY);
 
 		int l = this.getCookProgressScaled(15);
-		blit(mStack, this.guiLeft + 96, this.guiTop + 48, 0, 200, 14, l);
+		blit(mStack, this.leftPos + 96, this.topPos + 48, 0, 200, 14, l);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.guiLeft + 149, this.guiTop + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 
 		int j = this.getFluidStoredScaled(55);
-		blit(mStack, this.guiLeft + 41, this.guiTop + 28 + (55-j), 224, 55-j, 16, 0 + j);
+		blit(mStack, this.leftPos + 41, this.topPos + 28 + (55-j), 224, 55-j, 16, 0 + j);
 	}
 	
 	private int getCookProgressScaled(int pixels)
 	{
-		int i = container.getValue(4);
+		int i = menu.getValue(4);
 		return i != 0 ? i * pixels / ((SeedconstructorTileEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override
 	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
 	{
-	    drawTooltip(mStack, container.getValue(2) + "/" + container.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
+	    drawTooltip(mStack, menu.getValue(2) + "/" + menu.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 	    super.drawTooltips(mStack, mouseX, mouseY);
 	}
 	

@@ -50,7 +50,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	
 	public BaseUpgradeableItem(Properties property, int basecapacity, int maxInvSize, float baseAttack, float baseAttackSpeed, int slotId)
 	{
-		super(property.maxStackSize(1));
+		super(property.stacksTo(1));
 		this.basecapacity = basecapacity;
 		this.maxInvSize = maxInvSize; 
 		this.baseAttack = baseAttack; 
@@ -113,9 +113,9 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker)
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (!((PlayerEntity) attacker).abilities.isCreativeMode)
+		if (!((PlayerEntity) attacker).abilities.instabuild)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 		}
@@ -123,9 +123,9 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
+	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
-		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F && !((PlayerEntity) entityLiving).abilities.isCreativeMode)
+		if (!worldIn.isClientSide && state.getDestroySpeed(worldIn, pos) != 0.0F && !((PlayerEntity) entityLiving).abilities.instabuild)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 			updateEnergy(stack);
@@ -175,8 +175,8 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
 		if (equipmentSlot == EquipmentSlotType.MAINHAND)
 		{
-			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", getAttDamage(stack), AttributeModifier.Operation.ADDITION));
-			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", getAttDamage(stack), AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
 		}
 
 		return multimap;
@@ -199,7 +199,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		CompoundNBT tag = stack.getTag();
 		if (tag != null)
@@ -209,7 +209,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
 		}
 
-		super.addInformation(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -257,15 +257,15 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 
 		if(player.isCrouching())
 		{
-			if (!world.isRemote && player instanceof ServerPlayerEntity) 
+			if (!world.isClientSide && player instanceof ServerPlayerEntity) 
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.currentItem), buffer -> buffer.writeItemStack(stack));
+    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.selected), buffer -> buffer.writeItem(stack));
 			}
 		}
 		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
@@ -321,17 +321,17 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 					}
 				}
 			}
-			stack.getEnchantmentTagList().clear();
+			stack.getEnchantmentTags().clear();
 			for (Enchantment ench: enchantments.keySet())
 			{
 				int level = enchantments.get(ench);  
 				if(ench.getMaxLevel() < level)
 				{
-					stack.addEnchantment(ench, ench.getMaxLevel());
+					stack.enchant(ench, ench.getMaxLevel());
 				}
 				else
 				{
-					stack.addEnchantment(ench, level);
+					stack.enchant(ench, level);
 				}
 			}
 			
@@ -370,7 +370,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if(!world.isRemote)
+		if(!world.isClientSide)
 		{
 			if(!stack.isEmpty())
 			{

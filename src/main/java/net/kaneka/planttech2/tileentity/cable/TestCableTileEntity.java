@@ -32,7 +32,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     @Override
     public void tick()
     {
-        if (world != null && !world.isRemote() && isMaster())
+        if (level != null && !level.isClientSide() && isMaster())
             transferEnergy();
 //        if (world != null && !world.isRemote() && !isMaster())
 //        {
@@ -74,36 +74,36 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound)
+    public CompoundNBT save(CompoundNBT compound)
     {
         compound.put("cableinfo", this.cableInfo.write());
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt)
+    public void load(BlockState state, CompoundNBT nbt)
     {
-        super.read(state, nbt);
+        super.load(state, nbt);
         this.cableInfo = new CableInfo(nbt.getCompound("cableinfo"));
     }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()
     {
-        return new SUpdateTileEntityPacket(getPos(), 7414, getUpdateTag());
+        return new SUpdateTileEntityPacket(getBlockPos(), 7414, getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag()
     {
-        return this.write(new CompoundNBT());
+        return this.save(new CompoundNBT());
     }
 
     @Override
     public void onDataPacket(NetworkManager manager, SUpdateTileEntityPacket packet)
     {
-        if (world != null)
-            handleUpdateTag(world.getBlockState(packet.getPos()), packet.getNbtCompound());
+        if (level != null)
+            handleUpdateTag(level.getBlockState(packet.getPos()), packet.getTag());
     }
 
     public void initCable()
@@ -131,7 +131,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             if (largestNetwork != null)
             {
                 largestNetwork.addCableToNetwork(this);
-                masters.remove(largestNetwork.getPos());
+                masters.remove(largestNetwork.getBlockPos());
                 masters.forEach((pos) -> largestNetwork.mergeNetworks(getCableTE(pos)));
                 return;
             }
@@ -139,7 +139,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         //if there are no neighbor networks, create one instead
         createNetwork();
         getMasterCable().addMachinesFrom(this);
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -150,10 +150,10 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     {
         if (!isMaster())
             return;
-        info().slaves.add(cable.getPos());
+        info().slaves.add(cable.getBlockPos());
         cable.updateMaster(this);
         addMachinesFrom(cable);
-        markDirty();
+        setChanged();
     }
 
     public List<BlockPos> getAllConnections(BlockPos master)
@@ -177,7 +177,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     {
         for (Direction direction : Direction.values())
         {
-            BlockPos pos = getPos().offset(direction);
+            BlockPos pos = getBlockPos().relative(direction);
             if (connected.contains(pos))
                 continue;
             TestCableTileEntity cable = getCableTE(pos);
@@ -195,12 +195,12 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void refresh()
     {
-        if (world == null || !isMaster())
+        if (level == null || !isMaster())
             return;
         clear(true);
         setIsMaster(true);
-        getAllConnections(getPos()).forEach((pos) -> {
-            if (!pos.equals(getPos()))
+        getAllConnections(getBlockPos()).forEach((pos) -> {
+            if (!pos.equals(getBlockPos()))
             {
                 TestCableTileEntity cable = getCableTE(pos);
                 if (cable != null)
@@ -212,7 +212,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             }
         });
         addMachinesFrom(this);
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -224,7 +224,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         int[] connections = cable.getConnections();
         for (int i=0;i<connections.length;i++)
         {
-            Connection connection = new Connection(cable.getPos().offset(Direction.byIndex(i)), Direction.byIndex(i));
+            Connection connection = new Connection(cable.getBlockPos().relative(Direction.from3DDataValue(i)), Direction.from3DDataValue(i));
             if (connections[i] < 2)
             {
                 removeConsumer(connection);
@@ -242,7 +242,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void createNetwork()
     {
-        if (world == null)
+        if (level == null)
             return;
         setIsMaster(true);
         refresh();
@@ -280,11 +280,11 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void checkConnections()
     {
-        if (world == null)
+        if (level == null)
             return;
         for (Direction direction : Direction.values())
         {
-            TileEntity te = world.getTileEntity(getPos().offset(direction));
+            TileEntity te = level.getBlockEntity(getBlockPos().relative(direction));
             if (te != null)
             {
                 if (te instanceof TestCableTileEntity)
@@ -301,18 +301,18 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             else if (getConnection(direction) != 0)
                 setConnection(direction, 0);
         }
-        markDirty();
+        setChanged();
     }
 
     /**
      * Remove this cable and force neighbor cables to update
      */
-    public void remove()
+    public void setRemoved()
     {
         if (getMasterCable() != null)
         {
             getMasterCable().forceReplaceMaster();
-            getMasterCable().getSlaves().remove(getPos());
+            getMasterCable().getSlaves().remove(getBlockPos());
         }
     }
 
@@ -321,7 +321,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void forceReplaceMaster()
     {
-        if (world == null)
+        if (level == null)
             return;
         if (info().slaves.isEmpty())
         {
@@ -340,7 +340,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             if (cable.getMasterPos().equals(BlockPos.ZERO))
                 cable.createNetwork();
         });
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -348,7 +348,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void findNewMaster()
     {
-        if (world == null || !this.isMaster())
+        if (level == null || !this.isMaster())
             return;
         ArrayList<BlockPos> slaves = new ArrayList<>(info().slaves);
         if (!slaves.isEmpty())
@@ -365,7 +365,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void mergeNetworks(TestCableTileEntity otherMaster)
     {
-        if (world == null || !info().isMaster || otherMaster == null)
+        if (level == null || !info().isMaster || otherMaster == null)
             return;
         CableInfo i = otherMaster.info();
         info().slaves.addAll(i.slaves);
@@ -373,7 +373,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         info().consumers.addAll(i.consumers);
         info().storages.addAll(i.storages);
         otherMaster.clear(true);
-        info().slaves.add(otherMaster.getPos());
+        info().slaves.add(otherMaster.getBlockPos());
         updateSlavesMasterInfo();
     }
 
@@ -383,13 +383,13 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
      */
     public void setAsMaster(@Nullable TestCableTileEntity oldMaster)
     {
-        if (world == null)
+        if (level == null)
             return;
         this.setIsMaster(true);
         if (oldMaster != null)
         {
             CableInfo i = oldMaster.info();
-            info().masterPos = oldMaster.getPos();
+            info().masterPos = oldMaster.getBlockPos();
             info().slaves = i.slaves;
             info().producers = i.producers;
             info().consumers = i.consumers;
@@ -400,7 +400,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
 
     public void updateMaster(TestCableTileEntity master)
     {
-        updateMaster(master.getPos());
+        updateMaster(master.getBlockPos());
     }
 
     public void updateMaster(BlockPos master)
@@ -421,7 +421,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
             if (cable != null)
                 cable.updateMaster(this);
         });
-        markDirty();
+        setChanged();
     }
 
     /**
@@ -434,7 +434,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         boolean changed = false;
         for (Direction direction : Direction.values())
         {
-            TestCableTileEntity cable = getCableTE(getPos().offset(direction));
+            TestCableTileEntity cable = getCableTE(getBlockPos().relative(direction));
             if (cable != null)
             {
                 message.accept(cable);
@@ -446,9 +446,9 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
 
     private IEnergyStorage getEnergyCap(BlockPos pos, Direction facing)
     {
-        if (world == null)
+        if (level == null)
             return null;
-        TileEntity tileentity = world.getTileEntity(pos);
+        TileEntity tileentity = level.getBlockEntity(pos);
         if (tileentity != null)
         {
             LazyOptional<IEnergyStorage> capability = tileentity.getCapability(CapabilityEnergy.ENERGY, facing);
@@ -472,19 +472,19 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
 
     public void setConnection(Direction facing, int i)
     {
-        getConnections()[facing.getIndex()] = i;
+        getConnections()[facing.get3DDataValue()] = i;
         if (getMasterCable() != null)
             getMasterCable().addMachinesFrom(this);
     }
 
     public int getConnection(Direction direction)
     {
-        return getConnections()[direction.getIndex()];
+        return getConnections()[direction.get3DDataValue()];
     }
 
     public void rotateConnection(Direction direction)
     {
-        rotateConnection(direction.getIndex());
+        rotateConnection(direction.get3DDataValue());
     }
 
     public void rotateConnection(int direction)
@@ -492,7 +492,7 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
         int next = getConnections()[direction] + 1;
         if (next > 3)
             next = 2;
-        setConnection(Direction.byIndex(direction), next);
+        setConnection(Direction.from3DDataValue(direction), next);
     }
 
     public ArrayList<BlockPos> getAllCables()
@@ -561,8 +561,8 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     public void setIsMaster(boolean value)
     {
         info().isMaster = value;
-        info().masterPos = getPos();
-        info().slaves.remove(getPos());
+        info().masterPos = getBlockPos();
+        info().slaves.remove(getBlockPos());
     }
 
     public boolean isMaster()
@@ -618,9 +618,9 @@ public class TestCableTileEntity extends TileEntity implements ITickableTileEnti
     @Nullable
     public TestCableTileEntity getCableTE(BlockPos pos)
     {
-        if (world == null)
+        if (level == null)
             return null;
-        TileEntity tileEntity = world.getTileEntity(pos);
+        TileEntity tileEntity = level.getBlockEntity(pos);
         return tileEntity instanceof TestCableTileEntity ? (TestCableTileEntity) tileEntity : null;
     }
 }

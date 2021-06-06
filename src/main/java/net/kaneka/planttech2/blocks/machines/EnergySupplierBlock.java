@@ -18,18 +18,18 @@ public class EnergySupplierBlock extends MachineBaseBlock
     public EnergySupplierBlock(Supplier<? extends TileEntity> teCreator, int tier)
     {
         super(teCreator, tier);
-        setDefaultState(getDefaultState().with(SUPPLYING, false));
+        registerDefaultState(defaultBlockState().setValue(SUPPLYING, false));
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context)
     {
-        return getDefaultState().with(SUPPLYING, false);
+        return defaultBlockState().setValue(SUPPLYING, false);
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(SUPPLYING);
     }

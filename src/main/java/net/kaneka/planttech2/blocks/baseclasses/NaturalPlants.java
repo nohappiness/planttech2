@@ -26,11 +26,11 @@ public class NaturalPlants extends Block
 
 	public NaturalPlants(float width, float height)
 	{
-		super(Block.Properties.create(Material.PLANTS).notSolid().sound(SoundType.PLANT));
+		super(Block.Properties.of(Material.PLANT).noOcclusion().sound(SoundType.GRASS));
 		//        this.width = width;
 		//        this.height = height;
 		float halfWidth = width / 2;
-		BASE_SHAPE = Block.makeCuboidShape(8 - halfWidth, 0, 8 - halfWidth, 8 + halfWidth, height, 8 + halfWidth);
+		BASE_SHAPE = Block.box(8 - halfWidth, 0, 8 - halfWidth, 8 + halfWidth, height, 8 + halfWidth);
 	}
 
 	public NaturalPlants()
@@ -43,7 +43,7 @@ public class NaturalPlants extends Block
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
 		Vector3d vec3d = state.getOffset(worldIn, pos);
-		return BASE_SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+		return BASE_SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 
 	@Override
@@ -75,8 +75,8 @@ public class NaturalPlants extends Block
 
 	public boolean canPlaceAt(World world, BlockPos pos)
 	{
-		if (getValidGrounds().contains(world.getBlockState(pos.down()).getBlock())) {
-			return world.isAirBlock(pos);
+		if (getValidGrounds().contains(world.getBlockState(pos.below()).getBlock())) {
+			return world.isEmptyBlock(pos);
 		}
 		return false;
 	}

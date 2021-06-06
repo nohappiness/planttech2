@@ -32,7 +32,7 @@ public enum EnumTemperature
 	 */
 	public IFormattableTextComponent getDisplayString()
 	{
-		return new TranslationTextComponent("temp." + this.name().toLowerCase()).mergeStyle(color);
+		return new TranslationTextComponent("temp." + this.name().toLowerCase()).withStyle(color);
 	}
 
 	public static boolean inRange(float value, int tolerance, List<EnumTemperature> temperatures)

@@ -17,11 +17,11 @@ public class GuideItem extends Item
 
     public GuideItem()
     {
-	super(new Item.Properties().defaultMaxDamage(1).group(ModCreativeTabs.MAIN));
+	super(new Item.Properties().defaultDurability(1).tab(ModCreativeTabs.MAIN));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
 	/*
@@ -40,7 +40,7 @@ public class GuideItem extends Item
 		//CropListEntryConfiguration test = gson.fromJson(new InputStreamReader(rm.getResource(new ResourceLocation("example", "pt2_crops")).getInputStream()), CropListEntryConfiguration.class);
 		
 		//CropListEntryConfiguration.Serializer.readFromJson(new ResourceLocation("planttech2","example"),  gson.)
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @Override

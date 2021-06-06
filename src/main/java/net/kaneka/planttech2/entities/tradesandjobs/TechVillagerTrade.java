@@ -81,12 +81,12 @@ public class TechVillagerTrade
 		List<ItemStack> inputs = new ArrayList<>(), outputs = new ArrayList<>(); 
 		for(int i = 0; i < nbt.getInt("length_inputs"); i++)
 		{
-			inputs.add(ItemStack.read(nbt.getCompound("input_" + i)));
+			inputs.add(ItemStack.of(nbt.getCompound("input_" + i)));
 		}
 		
 		for(int i = 0; i < nbt.getInt("length_outputs"); i++)
 		{
-			outputs.add(ItemStack.read(nbt.getCompound("output_" + i)));
+			outputs.add(ItemStack.of(nbt.getCompound("output_" + i)));
 		}
 		
 		return new TechVillagerTrade(nbt.getString("name"), inputs, outputs, nbt.getInt("creditsbuy") , nbt.getInt("creditssell") , nbt.getInt("neededtrustlevel"));
@@ -94,17 +94,17 @@ public class TechVillagerTrade
 	
 	public PacketBuffer toBuffer(PacketBuffer buf)
 	{
-		buf.writeString(name);
+		buf.writeUtf(name);
 		buf.writeInt(inputs.size()); 
 		for(int i = 0; i < inputs.size(); i++)
 		{
-			buf.writeItemStack(inputs.get(i)); 
+			buf.writeItem(inputs.get(i)); 
 		}
 		
 		buf.writeInt(outputs.size()); 
 		for(int i = 0; i < outputs.size(); i++)
 		{
-			buf.writeItemStack(outputs.get(i)); 
+			buf.writeItem(outputs.get(i)); 
 		}
 		buf.writeInt(creditsBuy); 
 		buf.writeInt(creditsSell); 
@@ -115,17 +115,17 @@ public class TechVillagerTrade
 	public static TechVillagerTrade fromBuffer(PacketBuffer buf)
 	{
 		List<ItemStack> inputs = new ArrayList<>(), outputs = new ArrayList<>(); 
-		String name = buf.readString();
+		String name = buf.readUtf();
 		int size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
-			inputs.add(buf.readItemStack());
+			inputs.add(buf.readItem());
 		}
 		
 		size = buf.readInt();
 		for(int i = 0; i < size; i++)
 		{
-			outputs.add(buf.readItemStack());
+			outputs.add(buf.readItem());
 		}
 		return new TechVillagerTrade(name, inputs, outputs, buf.readInt(), buf.readInt(), buf.readInt());
 	}

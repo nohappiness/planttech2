@@ -56,24 +56,24 @@ public class InfuserRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean matches(IInventory inv, World worldIn)
 	{
-		return input.getItem() == inv.getStackInSlot(0).getItem();
+		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory inv)
+	public ItemStack assemble(IInventory inv)
 	{
 		return new ItemStack(output);
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		if(width == height && width == 1) return true; 
 		else return false; 
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
+	public ItemStack getResultItem()
 	{
 		return new ItemStack(output);
 	}
@@ -102,7 +102,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "infusing");
 
 		@Override
-		public InfuserRecipe read(ResourceLocation recipeId, JsonObject json)
+		public InfuserRecipe fromJson(ResourceLocation recipeId, JsonObject json)
 		{
 
 			JsonObject inputobject = json.getAsJsonObject("input");
@@ -144,19 +144,19 @@ public class InfuserRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public InfuserRecipe read(ResourceLocation recipeId, PacketBuffer buffer)
+		public InfuserRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
 		{
-			Item input = buffer.readItemStack().getItem();
-			Item result = buffer.readItemStack().getItem();
+			Item input = buffer.readItem().getItem();
+			Item result = buffer.readItem().getItem();
 			int biomass = buffer.readInt();
 			return new InfuserRecipe(recipeId, input, result, biomass);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, InfuserRecipe recipe)
+		public void toNetwork(PacketBuffer buffer, InfuserRecipe recipe)
 		{
-			buffer.writeItemStack(new ItemStack(recipe.input));
-			buffer.writeItemStack(new ItemStack(recipe.output));
+			buffer.writeItem(new ItemStack(recipe.input));
+			buffer.writeItem(new ItemStack(recipe.output));
 			buffer.writeInt(recipe.biomass);
 		}
 

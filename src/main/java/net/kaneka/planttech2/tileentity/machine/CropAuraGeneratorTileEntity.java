@@ -54,7 +54,7 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
         }
 
         @Override
-        public int size()
+        public int getCount()
         {
             return 2;
         }

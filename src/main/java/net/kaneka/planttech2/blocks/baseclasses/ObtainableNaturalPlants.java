@@ -25,13 +25,13 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
     @Override
     public void onObtained(World world, PlayerEntity player, ItemStack obtainer, BlockPos pos)
     {
-        world.setBlockState(pos, Blocks.AIR.getDefaultState());
+        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
     }
 
     @Override
     public void onReleased(ItemUseContext context, BlockState state)
     {
-        context.getWorld().setBlockState(context.getPos().offset(context.getFace()), state);
+        context.getLevel().setBlockAndUpdate(context.getClickedPos().relative(context.getClickedFace()), state);
     }
 
     @Override

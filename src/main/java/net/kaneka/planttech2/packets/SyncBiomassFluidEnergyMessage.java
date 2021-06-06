@@ -19,12 +19,12 @@ public class SyncBiomassFluidEnergyMessage
 
     public static void encode(SyncBiomassFluidEnergyMessage message, PacketBuffer buffer)
     {
-        buffer.writeItemStack(message.stack);
+        buffer.writeItem(message.stack);
     }
 
     public static SyncBiomassFluidEnergyMessage decode(PacketBuffer buffer)
     {
-        return new SyncBiomassFluidEnergyMessage(buffer.readItemStack());
+        return new SyncBiomassFluidEnergyMessage(buffer.readItem());
     }
 
     public static void handle(SyncBiomassFluidEnergyMessage message, Supplier<NetworkEvent.Context> ctx)

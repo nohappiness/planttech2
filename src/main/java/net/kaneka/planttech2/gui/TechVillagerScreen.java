@@ -54,13 +54,13 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	public void init()
 	{
 		super.init();
-		this.xSize = 442;
-		this.ySize = 196;
-		this.guiLeft = (this.width - this.xSize) / 2;
-		this.guiTop = (this.height - this.ySize) / 2;
+		this.imageWidth = 442;
+		this.imageHeight = 196;
+		this.leftPos = (this.width - this.imageWidth) / 2;
+		this.topPos = (this.height - this.imageHeight) / 2;
 		canTradeTextProperties = getCanTradeTextProperties();
-		profession = TechVillagerEntity.getProfessionString(container.getProfession());
-		professionname = new TranslationTextComponent("techvillager.profession." + TechVillagerEntity.getProfessionString(container.getProfession())).getString();
+		profession = TechVillagerEntity.getProfessionString(menu.getProfession());
+		professionname = new TranslationTextComponent("techvillager.profession." + TechVillagerEntity.getProfessionString(menu.getProfession())).getString();
 		checkPlayerTrustLevel();
 	
 	}
@@ -82,13 +82,13 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		this.renderBackground(mStack);
 		super.render(mStack, mouseX, mouseY, partialTicks);
 		this.renderSelectedTrades();
-		this.renderHoveredTooltip(mStack, mouseX, mouseY);
+		this.renderTooltip(mStack, mouseX, mouseY);
 		this.renderTooltips(mStack, mouseX, mouseY);
 	}
 
 	protected void renderSelectedTrades()
 	{
-		RenderHelper.disableStandardItemLighting();
+		RenderHelper.turnOff();
 		RenderSystem.enableDepthTest();
 		if (selectedTrade != null)
 		{
@@ -129,8 +129,8 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 
 	public void drawTooltip(MatrixStack mStack, List<ITextComponent> lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
-		posX += this.guiLeft;
-		posY += this.guiTop;
+		posX += this.leftPos;
+		posY += this.topPos;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 			for (ITextComponent line : lines)
 				renderTooltip(mStack, line, mouseX, mouseY);
@@ -138,100 +138,100 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	
 	public void drawTooltip(MatrixStack mStack, String line, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
-		posX += this.guiLeft;
-		posY += this.guiTop;
+		posX += this.leftPos;
+		posY += this.topPos;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 			renderTooltip(mStack, new StringTextComponent(line), mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack mStack, int mouseX, int mouseY)
+	protected void renderLabels(MatrixStack mStack, int mouseX, int mouseY)
 	{
-		super.drawGuiContainerForegroundLayer(mStack, mouseX, mouseY);
+		super.renderLabels(mStack, mouseX, mouseY);
 
-		font.drawString(mStack, professionname, (this.xSize / 2.0F - font.getStringWidth(professionname) / 2.0F), 10, Integer.parseInt("00e803",16));
-		font.drawString(mStack, "Trades", 70, 14, Integer.parseInt("00e803", 16));
-		font.drawString(mStack, "Jobs", 354, 14, Integer.parseInt("00e803", 16));
-		font.drawString(mStack, String.valueOf(playertrustlevel), 140, 20, Integer.parseInt("00e803", 16));
-		font.drawString(mStack, String.valueOf(playertrustlevel + 1), 309, 20, Integer.parseInt("00e803", 16));
-		for (int i = 0; i < container.getTrades().size(); i++)
+		font.draw(mStack, professionname, (this.imageWidth / 2.0F - font.width(professionname) / 2.0F), 10, Integer.parseInt("00e803",16));
+		font.draw(mStack, "Trades", 70, 14, Integer.parseInt("00e803", 16));
+		font.draw(mStack, "Jobs", 354, 14, Integer.parseInt("00e803", 16));
+		font.draw(mStack, String.valueOf(playertrustlevel), 140, 20, Integer.parseInt("00e803", 16));
+		font.draw(mStack, String.valueOf(playertrustlevel + 1), 309, 20, Integer.parseInt("00e803", 16));
+		for (int i = 0; i < menu.getTrades().size(); i++)
 		{
-			String color = container.getTrades().get(i).getNeededLevel() <= playertrustlevel ? "00e803" : "000000";
-			font.drawString(mStack, container.getTrades().get(i).getName(), 43, 32 + i * 20, Integer.parseInt(color, 16));
+			String color = menu.getTrades().get(i).getNeededLevel() <= playertrustlevel ? "00e803" : "000000";
+			font.draw(mStack, menu.getTrades().get(i).getName(), 43, 32 + i * 20, Integer.parseInt(color, 16));
 		}
 
-		for (int i = 0; i < container.getTasks().size(); i++)
+		for (int i = 0; i < menu.getTasks().size(); i++)
 		{
-			String color = container.getTasks().get(i).getMinTrustLevel() <= playertrustlevel ? "00e803" : "000000";
-			font.drawString(mStack, container.getTasks().get(i).getName(), 321, 32 + i * 20, Integer.parseInt(color, 16));
+			String color = menu.getTasks().get(i).getMinTrustLevel() <= playertrustlevel ? "00e803" : "000000";
+			font.draw(mStack, menu.getTasks().get(i).getName(), 321, 32 + i * 20, Integer.parseInt(color, 16));
 		}
 
 		if (selectedTrade != null)
 		{
 			String color = selectedTrade.getNeededLevel() <= playertrustlevel ? "00e803" : "000000";
-			font.drawString(mStack, "Trade", 212, 93, Integer.parseInt(color, 16));
-			font.drawString(mStack, String.valueOf(selectedTrade.getCreditsBuy()), 193 - String.valueOf(selectedTrade.getCreditsBuy()).length() * 6, 61, Integer.parseInt("00e803", 16));
-			font.drawString(mStack, String.valueOf(selectedTrade.getCreditsSell()), 301 - String.valueOf(selectedTrade.getCreditsSell()).length() * 6, 61, Integer.parseInt("00e803", 16));
+			font.draw(mStack, "Trade", 212, 93, Integer.parseInt(color, 16));
+			font.draw(mStack, String.valueOf(selectedTrade.getCreditsBuy()), 193 - String.valueOf(selectedTrade.getCreditsBuy()).length() * 6, 61, Integer.parseInt("00e803", 16));
+			font.draw(mStack, String.valueOf(selectedTrade.getCreditsSell()), 301 - String.valueOf(selectedTrade.getCreditsSell()).length() * 6, 61, Integer.parseInt("00e803", 16));
 		}
 		else if (selectedTask != null)
 		{
 			String color = selectedTask.getMinTrustLevel() <= playertrustlevel ? "00e803" : "000000";
-			font.drawString(mStack, "Trade", 194, 93, Integer.parseInt(color, 16));
-			font.drawString(mStack, String.valueOf(selectedTask.getTrust()) + " Trust", 317 - String.valueOf(selectedTask.getTrust() + " Trust").length() * 6, 78, Integer.parseInt("00e803", 16));
+			font.draw(mStack, "Trade", 194, 93, Integer.parseInt(color, 16));
+			font.draw(mStack, String.valueOf(selectedTask.getTrust()) + " Trust", 317 - String.valueOf(selectedTask.getTrust() + " Trust").length() * 6, 78, Integer.parseInt("00e803", 16));
 		}
 		else
-			font.drawString(mStack, "Maybe some kind of intoduction?", 142, 30, Integer.parseInt("00e803", 16));
+			font.draw(mStack, "Maybe some kind of intoduction?", 142, 30, Integer.parseInt("00e803", 16));
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bindTexture(BACKGROUND);
+		minecraft.getTextureManager().bind(BACKGROUND);
 		int trust = getTrustScaled(172);
-		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
-		blit(mStack, this.guiLeft + 141, this.guiTop + 23, 225, 197, trust , 2, 512, 512);
-		for (int i = 0; i < container.getTrades().size(); i++)
+		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 512, 512);
+		blit(mStack, this.leftPos + 141, this.topPos + 23, 225, 197, trust , 2, 512, 512);
+		for (int i = 0; i < menu.getTrades().size(); i++)
 		{
 			int k = inArea(mouseX, mouseY, 39, 25 + i * 20, 98, 20) ? 1 : 0;
 			if (selectedTrade != null)
 				if (i == selectedID)
 					k = 1;
-			if(container.getTrades().get(i).getNeededLevel() > playertrustlevel)
+			if(menu.getTrades().get(i).getNeededLevel() > playertrustlevel)
 				k = (i == selectedID && selectedTrade != null) || k == 1 ? 3 : 2;
-			blit(mStack, this.guiLeft + 39, this.guiTop + 25 + i * 20, 0, 197 + 20 * k, 98, 20, 512, 512);
+			blit(mStack, this.leftPos + 39, this.topPos + 25 + i * 20, 0, 197 + 20 * k, 98, 20, 512, 512);
 		}
 
-		for (int i = 0; i < container.getTasks().size(); i++)
+		for (int i = 0; i < menu.getTasks().size(); i++)
 		{
 			int k = inArea(mouseX, mouseY, 317, 25 + i * 20, 98, 20) ? 1 : 0;
 			if (selectedTask != null)
 				if (i == selectedID)
 					k = 1;
 
-			if(container.getTasks().get(i).getMinTrustLevel() > playertrustlevel)
+			if(menu.getTasks().get(i).getMinTrustLevel() > playertrustlevel)
 				k = (i == selectedID && selectedTask != null) || k == 1 ? 3 : 2;
-			blit(mStack, this.guiLeft + 317, this.guiTop + 25 + i * 20, 0, 197 + 20 * k, 98, 20, 512, 512);
+			blit(mStack, this.leftPos + 317, this.topPos + 25 + i * 20, 0, 197 + 20 * k, 98, 20, 512, 512);
 		}
 		if (selectedTrade != null)
 		{
 			int k = inArea(mouseX, mouseY, 203, 87, 48, 20) ? 1 : 0;
 			if(selectedTrade.getNeededLevel() > playertrustlevel)
 				k = k == 1 ? 3 : 2;
-			blit(mStack, this.guiLeft + 203, this.guiTop + 87, 98, 197 + 20 * k, 48, 20, 512, 512);
-			blit(mStack, this.guiLeft + 145, this.guiTop + 59, 450, 0, 56, 48, 512, 512);
-			blit(mStack, this.guiLeft + 253, this.guiTop + 59, 450, 0, 56, 48, 512, 512);
-			blit(mStack, this.guiLeft + 203, this.guiTop + 76, 450, 59, 48, 9, 512, 512);
+			blit(mStack, this.leftPos + 203, this.topPos + 87, 98, 197 + 20 * k, 48, 20, 512, 512);
+			blit(mStack, this.leftPos + 145, this.topPos + 59, 450, 0, 56, 48, 512, 512);
+			blit(mStack, this.leftPos + 253, this.topPos + 59, 450, 0, 56, 48, 512, 512);
+			blit(mStack, this.leftPos + 203, this.topPos + 76, 450, 59, 48, 9, 512, 512);
 		}
 		else if(selectedTask != null)
 		{
 			int k = inArea(mouseX, mouseY, 185, 87, 48, 20) ? 1 : 0;
 			if(selectedTask.getMinTrustLevel() > playertrustlevel || selectedTask.getMaxTrustLevel() < playertrustlevel)
 				k = k == 1 ? 3 : 2;
-			blit(mStack, this.guiLeft + 185, this.guiTop + 87, 98, 197 + 20 * k, 48, 20, 512, 512);
-			blit(mStack, this.guiLeft + 145, this.guiTop + 51, 450, 68, 38, 56, 512, 512);
-			blit(mStack, this.guiLeft + 185, this.guiTop + 76, 450, 59, 48, 9, 512, 512);
-			blit(mStack, this.guiLeft + 235, this.guiTop + 76, 146, 197, 79, 20, 512, 512);
+			blit(mStack, this.leftPos + 185, this.topPos + 87, 98, 197 + 20 * k, 48, 20, 512, 512);
+			blit(mStack, this.leftPos + 145, this.topPos + 51, 450, 68, 38, 56, 512, 512);
+			blit(mStack, this.leftPos + 185, this.topPos + 76, 450, 59, 48, 9, 512, 512);
+			blit(mStack, this.leftPos + 235, this.topPos + 76, 146, 197, 79, 20, 512, 512);
 		}
 	}
 
@@ -240,37 +240,37 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 	{
 		RenderSystem.color3f(0.0F, 0.0F, 32.0F);
 		this.setBlitOffset(200);
-		this.itemRenderer.zLevel = 200.0F;
+		this.itemRenderer.blitOffset = 200.0F;
 		FontRenderer font = stack.getItem().getFontRenderer(stack);
 		if (font == null)
 		{
 			font = this.font;
 		}
-		itemRenderer.renderItemAndEffectIntoGUI(stack, this.guiLeft + x, this.guiTop + y);
-		this.itemRenderer.renderItemOverlayIntoGUI(font, stack, this.guiLeft + x, this.guiTop + y, null);
+		itemRenderer.renderAndDecorateItem(stack, this.leftPos + x, this.topPos + y);
+		this.itemRenderer.renderGuiItemDecorations(font, stack, this.leftPos + x, this.topPos + y, null);
 		this.setBlitOffset(0);
-		this.itemRenderer.zLevel = 0.0F;
+		this.itemRenderer.blitOffset = 0.0F;
 	}
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int p_mouseClicked_5_)
 	{
-		for (int i = 0; i < container.getTrades().size(); i++)
+		for (int i = 0; i < menu.getTrades().size(); i++)
 		{
 			if (inArea(mouseX, mouseY, 39, 25 + i * 20, 98, 20))
 			{
-				selectedTrade = container.getTrades().get(i);
+				selectedTrade = menu.getTrades().get(i);
 				selectedTask = null; 
 				selectedID = i;
 
 			}
 		}
 		
-		for (int i = 0; i < container.getTasks().size(); i++)
+		for (int i = 0; i < menu.getTasks().size(); i++)
 		{
 			if (inArea(mouseX, mouseY, 317, 25 + i * 20, 98, 20))
 			{
-				selectedTask = container.getTasks().get(i);
+				selectedTask = menu.getTasks().get(i);
 				selectedTrade = null;
 				selectedID = i;
 
@@ -281,7 +281,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		{
 			if (getCanTradeTextProperties().size() <= 0)
 			{
-				PlantTech2PacketHandler.sendToServer(new DoTechVillagerTradeMessage(selectedTrade, container.getProfession()));
+				PlantTech2PacketHandler.sendToServer(new DoTechVillagerTradeMessage(selectedTrade, menu.getProfession()));
 			}
 		}
 		
@@ -299,8 +299,8 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 
 	private boolean inArea(double mouseX, double mouseY, int startX, int startY, int width, int height)
 	{
-		startX += this.guiLeft;
-		startY += this.guiTop;
+		startX += this.leftPos;
+		startY += this.topPos;
 		return mouseX >= startX && mouseX <= startX + width && mouseY >= startY && mouseY <= startY + height;
 	}
 
@@ -316,7 +316,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
     				if (PlayerInventoryUtils.hasList(player, selectedTrade.getInputs()))
     				{
     					if (PlayerInventoryUtils.enoughCredits(player, selectedTrade.getCreditsBuy()))
-    						if (selectedTrade.getCreditsSell() <= 0 && player.count(ModItems.PLANTCARD) <= 0 && selectedTrade.getCreditsSell() > 0)
+    						if (selectedTrade.getCreditsSell() <= 0 && player.countItem(ModItems.PLANTCARD) <= 0 && selectedTrade.getCreditsSell() > 0)
     							list.add("No plantcard in inventory");
     					else
     						list.add("Not enough credits");

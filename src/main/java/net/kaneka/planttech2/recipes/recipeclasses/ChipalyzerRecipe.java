@@ -112,7 +112,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 
 	public boolean compareEnchantment(ListNBT nbt)
 	{
-		if (input.getEnchantmentTagList() == nbt)
+		if (input.getEnchantmentTags() == nbt)
 		{
 			return true;
 		}
@@ -124,7 +124,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		components.add(chip);
 		if (input == ItemStack.EMPTY) {
 			ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-			book.addEnchantment(enchantment, 1);
+			book.enchant(enchantment, 1);
 			components.add(book);
 		} else {
 			components.add(input);
@@ -135,17 +135,17 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean matches(IInventory inv, World worldIn)
 	{
-		return input.getItem() == inv.getStackInSlot(0).getItem();
+		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory inv)
+	public ItemStack assemble(IInventory inv)
 	{
 		return output;
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		if (width == height && width == 1)
 			return true;
@@ -154,7 +154,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {return output;}
+	public ItemStack getResultItem() {return output;}
 
 	@Override
 	public ResourceLocation getId() {return id;}
@@ -171,7 +171,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ChipalyzerRecipe>
 	{
 		@Override
-		public ChipalyzerRecipe read(ResourceLocation recipeId, JsonObject json)
+		public ChipalyzerRecipe fromJson(ResourceLocation recipeId, JsonObject json)
 		{
 			ItemStack chip = ItemStack.EMPTY;
 			if (json.has("chip"))
@@ -233,34 +233,34 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public ChipalyzerRecipe read(ResourceLocation recipeId, PacketBuffer buffer)
+		public ChipalyzerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
 		{
-			ItemStack chip = buffer.readItemStack();
-			ItemStack input = buffer.readItemStack();
-			String ench = buffer.readString();
+			ItemStack chip = buffer.readItem();
+			ItemStack input = buffer.readItem();
+			String ench = buffer.readUtf();
 			Enchantment enchantment = null;
 			if(!ench.equals("null"))
 			{
 				enchantment = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(ench));
 			}
-			ItemStack result = buffer.readItemStack();
+			ItemStack result = buffer.readItem();
 			return new ChipalyzerRecipe(recipeId, chip, input, enchantment, result);
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, ChipalyzerRecipe recipe)
+		public void toNetwork(PacketBuffer buffer, ChipalyzerRecipe recipe)
 		{
-			buffer.writeItemStack(recipe.chip);
-			buffer.writeItemStack(recipe.input);
+			buffer.writeItem(recipe.chip);
+			buffer.writeItem(recipe.input);
 			if(recipe.enchantment != null)
 			{
-				buffer.writeString(recipe.enchantment.getRegistryName().toString());
+				buffer.writeUtf(recipe.enchantment.getRegistryName().toString());
 			}
 			else
 			{
-				buffer.writeString("null");
+				buffer.writeUtf("null");
 			}
-			buffer.writeItemStack(recipe.output);
+			buffer.writeItem(recipe.output);
 		}
 
 	}

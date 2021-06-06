@@ -32,13 +32,13 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	@Override
 	public void tick()
 	{
-		if (this.world != null && !this.world.isRemote)
+		if (this.level != null && !this.level.isClientSide)
 		{
-			if ((world.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
+			if ((level.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
 			{
-				Block block = world.getBlockState(pos).getBlock();
+				Block block = level.getBlockState(worldPosition).getBlock();
 				if (block instanceof CropBaseBlock)
-					((CropBaseBlock) block).updateCrop(this.world, this.pos, this.traits);
+					((CropBaseBlock) block).updateCrop(this.level, this.worldPosition, this.traits);
 			}
 		}
 
@@ -72,18 +72,18 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 
 	public void setStartTick()
 	{
-		this.startTick = world.getGameTime();
+		this.startTick = level.getGameTime();
 	}
 
 	public List<ItemStack> addDrops(List<ItemStack> drops, int growstate)
 	{
-		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate, world.rand);
+		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDrops(drops, this.traits, growstate, level.random);
 		return drops;
 	}
 
 	public void dropsRemoveOneSeed(NonNullList<ItemStack> drops, int growstate)
 	{
-		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate, world.rand);
+		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate, level.random);
 	}
 
 	@Override
@@ -91,43 +91,43 @@ public class CropsTileEntity extends TileEntity implements ITickableTileEntity
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
 		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return new SUpdateTileEntityPacket(this.pos, 1, nbtTagCompound);
+		save(nbtTagCompound);
+		return new SUpdateTileEntityPacket(this.worldPosition, 1, nbtTagCompound);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet)
 	{
-		read(world.getBlockState(packet.getPos()), packet.getNbtCompound());
+		load(level.getBlockState(packet.getPos()), packet.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag()
 	{
 		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
+		save(nbtTagCompound);
 		return nbtTagCompound;
 	}
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
-		super.read(state, tag);
+		super.load(state, tag);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
-		super.write(compound);
+		super.save(compound);
 		compound.putLong("starttick", this.startTick);
 		compound = traits.addToNBT(compound);
 		return compound;
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT compound)
+	public void load(BlockState state, CompoundNBT compound)
 	{
-		super.read(state, compound);
+		super.load(state, compound);
 		this.startTick = compound.getLong("starttick");
 		this.traits.fromNBT(compound);
 	}
