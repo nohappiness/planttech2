@@ -1,0 +1,66 @@
+{
+   "surface_builder": {
+    "config": {
+      "top_material": {
+        "Properties": {
+          "snowy": "false"
+        },
+        "Name": "minecraft:sand"
+      },
+      "under_material": {
+        "Name": "minecraft:sand"
+      },
+      "underwater_material": {
+        "Name": "minecraft:sand"
+      }
+    },
+    "type": "default"
+  },
+  "depth": -0.4,
+  "scale": 0.05,
+  "temperature": 2,
+  "downfall": 0,
+  "precipitation": "none",
+  "category": "none",
+  "player_spawn_friendly": false,
+  "effects": {
+    "sky_color": 16777215,
+    "fog_color": 4492285,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "grass_color": 1917984,
+    "foliage_color": 14768987
+  },
+  "starts": [],
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:slime",
+        "weight": 5,
+        "minCount": 2,
+        "maxCount": 5
+      }
+    ],
+    "creature": [
+      {
+        "type": "minecraft:llama",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 6
+      }
+    ]
+  },
+  "spawn_costs": {},
+  "carvers": {},
+  "features": [
+  [ ],
+  [ ],
+  [ ],
+  [ ],
+  [ ],
+  [ ],
+  [ ],
+  [ ],
+  ["planttech2:dead_coral_placer"]
+  ]
+}

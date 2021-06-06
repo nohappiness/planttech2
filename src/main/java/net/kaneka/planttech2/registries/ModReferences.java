@@ -29,8 +29,13 @@ public class ModReferences
 	public static final String TECHVILLAGERCONTAINER = MODID + ":techvillagercontainer";
 	public static final String CROPAURAGENERATORCONTAINER = MODID + ":cropaurageneratorcontainer";
 
+	//PLANTTOPIA
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 	public static final ResourceLocation PLANTTOPIA_RESLOC = new ResourceLocation(PLANTTOPIA);
+	public static final String FLOWER_MEADOW = "flower_meadow"; 
+	public static final String RADIATED_WASTELAND = "radiated_wasteland";
+	public static final String DRIED_LAKE = "dried_lake";
+	public static final String LAKE = "lake";
 	
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 	
@@ -43,5 +48,11 @@ public class ModReferences
 	public static final ResourceLocation RADIATIONEFFECTCAP = new ResourceLocation(MODID, "radiationeffectcap");
 	public static final ResourceLocation PLAYERRENDERRGBCAP = new ResourceLocation(MODID, "playerrenderrgbcap");
 	public static final ResourceLocation BIOMASSFLUIDENERGYCAP = new ResourceLocation(MODID, "biomassfluidenergycap");
+	
+	
+	public static ResourceLocation prefix(String name)
+	{
+		return new ResourceLocation(MODID, name);
+	}
 
 }

@@ -1,31 +1,35 @@
 package net.kaneka.planttech2.registries;
 
+
+import java.util.function.Supplier;
+
+import net.kaneka.planttech2.PlantTechMain;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeMaker;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+
 public class ModBiomes
 {
-	/*
-	public static List<PlantTopiaBaseBiome> BIOMES = new ArrayList<>(); 
-	public static List<Biome> COMMON_BIOMES = new ArrayList<>();
-	public static List<Biome> UNCOMMON_BIOMES = new ArrayList<>();
-	public static List<Biome> RARE_BIOMES = new ArrayList<>();
-
-	public static final Biome PLANTTOPIA_FLOWER = new FlowerBiome();
-	public static final Biome PLANTTOPIA_WASTELAST = new RadiationWastelastBiome();
-
-	public static void registerBiomes(IForgeRegistry<Biome> registry) 
-	{
-		for(PlantTopiaBaseBiome biome: BIOMES)
-		{
-			registerBiome(registry, biome, biome.getBiomeType(), biome.getBiomeDictionaryType());
-		}
-		
-		COMMON_BIOMES.add(Biomes.PLAINS); 
+	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, PlantTechMain.MODID);
+	
+	static {
+		 create(ModReferences.FLOWER_MEADOW, BiomeMaker::makeVoidBiome);
+		 create(ModReferences.RADIATED_WASTELAND, BiomeMaker::makeVoidBiome);
+		 create(ModReferences.DRIED_LAKE, BiomeMaker::makeVoidBiome);
+		 create(ModReferences.LAKE, BiomeMaker::makeVoidBiome); 
 	}
 	
-	private static Biome registerBiome(IForgeRegistry<Biome> registry, Biome biome, BiomeType biomeType, BiomeDictionary.Type... type) 
+	private static void create(String name, Supplier<Biome> biome) 
 	{
-		registry.register(biome);
-		BiomeDictionary.addTypes(biome, type);
-		return biome;
+		BIOMES.register(name, biome);
+		getRegistryKey(name);
 	}
-	*/
+	
+	public static RegistryKey<Biome> getRegistryKey(String name)
+	{
+		return RegistryKey.getOrCreateKey(Registry.BIOME_KEY, ModReferences.prefix(name));
+	}
 }

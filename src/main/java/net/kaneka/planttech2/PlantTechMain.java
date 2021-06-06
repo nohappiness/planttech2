@@ -7,10 +7,13 @@ import net.kaneka.planttech2.handlers.CapabilityHandler;
 import net.kaneka.planttech2.handlers.LootTableHandler;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
+import net.kaneka.planttech2.registries.ModBiomes;
 import net.kaneka.planttech2.registries.ModCommands;
+import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.registries.ModEntityTypes;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -39,7 +42,9 @@ public class PlantTechMain
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, PlantTech2Configuration.SERVER);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, PlantTech2Configuration.CLIENT);
-
+        
+        
+        
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStarting);
         MinecraftForge.EVENT_BUS.addListener(this::onServerStarting);
@@ -48,6 +53,9 @@ public class PlantTechMain
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerRespawn);
         //		MinecraftForge.EVENT_BUS.addListener(PlayerEvents::onPlayerHurt);
         MinecraftForge.EVENT_BUS.addListener(ModCommands::onCommandRegister);
+        
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        ModBiomes.BIOMES.register(modEventBus);
     }
 
     private void onServerAboutToStarting(FMLServerAboutToStartEvent event)
@@ -62,6 +70,7 @@ public class PlantTechMain
     {
         new ModRecipeTypes();
         //new ModStructurePieceTypes();
+        ModDimensions.initDimensions();
         CapabilityHandler.registerAll();
         PlantTech2PacketHandler.register();
         LootTableHandler.register();

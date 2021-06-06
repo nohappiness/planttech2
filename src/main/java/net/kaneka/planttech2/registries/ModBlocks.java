@@ -233,8 +233,6 @@ public class ModBlocks
 	@ObjectHolder("hedge_dark_oak_acacia_podzol") public static Hedge DARK_OAK_ACACIA_PODZOL_HEDGE;
 	@ObjectHolder("hedge_dark_oak_dark_oak_podzol") public static Hedge DARK_OAK_DARK_OAK_PODZOL_HEDGE;
 
-	@ObjectHolder("hedge_oak_oak") public static Hedge OAK_OAK_HEDGE;
-
 	@ObjectHolder("mutated_dandelion") public static ObtainableNaturalPlants MUTATED_DANDELION;
 	@ObjectHolder("mutated_poppy") public static ObtainableNaturalPlants MUTATED_POPPY;
 	@ObjectHolder("mutated_blue_orchid") public static ObtainableNaturalPlants MUTATED_BLUE_ORCHID;
