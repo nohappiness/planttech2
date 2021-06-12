@@ -21,7 +21,8 @@ public class GenLayerBiomes implements IAreaTransformer0
 			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.FLOWER_MEADOW)), 
 			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.RADIATED_WASTELAND)),
 			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.LAKE)),
-			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.DRIED_LAKE))
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.DRIED_LAKE)),
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.ICY_CLIFF))
 	);
 	
 	public GenLayerBiomes setup(Registry<Biome> registry) {

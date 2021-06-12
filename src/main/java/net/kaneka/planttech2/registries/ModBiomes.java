@@ -19,7 +19,8 @@ public class ModBiomes
 		 create(ModReferences.FLOWER_MEADOW, BiomeMaker::theVoidBiome);
 		 create(ModReferences.RADIATED_WASTELAND, BiomeMaker::theVoidBiome);
 		 create(ModReferences.DRIED_LAKE, BiomeMaker::theVoidBiome);
-		 create(ModReferences.LAKE, BiomeMaker::theVoidBiome); 
+		create(ModReferences.LAKE, BiomeMaker::theVoidBiome);
+		create(ModReferences.ICY_CLIFF, BiomeMaker::theVoidBiome);
 	}
 	
 	private static void create(String name, Supplier<Biome> biome) 
