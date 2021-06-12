@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,11 +44,10 @@ public class CropListReloadListener extends JsonReloadListener
 	protected void apply(Map<ResourceLocation, JsonElement> elementMap, IResourceManager resourceManager, IProfiler profiler)
 	{
 		LOGGER.debug("Loading crop configurations");
-		Map<ResourceLocation, CropEntryConfigData> configs = new HashMap<>();
-		// Ensure that our mod's crop configs are loaded first, as non-coded defaults
+		Map<ResourceLocation, CropEntryConfigData> configsDefault = new HashMap<>();
+		Map<ResourceLocation, CropEntryConfigData> configsOther = new HashMap<>();
 		List<ResourceLocation> keys = new LinkedList<>(elementMap.keySet());
-		keys.sort((a, b) -> a.getNamespace().equals(PlantTechMain.MODID) ? -1 : a.compareTo(b));
-
+		
 		for (ResourceLocation key : keys)
 		{
 			try
@@ -58,15 +58,25 @@ public class CropListReloadListener extends JsonReloadListener
 					LOGGER.debug("Skipping loading crop configuration {} as it's conditions were not met", key);
 					continue;
 				}
-				configs.put(key, GSON.fromJson(element, CropEntryConfigData.class));
+				
+				if(key.getNamespace().equals(PlantTechMain.MODID))
+				{
+					configsDefault.put(key, GSON.fromJson(element, CropEntryConfigData.class));
+				}
+				else
+				{
+					configsOther.put(key, GSON.fromJson(element, CropEntryConfigData.class));
+				}
+				
 			} catch (IllegalArgumentException | JsonSyntaxException ex)
 			{
 				LOGGER.error("Error while loading crop configuration {}", key, ex);
 			}
 		}
-
-		PlantTechMain.getCropList().configureFromConfigData(configs.values());
-
+		
+		PlantTechMain.getCropList().configureFromConfigData(configsDefault.values());
+		PlantTechMain.getCropList().configureFromConfigData(configsOther.values());
+		
 		// Check if the server is up
 		if (ServerLifecycleHooks.getCurrentServer() != null)
 		{
@@ -75,6 +85,7 @@ public class CropListReloadListener extends JsonReloadListener
 		}
 		else LOGGER.info("Server is not up yet, will not send the changes to clients");
 	}
+	
 
 	public static JsonElement toJson(CropEntryConfigData data)
 	{
