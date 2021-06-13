@@ -136,22 +136,23 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
      * Updates and gets the value, access the fields
      * directly if update is not needed
      */
+
+    public EnumTemperature getTemperature()
+    {
+        temperature = AuraCoreItem.getTemperature(itemhandler.getStackInSlot(0)).orElse(null);
+        return temperature;
+    }
+
     public int getLightValueDecrease()
     {
-        lightValueDecrease = AuraCoreItem.getLightValueDecrease(itemhandler.getStackInSlot(0)).orElse(0);
+        lightValueDecrease = AuraCoreItem.getLightValueDecrease(itemhandler.getStackInSlot(1)).orElse(0);
         return lightValueDecrease;
     }
 
     public int getWaterRangeDecrease()
     {
-        waterRangeDecrease = AuraCoreItem.getWaterRangeDecrease(itemhandler.getStackInSlot(1)).orElse(0);
+        waterRangeDecrease = AuraCoreItem.getWaterRangeDecrease(itemhandler.getStackInSlot(2)).orElse(0);
         return waterRangeDecrease;
-    }
-
-    public EnumTemperature getTemperature()
-    {
-        temperature = AuraCoreItem.getTemperature(itemhandler.getStackInSlot(2)).orElse(null);
-        return temperature;
     }
 
     public Block getSoil()
@@ -177,5 +178,11 @@ public class CropAuraGeneratorTileEntity extends EnergyInventoryTileEntity
     public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player)
     {
         return new CropAuraGeneratorContainer(id, inventory, this);
+    }
+
+    @Override
+    public String getNameString()
+    {
+        return "cropauragenerator";
     }
 }
