@@ -22,7 +22,7 @@ public class PlantTechClient
 	public static final ResourceLocation PULLING_PREDICATE = new ResourceLocation(PlantTechMain.MODID, "pulling");
 
 	public static void addAllItemModelsOverrides()
-	{
+	{ 
 		ItemModelsProperties.register(
 				ModItems.MULTITOOL, DRILLING_PREDICATE,
 				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.tickCount % 4) + 1
