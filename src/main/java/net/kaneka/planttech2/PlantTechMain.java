@@ -70,7 +70,7 @@ public class PlantTechMain
     {
         new ModRecipeTypes();
         //new ModStructurePieceTypes();
-        ModDimensions.initDimensions();
+        //ModDimensions.initDimensions();
         CapabilityHandler.registerAll();
         PlantTech2PacketHandler.register();
         LootTableHandler.register();
