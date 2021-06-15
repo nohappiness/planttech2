@@ -294,6 +294,7 @@ public class Languages extends LanguageProvider
         add(ModBlocks.SEEDSQUEEZER, "Seed Squeezer");
         add(ModBlocks.SOLARGENERATOR, "Solar Generator");
         add(ModBlocks.PLANTFARM, "Void-Plantfarm");
+        add(ModBlocks.CROP_AURA_GENERATOR, "Crop Aura Generator");
         //            add(ModBlocks.CROP, "Crop");
         add(ModBlocks.PLANTIUM_BLOCK, "Plantium Block");
         add(ModBlocks.DANCIUM_BLOCK, "Dancium Block");
@@ -416,6 +417,7 @@ public class Languages extends LanguageProvider
         add("container.planttopia_teleporter", "PlantTopia Teleporter");
         add("container.machinebulbreprocessor", "Machinebulb Reprocessor");
         add("container.energysupplier", "Energy Supplier");
+        add("container.crop_aura_generator", "Crop Aura Generator");
 
         add("gui.soil", "Soil");
         add("gui.seeds", "Seeds");
@@ -447,6 +449,12 @@ public class Languages extends LanguageProvider
         add("slot.seedsqueezer.squeeze", "No input, will automatically pull from input");
         add("slot.solargenerator.focus", "Insert focus to start energy production");
         add("slot.upgradeableitem.chipslot", "Insert chip to upgrade item");
+        add("slot.crop_aura_generator.input_0", "Insert Temperature Aura Core");
+        add("slot.crop_aura_generator.input_1", "Insert Light Value Aura Core");
+        add("slot.crop_aura_generator.input_2", "Insert Water Range Aura Core");
+        add("slot.crop_aura_generator.input_3", "Insert Soil Aura Core");
+        add("slot.crop_aura_generator.input_4", "Insert Fertility Aura Core");
+        add("slot.crop_aura_generator.input_5", "Insert Productivity Aura Core");
 
         add("slot.util.speedupgrade", "Insert Speed Upgrade to speed up the process");
         add("slot.util.rangeupgrade", "Insert Range Upgrade to increase the production");

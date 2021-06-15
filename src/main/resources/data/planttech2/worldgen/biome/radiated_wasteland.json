@@ -14,7 +14,7 @@
         "Name": "minecraft:end_stone"
       }
     },
-    "type": "default"
+    "type": "minecraft:default"
   },
   "depth": 0.15,
   "scale": 0.2,

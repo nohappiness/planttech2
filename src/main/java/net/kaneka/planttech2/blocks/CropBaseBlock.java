@@ -179,9 +179,8 @@ public class CropBaseBlock extends ContainerBlock
 	public boolean enoughWater(World world, BlockPos pos, int waterSensitivity, List<CropAuraGeneratorTileEntity> generators)
 	{
 		int extraWaterRangeDecrease = getCropAuraInRadiusInt(generators, (generator) -> generator.waterRangeDecrease);
-		System.out.println(extraWaterRangeDecrease);
 		waterSensitivity += extraWaterRangeDecrease + 1;
-		for (BlockPos blockpos$mutableblockpos : BlockPos.betweenClosed(pos.offset(-waterSensitivity, 0, waterSensitivity), pos.offset(waterSensitivity, -1, waterSensitivity)))
+		for (BlockPos blockpos$mutableblockpos : BlockPos.betweenClosed(pos.offset(-waterSensitivity, 0, -waterSensitivity), pos.offset(waterSensitivity, -1, waterSensitivity)))
 		{
 			BlockState state = world.getBlockState(blockpos$mutableblockpos);
 			if (state.getMaterial() == Material.WATER || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED)))
@@ -200,21 +199,21 @@ public class CropBaseBlock extends ContainerBlock
 
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance, List<CropAuraGeneratorTileEntity> generators)
 	{
-		EnumTemperature originalRequiredTemp = PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature();
 		List<EnumTemperature> extraTemperatures = getCropAuraInRadiusNonnullList(generators, (generator) -> generator.temperature);
+		extraTemperatures.add(PlantTechMain.getCropList().getByName(name).getConfiguration().getTemperature());
 		float biomeTemp = world.getBiomeManager().getBiome(pos).getTemperature(pos);
-		return EnumTemperature.inRange(biomeTemp, tolerance, extraTemperatures) || originalRequiredTemp.inRange(biomeTemp, tolerance);
+		return EnumTemperature.inRange(biomeTemp, tolerance, extraTemperatures);
 	}
 
 	private List<CropAuraGeneratorTileEntity> getCropAuraGeneratorInRadius(World world, BlockPos centre, int radius)
 	{
 		List<CropAuraGeneratorTileEntity> generators = new ArrayList<>();
 		for (int x = centre.getX() - radius; x < centre.getX() + radius; x++)
-			for (int y = centre.getY() - radius; y < centre.getY() + radius; y++)
+			for (int y = centre.getY(); y < centre.getY() + 1; y++)
 				for (int z = centre.getZ() - radius; z < centre.getZ() + radius; z++)
 				{
 					TileEntity te = world.getBlockEntity(new BlockPos(x, y, z));
-					if (te instanceof CropAuraGeneratorTileEntity)
+					if (te instanceof CropAuraGeneratorTileEntity && ((CropAuraGeneratorTileEntity) te).consumeEnergy(25))
 						generators.add((CropAuraGeneratorTileEntity) te);
 				}
 		return generators;

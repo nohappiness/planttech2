@@ -5,10 +5,17 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.datagen.helper.JsonFileConverter;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistry;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -30,14 +37,44 @@ public class TestItem extends Item
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}*/
-
+	private BufferedWriter out;
 	@Override
 	public ActionResultType useOn(ItemUseContext ctx)
 	{
-//		System.out.println(ModDimensions.getPlantTopiaDimensionType());
-		if(!ctx.getLevel().isClientSide)
+		//		System.out.println(ModDimensions.getPlantTopiaDimensionType());
+		if (!ctx.getLevel().isClientSide)
 		{
 			JsonFileConverter.act();
+			//https://planttech-2.fandom.com/wiki/Items
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FileDescriptor.out), StandardCharsets.US_ASCII));
+			List<Item> items = new ArrayList<>(ForgeRegistries.ITEMS.getValues());
+			items.sort(Comparator.comparing(item -> item.getDescription().getString()));
+			items.stream().filter((item) -> item.getRegistryName().getNamespace().equals("planttech2") && !(item instanceof CropSeedItem || item instanceof ParticleItem || item instanceof BlockItem)).forEach((item) ->
+			{
+				try
+				{
+					this.out = out;
+					write("-");
+					write(item.getDescription().getString());
+					write(item.getRegistryName().getPath());
+					int size = item.getMaxStackSize();
+					write((size == 64 ? "" : String.valueOf(size)));
+					int durability = item.getMaxDamage();
+					write((durability == 0 ? "" : String.valueOf(durability)));
+					write(item.getCreativeTabs().stream().findFirst().get().getDisplayName().getString());
+					out.flush();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+			});
+			//				|-
+			//				|Crop Remover
+			//				|cropremover
+			//				|1
+			//				|1024
+			//				|
 		}
 			/*
 			CropEntry entry = PlantTechMain.getCropList().getByName("coal");
@@ -72,8 +109,8 @@ public class TestItem extends Item
 		
 		*/
 		//TeleportationUtils.changeDimension(ctx.getWorld(), ctx.getPos(), ctx.getPlayer(), ModDimensions.getPlantTopiaDimensionType(), Blocks.DIRT);
-		
-		
+
+
 		//Minecraft.getInstance().displayGuiScreen(new GuideScreen());
 		/*
 		if(!ctx.getWorld().isRemote)
@@ -91,7 +128,13 @@ public class TestItem extends Item
 		*/
 		// place(Sets.newHashSet(), ctx.getWorld(), new Random(), ctx.getPos().up(),
 		// MutableBoundingBox.getNewBoundingBox());
-//		 System.out.println(ModDimensionPlantTopia.getDimensionType());
+		//		 System.out.println(ModDimensionPlantTopia.getDimensionType());
 		return super.useOn(ctx);
+	}
+
+	private void write(String text) throws IOException
+	{
+		out.write("|" + text);
+		out.write("\n");
 	}
 }

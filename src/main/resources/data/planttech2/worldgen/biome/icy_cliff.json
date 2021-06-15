@@ -1,0 +1,79 @@
+{
+  "surface_builder": {
+    "type": "minecraft:default",
+    "config": {
+      "top_material": {
+        "Name": "minecraft:ice",
+        "Properties": {
+          "snowy": "true"
+        }
+      },
+      "under_material": {
+        "Name": "minecraft:packed_ice"
+      },
+      "underwater_material": {
+        "Name": "minecraft:blue_ice"
+      }
+    }
+  },
+  "depth": 0.0,
+  "scale": 1.3,
+  "temperature": 0.1,
+  "downfall": 3.0,
+  "precipitation": "snow",
+  "category": "icy",
+  "effects": {
+    "sky_color": 16777215,
+    "fog_color": 10201280,
+    "water_color": 8432383,
+    "water_fog_color": 1250101
+  },
+  "starts": [],
+  "spawners": {
+    "creature": [
+      {
+        "type": "minecraft:snow_golem",
+        "weight": 2,
+        "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:polar_bear",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ],
+    "monster": [
+      {
+        "type": "minecraft:stray",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ]
+  },
+  "spawn_costs": {},
+  "carvers": {
+    "liquid": [
+      "minecraft:canyon",
+      "minecraft:cave"
+    ],
+    "air": [
+      "minecraft:underwater_canyon",
+      "minecraft:underwater_cave"
+    ]
+  },
+  "features": [
+    [
+      "planttech2:icy_cliff_placer",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis",
+      "minecraft:ore_diamond"
+    ]
+  ]
+}

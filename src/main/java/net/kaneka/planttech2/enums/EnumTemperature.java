@@ -37,10 +37,15 @@ public enum EnumTemperature
 
 	public static boolean inRange(float value, int tolerance, List<EnumTemperature> temperatures)
 	{
+		System.out.println(temperatures);
+		System.out.println(tolerance);
 		for (EnumTemperature temperature : temperatures)
-			if (!temperature.inRange(value, tolerance))
-				return false;
-		return true;
+		{
+			System.out.println(temperature);
+			if (temperature.inRange(value, tolerance))
+				return true;
+		}
+		return false;
 	}
 
 	public boolean inRange(float value, int tolerance)

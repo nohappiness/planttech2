@@ -36,7 +36,8 @@ public class ModReferences
 	public static final String RADIATED_WASTELAND = "radiated_wasteland";
 	public static final String DRIED_LAKE = "dried_lake";
 	public static final String LAKE = "lake";
-	
+	public static final String ICY_CLIFF = "icy_cliff";
+
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 	
 	public static final String TECHVILLAGER = MODID + ":techvillager"; 
