@@ -35,9 +35,11 @@ public class GenLayerBiomes implements IAreaTransformer0
 		return getRandomBiome(rand, biomes);
 	}
 
+
+
 	
 	private int getRandomBiome(INoiseRandom random, List<RegistryKey<Biome>> biomes) 
 	{
-		return PlanttopiaBiomeProvider.getBiomeId(biomes.get(random.nextRandom(biomes.size())), registry);
+		return GenLayerUtils.getBiomeId(biomes.get(random.nextRandom(biomes.size())), registry);
 	}
 }
