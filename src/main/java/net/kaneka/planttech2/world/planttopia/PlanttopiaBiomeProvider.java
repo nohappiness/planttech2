@@ -3,7 +3,6 @@ package net.kaneka.planttech2.world.planttopia;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.function.LongFunction;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -11,19 +10,10 @@ import net.kaneka.planttech2.world.planttopia.layers.GenLayerUtils;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModDimensions;
-import net.kaneka.planttech2.world.planttopia.layers.GenLayerBiomes;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.IExtendedNoiseRandom;
-import net.minecraft.world.gen.LazyAreaLayerContext;
-import net.minecraft.world.gen.area.IArea;
-import net.minecraft.world.gen.area.IAreaFactory;
-import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.layer.Layer;
-import net.minecraft.world.gen.layer.ZoomLayer;
-import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 
 public class PlanttopiaBiomeProvider extends BiomeProvider
 {

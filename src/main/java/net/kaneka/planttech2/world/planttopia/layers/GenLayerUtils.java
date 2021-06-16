@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.world.planttopia.layers;
 
-import com.mojang.datafixers.kinds.K1;
 import net.kaneka.planttech2.registries.ModReferences;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.Util;
@@ -55,7 +54,7 @@ public class GenLayerUtils {
     }
 
     private static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry) {
-        IAreaFactory<T> biomes = new GenLayerBiomes().setup(registry).run(seed.apply(1L));
+        IAreaFactory<T> biomes = new GenLayerBase().setup(registry).run(seed.apply(1L));
         biomes = ZoomLayer.FUZZY.run(seed.apply(2000L), biomes);
         biomes = repeat(1000L, ZoomLayer.NORMAL, biomes, 6, seed);
 
@@ -87,21 +86,21 @@ public class GenLayerUtils {
         return FLAGS.get(getBiomeRegistryKey(s)).contains(BIOMEFLAGS.ONLY_INSIDE);
     }
 
-    public static Set<RegistryKey<Biome>> byFlag(BIOMEFLAGS flag){
-        Set<RegistryKey<Biome>> set = new HashSet<>();
+    public static List<RegistryKey<Biome>> byFlag(BIOMEFLAGS flag){
+        List<RegistryKey<Biome>> list = new ArrayList<>();
         FLAGS.forEach((k,v) ->{
-            if(v.contains(flag)) set.add(k);
+            if(v.contains(flag)) list.add(k);
         });
-        return set;
+        return list;
     }
 
-    public static Set<RegistryKey<Biome>> byFlags(BIOMEFLAGS... flags){
-        Set<RegistryKey<Biome>> set = new HashSet<>();
+    public static List<RegistryKey<Biome>> byFlags(BIOMEFLAGS... flags){
+        List<RegistryKey<Biome>> list = new ArrayList<>();
         FLAGS.forEach((k,v) ->{
             boolean fitting = true;
             for(BIOMEFLAGS f : flags) if(!v.contains(f)) fitting = false;
-            if(fitting) set.add(k);
+            if(fitting) list.add(k);
         });
-        return set;
+        return list;
     }
 }
