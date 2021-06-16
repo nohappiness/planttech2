@@ -32,11 +32,31 @@ public class ModReferences
 	//PLANTTOPIA
 	public static final String PLANTTOPIA = MODID + ":planttopia"; 
 	public static final ResourceLocation PLANTTOPIA_RESLOC = new ResourceLocation(PLANTTOPIA);
-	public static final String FLOWER_MEADOW = "flower_meadow"; 
-	public static final String RADIATED_WASTELAND = "radiated_wasteland";
+	//BIOMES
+	public static final String BEE_FOREST = "bee_forest";
+	public static final String CHORUS_FOREST = "chorus_forest";
+	public static final String DARK_WETLANDS = "dark_wetlands";
+	public static final String DEAD_FOREST = "dead_forest";
+	public static final String DREAM_FOREST = "dream_forest";
 	public static final String DRIED_LAKE = "dried_lake";
+	public static final String FLOWER_HILLS = "flower_hills";
+	public static final String FLOWER_MEADOWS = "flower_meadows";
+	public static final String FLOWER_MOUNTAINS = "flower_mountains";
+	public static final String ICY_CLIFFS = "icy_cliffs";
+	public static final String ICY_MEADOWS = "icy_meadows";
 	public static final String LAKE = "lake";
-	public static final String ICY_CLIFF = "icy_cliff";
+	public static final String MEADOWS = "meadows";
+	public static final String MUSHROOM_FOREST = "mushroom_forest";
+	public static final String MUSHROOM_HILLS = "mushroom_hills";
+	public static final String NIGHTMARE_FOREST = "nightmare_forest";
+	public static final String PUMPKIN_FOREST = "pumpkin_forest";
+	public static final String RADIATED_WASTELANDS = "radiated_wastelands";
+	public static final String RIVER = "river";
+	public static final String VULCANO = "vulkano";
+	public static final String WASTELAND_MESA = "wasteland_mesa";
+	public static final String WETLANDS = "wetlands";
+
+
 
 	public static final String TECHVILLAGE = MODID + ":techvillage"; 
 	

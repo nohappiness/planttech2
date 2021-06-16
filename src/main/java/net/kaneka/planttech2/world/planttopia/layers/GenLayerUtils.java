@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.world.planttopia.layers;
 
-import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.kinds.K1;
 import net.kaneka.planttech2.registries.ModReferences;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.Util;
@@ -15,32 +15,43 @@ import net.minecraft.world.gen.layer.Layer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.function.LongFunction;
 
 public class GenLayerUtils {
 
-    protected static final HashMap<BIOME_TYPE, List<RegistryKey<Biome>>> CATEGORYS = Util.make(new HashMap<BIOME_TYPE, List<RegistryKey<Biome>>>(),
+    protected static final HashMap<RegistryKey<Biome>, Set<BIOMEFLAGS>> FLAGS = Util.make(new HashMap<RegistryKey<Biome>, Set<BIOMEFLAGS>>(),
             (hmap) -> {
-                prepareCategories(hmap);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MEADOW), BIOME_TYPE.NORMAL);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELAND));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.LAKE));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.DRIED_LAKE));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.Icy));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.BEE_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.CHORUS_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DARK_WETLANDS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DEAD_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DREAM_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DRIED_LAKE), BIOMEFLAGS.WARM, BIOMEFLAGS.LAKE);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_HILLS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MEADOWS), BIOMEFLAGS.NORMAL);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MOUNTAINS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_CLIFFS), BIOMEFLAGS.COLD);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_MEADOWS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.LAKE), BIOMEFLAGS.LAKE, BIOMEFLAGS.NORMAL);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MEADOWS), BIOMEFLAGS.BASE, BIOMEFLAGS.COMMON, BIOMEFLAGS.NORMAL);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_HILLS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.NIGHTMARE_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.PUMPKIN_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELANDS), BIOMEFLAGS.WARM);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RIVER));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.VULCANO));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.WASTELAND_MESA));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.WETLANDS));
 
             }
     );
 
-    private static void prepareCategories(HashMap<BIOME_TYPE, List<RegistryKey<Biome>>> categorys){
-        Arrays.asList(BIOME_TYPE.values()).forEach(type -> categorys.put(type, new ArrayList<RegistryKey<Biome>>()));
-    }
-
-    private static void categorize(HashMap<BIOME_TYPE, List<RegistryKey<Biome>>> categorys,RegistryKey<Biome> key, GenLayerUtils.BIOME_TYPE... types){
-        Arrays.asList(types).stream().forEach(type -> categorys.get(type).add(key));
+    private static void categorize(HashMap<RegistryKey<Biome>, Set<BIOMEFLAGS>> hmap, RegistryKey<Biome> key, BIOMEFLAGS... flags) {
+        Set<BIOMEFLAGS> set = new HashSet<BIOMEFLAGS>();
+        Arrays.asList(flags).stream().forEach(flag -> set.add(flag));
+        hmap.put(key, set);
     }
 
     private static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry) {
@@ -57,15 +68,10 @@ public class GenLayerUtils {
         return new Layer(areaFactory);
     }
 
-    public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> repeat(long seed, IAreaTransformer1 parent, IAreaFactory<T> p_202829_3_, int count,
+    public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> repeat(long seed, IAreaTransformer1 parent, IAreaFactory<T> iareafactoryparent, int count,
                                                                                               LongFunction<C> contextFactory) {
-        IAreaFactory<T> iareafactory = p_202829_3_;
-
-        for (int i = 0; i < count; ++i)
-        {
-            iareafactory = parent.run(contextFactory.apply(seed + (long) i), iareafactory);
-        }
-
+        IAreaFactory<T> iareafactory = iareafactoryparent;
+        for (int i = 0; i < count; ++i) iareafactory = parent.run(contextFactory.apply(seed + (long) i), iareafactory);
         return iareafactory;
     }
 
@@ -73,16 +79,29 @@ public class GenLayerUtils {
         return registry.getId(registry.get(biome));
     }
 
-    private static RegistryKey<Biome> getBiomeRegistryKey(String s){
+    private static RegistryKey<Biome> getBiomeRegistryKey(String s) {
         return RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(s));
     }
 
-    public static enum BIOME_TYPE{
-        BASE,
-        LAKE,
-        RIVER,
-        COLD,
-        WARM,
-        NORMAL;
+    public static boolean onlyInside(String s) {
+        return FLAGS.get(getBiomeRegistryKey(s)).contains(BIOMEFLAGS.ONLY_INSIDE);
+    }
+
+    public static Set<RegistryKey<Biome>> byFlag(BIOMEFLAGS flag){
+        Set<RegistryKey<Biome>> set = new HashSet<>();
+        FLAGS.forEach((k,v) ->{
+            if(v.contains(flag)) set.add(k);
+        });
+        return set;
+    }
+
+    public static Set<RegistryKey<Biome>> byFlags(BIOMEFLAGS... flags){
+        Set<RegistryKey<Biome>> set = new HashSet<>();
+        FLAGS.forEach((k,v) ->{
+            boolean fitting = true;
+            for(BIOMEFLAGS f : flags) if(!v.contains(f)) fitting = false;
+            if(fitting) set.add(k);
+        });
+        return set;
     }
 }

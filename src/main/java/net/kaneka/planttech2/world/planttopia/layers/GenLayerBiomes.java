@@ -4,7 +4,6 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 
 import net.kaneka.planttech2.registries.ModReferences;
-import net.kaneka.planttech2.world.planttopia.PlanttopiaBiomeProvider;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -18,11 +17,11 @@ public class GenLayerBiomes implements IAreaTransformer0
 	private Registry<Biome> registry;
 	
 	protected static final List<RegistryKey<Biome>> biomes = ImmutableList.of(
-			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.FLOWER_MEADOW)), 
-			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.RADIATED_WASTELAND)),
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.FLOWER_MEADOWS)),
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.RADIATED_WASTELANDS)),
 			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.LAKE)),
 			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.DRIED_LAKE)),
-			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.ICY_CLIFF))
+			RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(ModReferences.ICY_CLIFFS))
 	);
 	
 	public GenLayerBiomes setup(Registry<Biome> registry) {
