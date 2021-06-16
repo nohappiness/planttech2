@@ -16,13 +16,13 @@
     },
     "type": "default"
   },
-  "depth": 0.05,
+  "depth": -0.2,
   "scale": 0.2,
   "temperature": 1.5,
   "downfall": 0.2,
   "precipitation": "rain",
   "category": "none",
-  "player_spawn_friendly": true,
+  "player_spawn_friendly": false,
   "effects": {
     "sky_color": 16777215,
     "fog_color": 4492285,

@@ -62,7 +62,12 @@
     [],
     [],
     [
-      "minecraft:trees_birch"
+      "minecraft:trees_birch",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_pumpkin",
+      "minecraft:patch_pumpkin"
     ],
     []
   ]

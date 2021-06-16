@@ -31,18 +31,18 @@ public class GenLayerUtils {
                 categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MEADOWS), BIOMEFLAGS.NORMAL);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MOUNTAINS));
                 categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_CLIFFS), BIOMEFLAGS.COLD);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_MEADOWS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_MEADOWS), BIOMEFLAGS.BASE, BIOMEFLAGS.UNCOMMON);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.LAKE), BIOMEFLAGS.LAKE, BIOMEFLAGS.NORMAL);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.MEADOWS), BIOMEFLAGS.BASE, BIOMEFLAGS.COMMON, BIOMEFLAGS.NORMAL);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_FOREST));
                 categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_HILLS));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.NIGHTMARE_FOREST));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.NIGHTMARE_FOREST), BIOMEFLAGS.BASE, BIOMEFLAGS.RARE);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.PUMPKIN_FOREST));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELANDS), BIOMEFLAGS.WARM);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.RIVER));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELANDS), BIOMEFLAGS.BASE, BIOMEFLAGS.COMMON, BIOMEFLAGS.WARM);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RIVER), BIOMEFLAGS.RIVER);
                 categorize(hmap, getBiomeRegistryKey(ModReferences.VULCANO));
                 categorize(hmap, getBiomeRegistryKey(ModReferences.WASTELAND_MESA));
-                categorize(hmap, getBiomeRegistryKey(ModReferences.WETLANDS));
+                categorize(hmap, getBiomeRegistryKey(ModReferences.WETLANDS), BIOMEFLAGS.BASE, BIOMEFLAGS.UNCOMMON);
 
             }
     );

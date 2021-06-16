@@ -16,8 +16,8 @@
     },
     "type": "default"
   },
-  "depth": 0.05,
-  "scale": 0.2,
+  "depth": 0.4,
+  "scale": 0.4,
   "temperature": 1.5,
   "downfall": 0.2,
   "precipitation": "rain",

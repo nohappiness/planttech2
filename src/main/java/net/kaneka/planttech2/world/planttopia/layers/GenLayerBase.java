@@ -28,8 +28,8 @@ public class GenLayerBase implements IAreaTransformer0
 
 	@Override
 	public int applyPixel(INoiseRandom rand, int x_, int y) {
-		if(rand.nextRandom(RARITY_RARE) == 0) return randomBiome(rand, RARE);
-		if(rand.nextRandom(RARITY_UNCOMMON) == 0) return randomBiome(rand, UNCOMMON);
+		if(rand.nextRandom(RARITY_RARE) == 0 && !RARE.isEmpty()) return randomBiome(rand, RARE);
+		if(rand.nextRandom(RARITY_UNCOMMON) == 0 && !UNCOMMON.isEmpty()) return randomBiome(rand, UNCOMMON);
 		return randomBiome(rand, COMMON);
 	}
 

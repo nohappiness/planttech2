@@ -17,7 +17,7 @@
     "type": "default"
   },
   "depth": 0.05,
-  "scale": 0.2,
+  "scale": 0.4,
   "temperature": 1.5,
   "downfall": 0.2,
   "precipitation": "rain",
@@ -62,7 +62,11 @@
     [],
     [],
     [
-      "minecraft:trees_birch"
+      "minecraft:mushroom_field_vegetation",
+      "minecraft:brown_mushroom_taiga",
+      "minecraft:red_mushroom_taiga",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal"
     ],
     []
   ]

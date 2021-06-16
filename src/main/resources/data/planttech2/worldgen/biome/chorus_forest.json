@@ -62,8 +62,10 @@
     [],
     [],
     [
-      "minecraft:trees_birch"
+
     ],
-    []
+    [
+      "minecraft:chorus_plant"
+    ]
   ]
 }

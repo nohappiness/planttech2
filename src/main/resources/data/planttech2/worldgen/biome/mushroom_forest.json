@@ -5,7 +5,7 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:grass_block"
+        "Name": "minecraft:mycelium"
       },
       "under_material": {
         "Name": "minecraft:dirt"
@@ -62,7 +62,11 @@
     [],
     [],
     [
-      "minecraft:trees_birch"
+      "minecraft:mushroom_field_vegetation",
+      "minecraft:brown_mushroom_taiga",
+      "minecraft:red_mushroom_taiga",
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal"
     ],
     []
   ]
