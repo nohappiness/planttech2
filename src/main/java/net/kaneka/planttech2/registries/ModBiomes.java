@@ -16,11 +16,28 @@ public class ModBiomes
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, PlantTechMain.MODID);
 	
 	static {
-		 create(ModReferences.FLOWER_MEADOW, BiomeMaker::theVoidBiome);
-		 create(ModReferences.RADIATED_WASTELAND, BiomeMaker::theVoidBiome);
-		 create(ModReferences.DRIED_LAKE, BiomeMaker::theVoidBiome);
+		create(ModReferences.BEE_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.CHORUS_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.DARK_WETLANDS, BiomeMaker::theVoidBiome);
+		create(ModReferences.DEAD_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.DREAM_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.DRIED_LAKE, BiomeMaker::theVoidBiome);
+		create(ModReferences.FLOWER_HILLS, BiomeMaker::theVoidBiome);
+		create(ModReferences.FLOWER_MEADOWS, BiomeMaker::theVoidBiome);
+		create(ModReferences.FLOWER_MOUNTAINS, BiomeMaker::theVoidBiome);
+		create(ModReferences.ICY_CLIFFS, BiomeMaker::theVoidBiome);
+		create(ModReferences.ICY_MEADOWS, BiomeMaker::theVoidBiome);
 		create(ModReferences.LAKE, BiomeMaker::theVoidBiome);
-		create(ModReferences.ICY_CLIFF, BiomeMaker::theVoidBiome);
+		create(ModReferences.MEADOWS, BiomeMaker::theVoidBiome);
+		create(ModReferences.MUSHROOM_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.MUSHROOM_HILLS, BiomeMaker::theVoidBiome);
+		create(ModReferences.NIGHTMARE_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.PUMPKIN_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.RADIATED_WASTELANDS, BiomeMaker::theVoidBiome);
+		create(ModReferences.RIVER, BiomeMaker::theVoidBiome);
+		create(ModReferences.VULCANO, BiomeMaker::theVoidBiome);
+		create(ModReferences.WASTELAND_MESA, BiomeMaker::theVoidBiome);
+		create(ModReferences.WETLANDS, BiomeMaker::theVoidBiome);
 	}
 	
 	private static void create(String name, Supplier<Biome> biome) 

@@ -5,24 +5,24 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:sand"
+        "Name": "minecraft:coarse_dirt"
       },
       "under_material": {
-        "Name": "minecraft:sand"
+        "Name": "minecraft:dirt"
       },
       "underwater_material": {
-        "Name": "minecraft:sand"
+        "Name": "minecraft:coarse_dirt"
       }
     },
-    "type": "default"
+    "type": "minecraft:default"
   },
-  "depth": -0.4,
-  "scale": 0.05,
-  "temperature": 1,
-  "downfall": 0,
-  "precipitation": "none",
-  "category": "ocean",
-  "player_spawn_friendly": false,
+  "depth": 0.15,
+  "scale": 0.2,
+  "temperature": 1.5,
+  "downfall": 0.2,
+  "precipitation": "rain",
+  "category": "none",
+  "player_spawn_friendly": true,
   "effects": {
     "sky_color": 16777215,
     "fog_color": 4492285,
@@ -35,7 +35,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "minecraft:slime",
+        "type": "minecraft:spider",
         "weight": 5,
         "minCount": 2,
         "maxCount": 5

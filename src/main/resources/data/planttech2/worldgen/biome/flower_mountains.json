@@ -5,19 +5,19 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:grass_block"
       },
       "under_material": {
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:dirt"
       },
       "underwater_material": {
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:sand"
       }
     },
-    "type": "minecraft:default"
+    "type": "default"
   },
-  "depth": 0.15,
-  "scale": 0.2,
+  "depth": 0.4,
+  "scale": 0.4,
   "temperature": 1.5,
   "downfall": 0.2,
   "precipitation": "rain",
@@ -35,7 +35,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "minecraft:spider",
+        "type": "minecraft:slime",
         "weight": 5,
         "minCount": 2,
         "maxCount": 5
@@ -52,5 +52,18 @@
   },
   "spawn_costs": {},
   "carvers": {},
-  "features": []
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:trees_birch"
+    ],
+    []
+  ]
 }

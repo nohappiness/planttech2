@@ -5,10 +5,10 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:sand"
+        "Name": "minecraft:grass_block"
       },
       "under_material": {
-        "Name": "minecraft:sand"
+        "Name": "minecraft:dirt"
       },
       "underwater_material": {
         "Name": "minecraft:sand"
@@ -16,13 +16,13 @@
     },
     "type": "default"
   },
-  "depth": -0.4,
-  "scale": 0.05,
-  "temperature": 1,
-  "downfall": 0,
-  "precipitation": "none",
-  "category": "ocean",
-  "player_spawn_friendly": false,
+  "depth": 0.05,
+  "scale": 0.2,
+  "temperature": 1.5,
+  "downfall": 0.2,
+  "precipitation": "rain",
+  "category": "none",
+  "player_spawn_friendly": true,
   "effects": {
     "sky_color": 16777215,
     "fog_color": 4492285,
@@ -62,7 +62,13 @@
     [],
     [],
     [
-      "minecraft:trees_birch"
+      "minecraft:brown_mushroom_normal",
+      "minecraft:red_mushroom_normal",
+      "minecraft:weeping_vines",
+      "minecraft:crimson_fungi",
+      "minecraft:crimson_forest_vegetation",
+      "minecraft:warped_fungi",
+      "minecraft:warped_forest_vegetation"
     ],
     []
   ]
