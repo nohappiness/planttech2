@@ -5,13 +5,13 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:coarse_dirt"
       },
       "under_material": {
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:dirt"
       },
       "underwater_material": {
-        "Name": "minecraft:end_stone"
+        "Name": "minecraft:coarse_dirt"
       }
     },
     "type": "minecraft:default"

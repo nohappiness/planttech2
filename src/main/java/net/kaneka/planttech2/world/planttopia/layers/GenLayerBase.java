@@ -19,9 +19,9 @@ public class GenLayerBase implements IAreaTransformer0
 	private int RARITY_UNCOMMON = 5, RARITY_RARE = 15;
 	
 	public GenLayerBase setup(Registry<Biome> registry) {
-		COMMON = GenLayerUtils.byFlags(BIOMEFLAGS.COMMON, BIOMEFLAGS.BASE);
-		UNCOMMON = GenLayerUtils.byFlags(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
-		RARE = GenLayerUtils.byFlags(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
+		COMMON = GenLayerUtils.byFlagsList(BIOMEFLAGS.COMMON, BIOMEFLAGS.BASE);
+		UNCOMMON = GenLayerUtils.byFlagsList(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
+		RARE = GenLayerUtils.byFlagsList(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
 		this.registry = registry;
 		return this;
 	}

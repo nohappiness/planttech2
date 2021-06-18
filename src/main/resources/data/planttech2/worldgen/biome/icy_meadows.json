@@ -3,7 +3,7 @@
     "config": {
       "top_material": {
         "Properties": {
-          "snowy": "false"
+          "snowy": "true"
         },
         "Name": "minecraft:grass_block"
       },
@@ -18,7 +18,7 @@
   },
   "depth": 0.05,
   "scale": 0.1,
-  "temperature": 1.5,
+  "temperature": -0.5,
   "downfall": 0.2,
   "precipitation": "rain",
   "category": "none",
@@ -64,6 +64,8 @@
     [
       "minecraft:trees_birch"
     ],
-    []
+    [
+      "minecraft:freeze_top_layer"
+    ]
   ]
 }
