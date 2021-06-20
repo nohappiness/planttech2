@@ -35,6 +35,10 @@ public class BiomeHolder {
         return this;
     }
 
+    public boolean isRiver(){
+        return isRiver;
+    }
+
     public int getBiomeId(Registry<Biome> registry) {
         if (id == -1) {
             id = registry.getId(registry.get(biome));

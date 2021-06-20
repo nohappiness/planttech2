@@ -12,6 +12,7 @@ import net.minecraft.world.gen.area.IArea;
 import net.minecraft.world.gen.area.IAreaFactory;
 import net.minecraft.world.gen.area.LazyArea;
 import net.minecraft.world.gen.layer.Layer;
+import net.minecraft.world.gen.layer.SmoothLayer;
 import net.minecraft.world.gen.layer.ZoomLayer;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 
@@ -126,11 +127,25 @@ public class GenLayerUtils {
         biomes = new GenLayerPhase().setup(2, replacemap.get(2), replacemap_border.get(2),category).run(seed.apply(1L), biomes);
         biomes = repeat(1002L, ZoomLayer.NORMAL, biomes, 2, seed);
         biomes = new GenLayerPhase().setup(3, replacemap.get(3), replacemap_border.get(3),category).run(seed.apply(1L), biomes);
-
+        biomes = new GenLayerRiver().setup(getRiverId(registry), category).run(seed.apply(1L), biomes);;
         //biomes = ZoomLayer.FUZZY.run(seed.apply(1000L), biomes);
         biomes = repeat(1003L, ZoomLayer.NORMAL, biomes, 1, seed);
 
+        /*
+        IAreaFactory<T> riverLayer = new GenLayerRiver().setup(getRiverId(registry), category).run(seed.apply(1L), biomes);
+        riverLayer = SmoothLayer.INSTANCE.run(seed.apply(7000L), riverLayer);
+        biomes = GenLayerMixRiver.INSTANCE.run(seed.apply(100L), biomes, riverLayer);
+        */
         return biomes;
+    }
+
+    private static int getRiverId(Registry<Biome> reg){
+        for(BiomeHolder holder: BIOMES){
+            if(holder.isRiver()){
+                return holder.getBiomeId(reg);
+            }
+        }
+        return 0;
     }
 
     private static void fillInnerReplaceMap(HashMap<Integer, HashMap<Integer, HashMap<BiomeHolder.RARITY, List<Integer>>>> replacemap, int phase, int targetid, BiomeHolder.RARITY rarity, int biomeid) {

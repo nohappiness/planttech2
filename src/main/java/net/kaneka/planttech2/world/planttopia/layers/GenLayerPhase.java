@@ -10,7 +10,6 @@ import java.util.*;
 
 public class GenLayerPhase implements ICastleTransformer {
 
-    private Registry<Biome> registry;
 
     private HashMap<Integer, HashMap<BiomeHolder.RARITY, List<Integer>>> biomes_all, biomes_border;
     private HashMap<Integer, List<Integer>> categories;
@@ -18,7 +17,6 @@ public class GenLayerPhase implements ICastleTransformer {
     private int phase;
 
     public GenLayerPhase setup(int phase, HashMap<Integer, HashMap<BiomeHolder.RARITY, List<Integer>>> replacemap_all, HashMap<Integer, HashMap<BiomeHolder.RARITY, List<Integer>>> replacemap_border, HashMap<Integer, List<Integer>> category) {
-        this.registry = registry;
         this.phase = phase;
         this.biomes_all = replacemap_all;
         this.biomes_border = replacemap_border;
