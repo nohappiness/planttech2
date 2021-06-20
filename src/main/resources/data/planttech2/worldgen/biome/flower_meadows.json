@@ -55,16 +55,14 @@
   "features": [
     [],
     [],
+    ["planttech2:flower_placer"],
     [],
     [],
     [],
     [],
     [],
     [],
-    [
-      "minecraft:trees_birch"
-    ],
+    [],
     []
-  ["planttech2:flower_placer"]
   ]
 }
