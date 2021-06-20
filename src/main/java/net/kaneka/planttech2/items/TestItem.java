@@ -74,7 +74,7 @@ public class TestItem extends Item
 			//				|cropremover
 			//				|1
 			//				|1024
-			//				|
+			//				|"
 		}
 			/*
 			CropEntry entry = PlantTechMain.getCropList().getByName("coal");
