@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "planttech2:aura_core_light_decrease_i"
+    ]
+  },
+  "criteria": {
+    "plantium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "planttech2:plantium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "planttech2:aura_core_light_decrease_i"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "plantium",
+      "has_the_recipe"
+    ]
+  ]
+}

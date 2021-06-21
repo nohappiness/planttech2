@@ -86,8 +86,29 @@ public class LootTables extends LootTableProvider
         silkFortuneBlockTable(ModBlocks.DARK_CRYSTAL_ORE, ModItems.DARK_CRYSTAL);
         silkFortuneBlockTable(ModBlocks.WHITE_CRYSTAL_ORE, ModItems.WHITE_CRYSTAL);
 
+        silkBlockTable(ModBlocks.INFUSED_ICE);
+        silkBlockTable(ModBlocks.INFUSED_PACKED_ICE);
+        silkBlockTable(ModBlocks.INFUSED_BLUE_ICE);
+        silkBlockTable(ModBlocks.BLACK_ICE);
+
+        standardDropTable(ModBlocks.INFUSED_STONE);
+        standardDropTable(ModBlocks.INFUSED_COBBLESTONE);
         ModBlocks.HEDGE_BLOCKS.forEach(this::standardDropTable);
         return tables;
+    }
+
+    void silkBlockTable(Block b)
+    {
+        LootPool.Builder pool = LootPool.lootPool();
+        pool.setRolls(ConstantRange.exactly(1));
+
+        StandaloneLootEntry.Builder<?> silk = ItemLootEntry.lootTableItem(b)
+                .when(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(
+                        Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)))));
+
+        pool.add(AlternativesLootEntry.alternatives(silk));
+
+        blockTable(b, LootTable.lootTable().withPool(pool));
     }
 
     void silkFortuneBlockTable(Block b, IItemProvider item)

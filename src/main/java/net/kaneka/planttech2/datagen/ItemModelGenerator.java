@@ -22,6 +22,12 @@ public class ItemModelGenerator extends ItemModelProvider
 	{
 //		registerBlockModels();
 		registerItemModels();
+		block(ModBlocks.INFUSED_ICE);
+		block(ModBlocks.INFUSED_PACKED_ICE);
+		block(ModBlocks.INFUSED_BLUE_ICE);
+		block(ModBlocks.BLACK_ICE);
+		block(ModBlocks.INFUSED_STONE);
+		block(ModBlocks.INFUSED_COBBLESTONE);
 	}
 
 	private void registerBlockModels()

@@ -1,19 +1,7 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.CarverBlock;
-import net.kaneka.planttech2.blocks.CropBarsBlock;
-import net.kaneka.planttech2.blocks.CropBaseBlock;
-import net.kaneka.planttech2.blocks.ElectricFence;
-import net.kaneka.planttech2.blocks.ElectricFenceGate;
-import net.kaneka.planttech2.blocks.ElectricFenceTop;
-import net.kaneka.planttech2.blocks.FacingGrowingBlock;
-import net.kaneka.planttech2.blocks.GlassPaneEnd;
-import net.kaneka.planttech2.blocks.GlassPanePillar;
-import net.kaneka.planttech2.blocks.GrowingBlock;
-import net.kaneka.planttech2.blocks.Hedge;
-import net.kaneka.planttech2.blocks.ObtainableTallBushBlock;
-import net.kaneka.planttech2.blocks.WallLight;
+import net.kaneka.planttech2.blocks.*;
 import net.kaneka.planttech2.blocks.baseclasses.BaseOreBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomDoorBlock;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
@@ -29,6 +17,8 @@ import net.kaneka.planttech2.tileentity.machine.*;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -53,7 +43,7 @@ import static net.minecraft.block.AbstractBlock.Properties;
 @ObjectHolder(PlantTechMain.MODID)
 public class ModBlocks
 {
-	public static List<Supplier<? extends Block>> SPECIAL_RENDER_BLOCKS = new ArrayList<>();
+	public static HashMap<Supplier<? extends Block>, RenderType> SPECIAL_RENDER_BLOCKS = new HashMap<>();
 	public static List<Supplier<? extends Item>> BLOCK_ITEM_SUPPLIERS = new ArrayList<>();
 	public static List<Hedge> HEDGE_BLOCKS = new ArrayList<>();
 	public static HashMap<String, CropBaseBlock> CROPS = new HashMap<>();
@@ -266,6 +256,15 @@ public class ModBlocks
 	@ObjectHolder("energy_supplier_growing") public static GrowingBlock ENERGY_SUPPLIER_GROWING;
 	@ObjectHolder("seedconstructor_growing") public static GrowingBlock SEEDCONSTRUCTOR_GROWING;
 	@ObjectHolder("solargenerator_growing") public static GrowingBlock SOLARGENERATOR_GROWING;
+
+	//Terrain Blocks
+	@ObjectHolder("infused_ice") public static Block INFUSED_ICE;
+	@ObjectHolder("infused_packed_ice") public static Block INFUSED_PACKED_ICE;
+	@ObjectHolder("infused_blue_ice") public static Block INFUSED_BLUE_ICE;
+	@ObjectHolder("black_ice") public static Block BLACK_ICE;
+	@ObjectHolder("infused_stone") public static Block INFUSED_STONE;
+	@ObjectHolder("infused_cobblestone") public static Block INFUSED_COBBLESTONE;
+
 
 	public static void register(IForgeRegistry<Block> r)
 	{
@@ -484,6 +483,14 @@ public class ModBlocks
 		r.register(makeSpecial("seedconstructor_growing", new FacingGrowingBlock(() -> ModBlocks.SEEDCONSTRUCTOR, true)));
 		r.register(makeSpecial("solargenerator_growing", new GrowingBlock(() -> ModBlocks.SOLARGENERATOR, true)));
 
+		//Terrain Blocks
+		r.register(makeSpecialWithItem("infused_ice", BLOCKS, new InfusedIceBlock(AbstractBlock.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion()), RenderType.translucent()));
+		r.register(makeWithItem("infused_packed_ice", BLOCKS, new Block(AbstractBlock.Properties.of(Material.ICE_SOLID).friction(0.98F).strength(0.5F).sound(SoundType.GLASS))));
+		r.register(makeWithItem("infused_blue_ice", BLOCKS, new BreakableBlock(AbstractBlock.Properties.of(Material.ICE_SOLID).strength(2.8F).friction(0.989F).sound(SoundType.GLASS))));
+		r.register(makeSpecialWithItem("black_ice", BLOCKS, new IceBlock(AbstractBlock.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion()), RenderType.translucent()));
+
+		r.register(makeWithItem("infused_stone", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F))));
+		r.register(makeWithItem("infused_cobblestone", BLOCKS, new Block(AbstractBlock.Properties.of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 6.0F))));
 		CROPS.clear();
 		CropBaseBlock tempcrop;
 		String name;
@@ -494,7 +501,7 @@ public class ModBlocks
 			CROPS.put(name, tempcrop);
 			r.register(tempcrop);
 		}
-		SPECIAL_RENDER_BLOCKS.addAll(ModBlocks.CROPS.values().stream().map(b -> (Supplier<? extends Block>) () -> b).collect(Collectors.toList()));
+		SPECIAL_RENDER_BLOCKS.putAll(ModBlocks.CROPS.values().stream().map(b -> (Supplier<? extends Block>) () -> b).collect(Collectors.toMap((block) -> block, (block) -> RenderType.cutout())));
 	}
 
 	static <B extends Block> B makeWithItem(String registryName, ItemGroup group, B block)
@@ -506,7 +513,12 @@ public class ModBlocks
 
 	static <B extends Block> B makeSpecialWithItem(String registryName, ItemGroup group, B block)
 	{
-		final B b = makeSpecial(registryName, block);
+		return makeSpecialWithItem(registryName, group, block, RenderType.cutout());
+	}
+
+	static <B extends Block> B makeSpecialWithItem(String registryName, ItemGroup group, B block, RenderType renderType)
+	{
+		final B b = makeSpecial(registryName, block, renderType);
 		BLOCK_ITEM_SUPPLIERS.add(() -> new BlockItem(b, new Item.Properties().tab(group)).setRegistryName(registryName));
 		return b;
 	}
@@ -527,12 +539,15 @@ public class ModBlocks
 
 	static <B extends Block> B makeSpecial(String registryName, B block)
 	{
+		return makeSpecial(registryName, block, RenderType.cutout());
+	}
+
+	static <B extends Block> B makeSpecial(String registryName, B block, RenderType renderType)
+	{
 		block.setRegistryName(registryName);
-		SPECIAL_RENDER_BLOCKS.add(() -> block);
+		SPECIAL_RENDER_BLOCKS.put(() -> block, renderType);
 		return block;
 	}
-	
-	
 
 	public static void registerItemBlocks(IForgeRegistry<Item> registry)
 	{

@@ -28,11 +28,13 @@ public class ModBiomes
 		create(ModReferences.ICY_CLIFFS, BiomeMaker::theVoidBiome);
 		create(ModReferences.ICY_MEADOWS, BiomeMaker::theVoidBiome);
 		create(ModReferences.LAKE, BiomeMaker::theVoidBiome);
+		create(ModReferences.LLAMA_MEADOW, BiomeMaker::theVoidBiome);
 		create(ModReferences.MEADOWS, BiomeMaker::theVoidBiome);
 		create(ModReferences.MUSHROOM_FOREST, BiomeMaker::theVoidBiome);
 		create(ModReferences.MUSHROOM_HILLS, BiomeMaker::theVoidBiome);
 		create(ModReferences.NIGHTMARE_FOREST, BiomeMaker::theVoidBiome);
 		create(ModReferences.PUMPKIN_FOREST, BiomeMaker::theVoidBiome);
+		create(ModReferences.RADIATED_SWAMP, BiomeMaker::theVoidBiome);
 		create(ModReferences.RADIATED_WASTELANDS, BiomeMaker::theVoidBiome);
 		create(ModReferences.RIVER, BiomeMaker::theVoidBiome);
 		create(ModReferences.VULCANO, BiomeMaker::theVoidBiome);

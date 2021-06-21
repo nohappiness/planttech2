@@ -45,12 +45,14 @@ public class ModReferences
 	public static final String ICY_CLIFFS = "icy_cliffs";
 	public static final String ICY_MEADOWS = "icy_meadows";
 	public static final String LAKE = "lake";
+	public static final String LLAMA_MEADOW = "llama_meadow";
 	public static final String MEADOWS = "meadows";
 	public static final String MUSHROOM_FOREST = "mushroom_forest";
 	public static final String MUSHROOM_HILLS = "mushroom_hills";
 	public static final String NIGHTMARE_FOREST = "nightmare_forest";
 	public static final String PUMPKIN_FOREST = "pumpkin_forest";
 	public static final String RADIATED_WASTELANDS = "radiated_wastelands";
+	public static final String RADIATED_SWAMP = "radiated_swamp";
 	public static final String RIVER = "river";
 	public static final String VULCANO = "vulkano";
 	public static final String WASTELAND_MESA = "wasteland_mesa";

@@ -17,33 +17,36 @@ import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
 import java.util.*;
 import java.util.function.LongFunction;
 
+import static net.kaneka.planttech2.world.planttopia.layers.BIOMEFLAGS.*;
+
 public class GenLayerUtils {
 
     protected static final HashMap<RegistryKey<Biome>, Set<BIOMEFLAGS>> FLAGS = Util.make(new HashMap<>(),
             (hmap) -> {
-                categorize(hmap, getBiomeRegistryKey(ModReferences.BEE_FOREST), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.CHORUS_FOREST), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.DARK_WETLANDS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.WETLAND);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.DEAD_FOREST), BIOMEFLAGS.COMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.DREAM_FOREST), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.DRIED_LAKE), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.WASTELAND, BIOMEFLAGS.ONLY_INSIDE);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_HILLS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.MEADOW);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MEADOWS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.MEADOW);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MOUNTAINS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.MEADOW);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_CLIFFS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.ICY_MEADOW, BIOMEFLAGS.ONLY_INSIDE);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_MEADOWS), BIOMEFLAGS.BASE, BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.ICY_MEADOW);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.LAKE), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.MEADOW, BIOMEFLAGS.ONLY_INSIDE);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.MEADOWS), BIOMEFLAGS.BASE, BIOMEFLAGS.COMMON, BIOMEFLAGS.MEADOW,BIOMEFLAGS.NORMAL);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_FOREST), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_HILLS), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.NIGHTMARE_FOREST), BIOMEFLAGS.BASE, BIOMEFLAGS.RARE, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.PUMPKIN_FOREST), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.FOREST);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELANDS), BIOMEFLAGS.BASE, BIOMEFLAGS.COMMON, BIOMEFLAGS.WASTELAND, BIOMEFLAGS.WARM);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.RIVER), BIOMEFLAGS.RIVER);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.VULCANO), BIOMEFLAGS.RARE, BIOMEFLAGS.WASTELAND);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.WASTELAND_MESA), BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.WASTELAND);
-                categorize(hmap, getBiomeRegistryKey(ModReferences.WETLANDS), BIOMEFLAGS.BASE, BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.WETLAND);
-
+                categorize(hmap, getBiomeRegistryKey(ModReferences.BEE_FOREST), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.CHORUS_FOREST), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DARK_WETLANDS), UNCOMMON, WETLAND);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DEAD_FOREST), COMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DREAM_FOREST), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.DRIED_LAKE), UNCOMMON, WASTELAND, ONLY_INSIDE);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_HILLS), UNCOMMON, MEADOW);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MEADOWS), UNCOMMON, MEADOW);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.FLOWER_MOUNTAINS), UNCOMMON, MEADOW);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_CLIFFS), UNCOMMON, ICY_MEADOW, ONLY_INSIDE);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.ICY_MEADOWS), BASE, UNCOMMON, ICY_MEADOW);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.LAKE), UNCOMMON, MEADOW, ONLY_INSIDE);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.LLAMA_MEADOW), UNCOMMON, MEADOW);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MEADOWS), BASE, COMMON, MEADOW, NORMAL);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_FOREST), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.MUSHROOM_HILLS), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.NIGHTMARE_FOREST), BASE, RARE, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.PUMPKIN_FOREST), UNCOMMON, FOREST);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_SWAMP), BASE, UNCOMMON, WASTELAND, WARM, ONLY_INSIDE);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RADIATED_WASTELANDS), BASE, COMMON, WASTELAND, WARM);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.RIVER), RIVER);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.VULCANO), RARE, WASTELAND);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.WASTELAND_MESA), UNCOMMON, WASTELAND);
+                categorize(hmap, getBiomeRegistryKey(ModReferences.WETLANDS), BASE, UNCOMMON, WETLAND);
             }
     );
 

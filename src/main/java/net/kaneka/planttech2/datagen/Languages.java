@@ -350,8 +350,14 @@ public class Languages extends LanguageProvider
         add(ModBlocks.WHITE_CRYSTAL_GLASSPANE_MIDDLE, "White Crystal Glasspane Middle");
         add(ModBlocks.WHITE_CRYSTAL_GLASSPANE_CROSS, "White Crystal Glasspane Cross");
         add(ModBlocks.WHITE_CRYSTAL_ORE, "White Crystal Ore");
-        
-        
+
+        add(ModBlocks.INFUSED_ICE, "Biomass-Infused Ice");
+        add(ModBlocks.INFUSED_PACKED_ICE, "Biomass-Infused Packed Ice");
+        add(ModBlocks.INFUSED_BLUE_ICE, "Biomass-Infused Blue Ice");
+        add(ModBlocks.BLACK_ICE, "Biomass-Infused Black Ice");
+
+        add(ModBlocks.INFUSED_STONE, "Biomass-Infused Stone");
+        add(ModBlocks.INFUSED_COBBLESTONE, "Biomass-Infused Cobblestone");
     }
 
     public void addCrops()

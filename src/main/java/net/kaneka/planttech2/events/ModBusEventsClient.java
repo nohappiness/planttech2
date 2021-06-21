@@ -21,6 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
+import java.util.Map;
 import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = PlantTechMain.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -32,8 +33,8 @@ public class ModBusEventsClient
 		event.enqueueWork(PlantTechClient::addAllItemModelsOverrides);
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
-		for (Supplier<? extends Block> block : ModBlocks.SPECIAL_RENDER_BLOCKS)
-			RenderTypeLookup.setRenderLayer(block.get(), RenderType.cutout());
+		for (Map.Entry<Supplier<? extends Block>, RenderType> entry : ModBlocks.SPECIAL_RENDER_BLOCKS.entrySet())
+			RenderTypeLookup.setRenderLayer(entry.getKey().get(), entry.getValue());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.translucent());
