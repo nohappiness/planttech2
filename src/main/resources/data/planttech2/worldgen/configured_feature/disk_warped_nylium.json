@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:decorated",
+  "config": {
+    "decorator": {
+      "type": "minecraft:count",
+      "config": {
+        "count": 12
+      }
+    },
+    "feature": {
+      "type": "minecraft:decorated",
+      "config": {
+        "decorator": {
+          "type": "minecraft:decorated",
+          "config": {
+            "outer": {
+              "type": "minecraft:square",
+              "config": {}
+            },
+            "inner": {
+              "type": "minecraft:top_solid_heightmap",
+              "config": {}
+            }
+          }
+        },
+        "feature": {
+          "type": "minecraft:disk",
+          "config": {
+            "state": {
+              "Name": "minecraft:warped_nylium"
+            },
+            "radius": {
+              "base": 4,
+              "spread": 4
+            },
+            "half_height": 2,
+            "targets": [
+              {
+                "Name": "minecraft:netherrack"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

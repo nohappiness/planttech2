@@ -5,13 +5,13 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:grass_block"
+        "Name": "minecraft:warped_nylium"
       },
       "under_material": {
-        "Name": "minecraft:dirt"
+        "Name": "minecraft:netherrack"
       },
       "underwater_material": {
-        "Name": "minecraft:sand"
+        "Name": "minecraft:soulsand"
       }
     },
     "type": "default"
@@ -59,7 +59,9 @@
     [],
     [],
     [],
-    [],
+    [
+      "planttech2:disk_crimson_nylium"
+    ],
     [],
     [
       "minecraft:brown_mushroom_normal",
