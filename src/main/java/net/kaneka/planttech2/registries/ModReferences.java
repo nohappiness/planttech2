@@ -39,6 +39,7 @@ public class ModReferences
 	public static final String DEAD_FOREST = "dead_forest";
 	public static final String DREAM_FOREST = "dream_forest";
 	public static final String DRIED_LAKE = "dried_lake";
+	public static final String ENERGIZED_FOREST = "energized_forest";
 	public static final String FLOWER_HILLS = "flower_hills";
 	public static final String FLOWER_MEADOWS = "flower_meadows";
 	public static final String FLOWER_MOUNTAINS = "flower_mountains";
@@ -52,7 +53,7 @@ public class ModReferences
 	public static final String NIGHTMARE_FOREST = "nightmare_forest";
 	public static final String PUMPKIN_FOREST = "pumpkin_forest";
 	public static final String RADIATED_WASTELANDS = "radiated_wastelands";
-	public static final String RADIATED_SWAMP = "radiated_swamp";
+	public static final String RADIATED_WETLANDS = "radiated_wetlands";
 	public static final String RIVER = "river";
 	public static final String VULCANO = "vulkano";
 	public static final String WASTELAND_MESA = "wasteland_mesa";

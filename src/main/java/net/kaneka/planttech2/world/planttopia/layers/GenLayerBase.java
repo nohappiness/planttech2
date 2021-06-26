@@ -1,28 +1,22 @@
 package net.kaneka.planttech2.world.planttopia.layers;
-import java.util.List;
-import java.util.Set;
 
-import com.google.common.collect.ImmutableList;
-
-import net.kaneka.planttech2.registries.ModReferences;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.kaneka.planttech2.world.utils.BiomeHolder;
 import net.minecraft.world.gen.INoiseRandom;
 import net.minecraft.world.gen.layer.traits.IAreaTransformer0;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class GenLayerBase implements IAreaTransformer0
 {
-	//private static final int CHANCE_UNCOMMON_BIOMES = 10, CHANCE_RARE_BIOMES = 15; 
-	private Registry<Biome> registry;
-	private List<RegistryKey<Biome>> COMMON, UNCOMMON, RARE;
+	//private static final int CHANCE_UNCOMMON_BIOMES = 10, CHANCE_RARE_BIOMES = 15;
+	private List<Integer> COMMON, UNCOMMON, RARE;
 	private int RARITY_UNCOMMON = 5, RARITY_RARE = 15;
 	
-	public GenLayerBase setup(Registry<Biome> registry) {
-		COMMON = GenLayerUtils.byFlagsList(BIOMEFLAGS.COMMON, BIOMEFLAGS.BASE);
-		UNCOMMON = GenLayerUtils.byFlagsList(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
-		RARE = GenLayerUtils.byFlagsList(BIOMEFLAGS.UNCOMMON, BIOMEFLAGS.BASE);
-		this.registry = registry;
+	public GenLayerBase setup(HashMap<BiomeHolder.RARITY, List<Integer>> hmap) {
+		COMMON = hmap.get(BiomeHolder.RARITY.COMMON);
+		UNCOMMON = hmap.get(BiomeHolder.RARITY.UNCOMMON);
+		RARE = hmap.get(BiomeHolder.RARITY.RARE);
 		return this;
 	}
 
@@ -33,7 +27,7 @@ public class GenLayerBase implements IAreaTransformer0
 		return randomBiome(rand, COMMON);
 	}
 
-	private int randomBiome(INoiseRandom random, List<RegistryKey<Biome>> biomes) {
-		return GenLayerUtils.getBiomeId(biomes.get(random.nextRandom(biomes.size())), registry);
+	private int randomBiome(INoiseRandom random, List<Integer> biomes) {
+		return biomes.get(random.nextRandom(biomes.size()));
 	}
 }

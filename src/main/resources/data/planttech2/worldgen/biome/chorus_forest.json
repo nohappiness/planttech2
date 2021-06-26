@@ -5,7 +5,7 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:endstone"
+        "Name": "minecraft:end_stone"
       },
       "under_material": {
         "Name": "minecraft:dirt"

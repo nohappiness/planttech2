@@ -9,8 +9,8 @@
   "effects": {
     "sky_color": 16774241,
     "fog_color": 16766791,
-    "water_color": 16775864,
-    "water_fog_color": 15461558,
+    "water_color": 12451796,
+    "water_fog_color": 15794165,
     "grass_color": 16758845,
     "foliage_color": 16767831
   },
@@ -20,8 +20,8 @@
       {
         "type": "minecraft:llama",
         "weight": 1,
-        "minCount": 1,
-        "maxCount": 4
+        "minCount": 2,
+        "maxCount": 5
       }
     ]
   },

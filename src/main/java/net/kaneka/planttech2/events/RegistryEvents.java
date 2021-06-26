@@ -12,6 +12,8 @@ import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.Dimension;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,6 +71,12 @@ public class RegistryEvents
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
+	}
+
+	@SubscribeEvent
+	public static void registerConfigs(RegistryEvent.Register<Feature<?>> event)
+	{
+		ModFeatures.registerConfigs(event.getRegistry());
 	}
 
 	/*
