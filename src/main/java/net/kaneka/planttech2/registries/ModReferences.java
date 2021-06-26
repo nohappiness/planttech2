@@ -55,7 +55,7 @@ public class ModReferences
 	public static final String RADIATED_WASTELANDS = "radiated_wastelands";
 	public static final String RADIATED_WETLANDS = "radiated_wetlands";
 	public static final String RIVER = "river";
-	public static final String VULCANO = "vulkano";
+	public static final String VULCANO = "vulcano";
 	public static final String WASTELAND_MESA = "wasteland_mesa";
 	public static final String WETLANDS = "wetlands";
 

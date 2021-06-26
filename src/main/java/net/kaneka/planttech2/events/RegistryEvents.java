@@ -11,8 +11,6 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.potion.Effect;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.world.Dimension;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
@@ -104,14 +102,12 @@ public class RegistryEvents
 		ModPlacements.registerDimensions(event.getRegistry());
 	}
 
-
 	@SubscribeEvent
 	public static void registerFeatures(RegistryEvent.Register<Feature<?>> event)
 	{
-		ModStructures.registerAll(event);
+		ModFeatures.registerFeatures(event);
 	}
-
-	*/
+*/
 
 	@SubscribeEvent
 	public static void registerFluids(RegistryEvent.Register<Fluid> event)
