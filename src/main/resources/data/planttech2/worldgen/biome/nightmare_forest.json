@@ -5,7 +5,7 @@
         "Properties": {
           "snowy": "false"
         },
-        "Name": "minecraft:warped_nylium"
+        "Name": "minecraft:crimson_nylium"
       },
       "under_material": {
         "Name": "minecraft:netherrack"
@@ -61,10 +61,11 @@
     [],
     [],
     [
-      "planttech2:test"
+
     ],
     [
-      "planttech2:disk_crimson_nylium"
+      "planttech2:nightmare_forest_surface_replacements",
+      "planttech2:disk_warped_nylium"
     ],
     [
       "minecraft:brown_mushroom_normal",

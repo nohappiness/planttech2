@@ -36,7 +36,7 @@ public class ModBiomes
 		create(ModReferences.MEADOWS, BiomeMaker::theVoidBiome);
 		create(ModReferences.MUSHROOM_FOREST, BiomeMaker::theVoidBiome);
 		create(ModReferences.MUSHROOM_HILLS, BiomeMaker::theVoidBiome);
-		create(ModReferences.NIGHTMARE_FOREST, ModBiomes::theTestBiome);
+		create(ModReferences.NIGHTMARE_FOREST, BiomeMaker::theVoidBiome);
 		create(ModReferences.PUMPKIN_FOREST, BiomeMaker::theVoidBiome);
 		create(ModReferences.RADIATED_WETLANDS, BiomeMaker::theVoidBiome);
 		create(ModReferences.RADIATED_WASTELANDS, BiomeMaker::theVoidBiome);
@@ -50,7 +50,7 @@ public class ModBiomes
 	{
 		BiomeGenerationSettings.Builder biomegenerationsettings$builder = (new BiomeGenerationSettings.Builder()).surfaceBuilder(ConfiguredSurfaceBuilders.NOPE);
 		biomegenerationsettings$builder.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, Features.VOID_START_PLATFORM);
-		biomegenerationsettings$builder.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModFeatures.TEST);
+		//biomegenerationsettings$builder.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModFeatures.TEST);
 		return (new Biome.Builder()).precipitation(Biome.RainType.NONE).biomeCategory(Biome.Category.NONE).depth(0.1F).scale(0.2F).temperature(0.5F).downfall(0.5F).specialEffects((new BiomeAmbience.Builder()).waterColor(4159204).waterFogColor(329011).fogColor(12638463).skyColor(calculateSkyColor(0.5F)).ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).build()).mobSpawnSettings(MobSpawnInfo.EMPTY).generationSettings(biomegenerationsettings$builder.build()).build();
 	}
 
