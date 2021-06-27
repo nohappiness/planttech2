@@ -30,7 +30,12 @@
     "water_fog_color": 329011,
     "grass_color": 1917984,
     "foliage_color": 14768987,
-
+    "music": {
+      "sound": "planttech2:music_dangerous",
+      "min_delay": 1000,
+      "max_delay": 6000,
+      "replace_current_music": true
+    }
   },
   "starts": [],
   "spawners": {

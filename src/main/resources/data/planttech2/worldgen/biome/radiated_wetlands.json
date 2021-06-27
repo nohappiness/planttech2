@@ -13,7 +13,13 @@
     "water_fog_color": 3243096,
     "grass_color": 668451,
     "foliage_color": 1277707,
-    "grass_color_modifier": "swamp"
+    "grass_color_modifier": "swamp",
+    "music": {
+      "sound": "planttech2:music_adventure",
+      "min_delay": 1000,
+      "max_delay": 6000,
+      "replace_current_music": true
+    }
   },
   "starts": [],
   "spawners": {},
