@@ -27,9 +27,9 @@ public class ReplaceBlocksSurfaceFeature extends Feature<ProbabilityConfig> {
 
     @Override
     public boolean place(ISeedReader reader, ChunkGenerator chunkGenerator, Random rand, BlockPos pos, ProbabilityConfig config) {
-        System.out.println(target.getBlock());
+//        System.out.println(target.getBlock());
         if(reader.getBlockState(pos).is(Blocks.AIR) && reader.getBlockState(pos.below()).is(target.getBlock())){
-            System.out.println("replace");
+//            System.out.println("replace");
                 reader.setBlock(pos.below(), weightedList.get(rand.nextInt(weightedList.size())), 2);
         }
 
