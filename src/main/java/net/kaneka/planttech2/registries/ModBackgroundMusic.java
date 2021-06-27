@@ -3,6 +3,7 @@ package net.kaneka.planttech2.registries;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -51,7 +52,7 @@ public class ModBackgroundMusic
     {
         Minecraft minecraft = Minecraft.getInstance();
         PlayerEntity player = minecraft.player;
-        if (player != null)
+        if (player != null && event.getSound().getSource() == SoundCategory.MUSIC)
         {
             World world = player.level;
             if (world.dimension().getRegistryName().equals(ModDimensions.PLANTTOPIA_DIMENSION.getRegistryName()))

@@ -5,7 +5,7 @@
     "category": "music", "subtitle": "test",
     "sounds": [
       {
-        "volume": 0.35,
+        "volume": 0.225,
         "name": "planttech2:background_musics/planttopia_adventure"
       }
     ]

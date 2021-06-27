@@ -103,7 +103,7 @@ public class ModBiomes
 	{
 		for (RegistryObject<Biome> object : MUSICS.keySet())
 		{
-			if (object.get() == biome)
+			if (object.get().getRegistryName().equals(biome.getRegistryName()))
 				return MUSICS.get(object).get();
 		}
 		return null;
