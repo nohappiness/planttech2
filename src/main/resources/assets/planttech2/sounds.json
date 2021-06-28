@@ -5,7 +5,7 @@
     "category": "music",
     "sounds": [
       {
-        "volume": 0.2,
+        "volume": 0.625,
         "name": "planttech2:background_musics/planttopia_adventure"
       }
     ]
@@ -14,10 +14,7 @@
   {
     "category": "music",
     "sounds": [
-      {
-        "volume": 0.6,
-        "name": "planttech2:background_musics/planttopia_dangerous"
-      }
+        "planttech2:background_musics/planttopia_dangerous", "planttech2:background_musics/planttopia_dangerous_2"
     ]
   }
 }
