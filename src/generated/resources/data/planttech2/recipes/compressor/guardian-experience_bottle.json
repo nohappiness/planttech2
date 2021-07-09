@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:guardian_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:experience_bottle",
+    "count": "1"
+  }
+}

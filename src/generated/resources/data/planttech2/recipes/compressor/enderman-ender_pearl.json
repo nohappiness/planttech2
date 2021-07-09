@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:enderman_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:ender_pearl",
+    "count": "1"
+  }
+}

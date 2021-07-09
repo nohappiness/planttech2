@@ -1,0 +1,12 @@
+{
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "enchantment": "minecraft:sharpness"
+  },
+  "result": {
+    "item": "planttech2:sharpness_chip"
+  }
+}

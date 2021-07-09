@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:illager_particles",
+    "count": "16"
+  },
+  "result": {
+    "item": "minecraft:iron_sword",
+    "count": "1"
+  }
+}

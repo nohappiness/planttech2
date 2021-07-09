@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:wood_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:spruce_log",
+    "count": "1"
+  }
+}

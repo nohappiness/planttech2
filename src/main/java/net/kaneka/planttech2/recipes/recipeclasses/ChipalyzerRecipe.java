@@ -30,24 +30,29 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+import javax.annotation.Nullable;
+
 public class ChipalyzerRecipe implements IRecipe<IInventory>
 {
 	private final ResourceLocation id;
 	private final ItemStack chip;
 	private final ItemStack input;
+	@Nullable
 	private final Enchantment enchantment;
 	private final ItemStack output;
 
-	public ChipalyzerRecipe(ResourceLocation id, ItemStack chip, ItemStack input, Enchantment enchantment, ItemStack output)
+	public ChipalyzerRecipe(ResourceLocation id, ItemStack chip, @Nullable ItemStack input, @Nullable Enchantment enchantment, ItemStack output)
 	{
 		this.id = id;
 		this.chip = chip;
-		this.input = input;
+		this.input = input == null ? new ItemStack(Items.AIR) : input;
 		this.enchantment = enchantment;
 		this.output = output;
 	}
+
 	public ItemStack getChip() {return chip;}
 	public ItemStack getInput() {return input;}
+	@Nullable
 	public Enchantment getEnchantment() {return enchantment;}
 	public ItemStack getOutput() {return output;}
 

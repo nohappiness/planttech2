@@ -1,4 +1,4 @@
-package net.kaneka.planttech2.datagen;
+package net.kaneka.planttech2.datagen.recipes;
 
 import java.util.function.Consumer;
 
@@ -16,9 +16,9 @@ import net.minecraft.util.IItemProvider;
 import static net.kaneka.planttech2.registries.ModItems.*;
 import static net.minecraft.item.Items.*;
 
-public class Recipes extends RecipeProvider
+public class ItemRecipeProvider extends RecipeProvider
 {
-	public Recipes(DataGenerator gen)
+	public ItemRecipeProvider(DataGenerator gen)
 	{
 		super(gen);
 	}

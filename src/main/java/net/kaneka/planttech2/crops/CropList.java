@@ -3,14 +3,12 @@ package net.kaneka.planttech2.crops;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ISerializable;
-import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;

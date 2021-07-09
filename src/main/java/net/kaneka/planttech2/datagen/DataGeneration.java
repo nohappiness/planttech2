@@ -2,6 +2,10 @@ package net.kaneka.planttech2.datagen;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.datagen.blocks.BlockStateGenerator;
+import net.kaneka.planttech2.datagen.recipes.ChipalyzerRecipesProvider;
+import net.kaneka.planttech2.datagen.recipes.CompressorRecipesProvider;
+import net.kaneka.planttech2.datagen.recipes.InfuserRecipesProvider;
+import net.kaneka.planttech2.datagen.recipes.ItemRecipeProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,9 +27,12 @@ public class DataGeneration {
         }
         if (event.includeServer())
         {
-            gen.addProvider(new Recipes(gen));
+            gen.addProvider(new ItemRecipeProvider(gen));
             gen.addProvider(new LootTables(gen));
             gen.addProvider(new DefaultCropConfigProvider(gen));
+            gen.addProvider(new CompressorRecipesProvider(gen));
+            gen.addProvider(new ChipalyzerRecipesProvider(gen));
+            gen.addProvider(new InfuserRecipesProvider(gen));
         }
     }
 }

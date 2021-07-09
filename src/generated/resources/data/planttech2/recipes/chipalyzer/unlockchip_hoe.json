@@ -1,0 +1,12 @@
+{
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "item": "minecraft:iron_hoe"
+  },
+  "result": {
+    "item": "planttech2:unlockchip_hoe"
+  }
+}
