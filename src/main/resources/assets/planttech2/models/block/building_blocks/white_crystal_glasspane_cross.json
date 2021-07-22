@@ -1,8 +1,0 @@
-{
-    "parent": "planttech2:block/basic/glasspane_cross",
-    "textures": {
-		"0": "planttech2:blocks/building_blocks/white_crystal_half",
-		"1": "planttech2:blocks/building_blocks/glass/glass_cross",
-		"particle": "planttech2:blocks/building_blocks/white_crystal_half"
-	}
-}

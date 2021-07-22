@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "planttech2:dark_crystal_block"
-  },
-  "result": "planttech2:dark_crystal_brick",
-  "count": 1
-}

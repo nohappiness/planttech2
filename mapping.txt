@@ -1,9 +1,0 @@
-func_240715_a_ -> setClickEvent
-func_240716_a_ -> setHoverEvent
-func_240712_a_ -> setColor
-field_230712_o_ -> font
-func_235896_a_ -> cycle
-func_230450_a_ -> drawGuiContainerBackgroundLayer
-func_230451_b_ -> drawGuiContainerForegroundLayer
-func_230459_a_ -> renderHoveredToolTip
-func_195363_d -> itemStackMoved

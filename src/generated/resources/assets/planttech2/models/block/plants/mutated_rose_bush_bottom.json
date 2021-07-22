@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "planttech2:blocks/plants/mutated_rose_bush_bottom"
-  }
-}

@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs",
-    "textures": {
-        "bottom": "planttech2:blocks/building_blocks/white_crystal_tiling",
-        "top": "planttech2:blocks/building_blocks/white_crystal_tiling",
-        "side": "planttech2:blocks/building_blocks/white_crystal_tiling"
-    }
-}

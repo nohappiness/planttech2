@@ -1,7 +1,0 @@
-{
-    "parent": "planttech2:block/basic/fence_west",
-    "textures": {
-		"1": "planttech2:blocks/building_blocks/dark_crystal_half",
-		"particle": "planttech2:blocks/building_blocks/dark_crystal_half"
-	}
-}

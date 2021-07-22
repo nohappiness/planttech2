@@ -1,9 +1,0 @@
-{
-  "parent": "planttech2:block/hedge/base/hedge_base",
-  "textures": {
-    "leaves": "minecraft:block/dark_oak_leaves",
-    "wood": "minecraft:block/acacia_log",
-    "soil": "minecraft:block/podzol_top",
-    "particle": "minecraft:block/acacia_log"
-  }
-}

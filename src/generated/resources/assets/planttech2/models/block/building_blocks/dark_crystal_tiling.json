@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "planttech2:blocks/building_blocks/dark_crystal_tiling"
-  }
-}

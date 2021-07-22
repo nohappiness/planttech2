@@ -1,7 +1,0 @@
-{
-    "parent": "planttech2:block/basic/fence_core",
-    "textures": {
-		"1": "planttech2:blocks/building_blocks/fence",
-		"particle": "planttech2:blocks/building_blocks/fence"
-	}
-}

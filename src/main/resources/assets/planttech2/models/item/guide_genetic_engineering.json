@@ -1,8 +1,0 @@
-{
-    "parent": "item/generated",
-    "textures": { "layer0": "planttech2:items/tablet"},
-    "overrides": [
-        { "predicate": {"damaged": 0, "damage": 0}, "model": "planttech2:item/tablet_closed"},
-        { "predicate": {"damaged": 0, "damage": 1}, "model": "planttech2:item/tablet_open"}
-    ]
-}

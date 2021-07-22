@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "planttech2:items/aura_core_fertility_increase_i"
-  }
-}

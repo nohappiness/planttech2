@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "planttech2:items/chips/reactor_tier_3"
-  }
-}
