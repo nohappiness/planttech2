@@ -1,6 +1,5 @@
 package net.kaneka.planttech2;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.items.BiomassContainerItem;
@@ -10,9 +9,8 @@ import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
 import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.resources.ResourceLocation;
 
 public class PlantTechClient
 {

@@ -1,0 +1,25 @@
+{
+  "crop": "carrot",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:carrot_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:carrot_seeds",
+    "minecraft:carrot"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:carrot",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

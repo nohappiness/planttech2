@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " A ",
+        "AAA",
+        " A "
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:gear_plantium",
+        "count": 1
+    }
+}

@@ -6,11 +6,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-
-import net.minecraft.item.Item.Properties;
 
 public class TeleporterItem extends EnergyStorageItem
 {
@@ -22,7 +21,7 @@ public class TeleporterItem extends EnergyStorageItem
 
 	/*
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		if(Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
@@ -36,7 +35,7 @@ public class TeleporterItem extends EnergyStorageItem
     			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack), buffer -> buffer.writeItemStack(stack));
 			}
 		}
-		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<ItemStack>(InteractionResultHolderType.SUCCESS, stack);
 	}
 
 	*/

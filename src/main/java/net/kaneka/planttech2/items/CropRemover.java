@@ -1,29 +1,28 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.tileentity.CropsTileEntity;
+import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.DispenserBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.util.InteractionResultHolderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class CropRemover extends Item
 {
@@ -51,7 +50,7 @@ public class CropRemover extends Item
 	}
 	
 	@Override
-	public ActionResultType useOn(ItemUseContext context)
+	public InteractionResultHolderType useOn(ItemUseContext context)
 	{
 	    World world = context.getLevel();
 	    BlockPos pos = context.getClickedPos();
@@ -65,7 +64,7 @@ public class CropRemover extends Item
 				if (stack.getDamageValue() >= stack.getMaxDamage())
 					stack.shrink(1);
 			}
-			return ActionResultType.CONSUME;
+			return InteractionResultHolderType.CONSUME;
 		}
 		return super.useOn(context);
 	}
@@ -80,12 +79,12 @@ public class CropRemover extends Item
 	public static boolean applyCropRemove(World world, BlockPos pos, ItemStack stack)
 	{
 		BlockState state = world.getBlockState(pos);
-		TileEntity tileentity = world.getBlockEntity(pos);
-		if(tileentity instanceof CropsTileEntity)
+		BlockEntity BlockEntity = world.getBlockEntity(pos);
+		if(BlockEntity instanceof CropsBlockEntity)
 		{
 			List<ItemStack> drops = Lists.newArrayList();
 			int growstate = state.getValue(CropBaseBlock.GROWSTATE);
-			((CropsTileEntity) tileentity).addDrops(drops, growstate);
+			((CropsBlockEntity) BlockEntity).addDrops(drops, growstate);
 			for(ItemStack drop : drops)
 				Block.popResource(world, pos, drop);
 			world.setBlockAndUpdate(pos, ModBlocks.CROPBARS.defaultBlockState());

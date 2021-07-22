@@ -1,24 +1,26 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IceBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.PushReaction;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.level.block.IceBlock;
+import net.minecraft.level.level.material.Material;
+import net.minecraft.level.level.block.material.PushReaction;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.level.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.level.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.level.LightType;
+import net.minecraft.level.level;
+import net.minecraft.level.server.Serverlevel;
 
 import javax.annotation.Nullable;
 import java.util.Random;
+
+import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
 
 public class InfusedIceBlock extends IceBlock
 {
@@ -28,40 +30,40 @@ public class InfusedIceBlock extends IceBlock
     }
 
     @Override
-    public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity tileEntity, ItemStack stack)
+    public void playerDestroy(level level, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity BlockEntity, ItemStack stack)
     {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
-        dropResources(state, world, pos, tileEntity, player, stack);
+        dropResources(state, level, pos, BlockEntity, player, stack);
         if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0)
         {
-            if (world.dimensionType().ultraWarm())
+            if (level.dimensionType().ultraWarm())
             {
-                world.removeBlock(pos, false);
+                level.removeBlock(pos, false);
                 return;
             }
-            Material material = world.getBlockState(pos.below()).getMaterial();
+            Material material = level.getBlockState(pos.below()).getMaterial();
             if (material.blocksMotion() || material.isLiquid())
-                world.setBlockAndUpdate(pos, ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState());
+                level.setBlockAndUpdate(pos, ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState());
         }
 
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
+    public void randomTick(BlockState state, Serverlevel level, BlockPos pos, Random rand)
     {
-        if (world.getBrightness(LightType.BLOCK, pos) > 11 - state.getLightBlock(world, pos))
-            this.melt(state, world, pos);
+        if (level.getBrightness(LightType.BLOCK, pos) > 11 - state.getLightBlock(level, pos))
+            this.melt(state, level, pos);
     }
 
     @Override
-    protected void melt(BlockState state, World world, BlockPos pos) {
-        if (world.dimensionType().ultraWarm())
-            world.removeBlock(pos, false);
+    protected void melt(BlockState state, level level, BlockPos pos) {
+        if (level.dimensionType().ultraWarm())
+            level.removeBlock(pos, false);
         else
         {
-            world.setBlockAndUpdate(pos, ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState());
-            world.neighborChanged(pos, Blocks.WATER, pos);
+            level.setBlockAndUpdate(pos, ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState());
+            level.neighborChanged(pos, Blocks.WATER, pos);
         }
     }
 

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SMS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:glowstone"
+    },
+    "M": {
+      "item": "planttech2:aura_core_light_decrease_ii"
+    }
+  },
+  "result": {
+    "item": "planttech2:aura_core_light_decrease_iii"
+  }
+}

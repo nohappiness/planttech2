@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:magma_cube_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:magma_cream",
+    "count": "1"
+  }
+}

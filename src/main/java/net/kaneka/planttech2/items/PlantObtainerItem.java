@@ -2,24 +2,25 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.InteractionResultHolderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-import net.minecraft.item.Item.Properties;
+import InteractionResultHolderType;
 
 public class PlantObtainerItem extends Item
 {
@@ -29,7 +30,7 @@ public class PlantObtainerItem extends Item
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context)
+    public InteractionResultHolderType useOn(ItemUseContext context)
     {
         World world = context.getLevel();
         BlockPos pos = context.getClickedPos();
@@ -37,7 +38,7 @@ public class PlantObtainerItem extends Item
         PlayerEntity player = context.getPlayer();
         if (player == null)
         {
-            return ActionResultType.FAIL;
+            return InteractionResultHolderType.FAIL;
         }
         ItemStack stack = player.getMainHandItem();
         initTags(stack);
@@ -49,7 +50,7 @@ public class PlantObtainerItem extends Item
                 setBlockFilled(stack, block.getObtainedBlockState(state));
                 block.onObtained(world, player, stack, pos);
 //                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
-                return ActionResultType.SUCCESS;
+                return InteractionResultHolderType.SUCCESS;
             }
         }
         else if (isFilled(stack))
@@ -61,10 +62,10 @@ public class PlantObtainerItem extends Item
                 setBlockFilled(stack, null);
                 setFilled(stack, false);
 //                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
-                return ActionResultType.SUCCESS;
+                return InteractionResultHolderType.SUCCESS;
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResultHolderType.PASS;
     }
 
     public static ItemStack setBlockFilled(ItemStack stack, BlockState state)

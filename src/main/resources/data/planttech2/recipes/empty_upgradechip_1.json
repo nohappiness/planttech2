@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ppp",
+        "rrr",
+        "ppp"
+    ],
+    "key": {
+        "p":
+        {
+            "item": "planttech2:plantium_ingot"
+        },
+        "r":
+        {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result": {
+        "item": "planttech2:empty_upgradechip_1",
+        "count": 1
+    }
+}

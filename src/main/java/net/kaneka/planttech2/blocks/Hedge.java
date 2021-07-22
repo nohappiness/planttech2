@@ -1,27 +1,16 @@
 package net.kaneka.planttech2.blocks;
 
-import java.util.List;
-
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.FoliageColors;
-import net.minecraft.world.GrassColors;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.level.item.ItemStack;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.level.block.SoundType;
+import net.minecraft.level.level.block.state.BlockBehaviour;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.material.Material;
+
+import java.util.List;
 
 public class Hedge extends CustomFenceBlock
 {
@@ -29,7 +18,7 @@ public class Hedge extends CustomFenceBlock
 
 	public Hedge(Block leaves, Block wood, Block soil)
 	{
-		super(AbstractBlock.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion());
+		super(BlockBehaviour.Properties.of(Material.LEAVES).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion());
 		this.leaves = leaves;
 		this.wood = wood; 
 		this.soil = soil;
@@ -53,7 +42,7 @@ public class Hedge extends CustomFenceBlock
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, IBlockReader levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(new StringTextComponent("Log: " + getWood().getName().getString()));
 		tooltip.add(new StringTextComponent("Leaf: " + getLeaves().getName().getString()));

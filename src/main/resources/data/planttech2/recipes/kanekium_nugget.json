@@ -1,0 +1,12 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "planttech2:kanekium_ingot"
+        }
+    ],
+    "result": {
+        "item": "planttech2:kanekium_nugget",
+        "count": 9
+    }
+}

@@ -1,26 +1,27 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.colors.IColoredBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.level.level.block.AbstractBlock.Properties;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.item.BlockItemUseContext;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.level.Ilevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import DirectionProperty;
 
 public class GlassPaneEnd extends Block implements IColoredBlock
 {
@@ -55,10 +56,10 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
 	{
-		return getFacing(stateIn).getOpposite() == facing && !stateIn.canSurvive(worldIn, currentPos) ? Blocks.AIR.defaultBlockState()
-		        : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return getFacing(stateIn).getOpposite() == facing && !stateIn.canSurvive(levelIn, currentPos) ? Blocks.AIR.defaultBlockState()
+		        : super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
 	}
 
 	@Override

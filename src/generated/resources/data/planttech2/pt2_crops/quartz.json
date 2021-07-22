@@ -1,0 +1,30 @@
+{
+  "crop": "quartz",
+  "enabled": true,
+  "temperature": "extreme_warm",
+  "primary_seed": {
+    "item": "planttech2:quartz_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:quartz_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:quartz_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "netherrack",
+      "parent_2": "iron",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

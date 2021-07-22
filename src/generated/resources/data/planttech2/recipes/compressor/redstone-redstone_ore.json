@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:redstone_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:redstone_ore",
+    "count": "1"
+  }
+}

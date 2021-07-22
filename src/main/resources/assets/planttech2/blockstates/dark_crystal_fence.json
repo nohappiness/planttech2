@@ -1,0 +1,17 @@
+{
+   "multipart": [
+       {   "apply": { "model": "planttech2:block/building_blocks/dark_crystal_fence_core" }},
+       {   "when": { "north": "true" },
+           "apply": { "model": "planttech2:block/building_blocks/dark_crystal_fence_west", "y": 90}
+       },
+       {   "when": { "east": "true" },
+           "apply": { "model": "planttech2:block/building_blocks/dark_crystal_fence_west", "y": 180}
+       },
+       {   "when": { "south": "true" },
+           "apply": { "model": "planttech2:block/building_blocks/dark_crystal_fence_west",  "y": 270}
+       },
+       {   "when": { "west": "true" },
+           "apply": { "model": "planttech2:block/building_blocks/dark_crystal_fence_west"}
+       }
+   ]
+}

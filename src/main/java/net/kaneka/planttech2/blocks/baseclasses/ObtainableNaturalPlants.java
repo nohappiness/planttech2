@@ -1,14 +1,12 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.item.ItemStack;
+import net.minecraft.level.item.ItemUseContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.level.level;
 
 public class ObtainableNaturalPlants extends NaturalPlants implements IObtainable
 {
@@ -23,9 +21,9 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
     }
 
     @Override
-    public void onObtained(World world, PlayerEntity player, ItemStack obtainer, BlockPos pos)
+    public void onObtained(level level, PlayerEntity player, ItemStack obtainer, BlockPos pos)
     {
-        world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+        level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
     }
 
     @Override

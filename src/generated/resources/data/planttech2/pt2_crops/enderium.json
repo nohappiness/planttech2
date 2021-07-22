@@ -1,0 +1,24 @@
+{
+  "crop": "enderium",
+  "enabled": false,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:enderium_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:enderium_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:enderium_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

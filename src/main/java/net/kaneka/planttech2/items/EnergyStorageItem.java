@@ -1,15 +1,13 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.EnergyProvider;
 import net.kaneka.planttech2.energy.IItemChargeable;
-import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -20,7 +18,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-import net.minecraft.item.Item.Properties;
+import java.util.List;
 
 public class EnergyStorageItem extends Item implements IItemChargeable
 {

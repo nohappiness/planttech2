@@ -2,11 +2,11 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 

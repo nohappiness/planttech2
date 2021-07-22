@@ -1,0 +1,12 @@
+{
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:empty_upgradechip_1"
+  },
+  "input": {
+    "item": "minecraft:diamond_chestplate"
+  },
+  "result": {
+    "item": "planttech2:toughnesschip_tier_1"
+  }
+}

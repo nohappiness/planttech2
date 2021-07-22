@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.items;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.level.Level;
 
 public class RadiationMetreItem extends Item
 {
@@ -17,7 +17,7 @@ public class RadiationMetreItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand handIn)
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand handIn)
     {
 //        if (player instanceof ServerPlayerEntity)
 //        {
@@ -30,6 +30,6 @@ public class RadiationMetreItem extends Item
 //            Biome biome = worldIn.getBiome(player.getPosition());
 //            player.sendMessage(new StringTextComponent("Biome Radiation Level: " + BiomeRadiation.getText(biome instanceof PlantTopiaBaseBiome ? ((PlantTopiaBaseBiome) biome).getRadiationLevel() : BiomeRadiation.NONE, true).getFormattedText()), player.getUniqueID());
 //        }
-        return ActionResult.success(player.getItemInHand(handIn));
+        return InteractionResultHolder.success(player.getItemInHand(handIn));
     }
 }

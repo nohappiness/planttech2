@@ -1,0 +1,30 @@
+{
+  "crop": "potato",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:potato_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:potato_seeds",
+    "minecraft:potato"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:potato",
+      "min": 0,
+      "max": 4
+    },
+    {
+      "item": "minecraft:poisonous_potato",
+      "min": 0,
+      "max": 2
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

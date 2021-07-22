@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:creeper_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:gunpowder",
+    "count": "1"
+  }
+}

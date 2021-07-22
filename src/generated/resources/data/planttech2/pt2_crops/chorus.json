@@ -1,0 +1,25 @@
+{
+  "crop": "chorus",
+  "enabled": true,
+  "temperature": "cold",
+  "primary_seed": {
+    "item": "planttech2:chorus_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:chorus_seeds",
+    "minecraft:chorus_flower"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:chorus_fruit",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:end_stone"
+  }
+}

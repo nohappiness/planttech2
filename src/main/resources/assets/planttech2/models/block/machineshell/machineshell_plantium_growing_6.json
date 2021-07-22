@@ -1,0 +1,11 @@
+{
+	"parent": "planttech2:block/basic/two_layered_six_sided", 
+	"textures": 
+	{
+        "particle": "planttech2:blocks/plantium_block",
+        "top_buttom": "planttech2:blocks/plantium_block",
+        "side": "planttech2:blocks/plantium_block",
+        "overlay_top_buttom": "planttech2:blocks/empty",
+        "overlay_side": "planttech2:blocks/machine/side_6"
+    }
+}

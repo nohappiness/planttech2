@@ -1,19 +1,20 @@
 package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.FacingGrowingBlock;
-import net.kaneka.planttech2.blocks.GrowingBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.util.InteractionResultHolderType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.function.Supplier;
+
+import InteractionResultHolderType;
 
 public class MachineBulbItem extends BlockItem
 {
@@ -31,7 +32,7 @@ public class MachineBulbItem extends BlockItem
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext ctx)
+	public InteractionResultHolderType useOn(ItemUseContext ctx)
 	{
 		World world = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
@@ -53,9 +54,9 @@ public class MachineBulbItem extends BlockItem
 				world.setBlockAndUpdate(pos, getMachine().defaultBlockState());
 				stack.shrink(1);
 			}
-			return ActionResultType.CONSUME;
+			return InteractionResultHolderType.CONSUME;
 		}
-		return ActionResultType.PASS;
+		return InteractionResultHolderType.PASS;
 	}
 
 	public int getTier()

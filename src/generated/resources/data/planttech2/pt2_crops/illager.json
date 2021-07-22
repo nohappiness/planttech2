@@ -1,0 +1,30 @@
+{
+  "crop": "illager",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:illager_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:illager_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:illager_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "villager",
+      "parent_2": "witch",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

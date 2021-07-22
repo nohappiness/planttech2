@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:glowstone_particles",
+    "count": "2"
+  },
+  "result": {
+    "item": "minecraft:glowstone_dust",
+    "count": "1"
+  }
+}

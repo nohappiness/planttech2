@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "planttech2:blocks/building_blocks/dark_crystal_block",
+        "side": "planttech2:blocks/building_blocks/dark_crystal_half"
+    }
+}

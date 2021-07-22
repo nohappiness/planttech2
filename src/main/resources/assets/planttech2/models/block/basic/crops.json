@@ -1,0 +1,108 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"particle": "#bars"
+	},
+	"elements": [
+		{
+			"name": "cross_1_bars",
+			"from": [0.8, 0, 8],
+			"to": [15.2, 16, 8],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+            "name": "cross_1_crops",
+            "from": [0.8, 0, 8],
+            "to": [15.2, 16, 8],
+            "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+            "faces": {
+                "north": {"uv": [0, 0, 16, 16], "texture": "#crops"},
+                "south": {"uv": [0, 0, 16, 16], "texture": "#crops"}
+            }
+        },
+        {
+            "name": "cross_1_particles",
+            "from": [0.8, 0, 8],
+            "to": [15.2, 16, 8],
+            "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+            "faces": {
+                "north": {"uv": [0, 0, 16, 16], "texture": "#particles", "tintindex": 0},
+                "south": {"uv": [0, 0, 16, 16], "texture": "#particles", "tintindex": 0}
+            }
+        },
+		{
+			"name": "cross_2_bars",
+			"from": [8, 0, 0.8],
+			"to": [8, 16, 15.2],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+			"faces": {
+				"east": {"uv": [0, 0, 16, 16], "texture": "#bars"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#bars"}
+			}
+		},
+		{
+            "name": "cross_2_crops",
+            "from": [8, 0, 0.8],
+            "to": [8, 16, 15.2],
+            "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+            "faces": {
+                "east": {"uv": [0, 0, 16, 16], "texture": "#crops"},
+                "west": {"uv": [0, 0, 16, 16], "texture": "#crops"}
+            }
+        },
+        {
+            "name": "cross_2_particles",
+            "from": [8, 0, 0.8],
+            "to": [8, 16, 15.2],
+            "rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8], "rescale": true},
+            "faces": {
+                "east": {"uv": [0, 0, 16, 16], "texture": "#particles", "tintindex": 0},
+                "west": {"uv": [0, 0, 16, 16], "texture": "#particles", "tintindex": 0}
+            }
+        },
+		{
+			"name": "minicross_1",
+			"from": [1.66666, 0, 6],
+			"to": [1.66666, 16, 10],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [1, 0, 5, 16], "texture": "#crops"},
+				"west": {"uv": [1, 0, 5, 16], "texture": "#crops"}
+			}
+		},
+		{
+			"name": "minicross_2",
+			"from": [14.33333, 0, 6],
+			"to": [14.33333, 16, 10],
+			"rotation": {"angle": -45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [1, 0, 5, 16], "texture": "#crops"},
+				"west": {"uv": [1, 0, 5, 16], "texture": "#crops"}
+			}
+		},
+		{
+			"name": "minicross_3",
+			"from": [1.66666, 0, 6],
+			"to": [1.66666, 16, 10],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [1, 0, 5, 16], "texture": "#crops"},
+				"west": {"uv": [1, 0, 5, 16], "texture": "#crops"}
+			}
+		},
+		{
+			"name": "minicross_4",
+			"from": [14.333, 0, 6],
+			"to": [14.333, 16, 10],
+			"rotation": {"angle": 45, "axis": "y", "origin": [8, 8, 8]},
+			"faces": {
+				"east": {"uv": [1, 0, 5, 16], "texture": "#crops"},
+				"west": {"uv": [1, 0, 5, 16], "texture": "#crops"}
+			}
+		}
+	]
+}

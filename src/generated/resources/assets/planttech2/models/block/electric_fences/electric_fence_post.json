@@ -1,0 +1,76 @@
+{
+  "textures": {
+    "0": "planttech2:blocks/electric_fences/electric_fence_bars",
+    "particle": "planttech2:blocks/electric_fences/electric_fence_bars"
+  },
+  "elements": [
+    {
+      "from": [
+        7.5,
+        0,
+        7.5
+      ],
+      "to": [
+        8.5,
+        16,
+        8.5
+      ],
+      "faces": {
+        "down": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        },
+        "up": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        },
+        "north": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        },
+        "south": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        },
+        "west": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        },
+        "east": {
+          "texture": "#0",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            5.0
+          ]
+        }
+      }
+    }
+  ]
+}

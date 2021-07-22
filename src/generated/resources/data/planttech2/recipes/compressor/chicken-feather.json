@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:chicken_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:feather",
+    "count": "1"
+  }
+}

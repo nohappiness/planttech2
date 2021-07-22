@@ -1,0 +1,10 @@
+{
+    "parent": "planttech2:block/basic/glasspane_end",
+    "textures": {
+		"0": "planttech2:blocks/building_blocks/glass/glass_end",
+		"1": "planttech2:blocks/building_blocks/dark_crystal_half",
+		"2": "planttech2:blocks/building_blocks/dark_crystal_half_90",
+		"3": "planttech2:blocks/building_blocks/dark_crystal_block",
+		"particle": "planttech2:blocks/building_blocks/glass/glass_end"
+	}
+}

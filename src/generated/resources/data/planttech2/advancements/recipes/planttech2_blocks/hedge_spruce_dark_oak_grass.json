@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "planttech2:hedge_spruce_dark_oak_grass"
+    ]
+  },
+  "criteria": {
+    "leaves": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:spruce_leaves"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "planttech2:hedge_spruce_dark_oak_grass"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "leaves",
+      "has_the_recipe"
+    ]
+  ]
+}

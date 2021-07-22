@@ -1,0 +1,30 @@
+{
+  "crop": "creeper",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:creeper_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:creeper_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:creeper_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "pig",
+      "parent_2": "coal",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

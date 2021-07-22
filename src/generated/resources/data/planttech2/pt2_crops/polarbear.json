@@ -1,0 +1,30 @@
+{
+  "crop": "polarbear",
+  "enabled": true,
+  "temperature": "extreme_cold",
+  "primary_seed": {
+    "item": "planttech2:polarbear_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:polarbear_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:polarbear_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "cow",
+      "parent_2": "panda",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

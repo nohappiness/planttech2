@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "planttech2:white_crystal"
+    }
+  },
+  "result": {
+    "item": "planttech2:white_crystal_block"
+  }
+}

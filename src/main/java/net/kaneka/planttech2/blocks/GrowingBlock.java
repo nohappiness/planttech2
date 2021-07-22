@@ -2,21 +2,23 @@ package net.kaneka.planttech2.blocks;
 
 import com.google.common.collect.Lists;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.level.block.SoundType;
+import net.minecraft.level.level.material.Material;
+import net.minecraft.level.item.ItemStack;
 import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.level.server.Serverlevel;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
+
+import IntegerProperty;
 
 public class GrowingBlock extends Block
 {
@@ -34,24 +36,24 @@ public class GrowingBlock extends Block
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
+	public void tick(BlockState state, Serverlevel level, BlockPos pos, Random rand)
 	{
 		if (growAlone)
-    		grow(state, world, pos);
+    		grow(state, level, pos);
 	}
 	
-	public void grow(BlockState state, ServerWorld world, BlockPos pos)
+	public void grow(BlockState state, Serverlevel level, BlockPos pos)
 	{
 		int i = state.getValue(GROWINGSTATE);
 		if (i < 6)
-			world.setBlockAndUpdate(pos, state.setValue(GROWINGSTATE, i + 1));
+			level.setBlockAndUpdate(pos, state.setValue(GROWINGSTATE, i + 1));
 		else
-			placeBlock(world, pos, state);
+			placeBlock(level, pos, state);
 	}
 	
-	protected void placeBlock(ServerWorld world, BlockPos pos, BlockState state)
+	protected void placeBlock(Serverlevel level, BlockPos pos, BlockState state)
 	{
-		world.setBlockAndUpdate(pos, getBlock().defaultBlockState());
+		level.setBlockAndUpdate(pos, getBlock().defaultBlockState());
 	}
 	
 	@Override

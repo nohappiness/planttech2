@@ -1,23 +1,20 @@
 package net.kaneka.planttech2.items;
 
 
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.datagen.helper.JsonFileConverter;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.util.InteractionResultHolderType;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistry;
 
 import javax.annotation.Nullable;
 import java.io.*;
@@ -25,7 +22,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Supplier;
+
+import InteractionResultHolderType;
 
 public class TestItem extends Item
 {
@@ -37,7 +35,7 @@ public class TestItem extends Item
 	}
 
 	/*@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+	public InteractionResultHolder<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
 	{
 		if (playerIn instanceof ServerPlayerEntity)
 		{
@@ -47,7 +45,7 @@ public class TestItem extends Item
 	}*/
 	private BufferedWriter out;
 	@Override
-	public ActionResultType useOn(ItemUseContext ctx)
+	public InteractionResultHolderType useOn(ItemUseContext ctx)
 	{
 		//		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if (!ctx.getLevel().isClientSide)

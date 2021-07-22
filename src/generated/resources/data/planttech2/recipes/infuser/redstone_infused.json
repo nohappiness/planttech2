@@ -1,0 +1,10 @@
+{
+  "type": "planttech2:infusing",
+  "input": {
+    "item": "minecraft:redstone",
+    "biomass": 250
+  },
+  "result": {
+    "item": "planttech2:redstone_infused"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "crop": "sheep",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:sheep_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:sheep_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:sheep_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "potato",
+      "parent_2": "wheat",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "crop": "aquamarine",
+  "enabled": false,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:aquamarine_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:aquamarine_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:aquamarine_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

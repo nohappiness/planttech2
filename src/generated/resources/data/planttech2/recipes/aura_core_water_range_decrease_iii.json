@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SMS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:water_bucket"
+    },
+    "M": {
+      "item": "planttech2:aura_core_water_range_decrease_ii"
+    }
+  },
+  "result": {
+    "item": "planttech2:aura_core_water_range_decrease_iii"
+  }
+}

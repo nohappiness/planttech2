@@ -1,38 +1,30 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import javax.annotation.Nullable;
+import java.util.*;
 
 public class CarverBlock extends Block
 {
-	public static final BooleanProperty NORTH = SixWayBlock.NORTH;
-	public static final BooleanProperty EAST = SixWayBlock.EAST;
-	public static final BooleanProperty SOUTH = SixWayBlock.SOUTH;
-	public static final BooleanProperty WEST = SixWayBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = SixWayBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
+	public static final BooleanProperty NORTH = PipeBlock.NORTH;
+	public static final BooleanProperty EAST = PipeBlock.EAST;
+	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
+	public static final BooleanProperty WEST = PipeBlock.WEST;
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
 		return facingProperty.getKey().getAxis().isHorizontal();
 	}).collect(Util.toMap());
 
@@ -47,7 +39,7 @@ public class CarverBlock extends Block
 	}
 
 	@Override
-	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand)
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random rand)
 	{
 		List<Direction> directions = new ArrayList<Direction>();
 		directions.add(Direction.NORTH);
@@ -57,30 +49,33 @@ public class CarverBlock extends Block
 		Collections.shuffle(directions);
 		for(Direction direction: directions)
 		{
-			BlockState state2 = world.getBlockState(pos.relative(direction));
+			BlockState state2 = level.getBlockState(pos.relative(direction));
 			Block block = state2.getBlock();
 			if(checkForGrowable(block))
 			{
 				if(block == Blocks.IRON_BLOCK)
-					world.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_IRON_GROWING.defaultBlockState());
+					level.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_IRON_GROWING.defaultBlockState());
 				else if(block == ModBlocks.PLANTIUM_BLOCK)
-					world.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_PLANTIUM_GROWING.defaultBlockState());
+					level.setBlockAndUpdate(pos.relative(direction), ModBlocks.MACHINESHELL_PLANTIUM_GROWING.defaultBlockState());
 				else if(block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING)
-					((GrowingBlock)block).grow(state2, world, pos.relative(direction));
+					((GrowingBlock)block).grow(state2, level, pos.relative(direction));
 				break;
 			}
 		}
 
 	}
 
-	@Override
-	public BlockRenderType getRenderShape(BlockState iBlockState)
-	{
-		return BlockRenderType.MODEL;
-	}
+
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos)
+	public RenderShape getRenderShape(BlockState iBlockState)
+	{
+		return RenderShape.MODEL;
+	}
+
+
+	@Override
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos)
 	{
 		return true;
 	}
@@ -127,28 +122,31 @@ public class CarverBlock extends Block
 		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ;
 	}
 
+
+
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
 	{
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL ? stateIn.setValue(FACING_TO_PROPERTY_MAP.get(facing), Boolean.valueOf(this.checkForConnection(facingState)))
-		        : super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		        : super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
 	}
 
+
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
-		World world = context.getLevel();
+		Level level = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		return defaultBlockState()
-		        .setValue(NORTH, this.checkForConnection(world.getBlockState(pos.north())))
-		        .setValue(EAST, this.checkForConnection(world.getBlockState(pos.east())))
-		        .setValue(SOUTH, this.checkForConnection(world.getBlockState(pos.south())))
-		        .setValue(WEST, this.checkForConnection(world.getBlockState(pos.west())));
+		        .setValue(NORTH, this.checkForConnection(level.getBlockState(pos.north())))
+		        .setValue(EAST, this.checkForConnection(level.getBlockState(pos.east())))
+		        .setValue(SOUTH, this.checkForConnection(level.getBlockState(pos.south())))
+		        .setValue(WEST, this.checkForConnection(level.getBlockState(pos.west())));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, WEST, SOUTH);
 	}

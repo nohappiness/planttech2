@@ -1,0 +1,11 @@
+{
+  "type": "planttech2:compressing",
+  "input": {
+    "item": "planttech2:lapis_particles",
+    "count": "8"
+  },
+  "result": {
+    "item": "minecraft:lapis_lazuli",
+    "count": "1"
+  }
+}

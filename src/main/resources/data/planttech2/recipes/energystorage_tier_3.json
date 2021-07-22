@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "AAA",
+        "CCC",
+        "ABA"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "planttech2:plantium_ingot"
+        }, 
+        "B": 
+        {
+            "item": "minecraft:iron_block"
+        }, 
+        "C": 
+        {	
+        	"item": "planttech2:energystorage_tier_2"
+        }
+    },
+    "result": {
+        "item": "planttech2:energystorage_tier_3",
+        "count": 1
+    }
+}

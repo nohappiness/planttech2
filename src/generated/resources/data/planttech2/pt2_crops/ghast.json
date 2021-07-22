@@ -1,0 +1,30 @@
+{
+  "crop": "ghast",
+  "enabled": true,
+  "temperature": "extreme_warm",
+  "primary_seed": {
+    "item": "planttech2:ghast_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:ghast_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:ghast_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "magma_cube",
+      "parent_2": "blaze",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "crop": "star_steel",
+  "enabled": false,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:star_steel_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:star_steel_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:star_steel_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

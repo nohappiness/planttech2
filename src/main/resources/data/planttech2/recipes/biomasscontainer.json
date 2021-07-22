@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "ABA",
+        "A A",
+        " A "
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "minecraft:glass"
+        },
+        "B": 
+        {
+            "item": "planttech2:plantium_nugget"
+        }
+    },
+    "result": {
+        "item": "planttech2:biomasscontainer",
+        "count": 8
+    }
+}

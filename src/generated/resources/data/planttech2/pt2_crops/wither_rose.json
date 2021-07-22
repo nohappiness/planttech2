@@ -1,0 +1,25 @@
+{
+  "crop": "wither_rose",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:wither_rose_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:wither_rose_seeds",
+    "minecraft:wither_rose"
+  ],
+  "drops": [
+    {
+      "item": "minecraft:wither_rose",
+      "min": 0,
+      "max": 1
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

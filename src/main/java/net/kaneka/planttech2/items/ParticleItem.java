@@ -3,8 +3,8 @@ package net.kaneka.planttech2.items;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class ParticleItem extends Item
 {

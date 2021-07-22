@@ -1,0 +1,30 @@
+{
+  "crop": "sand",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:sand_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:sand_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:sand_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "mushroom",
+      "parent_2": "cactus",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

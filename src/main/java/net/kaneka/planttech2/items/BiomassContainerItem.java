@@ -1,16 +1,14 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.kaneka.planttech2.fluids.capability.IBiomassFluidEnergy;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.NonNullList;
@@ -18,8 +16,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 

@@ -4,13 +4,15 @@ import net.kaneka.planttech2.PlantTechClient;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
+
+import InteractionResultHolder;
 
 public class GuideItem extends Item
 {
@@ -21,7 +23,7 @@ public class GuideItem extends Item
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
+    public InteractionResultHolder<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
     {
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
 	/*

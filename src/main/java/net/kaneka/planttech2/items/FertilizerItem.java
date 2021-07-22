@@ -1,23 +1,23 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.tileentity.CropsTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.DispenserBlock;
+import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
-import net.minecraft.item.*;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.util.InteractionResultHolderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class FertilizerItem extends Item
 {
@@ -41,7 +41,7 @@ public class FertilizerItem extends Item
     }
 
     @Override
-    public ActionResultType useOn(ItemUseContext context)
+    public InteractionResultHolderType useOn(ItemUseContext context)
     {
 		ItemStack stack = context.getItemInHand();
 		BlockPos pos = context.getClickedPos();
@@ -51,7 +51,7 @@ public class FertilizerItem extends Item
 			{
 				if (context.getPlayer() != null && !context.getPlayer().abilities.instabuild)
 					stack.shrink(1);
-				return ActionResultType.CONSUME;
+				return InteractionResultHolderType.CONSUME;
 			}
 		return super.useOn(context);
     }
@@ -88,9 +88,9 @@ public class FertilizerItem extends Item
 			{
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{
-					TileEntity te = world.getBlockEntity(pos);
-					if (te instanceof CropsTileEntity)
-						((CropBaseBlock) block).updateCrop(world, pos, ((CropsTileEntity) te).getTraits());
+					BlockEntity te = world.getBlockEntity(pos);
+					if (te instanceof CropsBlockEntity)
+						((CropBaseBlock) block).updateCrop(world, pos, ((CropsBlockEntity) te).getTraits());
 				}
 				else
 					((CropBaseBlock) block).updateCreative(world, pos);

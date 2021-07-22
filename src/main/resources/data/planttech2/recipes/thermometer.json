@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "A",
+        "A",
+        "B"
+    ],
+    "key": {
+        "A": 
+        {
+            "item": "minecraft:glass"
+        },
+        "B": 
+        {
+            "item": "planttech2:plantium_ingot"
+        }
+    },
+    "result": {
+        "item": "planttech2:thermometer",
+        "count": 1
+    }
+}

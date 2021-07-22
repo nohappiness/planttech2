@@ -5,22 +5,24 @@ import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.machines.CableBlock;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.util.InteractionResultHolderType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import java.util.List;
+
+import InteractionResultHolderType;
 
 public class WrenchItem extends Item
 {
@@ -31,7 +33,7 @@ public class WrenchItem extends Item
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext ctx)
+	public InteractionResultHolderType useOn(ItemUseContext ctx)
 	{
 		World world = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
@@ -52,10 +54,10 @@ public class WrenchItem extends Item
 						{
 							Block.popResource(world, player.blockPosition(), new ItemStack(block));
 						}
-						return ActionResultType.SUCCESS;
+						return InteractionResultHolderType.SUCCESS;
 					}
 					Block.popResource(world, pos, new ItemStack(target.getBlock()));
-					return ActionResultType.SUCCESS;
+					return InteractionResultHolderType.SUCCESS;
 				}
 			}
 		}

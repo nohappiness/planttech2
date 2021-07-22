@@ -1,22 +1,14 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FourWayBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.FourWayBlock;
+import net.minecraft.level.item.BlockItemUseContext;
+import net.minecraft.level.level.block.state.properties.BooleanProperty;
+import net.minecraft.level.phys.shapes.VoxelShape;
 
 public abstract class AbstractCustomFence extends Block
 {
@@ -37,9 +29,9 @@ public abstract class AbstractCustomFence extends Block
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
     {
-        return getState(this.defaultBlockState(), (World) worldIn, currentPos);
+        return getState(this.defaultBlockState(), (level) levelIn, currentPos);
     }
 
     @Override
@@ -48,9 +40,9 @@ public abstract class AbstractCustomFence extends Block
         return getState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
 
-    public boolean canConnectTo(World world, BlockPos pos, Direction direction)
+    public boolean canConnectTo(level level, BlockPos pos, Direction direction)
     {
-        return canAttachToSolid() && world.getBlockState(pos.relative(direction)).isFaceSturdy(world, pos.relative(direction), direction.getOpposite());
+        return canAttachToSolid() && level.getBlockState(pos.relative(direction)).isFaceSturdy(level, pos.relative(direction), direction.getOpposite());
     }
 
     /**
@@ -62,7 +54,7 @@ public abstract class AbstractCustomFence extends Block
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
     {
         VoxelShape shape = getPostShape();
         if (state.getValue(NORTH))
@@ -80,12 +72,12 @@ public abstract class AbstractCustomFence extends Block
 
     public abstract VoxelShape getPostShape();
 
-    private BlockState getState(BlockState state, World worldIn, BlockPos pos)
+    private BlockState getState(BlockState state, level levelIn, BlockPos pos)
     {
         return state
-                .setValue(NORTH, canConnectTo(worldIn, pos, Direction.SOUTH))
-                .setValue(EAST, canConnectTo(worldIn, pos, Direction.WEST))
-                .setValue(SOUTH, canConnectTo(worldIn, pos, Direction.NORTH))
-                .setValue(WEST, canConnectTo(worldIn, pos, Direction.EAST));
+                .setValue(NORTH, canConnectTo(levelIn, pos, Direction.SOUTH))
+                .setValue(EAST, canConnectTo(levelIn, pos, Direction.WEST))
+                .setValue(SOUTH, canConnectTo(levelIn, pos, Direction.NORTH))
+                .setValue(WEST, canConnectTo(levelIn, pos, Direction.EAST));
     }
 }

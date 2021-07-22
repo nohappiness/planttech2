@@ -1,0 +1,30 @@
+{
+  "crop": "husk",
+  "enabled": true,
+  "temperature": "warm",
+  "primary_seed": {
+    "item": "planttech2:husk_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:husk_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:husk_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "zombie",
+      "parent_2": "lava",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

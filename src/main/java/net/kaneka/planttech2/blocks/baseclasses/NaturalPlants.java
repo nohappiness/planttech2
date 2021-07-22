@@ -1,22 +1,21 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.level.IBlockReader;
+import net.minecraft.level.level;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.Blocks;
+import net.minecraft.level.level.block.SoundType;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.material.Material;
+import net.minecraft.level.phys.shapes.VoxelShape;
 
 import java.util.HashSet;
-
-import net.minecraft.block.AbstractBlock.OffsetType;
 
 public class NaturalPlants extends Block
 {
@@ -40,9 +39,9 @@ public class NaturalPlants extends Block
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
 	{
-		Vector3d vec3d = state.getOffset(worldIn, pos);
+		Vector3d vec3d = state.getOffset(levelIn, pos);
 		return BASE_SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 
@@ -68,15 +67,15 @@ public class NaturalPlants extends Block
     }*/
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
 	{
 		return VoxelShapes.empty();
 	}
 
-	public boolean canPlaceAt(World world, BlockPos pos)
+	public boolean canPlaceAt(level level, BlockPos pos)
 	{
-		if (getValidGrounds().contains(world.getBlockState(pos.below()).getBlock())) {
-			return world.isEmptyBlock(pos);
+		if (getValidGrounds().contains(level.getBlockState(pos.below()).getBlock())) {
+			return level.isEmptyBlock(pos);
 		}
 		return false;
 	}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SMS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "planttech2:plantium_ingot"
+    },
+    "M": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "result": {
+    "item": "planttech2:aura_core_light_decrease_i"
+  }
+}

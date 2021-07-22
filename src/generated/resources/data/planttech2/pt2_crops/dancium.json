@@ -1,0 +1,30 @@
+{
+  "crop": "dancium",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:dancium_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:dancium_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:dancium_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "plantium",
+      "parent_2": "fish",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

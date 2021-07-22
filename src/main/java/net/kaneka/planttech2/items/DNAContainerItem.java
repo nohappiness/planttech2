@@ -1,15 +1,10 @@
 package net.kaneka.planttech2.items;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Nullable;
-
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -18,6 +13,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 
 public class DNAContainerItem extends Item
 {

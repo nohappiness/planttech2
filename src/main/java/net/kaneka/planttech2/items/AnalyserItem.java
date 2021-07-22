@@ -2,14 +2,16 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.util.InteractionResultHolderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+
+import InteractionResultHolderType;
 
 public class AnalyserItem extends Item
 {
@@ -20,7 +22,7 @@ public class AnalyserItem extends Item
 	}
 	
 	@Override
-	public ActionResultType useOn(ItemUseContext ctx)
+	public InteractionResultHolderType useOn(ItemUseContext ctx)
 	{
 	    World world = ctx.getLevel(); 
 	    BlockPos pos = ctx.getClickedPos(); 

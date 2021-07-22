@@ -1,0 +1,30 @@
+{
+  "crop": "pink_tulip",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:pink_tulip_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:pink_tulip_seeds",
+    "minecraft:pink_tulip"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:color_particles",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "item": "minecraft:pink_tulip",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "planttech2:chipalyzer",
+  "chip": {
+    "item": "planttech2:harvestlevelchip_tier_1"
+  },
+  "input": {
+    "item": "planttech2:chip_upgradepack_harvestlevel_1"
+  },
+  "result": {
+    "item": "planttech2:harvestlevelchip_tier_2"
+  }
+}

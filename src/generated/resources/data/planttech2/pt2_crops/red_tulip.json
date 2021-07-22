@@ -1,0 +1,30 @@
+{
+  "crop": "red_tulip",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:red_tulip_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:red_tulip_seeds",
+    "minecraft:red_tulip"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:color_particles",
+      "min": 1,
+      "max": 4
+    },
+    {
+      "item": "minecraft:red_tulip",
+      "min": 0,
+      "max": 4
+    }
+  ],
+  "parents": [],
+  "soil": {
+    "block": "minecraft:dirt"
+  }
+}

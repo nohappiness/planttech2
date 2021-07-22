@@ -1,21 +1,22 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.FacingWallLightBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.level.level.block.AbstractBlock.Properties;
+import net.minecraft.level.level.block.Block;
+import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.level.level.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.level.phys.shapes.VoxelShape;
+import net.minecraft.level.IBlockReader;
+import net.minecraft.level.IlevelReader;
+import net.minecraft.level.level;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
 
 public class WallLight extends FacingWallLightBase
 {
@@ -35,7 +36,7 @@ public class WallLight extends FacingWallLightBase
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
     {
         boolean broke = state.getValue(LIGHT_STATUS) == 0;
         switch (state.getValue(HORIZONTAL_FACING))
@@ -53,14 +54,14 @@ public class WallLight extends FacingWallLightBase
     }
 
     @Override
-    public SoundType getSoundType(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity entity)
+    public SoundType getSoundType(BlockState state, IlevelReader level, BlockPos pos, @Nullable Entity entity)
     {
-        return state.getValue(LIGHT_STATUS) == 0 ? SoundType.STONE : super.getSoundType(state, world, pos, entity);
+        return state.getValue(LIGHT_STATUS) == 0 ? SoundType.STONE : super.getSoundType(state, level, pos, entity);
     }
 
     @Override
-    public void playerWillDestroy(World worldIn, BlockPos pos, BlockState state, PlayerEntity player)
+    public void playerWillDestroy(level levelIn, BlockPos pos, BlockState state, PlayerEntity player)
     {
-        super.playerWillDestroy(worldIn, pos, state, player);
+        super.playerWillDestroy(levelIn, pos, state, player);
     }
 }

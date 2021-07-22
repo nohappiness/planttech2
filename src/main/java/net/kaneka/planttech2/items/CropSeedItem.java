@@ -1,28 +1,23 @@
 package net.kaneka.planttech2.items;
 
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Objects;
-
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.tileentity.CropsTileEntity;
+import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.DispenserBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -30,6 +25,10 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Objects;
 
 public class CropSeedItem extends Item
 {
@@ -178,8 +177,8 @@ public class CropSeedItem extends Item
 		if (entry == null)
 			return false;
 		world.setBlockAndUpdate(pos, ModBlocks.CROPS.get(entry.getName()).defaultBlockState());
-		TileEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof CropsTileEntity)
+		BlockEntity BlockEntity = world.getBlockEntity(pos);
+		if (BlockEntity instanceof CropsBlockEntity)
 		{
 			HashMapCropTraits toPass = new HashMapCropTraits();
 			toPass.setType(entry.getName());
@@ -187,8 +186,8 @@ public class CropSeedItem extends Item
 				toPass.fromStack(stack);
 			else
 				toPass.setAnalysed(true);
-			((CropsTileEntity) tileentity).setTraits(toPass);
-			((CropsTileEntity) tileentity).setStartTick();
+			((CropsBlockEntity) BlockEntity).setTraits(toPass);
+			((CropsBlockEntity) BlockEntity).setStartTick();
 			return true;
 		}
 		return false;

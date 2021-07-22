@@ -1,0 +1,30 @@
+{
+  "crop": "lapis",
+  "enabled": true,
+  "temperature": "normal",
+  "primary_seed": {
+    "item": "planttech2:lapis_seeds",
+    "min": 1,
+    "max": 4
+  },
+  "seeds": [
+    "planttech2:lapis_seeds"
+  ],
+  "drops": [
+    {
+      "item": "planttech2:lapis_particles",
+      "min": 0,
+      "max": 8
+    }
+  ],
+  "parents": [
+    {
+      "parent_1": "stone",
+      "parent_2": "coal",
+      "chance": 0.1
+    }
+  ],
+  "soil": {
+    "block": "minecraft:lapis_ore"
+  }
+}

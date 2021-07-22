@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab_top",
+    "textures": {
+        "bottom": "planttech2:blocks/building_blocks/white_crystal_block",
+        "top": "planttech2:blocks/building_blocks/white_crystal_block",
+        "side": "planttech2:blocks/building_blocks/white_crystal_half"
+    }
+}

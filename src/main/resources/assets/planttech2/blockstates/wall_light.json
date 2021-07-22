@@ -1,0 +1,148 @@
+{
+  "variants": {
+    "facing=north,is_on=true,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken"
+    } ,
+    "facing=north,is_on=false,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken"
+    } ,
+    "facing=south,is_on=true,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=0": {
+      "model":  "planttech2:block/wall_lights/wall_light_broken" , "y": 270
+    } ,
+    "facing=north,is_on=true,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on"
+    } ,
+    "facing=north,is_on=false,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged"
+    } ,
+    "facing=south,is_on=true,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=1": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 270
+    } ,
+    "facing=north,is_on=true,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on"
+    } ,
+    "facing=north,is_on=false,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged"
+    } ,
+    "facing=south,is_on=true,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged_on" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=2": {
+      "model":  "planttech2:block/wall_lights/wall_light_damaged" , "y": 270
+    } ,
+    "facing=north,is_on=true,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on"
+    } ,
+    "facing=north,is_on=false,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged"
+    } ,
+    "facing=south,is_on=true,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=3": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 270
+    } ,
+    "facing=north,is_on=true,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on"
+    } ,
+    "facing=north,is_on=false,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged"
+    } ,
+    "facing=south,is_on=true,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged_on" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=4": {
+      "model":  "planttech2:block/wall_lights/wall_light_slightly_damaged" , "y": 270
+    } ,
+    "facing=north,is_on=true,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on"
+    } ,
+    "facing=north,is_on=false,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on"
+    } ,
+    "facing=south,is_on=true,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 180
+    } ,
+    "facing=south,is_on=false,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 180
+    } ,
+    "facing=east,is_on=true,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 90
+    } ,
+    "facing=east,is_on=false,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 90
+    } ,
+    "facing=west,is_on=true,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 270
+    } ,
+    "facing=west,is_on=false,status=5": {
+      "model":  "planttech2:block/wall_lights/wall_light_on" , "y": 270
+    }
+  }
+}
