@@ -1,37 +1,37 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.PushReaction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.material.PushReaction;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoorHingeSide;
 import net.minecraft.state.properties.DoubleBlockHalf;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.BlockEntity.BlockEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockHitResult;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.CollisionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +39,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.AbstractBlock.Properties;
 
 public class CustomDoorBlock extends Block
 {
@@ -61,7 +61,7 @@ public class CustomDoorBlock extends Block
 				.setValue(POWERED, false).setValue(HALF, DoubleBlockHalf.LOWER));
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		Direction enumfacing = state.getValue(FACING);
 		boolean flag = !state.getValue(OPEN);
@@ -80,7 +80,7 @@ public class CustomDoorBlock extends Block
 	}
 
 	@SuppressWarnings("deprecation")
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
 		DoubleBlockHalf doubleblockhalf = stateIn.getValue(HALF);
 		if (facing.getAxis() == Direction.Axis.Y && doubleblockhalf == DoubleBlockHalf.LOWER == (facing == Direction.UP)) {
@@ -93,7 +93,7 @@ public class CustomDoorBlock extends Block
 		}
 	}
 
-	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack)
+	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack)
 	{
 		super.playerDestroy(worldIn, player, pos, Blocks.AIR.defaultBlockState(), te, stack);
 	}
@@ -108,15 +108,15 @@ public class CustomDoorBlock extends Block
 			worldIn.levelEvent(player, 2001, blockpos, Block.getId(blockstate));
 			ItemStack itemstack = player.getMainHandItem();
 			if (!worldIn.isClientSide && !player.isCreative()) {
-				Block.dropResources(state, worldIn, pos, (TileEntity) null, player, itemstack);
-				Block.dropResources(blockstate, worldIn, blockpos, (TileEntity) null, player, itemstack);
+				Block.dropResources(state, worldIn, pos, (BlockEntity) null, player, itemstack);
+				Block.dropResources(blockstate, worldIn, blockpos, (BlockEntity) null, player, itemstack);
 			}
 		}
 
 		super.playerWillDestroy(worldIn, pos, state, player);
 	}
 
-	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type)
+	public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathType type)
 	{
 		switch (type) {
 			case LAND:
@@ -146,7 +146,7 @@ public class CustomDoorBlock extends Block
 	}
 
 	@Nullable
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
 		BlockPos blockpos = context.getClickedPos();
 		if (blockpos.getY() < 255 && context.getLevel().getBlockState(blockpos.above()).canBeReplaced(context)) {
@@ -164,9 +164,9 @@ public class CustomDoorBlock extends Block
 		worldIn.setBlock(pos.above(), state.setValue(HALF, DoubleBlockHalf.UPPER), 3);
 	}
 
-	private DoorHingeSide getHingeSide(BlockItemUseContext context)
+	private DoorHingeSide getHingeSide(BlockPlaceContext context)
 	{
-		IBlockReader iblockreader = context.getLevel();
+		BlockGetter iblockreader = context.getLevel();
 		BlockPos blockpos = context.getClickedPos();
 		Direction direction = context.getHorizontalDirection();
 		BlockPos blockpos1 = blockpos.above();
@@ -200,7 +200,7 @@ public class CustomDoorBlock extends Block
 		}
 	}
 
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit)
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockHitResult hit)
 	{
 		if (this.material == Material.METAL) {
 			return ActionResultType.FAIL;
@@ -267,7 +267,7 @@ public class CustomDoorBlock extends Block
 		return MathHelper.getSeed(pos.getX(), pos.below(state.getValue(HALF) == DoubleBlockHalf.LOWER ? 0 : 1).getY(), pos.getZ());
 	}
 
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(HALF, FACING, OPEN, HINGE, POWERED);
 	}

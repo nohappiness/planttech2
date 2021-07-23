@@ -9,7 +9,7 @@ import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.TeleporterBlockButtonPressMessage;
 import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTeleporterContainer>

@@ -1,28 +1,28 @@
 package net.kaneka.planttech2.blocks.machines;
 
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.tileentity.cable.CableTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
+import net.kaneka.planttech2.BlockEntity.cable.CableBlockEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BlockRenderType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.item.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.state.StateDefinition.Builder;
+import net.minecraft.BlockEntity.BlockEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.BlockHitResult;
+import net.minecraft.util.math.shapes.CollisionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.World;
 import net.minecraftforge.energy.CapabilityEnergy;
 
@@ -86,7 +86,7 @@ public class CableBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray)
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult ray)
 	{
 		if (!worldIn.isClientSide && hand.equals(Hand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
 		{
@@ -102,7 +102,7 @@ public class CableBlock extends Block
 					{
 						if (tempshape.min(Axis.Z) <= hitvec.z && tempshape.max(Axis.Z) >= hitvec.z)
 						{
-							CableTileEntity te = getTECable(worldIn, pos);
+							CableBlockEntity te = getTECable(worldIn, pos);
 							if (te != null)
 							{
 								te.rotateConnection(dir);
@@ -117,7 +117,7 @@ public class CableBlock extends Block
 			 * Integer result = getConnectionLookedOn(worldIn, pos,
 			 * player.getPositionVector().add(0, player.getEyeHeight(), 0),
 			 * player.getPositionVector().add(0f, player.getEyeHeight(),
-			 * 0f).add(player.getLookVec().scale(5))); if (result != -1) { CableTileEntity
+			 * 0f).add(player.getLookVec().scale(5))); if (result != -1) { CableBlockEntity
 			 * te = getTECable(worldIn, pos); if (te != null) { te.rotateConnection(result);
 			 * } }
 			 */
@@ -128,7 +128,7 @@ public class CableBlock extends Block
 	@Override
 	public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
 	{
-		CableTileEntity te = getTECable(world, pos);
+		CableBlockEntity te = getTECable(world, pos);
 		if (te != null)
 		{
 			te.initCable(state);
@@ -137,22 +137,22 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state)
+	public boolean hasBlockEntity(BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world)
+	public BlockEntity createBlockEntity(BlockState state, BlockGetter world)
 	{
-		return new CableTileEntity();
+		return new CableBlockEntity();
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		CableTileEntity te = getTECable(worldIn, pos);
+		CableBlockEntity te = getTECable(worldIn, pos);
 		if (te != null)
 		{
 			te.deleteCable();
@@ -184,7 +184,7 @@ public class CableBlock extends Block
 	 * private HashMap<Integer, AxisAlignedBB>
 	 * getCollisionBoxListConnectionsList(World world, BlockPos pos) {
 	 * HashMap<Integer, AxisAlignedBB> list = new HashMap<Integer, AxisAlignedBB>();
-	 * CableTileEntity te = getTECable(world, pos); if (te != null) { for (Direction
+	 * CableBlockEntity te = getTECable(world, pos); if (te != null) { for (Direction
 	 * facing : Direction.values()) { if (te.getConnection(facing) > 1) {
 	 * list.put(facing.getIndex(), AABB_CONNECTIONS[facing.getIndex()]); } } }
 	 * return list; }
@@ -208,7 +208,7 @@ public class CableBlock extends Block
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor)
 	{
 		System.out.println("onNeighborChange called");
-		CableTileEntity cable = getTECable((World) world, pos);
+		CableBlockEntity cable = getTECable((World) world, pos);
 		if (cable != null)
 		{
 			cable.checkConnections("onNeighborChange");
@@ -219,7 +219,7 @@ public class CableBlock extends Block
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-		CableTileEntity cable = getTECable(world, pos);
+		CableBlockEntity cable = getTECable(world, pos);
 		if (cable != null)
 		{
 			cable.checkConnections(true);
@@ -227,16 +227,16 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
-		IBlockReader world = context.getLevel();
+		BlockGetter world = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		BlockState state = defaultBlockState();
 		for (Direction facing : Direction.values())
 		{
 
 			BlockState stateDirection = world.getBlockState(pos.relative(facing));
-			TileEntity te = world.getBlockEntity(pos.relative(facing));
+			BlockEntity te = world.getBlockEntity(pos.relative(facing));
 
 			if (stateDirection.getBlock() instanceof CableBlock)
 			{
@@ -259,14 +259,14 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos)
 	{
 		return getCurrentState(state, world, currentPos);
 	}
 
-	public BlockState getCurrentState(BlockState state, IWorld world, BlockPos pos)
+	public BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos)
 	{
-		CableTileEntity te = getTECable((World) world, pos);
+		CableBlockEntity te = getTECable((World) world, pos);
 		if (te != null)
 		{
 			te.checkConnections(false);
@@ -283,13 +283,13 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		return getCombinedShape(state);
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
 	{
 		return getCombinedShape(state);
 	}
@@ -312,9 +312,9 @@ public class CableBlock extends Block
 		return shape;
 	}
 
-	private CableTileEntity getTECable(World world, BlockPos pos)
+	private CableBlockEntity getTECable(World world, BlockPos pos)
 	{
-		TileEntity te = world.getBlockEntity(pos);
-		return te instanceof CableTileEntity ? (CableTileEntity) te : null;
+		BlockEntity te = world.getBlockEntity(pos);
+		return te instanceof CableBlockEntity ? (CableBlockEntity) te : null;
 	}
 }

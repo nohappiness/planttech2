@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.tileentity.cable;
 
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 public class Connection
 {

@@ -2,7 +2,7 @@ package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 

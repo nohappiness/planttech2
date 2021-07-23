@@ -1,17 +1,17 @@
 package net.kaneka.planttech2.blocks;
 
 import net.minecraft.core.Direction;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.HorizontalBlock;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.state.StateDefinition.Builder;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.level.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.level.server.Serverlevel;
 
 import java.util.function.Supplier;
@@ -34,7 +34,7 @@ public class FacingGrowingBlock extends GrowingBlock
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
 		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection());
 	}

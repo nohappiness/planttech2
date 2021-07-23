@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.SeedconstructorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,7 +14,7 @@ public class SeedConstructorContainer extends BaseContainer
 {
 	public SeedConstructorContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new SeedconstructorTileEntity()); 
+		this(id, inv, new SeedconstructorTileEntity());
 	}
 	
 	public SeedConstructorContainer(int id, PlayerInventory player, SeedconstructorTileEntity tileentity)

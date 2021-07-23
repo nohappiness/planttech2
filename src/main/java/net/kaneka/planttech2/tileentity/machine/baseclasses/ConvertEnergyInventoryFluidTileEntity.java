@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;

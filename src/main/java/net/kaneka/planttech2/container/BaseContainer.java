@@ -5,18 +5,18 @@ import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
+import net.kaneka.planttech2.BlockEntity.machine.CompressorBlockEntity;
+import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
+import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyInventoryBlockEntity;
+import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyBlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.FurnaceContainer;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.IIntArray;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -26,10 +26,10 @@ import java.util.function.Predicate;
 
 public class BaseContainer extends Container
 {
-	protected final EnergyInventoryTileEntity tileentity;
+	protected final EnergyInventoryBlockEntity BlockEntity;
 	protected final IIntArray fieldArray;
 
-	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyInventoryTileEntity tileentity, int slots)
+	public BaseContainer(int id, ContainerType<?> type, PlayerInventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
 	{
 		super(type, id);
 		for (int y = 0; y < 3; y++)
@@ -37,20 +37,20 @@ public class BaseContainer extends Container
 				addSlot(new Slot(player, x + y * 9 + 9, 23 + x * 18, 106 + y * 18));
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
-		this.tileentity = tileentity;
-		fieldArray = tileentity.getIntArray();
+		this.BlockEntity = BlockEntity;
+		fieldArray = BlockEntity.getIntArray();
 		addDataSlots(fieldArray);
 	}
 
 	@Override
 	public boolean stillValid(PlayerEntity playerIn)
 	{
-		return tileentity.isUsableByPlayer(playerIn);
+		return BlockEntity.isUsableByPlayer(playerIn);
 	}
 
-	public EnergyTileEntity getTE()
+	public EnergyBlockEntity getTE()
 	{
-		return tileentity;
+		return BlockEntity;
 	}
 
 	public int getValue(int id)
@@ -76,7 +76,7 @@ public class BaseContainer extends Container
 
 	protected LimitedItemInfoSlot createKnowledgeChipSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
+		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
 	}
 
 	protected LimitedItemInfoSlot createCapacityChipSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
@@ -89,22 +89,22 @@ public class BaseContainer extends Container
 
 	protected LimitedItemInfoSlot createEnergyInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createEnergyOutSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, tileentity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createFluidInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidTileEntity) tileentity).getFluidInSlot(), xPosition, yPosition, "slot.util.fluidin");
+		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) BlockEntity).getFluidInSlot(), xPosition, yPosition, "slot.util.fluidin");
 	}
 
 	protected LimitedItemInfoSlot createFluidOutSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidTileEntity) tileentity).getFluidOutSlot(), xPosition, yPosition, "slot.util.fluidout");
+		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) BlockEntity).getFluidOutSlot(), xPosition, yPosition, "slot.util.fluidout");
 	}
 
 	protected LimitedItemInfoSlot createFakeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
@@ -146,7 +146,7 @@ public class BaseContainer extends Container
 			if (listening)
 			{
 				BaseContainer.this.broadcastChanges();
-				BaseContainer.this.tileentity.onContainerUpdated(getSlotIndex());
+				BaseContainer.this.BlockEntity.onContainerUpdated(getSlotIndex());
 			}
 		}
 

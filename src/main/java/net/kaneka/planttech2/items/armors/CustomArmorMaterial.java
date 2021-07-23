@@ -2,8 +2,8 @@ package net.kaneka.planttech2.items.armors;
 
 import java.util.function.Supplier;
 
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.kaneka.planttech2.registries.ModItems;

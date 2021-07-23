@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.blocks.colors;
 
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 
 public class CustomColorHandler  implements IBlockColor

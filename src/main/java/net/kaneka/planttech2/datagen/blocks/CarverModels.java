@@ -2,7 +2,7 @@ package net.kaneka.planttech2.datagen.blocks;
 
 import net.kaneka.planttech2.blocks.CarverBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 

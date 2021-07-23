@@ -14,7 +14,7 @@ import net.kaneka.planttech2.addons.jei.crossbreeding.CrossbreedingCategory;
 import net.kaneka.planttech2.addons.jei.infuser.InfuserCategory;
 import net.kaneka.planttech2.addons.jei.machine_growing.MachineGrowingCategory;
 import net.kaneka.planttech2.addons.jei.machinebulbreprocessor.MachinebulbReprocessorCategory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import mezz.jei.api.IModPlugin;
 
 @JeiPlugin

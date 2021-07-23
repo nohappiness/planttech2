@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.SolarGeneratorTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class SolarGeneratorContainer extends BaseContainer
 {
 	public SolarGeneratorContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new SolarGeneratorTileEntity()); 
+		this(id, inv, new SolarGeneratorTileEntity());
 	}
 	
-	public SolarGeneratorContainer(int id, PlayerInventory player, SolarGeneratorTileEntity tileentity) 
+	public SolarGeneratorContainer(int id, PlayerInventory player, SolarGeneratorTileEntity tileentity)
 	{
 		super(id, ModContainers.SOLARGENERATOR, player, tileentity, 4);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

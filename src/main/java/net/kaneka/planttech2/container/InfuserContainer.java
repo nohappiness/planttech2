@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.InfuserTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class InfuserContainer extends BaseContainer
 {
 	public InfuserContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new InfuserTileEntity()); 
+		this(id, inv, new InfuserTileEntity());
 	}
 	
-	public InfuserContainer(int id, PlayerInventory player, InfuserTileEntity tileentity) 
+	public InfuserContainer(int id, PlayerInventory player, InfuserTileEntity tileentity)
 	{
 		super(id, ModContainers.INFUSER, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

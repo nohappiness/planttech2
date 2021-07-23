@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.DNARemoverTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class DNARemoverContainer extends BaseContainer
 {
 	public DNARemoverContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new DNARemoverTileEntity()); 
+		this(id, inv, new DNARemoverTileEntity());
 	}
 	
-	public DNARemoverContainer(int id, PlayerInventory player, DNARemoverTileEntity tileentity) 
+	public DNARemoverContainer(int id, PlayerInventory player, DNARemoverTileEntity tileentity)
 	{
 		super(id, ModContainers.DNAREMOVER,player, tileentity, 5);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

@@ -3,12 +3,12 @@ package net.kaneka.planttech2.blocks;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.level.item.ItemStack;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.Blocks;
-import net.minecraft.level.level.block.SoundType;
-import net.minecraft.level.level.block.state.BlockBehaviour;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.material.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class Hedge extends CustomFenceBlock
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, IBlockReader levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, BlockGetter levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
 	{
 		tooltip.add(new StringTextComponent("Log: " + getWood().getName().getString()));
 		tooltip.add(new StringTextComponent("Leaf: " + getLeaves().getName().getString()));

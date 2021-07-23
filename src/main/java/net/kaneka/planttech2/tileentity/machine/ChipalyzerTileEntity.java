@@ -13,8 +13,8 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.IRecipe;
 import net.minecraft.util.IIntArray;
 
 public class ChipalyzerTileEntity extends ConvertEnergyInventoryTileEntity

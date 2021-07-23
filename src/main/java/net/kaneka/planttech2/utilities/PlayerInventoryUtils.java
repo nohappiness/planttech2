@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.kaneka.planttech2.items.CreditCardItem;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class PlayerInventoryUtils
 {

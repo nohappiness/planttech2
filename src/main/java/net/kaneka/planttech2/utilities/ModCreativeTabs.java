@@ -2,12 +2,12 @@ package net.kaneka.planttech2.utilities;
 
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 public class ModCreativeTabs
 {
-	public static final ItemGroup MAIN = new ItemGroup("planttech2_main")
+	public static final CreativeModeTab MAIN = new CreativeModeTab("planttech2_main")
 	{
 		public ItemStack makeIcon()
 		{
@@ -15,7 +15,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup BLOCKS = new ItemGroup("planttech2_blocks")
+	public static final CreativeModeTab BLOCKS = new CreativeModeTab("planttech2_blocks")
 	{
 		public ItemStack makeIcon()
 		{
@@ -23,7 +23,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup MACHINES = new ItemGroup("planttech2_machines")
+	public static final CreativeModeTab MACHINES = new CreativeModeTab("planttech2_machines")
 	{
 		public ItemStack makeIcon()
 		{
@@ -31,7 +31,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup SEEDS = new ItemGroup("planttech2_seeds")
+	public static final CreativeModeTab SEEDS = new CreativeModeTab("planttech2_seeds")
 	{
 		public ItemStack makeIcon()
 		{
@@ -39,7 +39,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup PARTICLES = new ItemGroup("planttech2_particles")
+	public static final CreativeModeTab PARTICLES = new CreativeModeTab("planttech2_particles")
 	{
 		public ItemStack makeIcon()
 		{
@@ -47,7 +47,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup TOOLS_AND_ARMOR = new ItemGroup("planttech2_toolsandarmor")
+	public static final CreativeModeTab TOOLS_AND_ARMOR = new CreativeModeTab("planttech2_toolsandarmor")
 	{
 		public ItemStack makeIcon()
 		{
@@ -55,7 +55,7 @@ public class ModCreativeTabs
 		}
 	};
 
-	public static final ItemGroup CHIPS = new ItemGroup("planttech2_chips")
+	public static final CreativeModeTab CHIPS = new CreativeModeTab("planttech2_chips")
 	{
 		public ItemStack makeIcon()
 		{

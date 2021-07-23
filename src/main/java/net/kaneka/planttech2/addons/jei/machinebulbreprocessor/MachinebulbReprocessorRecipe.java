@@ -2,7 +2,7 @@ package net.kaneka.planttech2.addons.jei.machinebulbreprocessor;
 
 import net.kaneka.planttech2.addons.jei.libs.AbstractJeiRecipe;
 import net.kaneka.planttech2.items.KnowledgeChip;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class MachinebulbReprocessorRecipe extends AbstractJeiRecipe
 {

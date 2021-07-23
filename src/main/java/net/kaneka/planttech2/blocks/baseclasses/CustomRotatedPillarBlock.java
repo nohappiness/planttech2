@@ -1,16 +1,13 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.minecraft.level.level.block.AbstractBlock.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Rotation;
-
-import EnumProperty;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public class CustomRotatedPillarBlock extends Block
 {
@@ -27,30 +24,27 @@ public class CustomRotatedPillarBlock extends Block
 	{
 		switch (rot)
 		{
-		case COUNTERCLOCKWISE_90:
-		case CLOCKWISE_90:
-			switch ((Direction.Axis) state.getValue(AXIS))
-			{
-			case X:
-				return state.setValue(AXIS, Direction.Axis.Z);
-			case Z:
-				return state.setValue(AXIS, Direction.Axis.X);
+			case COUNTERCLOCKWISE_90:
+			case CLOCKWISE_90:
+				return switch (state.getValue(AXIS))
+						{
+							case X -> state.setValue(AXIS, Direction.Axis.Z);
+							case Z -> state.setValue(AXIS, Direction.Axis.X);
+							default -> state;
+						};
 			default:
 				return state;
-			}
-		default:
-			return state;
 		}
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(AXIS);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
 		return this.defaultBlockState().setValue(AXIS, context.getClickedFace().getAxis());
 	}

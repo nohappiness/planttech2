@@ -6,7 +6,7 @@ import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
+import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -178,7 +178,7 @@ public class CropSeedItem extends Item
 			return false;
 		world.setBlockAndUpdate(pos, ModBlocks.CROPS.get(entry.getName()).defaultBlockState());
 		BlockEntity BlockEntity = world.getBlockEntity(pos);
-		if (BlockEntity instanceof CropsBlockEntity)
+		if (BlockEntity instanceof CropsTileEntity)
 		{
 			HashMapCropTraits toPass = new HashMapCropTraits();
 			toPass.setType(entry.getName());
@@ -186,8 +186,8 @@ public class CropSeedItem extends Item
 				toPass.fromStack(stack);
 			else
 				toPass.setAnalysed(true);
-			((CropsBlockEntity) BlockEntity).setTraits(toPass);
-			((CropsBlockEntity) BlockEntity).setStartTick();
+			((CropsTileEntity) BlockEntity).setTraits(toPass);
+			((CropsTileEntity) BlockEntity).setStartTick();
 			return true;
 		}
 		return false;

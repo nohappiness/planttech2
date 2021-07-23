@@ -6,7 +6,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.container.EnergyStorageContainer;
 import net.kaneka.planttech2.container.EnergySupplierContainer;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierContainer>

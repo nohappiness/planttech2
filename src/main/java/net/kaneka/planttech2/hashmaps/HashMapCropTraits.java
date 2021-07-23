@@ -9,8 +9,8 @@ import java.util.Set;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.crops.CropEntry;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 public class HashMapCropTraits

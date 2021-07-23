@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.utilities;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraftforge.common.util.Constants;
 

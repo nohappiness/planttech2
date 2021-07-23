@@ -2,14 +2,14 @@ package net.kaneka.planttech2.blocks.machines;
 
 import java.util.function.Supplier;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.item.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.state.StateDefinition.Builder;
+import net.minecraft.BlockEntity.BlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 
@@ -17,19 +17,19 @@ public class MachineFacingBlock extends MachineBaseBlock
 {
     public static final DirectionProperty FACING = HorizontalBlock.FACING;
 
-    public MachineFacingBlock(Supplier<? extends TileEntity> teCreator, int tier)
+    public MachineFacingBlock(Supplier<? extends BlockEntity> teCreator, int tier)
     {
         super(teCreator, tier);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-	public MachineFacingBlock(Supplier<? extends TileEntity> teCreator)
+	public MachineFacingBlock(Supplier<? extends BlockEntity> teCreator)
 	{
 		this(teCreator, 0);
 	}
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
 	    return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }

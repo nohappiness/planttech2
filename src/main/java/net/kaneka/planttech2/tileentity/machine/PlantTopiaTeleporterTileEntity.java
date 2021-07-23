@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 {
@@ -22,11 +22,11 @@ public class PlantTopiaTeleporterTileEntity extends EnergyInventoryTileEntity
 			case 1:
 				return PlantTopiaTeleporterTileEntity.this.energystorage.getMaxEnergyStored();
 			case 2: 
-				return PlantTopiaTeleporterTileEntity.this.worldPosition.getX(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getX();
 			case 3: 
-				return PlantTopiaTeleporterTileEntity.this.worldPosition.getY(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getY();
 			case 4: 
-				return PlantTopiaTeleporterTileEntity.this.worldPosition.getZ(); 
+				return PlantTopiaTeleporterTileEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}

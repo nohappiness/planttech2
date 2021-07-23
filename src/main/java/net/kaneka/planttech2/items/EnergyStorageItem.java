@@ -6,7 +6,7 @@ import net.kaneka.planttech2.energy.IItemChargeable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
@@ -155,7 +155,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items)
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if(group == this.category)
 		{

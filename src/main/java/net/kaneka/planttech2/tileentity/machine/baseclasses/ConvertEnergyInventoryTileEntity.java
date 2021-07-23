@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.tileentity.machine.baseclasses;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.tileentity.TileEntityType;
 
 public abstract class ConvertEnergyInventoryTileEntity extends EnergyInventoryTileEntity

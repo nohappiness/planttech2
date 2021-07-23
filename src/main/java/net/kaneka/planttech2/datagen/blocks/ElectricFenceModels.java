@@ -4,7 +4,7 @@ import net.kaneka.planttech2.blocks.ElectricFence;
 import net.kaneka.planttech2.blocks.ElectricFenceGate;
 import net.kaneka.planttech2.blocks.ElectricFenceTop;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;

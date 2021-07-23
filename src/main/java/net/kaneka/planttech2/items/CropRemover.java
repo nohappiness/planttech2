@@ -3,7 +3,7 @@ package net.kaneka.planttech2.items;
 import com.google.common.collect.Lists;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
+import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -80,11 +80,11 @@ public class CropRemover extends Item
 	{
 		BlockState state = world.getBlockState(pos);
 		BlockEntity BlockEntity = world.getBlockEntity(pos);
-		if(BlockEntity instanceof CropsBlockEntity)
+		if(BlockEntity instanceof CropsTileEntity)
 		{
 			List<ItemStack> drops = Lists.newArrayList();
 			int growstate = state.getValue(CropBaseBlock.GROWSTATE);
-			((CropsBlockEntity) BlockEntity).addDrops(drops, growstate);
+			((CropsTileEntity) BlockEntity).addDrops(drops, growstate);
 			for(ItemStack drop : drops)
 				Block.popResource(world, pos, drop);
 			world.setBlockAndUpdate(pos, ModBlocks.CROPBARS.defaultBlockState());

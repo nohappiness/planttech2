@@ -7,7 +7,7 @@ import net.kaneka.planttech2.container.PlantFarmContainer;
 import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
 import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>

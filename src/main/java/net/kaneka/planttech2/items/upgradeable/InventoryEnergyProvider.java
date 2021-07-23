@@ -2,7 +2,7 @@ package net.kaneka.planttech2.items.upgradeable;
 
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;

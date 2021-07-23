@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.crops;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 

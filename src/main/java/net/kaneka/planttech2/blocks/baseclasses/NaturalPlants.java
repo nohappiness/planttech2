@@ -3,16 +3,16 @@ package net.kaneka.planttech2.blocks.baseclasses;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.CollisionContext;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.level.IBlockReader;
-import net.minecraft.level.level;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.Blocks;
-import net.minecraft.level.level.block.SoundType;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.material.Material;
+import net.minecraft.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.level.phys.shapes.VoxelShape;
 
 import java.util.HashSet;
@@ -39,7 +39,7 @@ public class NaturalPlants extends Block
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
 	{
 		Vector3d vec3d = state.getOffset(levelIn, pos);
 		return BASE_SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
@@ -67,7 +67,7 @@ public class NaturalPlants extends Block
     }*/
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
 	{
 		return VoxelShapes.empty();
 	}

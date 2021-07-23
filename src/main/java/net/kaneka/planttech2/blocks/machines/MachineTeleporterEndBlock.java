@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class MachineTeleporterEndBlock extends Block
 {
@@ -12,7 +12,7 @@ public class MachineTeleporterEndBlock extends Block
 
 	/*
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult rts)
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockHitResult rts)
 	{
 		
 		if (!worldIn.isRemote)

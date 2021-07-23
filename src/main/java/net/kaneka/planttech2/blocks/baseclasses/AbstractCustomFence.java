@@ -2,20 +2,26 @@ package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.FourWayBlock;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.level.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.level.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public abstract class AbstractCustomFence extends Block
 {
-    public static final BooleanProperty NORTH = FourWayBlock.NORTH;
-    public static final BooleanProperty EAST = FourWayBlock.EAST;
-    public static final BooleanProperty SOUTH = FourWayBlock.SOUTH;
-    public static final BooleanProperty WEST = FourWayBlock.WEST;
+    public static final BooleanProperty NORTH = FenceBlock.NORTH;
+    public static final BooleanProperty EAST = FenceBlock.EAST;
+    public static final BooleanProperty SOUTH = FenceBlock.SOUTH;
+    public static final BooleanProperty WEST = FenceBlock.WEST;
 
     public AbstractCustomFence(Properties property)
     {
@@ -23,24 +29,24 @@ public abstract class AbstractCustomFence extends Block
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(NORTH, EAST, SOUTH, WEST);
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
-        return getState(this.defaultBlockState(), (level) levelIn, currentPos);
+        return getState(this.defaultBlockState(), (Level) levelIn, currentPos);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return getState(this.defaultBlockState(), context.getLevel(), context.getClickedPos());
     }
 
-    public boolean canConnectTo(level level, BlockPos pos, Direction direction)
+    public boolean canConnectTo(Level level, BlockPos pos, Direction direction)
     {
         return canAttachToSolid() && level.getBlockState(pos.relative(direction)).isFaceSturdy(level, pos.relative(direction), direction.getOpposite());
     }
@@ -54,7 +60,7 @@ public abstract class AbstractCustomFence extends Block
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         VoxelShape shape = getPostShape();
         if (state.getValue(NORTH))

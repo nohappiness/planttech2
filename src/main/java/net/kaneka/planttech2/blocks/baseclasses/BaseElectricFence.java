@@ -11,15 +11,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.level.entity.Entity;
 import net.minecraft.level.entity.LivingEntity;
 import net.minecraft.level.item.ItemStack;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BaseElectricFence extends Block
 {
@@ -30,7 +30,7 @@ public class BaseElectricFence extends Block
 	}
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(ELECTRIC_POWER);
     }
@@ -104,7 +104,7 @@ public class BaseElectricFence extends Block
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable IBlockReader levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         tooltip.add(new StringTextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }

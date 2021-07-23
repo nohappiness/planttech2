@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class SeedSqueezerContainer extends BaseContainer
 {
 	public SeedSqueezerContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new SeedSqueezerTileEntity()); 
+		this(id, inv, new SeedSqueezerTileEntity());
 	}
 	
-	public SeedSqueezerContainer(int id, PlayerInventory player, SeedSqueezerTileEntity tileentity) 
+	public SeedSqueezerContainer(int id, PlayerInventory player, SeedSqueezerTileEntity tileentity)
 	{
 		super(id, ModContainers.SEEDQUEEZER, player, tileentity, 16);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

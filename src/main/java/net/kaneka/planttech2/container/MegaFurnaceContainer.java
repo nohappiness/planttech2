@@ -5,7 +5,7 @@ import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -13,9 +13,9 @@ public class MegaFurnaceContainer extends BaseContainer
 {
 	public MegaFurnaceContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new MegaFurnaceTileEntity()); 
+		this(id, inv, new MegaFurnaceTileEntity());
 	}
-	public MegaFurnaceContainer(int id, PlayerInventory player, MegaFurnaceTileEntity tileentity) 
+	public MegaFurnaceContainer(int id, PlayerInventory player, MegaFurnaceTileEntity tileentity)
 	{
 		super(id, ModContainers.MEGAFURNACE, player, tileentity, 15);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

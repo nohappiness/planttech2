@@ -11,10 +11,10 @@ import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBulbReprocessorContainer>

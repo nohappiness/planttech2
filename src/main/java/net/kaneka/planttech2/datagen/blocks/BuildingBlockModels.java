@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.datagen.blocks;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class BuildingBlockModels extends BlockModelBase
 {

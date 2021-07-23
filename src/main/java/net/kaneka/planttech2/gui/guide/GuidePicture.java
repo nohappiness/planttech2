@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.gui.guide;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class GuidePicture
 {

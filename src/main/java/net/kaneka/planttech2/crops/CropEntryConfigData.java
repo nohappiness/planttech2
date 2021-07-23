@@ -9,11 +9,11 @@ import java.util.stream.StreamSupport;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
 import net.kaneka.planttech2.enums.EnumTemperature;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import static net.minecraftforge.registries.ForgeRegistries.BLOCKS;

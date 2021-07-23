@@ -11,10 +11,10 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.Tags.Items;
 
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryTileEntity.EnergyConsumptionType;
@@ -39,17 +39,17 @@ public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFlui
 			case 3:
 			    return MachineBulbReprocessorTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
-				return MachineBulbReprocessorTileEntity.this.ticksPassed; 
+				return MachineBulbReprocessorTileEntity.this.ticksPassed;
 			case 5: 
-				return MachineBulbReprocessorTileEntity.this.selectedId; 
+				return MachineBulbReprocessorTileEntity.this.selectedId;
 			case 6: 
-				return MachineBulbReprocessorTileEntity.this.actualTier; 
+				return MachineBulbReprocessorTileEntity.this.actualTier;
 			case 7: 
-				return MachineBulbReprocessorTileEntity.this.worldPosition.getX(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getX();
 			case 8: 
-				return MachineBulbReprocessorTileEntity.this.worldPosition.getY(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getY();
 			case 9: 
-				return MachineBulbReprocessorTileEntity.this.worldPosition.getZ(); 
+				return MachineBulbReprocessorTileEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}
@@ -72,13 +72,13 @@ public class MachineBulbReprocessorTileEntity extends ConvertEnergyInventoryFlui
 				MachineBulbReprocessorTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
-				MachineBulbReprocessorTileEntity.this.ticksPassed = value; 
+				MachineBulbReprocessorTileEntity.this.ticksPassed = value;
 				break; 
 			case 5: 
-				MachineBulbReprocessorTileEntity.this.selectedId = value; 
+				MachineBulbReprocessorTileEntity.this.selectedId = value;
 				break; 
 			case 6: 
-				MachineBulbReprocessorTileEntity.this.actualTier = value; 
+				MachineBulbReprocessorTileEntity.this.actualTier = value;
 				break;
 			case 7:
 				MachineBulbReprocessorTileEntity.this.worldPosition = new BlockPos(value, MachineBulbReprocessorTileEntity.this.worldPosition.getY(), MachineBulbReprocessorTileEntity.this.worldPosition.getZ());

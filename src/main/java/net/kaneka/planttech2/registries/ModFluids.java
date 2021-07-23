@@ -2,8 +2,8 @@ package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.fluids.BiomassFluid;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 

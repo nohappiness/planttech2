@@ -10,7 +10,7 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 
@@ -33,7 +33,7 @@ public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEn
 			case 3:
 			    return SeedconstructorTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
-				return SeedconstructorTileEntity.this.ticksPassed; 
+				return SeedconstructorTileEntity.this.ticksPassed;
 			default:
 				return 0;
 			}
@@ -56,7 +56,7 @@ public class SeedconstructorTileEntity extends ConvertEnergyInventoryFluidTileEn
 				SeedconstructorTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
-				SeedconstructorTileEntity.this.ticksPassed = value; 
+				SeedconstructorTileEntity.this.ticksPassed = value;
 				break; 
 			}
 		}

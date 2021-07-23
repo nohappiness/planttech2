@@ -2,15 +2,15 @@ package net.kaneka.planttech2.blocks;
 
 import com.google.common.collect.Lists;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.Blocks;
-import net.minecraft.level.level.block.SoundType;
-import net.minecraft.level.level.material.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.level.item.ItemStack;
 import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
 import net.minecraft.level.server.Serverlevel;
 
@@ -57,7 +57,7 @@ public class GrowingBlock extends Block
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) 
 	{
 		builder.add(GROWINGSTATE);
 	}

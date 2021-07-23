@@ -11,7 +11,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.librarys.CropEntry;
 import net.kaneka.planttech2.librarys.DropEntry;
 import net.kaneka.planttech2.librarys.ParentPair;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class CropListJSONGenerator
 {

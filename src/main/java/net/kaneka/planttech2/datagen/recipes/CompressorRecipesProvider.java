@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.kaneka.planttech2.datagen.recipes.CompressorRecipesProvider.Builder.create;
 import static net.kaneka.planttech2.registries.ModItems.*;
-import static net.minecraft.item.Items.*;
+import static net.minecraft.world.item.Items.*;
 
 public class CompressorRecipesProvider extends MachineRecipeProvider<CompressorRecipe>
 {

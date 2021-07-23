@@ -9,15 +9,15 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.ConvertEnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CropsBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.IIntArray;
 import net.minecraft.util.NonNullList;
@@ -45,15 +45,15 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 			case 3:
 			    return PlantFarmTileEntity.this.biomassCap.getMaxStorage();
 			case 4: 
-				return PlantFarmTileEntity.this.progress[0]; 
+				return PlantFarmTileEntity.this.progress[0];
 			case 5: 
-				return PlantFarmTileEntity.this.progress[1]; 
+				return PlantFarmTileEntity.this.progress[1];
 			case 6: 
-				return PlantFarmTileEntity.this.progress[2]; 
+				return PlantFarmTileEntity.this.progress[2];
 			case 7: 
-				return PlantFarmTileEntity.this.progress[3]; 
+				return PlantFarmTileEntity.this.progress[3];
 			case 8: 
-				return PlantFarmTileEntity.this.progress[4]; 	
+				return PlantFarmTileEntity.this.progress[4];
 			default:
 				return 0;
 			}
@@ -76,19 +76,19 @@ public class PlantFarmTileEntity extends EnergyInventoryFluidTileEntity
 				PlantFarmTileEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
-				PlantFarmTileEntity.this.progress[0] = value; 
+				PlantFarmTileEntity.this.progress[0] = value;
 				break; 
 			case 5: 
-				PlantFarmTileEntity.this.progress[1] = value; 
+				PlantFarmTileEntity.this.progress[1] = value;
 				break; 
 			case 6: 
-				PlantFarmTileEntity.this.progress[2] = value; 
+				PlantFarmTileEntity.this.progress[2] = value;
 				break; 
 			case 7: 
-				PlantFarmTileEntity.this.progress[3] = value; 
+				PlantFarmTileEntity.this.progress[3] = value;
 				break; 
 			case 8: 
-				PlantFarmTileEntity.this.progress[4] = value; 
+				PlantFarmTileEntity.this.progress[4] = value;
 				break;
 			}
 

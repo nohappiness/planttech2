@@ -5,7 +5,7 @@ import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -13,10 +13,10 @@ public class PlantFarmContainer extends BaseContainer
 {
 	public PlantFarmContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new PlantFarmTileEntity()); 
+		this(id, inv, new PlantFarmTileEntity());
 	}
 	
-	public PlantFarmContainer(int id, PlayerInventory player, PlantFarmTileEntity tileentity) 
+	public PlantFarmContainer(int id, PlayerInventory player, PlantFarmTileEntity tileentity)
 	{
 		super(id, ModContainers.PLANTFARM, player, tileentity, 17);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

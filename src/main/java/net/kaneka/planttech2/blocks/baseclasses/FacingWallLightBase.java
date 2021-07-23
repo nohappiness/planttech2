@@ -1,31 +1,28 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
-import net.minecraft.level.level.block.AbstractBlock.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjecBlockEntity;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.level.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.TickPriority;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.level.IBlockReader;
-import net.minecraft.level.TickPriority;
-import net.minecraft.level.level;
-import net.minecraft.level.server.Serverlevel;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import DirectionProperty;
 
 public class FacingWallLightBase extends Block
 {
@@ -44,13 +41,13 @@ public class FacingWallLightBase extends Block
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(HORIZONTAL_FACING, LIGHT_STATUS, IS_ON);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return defaultBlockState()
                 .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
@@ -59,7 +56,7 @@ public class FacingWallLightBase extends Block
     }
 
     @Override
-    public void onPlace(BlockState state, level levelIn, BlockPos pos, BlockState oldState, boolean isMoving)
+    public void onPlace(BlockState state, Level levelIn, BlockPos pos, BlockState oldState, boolean isMoving)
     {
         int status = state.getValue(LIGHT_STATUS);
         if (status < 5 && status > 0)
@@ -69,7 +66,7 @@ public class FacingWallLightBase extends Block
     }
     
     @Override
-    public void onProjectileHit(level levelIn, BlockState state, BlockRayTraceResult hit, ProjecBlockEntity projectile)
+    public void onProjectileHit(Level levelIn, BlockState state, BlockHitResult hit, Projectile projectile)
     {
         if (state.getValue(LIGHT_STATUS) != 0)
         {
@@ -100,14 +97,14 @@ public class FacingWallLightBase extends Block
     }
 
     @Override
-    public int getLightValue(BlockState state, IBlockReader level, BlockPos pos)
+    public int getLightValue(BlockState state, BlockGetter level, BlockPos pos)
     {
         return state.getValue(IS_ON) ? state.getValue(LIGHT_STATUS) * 3 : 0;
     }
 
     @SuppressWarnings("deprecation")
 	@Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         return getShape(state, levelIn, pos, context);
     }

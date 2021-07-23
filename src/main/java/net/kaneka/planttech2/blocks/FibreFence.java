@@ -1,15 +1,15 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.AbstractCustomFence;
-import net.minecraft.level.level.block.AbstractBlock.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.level.level;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class FibreFence extends AbstractCustomFence
 {

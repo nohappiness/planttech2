@@ -3,7 +3,7 @@ package net.kaneka.planttech2.datagen;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;

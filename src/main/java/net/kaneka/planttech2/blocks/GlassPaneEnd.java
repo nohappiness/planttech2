@@ -1,27 +1,27 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.colors.IColoredBlock;
-import net.minecraft.level.level.block.AbstractBlock.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.Blocks;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.level.Ilevel;
+import net.minecraft.level.LevelAccessor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-import DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 public class GlassPaneEnd extends Block implements IColoredBlock
 {
@@ -38,7 +38,7 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context)
+	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
 		for (Direction direction : context.getNearestLookingDirections())
 		{
@@ -56,7 +56,7 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
 	{
 		return getFacing(stateIn).getOpposite() == facing && !stateIn.canSurvive(levelIn, currentPos) ? Blocks.AIR.defaultBlockState()
 		        : super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
@@ -75,7 +75,7 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(HORIZONTAL_FACING, FACE);
 	}

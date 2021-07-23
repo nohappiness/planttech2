@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.IdentifierTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class IdentifierContainer extends BaseContainer
 {
 	public IdentifierContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new IdentifierTileEntity()); 
+		this(id, inv, new IdentifierTileEntity());
 	}
 	
-	public IdentifierContainer(int id, PlayerInventory player, IdentifierTileEntity tileentity) 
+	public IdentifierContainer(int id, PlayerInventory player, IdentifierTileEntity tileentity)
 	{
 		super(id, ModContainers.IDENTIFIER, player, tileentity, 21);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

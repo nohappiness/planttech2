@@ -1,22 +1,22 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.FacingWallLightBase;
-import net.minecraft.level.level.block.AbstractBlock.Properties;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.CollisionContext;
 import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.level.IBlockReader;
+import net.minecraft.level.BlockGetter;
 import net.minecraft.level.IlevelReader;
-import net.minecraft.level.level;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.level.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WallLight extends FacingWallLightBase
 {
@@ -36,7 +36,7 @@ public class WallLight extends FacingWallLightBase
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         boolean broke = state.getValue(LIGHT_STATUS) == 0;
         switch (state.getValue(HORIZONTAL_FACING))

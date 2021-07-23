@@ -2,7 +2,7 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
+import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
@@ -22,7 +22,7 @@ import java.util.List;
 public class FertilizerItem extends Item
 {
 
-    public FertilizerItem(ItemGroup group)
+    public FertilizerItem(CreativeModeTab group)
     {
 		super(new Item.Properties().tab(group));
 		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
@@ -89,8 +89,8 @@ public class FertilizerItem extends Item
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{
 					BlockEntity te = world.getBlockEntity(pos);
-					if (te instanceof CropsBlockEntity)
-						((CropBaseBlock) block).updateCrop(world, pos, ((CropsBlockEntity) te).getTraits());
+					if (te instanceof CropsTileEntity)
+						((CropBaseBlock) block).updateCrop(world, pos, ((CropsTileEntity) te).getTraits());
 				}
 				else
 					((CropBaseBlock) block).updateCreative(world, pos);

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.blocks.baseclasses.CustomFenceBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 import java.util.Map;

@@ -10,7 +10,7 @@ import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContainer>

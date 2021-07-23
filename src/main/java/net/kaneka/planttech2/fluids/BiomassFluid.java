@@ -4,22 +4,29 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.core.BlockPos;
 import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.Item;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.fluids.FluidAttributes;
 
 public abstract class BiomassFluid extends FlowingFluid
@@ -48,9 +55,9 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected void beforeDestroyingBlock(IWorld worldIn, BlockPos pos, BlockState state)
+	protected void beforeDestroyingBlock(LevelAccessor worldIn, BlockPos pos, BlockState state)
 	{
-		TileEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getBlockEntity(pos) : null;
+		BlockEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getBlockEntity(pos) : null;
 		Block.dropResources(state, worldIn , pos, tileentity);
 	}
 
@@ -73,7 +80,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected boolean canBeReplacedWith(FluidState fluidState, IBlockReader blockReader, BlockPos pos, Fluid fluid, Direction direction)
+	protected boolean canBeReplacedWith(FluidState fluidState, BlockGetter blockReader, BlockPos pos, Fluid fluid, Direction direction)
 	{
 		return direction == Direction.DOWN && !fluid.is(FluidTags.WATER);
 	}
@@ -93,7 +100,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	@Override
 	protected BlockState createLegacyBlock(FluidState state)
 	{
-		return ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState().setValue(FlowingFluidBlock.LEVEL, getLegacyLevel(state));
+		return ModBlocks.BIOMASSFLUIDBLOCK.defaultBlockState().setValue(LiquidBlock.LEVEL, getLegacyLevel(state));
 	}
 
 	@Override
@@ -109,7 +116,7 @@ public abstract class BiomassFluid extends FlowingFluid
 			registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
 		}
 
-		protected void createFluidStateDefinition(StateContainer.Builder<Fluid, FluidState> builder)
+		protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder)
 		{
 			super.createFluidStateDefinition(builder);
 			builder.add(LEVEL);

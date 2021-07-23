@@ -33,7 +33,7 @@ public class Languages extends LanguageProvider
         addGuides();
         addGUIs();
         addItems();
-        addItemGroups();
+        addCreativeModeTabs();
         addInfo();
         addMisc();
     }
@@ -73,15 +73,15 @@ public class Languages extends LanguageProvider
         add("temp.extreme_warm", "Extremely Warm");
     }
 
-    private void addItemGroups()
+    private void addCreativeModeTabs()
     {
-        add("itemGroup.planttech2_main", "General");
-        add("itemGroup.planttech2_blocks", "Building Blocks");
-        add("itemGroup.planttech2_seeds", "Seeds");
-        add("itemGroup.planttech2_machines", "Machines");
-        add("itemGroup.planttech2_particles", "Particles");
-        add("itemGroup.planttech2_toolsandarmor", "Tools and Armor");
-        add("itemGroup.planttech2_chips", "Chips and Upgrades");
+        add("CreativeModeTab.planttech2_main", "General");
+        add("CreativeModeTab.planttech2_blocks", "Building Blocks");
+        add("CreativeModeTab.planttech2_seeds", "Seeds");
+        add("CreativeModeTab.planttech2_machines", "Machines");
+        add("CreativeModeTab.planttech2_particles", "Particles");
+        add("CreativeModeTab.planttech2_toolsandarmor", "Tools and Armor");
+        add("CreativeModeTab.planttech2_chips", "Chips and Upgrades");
     }
 
     private void addItems()

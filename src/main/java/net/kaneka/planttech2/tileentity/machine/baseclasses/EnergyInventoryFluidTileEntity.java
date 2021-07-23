@@ -4,8 +4,8 @@ import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.kaneka.planttech2.fluids.capability.IBiomassFluidEnergy;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.tileentity.TileEntityType;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;

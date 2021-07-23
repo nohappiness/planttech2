@@ -17,17 +17,17 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.IRecipe;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.IIntArray;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.wrapper.RangedWrapper;
@@ -59,11 +59,11 @@ public class CompressorTileEntity extends ConvertEnergyInventoryTileEntity
 			case 3:
 				return CompressorTileEntity.this.selectedId;
 			case 4: 
-				return CompressorTileEntity.this.worldPosition.getX(); 
+				return CompressorTileEntity.this.worldPosition.getX();
 			case 5: 
-				return CompressorTileEntity.this.worldPosition.getY(); 
+				return CompressorTileEntity.this.worldPosition.getY();
 			case 6: 
-				return CompressorTileEntity.this.worldPosition.getZ(); 
+				return CompressorTileEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}

@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface IUpgradeable
 {

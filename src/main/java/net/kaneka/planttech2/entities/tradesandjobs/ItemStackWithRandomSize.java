@@ -2,7 +2,7 @@ package net.kaneka.planttech2.entities.tradesandjobs;
 
 import java.util.Random;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class ItemStackWithRandomSize
 {

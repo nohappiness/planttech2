@@ -10,11 +10,11 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.IItemProvider;
 
 import static net.kaneka.planttech2.registries.ModItems.*;
-import static net.minecraft.item.Items.*;
+import static net.minecraft.world.item.Items.*;
 
 public class ItemRecipeProvider extends RecipeProvider
 {

@@ -3,7 +3,7 @@ package net.kaneka.planttech2.gui.guide;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class Guide
 {

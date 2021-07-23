@@ -2,20 +2,20 @@ package net.kaneka.planttech2.blocks.machines;
 
 import java.util.function.Supplier;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.BlockPlaceContext;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.BlockEntity.BlockEntity;
 
 import javax.annotation.Nullable;
 
 public class EnergySupplierBlock extends MachineBaseBlock
 {
     public static final BooleanProperty SUPPLYING = BooleanProperty.create("supplying");
-    public EnergySupplierBlock(Supplier<? extends TileEntity> teCreator, int tier)
+    public EnergySupplierBlock(Supplier<? extends BlockEntity> teCreator, int tier)
     {
         super(teCreator, tier);
         registerDefaultState(defaultBlockState().setValue(SUPPLYING, false));
@@ -23,13 +23,13 @@ public class EnergySupplierBlock extends MachineBaseBlock
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return defaultBlockState().setValue(SUPPLYING, false);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(SUPPLYING);
     }

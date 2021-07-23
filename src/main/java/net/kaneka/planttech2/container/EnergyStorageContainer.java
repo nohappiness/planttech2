@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.EnergyStorageTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,7 +14,7 @@ public class EnergyStorageContainer extends BaseContainer
 {
 	public EnergyStorageContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new EnergyStorageTileEntity()); 
+		this(id, inv, new EnergyStorageTileEntity());
 	}
 
     public EnergyStorageContainer(int id, PlayerInventory player, EnergyStorageTileEntity tileentity)
@@ -82,7 +82,7 @@ public class EnergyStorageContainer extends BaseContainer
     
     class ChangeCheckSlot extends SlotItemHandlerWithInfo
     {
-        private EnergyStorageTileEntity te; 
+        private EnergyStorageTileEntity te;
 
         public ChangeCheckSlot(EnergyStorageTileEntity te, IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
         {

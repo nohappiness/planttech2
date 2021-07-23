@@ -13,10 +13,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ElectricFence extends BaseElectricFence
 {
-    public static final BooleanProperty NORTH = FourWayBlock.NORTH;
-    public static final BooleanProperty EAST = FourWayBlock.EAST;
-    public static final BooleanProperty SOUTH = FourWayBlock.SOUTH;
-    public static final BooleanProperty WEST = FourWayBlock.WEST;
+    public static final BooleanProperty NORTH = FenceBlock.NORTH;
+    public static final BooleanProperty EAST = FenceBlock.EAST;
+    public static final BooleanProperty SOUTH = FenceBlock.SOUTH;
+    public static final BooleanProperty WEST = FenceBlock.WEST;
 
     public static final VoxelShape POST = Block.box(7.5D, 0.10D, 7.5D, 8.5D, 15.90D, 8.5D);
     public static final VoxelShape NEGATIVE_Z = Block.box(7.0D, 0.10D, 0.10D, 9.0D, 15.90D, 8.5D);
@@ -45,14 +45,14 @@ public class ElectricFence extends BaseElectricFence
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
         return getState(this.defaultBlockState()
                 .setValue(ELECTRIC_POWER, calculatePower((level) levelIn, currentPos)), (level) levelIn, currentPos);
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return getState(this.defaultBlockState()
                 .setValue(ELECTRIC_POWER, calculatePower(context.getLevel(), context.getClickedPos())), context.getLevel(), context.getClickedPos());
@@ -76,7 +76,7 @@ public class ElectricFence extends BaseElectricFence
 
     @SuppressWarnings("deprecation")
 	@Override
-    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         VoxelShape shape = POST;
         if (state.getValue(NORTH))

@@ -6,7 +6,7 @@ import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -14,10 +14,10 @@ public class MachineBulbReprocessorContainer extends BaseContainer
 {
 	public MachineBulbReprocessorContainer(int id, PlayerInventory inv)
 	{
-		this(id, inv, new MachineBulbReprocessorTileEntity()); 
+		this(id, inv, new MachineBulbReprocessorTileEntity());
 	}
 	
-	public MachineBulbReprocessorContainer(int id, PlayerInventory player, MachineBulbReprocessorTileEntity tileentity) 
+	public MachineBulbReprocessorContainer(int id, PlayerInventory player, MachineBulbReprocessorTileEntity tileentity)
 	{
 		super(id, ModContainers.MACHINEBULBREPROCESSOR, player, tileentity, 7);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);

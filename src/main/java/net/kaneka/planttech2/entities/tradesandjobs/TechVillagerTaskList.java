@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class TechVillagerTaskList
 {

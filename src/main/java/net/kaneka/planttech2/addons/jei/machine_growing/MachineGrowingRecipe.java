@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.addons.jei.machine_growing;
 
 import net.kaneka.planttech2.addons.jei.libs.AbstractJeiRecipe;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class MachineGrowingRecipe extends AbstractJeiRecipe
 {

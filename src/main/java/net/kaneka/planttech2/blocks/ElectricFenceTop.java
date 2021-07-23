@@ -1,21 +1,21 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
-import net.minecraft.level.level.block.Block;
-import net.minecraft.level.level.block.state.BlockState;
-import net.minecraft.level.level.block.HorizontalBlock;
-import net.minecraft.level.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.CollisionContext;
 import net.minecraft.level.phys.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.level.IBlockReader;
-import net.minecraft.level.Ilevel;
-import net.minecraft.level.level;
+import net.minecraft.level.BlockGetter;
+import net.minecraft.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-import DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 public class ElectricFenceTop extends BaseElectricFence
 {
@@ -46,14 +46,14 @@ public class ElectricFenceTop extends BaseElectricFence
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         super.createBlockStateDefinition(builder);
         builder.add(HORIZONTAL_FACING);
     }
 
     @Override
-    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, Ilevel levelIn, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
         return defaultBlockState()
                 .setValue(HORIZONTAL_FACING, stateIn.getValue(HORIZONTAL_FACING))
@@ -61,7 +61,7 @@ public class ElectricFenceTop extends BaseElectricFence
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context)
+    public BlockState getStateForPlacement(BlockPlaceContext context)
     {
         return this.defaultBlockState()
                 .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
@@ -70,7 +70,7 @@ public class ElectricFenceTop extends BaseElectricFence
 
     @SuppressWarnings("deprecation")
 	@Override
-    public VoxelShape getShape(BlockState state, IBlockReader levelIn, BlockPos pos, ISelectionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         switch (state.getValue(HORIZONTAL_FACING).getAxis())
         {
