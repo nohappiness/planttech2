@@ -2,9 +2,9 @@ package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntryConfigData;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class CropConfigChangeMessage
         this.configData = configData;
     }
 
-    public static void encode(CropConfigChangeMessage pkt, PacketBuffer buf)
+    public static void encode(CropConfigChangeMessage pkt, FriendlyByteBuf buf)
     {
         buf.writeVarInt(pkt.configData.size());
         for (Entry<ResourceLocation, CropEntryConfigData> entry : pkt.configData.entrySet())
@@ -30,7 +30,7 @@ public class CropConfigChangeMessage
         }
     }
 
-    public static CropConfigChangeMessage decode(PacketBuffer buf)
+    public static CropConfigChangeMessage decode(FriendlyByteBuf buf)
     {
         Map<ResourceLocation, CropEntryConfigData> configData = new HashMap<>();
         int size = buf.readVarInt();

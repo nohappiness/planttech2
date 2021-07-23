@@ -1,14 +1,13 @@
 package net.kaneka.planttech2.items;
 
 
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class CreditCardItem extends Item
 	
 	public static boolean hasCredits(ItemStack stack)
 	{
-		CompoundNBT nbt = getNBT(stack); 
+		CompoundTag nbt = getNBT(stack); 
 		if(nbt.contains("credits"))
 		{
 			return true; 
@@ -45,14 +44,14 @@ public class CreditCardItem extends Item
 		return 0; 
 	}
 	
-	public static CompoundNBT getNBT(ItemStack stack)
+	public static CompoundTag getNBT(ItemStack stack)
 	{
-		CompoundNBT nbt = stack.getTag(); 
+		CompoundTag nbt = stack.getTag(); 
 		if(nbt != null)
 		{
 			return nbt; 
 		}
-		return new CompoundNBT(); 
+		return new CompoundTag(); 
 	}
 	
 	public static int addCredits(ItemStack stack, int amount)
@@ -71,16 +70,16 @@ public class CreditCardItem extends Item
 	
 	public static void setCredits(ItemStack stack, int amount)
 	{
-		CompoundNBT nbt = getNBT(stack); 
+		CompoundTag nbt = getNBT(stack); 
 		nbt.putInt("credits", amount); 
 		stack.setTag(nbt);
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent("Plantcredits: " + getCredits(stack)));
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		tooltip.add(new TextComponent("Plantcredits: " + getCredits(stack)));
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 }

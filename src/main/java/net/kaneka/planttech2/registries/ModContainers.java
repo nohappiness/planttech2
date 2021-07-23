@@ -1,10 +1,9 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.*;
-import net.kaneka.planttech2.container.entities.TechVillagerContainer;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
+import net.kaneka.planttech2.inventory.*;
+import net.kaneka.planttech2.inventory.entities.TechVillagerContainer;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -15,7 +14,7 @@ import static net.kaneka.planttech2.registries.ModReferences.*;
 @ObjectHolder(PlantTechMain.MODID)
 public class ModContainers
 {
-	@ObjectHolder(COMPRESSORCONTAINER) public static ContainerType<CompressorContainer> COMPRESSOR;
+	@ObjectHolder(COMPRESSORCONTAINER) public static MenuType<CompressorContainer> COMPRESSOR;
 	@ObjectHolder(DNACLEANERCONTAINER) public static ContainerType<DNACleanerContainer> DNACLEANER;
 	@ObjectHolder(DNACOMBINERCONTAINER) public static ContainerType<DNACombinerContainer> DNACOMBINER;
 	@ObjectHolder(DNAEXTRACTORCONTAINER) public static ContainerType<DNAExtractorContainer> DNAEXTRACTOR;

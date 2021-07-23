@@ -1,32 +1,42 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import java.util.Map;
-import java.util.Set;
-
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMap.Builder;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.common.collect.ImmutableMap.Builder;
-
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.*;
-import net.minecraft.util.*;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.World;
+import net.minecraftforge.common.IForgeShearable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class MultitoolItem extends UpgradeableHandItem
 {
 	private static final Set<Block> EFFECTIVE_ON_SPADE = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.COARSE_DIRT, Blocks.PODZOL, Blocks.FARMLAND, Blocks.GRASS_BLOCK,
-	        Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.WHITE_CONCRETE_POWDER,
+	        Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.RED_SAND, Blocks.SNOW_BLOCK, Blocks.SNOW, Blocks.SOUL_SAND, Blocks.DIRT_PATH, Blocks.WHITE_CONCRETE_POWDER,
 	        Blocks.ORANGE_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE_POWDER, Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER, Blocks.LIME_CONCRETE_POWDER,
 	        Blocks.PINK_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER, Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.PURPLE_CONCRETE_POWDER,
 	        Blocks.BLUE_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER, Blocks.RED_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER);
@@ -52,9 +62,9 @@ public class MultitoolItem extends UpgradeableHandItem
 	        .put(Blocks.BIRCH_LOG, Blocks.STRIPPED_BIRCH_LOG).put(Blocks.JUNGLE_WOOD, Blocks.STRIPPED_JUNGLE_WOOD).put(Blocks.JUNGLE_LOG, Blocks.STRIPPED_JUNGLE_LOG)
 	        .put(Blocks.SPRUCE_WOOD, Blocks.STRIPPED_SPRUCE_WOOD).put(Blocks.SPRUCE_LOG, Blocks.STRIPPED_SPRUCE_LOG).build();
 
-	protected static final Map<Block, BlockState> PATH_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.GRASS_PATH.defaultBlockState()));
+	protected static final Map<Block, BlockState> PATH_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.DIRT_PATH.defaultBlockState()));
 
-	protected static final Map<Block, BlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.GRASS_PATH,
+	protected static final Map<Block, BlockState> FARMLAND_MAP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH,
 	        Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
 
 	protected static final Set<Material> MATERIAL_EFFECT_ON = Sets.newHashSet(Material.METAL, Material.HEAVY_METAL, Material.STONE, Material.WOOD, Material.PLANT);
@@ -103,26 +113,26 @@ public class MultitoolItem extends UpgradeableHandItem
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext ctx)
+	public InteractionResult useOn(UseOnContext ctx)
 	{
 		if (extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), true) >= getEnergyCost(ctx.getItemInHand()))
 		{
-			World world = ctx.getLevel();
+			Level level = ctx.getLevel();
 			BlockPos blockpos = ctx.getClickedPos();
-			BlockState state = world.getBlockState(blockpos);
-			BlockState state_for_spade = PATH_MAP.get(world.getBlockState(blockpos).getBlock());
-			BlockState state_for_hoe = FARMLAND_MAP.get(world.getBlockState(blockpos).getBlock());
+			BlockState state = level.getBlockState(blockpos);
+			BlockState state_for_spade = PATH_MAP.get(level.getBlockState(blockpos).getBlock());
+			BlockState state_for_hoe = FARMLAND_MAP.get(level.getBlockState(blockpos).getBlock());
 			Block block_for_strinping = BLOCK_STRIPPING_MAP.get(state.getBlock());
-			PlayerEntity PlayerEntity = ctx.getPlayer();
-			if (ctx.getClickedFace() != Direction.DOWN && world.getBlockState(blockpos.above()).isAir(world, blockpos.above()) && state_for_spade != null)
+			Player PlayerEntity = ctx.getPlayer();
+			if (ctx.getClickedFace() != Direction.DOWN && level.getBlockState(blockpos.above()).isAir(level, blockpos.above()) && state_for_spade != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockshovel", false))
 				{
 
-					world.playSound(PlayerEntity, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-					if (!world.isClientSide)
+					level.playSound(PlayerEntity, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!level.isClientSide)
 					{
-						world.setBlock(blockpos, state_for_spade, 11);
+						level.setBlock(blockpos, state_for_spade, 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
@@ -130,15 +140,15 @@ public class MultitoolItem extends UpgradeableHandItem
 					}
 				}
 
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			} else if (block_for_strinping != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockaxe", false))
 				{
-					world.playSound(PlayerEntity, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-					if (!world.isClientSide)
+					level.playSound(PlayerEntity, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!level.isClientSide)
 					{
-						world.setBlock(blockpos, block_for_strinping.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
+						level.setBlock(blockpos, block_for_strinping.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
@@ -146,27 +156,27 @@ public class MultitoolItem extends UpgradeableHandItem
 					}
 				}
 
-				return ActionResultType.SUCCESS;
-			} else if (ctx.getClickedFace() != Direction.DOWN && world.isEmptyBlock(blockpos.above()) && state_for_hoe != null)
+				return InteractionResult.SUCCESS;
+			} else if (ctx.getClickedFace() != Direction.DOWN && level.isEmptyBlock(blockpos.above()) && state_for_hoe != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockhoe", false))
 				{
-					world.playSound(PlayerEntity, blockpos, SoundEvents.HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-					if (!world.isClientSide)
+					level.playSound(PlayerEntity, blockpos, SoundEvents.HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					if (!level.isClientSide)
 					{
-						world.setBlock(blockpos, state_for_hoe, 11);
+						level.setBlock(blockpos, state_for_hoe, 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
 						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
 						}
 					}
 
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	public int getHarvestLevel(ItemStack stack)
@@ -181,32 +191,32 @@ public class MultitoolItem extends UpgradeableHandItem
 	}
 
 	@Override
-	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
+	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
 
-		return super.mineBlock(stack, worldIn, state, pos, entityLiving);
+		return super.mineBlock(stack, level, state, pos, entityLiving);
 	}
 
 	@Override
-	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand)
+	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand)
 	{
-		if (entity.level.isClientSide) return net.minecraft.util.ActionResultType.PASS;
-	      if (entity instanceof net.minecraftforge.common.IForgeShearable) {
-	          net.minecraftforge.common.IForgeShearable target = (net.minecraftforge.common.IForgeShearable)entity;
+		if (entity.level.isClientSide) return InteractionResult.PASS;
+	      if (entity instanceof IForgeShearable) {
+	          IForgeShearable target = (IForgeShearable)entity;
 	         BlockPos pos = new BlockPos(entity.getX(), entity.getY(), entity.getZ());
 	         if (target.isShearable(stack, entity.level, pos)) {
-	            java.util.List<ItemStack> drops = target.onSheared(player, stack, entity.level, pos,
-	                    net.minecraft.enchantment.EnchantmentHelper.getItemEnchantmentLevel(net.minecraft.enchantment.Enchantments.BLOCK_FORTUNE, stack));
-	            java.util.Random rand = new java.util.Random();
+	            List<ItemStack> drops = target.onSheared(player, stack, entity.level, pos,
+	            EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
+	            Random rand = new java.util.Random();
 	            drops.forEach(d -> {
-	               net.minecraft.entity.item.ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
+	               ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
 	               ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
 	            });
 	            stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(hand));
 	         }
-	         return net.minecraft.util.ActionResultType.SUCCESS;
+	         return InteractionResult.SUCCESS;
 	      }
-	      return net.minecraft.util.ActionResultType.PASS;
+	      return InteractionResult.PASS;
 	}
 
 }

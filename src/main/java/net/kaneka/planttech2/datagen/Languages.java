@@ -1,8 +1,5 @@
 package net.kaneka.planttech2.datagen;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import net.kaneka.planttech2.PlantTechMain;
@@ -10,6 +7,9 @@ import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static net.kaneka.planttech2.PlantTechMain.MODID;
 import static net.kaneka.planttech2.registries.ModItems.*;

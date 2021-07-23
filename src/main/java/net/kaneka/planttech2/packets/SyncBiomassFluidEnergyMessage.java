@@ -2,9 +2,9 @@ package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -17,12 +17,12 @@ public class SyncBiomassFluidEnergyMessage
         this.stack = stack;
     }
 
-    public static void encode(SyncBiomassFluidEnergyMessage message, PacketBuffer buffer)
+    public static void encode(SyncBiomassFluidEnergyMessage message, FriendlyByteBuf buffer)
     {
         buffer.writeItem(message.stack);
     }
 
-    public static SyncBiomassFluidEnergyMessage decode(PacketBuffer buffer)
+    public static SyncBiomassFluidEnergyMessage decode(FriendlyByteBuf buffer)
     {
         return new SyncBiomassFluidEnergyMessage(buffer.readItem());
     }

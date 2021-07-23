@@ -2,46 +2,44 @@ package net.kaneka.planttech2.items.upgradeable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.kaneka.planttech2.container.ItemUpgradeableContainer;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
+import net.kaneka.planttech2.inventory.ItemUpgradeableContainer;
 import net.kaneka.planttech2.utilities.NBTHelper;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.core.BlockPos;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class BaseUpgradeableItem extends Item implements IItemChargeable, IUpgradeable
 {
@@ -59,7 +57,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt)
 	{
 		return new InventoryEnergyProvider(basecapacity, maxInvSize);
 	}
@@ -115,7 +113,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
-		if (!((PlayerEntity) attacker).abilities.instabuild)
+		if (!((Player) attacker).getAbilities().instabuild)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 		}
@@ -123,9 +121,9 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public boolean mineBlock(ItemStack stack, World worldIn, BlockState state, BlockPos pos, LivingEntity entityLiving)
+	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
-		if (!worldIn.isClientSide && state.getDestroySpeed(worldIn, pos) != 0.0F && !((PlayerEntity) entityLiving).abilities.instabuild)
+		if (!level.isClientSide && state.getDestroySpeed(level, pos) != 0.0F && !((Player) entityLiving).getAbilities().instabuild)
 		{
 			extractEnergy(stack, getEnergyCost(stack), false);
 			updateEnergy(stack);
@@ -170,10 +168,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack)
 	{
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
-		if (equipmentSlot == EquipmentSlotType.MAINHAND)
+		if (equipmentSlot == EquipmentSlot.MAINHAND)
 		{
 			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", getAttDamage(stack), AttributeModifier.Operation.ADDITION));
 			multimap.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Tool modifier", getAttackSpeed(stack), AttributeModifier.Operation.ADDITION));
@@ -184,10 +182,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 
 	protected void updateEnergy(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
@@ -199,17 +197,17 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new TranslationTextComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
-			tooltip.add(new TranslationTextComponent("info.energycosts", getEnergyCost(stack))); 
-			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
+			tooltip.add(new TranslatableComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new TranslatableComponent("info.energycosts", getEnergyCost(stack)));
+			tooltip.add(new TranslatableComponent("info.openwithshift"));
 		}
 
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 	@Override
@@ -225,7 +223,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
@@ -257,18 +255,18 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 
 		if(player.isCrouching())
 		{
-			if (!world.isClientSide && player instanceof ServerPlayerEntity) 
+			if (!world.isClientSide && player instanceof ServerPlayer)
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.selected), buffer -> buffer.writeItem(stack));
+    			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
 			}
 		}
-		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override
@@ -280,7 +278,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 			int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseHarvestlevel = 0;
 			float increaseAttack = 0, increaseAttackSpeed = 0, increaseBreakdownRate = 0; 
 			boolean unlockShovelFeat = false, unlockAxeFeat = false, unlockHoeFeat = false, unlockShearsFeat = false; 
-			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(); 
+			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 			
 			ItemStack slot; 
 			for(int i = 0; i < inv.getSlots(); i++)
@@ -336,10 +334,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 			}
 			
 			
-			CompoundNBT nbt = stack.getTag(); 
+			CompoundTag nbt = stack.getTag(); 
 			if(nbt == null)
 			{
-				nbt = new CompoundNBT(); 
+				nbt = new CompoundTag(); 
 			}
 			
 			nbt.putInt("energycost", energyCost);
@@ -368,7 +366,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	}
 	
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entityIn, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected)
 	{
 		if(!world.isClientSide)
 		{
@@ -403,20 +401,21 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 		}
 
 		@Override
-		public Container createMenu(int id, PlayerInventory inv, PlayerEntity entity)
+		public Container createMenu(int id, Inventory inv, Player entity)
 		{
 			return this.getMenu(id, inv);
 		}
 
-		private Container getMenu(int id, PlayerInventory inv)
+		private Container getMenu(int id, Inventory inv)
 		{
 			return new ItemUpgradeableContainer(id, inv, stack, this.slot);
 		}
 
+
 		@Override
-		public ITextComponent getDisplayName()
+		public Component getDisplayName()
 		{
-			return new TranslationTextComponent("container.upgradeableitem");
+			return new TranslatableComponent("container.upgradeableitem");
 		}
 	}
 }

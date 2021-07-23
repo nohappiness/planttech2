@@ -1,18 +1,16 @@
 package net.kaneka.planttech2.gui.guide;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.kaneka.planttech2.gui.buttons.CustomButton;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GuideScreen extends Screen
@@ -175,7 +173,7 @@ public class GuideScreen extends Screen
     			if(i < guide.getAmountMainMenus())
     			{ 
     				activateButton(button);
-    				button.setMessage(new StringTextComponent(guide.getMenuById(i).getName()));
+    				button.setMessage(new TextComponent(guide.getMenuById(i).getName()));
     			}
     		}
 		}
@@ -189,7 +187,7 @@ public class GuideScreen extends Screen
     			if(i + page * 10 < menu.getAmountEntrys())
     			{ 
     				activateButton(button);
-    				button.setMessage(new StringTextComponent(menu.getEntryById(i + page * 10).getName()));
+    				button.setMessage(new TextComponent(menu.getEntryById(i + page * 10).getName()));
     			}
     		}
 			activateButton(buttons_navigation.get(0));

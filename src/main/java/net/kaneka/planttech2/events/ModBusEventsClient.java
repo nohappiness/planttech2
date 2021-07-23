@@ -6,23 +6,16 @@ import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.ParticleItem;
-import net.kaneka.planttech2.registries.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.world.item.BlockItem;
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModRenderer;
+import net.kaneka.planttech2.registries.ModScreens;
 import net.minecraft.world.item.Item;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.IBlockDisplayReader;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
-import java.util.Map;
-import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = PlantTechMain.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModBusEventsClient
@@ -33,11 +26,15 @@ public class ModBusEventsClient
 		event.enqueueWork(PlantTechClient::addAllItemModelsOverrides);
 		ModRenderer.registerEntityRenderer();
 		ModScreens.registerGUI();
+		//TODO
+		/*
 		for (Map.Entry<Supplier<? extends Block>, RenderType> entry : ModBlocks.SPECIAL_RENDER_BLOCKS.entrySet())
 			RenderTypeLookup.setRenderLayer(entry.getKey().get(), entry.getValue());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BIOMASSFLUIDBLOCK, RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS, RenderType.translucent());
 		RenderTypeLookup.setRenderLayer(ModFluids.BIOMASS_FLOWING, RenderType.translucent());
+
+		 */
 	}
 
 	@SubscribeEvent

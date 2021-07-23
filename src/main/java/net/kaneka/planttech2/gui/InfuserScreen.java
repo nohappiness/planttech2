@@ -1,18 +1,17 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.InfuserContainer;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.inventory.InfuserContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class InfuserScreen extends BaseContainerScreen<InfuserContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/infuser.png");
 
-	public InfuserScreen(InfuserContainer container, PlayerInventory player, ITextComponent name)
+	public InfuserScreen(InfuserContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }

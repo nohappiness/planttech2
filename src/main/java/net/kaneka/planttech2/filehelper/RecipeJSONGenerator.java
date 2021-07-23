@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.filehelper;
 
+import net.kaneka.planttech2.registries.ModBlocks;
+import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
-import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class RecipeJSONGenerator
 {

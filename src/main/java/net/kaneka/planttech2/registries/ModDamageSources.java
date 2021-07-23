@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.registries;
 
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 
 public class ModDamageSources
 {

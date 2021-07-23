@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.filehelper;
 
+import net.kaneka.planttech2.PlantTechMain;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-
-import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class DropsJSONGenerator
 {

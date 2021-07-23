@@ -2,8 +2,8 @@ package net.kaneka.planttech2.packets;
 
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -16,12 +16,12 @@ public class SyncRadiationLevelMessage
         this.level = level;
     }
 
-    public static void encode(SyncRadiationLevelMessage message, PacketBuffer buffer)
+    public static void encode(SyncRadiationLevelMessage message, FriendlyByteBuf buffer)
     {
         buffer.writeFloat(message.level);
     }
 
-    public static SyncRadiationLevelMessage decode(PacketBuffer buffer)
+    public static SyncRadiationLevelMessage decode(FriendlyByteBuf buffer)
     {
         return new SyncRadiationLevelMessage(buffer.readFloat());
     }

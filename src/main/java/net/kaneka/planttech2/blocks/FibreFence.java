@@ -1,15 +1,12 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.AbstractCustomFence;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.world.level.Level;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FibreFence extends AbstractCustomFence
 {
@@ -25,7 +22,7 @@ public class FibreFence extends AbstractCustomFence
     }
 
     @Override
-    public boolean canConnectTo(level level, BlockPos pos, Direction direction)
+    public boolean canConnectTo(Level level, BlockPos pos, Direction direction)
     {
         BlockState state = level.getBlockState(pos.relative(direction));
         Block block = state.getBlock();

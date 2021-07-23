@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.addons.jei.infuser;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;

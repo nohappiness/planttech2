@@ -2,17 +2,17 @@ package net.kaneka.planttech2.commands;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.StringTextComponent;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import static com.google.common.collect.ImmutableList.of;
-import static net.minecraft.util.text.TextFormatting.*;
 
 public class DevListCommand
 {
@@ -35,13 +35,13 @@ public class DevListCommand
 //        .put("Sciwhiz12", of())
 //        .build();
 
-    public static LiteralArgumentBuilder<CommandSource> register()
+    public static LiteralArgumentBuilder<CommandSourceStack> register()
     {
         return Commands.literal("devlist").executes((context) ->
         {
             int online = 0;
-            CommandSource src = context.getSource();
-            src.sendSuccess(new StringTextComponent("---- Plant Tech 2 Developers ----").withStyle(DARK_GREEN, BOLD, UNDERLINE), false);
+            CommandSourceStack src = context.getSource();
+            src.sendSuccess(new TextComponent("---- Plant Tech 2 Developers ----").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.BOLD, ChatFormatting.UNDERLINE), false);
             printTitle(src, "Artists:");
             online += printAllFromList(ARTISTS, src);
             printTitle(src, "Authors:");
@@ -52,29 +52,29 @@ public class DevListCommand
         });
     }
 
-    private static void printTitle(CommandSource source, String message)
+    private static void printTitle(CommandSourceStack source, String message)
     {
-        source.sendSuccess(new StringTextComponent(message).withStyle(AQUA, BOLD), false);
+        source.sendSuccess(new TextComponent(message).withStyle(ChatFormatting.AQUA, ChatFormatting.BOLD), false);
     }
 
-    private static int printAllFromList(Map<String, List<String>> map, CommandSource src)
+    private static int printAllFromList(Map<String, List<String>> map, CommandSourceStack src)
     {
         return printAllFromList(map, src, false);
     }
 
-    private static int printAllFromList(Map<String, List<String>> map, CommandSource src, boolean contributionDone)
+    private static int printAllFromList(Map<String, List<String>> map, CommandSourceStack src, boolean contributionDone)
     {
         int online = 0;
         for (Map.Entry<String, List<String>> entry : map.entrySet())
         {
-            StringTextComponent name = new StringTextComponent(entry.getKey());
+            TextComponent name = new TextComponent(entry.getKey());
             if (isOnline(src.getServer(), entry.getValue()))
             {
-                name.append(new StringTextComponent(" (online)").withStyle(GREEN));
+                name.append(new TextComponent(" (online)").withStyle(ChatFormatting.GREEN));
                 online++;
             }
             if (contributionDone)
-                name = new StringTextComponent("Thanks " + name + getContribution(entry.getKey()));
+                name = new TextComponent("Thanks " + name + getContribution(entry.getKey()));
             src.sendSuccess(name, false);
         }
         return online;

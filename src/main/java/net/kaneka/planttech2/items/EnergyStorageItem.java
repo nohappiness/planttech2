@@ -3,16 +3,15 @@ package net.kaneka.planttech2.items;
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.EnergyProvider;
 import net.kaneka.planttech2.energy.IItemChargeable;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -31,7 +30,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	}
 	
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt)
 	{
 		return new EnergyProvider(basecapacity);
 	}
@@ -96,10 +95,10 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	
 	protected void updateEnergy(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
@@ -111,19 +110,19 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new StringTextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy") + " BE"));
+			tooltip.add(new TextComponent(tag.getInt("current_energy") + "/" + tag.getInt("max_energy") + " BE"));
 		}
 		else
 		{
 			updateEnergy(stack);
 		}
 
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 	@Override
@@ -135,7 +134,7 @@ public class EnergyStorageItem extends Item implements IItemChargeable
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));

@@ -1,21 +1,21 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import java.util.function.Supplier;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HorizontalBlock;
-import net.minecraft.world.item.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.state.StateDefinition.Builder;
-import net.minecraft.BlockEntity.BlockEntity;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+
+import java.util.function.Supplier;
 
 public class MachineFacingBlock extends MachineBaseBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public MachineFacingBlock(Supplier<? extends BlockEntity> teCreator, int tier)
     {
@@ -47,7 +47,7 @@ public class MachineFacingBlock extends MachineBaseBlock
     }
     
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(FACING);
     }

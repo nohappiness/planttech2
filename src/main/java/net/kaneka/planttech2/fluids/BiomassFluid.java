@@ -4,26 +4,19 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModFluids;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.tags.FluidTags;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.BlockGetter;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
@@ -55,20 +48,20 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	protected void beforeDestroyingBlock(LevelAccessor worldIn, BlockPos pos, BlockState state)
+	protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state)
 	{
-		BlockEntity tileentity = state.getBlock().hasTileEntity(state) ? worldIn.getBlockEntity(pos) : null;
-		Block.dropResources(state, worldIn , pos, tileentity);
+		BlockEntity tileentity = state.getBlock().hasBlockEntity(state) ? level.getBlockEntity(pos) : null;
+		Block.dropResources(state, level , pos, tileentity);
 	}
 
 	@Override
-	protected int getSlopeFindDistance(IWorldReader worldIn)
+	protected int getSlopeFindDistance(LevelReader worldIn)
 	{
 		return 4;
 	}
 
 	@Override
-	protected int getDropOff(IWorldReader worldIn)
+	protected int getDropOff(LevelReader worldIn)
 	{
 		return 1;
 	}
@@ -86,7 +79,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	}
 
 	@Override
-	public int getTickDelay(IWorldReader p_205569_1_)
+	public int getTickDelay(LevelReader p_205569_1_)
 	{
 		return 5;
 	}

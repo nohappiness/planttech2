@@ -5,7 +5,6 @@ import net.kaneka.planttech2.blocks.ElectricFenceGate;
 import net.kaneka.planttech2.blocks.ElectricFenceTop;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Direction.Axis;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
@@ -287,7 +286,7 @@ public class ElectricFenceModels extends BlockModelBase
 		 	.rotation(FaceRotation.UPSIDE_DOWN)
 		 	.rotation(FaceRotation.COUNTERCLOCKWISE_90).texture("#1_4").end().end()
 		 	.element().from(2.4f, 13.5f, 8.1f).to(5.4f, 14.5f, 9.1f)
-		 		.rotation().angle(-45.0f).axis(Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
+		 		.rotation().angle(-45.0f).axis(Direction.Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
 		 		.face(Direction.byName("north")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
 		 		.face(Direction.byName("east")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
 		 		.face(Direction.byName("south")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
@@ -295,7 +294,7 @@ public class ElectricFenceModels extends BlockModelBase
 		 		.face(Direction.byName("up")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
 		 		.face(Direction.byName("down")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end().end()
 		 	.element().from(0.92628f, 13.5f, 5.5f).to(6.92628f, 14.5f, 6.5f)
-		 		.rotation().angle(22.5f).axis(Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
+		 		.rotation().angle(22.5f).axis(Direction.Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
 		 		.face(Direction.byName("north")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
 		 		.face(Direction.byName("east")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()
 		 		.face(Direction.byName("south")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#2_3").end()

@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.energy;
 
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class EnergyProvider implements ICapabilitySerializable<CompoundNBT>
+public class EnergyProvider implements ICapabilitySerializable<CompoundTag>
 {
 	
 	protected BioEnergyStorage energystorage;
@@ -31,15 +31,15 @@ public class EnergyProvider implements ICapabilitySerializable<CompoundNBT>
 	}
 
 	@Override
-	public CompoundNBT serializeNBT()
+	public CompoundTag serializeNBT()
 	{
-		CompoundNBT compound = new CompoundNBT();
+		CompoundTag compound = new CompoundTag();
 		compound.put("energy", energystorage.serializeNBT());
 		return compound;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt)
+	public void deserializeNBT(CompoundTag nbt)
 	{
 		energystorage.deserializeNBT(nbt.getCompound("energy"));
 	}

@@ -4,20 +4,12 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.HoverEvent;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientChatEvent;
-import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,7 +25,7 @@ public class ForgeBusEventsClient
     @SubscribeEvent
     public static void onTextInsert(ClientChatEvent event)
     {
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         if (player == null)
             return;
         int screen = 0;
@@ -56,10 +48,10 @@ public class ForgeBusEventsClient
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event)
     {
-        PlayerEntity player = Minecraft.getInstance().player;
+        Player player = Minecraft.getInstance().player;
         if (player != null)
         {
-            CompoundNBT data = player.getPersistentData();
+            CompoundTag data = player.getPersistentData();
             if (data.contains("planttech2_screen_delay"))
             {
                 Screen screen = null;
@@ -85,13 +77,13 @@ public class ForgeBusEventsClient
     public static void onWorldStart(EntityJoinWorldEvent evt)
     {
         VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
-        if (evt.getEntity() instanceof ClientPlayerEntity && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
+        if (evt.getEntity() instanceof ClientPlayer && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
         {
-            TextComponent info = new TranslationTextComponent("planttech2.update.available");
-            TextComponent link = new TranslationTextComponent("planttech2.update.click");
+            TextComponent info = new TranslatableComponent("planttech2.update.available");
+            TextComponent link = new TranslatableComponent("planttech2.update.click");
             link.setStyle(link.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
-                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslationTextComponent("planttech2.update.tooltip")))
-                    .withColor(TextFormatting.BLUE)
+                    .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent("planttech2.update.tooltip")))
+                    .withColor(TextColor.parseColor("BLUE"))
                     .setUnderlined(true));
             evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUUID());
         }

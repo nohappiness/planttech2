@@ -4,11 +4,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.kaneka.planttech2.commands.DevListCommand;
 import net.kaneka.planttech2.commands.GuideCommand;
-import net.kaneka.planttech2.commands.RadiationLevelCommand;
-import net.minecraft.command.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraftforge.event.RegisterCommandsEvent;
-
-import static net.minecraft.command.Commands.literal;
 
 public class ModCommands
 {
@@ -16,8 +14,8 @@ public class ModCommands
 
     public static void onCommandRegister(RegisterCommandsEvent event)
     {
-        CommandDispatcher<CommandSource> dispatcher = event.getDispatcher();
-        LiteralArgumentBuilder<CommandSource> pt2command = literal("pt2")
+        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
+        LiteralArgumentBuilder<CommandSourceStack> pt2command = Commands.literal("pt2")
                 .then(DevListCommand.register())
 
                 // Temporary disabled as PlantTopia is not implemented yet

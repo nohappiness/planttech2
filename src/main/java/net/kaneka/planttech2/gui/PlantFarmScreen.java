@@ -1,20 +1,18 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.PlantFarmContainer;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.PlantFarmTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.PlantFarmBlockEntity;
+import net.kaneka.planttech2.inventory.PlantFarmContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/plantfarm.png");
 
-	public PlantFarmScreen(PlantFarmContainer container, PlayerInventory player, ITextComponent name)
+	public PlantFarmScreen(PlantFarmContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -40,7 +38,7 @@ public class PlantFarmScreen extends BaseContainerScreen<PlantFarmContainer>
 	private int getCookProgressScaled(int pixels, int slot)
 	{
 		int i = menu.getValue(4 + slot);
-		return i != 0 ? i * pixels / ((PlantFarmTileEntity) this.te).getTicks() : 0;
+		return i != 0 ? i * pixels / ((PlantFarmBlockEntity) this.te).getTicks() : 0;
 	}
 	
 	@Override

@@ -1,12 +1,10 @@
 package net.kaneka.planttech2.blocks.baseclasses;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorldReader;
 
-import net.minecraft.world.level.block.AbstractBlock.Properties;
 
 public class BaseOreBlock extends Block
 {
@@ -19,9 +17,11 @@ public class BaseOreBlock extends Block
 		this.expMax = expMax;
 	}
 
+
+
 	@Override
-	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silkTouch)
+	public int getExpDrop(BlockState state, LevelReader world, BlockPos pos, int fortune, int silkTouch)
 	{
-		return silkTouch == 0 ? MathHelper.nextInt(RANDOM, expMin, expMax) : 0;
+		return silkTouch == 0 ? RANDOM.nextInt(expMax - expMin) + expMin : 0;
 	}
 }

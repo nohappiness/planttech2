@@ -1,10 +1,9 @@
 package net.kaneka.planttech2.entities.capabilities.player;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -13,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PlayerRenderRGB implements ICapabilitySerializable<CompoundNBT>, IPlayerRenderRGB
+public class PlayerRenderRGB implements ICapabilitySerializable<CompoundTag>, IPlayerRenderRGB
 {
     @CapabilityInject(IPlayerRenderRGB.class)
     public static Capability<IPlayerRenderRGB> PLAYER_RENDER_RGB_CAPABILITY = null;
@@ -31,19 +30,19 @@ public class PlayerRenderRGB implements ICapabilitySerializable<CompoundNBT>, IP
         return cap == PLAYER_RENDER_RGB_CAPABILITY ? lazyOptional.cast() : LazyOptional.empty();
     }
 
-    public static IPlayerRenderRGB getCap(PlayerEntity player)
+    public static IPlayerRenderRGB getCap(Player player)
     {
         return player.getCapability(PLAYER_RENDER_RGB_CAPABILITY).orElseThrow(() -> new NullPointerException("getting capability"));
     }
 
     @Override
-    public CompoundNBT serializeNBT()
+    public CompoundTag serializeNBT()
     {
-        return (CompoundNBT) PLAYER_RENDER_RGB_CAPABILITY.getStorage().writeNBT(PLAYER_RENDER_RGB_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Render RGB Capability by Plant Tech 2")), null);
+        return (CompoundTag) PLAYER_RENDER_RGB_CAPABILITY.orEmpty().getStorage().writeNBT(PLAYER_RENDER_RGB_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Render RGB Capability by Plant Tech 2")), null);
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt)
+    public void deserializeNBT(CompoundTag nbt)
     {
       PLAYER_RENDER_RGB_CAPABILITY.getStorage().readNBT(PLAYER_RENDER_RGB_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during reading Render RGB Capability by Plant Tech 2")), null, nbt);
     }
@@ -134,15 +133,15 @@ public class PlayerRenderRGB implements ICapabilitySerializable<CompoundNBT>, IP
         this.fogDensity = value;
     }
 
-    public static class PlayerRenderRGBStorage implements Capability.IStorage<IPlayerRenderRGB>
+    public static class PlayerRenderRGBStorage implements Capability.Storage<IPlayerRenderRGB>
     {
         public PlayerRenderRGBStorage(){}
 
         @Nullable
         @Override
-        public INBT writeNBT(Capability<IPlayerRenderRGB> capability, IPlayerRenderRGB instance, Direction side)
+        public Tag writeNBT(Capability<IPlayerRenderRGB> capability, IPlayerRenderRGB instance, Direction side)
         {
-            CompoundNBT compound = new CompoundNBT();
+            CompoundTag compound = new CompoundTag();
             compound.putFloat("red", instance.getCurrentRed());
             compound.putFloat("green", instance.getCurrentGreen());
             compound.putFloat("blue", instance.getCurrentBlue());
@@ -153,7 +152,7 @@ public class PlayerRenderRGB implements ICapabilitySerializable<CompoundNBT>, IP
         @Override
         public void readNBT(Capability<IPlayerRenderRGB> capability, IPlayerRenderRGB instance, Direction side, INBT nbt)
         {
-            CompoundNBT compound = (CompoundNBT) nbt;
+            CompoundTag compound = (CompoundTag) nbt;
             instance.setRGB(compound.getFloat("red"), compound.getFloat("green"), compound.getFloat("blue"));
             instance.setCurrentFogDensity(compound.getFloat("density"));
         }

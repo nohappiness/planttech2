@@ -1,17 +1,13 @@
 package net.kaneka.planttech2.hashmaps;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.crops.CropEntry;
+import net.kaneka.planttech2.enums.EnumTraitsInt;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+
+import java.util.*;
 
 public class HashMapCropTraits
 {
@@ -97,25 +93,25 @@ public class HashMapCropTraits
 	public ItemStack createItemStackwithTraits(Item item)
 	{
 		ItemStack stack = new ItemStack(item);
-		CompoundNBT nbt = this.toNBT();
+		CompoundTag nbt = this.toNBT();
 		stack.setTag(nbt);
 		return stack;
 	}
 
 	public ItemStack addToItemStack(ItemStack stack)
 	{
-		CompoundNBT nbt = this.toNBT();
+		CompoundTag nbt = this.toNBT();
 		stack.setTag(nbt);
 		return stack;
 	}
 
-	public CompoundNBT toNBT()
+	public CompoundTag toNBT()
 	{
-		CompoundNBT nbt = new CompoundNBT();
+		CompoundTag nbt = new CompoundTag();
 		return this.addToNBT(nbt);
 	}
 
-	public CompoundNBT addToNBT(CompoundNBT nbt)
+	public CompoundTag addToNBT(CompoundTag nbt)
 	{
 		Set<EnumTraitsInt> keyset = this.getTraitsList();
 		for (EnumTraitsInt key : keyset)
@@ -132,7 +128,7 @@ public class HashMapCropTraits
 		this.fromNBT(stack.getTag());
 	}
 
-	public void fromNBT(CompoundNBT nbt)
+	public void fromNBT(CompoundTag nbt)
 	{
 		Set<EnumTraitsInt> keyset = this.getTraitsList();
 		if (nbt != null)

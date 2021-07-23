@@ -1,19 +1,18 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.DNAExtractorContainer;
-import net.kaneka.planttech2.tileentity.machine.DNAExtractorTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.DNAExtractorBlockEntity;
+import net.kaneka.planttech2.inventory.DNAExtractorContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_extractor.png");
 
-	public DNAExtractorScreen(DNAExtractorContainer container, PlayerInventory player, ITextComponent name)
+	public DNAExtractorScreen(DNAExtractorContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -45,7 +44,7 @@ public class DNAExtractorScreen extends BaseContainerScreen<DNAExtractorContaine
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(2);
-		return i != 0 ? i * pixels / ((DNAExtractorTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((DNAExtractorBlockEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override

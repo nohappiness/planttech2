@@ -1,20 +1,20 @@
 package net.kaneka.planttech2.crops;
 
-import java.nio.file.Path;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class CropConfigProvider implements IDataProvider
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public abstract class CropConfigProvider implements DataProvider
 {
 	private static final Logger LOGGER = LogManager.getLogger();
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -28,7 +28,7 @@ public abstract class CropConfigProvider implements IDataProvider
 	public abstract Map<ResourceLocation, CropEntryConfigData> getCropData();
 
 	@Override
-	public void run(DirectoryCache cache)
+	public void run(HashCache cache)
 	{
 		Path path = this.dataGenerator.getOutputFolder();
 		Map<ResourceLocation, CropEntryConfigData> cropEntryData = this.getCropData();
@@ -38,7 +38,7 @@ public abstract class CropConfigProvider implements IDataProvider
 			Path outputFile = getPath(path, key);
 			try
 			{
-				IDataProvider.save(GSON, cache, CropListReloadListener.toJson(data), outputFile);
+				DataProvider.save(GSON, cache, CropListReloadListener.toJson(data), outputFile);
 			} catch (Exception ioexception)
 			{
 				LOGGER.error("Couldn't save crop entry configuration {}", outputFile, ioexception);

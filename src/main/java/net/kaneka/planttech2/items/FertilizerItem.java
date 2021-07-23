@@ -1,21 +1,23 @@
 package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.dispenser.IBlockSource;
-import net.minecraft.dispenser.OptionalDispenseBehavior;
-import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.InteractionResultHolderType;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -28,30 +30,30 @@ public class FertilizerItem extends Item
 		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
 		{
 			@Override
-			protected ItemStack execute(IBlockSource source, ItemStack stack)
+			protected ItemStack execute(BlockSource source, ItemStack stack)
 			{
-				World world = source.getLevel();
+				Level level = source.getLevel();
 				BlockPos target = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-				this.setSuccess(applyFertillizer(world, target, stack));
-				if (!world.isClientSide() && this.isSuccess())
-					world.levelEvent(2005, target, 0);
+				this.setSuccess(applyFertillizer(level, target, stack));
+				if (!level.isClientSide() && this.isSuccess())
+					level.levelEvent(2005, target, 0);
 				return stack;
 			}
 		});
     }
 
     @Override
-    public InteractionResultHolderType useOn(ItemUseContext context)
+    public InteractionResult useOn(UseOnContext context)
     {
 		ItemStack stack = context.getItemInHand();
 		BlockPos pos = context.getClickedPos();
-		World world = context.getLevel();
-		if (!world.isClientSide())
-			if (applyFertillizer(world, pos, stack))
+		Level level = context.getLevel();
+		if (!level.isClientSide())
+			if (applyFertillizer(level, pos, stack))
 			{
-				if (context.getPlayer() != null && !context.getPlayer().abilities.instabuild)
+				if (context.getPlayer() != null && !context.getPlayer().getAbilities().instabuild)
 					stack.shrink(1);
-				return InteractionResultHolderType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		return super.useOn(context);
     }
@@ -72,14 +74,14 @@ public class FertilizerItem extends Item
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
     {
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer").getString() + ": " + (int) (getIncreaseChance(stack.getItem()) * 100) + "%"));
+		tooltip.add(new TextComponent(new TranslatableComponent("info.fertilizer").getString() + ": " + (int) (getIncreaseChance(stack.getItem()) * 100) + "%"));
 		if(stack.getItem() == ModItems.FERTILIZER_CREATIVE)
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.fertilizer_creative").getString()));
+			tooltip.add(new TextComponent(new TranslatableComponent("info.fertilizer_creative").getString()));
     }
 
-    public static boolean applyFertillizer(World world, BlockPos pos, ItemStack stack)
+    public static boolean applyFertillizer(Level world, BlockPos pos, ItemStack stack)
 	{
 		Block block = world.getBlockState(pos).getBlock();
 		if (block instanceof CropBaseBlock)
@@ -89,8 +91,8 @@ public class FertilizerItem extends Item
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{
 					BlockEntity te = world.getBlockEntity(pos);
-					if (te instanceof CropsTileEntity)
-						((CropBaseBlock) block).updateCrop(world, pos, ((CropsTileEntity) te).getTraits());
+					if (te instanceof CropsBlockEntity)
+						((CropBaseBlock) block).updateCrop(world, pos, ((CropsBlockEntity) te).getTraits());
 				}
 				else
 					((CropBaseBlock) block).updateCreative(world, pos);

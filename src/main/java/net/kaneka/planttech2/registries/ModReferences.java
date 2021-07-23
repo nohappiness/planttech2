@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.registries;
 
-import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.resources.ResourceLocation;
 
 import static net.kaneka.planttech2.PlantTechMain.MODID;

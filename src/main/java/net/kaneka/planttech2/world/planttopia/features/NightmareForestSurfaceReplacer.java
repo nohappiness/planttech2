@@ -1,10 +1,9 @@
 package net.kaneka.planttech2.world.planttopia.features;
 
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NightmareForestSurfaceReplacer extends ReplaceBlocksSurfaceFeature {
     public NightmareForestSurfaceReplacer() {

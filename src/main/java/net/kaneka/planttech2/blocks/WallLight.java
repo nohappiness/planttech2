@@ -1,22 +1,19 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.FacingWallLightBase;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.shapes.CollisionContext;
-import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.level.BlockGetter;
-import net.minecraft.level.IlevelReader;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WallLight extends FacingWallLightBase
 {
@@ -54,13 +51,13 @@ public class WallLight extends FacingWallLightBase
     }
 
     @Override
-    public SoundType getSoundType(BlockState state, IlevelReader level, BlockPos pos, @Nullable Entity entity)
+    public SoundType getSoundType(BlockState state, LevelReader level, BlockPos pos, @Nullable Entity entity)
     {
         return state.getValue(LIGHT_STATUS) == 0 ? SoundType.STONE : super.getSoundType(state, level, pos, entity);
     }
 
     @Override
-    public void playerWillDestroy(level levelIn, BlockPos pos, BlockState state, PlayerEntity player)
+    public void playerWillDestroy(Level levelIn, BlockPos pos, BlockState state, Player player)
     {
         super.playerWillDestroy(levelIn, pos, state, player);
     }

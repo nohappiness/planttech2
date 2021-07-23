@@ -1,46 +1,43 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.level.item.ItemStack;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.util.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockHitResult;
-import net.minecraft.util.math.shapes.CollisionContext;
-import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.level.BlockGetter;
-import net.minecraft.level.LevelAccessor;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 public class ElectricFenceGate extends Block
 {
     public static final DirectionProperty HORIZONTAL_FACING = DirectionProperty.create("facing", Direction.Plane.HORIZONTAL);
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty IS_TOP = BooleanProperty.create("is_top");
-    public static final VoxelShape FRAME_Z = VoxelShapes.or(
+    public static final VoxelShape FRAME_Z = Shapes.or(
             Block.box(0.0D, 0.0D, 6.0D, 1.0D, 16.0D, 10.0D),
             Block.box(15.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D));
-    public static final VoxelShape FRAME_X = VoxelShapes.or(
+    public static final VoxelShape FRAME_X = Shapes.or(
             Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 1.0D),
             Block.box(6.0D, 0.0D, 15.0D, 10.0D, 16.0D, 16.0D));
     public static final VoxelShape FRAME_TOP_Z = Block.box(0.0D, 15.0D, 6.0D, 16.0D, 16.0D, 10.0D);
@@ -71,7 +68,7 @@ public class ElectricFenceGate extends Block
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
-        if (!checkValid(currentPos, (level) levelIn))
+        if (!checkValid(currentPos, (Level) levelIn))
             levelIn.destroyBlock(currentPos, !stateIn.getValue(IS_TOP));
         BlockState state = levelIn.getBlockState(stateIn.getValue(IS_TOP) ? currentPos.below() : currentPos.above());
         if (state.getBlock() instanceof ElectricFenceGate)
@@ -106,7 +103,7 @@ public class ElectricFenceGate extends Block
     }
 
     @Override
-    public InteractionResult use(BlockState state, level levelIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockHitResult hit)
+    public InteractionResult use(BlockState state, Level levelIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit)
     {
         if (!checkValid(pos, levelIn))
         {
@@ -125,13 +122,13 @@ public class ElectricFenceGate extends Block
         return InteractionResult.SUCCESS;
     }
 
-    private boolean isPowered(level level, BlockPos pos)
+    private boolean isPowered(Level level, BlockPos pos)
     {
         return BaseElectricFence.calculatePower(level, pos) > 0;
     }
 
     @Override
-    public void setPlacedBy(level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(Level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
         levelIn.setBlockAndUpdate(pos.above(), state
                 .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
@@ -195,16 +192,16 @@ public class ElectricFenceGate extends Block
 
     private VoxelShape add(VoxelShape shape, VoxelShape shape2)
     {
-        return VoxelShapes.or(shape, shape2);
+        return Shapes.or(shape, shape2);
     }
 
     private VoxelShape toTopShape(VoxelShape shape)
     {
-        AxisAlignedBB aabb = shape.bounds();
+        AABB aabb = shape.bounds();
         return Block.box(aabb.minX * 16, aabb.minY * 16 - 1, aabb.minZ * 16, aabb.maxX * 16, aabb.maxY * 16 - 1, aabb.maxZ * 16);
     }
 
-    private boolean checkValid(BlockPos pos, level level)
+    private boolean checkValid(BlockPos pos, Level level)
     {
         BlockState state = level.getBlockState(pos);
         BlockState state2 = level.getBlockState(state.getValue(IS_TOP) ? pos.below() : pos.above());
@@ -212,8 +209,8 @@ public class ElectricFenceGate extends Block
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        tooltip.add(new StringTextComponent("can be dismantled by wrench"));
+        tooltip.add(new TextComponent("can be dismantled by wrench"));
     }
 }

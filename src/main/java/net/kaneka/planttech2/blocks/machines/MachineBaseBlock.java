@@ -1,27 +1,25 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockRenderType;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.BlockEntity.BlockEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockHitResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.BlockGetter;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -42,33 +40,27 @@ public class MachineBaseBlock extends Block
 		this(teCreator, 0);
 	}
 
-	public IItemProvider getItemDropped(BlockState state, World worldIn, BlockPos pos, int fortune)
-	{
-		return this;
-	}
-
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, BlockGetter world, BlockPos pos, PlayerEntity player)
+	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player)
 	{
 		return new ItemStack(this);
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult ray)
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray)
 	{
-		if (!world.isClientSide)
+		if (!level.isClientSide)
 		{
-			BlockEntity te = world.getBlockEntity(pos);
-			if (te instanceof EnergyBlockEntity)
+			BlockEntity te = level.getBlockEntity(pos);
+			if (te instanceof EnergyInventoryBlockEntity eibe)
 			{
-				EnergyBlockEntity energyBlockEntity = (EnergyBlockEntity) te;
-				player.openMenu(energyBlockEntity);
-				if (energyBlockEntity.requireSyncOnOpen())
-					world.sendBlockUpdated(pos, state, state, 3);
+				player.openMenu(eibe);
+				if (eibe.requireSyncOnOpen())
+					level.sendBlockUpdated(pos, state, state, 3);
 			}
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 	
 	@Override
@@ -84,36 +76,36 @@ public class MachineBaseBlock extends Block
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState state)
+	public RenderShape getRenderShape(BlockState state)
 	{
-		return BlockRenderType.MODEL;
+		return RenderShape.MODEL;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (state.getBlock() != newState.getBlock())
 		{
-			if (worldIn.getBlockEntity(pos) instanceof EnergyInventoryBlockEntity)
+			if (level.getBlockEntity(pos) instanceof EnergyInventoryBlockEntity)
 			{
-				EnergyInventoryBlockEntity te = (EnergyInventoryBlockEntity) worldIn.getBlockEntity(pos);
+				EnergyInventoryBlockEntity te = (EnergyInventoryBlockEntity) level.getBlockEntity(pos);
 				List<ItemStack> toSpawn = te.getInventoryContent();
 				for (ItemStack stack : toSpawn)
 				{
-					worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), stack));
+					level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack));
 				}
 			}
-			super.onRemove(state, worldIn, pos, newState, isMoving);
+			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, BlockGetter worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, BlockGetter level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.tier").getString() + ": " + tier));
+		tooltip.add(new TextComponent(new TranslatableComponent("info.tier").getString() + ": " + tier));
 		
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 }

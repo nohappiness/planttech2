@@ -3,7 +3,6 @@ package net.kaneka.planttech2.datagen.blocks;
 import net.kaneka.planttech2.blocks.CarverBlock;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Direction.Axis;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 
 public class CarverModels extends BlockModelBase
@@ -32,7 +31,7 @@ public class CarverModels extends BlockModelBase
 				.face(Direction.byName("up")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#ns_1").end()
 				.face(Direction.byName("down")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#ns_1").end().end()
 			.element().from(8.0f, 0.0f, 0.0f).to(8.0f, 16.0f, 16.0f)
-				.rotation().angle(-45.0f).axis(Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
+				.rotation().angle(-45.0f).axis(Direction.Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
 				.face(Direction.byName("north")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#diagonal_1").end()
 				.face(Direction.byName("east")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#diagonal_2").end()
 				.face(Direction.byName("south")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#diagonal_1").end()
@@ -40,7 +39,7 @@ public class CarverModels extends BlockModelBase
 				.face(Direction.byName("up")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#diagonal_1").end()
 				.face(Direction.byName("down")).uvs(0.0f, 0.0f, 0.0f, 16.0f).texture("#diagonal_1").end().end()
 			.element().from(8.0f, 0.0f, 0.0f).to(8.0f, 16.0f, 16.0f)
-				.rotation().angle(45.0f).axis(Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
+				.rotation().angle(45.0f).axis(Direction.Axis.byName("y")).origin(8.0f, 8.0f, 8.0f).end()
 				.face(Direction.byName("north")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#diagonal_1").end()
 				.face(Direction.byName("east")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#diagonal_1").end()
 				.face(Direction.byName("south")).uvs(0.0f, 0.0f, 16.0f, 16.0f).texture("#diagonal_1").end()

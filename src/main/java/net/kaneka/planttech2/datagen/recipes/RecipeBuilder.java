@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.datagen.recipes;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 
 class RecipeBuilder

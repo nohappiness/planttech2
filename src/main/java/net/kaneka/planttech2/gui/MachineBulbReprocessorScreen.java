@@ -1,27 +1,26 @@
 package net.kaneka.planttech2.gui;
 
-import java.util.function.Supplier;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.MachineBulbReprocessorContainer;
+import net.kaneka.planttech2.blocks.entity.machine.MachineBulbReprocessorBlockEntity;
+import net.kaneka.planttech2.inventory.MachineBulbReprocessorContainer;
 import net.kaneka.planttech2.items.MachineBulbItem;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+
+import java.util.function.Supplier;
 
 public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBulbReprocessorContainer>
 {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/machinebulbreprocessor.png");
 
-	public MachineBulbReprocessorScreen(MachineBulbReprocessorContainer container, PlayerInventory player, ITextComponent name)
+	public MachineBulbReprocessorScreen(MachineBulbReprocessorContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -129,7 +128,7 @@ public class MachineBulbReprocessorScreen extends BaseContainerScreen<MachineBul
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(4);
-		return i != 0 ? i * pixels / ((MachineBulbReprocessorTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((MachineBulbReprocessorBlockEntity) this.te).ticksPerItem() : 0;
 	}
 
 	@Override

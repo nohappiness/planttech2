@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.crops;
 
+import com.google.gson.*;
+import net.kaneka.planttech2.utilities.ISerializable;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.JSONUtils;
+
 import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.function.BiPredicate;
-
-import com.google.gson.*;
-import net.kaneka.planttech2.utilities.ISerializable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
 
 public class ParentPair implements BiPredicate<String, String>, ISerializable
 {
@@ -24,9 +24,9 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
     }
 
     @Override
-    public CompoundNBT write()
+    public CompoundTag save()
     {
-        CompoundNBT compound = new CompoundNBT();
+        CompoundTag compound = new CompoundTag();
         compound.putString("parent1", parent1);
         compound.putString("parent2", parent2);
         compound.putFloat("mutation", mutationChance);
@@ -93,7 +93,7 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
                 '}';
     }
 
-    public static ParentPair of(CompoundNBT compound)
+    public static ParentPair of(CompoundTag compound)
     {
         return new ParentPair(compound.getString("parent1"), compound.getString("parent2"), compound.getFloat("mutation"));
     }
@@ -137,7 +137,7 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
             return ParentPair.of(parent1, parent2, chance);
         }
 
-        public void write(ParentPair pair, PacketBuffer buf)
+        public void write(ParentPair pair,ByteBuf buf)
         {
             buf.writeUtf(pair.getFirstParent());
             buf.writeUtf(pair.getSecondParent());

@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.addons.jei;
 
+import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.ModIds;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -15,7 +16,6 @@ import net.kaneka.planttech2.addons.jei.infuser.InfuserCategory;
 import net.kaneka.planttech2.addons.jei.machine_growing.MachineGrowingCategory;
 import net.kaneka.planttech2.addons.jei.machinebulbreprocessor.MachinebulbReprocessorCategory;
 import net.minecraft.resources.ResourceLocation;
-import mezz.jei.api.IModPlugin;
 
 @JeiPlugin
 public class PlantTech2Plugin implements IModPlugin

@@ -2,19 +2,19 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.CompressorContainer;
+import net.kaneka.planttech2.blocks.entity.machine.CompressorBlockEntity;
+import net.kaneka.planttech2.inventory.CompressorContainer;
 import net.kaneka.planttech2.packets.ButtonPressMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
 {
     private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/compressor.png");
 
-    public CompressorScreen(CompressorContainer container, PlayerInventory player, ITextComponent name)
+    public CompressorScreen(CompressorContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -53,7 +53,7 @@ public class CompressorScreen extends BaseContainerScreen<CompressorContainer>
     private int getCookProgressScaled(int pixels)
     {
 	int i = menu.getValue(2);
-	return i != 0 ? i * pixels / ((CompressorTileEntity) this.te).ticksPerItem() : 0;
+	return i != 0 ? i * pixels / ((CompressorBlockEntity) this.te).ticksPerItem() : 0;
     }
     private boolean inArea(double mouseX, double mouseY, int posX, int posY)
     {

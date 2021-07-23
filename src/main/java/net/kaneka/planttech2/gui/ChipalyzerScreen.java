@@ -2,19 +2,18 @@ package net.kaneka.planttech2.gui;
 
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.ChipalyzerContainer;
-import net.kaneka.planttech2.tileentity.machine.ChipalyzerTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.ChipalyzerBlockEntity;
+import net.kaneka.planttech2.inventory.ChipalyzerContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/chipalyzer.png");
 
-	public ChipalyzerScreen(ChipalyzerContainer container, PlayerInventory player, ITextComponent name)
+	public ChipalyzerScreen(ChipalyzerContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -34,7 +33,7 @@ public class ChipalyzerScreen extends BaseContainerScreen<ChipalyzerContainer>
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(2);
-		return i != 0 ? i * pixels / ((ChipalyzerTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((ChipalyzerBlockEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override

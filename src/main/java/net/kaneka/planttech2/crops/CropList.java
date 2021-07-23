@@ -1,21 +1,21 @@
 package net.kaneka.planttech2.crops;
 
-import javax.annotation.Nullable;
-import java.util.*;
-import java.util.function.Consumer;
-
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ISerializable;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.world.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
 import net.minecraftforge.common.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nullable;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class CropList implements ISerializable
 {
@@ -24,32 +24,32 @@ public class CropList implements ISerializable
 	private final HashMap<String, CropEntry> internalMap = new HashMap<>();
 
 	@Override
-	public CompoundNBT write()
+	public CompoundTag save()
 	{
-		CompoundNBT compound = new CompoundNBT();
+		CompoundTag compound = new CompoundTag();
 		try
 		{
-			ListNBT keyList = new ListNBT();
+			ListTag keyList = new ListTag();
 			for (String key : internalMap.keySet())
 			{
-				keyList.add(StringNBT.valueOf(key));
-				compound.put(key, internalMap.get(key).write());
+				keyList.add(StringTag.valueOf(key));
+				compound.put(key, internalMap.get(key).save());
 			}
 			compound.put("keys", keyList);
 		}
 		catch (Exception e)
 		{
 			PlantTechMain.LOGGER.error("Crop list is broken, cannot write the data");
-			return new CompoundNBT();
+			return new CompoundTag();
 		}
 		return compound;
 	}
 
     @Override
-    public void read(CompoundNBT compound)
+    public void load(CompoundTag compound)
     {
         internalMap.clear();
-        ListNBT list = compound.getList("keys", Constants.NBT.TAG_STRING);
+        ListTag list = compound.getList("keys", Constants.NBT.TAG_STRING);
         for (int i=0;i<list.size();i++)
         {
 			String key = list.getString(i);

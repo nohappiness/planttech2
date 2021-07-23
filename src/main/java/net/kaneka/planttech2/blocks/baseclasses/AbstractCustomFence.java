@@ -2,18 +2,17 @@ package net.kaneka.planttech2.blocks.baseclasses;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.level.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public abstract class AbstractCustomFence extends Block
@@ -64,13 +63,13 @@ public abstract class AbstractCustomFence extends Block
     {
         VoxelShape shape = getPostShape();
         if (state.getValue(NORTH))
-            shape = VoxelShapes.or(shape, getShapeByDirection(Direction.NORTH));
+            shape = Shapes.or(shape, getShapeByDirection(Direction.NORTH));
         if (state.getValue(SOUTH))
-            shape = VoxelShapes.or(shape, getShapeByDirection(Direction.SOUTH));
+            shape = Shapes.or(shape, getShapeByDirection(Direction.SOUTH));
         if (state.getValue(WEST))
-            shape = VoxelShapes.or(shape, getShapeByDirection(Direction.WEST));
+            shape = Shapes.or(shape, getShapeByDirection(Direction.WEST));
         if (state.getValue(EAST))
-            shape = VoxelShapes.or(shape, getShapeByDirection(Direction.EAST));
+            shape = Shapes.or(shape, getShapeByDirection(Direction.EAST));
         return shape;
     }
 
@@ -78,7 +77,7 @@ public abstract class AbstractCustomFence extends Block
 
     public abstract VoxelShape getPostShape();
 
-    private BlockState getState(BlockState state, level levelIn, BlockPos pos)
+    private BlockState getState(BlockState state, Level levelIn, BlockPos pos)
     {
         return state
                 .setValue(NORTH, canConnectTo(levelIn, pos, Direction.SOUTH))

@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.world.planttopia.layers;
 
 import net.kaneka.planttech2.world.utils.BiomeHolder;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.INoiseRandom;
-import net.minecraft.world.gen.layer.traits.ICastleTransformer;
+import net.minecraft.world.level.newbiome.context.Context;
+import net.minecraft.world.level.newbiome.layer.traits.CastleTransformer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class GenLayerPhase implements ICastleTransformer {
+public class GenLayerPhase implements CastleTransformer {
 
 
     private HashMap<Integer, HashMap<BiomeHolder.RARITY, List<Integer>>> biomes_all, biomes_border;
@@ -25,7 +25,7 @@ public class GenLayerPhase implements ICastleTransformer {
     }
 
     @Override
-    public int apply(INoiseRandom rand, int north, int west, int south, int east, int center) {
+    public int apply(Context rand, int north, int west, int south, int east, int center) {
         HashMap<BiomeHolder.RARITY, List<Integer>> list = biomes_all.get(center);
 
         if(category(center) != category(north) || category(center) != category(west) || category(center) != category(south) || category(center) != category(east)){
@@ -58,7 +58,7 @@ public class GenLayerPhase implements ICastleTransformer {
 
 
 
-    private int randomBiome(INoiseRandom random, List<Integer> biomes) {
+    private int randomBiome(Context random, List<Integer> biomes) {
         return biomes.get(random.nextRandom(biomes.size()));
     }
 }

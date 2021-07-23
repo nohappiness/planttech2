@@ -1,12 +1,13 @@
 package net.kaneka.planttech2.packets;
 
-import net.kaneka.planttech2.tileentity.machine.CompressorTileEntity;
-import net.kaneka.planttech2.tileentity.machine.MachineBulbReprocessorTileEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import io.netty.buffer.ByteBuf;
+import net.kaneka.planttech2.blocks.entity.machine.CompressorBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.MachineBulbReprocessorBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -23,7 +24,7 @@ public class ButtonPressMessage
 		this.buttonId = buttonId;
 	}
 
-	public static void encode(ButtonPressMessage pkt, PacketBuffer buf)
+	public static void encode(ButtonPressMessage pkt, FriendlyByteBuf buf)
 	{
 		buf.writeInt(pkt.x);
 		buf.writeInt(pkt.y);
@@ -31,7 +32,7 @@ public class ButtonPressMessage
 		buf.writeInt(pkt.buttonId);
 	}
 
-	public static ButtonPressMessage decode(PacketBuffer buf)
+	public static ButtonPressMessage decode(ByteBuf buf)
 	{
 		return new ButtonPressMessage(buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
 	}
@@ -40,20 +41,20 @@ public class ButtonPressMessage
 	{
 		ctx.get().enqueueWork(() -> {
 
-			ServerPlayerEntity serverPlayer = ctx.get().getSender();
+			ServerPlayer serverPlayer = ctx.get().getSender();
 			BlockPos pos = new BlockPos(pkt.x, pkt.y, pkt.z);
 			int buttonId = pkt.buttonId;
 			if (serverPlayer != null && serverPlayer.level.hasChunkAt(pos))
 			{
-				TileEntity te = serverPlayer.level.getBlockEntity(pos);
+				BlockEntity te = serverPlayer.level.getBlockEntity(pos);
 				if (te != null)
 				{
-					if (te instanceof CompressorTileEntity)
+					if (te instanceof CompressorBlockEntity cbe)
 					{
-						((CompressorTileEntity) te).setSelectedId(buttonId);
-					} else if (te instanceof MachineBulbReprocessorTileEntity)
+						cbe.setSelectedId(buttonId);
+					} else if (te instanceof MachineBulbReprocessorBlockEntity)
 					{
-						((MachineBulbReprocessorTileEntity) te).setSelectedId(buttonId);
+						((MachineBulbReprocessorBlockEntity) te).setSelectedId(buttonId);
 					}
 				}
 			}

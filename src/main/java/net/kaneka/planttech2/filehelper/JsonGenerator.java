@@ -1,17 +1,12 @@
 package net.kaneka.planttech2.filehelper;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import net.minecraft.world.item.Item;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.minecraft.world.item.Item;
 
 public class JsonGenerator
 {

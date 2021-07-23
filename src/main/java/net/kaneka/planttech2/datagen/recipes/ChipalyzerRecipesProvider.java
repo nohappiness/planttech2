@@ -4,9 +4,9 @@ import com.google.gson.JsonObject;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.kaneka.planttech2.datagen.recipes.ChipalyzerRecipesProvider.Builder.create;

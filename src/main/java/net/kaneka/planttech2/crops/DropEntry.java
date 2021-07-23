@@ -1,23 +1,15 @@
 package net.kaneka.planttech2.crops;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import net.kaneka.planttech2.utilities.ISerializable;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -41,9 +33,9 @@ public class DropEntry implements ISerializable
     }
 
     @Override
-    public CompoundNBT write()
+    public CompoundTag save()
     {
-        CompoundNBT compound = new CompoundNBT();
+        CompoundTag compound = new CompoundTag();
         compound.putInt("min", min);
         compound.putInt("max", max);
         compound.putString("drop", drop.get().getRegistryName().toString());
@@ -110,7 +102,7 @@ public class DropEntry implements ISerializable
         return new DropEntry(item, min, max);
     }
 
-    public static DropEntry of(CompoundNBT compound)
+    public static DropEntry of(CompoundTag compound)
     {
         return new DropEntry(() -> ITEMS.getValue(new ResourceLocation(compound.getString("drop"))), compound.getInt("min"), compound.getInt("max"));
     }
@@ -162,14 +154,14 @@ public class DropEntry implements ISerializable
             return DropEntry.of(ObjectSupplier.of(itemLocation, ITEMS), min, max);
         }
 
-        public void write(DropEntry entry, PacketBuffer buffer)
+        public void write(DropEntry entry, FriendlyByteBuf buffer)
         {
             buffer.writeResourceLocation(entry.getItem().get().getRegistryName());
             buffer.writeInt(entry.getMin());
             buffer.writeInt(entry.getMax());
         }
 
-        public DropEntry read(PacketBuffer buffer)
+        public DropEntry read(FriendlyByteBuf buffer)
         {
             final ResourceLocation itemLoc = buffer.readResourceLocation();
             final int min = buffer.readInt();

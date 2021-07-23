@@ -1,29 +1,28 @@
 package net.kaneka.planttech2.blocks.machines;
 
+import net.kaneka.planttech2.blocks.entity.cable.CableBlockEntity;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.BlockEntity.cable.CableBlockEntity;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockRenderType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.state.StateDefinition.Builder;
-import net.minecraft.BlockEntity.BlockEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Hand;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockHitResult;
-import net.minecraft.util.math.shapes.CollisionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.BlockGetter;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.util.HashMap;
@@ -86,28 +85,28 @@ public class CableBlock extends Block
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult ray)
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray)
 	{
-		if (!worldIn.isClientSide && hand.equals(Hand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
 		{
-			Vector3d hitvec = ray.getLocation();
+			Vec3 hitvec = ray.getLocation();
 			hitvec = hitvec.add(-pos.getX(), -pos.getY(), -pos.getZ());
 			VoxelShape tempshape;
 			for (Direction dir : Direction.values())
 			{
 				tempshape = connection_voxels.get(dir);
-				if (tempshape.min(Axis.X) <= hitvec.x && tempshape.max(Axis.X) >= hitvec.x)
+				if (tempshape.min(Direction.Axis.X) <= hitvec.x && tempshape.max(Direction.Axis.X) >= hitvec.x)
 				{
-					if (tempshape.min(Axis.Y) <= hitvec.y && tempshape.max(Axis.Y) >= hitvec.y)
+					if (tempshape.min(Direction.Axis.Y) <= hitvec.y && tempshape.max(Direction.Axis.Y) >= hitvec.y)
 					{
-						if (tempshape.min(Axis.Z) <= hitvec.z && tempshape.max(Axis.Z) >= hitvec.z)
+						if (tempshape.min(Direction.Axis.Z) <= hitvec.z && tempshape.max(Direction.Axis.Z) >= hitvec.z)
 						{
-							CableBlockEntity te = getTECable(worldIn, pos);
+							CableBlockEntity te = getTECable(level, pos);
 							if (te != null)
 							{
 								te.rotateConnection(dir);
-								worldIn.setBlockAndUpdate(pos, getCurrentState(state, worldIn, pos));
-								return ActionResultType.SUCCESS;
+								level.setBlockAndUpdate(pos, getCurrentState(state, level, pos));
+								return InteractionResult.SUCCESS;
 							}
 						}
 					}
@@ -122,52 +121,40 @@ public class CableBlock extends Block
 			 * } }
 			 */
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
-	public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldstate, boolean bool)
 	{
-		CableBlockEntity te = getTECable(world, pos);
+		CableBlockEntity te = getTECable(level, pos);
 		if (te != null)
 		{
 			te.initCable(state);
-			world.setBlockAndUpdate(pos, getCurrentState(state, world, pos));
+			level.setBlockAndUpdate(pos, getCurrentState(state, level, pos));
 		}
-	}
-
-	@Override
-	public boolean hasBlockEntity(BlockState state)
-	{
-		return true;
-	}
-
-	@Override
-	public BlockEntity createBlockEntity(BlockState state, BlockGetter world)
-	{
-		return new CableBlockEntity();
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
 	{
-		CableBlockEntity te = getTECable(worldIn, pos);
+		CableBlockEntity te = getTECable(level, pos);
 		if (te != null)
 		{
 			te.deleteCable();
 		}
-		super.onRemove(state, worldIn, pos, newState, isMoving);
+		super.onRemove(state, level, pos, newState, isMoving);
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState state)
+	public RenderShape getRenderShape(BlockState state)
 	{
-		return BlockRenderType.MODEL;
+		return RenderShape.MODEL;
 	}
 
 	/*
-	 * public int getConnectionLookedOn(World worldIn, BlockPos pos, Vec3d start,
+	 * public int getConnectionLookedOn(Level level, BlockPos pos, Vec3d start,
 	 * Vec3d end) { HashMap<Integer, AxisAlignedBB> boxes =
 	 * getCollisionBoxListConnectionsList(worldIn, pos); HashMap<Integer,
 	 * RayTraceResult> rayTraces = rayTraceList(pos, start, end, boxes);
@@ -182,7 +169,7 @@ public class CableBlock extends Block
 	 *
 	 *
 	 * private HashMap<Integer, AxisAlignedBB>
-	 * getCollisionBoxListConnectionsList(World world, BlockPos pos) {
+	 * getCollisionBoxListConnectionsList(Level world, BlockPos pos) {
 	 * HashMap<Integer, AxisAlignedBB> list = new HashMap<Integer, AxisAlignedBB>();
 	 * CableBlockEntity te = getTECable(world, pos); if (te != null) { for (Direction
 	 * facing : Direction.values()) { if (te.getConnection(facing) > 1) {
@@ -216,7 +203,7 @@ public class CableBlock extends Block
 	}*/
 
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
 	{
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
 		CableBlockEntity cable = getTECable(world, pos);
@@ -229,14 +216,14 @@ public class CableBlock extends Block
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{
-		BlockGetter world = context.getLevel();
+		BlockGetter level = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		BlockState state = defaultBlockState();
 		for (Direction facing : Direction.values())
 		{
 
-			BlockState stateDirection = world.getBlockState(pos.relative(facing));
-			BlockEntity te = world.getBlockEntity(pos.relative(facing));
+			BlockState stateDirection = level.getBlockState(pos.relative(facing));
+			BlockEntity te = level.getBlockEntity(pos.relative(facing));
 
 			if (stateDirection.getBlock() instanceof CableBlock)
 			{
@@ -264,9 +251,9 @@ public class CableBlock extends Block
 		return getCurrentState(state, world, currentPos);
 	}
 
-	public BlockState getCurrentState(BlockState state, LevelAccessor world, BlockPos pos)
+	public BlockState getCurrentState(BlockState state, LevelAccessor level, BlockPos pos)
 	{
-		CableBlockEntity te = getTECable((World) world, pos);
+		CableBlockEntity te = getTECable((Level) level, pos);
 		if (te != null)
 		{
 			te.checkConnections(false);
@@ -277,19 +264,19 @@ public class CableBlock extends Block
 	}
 
 	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN);
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
 	{
 		return getCombinedShape(state);
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
 	{
 		return getCombinedShape(state);
 	}
@@ -302,19 +289,19 @@ public class CableBlock extends Block
 			int value = state.getValue(directions.get(dir));
 			if (value > 0)
 			{
-				shape = VoxelShapes.or(shape, cable_voxels.get(dir));
+				shape = Shapes.or(shape, cable_voxels.get(dir));
 				if (value > 1)
 				{
-					shape = VoxelShapes.or(shape, connection_voxels.get(dir));
+					shape = Shapes.or(shape, connection_voxels.get(dir));
 				}
 			}
 		}
 		return shape;
 	}
 
-	private CableBlockEntity getTECable(World world, BlockPos pos)
+	private CableBlockEntity getTECable(Level level, BlockPos pos)
 	{
-		BlockEntity te = world.getBlockEntity(pos);
+		BlockEntity te = level.getBlockEntity(pos);
 		return te instanceof CableBlockEntity ? (CableBlockEntity) te : null;
 	}
 }

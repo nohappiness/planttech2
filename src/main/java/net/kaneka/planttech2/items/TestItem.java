@@ -3,17 +3,17 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.datagen.helper.JsonFileConverter;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
-import net.minecraft.util.InteractionResultHolderType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -22,8 +22,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
-import InteractionResultHolderType;
 
 public class TestItem extends Item
 {
@@ -35,7 +33,7 @@ public class TestItem extends Item
 	}
 
 	/*@Override
-	public InteractionResultHolder<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn)
+	public InteractionResultHolder<ItemStack> onItemRightClick(Level level, PlayerEntity playerIn, Hand handIn)
 	{
 		if (playerIn instanceof ServerPlayerEntity)
 		{
@@ -45,7 +43,7 @@ public class TestItem extends Item
 	}*/
 	private BufferedWriter out;
 	@Override
-	public InteractionResultHolderType useOn(ItemUseContext ctx)
+	public InteractionResult useOn(UseOnContext ctx)
 	{
 		//		System.out.println(ModDimensions.getPlantTopiaDimensionType());
 		if (!ctx.getLevel().isClientSide)
@@ -145,9 +143,9 @@ public class TestItem extends Item
 	}
 
 	@Override
-	public void appendHoverText(ItemStack p_77624_1_, @Nullable World p_77624_2_, List<ITextComponent> p_77624_3_, ITooltipFlag p_77624_4_)
+	public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_)
 	{
-		StringTextComponent text = new StringTextComponent("Leave me alone!");
+		Component text = new TextComponent("Leave me alone!");
 		text.setStyle(Style.EMPTY.applyFormat(TextFormatting.RED));
 		p_77624_3_.add(text);
 	}

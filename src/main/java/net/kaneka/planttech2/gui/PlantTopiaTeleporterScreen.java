@@ -1,22 +1,21 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.PlantTopiaTeleporterContainer;
+import net.kaneka.planttech2.blocks.entity.machine.PlantTopiaTeleporterBlockEntity;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
+import net.kaneka.planttech2.inventory.PlantTopiaTeleporterContainer;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.TeleporterBlockButtonPressMessage;
-import net.kaneka.planttech2.tileentity.machine.PlantTopiaTeleporterTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTeleporterContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/blockteleporter.png");
 
-	public PlantTopiaTeleporterScreen(PlantTopiaTeleporterContainer container, PlayerInventory player, ITextComponent name)
+	public PlantTopiaTeleporterScreen(PlantTopiaTeleporterContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -33,7 +32,7 @@ public class PlantTopiaTeleporterScreen extends BaseContainerScreen<PlantTopiaTe
 	
 	private void buttonClicked(int buttonid)
 	{
-		if(menu.getValue(0) >= ((PlantTopiaTeleporterTileEntity) te).energyPerAction())
+		if(menu.getValue(0) >= ((PlantTopiaTeleporterBlockEntity) te).energyPerAction())
 		{
 			PlantTech2PacketHandler.sendToServer(new TeleporterBlockButtonPressMessage(te.getBlockPos().getX(), te.getBlockPos().getY(), te.getBlockPos().getZ(), buttonid));
 		}

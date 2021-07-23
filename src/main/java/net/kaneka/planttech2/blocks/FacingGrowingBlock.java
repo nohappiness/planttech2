@@ -1,25 +1,23 @@
 package net.kaneka.planttech2.blocks;
 
-import net.minecraft.core.Direction;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HorizontalBlock;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.state.StateDefinition.Builder;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.level.server.Serverlevel;
 
 import java.util.function.Supplier;
 
 
 public class FacingGrowingBlock extends GrowingBlock
 {
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
 	public FacingGrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
 	{
@@ -28,7 +26,7 @@ public class FacingGrowingBlock extends GrowingBlock
 	}
 
 	@Override
-	protected void placeBlock(Serverlevel level, BlockPos pos, BlockState state)
+	protected void placeBlock(ServerLevel level, BlockPos pos, BlockState state)
 	{
 		level.setBlockAndUpdate(pos, blockSupplier.get().defaultBlockState().setValue(FACING, state.getValue(FACING)));
 	}
@@ -52,7 +50,7 @@ public class FacingGrowingBlock extends GrowingBlock
 	}
 
 	@Override
-	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
 	{
 		builder.add(GROWINGSTATE, FACING);
 	}

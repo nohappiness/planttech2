@@ -2,18 +2,19 @@ package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.world.planttopia.PlanttopiaBiomeProvider;
 import net.kaneka.planttech2.world.planttopia.PlanttopiaChunkGenerator;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.Dimension;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.dimension.DimensionType;
+
+import java.awt.*;
 
 public class ModDimensions
 {
 	public static long seed = 3818919209114L;
-	public static final RegistryKey<DimensionType> PLANTTOPIA_DIMENSIONTYPE = RegistryKey.create(Registry.DIMENSION_TYPE_REGISTRY, ModReferences.prefix("planttopia"));
-	public static final RegistryKey<Dimension> PLANTTOPIA_DIMENSION = RegistryKey.create(Registry.LEVEL_STEM_REGISTRY, ModReferences.prefix("planttopia"));
-	public static final RegistryKey<World> PLANTTOPIA_WORLD = RegistryKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
+	public static final ResourceKey<DimensionType> PLANTTOPIA_DIMENSIONTYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, ModReferences.prefix("planttopia"));
+	public static final ResourceKey<Dimension> PLANTTOPIA_DIMENSION = ResourceKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
+	public static final ResourceKey<Level> PLANTTOPIA_WORLD = ResourceKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
 	
 	public static void initDimensions()
 	{

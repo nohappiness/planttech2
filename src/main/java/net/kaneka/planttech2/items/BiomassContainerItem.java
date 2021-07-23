@@ -4,17 +4,17 @@ import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.kaneka.planttech2.fluids.capability.IBiomassFluidEnergy;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import java.util.List;
@@ -54,7 +54,7 @@ public class BiomassContainerItem extends Item
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	public void inventoryTick(ItemStack stack, Level level, Entity entityIn, int itemSlot, boolean isSelected)
 	{
 //		if (entityIn instanceof PlayerEntity && !worldIn.isRemote)
 //		{
@@ -65,7 +65,7 @@ public class BiomassContainerItem extends Item
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt)
 	{
 		return new BiomassFluidEnergy();
 	}
@@ -127,46 +127,46 @@ public class BiomassContainerItem extends Item
 		return CAPACITY;
 	}
 
-	private static CompoundNBT initTag(ItemStack stack)
+	private static CompoundTag initTag(ItemStack stack)
 	{
-		CompoundNBT compoundNBT;
+		CompoundTag CompoundTag;
 		if (stack.hasTag())
-			compoundNBT = stack.getTag();
+			CompoundTag = stack.getTag();
 		else
 		{
-			compoundNBT = new CompoundNBT();
-			compoundNBT.putInt("biomass", 0);
-			stack.setTag(compoundNBT);
+			CompoundTag = new CompoundTag();
+			CompoundTag.putInt("biomass", 0);
+			stack.setTag(CompoundTag);
 		}
-		return compoundNBT;
+		return CompoundTag;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
 		IBiomassFluidEnergy cap = BiomassFluidEnergy.getItemStackCap(stack);
 //		if (cap.getCurrentStorage() > 0)
 //		if (getCurrentStorage(stack) > 0)
-//			tooltip.add(new StringTextComponent(cap.getMaxStorage() + "/" + cap.getMaxStorage()));
-//			tooltip.add(new StringTextComponent(getCapacity() + "/" + getCapacity()));
+//			tooltip.add(new TextComponent(cap.getMaxStorage() + "/" + cap.getMaxStorage()));
+//			tooltip.add(new TextComponent(getCapacity() + "/" + getCapacity()));
 //		else
-			tooltip.add(new StringTextComponent(cap.getCurrentStorage() + "/" + cap.getMaxStorage()));
-//		tooltip.add(new StringTextComponent(getCurrentStorage(stack) + "/" + getCapacity()));
+			tooltip.add(new TextComponent(cap.getCurrentStorage() + "/" + cap.getMaxStorage()));
+//		tooltip.add(new TextComponent(getCurrentStorage(stack) + "/" + getCapacity()));
 	}
 
 	@Override
-	public CompoundNBT getShareTag(ItemStack stack)
+	public CompoundTag getShareTag(ItemStack stack)
 	{
-		CompoundNBT compound = stack.getOrCreateTag();
+		CompoundTag compound = stack.getOrCreateTag();
 		IBiomassFluidEnergy cap = stack.getCapability(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY).orElseThrow(NullPointerException::new);
-		INBT compound2 = BiomassFluidEnergy.BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY, cap, null);
+		Tag compound2 = BiomassFluidEnergy.BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BiomassFluidEnergy.BIOMASS_FLUID_ENERGY, cap, null);
 		if (compound2 != null)
 			compound.put("biomass", compound2);
 		return compound;
 	}
 
 	@Override
-	public void readShareTag(ItemStack stack, CompoundNBT nbt)
+	public void readShareTag(ItemStack stack, CompoundTag nbt)
 	{
 		if (nbt != null && nbt.contains("biomass"))
 		{
@@ -177,7 +177,7 @@ public class BiomassContainerItem extends Item
 	}
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) 
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items)
 	{
 		if (group == this.category)
 		{

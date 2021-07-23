@@ -1,21 +1,19 @@
 package net.kaneka.planttech2.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.ItemUpgradeableContainer;
+import net.kaneka.planttech2.inventory.ItemUpgradeableContainer;
 import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContainer>
 {
@@ -24,12 +22,12 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 			put(10, new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/itemupgradeable_10.png"));
 	    }
 	};
-	protected final PlayerInventory player;
+	protected final Inventory player;
     protected ItemStack stack; 
     protected int invsize; 
     protected IEnergyStorage energystorage; 
 
-    public ItemUpgradeableScreen(ItemUpgradeableContainer container, PlayerInventory inv, ITextComponent name)
+    public ItemUpgradeableScreen(ItemUpgradeableContainer container, Inventory inv, ITextComponent name)
     {
     	super(container, inv, name); 
     	this.player = inv; 
@@ -69,7 +67,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
 		posY += this.topPos;
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 			renderComponentHoverEffect(mStack, null, mouseX, mouseY);
-//            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
+//            renderComponentHoverEffect(mStack, new TextComponent(lines), mouseX, mouseY);
     }
 
 	@Override

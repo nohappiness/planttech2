@@ -1,0 +1,164 @@
+package net.kaneka.planttech2.blocks.entity.machine;
+
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
+import net.kaneka.planttech2.inventory.DNAExtractorContainer;
+import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
+import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.antlr.runtime.misc.ContainerData;
+
+public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
+{
+    protected final ContainerData field_array = new ContainerData()
+	{
+		public int get(int index)
+		{
+			switch (index)
+			{
+			case 0:
+				return DNAExtractorBlockEntity.this.energystorage.getEnergyStored();
+			case 1:
+				return DNAExtractorBlockEntity.this.energystorage.getMaxEnergyStored();
+			case 2:
+				return DNAExtractorBlockEntity.this.ticksPassed;
+			default:
+				return 0;
+			}
+		}
+
+		public void set(int index, int value)
+		{
+			switch (index)
+			{
+			case 0:
+				DNAExtractorBlockEntity.this.energystorage.setEnergyStored(value);
+				break;
+			case 1:
+				DNAExtractorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				break;
+			case 2:
+				DNAExtractorBlockEntity.this.ticksPassed = value;
+				;
+				break;
+			}
+		}
+		public int getCount()
+		{
+			return 3;
+		}
+	};
+
+    public DNAExtractorBlockEntity()
+    {
+		super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
+    }
+
+    @Override
+    public void doUpdate()
+    {
+    	super.doUpdate();
+		if (energystorage.getEnergyStored() > energyPerAction())
+		{
+			ItemStack stack1 = itemhandler.getStackInSlot(0);
+			ItemStack stack2 = itemhandler.getStackInSlot(1);
+			ItemStack stack3 = itemhandler.getStackInSlot(2);
+			if (!stack1.isEmpty() && !stack2.isEmpty())
+			{
+				if (stack1.getItem() instanceof CropSeedItem && stack2.getItem() == ModItems.DNA_CONTAINER_EMPTY)
+				{
+					if (stack1.hasTag())
+					{
+						if (ticksPassed < ticksPerItem())
+						{
+							ticksPassed++;
+							energystorage.extractEnergy(energyPerAction(), false);
+						}
+						else
+						{
+							if (stack3.isEmpty())
+							{
+								ItemStack stack = new ItemStack(ModItems.DNA_CONTAINER);
+								CompoundTag nbt = stack1.getTag().copy();
+								nbt.remove("analysed");
+								stack.setTag(nbt);
+								itemhandler.setStackInSlot(2, stack);
+								endProcess();
+								addKnowledge();
+							}
+							else if (stack3.hasTag() && stack3.getItem() == ModItems.DNA_CONTAINER)
+							{
+								if (stack3.getTag().equals(stack1.getTag()))
+								{
+									stack3.grow(1);
+									addKnowledge();
+									endProcess();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+    }
+    
+    @Override
+	public ContainerData getContainerData()
+	{
+		return field_array;
+	}
+
+    private void endProcess()
+    {
+		ticksPassed = 0;
+		itemhandler.getStackInSlot(0).shrink(1);
+		itemhandler.getStackInSlot(1).shrink(1);
+    }
+
+    @Override
+    public String getNameString()
+    {
+	return "dnaextractor";
+    }
+
+    @Override
+	public Container createMenu(int id, Inventory inv, Player player)
+	{
+		return new DNAExtractorContainer(id, inv, this);
+	}
+
+	@Override
+	public int getEnergyInSlot()
+	{
+		return 4;
+	}
+
+	@Override
+	public int getEnergyOutSlot()
+	{
+		return 5;
+	}
+
+	@Override
+	public int getKnowledgeChipSlot()
+	{
+		return 6;
+	}
+
+	@Override
+	public int getKnowledgePerAction()
+	{
+		return 50;
+	}
+
+	@Override
+	public int getUpgradeSlot()
+	{
+		return 3;
+	}
+}

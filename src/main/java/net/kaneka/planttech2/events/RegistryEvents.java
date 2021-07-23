@@ -2,16 +2,16 @@ package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.entity.EntityType;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.potion.Effect;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
-import net.minecraft.potion.Effect;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,7 +36,7 @@ public class RegistryEvents
 	}
 
 	@SubscribeEvent
-	public static void registerTileEntities(RegistryEvent.Register<TileEntityType<?>> event)
+	public static void registerTileEntities(RegistryEvent.Register<BlockEntityType<?>> event)
 	{
 		ModTileEntities.register(event.getRegistry());
 	}

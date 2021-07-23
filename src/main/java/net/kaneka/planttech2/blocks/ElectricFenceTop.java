@@ -1,26 +1,25 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HorizontalBlock;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.shapes.CollisionContext;
-import net.minecraft.level.phys.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.level.BlockGetter;
-import net.minecraft.level.LevelAccessor;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ElectricFenceTop extends BaseElectricFence
 {
-    public static final DirectionProperty HORIZONTAL_FACING = HorizontalBlock.FACING;
-    public static final VoxelShape TOP_X_AXIS = VoxelShapes.or(
+    public static final DirectionProperty HORIZONTAL_FACING = HorizontalDirectionalBlock.FACING;
+    public static final VoxelShape TOP_X_AXIS = Shapes.or(
             Block.box(7.0D, 0.10D, 0.10D, 9.0D, 5.0D, 15.90D),
             Block.box(6.0D, 5.0D, 0.10D, 10.0D, 7.0D, 15.90D),
 
@@ -28,7 +27,7 @@ public class ElectricFenceTop extends BaseElectricFence
             Block.box(3.0D, 7.0D, 0.10D, 6.0D, 10.0D, 15.90D),
             Block.box(10.0D, 7.0D, 0.10D, 13.0D, 10.0D, 15.90D),
             Block.box(13.0D, 10.0D, 0.10D, 15.90D, 13.0D, 15.90D));
-    public static final VoxelShape TOP_Z_AXIS = VoxelShapes.or(
+    public static final VoxelShape TOP_Z_AXIS = Shapes.or(
             Block.box(0.10D, 0.10D, 7.0D, 15.90D, 5.0D, 9.0D),
             Block.box(0.10D, 5.0D, 6.0D, 15.90D, 7.0D, 10.0D),
 
@@ -57,7 +56,7 @@ public class ElectricFenceTop extends BaseElectricFence
     {
         return defaultBlockState()
                 .setValue(HORIZONTAL_FACING, stateIn.getValue(HORIZONTAL_FACING))
-                .setValue(ELECTRIC_POWER, calculatePower((level) levelIn, currentPos));
+                .setValue(ELECTRIC_POWER, calculatePower((Level) levelIn, currentPos));
     }
 
     @Override

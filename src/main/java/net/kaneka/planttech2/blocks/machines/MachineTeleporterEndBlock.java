@@ -12,7 +12,7 @@ public class MachineTeleporterEndBlock extends Block
 
 	/*
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockHitResult rts)
+	public InteractionResult onBlockActivated(BlockState state, Level level, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockHitResult rts)
 	{
 		
 		if (!worldIn.isRemote)
@@ -30,10 +30,10 @@ public class MachineTeleporterEndBlock extends Block
 			
 			
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 	*/
 }

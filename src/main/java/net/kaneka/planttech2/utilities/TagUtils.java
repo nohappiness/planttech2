@@ -1,11 +1,11 @@
 package net.kaneka.planttech2.utilities;
 
-import java.util.Collection;
-
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.resources.ResourceLocation;
+
+import java.util.Collection;
 
 public class TagUtils
 {

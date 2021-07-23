@@ -1,15 +1,14 @@
 package net.kaneka.planttech2.items;
 
 
-import net.kaneka.planttech2.container.TeleporterContainer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
+import net.kaneka.planttech2.inventory.TeleporterContainer;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.world.item.Item.Properties;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 public class TeleporterItem extends EnergyStorageItem
 {
@@ -21,7 +20,7 @@ public class TeleporterItem extends EnergyStorageItem
 
 	/*
 	@Override
-	public InteractionResultHolder<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> onItemRightClick(Level world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		if(Minecraft.getInstance().gameSettings.keyBindSneak.isKeyDown())
@@ -43,10 +42,10 @@ public class TeleporterItem extends EnergyStorageItem
 	public static boolean addPoint(ItemStack stack, Dimension dim, BlockPos pos)
 	{
 		boolean retval = false; 
-		CompoundNBT stacknbt = stack.getTag();
+		CompoundTag stacknbt = stack.getTag();
 		if (stacknbt != null)
 		{
-			stacknbt = new CompoundNBT();
+			stacknbt = new CompoundTag();
 		}
 		
 		int amount = 0; 
@@ -57,7 +56,7 @@ public class TeleporterItem extends EnergyStorageItem
 		
 		if(amount < 8)
 		{
-    		CompoundNBT newnbt = new CompoundNBT();
+    		CompoundTag newnbt = new CompoundTag();
     		newnbt.putString("dim", dim.getType().getRegistryName().toString());
     		newnbt.putInt("x", pos.getX());
     		newnbt.putInt("y", pos.getY());
@@ -90,15 +89,15 @@ public class TeleporterItem extends EnergyStorageItem
 		
 
 		@Override
-		public Container createMenu(int id, PlayerInventory inv, PlayerEntity entity)
+		public Container createMenu(int id, Inventory inv, Player entity)
 		{
 			return new TeleporterContainer(id, inv, stack);
 		}
 
 		@Override
-		public ITextComponent getDisplayName()
+		public Component getDisplayName()
 		{
-			return new StringTextComponent("container.teleporter");
+			return new TextComponent("container.teleporter");
 		}
 		
 	}

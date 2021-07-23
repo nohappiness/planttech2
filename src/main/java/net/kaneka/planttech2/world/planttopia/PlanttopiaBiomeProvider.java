@@ -1,19 +1,19 @@
 package net.kaneka.planttech2.world.planttopia;
 
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.kaneka.planttech2.world.planttopia.layers.GenLayerUtils;
-import net.minecraft.util.registry.RegistryLookupCodec;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModDimensions;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.kaneka.planttech2.world.planttopia.layers.GenLayerUtils;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.RegistryLookupCodec;
 import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.layer.Layer;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.newbiome.layer.Layer;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PlanttopiaBiomeProvider extends BiomeProvider
 {

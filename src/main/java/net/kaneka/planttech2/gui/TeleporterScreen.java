@@ -3,24 +3,22 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.kaneka.planttech2.container.TeleporterContainer;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
+import net.kaneka.planttech2.inventory.TeleporterContainer;
 import net.kaneka.planttech2.items.TeleporterItem;
 import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
 
 public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 {
 	protected static final ResourceLocation BACKGROUND = new ResourceLocation("planttech2:textures/gui/teleporter.png");
-	protected final PlayerInventory player;
+	protected final Inventory player;
 	protected int guiLeft;
 	protected int guiTop;
 	protected ItemStack stack = ItemStack.EMPTY; 
@@ -28,7 +26,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
     protected IEnergyStorage energystorage; 
 
 	
-	public TeleporterScreen(TeleporterContainer container, PlayerInventory player, ITextComponent name)
+	public TeleporterScreen(TeleporterContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     	this.player = player; 
@@ -141,7 +139,7 @@ public class TeleporterScreen extends ContainerScreen<TeleporterContainer>
 		posY += this.guiTop; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
 			renderComponentHoverEffect(mStack, null, mouseX, mouseY);
-//            renderComponentHoverEffect(mStack, new StringTextComponent(lines), mouseX, mouseY);
+//            renderComponentHoverEffect(mStack, new TextComponent(lines), mouseX, mouseY);
     }
 	
 	protected int getEnergyStoredScaled(int pixels)

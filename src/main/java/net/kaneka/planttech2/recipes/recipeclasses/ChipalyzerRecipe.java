@@ -1,38 +1,33 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.JsonObject;
-
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.TagUtils;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.IRecipe;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
-import net.minecraft.world.item.crafting.IRecipeType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChipalyzerRecipe implements IRecipe<IInventory>
+public class ChipalyzerRecipe implements Recipe<Inventory>
 {
 	private final ResourceLocation id;
 	private final ItemStack chip;
@@ -88,16 +83,16 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 			{
 				if (stack.getItem() == Items.ENCHANTED_BOOK)
 				{
-					for (INBT nbt : EnchantedBookItem.getEnchantments(stack))
+					for (Tag nbt : EnchantedBookItem.getEnchantments(stack))
 					{
-						if (nbt instanceof CompoundNBT)
+						if (nbt instanceof CompoundTag)
 						{
-							CompoundNBT compoundnbt = (CompoundNBT) nbt;
-							if (compoundnbt.contains("id"))
+							CompoundTag CompoundTag = (CompoundTag) nbt;
+							if (CompoundTag.contains("id"))
 							{
-								if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(compoundnbt.getString("id"))))
+								if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(CompoundTag.getString("id"))))
 								{
-									list.add(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(compoundnbt.getString("id"))));
+									list.add(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(CompoundTag.getString("id"))));
 								}
 							}
 						}
@@ -115,7 +110,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		return list;
 	}
 
-	public boolean compareEnchantment(ListNBT nbt)
+	public boolean compareEnchantment(ListTag nbt)
 	{
 		if (input.getEnchantmentTags() == nbt)
 		{
@@ -138,13 +133,13 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public boolean matches(IInventory inv, World worldIn)
+	public boolean matches(Inventory inv, Level worldIn)
 	{
 		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack assemble(IInventory inv)
+	public ItemStack assemble(Inventory inv)
 	{
 		return output;
 	}
@@ -165,15 +160,15 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 	public ResourceLocation getId() {return id;}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer()
+	public RecipeSerializer<?> getSerializer()
 	{
 		return ModRecipeSerializers.CHIPALYZER;
 	}
 
 	@Override
-	public IRecipeType<?> getType() {return ModRecipeTypes.CHIPALYZER;}
+	public RecipeType<?> getType() {return ModRecipeTypes.CHIPALYZER;}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ChipalyzerRecipe>
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ChipalyzerRecipe>
 	{
 		@Override
 		public ChipalyzerRecipe fromJson(ResourceLocation recipeId, JsonObject json)
@@ -238,7 +233,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public ChipalyzerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
+		public ChipalyzerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
 		{
 			ItemStack chip = buffer.readItem();
 			ItemStack input = buffer.readItem();
@@ -253,7 +248,7 @@ public class ChipalyzerRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, ChipalyzerRecipe recipe)
+		public void toNetwork(FriendlyByteBuf buffer, ChipalyzerRecipe recipe)
 		{
 			buffer.writeItem(recipe.chip);
 			buffer.writeItem(recipe.input);
