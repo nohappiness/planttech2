@@ -2,14 +2,14 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class KnowledgeChip extends Item
 				KnowledgeChip chip = (KnowledgeChip) item; 
 				if(chip.getTier() <= maxTier)
 				{
-					CompoundNBT nbt = stack.getOrCreateTag();
+					CompoundTag nbt = stack.getOrCreateTag();
 					int newknowledge;
 					if(nbt.contains("knowledge"))
 					{
@@ -101,16 +101,16 @@ public class KnowledgeChip extends Item
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		CompoundNBT nbt = stack.getOrCreateTag();
+		CompoundTag nbt = stack.getOrCreateTag();
 		if(nbt.contains("knowledge"))
 		{
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getString() + ": " + nbt.getInt("knowledge") + "/" + getMaxKnowledge()));
+			tooltip.add(new TextComponent(new TranslatableComponent("info.knowledge").getString() + ": " + nbt.getInt("knowledge") + "/" + getMaxKnowledge()));
 		}
 		else
 		{
-			tooltip.add(new StringTextComponent(new TranslationTextComponent("info.knowledge").getString() + ": 0/" + getMaxKnowledge()));
+			tooltip.add(new TextComponent(new TranslatableComponent("info.knowledge").getString() + ": 0/" + getMaxKnowledge()));
 		}
 	}
 

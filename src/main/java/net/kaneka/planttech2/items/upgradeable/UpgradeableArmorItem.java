@@ -1,43 +1,42 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-
 import net.kaneka.planttech2.energy.BioEnergyStorage;
 import net.kaneka.planttech2.energy.IItemChargeable;
+import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.items.armors.CustomArmorMaterial;
 import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem.NamedContainerProvider;
-import net.kaneka.planttech2.items.armors.ArmorBaseItem;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.kaneka.planttech2.utilities.NBTHelper;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeable, IUpgradeable
 {
@@ -47,7 +46,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	private int basecapacity, maxInvSize, baseDamageReduction, slotId;
 	private float baseToughness; 
 
-	public UpgradeableArmorItem(String resname, EquipmentSlotType slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
+	public UpgradeableArmorItem(String resname, EquipmentSlot slot, int basecapacity, int maxInvSize, int baseDamageReduction, float baseToughness, int slotId)
 	{
 		super(resname, CustomArmorMaterial.UNNECESSARY, slot, new Item.Properties().tab(ModCreativeTabs.TOOLS_AND_ARMOR));
 		this.basecapacity = basecapacity;
@@ -58,7 +57,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt)
+	public ICapabilityProvider initCapabilities(ItemStack stack, CompoundTag nbt)
 	{
 		return new InventoryEnergyProvider(basecapacity, maxInvSize);
 	}
@@ -93,10 +92,10 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 
 	public void updateEnergy(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag == null)
 		{
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
@@ -194,7 +193,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	@Override
 	public double getDurabilityForDisplay(ItemStack stack)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
@@ -226,18 +225,18 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
 
 		if(player.isCrouching())
 		{
-			if (!world.isClientSide && player instanceof ServerPlayerEntity) 
+			if (!world.isClientSide && player instanceof ServerPlayer)
 			{
-    			NetworkHooks.openGui((ServerPlayerEntity) player, new NamedContainerProvider(stack, player.inventory.selected), buffer -> buffer.writeItem(stack));
+    			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
 			}
 		}
-		return new ActionResult<ItemStack>(ActionResultType.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override
@@ -248,7 +247,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 		{
 			int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseArmor = 0;
 			float increaseToughness = 0; 
-			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>(); 
+			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 
 			ItemStack slot;
 			for (int i = 0; i < inv.getSlots(); i++)
@@ -298,10 +297,10 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 				}
 			}
 
-			CompoundNBT nbt = stack.getTag();
+			CompoundTag nbt = stack.getTag();
 			if (nbt == null)
 			{
-				nbt = new CompoundNBT();
+				nbt = new CompoundTag();
 			}
 
 			nbt.putInt("energycost", energyCost);
@@ -323,7 +322,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack)
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot, ItemStack stack)
 	{
 		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create();
 		if (equipmentSlot == slot)
@@ -352,7 +351,7 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 	
 	@Override
-	public void onArmorTick(ItemStack stack, World world, PlayerEntity player)
+	public void onArmorTick(ItemStack stack, Level world, Player player)
 	{
 		if(!world.isClientSide)
 		{
@@ -367,17 +366,17 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			tooltip.add(new TranslationTextComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
-			tooltip.add(new TranslationTextComponent("info.energycosts", getEnergyCost(stack))); 
-			tooltip.add(new TranslationTextComponent("info.openwithshift")); 
+			tooltip.add(new TranslatableComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+			tooltip.add(new TranslatableComponent("info.energycosts", getEnergyCost(stack)));
+			tooltip.add(new TranslatableComponent("info.openwithshift"));
 		}
 
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 	@Override

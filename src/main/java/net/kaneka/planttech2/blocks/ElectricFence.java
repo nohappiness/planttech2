@@ -1,13 +1,20 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 
@@ -48,7 +55,7 @@ public class ElectricFence extends BaseElectricFence
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
         return getState(this.defaultBlockState()
-                .setValue(ELECTRIC_POWER, calculatePower((level) levelIn, currentPos)), (level) levelIn, currentPos);
+                .setValue(ELECTRIC_POWER, calculatePower((Level) levelIn, currentPos)), (Level) levelIn, currentPos);
     }
 
     @Override
@@ -58,14 +65,14 @@ public class ElectricFence extends BaseElectricFence
                 .setValue(ELECTRIC_POWER, calculatePower(context.getLevel(), context.getClickedPos())), context.getLevel(), context.getClickedPos());
     }
 
-    public boolean canConnectTo(level level, BlockPos pos, Direction direction)
+    public boolean canConnectTo(Level level, BlockPos pos, Direction direction)
     {
         BlockState state = level.getBlockState(pos.relative(direction));
         Block block = state.getBlock();
         return ((block instanceof BaseElectricFence || block instanceof ElectricFenceGate) || state.isFaceSturdy(level, pos.relative(direction), direction.getOpposite()));
     }
 
-    private BlockState getState(BlockState state, level levelIn, BlockPos pos)
+    private BlockState getState(BlockState state, Level levelIn, BlockPos pos)
     {
         return state
                 .setValue(NORTH, canConnectTo(levelIn, pos, Direction.SOUTH))
@@ -80,13 +87,13 @@ public class ElectricFence extends BaseElectricFence
     {
         VoxelShape shape = POST;
         if (state.getValue(NORTH))
-            shape = VoxelShapes.or(shape, POSITIVE_Z);
+            shape = Shapes.or(shape, POSITIVE_Z);
         if (state.getValue(SOUTH))
-            shape = VoxelShapes.or(shape, NEGATIVE_Z);
+            shape = Shapes.or(shape, NEGATIVE_Z);
         if (state.getValue(WEST))
-            shape = VoxelShapes.or(shape, POSITIVE_X);
+            shape = Shapes.or(shape, POSITIVE_X);
         if (state.getValue(EAST))
-            shape = VoxelShapes.or(shape, NEGATIVE_X);
+            shape = Shapes.or(shape, NEGATIVE_X);
         return shape;
     }
 }

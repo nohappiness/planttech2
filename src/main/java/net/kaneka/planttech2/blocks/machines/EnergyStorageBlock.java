@@ -1,27 +1,26 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import java.util.function.Supplier;
-
-import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.HorizontalBlock;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.item.BlockPlaceContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.state.StateDefinition.Builder;
-import net.minecraft.BlockEntity.BlockEntity;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.World;
+
+import java.util.function.Supplier;
 
 public class EnergyStorageBlock extends MachineBaseBlock
 {
-    public static final DirectionProperty FACING = HorizontalBlock.FACING;
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 3);
 
     public EnergyStorageBlock(Supplier<? extends BlockEntity> teCreator, int tier)
@@ -43,9 +42,9 @@ public class EnergyStorageBlock extends MachineBaseBlock
     }
 
     @Override
-    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
     {
-	worldIn.setBlock(pos, this.defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()), 2);
+	 level.setBlock(pos, this.defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()), 2);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class EnergyStorageBlock extends MachineBaseBlock
     }
 
     @Override
-    protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder)
     {
         builder.add(FACING).add(TIER);
     }

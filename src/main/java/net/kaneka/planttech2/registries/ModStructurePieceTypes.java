@@ -1,7 +1,6 @@
 package net.kaneka.planttech2.registries;
 
 
-import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 
 public class ModStructurePieceTypes
 {

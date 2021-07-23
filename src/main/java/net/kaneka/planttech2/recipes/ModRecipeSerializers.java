@@ -4,7 +4,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -15,7 +15,7 @@ public class ModRecipeSerializers
     @ObjectHolder("infusing") public static InfuserRecipe.Serializer INFUSER;
     @ObjectHolder("chipalyzer") public static ChipalyzerRecipe.Serializer CHIPALYZER;
 
-    public static void registerAll(RegistryEvent.Register<IRecipeSerializer<?>> event)
+    public static void registerAll(RegistryEvent.Register<RecipeSerializer<?>> event)
     {
         event.getRegistry().register(new CompressorRecipe.Serializer().setRegistryName("compressing"));
         event.getRegistry().register(new InfuserRecipe.Serializer().setRegistryName("infusing"));

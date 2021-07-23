@@ -4,12 +4,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.Button.IPressable;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-
-import net.minecraft.client.gui.widget.button.Button.IPressable;
 
 public class CustomButton extends Button
 {
@@ -17,7 +15,7 @@ public class CustomButton extends Button
 	public final int id;
 	public CustomButton(int id, int xPos, int yPos, int width, int height, String displayString, ICustomPressable pressable)
 	{
-		super(xPos, yPos, width, height, new StringTextComponent(displayString), pressable);
+		super(xPos, yPos, width, height, new TextComponent(displayString), pressable);
 		this.id = id;
 	}
 
@@ -38,7 +36,7 @@ public class CustomButton extends Button
 
 			if (strWidth > width - 6 && strWidth > ellipsisWidth)
 				//TODO, srg names make it hard to figure out how to append to an ITextProperties from this trim operation, wraping this in StringTextComponent is kinda dirty.
-				buttonText = new StringTextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+				buttonText = new TextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 
 			AbstractGui.drawCenteredString(mStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor());
 		}

@@ -9,9 +9,9 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
 
 public class MachineGrowingCategory implements IRecipeCategory<MachineGrowingRecipe>
 {

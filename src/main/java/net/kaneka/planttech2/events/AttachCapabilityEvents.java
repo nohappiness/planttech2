@@ -1,15 +1,10 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.entities.capabilities.player.PlayerRenderRGB;
-import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.registries.ModReferences;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyInventoryFluidTileEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -43,7 +38,7 @@ public class AttachCapabilityEvents
     @SubscribeEvent
     public static void attachItemStackCapability(final AttachCapabilitiesEvent<ItemStack> event)
     {
-//        add a checking here because somehow it passes a server world at the end of the event
+//        add a checking here because somehow it passes a server Level at the end of the event
 //      [00:39:00] [Server thread/INFO] [STDOUT/]: [net.kaneka.planttech2.events.AttachCapabilityEvents:attachItemStackCapability:45]: 1 carrot
 //      [00:39:11] [Server thread/INFO] [STDOUT/]: [net.kaneka.planttech2.events.AttachCapabilityEvents:attachItemStackCapability:45]: net.minecraft.world.server.ServerWorld@38766f34
         if(event.getObject() instanceof ItemStack)
@@ -53,9 +48,9 @@ public class AttachCapabilityEvents
     }
 
     @SubscribeEvent
-    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<TileEntity> event)
+    public static void attachTileEntityCapability(final AttachCapabilitiesEvent<BlockEntity> event)
     {
-        if(event.getObject() instanceof EnergyInventoryFluidTileEntity)
+        if(event.getObject() instanceof EnergyInventoryFluidBlockEntity)
             if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
                 event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
     }

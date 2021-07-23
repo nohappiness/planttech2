@@ -1,14 +1,14 @@
 package net.kaneka.planttech2.utilities;
 
-import java.util.List;
-
 import net.kaneka.planttech2.items.CreditCardItem;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-public class PlayerInventoryUtils
+import java.util.List;
+
+public class InventoryUtils
 {
-	public static boolean enoughSpace(PlayerInventory inv, int neededSpace)
+	public static boolean enoughSpace(Inventory inv, int neededSpace)
 	{
 		if (neededSpace <= 0)
 		{
@@ -30,7 +30,7 @@ public class PlayerInventoryUtils
 		return false;
 	}
 
-	public static boolean hasList(PlayerInventory inv, List<ItemStack> stacks)
+	public static boolean hasList(Inventory inv, List<ItemStack> stacks)
 	{
 		for (int i = 0; i < stacks.size(); i++)
 		{
@@ -46,7 +46,7 @@ public class PlayerInventoryUtils
 		return true;
 	}
 	
-	public static boolean addList(PlayerInventory inv, List<ItemStack> stacks)
+	public static boolean addList(Inventory inv, List<ItemStack> stacks)
 	{
 		boolean flag = true; 
 		for(ItemStack stack: stacks)
@@ -59,7 +59,7 @@ public class PlayerInventoryUtils
 		return flag; 
 	}
 
-	public static boolean removeList(PlayerInventory inv, List<ItemStack> stacks)
+	public static boolean removeList(Inventory inv, List<ItemStack> stacks)
 	{
 		boolean flag = true; 
 		for(ItemStack stack: stacks)
@@ -72,7 +72,7 @@ public class PlayerInventoryUtils
 		return flag; 
 	}
 
-	public static boolean remove(PlayerInventory inv, ItemStack stack)
+	public static boolean remove(Inventory inv, ItemStack stack)
 	{
 		int count = stack.getCount();
 		for (int j = 0; j < 36; j++)
@@ -100,7 +100,7 @@ public class PlayerInventoryUtils
 		return false; 
 	}
 	
-	public static boolean enoughCredits(PlayerInventory inv, int amount)
+	public static boolean enoughCredits(Inventory inv, int amount)
 	{
 		if(amount <=  0)
 		{
@@ -126,7 +126,7 @@ public class PlayerInventoryUtils
 		return false; 
 	}
 	
-	public static boolean removeCredits(PlayerInventory inv, int amount)
+	public static boolean removeCredits(Inventory inv, int amount)
 	{
 		int count = amount;
 		if(count <=  0)
@@ -153,7 +153,7 @@ public class PlayerInventoryUtils
 		return false; 
 	}
 	
-	public static boolean addCredits(PlayerInventory inv, int amount)
+	public static boolean addCredits(Inventory inv, int amount)
 	{
 		for (int i = 0; i < 36; i++)
 		{

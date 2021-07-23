@@ -1,26 +1,24 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IceBlock;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.block.material.PushReaction;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.level.item.ItemStack;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
-import net.minecraft.level.LightType;
-import net.minecraft.world.level.Level;
-import net.minecraft.level.server.Serverlevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.PushReaction;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class InfusedIceBlock extends IceBlock
 {
@@ -30,7 +28,7 @@ public class InfusedIceBlock extends IceBlock
     }
 
     @Override
-    public void playerDestroy(level level, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity BlockEntity, ItemStack stack)
+    public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity BlockEntity, ItemStack stack)
     {
         player.awardStat(Stats.BLOCK_MINED.get(this));
         player.causeFoodExhaustion(0.005F);
@@ -50,14 +48,14 @@ public class InfusedIceBlock extends IceBlock
     }
 
     @Override
-    public void randomTick(BlockState state, Serverlevel level, BlockPos pos, Random rand)
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random rand)
     {
-        if (level.getBrightness(LightType.BLOCK, pos) > 11 - state.getLightBlock(level, pos))
+        if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos))
             this.melt(state, level, pos);
     }
 
     @Override
-    protected void melt(BlockState state, level level, BlockPos pos) {
+    protected void melt(BlockState state, Level level, BlockPos pos) {
         if (level.dimensionType().ultraWarm())
             level.removeBlock(pos, false);
         else

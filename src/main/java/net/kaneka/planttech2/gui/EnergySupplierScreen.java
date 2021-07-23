@@ -1,19 +1,17 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.EnergyStorageContainer;
-import net.kaneka.planttech2.container.EnergySupplierContainer;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.inventory.EnergySupplierContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierContainer>
 {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energy_supplier.png");
 
-	public EnergySupplierScreen(EnergySupplierContainer container, PlayerInventory player, ITextComponent name)
+	public EnergySupplierScreen(EnergySupplierContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }

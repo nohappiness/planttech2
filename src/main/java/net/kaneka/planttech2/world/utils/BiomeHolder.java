@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.world.utils;
 
 import net.kaneka.planttech2.registries.ModReferences;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 
 public class BiomeHolder {
-    private final RegistryKey<Biome> biome;
-    private RegistryKey<Biome> targetBiome;
+    private final ResourceKey<Biome> biome;
+    private ResourceKey<Biome> targetBiome;
     private final RARITY rarity;
     private final int phase;
     private boolean onlyInside = false;
@@ -60,8 +60,8 @@ public class BiomeHolder {
         return targetBiome != null;
     }
 
-    private RegistryKey<Biome> getBiomeRegistryKey(String s) {
-        return RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(s));
+    private ResourceKey<Biome> getBiomeRegistryKey(String s) {
+        return ResourceKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(s));
     }
 
     public int getPhase() {

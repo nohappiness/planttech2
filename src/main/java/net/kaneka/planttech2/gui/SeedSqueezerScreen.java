@@ -2,22 +2,18 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.SeedSqueezerContainer;
-import net.kaneka.planttech2.gui.guide.Guide;
-import net.kaneka.planttech2.gui.guide.GuideScreen;
-import net.kaneka.planttech2.tileentity.machine.SeedSqueezerTileEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.SeedSqueezerBlockEntity;
+import net.kaneka.planttech2.inventory.SeedSqueezerContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedsqueezer.png");
 
-	public SeedSqueezerScreen(SeedSqueezerContainer container, PlayerInventory player, ITextComponent name)
+	public SeedSqueezerScreen(SeedSqueezerContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -52,7 +48,7 @@ public class SeedSqueezerScreen extends BaseContainerScreen<SeedSqueezerContaine
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(4);
-		return i != 0 ? i * pixels / ((SeedSqueezerTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((SeedSqueezerBlockEntity) this.te).ticksPerItem() : 0;
 	}
 
 	@Override

@@ -3,13 +3,13 @@ package net.kaneka.planttech2.items.upgradeable;
 
 import net.kaneka.planttech2.configuration.PlantTech2Configuration;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,79 +245,79 @@ public class UpgradeChipItem extends Item
 
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
 		if (increaseCapacity > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasecapacity", getIncreaseCapacity()));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasecapacitymax", getCapacityMax()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasecapacity", getIncreaseCapacity()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasecapacitymax", getCapacityMax()));
 		}
 		if (energyProduction > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.energyproduction", getEnergyProduction()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.energyproduction", getEnergyProduction()));
 		}
 		if (increaseHarvestlevel > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseharvestlevel", increaseHarvestlevel));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increaseharvestlevel", increaseHarvestlevel));
 		}
 		if (increaseArmor > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasearmor", getIncreaseArmor()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasearmor", getIncreaseArmor()));
 		}
 
 		if (increaseAttack > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattack", getIncreaseAttack()));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackmax", getAttackMax()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increaseattack", getIncreaseAttack()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increaseattackmax", getAttackMax()));
 		}
 		
 		if (increaseAttackSpeed > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackspeed", getIncreaseAttackSpeed()));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increaseattackspeedmax", getAttackSpeedMax()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increaseattackspeed", getIncreaseAttackSpeed()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increaseattackspeedmax", getAttackSpeedMax()));
 		}
 		
 		if (increaseBreakdownRate > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasebreakdownrate", getIncreaseBreakdownRate()));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasebreakdownratemax", getBreakdownRateMax()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasebreakdownrate", getIncreaseBreakdownRate()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasebreakdownratemax", getBreakdownRateMax()));
 		}
 		
 		if (increaseToughness > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasetougness", getIncreaseToughness()));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.increasetougnessmax", getToughnessMax()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasetougness", getIncreaseToughness()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.increasetougnessmax", getToughnessMax()));
 		}
 		
 		if(unlockAxeFeat)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.unlockaxefeat"));
+			tooltip.add(new TranslatableComponent("info.upgradechip.unlockaxefeat"));
 		}
 		if(unlockShovelFeat)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.unlockshovelfeat"));
+			tooltip.add(new TranslatableComponent("info.upgradechip.unlockshovelfeat"));
 		}
 		if(unlockShearFeat)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.unlockshearsfeat"));
+			tooltip.add(new TranslatableComponent("info.upgradechip.unlockshearsfeat"));
 		}
 		if(unlockHoeFeat)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.unlockhoefeat"));
+			tooltip.add(new TranslatableComponent("info.upgradechip.unlockhoefeat"));
 		}
 		
 		if(enchantment != null)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.add").append(" ").append(enchantment.getFullname(0)));
-			tooltip.add(new TranslationTextComponent("info.upgradechip.stackable"));
+			tooltip.add(new TranslatableComponent("info.upgradechip.add").append(" ").append(enchantment.getFullname(0)));
+			tooltip.add(new TranslatableComponent("info.upgradechip.stackable"));
 		}
 		
 		if (energyCost > 0)
 		{
-			tooltip.add(new TranslationTextComponent("info.upgradechip.energycosts", getEnergyCost()));
+			tooltip.add(new TranslatableComponent("info.upgradechip.energycosts", getEnergyCost()));
 		}
 
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 }

@@ -2,10 +2,9 @@ package net.kaneka.planttech2.entities.capabilities.player;
 
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -14,7 +13,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IRadiationEffect
+public class RadiationEffect implements ICapabilitySerializable<CompoundTag>, IRadiationEffect
 {
     @CapabilityInject(IRadiationEffect.class)
     public static Capability<IRadiationEffect> RADIATION_CAPABILITY = null;
@@ -31,7 +30,7 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IR
         return cap == RADIATION_CAPABILITY ? lazyOptional.cast() : LazyOptional.empty();
     }
 
-    public static IRadiationEffect getCap(ServerPlayerEntity player)
+    public static IRadiationEffect getCap(ServerPlayer player)
     {
         IRadiationEffect cap = player.getCapability(RADIATION_CAPABILITY).orElseThrow(() -> new NullPointerException("getting capability"));
         PlantTech2PacketHandler.sendTo(new SyncRadiationLevelMessage(cap.getLevel()), player);
@@ -39,13 +38,13 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IR
     }
 
     @Override
-    public CompoundNBT serializeNBT()
+    public CompoundTag serializeNBT()
     {
-        return (CompoundNBT) RADIATION_CAPABILITY.getStorage().writeNBT(RADIATION_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Radiation Effect Capability by Plant Tech 2")), null);
+        return (CompoundTag) RADIATION_CAPABILITY.getStorage().writeNBT(RADIATION_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Radiation Effect Capability by Plant Tech 2")), null);
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt)
+    public void deserializeNBT(CompoundTag nbt)
     {
        RADIATION_CAPABILITY.getStorage().readNBT(RADIATION_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during reading Radiation Effect Capability by Plant Tech 2")), null, nbt);
     }
@@ -77,7 +76,7 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IR
         @Override
         public INBT writeNBT(Capability<IRadiationEffect> capability, IRadiationEffect instance, Direction side)
         {
-            CompoundNBT compound = new CompoundNBT();
+            CompoundTag compound = new CompoundTag();
             compound.putFloat("radiationeffect", instance.getLevel());
             return compound;
         }
@@ -85,7 +84,7 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundNBT>, IR
         @Override
         public void readNBT(Capability<IRadiationEffect> capability, IRadiationEffect instance, Direction side, INBT nbt)
         {
-            instance.setLevel(((CompoundNBT) nbt).getFloat("radiationeffect"));
+            instance.setLevel(((CompoundTag) nbt).getFloat("radiationeffect"));
         }
     }
 }

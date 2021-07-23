@@ -1,17 +1,16 @@
 package net.kaneka.planttech2.datagen.recipes;
 
-import java.util.function.Consumer;
-
 import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.world.item.Items;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.data.HashCache;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.level.ItemLike;
+
+import java.util.function.Consumer;
 
 import static net.kaneka.planttech2.registries.ModItems.*;
 import static net.minecraft.world.item.Items.*;
@@ -23,25 +22,16 @@ public class ItemRecipeProvider extends RecipeProvider
 		super(gen);
 	}
 
-	private Consumer<IFinishedRecipe> cons;
+	private Consumer<FinishedRecipe> cons;
 
 	@Override
-	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> cons)
-	{
-		this.cons = cons;
-		/*ShapedRecipeBuilder
-		.shapedRecipe(ModBlocks.DARK_CRYSTAL_DOOR)
-		.patternLine("XXX")
-		.patternLine(" X ")
-		.patternLine("XXX")
-		.key('X', ModBlocks.CABLE)
-		.addCriterion("cobblestone", InventoryChangeTrigger.Instance.forItems(Blocks.COBBLESTONE))
-		.build(cons);*/
+	public void run(HashCache p_125982_) {
+		super.run(p_125982_);
 		registerHedgeRecipes(cons);
 		registerAuraCoreRecipes();
 	}
-	
-	private void registerHedgeRecipes(Consumer<IFinishedRecipe> cons)
+
+	private void registerHedgeRecipes(Consumer<FinishedRecipe> cons)
 	{
 		for(Hedge block: ModBlocks.HEDGE_BLOCKS)
 		{
@@ -52,7 +42,7 @@ public class ItemRecipeProvider extends RecipeProvider
 			.define('A', block.getLeaves())
 			.define('B', block.getWood())
 			.define('C', block.getSoil())
-			.unlockedBy("leaves", InventoryChangeTrigger.Instance.hasItems(block.getLeaves()))
+			.unlockedBy("leaves", InventoryChangeTrigger.TriggerInstance.hasItems(block.getLeaves()))
 			.save(cons);
 		}
 	}
@@ -71,19 +61,19 @@ public class ItemRecipeProvider extends RecipeProvider
 		//		makeTieredAuraCore(ModItems.FERTILIZER_TIER_1, ModItems.AURA_CORE_PRODUCTIVITY_INCREASE_I, ModItems.AURA_CORE_PRODUCTIVITY_INCREASE_II, ModItems.AURA_CORE_PRODUCTIVITY_INCREASE_III);
 	}
 
-	private void makeTieredAuraCore(IItemProvider ingredient, IItemProvider... cores)
+	private void makeTieredAuraCore(ItemLike ingredient, ItemLike... cores)
 	{
 		makeAuraCore(cores[0], ingredient, PLANTIUM_INGOT, PLANTIUM_INGOT);
 		for (int i = 1; i < cores.length; i++)
 			makeAuraCore(cores[i], cores[i - 1], ingredient, cores[i - 1]);
 	}
 
-	private void makeAuraCore(IItemProvider product, IItemProvider middle, IItemProvider side)
+	private void makeAuraCore(ItemLike product, ItemLike middle, ItemLike side)
 	{
 		makeAuraCore(product, middle, side, middle);
 	}
 
-	private void makeAuraCore(IItemProvider product, IItemProvider middle, IItemProvider side, IItemProvider criterion)
+	private void makeAuraCore(ItemLike product, ItemLike middle, ItemLike side, ItemLike criterion)
 	{
 		ShapedRecipeBuilder.shaped(product)
 				.pattern(" S ")

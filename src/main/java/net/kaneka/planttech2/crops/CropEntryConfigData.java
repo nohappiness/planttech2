@@ -1,20 +1,22 @@
 package net.kaneka.planttech2.crops;
 
+import com.google.common.collect.ImmutableList;
+import com.google.gson.*;
+import io.netty.buffer.ByteBuf;
+import net.kaneka.planttech2.enums.EnumTemperature;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import com.google.common.collect.ImmutableList;
-import com.google.gson.*;
-import net.kaneka.planttech2.enums.EnumTemperature;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import static net.minecraftforge.registries.ForgeRegistries.BLOCKS;
 import static net.minecraftforge.registries.ForgeRegistries.ITEMS;
@@ -154,7 +156,7 @@ public class CropEntryConfigData
 			return new CropEntryConfigData(name, enabled, temp, primarySeed, seeds, drops, parents, soil);
 		}
 
-		public void write(CropEntryConfigData data, PacketBuffer buf)
+		public void write(CropEntryConfigData data, FriendlyByteBuf buf)
 		{
 			buf.writeUtf(data.getCropEntryName(), 64);
 			buf.writeBoolean(data.isEnabled());
@@ -174,7 +176,7 @@ public class CropEntryConfigData
 			buf.writeResourceLocation(data.getSoil().get().getRegistryName());
 		}
 
-		public CropEntryConfigData read(PacketBuffer buf)
+		public CropEntryConfigData read(FriendlyByteBuf buf)
 		{
 			String cropEntryName = buf.readUtf(64);
 			boolean enabled = buf.readBoolean();

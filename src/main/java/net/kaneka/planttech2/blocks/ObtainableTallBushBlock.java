@@ -1,22 +1,20 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.baseclasses.ObtainableNaturalPlants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.level.item.ItemStack;
-import net.minecraft.level.item.ItemUseContext;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.level.LevelAccessor;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import javax.annotation.Nullable;
-
-import BooleanProperty;
 
 public class ObtainableTallBushBlock extends ObtainableNaturalPlants
 {
@@ -43,7 +41,7 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
     {
-        if (!checkValid(currentPos, (level) levelIn))
+        if (!checkValid(currentPos, (Level) levelIn))
             levelIn.destroyBlock(currentPos, !stateIn.getValue(IS_TOP));
         BlockState state = levelIn.getBlockState(stateIn.getValue(IS_TOP) ? currentPos.below() : currentPos.above());
         return state.getBlock() == this ? defaultBlockState().setValue(IS_TOP, stateIn.getValue(IS_TOP)) : stateIn;
@@ -60,13 +58,13 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     }
 
     @Override
-    public void setPlacedBy(level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
+    public void setPlacedBy(Level levelIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack)
     {
         levelIn.setBlockAndUpdate(pos.above(), state
                 .setValue(IS_TOP, true));
     }
 
-    private boolean checkValid(BlockPos pos, level level)
+    private boolean checkValid(BlockPos pos, Level level)
     {
         BlockState state = level.getBlockState(pos);
         BlockState state2 = level.getBlockState(state.getValue(IS_TOP) ? pos.below() : pos.above());
@@ -74,13 +72,14 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
     }
 
     @Override
-    public boolean canPlaceAt(level level, BlockPos pos)
+    public boolean canPlaceAt(Level level, BlockPos pos)
     {
         return super.canPlaceAt(level, pos) && pos.getY() < 255 && level.isEmptyBlock(pos.above());
     }
 
+
     @Override
-    public void onReleased(ItemUseContext context, BlockState state)
+    public void onReleased(UseOnContext context, BlockState state)
     {
         context.getLevel().setBlockAndUpdate(context.getClickedPos().relative(context.getClickedFace()), defaultBlockState());
         setPlacedBy(context.getLevel(), context.getClickedPos().relative(context.getClickedFace()), state, context.getPlayer(), context.getItemInHand());

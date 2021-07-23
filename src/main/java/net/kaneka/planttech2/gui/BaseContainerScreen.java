@@ -2,31 +2,27 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
-import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.configuration.ClientConfig;
-import net.kaneka.planttech2.container.BaseContainer;
-import net.kaneka.planttech2.container.BaseContainer.SlotItemHandlerWithInfo;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyTileEntity;
 import net.kaneka.planttech2.gui.guide.Guide;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
-import net.kaneka.planttech2.tileentity.machine.baseclasses.EnergyTileEntity;
+import net.kaneka.planttech2.inventory.BaseContainer;
+import net.kaneka.planttech2.inventory.BaseContainer.SlotItemHandlerWithInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
 {
 	//protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
-	protected final PlayerInventory player;
+	protected final Inventory player;
 	protected final EnergyTileEntity te;
 	protected abstract ResourceLocation getBackgroundTexture();
 
 	@SuppressWarnings("unchecked")
-	public BaseContainerScreen(BaseContainer inventorySlotsIn, PlayerInventory inventoryPlayer, ITextComponent title)
+	public BaseContainerScreen(BaseContainer inventorySlotsIn, Inventory inventoryPlayer, ITextComponent title)
 	{
 		super((T) inventorySlotsIn, inventoryPlayer, title);
 		
@@ -66,7 +62,7 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 		posY += this.topPos; 
         if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height) 
         {
-        	renderTooltip(mStack, new StringTextComponent(lines), mouseX, mouseY);
+        	renderTooltip(mStack, new TextComponent(lines), mouseX, mouseY);
         }
     }
 

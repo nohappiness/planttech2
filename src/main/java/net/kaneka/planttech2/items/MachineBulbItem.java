@@ -2,19 +2,17 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.FacingGrowingBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
-import net.minecraft.util.InteractionResultHolderType;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Supplier;
-
-import InteractionResultHolderType;
 
 public class MachineBulbItem extends BlockItem
 {
@@ -32,11 +30,11 @@ public class MachineBulbItem extends BlockItem
 	}
 
 	@Override
-	public InteractionResultHolderType useOn(ItemUseContext ctx)
+	public InteractionResult useOn(UseOnContext ctx)
 	{
-		World world = ctx.getLevel();
+		Level level = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
-		Block target = world.getBlockState(pos).getBlock();
+		Block target = level.getBlockState(pos).getBlock();
 		ItemStack stack = ctx.getItemInHand();
 		if (target == getHull())
 		{
@@ -45,18 +43,18 @@ public class MachineBulbItem extends BlockItem
 				Direction direction = ctx.getClickedFace();
 				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					world.setBlockAndUpdate(pos, getMachine().defaultBlockState().setValue(FacingGrowingBlock.FACING, direction));
+					level.setBlockAndUpdate(pos, getMachine().defaultBlockState().setValue(FacingGrowingBlock.FACING, direction));
 					stack.shrink(1);
 				}
 			}
 			else
 			{
-				world.setBlockAndUpdate(pos, getMachine().defaultBlockState());
+				level.setBlockAndUpdate(pos, getMachine().defaultBlockState());
 				stack.shrink(1);
 			}
-			return InteractionResultHolderType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
-		return InteractionResultHolderType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	public int getTier()

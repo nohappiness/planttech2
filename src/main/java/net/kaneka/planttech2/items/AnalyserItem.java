@@ -2,16 +2,14 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemUseContext;
-import net.minecraft.util.InteractionResultHolderType;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-
-import InteractionResultHolderType;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class AnalyserItem extends Item
 {
@@ -22,30 +20,30 @@ public class AnalyserItem extends Item
 	}
 	
 	@Override
-	public InteractionResultHolderType useOn(ItemUseContext ctx)
+	public InteractionResult useOn(UseOnContext ctx)
 	{
-	    World world = ctx.getLevel(); 
+	    Level level = ctx.getLevel();
 	    BlockPos pos = ctx.getClickedPos(); 
-	    PlayerEntity player = ctx.getPlayer(); 
-		if(!world.isClientSide && player != null)
+	    Player player = ctx.getPlayer();
+		if(!level.isClientSide && player != null)
 		{
-			Block targetBlock = world.getBlockState(pos).getBlock(); 
+			Block targetBlock = level.getBlockState(pos).getBlock();
 
 			if(targetBlock instanceof CropBaseBlock)
 			{
-				String[] messages = ((CropBaseBlock) targetBlock).canGrowString(world, pos);
+				String[] messages = ((CropBaseBlock) targetBlock).canGrowString(level, pos);
 				boolean ok = true; 
 				for(int i = 0; i < 5; i++)
 				{
 					if(messages[i] != null)
 					{
-						player.sendMessage(new StringTextComponent(messages[i]), player.getUUID());
+						player.sendMessage(new TextComponent(messages[i]), player.getUUID());
 						ok = false; 
 					}
 				}
 				if(ok)
 				{
-					player.sendMessage(new StringTextComponent("Everything ok"), player.getUUID());
+					player.sendMessage(new TextComponent("Everything ok"), player.getUUID());
 				}
 			}
 		}

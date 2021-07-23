@@ -1,36 +1,33 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.BlockEntity.cable.TestCableBlockEntity;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.BlockEntity.BlockEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Hand;
+import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.BlockHitResult;
-import net.minecraft.util.math.shapes.CollisionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.BlockGetter;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
-
-import static net.minecraftforge.common.util.Constants.BlockFlags;
-
-import net.minecraftforge.common.util.Constants.BlockFlags;
 
 public class TestCableBlock extends Block
 {
@@ -113,9 +110,9 @@ public class TestCableBlock extends Block
                 Direction direction = Direction.from3DDataValue(i);
                 if (state > 0)
                 {
-                    shape = VoxelShapes.or(shape, CABLE_VOXELS.get(direction));
+                    shape = Shapes.or(shape, CABLE_VOXELS.get(direction));
                     if (state > 1)
-                        shape = VoxelShapes.or(shape, CONNECTION_VOXELS.get(direction));
+                        shape = Shapes.or(shape, CONNECTION_VOXELS.get(direction));
                 }
             }
     	}
@@ -123,18 +120,18 @@ public class TestCableBlock extends Block
     }
     
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context)
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context)
     {
     	//Direction indexes are DUNSWE
     	return shapes[Math.min(2, state.getValue(DOWN))][Math.min(2, state.getValue(UP))][Math.min(2, state.getValue(NORTH))][Math.min(2, state.getValue(SOUTH))][Math.min(2, state.getValue(WEST))][Math.min(2, state.getValue(EAST))];
     }
 
     @Override
-    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult ray)
+    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray)
     {
-        if (!worldIn.isClientSide() && hand.equals(Hand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
+        if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && player.getMainHandItem().getItem().equals(ModItems.WRENCH))
         {
-            Vector3d hitvec = ray.getLocation();
+            Vec3 hitvec = ray.getLocation();
             hitvec = hitvec.add(-pos.getX(), -pos.getY(), -pos.getZ());
             VoxelShape tempshape;
             for (Direction dir : Direction.values())
@@ -146,23 +143,23 @@ public class TestCableBlock extends Block
                     {
                         if (tempshape.min(Direction.Axis.Z) <= hitvec.z && tempshape.max(Direction.Axis.Z) >= hitvec.z)
                         {
-                            TestCableBlockEntity te = getTECable(worldIn, pos);
+                            TestCableBlockEntity te = getTECable(level, pos);
                             if (te != null)
                             {
                                 te.rotateConnection(dir);
-                                worldIn.setBlock(pos, getCurrentState(state, worldIn, pos), BlockFlags.DEFAULT);
-                                return ActionResultType.SUCCESS;
+                                level.setBlock(pos, getCurrentState(state, level, pos), BlockFlags.DEFAULT);
+                                return InteractionResult.SUCCESS;
                             }
                         }
                     }
                 }
             }
         }
-        return ActionResultType.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public void onPlace(BlockState state, World world, BlockPos pos, BlockState oldstate, boolean bool)
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldstate, boolean bool)
     {
         if (!world.isClientSide() && state.getBlock() != oldstate.getBlock())
         {
@@ -188,18 +185,18 @@ public class TestCableBlock extends Block
     }
 
     @Override
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
     {
-        if (!worldIn.isClientSide() && state.getBlock() != newState.getBlock())
+        if (!level.isClientSide() && state.getBlock() != newState.getBlock())
         {
-            modifyCable(worldIn, pos, TestCableBlockEntity::setRemoved);
-            worldIn.removeBlockEntity(pos);
+            modifyCable(level, pos, TestCableBlockEntity::setRemoved);
+            level.removeBlockEntity(pos);
         }
     }
 
     @SuppressWarnings("deprecation")
 	@Override
-    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving)
     {
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);
         if (!world.isClientSide())
@@ -209,13 +206,13 @@ public class TestCableBlock extends Block
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context)
     {
-        BlockGetter world = context.getLevel();
+        BlockGetter level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         BlockState state = defaultBlockState();
         for (Direction facing : Direction.values())
         {
-            BlockState stateDirection = world.getBlockState(pos.relative(facing));
-            BlockEntity te = world.getBlockEntity(pos.relative(facing));
+            BlockState stateDirection = level.getBlockState(pos.relative(facing));
+            BlockEntity te = level.getBlockEntity(pos.relative(facing));
             if (stateDirection.getBlock() instanceof CableBlock)
                 state.setValue(DIRECTIONS.get(facing), 1);
             else if (te != null && te.getCapability(CapabilityEnergy.ENERGY).isPresent())
@@ -227,12 +224,12 @@ public class TestCableBlock extends Block
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos)
+    public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos)
     {
-        return getCurrentState(state, (World) world, currentPos);
+        return getCurrentState(state, (Level) level, currentPos);
     }
 
-    public BlockState getCurrentState(BlockState state, World world, BlockPos pos)
+    public BlockState getCurrentState(BlockState state, Level world, BlockPos pos)
     {
         TestCableBlockEntity cable = getTECable(world, pos);
         if (cable != null)
@@ -261,18 +258,18 @@ public class TestCableBlock extends Block
 //        return shape;
 //    }
 
-    private TestCableBlockEntity getTECable(World world, BlockPos pos)
+    private TestCableBlockEntity getTECable(Level world, BlockPos pos)
     {
         BlockEntity BlockEntity = world.getBlockEntity(pos);
         return BlockEntity instanceof TestCableBlockEntity ? (TestCableBlockEntity) BlockEntity : null;
     }
 
-    private void checkConnections(World world, BlockPos pos)
+    private void checkConnections(Level world, BlockPos pos)
     {
         modifyCable(world, pos, TestCableBlockEntity::checkConnections);
     }
 
-    private void modifyCable(World world, BlockPos pos, Consumer<TestCableBlockEntity> modification)
+    private void modifyCable(Level world, BlockPos pos, Consumer<TestCableBlockEntity> modification)
     {
         TestCableBlockEntity cable = getTECable(world, pos);
         if (cable != null)

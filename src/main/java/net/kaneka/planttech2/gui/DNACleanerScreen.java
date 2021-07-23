@@ -1,19 +1,18 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.DNACleanerContainer;
-import net.kaneka.planttech2.tileentity.machine.DNACleanerTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.DNACleanerBlockEntity;
+import net.kaneka.planttech2.inventory.DNACleanerContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
 
-	public DNACleanerScreen(DNACleanerContainer container, PlayerInventory player, ITextComponent string)
+	public DNACleanerScreen(DNACleanerContainer container, Inventory player, ITextComponent string)
     {
     	super(container, player, string);
 
@@ -46,7 +45,7 @@ public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(2);
-		return i != 0 ? i * pixels / ((DNACleanerTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((DNACleanerBlockEntity) this.te).ticksPerItem() : 0;
 	}
 
 

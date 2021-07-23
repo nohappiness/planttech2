@@ -1,8 +1,7 @@
 package net.kaneka.planttech2.enums;
 
-import net.minecraft.util.IStringSerializable;
 
-public enum EnumTraitsInt implements IStringSerializable
+public enum EnumTraitsInt
 {
     GROWSPEED(           0, "growspeed",            0, 10, 0.04F),
     SENSITIVITY(         1, "sensitivity",          0, 10, 0.04F),
@@ -86,9 +85,6 @@ public enum EnumTraitsInt implements IStringSerializable
 	}
     }
 
-
-
-	@Override
 	public String getSerializedName()
 	{
 		return getName();

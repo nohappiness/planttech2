@@ -1,8 +1,9 @@
 package net.kaneka.planttech2.blocks;
 
 import com.google.common.collect.Lists;
-import com.mojang.math.Vector3d;
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.CropAuraGeneratorBlockEntity;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
@@ -10,30 +11,36 @@ import net.kaneka.planttech2.items.AdvancedAnalyserItem;
 import net.kaneka.planttech2.items.AnalyserItem;
 import net.kaneka.planttech2.items.CropRemover;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.kaneka.planttech2.BlockEntity.CropsBlockEntity;
+import net.minecraft.client.color.block.BlockColor;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CropBaseBlock extends ModBlockEntityBlock
@@ -291,7 +298,7 @@ public class CropBaseBlock extends ModBlockEntityBlock
 	{
 		List<ItemStack> drops = Lists.newArrayList();
 		int growstate = state.getValue(GROWSTATE);
-		Vector3d vec3d = builder.getOptionalParameter(LootParameters.ORIGIN);
+		Vec3 vec3d = builder.getOptionalParameter(LootContextParams.ORIGIN);
 		if (vec3d != null)
 		{
 			BlockPos pos = new BlockPos(vec3d);
@@ -330,10 +337,10 @@ public class CropBaseBlock extends ModBlockEntityBlock
 		return new CropsBlockEntity();
 	}
 
-	public static class ColorHandler implements IBlockColor
+	public static class ColorHandler implements BlockColor
 	{
 		@Override
-		public int getColor(BlockState state, IBlockDisplayReader blockDisplayReader, BlockPos pos, int tintindex)
+		public int getColor(BlockState state, BlockAndTintGetter blockDisplayReader, BlockPos pos, int tintindex)
 		{
 			if (tintindex == 0)
 				return PlantTechMain.getCropList().getByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();

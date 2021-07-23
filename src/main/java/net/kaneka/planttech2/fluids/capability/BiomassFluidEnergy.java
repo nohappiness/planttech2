@@ -1,10 +1,9 @@
 package net.kaneka.planttech2.fluids.capability;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -13,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>, IBiomassFluidEnergy
+public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>, IBiomassFluidEnergy
 {
     @CapabilityInject(IBiomassFluidEnergy.class)
     public static Capability<IBiomassFluidEnergy> BIOMASS_FLUID_ENERGY = null;
@@ -30,12 +29,12 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
     }
 
     @Override
-    public CompoundNBT serializeNBT()
+    public CompoundTag serializeNBT()
     {
-        return (CompoundNBT) BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BIOMASS_FLUID_ENERGY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Biomass Capability by Plant Tech 2")), null);
+        return (CompoundTag) BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BIOMASS_FLUID_ENERGY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Biomass Capability by Plant Tech 2")), null);
     }
 
-    public static IBiomassFluidEnergy getTECap(TileEntity te)
+    public static IBiomassFluidEnergy getTECap(BlockEntity te)
     {
         return te.getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(() -> new NullPointerException("getting capability for tileentity"));
     }
@@ -47,7 +46,7 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
     }
 
     @Override
-    public void deserializeNBT(CompoundNBT nbt)
+    public void deserializeNBT(CompoundTag nbt)
     {
         BIOMASS_FLUID_ENERGY.getStorage().readNBT(BIOMASS_FLUID_ENERGY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during reading Biomass Capability by Plant Tech 2")), null, nbt);
     }
@@ -128,7 +127,7 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
         @Override
         public INBT writeNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side)
         {
-            CompoundNBT compound = new CompoundNBT();
+            CompoundTag compound = new CompoundTag();
             compound.putInt("maxstorage", instance.getMaxStorage());
             compound.putInt("currentstorage", instance.getCurrentStorage());
             return compound;
@@ -137,7 +136,7 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundNBT>,
         @Override
         public void readNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side, INBT nbt)
         {
-            CompoundNBT compound = (CompoundNBT) nbt;
+            CompoundTag compound = (CompoundTag) nbt;
             instance.setMaxStorage(compound.getInt("maxstorage"));
             instance.setCurrentStorage(compound.getInt("currentstorage"));
         }

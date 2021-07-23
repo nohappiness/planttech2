@@ -1,7 +1,5 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class UpgradeableHandItem extends BaseUpgradeableItem
 {
 

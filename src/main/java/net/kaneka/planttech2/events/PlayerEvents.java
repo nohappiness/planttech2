@@ -1,23 +1,13 @@
 package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.crops.CropListReloadListener;
-import net.kaneka.planttech2.entities.IAffectPlayerRadiation;
-import net.kaneka.planttech2.entities.capabilities.player.IRadiationEffect;
-import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
-import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.kaneka.planttech2.packets.SyncRadiationLevelMessage;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.core.jmx.Server;
 
 @Mod.EventBusSubscriber(modid = PlantTechMain.MODID)
 public class PlayerEvents
@@ -25,11 +15,11 @@ public class PlayerEvents
 	@SubscribeEvent
 	public static void playerConnect(PlayerEvent.PlayerLoggedInEvent event)
 	{
-		PlayerEntity player = event.getPlayer();
+		Player player = event.getPlayer();
 		if (!player.level.isClientSide())
 		{
 			PlantTechMain.LOGGER.info(event.getPlayer().getDisplayName().getString() + " has logged in, syncing crop list");
-			PlantTech2PacketHandler.sendTo(new CropListSyncMessage(), (ServerPlayerEntity) player);
+			PlantTech2PacketHandler.sendTo(new CropListSyncMessage(), (ServerPlayer) player);
 		}
 		/*
 //

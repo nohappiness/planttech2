@@ -1,13 +1,12 @@
 package net.kaneka.planttech2.registries;
 
 
-import javafx.util.Pair;
+import com.mojang.datafixers.util.Pair;
 import net.kaneka.planttech2.PlantTechMain;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeMaker;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -17,31 +16,31 @@ public class ModBiomes
 {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, PlantTechMain.MODID);
 
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> BEE_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> CHORUS_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> DARK_WETLANDS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> DEAD_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> DREAM_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> DRIED_LAKE;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> ENERGIZED_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> FLOWER_HILLS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> FLOWER_MEADOWS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> FLOWER_MOUNTAINS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> ICY_CLIFFS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> ICY_MEADOWS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> LAKE;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> LLAMA_MEADOW;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> MEADOWS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> MUSHROOM_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> MUSHROOM_HILLS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> NIGHTMARE_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> PUMPKIN_FOREST;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> RADIATED_WETLANDS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> RADIATED_WASTELANDS;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> RIVER;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> VULCANO;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> WASTELAND_MESA;
-	public static Pair<RegistryKey<Biome>, RegistryObject<Biome>> WETLANDS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> BEE_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> CHORUS_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> DARK_WETLANDS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> DEAD_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> DREAM_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> DRIED_LAKE;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> ENERGIZED_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> FLOWER_HILLS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> FLOWER_MEADOWS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> FLOWER_MOUNTAINS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> ICY_CLIFFS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> ICY_MEADOWS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> LAKE;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> LLAMA_MEADOW;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> MEADOWS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> MUSHROOM_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> MUSHROOM_HILLS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> NIGHTMARE_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> PUMPKIN_FOREST;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> RADIATED_WETLANDS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> RADIATED_WASTELANDS;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> RIVER;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> VULCANO;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> WASTELAND_MESA;
+	public static Pair<ResourceKey<Biome>, RegistryObject<Biome>> WETLANDS;
 
 	static
 	{
@@ -72,13 +71,13 @@ public class ModBiomes
 		WETLANDS 			= create(ModReferences.WETLANDS, BiomeMaker::theVoidBiome);
 	}
 
-	private static Pair<RegistryKey<Biome>, RegistryObject<Biome>> create(String name, Supplier<Biome> biome)
+	private static Pair<ResourceKey<Biome>, RegistryObject<Biome>> create(String name, Supplier<Biome> biome)
 	{
-		return new Pair<>(getRegistryKey(name), BIOMES.register(name, biome));
+		return new Pair<>(getResourceKey(name), BIOMES.register(name, biome));
 	}
 
-	public static RegistryKey<Biome> getRegistryKey(String name)
+	public static ResourceKey<Biome> getResourceKey(String name)
 	{
-		return RegistryKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(name));
+		return ResourceKey.create(Registry.BIOME_REGISTRY, ModReferences.prefix(name));
 	}
 }

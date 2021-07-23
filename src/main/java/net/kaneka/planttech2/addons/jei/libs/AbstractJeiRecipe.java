@@ -1,9 +1,9 @@
 package net.kaneka.planttech2.addons.jei.libs;
 
+import net.minecraft.world.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.world.item.ItemStack;
 
 public class AbstractJeiRecipe
 {

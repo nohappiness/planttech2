@@ -1,19 +1,18 @@
 package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.MegaFurnaceContainer;
-import net.kaneka.planttech2.tileentity.machine.MegaFurnaceTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
+import net.kaneka.planttech2.blocks.entity.machine.MegaFurnaceBlockEntity;
+import net.kaneka.planttech2.inventory.MegaFurnaceContainer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.player.Inventory;
 
 public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/megafurnace.png");
 
-	public MegaFurnaceScreen(MegaFurnaceContainer container, PlayerInventory player, ITextComponent name)
+	public MegaFurnaceScreen(MegaFurnaceContainer container, Inventory player, ITextComponent name)
     {
     	super(container, player, name);
     }
@@ -36,7 +35,7 @@ public class MegaFurnaceScreen extends BaseContainerScreen<MegaFurnaceContainer>
 	private int getCookProgressScaled(int id, int pixels)
 	{
 		int i = menu.getValue(id + 2);
-		return i != 0 ? i * pixels / ((MegaFurnaceTileEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((MegaFurnaceBlockEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override

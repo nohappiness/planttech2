@@ -1,9 +1,9 @@
 package net.kaneka.planttech2.addons.jei.crossbreeding;
 
+import net.minecraft.world.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.world.item.ItemStack;
 
 public class CrossbreedingRecipe
 {

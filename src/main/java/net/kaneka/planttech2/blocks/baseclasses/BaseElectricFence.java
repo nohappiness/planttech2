@@ -6,20 +6,26 @@ import net.kaneka.planttech2.registries.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.level.entity.Entity;
-import net.minecraft.level.entity.LivingEntity;
-import net.minecraft.level.item.ItemStack;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BaseElectricFence extends Block
 {
@@ -35,7 +41,7 @@ public class BaseElectricFence extends Block
         builder.add(ELECTRIC_POWER);
     }
 
-    public static int calculatePower(level levelIn, BlockPos pos)
+    public static int calculatePower(Level levelIn, BlockPos pos)
     {
         int fencePower = 0;
         for (Direction direction : Direction.values())
@@ -55,7 +61,7 @@ public class BaseElectricFence extends Block
     }
 
     @Override
-    public void entityInside(BlockState state, level levelIn, BlockPos pos, Entity entityIn)
+    public void entityInside(BlockState state, Level levelIn, BlockPos pos, Entity entityIn)
     {
         if (state.getValue(ELECTRIC_POWER) > 0 && levelIn.getGameTime() % 8L == 0L)
         {
@@ -76,36 +82,37 @@ public class BaseElectricFence extends Block
             }
             else
             {
-                entityIn.remove();
+                entityIn.remove(false);
                 if (levelIn.isClientSide)
                     doCollideAnimation(pos, levelIn, 7, ParticleTypes.SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.8F, 20F);
             }
         }
     }
 
-	private void doCollideAnimation(BlockPos pos, level levelIn, int amount, BasicParticleType particle, SoundEvent sound, float volume, float pitch)
+	private void doCollideAnimation(BlockPos pos, Level levelIn, int amount, SimpleParticleType particle, SoundEvent sound, float volume, float pitch)
     {
         double x = pos.getX();
         double y = pos.getY();
         double z = pos.getZ();
         Random random = new Random();
         // levelIn.playSound(x + 0.5, y + 0.5, z + 0.5, SoundEvents.ENTITY_GENERIC_EXTINGUISH_FIRE, SoundCategory.BLOCKS, volume, pitch, false);
-        levelIn.playLocalSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundCategory.BLOCKS, volume, pitch, false);
+        levelIn.playLocalSound(x + 0.5, y + 0.5, z + 0.5, sound, SoundSource.BLOCKS, volume, pitch, false);
         for (int i = 0; i < amount; i++)
             levelIn.addParticle(particle, x + random.nextFloat(), y + random.nextFloat(), z + random.nextFloat(), 0.0D, 0.0D, 0.0D);
     }
 
     @Override
-    public void animateTick(BlockState stateIn, level levelIn, BlockPos pos, Random rand)
+    public void animateTick(BlockState stateIn, Level levelIn, BlockPos pos, Random rand)
     {
         if (stateIn.getValue(ELECTRIC_POWER) > 0 && rand.nextInt(350) == 1)
             if (levelIn.isClientSide)
                 doCollideAnimation(pos, levelIn, 1, ParticleTypes.CRIT, ModSounds.ELECTRIC_FENCE_IDLE, 0.05F, 1.0F);
     }
 
+
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        tooltip.add(new StringTextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
+        tooltip.add(new TextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }
 }

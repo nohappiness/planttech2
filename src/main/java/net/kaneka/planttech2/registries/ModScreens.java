@@ -1,9 +1,7 @@
 package net.kaneka.planttech2.registries;
 
+import com.mojang.blaze3d.platform.ScreenManager;
 import net.kaneka.planttech2.gui.*;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModScreens
 {

@@ -1,9 +1,5 @@
 package net.kaneka.planttech2.gui;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Supplier;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntry;
@@ -11,16 +7,19 @@ import net.kaneka.planttech2.crops.DropEntry;
 import net.kaneka.planttech2.crops.ParentPair;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class GuidePlantsScreen extends GuideBaseScreen
 {
 	private final String[] buttonEntryNames = new String[8];
-	private ITextComponent selectedName = new StringTextComponent("");
+	private ITextComponent selectedName = new TextComponent("");
 	protected ItemStack primarySeed = ItemStack.EMPTY;
 	protected ItemStack soil = ItemStack.EMPTY;
 	protected ItemStack[] seeds = new ItemStack[9];
@@ -188,7 +187,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 					this.drawTooltip(mStack, seeds[i].getHoverName(), mouseX, mouseY, 189 + 18 * i, 98);
 
 				if (drops[i] != DropEntry.EMPTY)
-					this.drawTooltip(mStack, new StringTextComponent("").append(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
+					this.drawTooltip(mStack, new TextComponent("").append(drops[i].getMin() + "-" + drops[i].getMax() + "x ")
 									.append(drops[i].getItem().get().asItem().getDescription()), mouseX, mouseY,
 							189 + 18 * i, 131);
 			}

@@ -1,27 +1,24 @@
 package net.kaneka.planttech2.blocks;
 
 import net.kaneka.planttech2.blocks.colors.IColoredBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.state.properties.AttachFace;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.core.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.core.BlockPos;
-import net.minecraft.level.LevelAccessor;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 public class GlassPaneEnd extends Block implements IColoredBlock
 {
@@ -56,10 +53,10 @@ public class GlassPaneEnd extends Block implements IColoredBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
-	{
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos) {
+
 		return getFacing(stateIn).getOpposite() == facing && !stateIn.canSurvive(levelIn, currentPos) ? Blocks.AIR.defaultBlockState()
-		        : super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
+				: super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
 	}
 
 	@Override

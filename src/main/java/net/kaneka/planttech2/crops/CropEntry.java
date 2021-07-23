@@ -1,18 +1,18 @@
 package net.kaneka.planttech2.crops;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.utilities.ISerializable;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
 
 public class CropEntry implements Comparable<CropEntry>, ISerializable
 {
@@ -22,7 +22,7 @@ public class CropEntry implements Comparable<CropEntry>, ISerializable
 	private final CropConfiguration defaultConfig;
 	private CropConfiguration currentConfig;
 
-	public CropEntry(CompoundNBT compound)
+	public CropEntry(CompoundTag compound)
 	{
 		this(compound.getString("name"),
 				compound.getInt("colour"),
@@ -41,14 +41,14 @@ public class CropEntry implements Comparable<CropEntry>, ISerializable
 	}
 
 	@Override
-	public CompoundNBT write()
+	public CompoundTag save()
 	{
-		CompoundNBT compound = new CompoundNBT();
+		CompoundTag compound = new CompoundTag();
 		compound.putString("name", name);
 		compound.putInt("colour", seedColor);
 		compound.putBoolean("hasparticle", hasParticle);
-		compound.put("defaultconfig", defaultConfig.write());
-		compound.put("currentconfig", currentConfig.write());
+		compound.put("defaultconfig", defaultConfig.save());
+		compound.put("currentconfig", currentConfig.save());
 		return compound;
 	}
 
@@ -57,9 +57,9 @@ public class CropEntry implements Comparable<CropEntry>, ISerializable
 		return this.name;
 	}
 
-	public ITextComponent getDisplayName()
+	public Component getDisplayName()
 	{
-		return new TranslationTextComponent("crop." + this.name);
+		return new TranslatableComponent("crop." + this.name);
 	}
 
 	public int getSeedColor()

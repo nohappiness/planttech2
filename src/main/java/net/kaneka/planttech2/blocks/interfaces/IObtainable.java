@@ -1,19 +1,19 @@
 package net.kaneka.planttech2.blocks.interfaces;
 
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public interface IObtainable
 {
-    void onObtained(World world, PlayerEntity player, ItemStack obtainer, BlockPos pos);
+    void onObtained(Level level, Player player, ItemStack obtainer, BlockPos pos);
 
-    void onReleased(ItemUseContext context, BlockState state);
+    void onReleased(UseOnContext context, BlockState state);
 
-    boolean isObtainable(ItemUseContext context);
+    boolean isObtainable(UseOnContext context);
 
     BlockState getObtainedBlockState(BlockState state);
 }

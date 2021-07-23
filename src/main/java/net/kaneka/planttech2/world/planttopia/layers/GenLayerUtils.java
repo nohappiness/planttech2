@@ -2,20 +2,22 @@ package net.kaneka.planttech2.world.planttopia.layers;
 
 import net.kaneka.planttech2.registries.ModReferences;
 import net.kaneka.planttech2.world.utils.BiomeHolder;
-import net.minecraft.util.Util;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.IExtendedNoiseRandom;
+import net.minecraft.Util;
+import net.minecraft.core.Registry;
 import net.minecraft.world.gen.LazyAreaLayerContext;
-import net.minecraft.world.gen.area.IArea;
-import net.minecraft.world.gen.area.IAreaFactory;
-import net.minecraft.world.gen.area.LazyArea;
-import net.minecraft.world.gen.layer.Layer;
-import net.minecraft.world.gen.layer.ZoomLayer;
-import net.minecraft.world.gen.layer.traits.IAreaTransformer1;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.newbiome.area.Area;
+import net.minecraft.world.level.newbiome.area.AreaFactory;
+import net.minecraft.world.level.newbiome.area.LazyArea;
+import net.minecraft.world.level.newbiome.layer.Layer;
+import net.minecraft.world.level.newbiome.layer.ZoomLayer;
+import net.minecraft.world.level.newbiome.layer.traits.AreaTransformer1;
+import net.minecraftforge.server.permission.context.ContextKey;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.LongFunction;
 
 public class GenLayerUtils {
@@ -81,7 +83,7 @@ public class GenLayerUtils {
     );
 
 
-    private static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry){
+    private static <T extends Area, C extends ContextKey<T>> AreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry){
         //PREPERATION AND LOADING OF DATA
         //-> CATEGORY FOR BORDER-DETECTION (ONLY INSIDE BIOMES AND RIVERS)
         HashMap<Integer, List<Integer>> category = new HashMap<>();
@@ -117,7 +119,7 @@ public class GenLayerUtils {
 
 
         //GENERATING LAYERS
-        IAreaFactory<T> biomes = new GenLayerBase().setup(idByPhaseWithRarity(0, registry)).run(seed.apply(1L));
+        AreaFactory<T> biomes = new GenLayerBase().setup(idByPhaseWithRarity(0, registry)).run(seed.apply(1L));
         biomes = repeat(1000L, ZoomLayer.NORMAL, biomes, 1, seed);
         biomes = new GenLayerPhase().setup(1, replacemap.get(1), replacemap_border.get(1),category).run(seed.apply(1L), biomes);
         biomes = repeat(1001L, ZoomLayer.NORMAL, biomes, 2, seed);
@@ -157,13 +159,13 @@ public class GenLayerUtils {
     }
 
     public static Layer genLayers(long seed, Registry<Biome> registry) {
-        IAreaFactory<LazyArea> areaFactory = genLayers((context) -> new LazyAreaLayerContext(25, seed, context), registry);
+        AreaFactory<LazyArea> areaFactory = genLayers((context) -> new LazyAreaLayerContext(25, seed, context), registry);
         return new Layer(areaFactory);
     }
 
-    public static <T extends IArea, C extends IExtendedNoiseRandom<T>> IAreaFactory<T> repeat(long seed, IAreaTransformer1 parent, IAreaFactory<T> iareafactoryparent, int count,
-                                                                                              LongFunction<C> contextFactory) {
-        IAreaFactory<T> iareafactory = iareafactoryparent;
+    public static <T extends Area, C extends ContextKey<T>> AreaFactory<T> repeat(long seed, AreaTransformer1 parent, AreaFactory<T> iareafactoryparent, int count,
+                                                                                  LongFunction<C> contextFactory) {
+        AreaFactory<T> iareafactory = iareafactoryparent;
         for (int i = 0; i < count; ++i) iareafactory = parent.run(contextFactory.apply(seed + (long) i), iareafactory);
         return iareafactory;
     }

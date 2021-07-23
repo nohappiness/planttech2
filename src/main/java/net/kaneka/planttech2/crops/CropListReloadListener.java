@@ -1,28 +1,25 @@
 package net.kaneka.planttech2.crops;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.packets.CropConfigChangeMessage;
 import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.JSONUtils;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
+import org.antlr.runtime.debug.Profiler;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static net.kaneka.planttech2.PlantTechMain.LOGGER;
 
@@ -41,7 +38,7 @@ public class CropListReloadListener extends JsonReloadListener
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> elementMap, IResourceManager resourceManager, IProfiler profiler)
+	protected void apply(Map<ResourceLocation, JsonElement> elementMap, ResourceManager resourceManager, Profiler profiler)
 	{
 		LOGGER.debug("Loading crop configurations");
 		Map<ResourceLocation, CropEntryConfigData> configsDefault = new HashMap<>();

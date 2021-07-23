@@ -1,24 +1,22 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
 import com.google.gson.JsonObject;
-
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipe;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
-import net.minecraft.world.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class InfuserRecipe implements IRecipe<IInventory>
+public class InfuserRecipe implements Recipe<Inventory>
 {
 	private final ResourceLocation id; 
 	private final Item input; 
@@ -54,13 +52,13 @@ public class InfuserRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public boolean matches(IInventory inv, World worldIn)
+	public boolean matches(Inventory inv, Level worldIn)
 	{
 		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack assemble(IInventory inv)
+	public ItemStack assemble(Inventory inv)
 	{
 		return new ItemStack(output);
 	}
@@ -85,19 +83,19 @@ public class InfuserRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer()
+	public RecipeSerializer<?> getSerializer()
 	{
 		return ModRecipeSerializers.INFUSER;
 	}
 
 	@Override
-	public IRecipeType<?> getType()
+	public RecipeType<?> getType()
 	{
 		return ModRecipeTypes.INFUSING;
 	}
 
 	
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<InfuserRecipe>
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfuserRecipe>
 	{
 		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "infusing");
 
@@ -144,7 +142,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public InfuserRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
+		public InfuserRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
 		{
 			Item input = buffer.readItem().getItem();
 			Item result = buffer.readItem().getItem();
@@ -153,7 +151,7 @@ public class InfuserRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, InfuserRecipe recipe)
+		public void toNetwork(FriendlyByteBuf buffer, InfuserRecipe recipe)
 		{
 			buffer.writeItem(new ItemStack(recipe.input));
 			buffer.writeItem(new ItemStack(recipe.output));

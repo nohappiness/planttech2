@@ -1,22 +1,20 @@
 package net.kaneka.planttech2.crops;
 
+import net.kaneka.planttech2.enums.EnumTemperature;
+import net.kaneka.planttech2.utilities.ISerializable;
+import net.kaneka.planttech2.utilities.NBTHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
-
-import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.utilities.ISerializable;
-import net.kaneka.planttech2.utilities.NBTHelper;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.minecraftforge.registries.ForgeRegistries.ITEMS;
 
@@ -30,7 +28,7 @@ public class CropConfiguration implements ISerializable
 	private final List<ParentPair> parents;
 	private final Supplier<Block> soil;
 
-	public CropConfiguration(CompoundNBT compound)
+	public CropConfiguration(CompoundTag compound)
 	{
 		this(compound.getBoolean("enabled"),
 				EnumTemperature.byName(compound.getString("temperature")),
@@ -55,13 +53,13 @@ public class CropConfiguration implements ISerializable
 	}
 
 	@Override
-	public CompoundNBT write()
+	public CompoundTag save()
 	{
-		CompoundNBT compound = new CompoundNBT();
+		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("enabled", enabled);
 		compound.putString("temperature", temperature.toString());
-		compound.put("primaryseed", primarySeed.write());
-		NBTHelper.putList(compound, "seeds", seeds, (seed) -> StringNBT.valueOf(seed.get().getRegistryName().toString()));
+		compound.put("primaryseed", primarySeed.save());
+		NBTHelper.putList(compound, "seeds", seeds, (seed) -> StringTag.valueOf(seed.get().getRegistryName().toString()));
 		NBTHelper.putSerilizableList(compound, "drops", drops);
 		NBTHelper.putSerilizableList(compound, "parents", parents);
 		compound.putString("soil", soil.get().getRegistryName().toString());

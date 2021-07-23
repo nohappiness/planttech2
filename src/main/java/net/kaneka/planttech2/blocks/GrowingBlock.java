@@ -2,23 +2,21 @@ package net.kaneka.planttech2.blocks;
 
 import com.google.common.collect.Lists;
 import net.kaneka.planttech2.registries.ModBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.level.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.core.BlockPos;
-import net.minecraft.level.server.Serverlevel;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.storage.loot.LootContext;
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
-
-import IntegerProperty;
 
 public class GrowingBlock extends Block
 {
@@ -36,13 +34,13 @@ public class GrowingBlock extends Block
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public void tick(BlockState state, Serverlevel level, BlockPos pos, Random rand)
+	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random rand)
 	{
 		if (growAlone)
     		grow(state, level, pos);
 	}
 	
-	public void grow(BlockState state, Serverlevel level, BlockPos pos)
+	public void grow(BlockState state, ServerLevel level, BlockPos pos)
 	{
 		int i = state.getValue(GROWINGSTATE);
 		if (i < 6)
@@ -51,7 +49,7 @@ public class GrowingBlock extends Block
 			placeBlock(level, pos, state);
 	}
 	
-	protected void placeBlock(Serverlevel level, BlockPos pos, BlockState state)
+	protected void placeBlock(ServerLevel level, BlockPos pos, BlockState state)
 	{
 		level.setBlockAndUpdate(pos, getBlock().defaultBlockState());
 	}
@@ -68,7 +66,7 @@ public class GrowingBlock extends Block
 	}
 	
 	@Override
-	public List<ItemStack> getDrops(BlockState state, Builder builder)
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder)
 	{
 		List<ItemStack> drops = Lists.newArrayList();
 		Block block = state.getBlock();

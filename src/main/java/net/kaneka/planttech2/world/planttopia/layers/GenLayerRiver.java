@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.world.planttopia.layers;
 
-import net.minecraft.world.gen.INoiseRandom;
-import net.minecraft.world.gen.layer.traits.ICastleTransformer;
+import net.minecraft.world.level.newbiome.context.Context;
+import net.minecraft.world.level.newbiome.layer.traits.CastleTransformer;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenLayerRiver implements ICastleTransformer {
+public class GenLayerRiver implements CastleTransformer {
 
     private int riverid;
     private HashMap<Integer, List<Integer>> categories;
@@ -19,7 +19,7 @@ public class GenLayerRiver implements ICastleTransformer {
     }
 
     @Override
-    public int apply(INoiseRandom rand, int north, int west, int south, int east, int center) {
+    public int apply(Context rand, int north, int west, int south, int east, int center) {
 
         if(category(north) != category(south) || category(west) != category(east)){
             return riverid;

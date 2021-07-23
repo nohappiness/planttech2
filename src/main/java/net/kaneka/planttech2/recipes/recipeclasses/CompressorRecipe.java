@@ -4,23 +4,24 @@ import com.google.gson.JsonObject;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipe;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
-import net.minecraft.world.item.crafting.IRecipeType;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class CompressorRecipe implements IRecipe<IInventory>
+public class CompressorRecipe implements Recipe<Inventory>
 {
 	private final ResourceLocation id;
 	private final ItemStack input;
@@ -34,13 +35,13 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public boolean matches(IInventory inv, World worldIn)
+	public boolean matches(Inventory inv, Level worldIn)
 	{
 		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack assemble(IInventory inv)
+	public ItemStack assemble(Inventory inv)
 	{
 		return output.copy();
 	}
@@ -74,18 +75,18 @@ public class CompressorRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer()
+	public RecipeSerializer<?> getSerializer()
 	{
 		return ModRecipeSerializers.COMPRESSOR;
 	}
 	
 	@Override
-	public IRecipeType<?> getType()
+	public RecipeType<?> getType()
 	{
 		return ModRecipeTypes.COMPRESSING;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<CompressorRecipe>
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<CompressorRecipe>
 	{
 		//private static ResourceLocation NAME = new ResourceLocation(PlantTechMain.MODID, "compressing");
 
@@ -160,7 +161,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public CompressorRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer)
+		public CompressorRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer)
 		{
 			ItemStack input = buffer.readItem();
 			ItemStack result = buffer.readItem();
@@ -168,7 +169,7 @@ public class CompressorRecipe implements IRecipe<IInventory>
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, CompressorRecipe recipe)
+		public void toNetwork(FriendlyByteBuf buffer, CompressorRecipe recipe)
 		{
 			buffer.writeItem(recipe.input);
 			buffer.writeItem(recipe.output);

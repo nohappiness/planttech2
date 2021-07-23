@@ -1,20 +1,16 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
+import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.items.*;
-import net.kaneka.planttech2.items.upgradeable.MultitoolItem;
-import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
-import net.kaneka.planttech2.items.upgradeable.UpgradeChipItem;
-import net.kaneka.planttech2.items.upgradeable.UpgradeableArmorItem;
-import net.kaneka.planttech2.items.upgradeable.UpgradeableHandItem;
-import net.kaneka.planttech2.crops.CropEntry;
+import net.kaneka.planttech2.items.upgradeable.*;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -391,10 +387,10 @@ public class ModItems
         r.register(make("aura_core_productivity_increase_ii", new AuraCoreItem(new AuraCoreItem.Builder(2).setIncreaseProductivity(2))));
         r.register(make("aura_core_productivity_increase_iii", new AuraCoreItem(new AuraCoreItem.Builder(3).setIncreaseProductivity(3))));
 
-        r.register(make("cyberarmor_helmet", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET)));
-        r.register(make("cyberarmor_chest", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST)));
-        r.register(make("cyberarmor_leggings", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.LEGS, 1000, 10, 2, 0, UpgradeChipItem.LEGGINGS)));
-        r.register(make("cyberarmor_boots", new UpgradeableArmorItem("cyberarmor", EquipmentSlotType.FEET, 1000, 10, 1, 0, UpgradeChipItem.BOOTS)));
+        r.register(make("cyberarmor_helmet", new UpgradeableArmorItem("cyberarmor", EquipmentSlot.HEAD, 1000, 10, 1, 0, UpgradeChipItem.HELMET)));
+        r.register(make("cyberarmor_chest", new UpgradeableArmorItem("cyberarmor", EquipmentSlot.CHEST, 1000, 10, 3, 0, UpgradeChipItem.CHEST)));
+        r.register(make("cyberarmor_leggings", new UpgradeableArmorItem("cyberarmor", EquipmentSlot.LEGS, 1000, 10, 2, 0, UpgradeChipItem.LEGGINGS)));
+        r.register(make("cyberarmor_boots", new UpgradeableArmorItem("cyberarmor", EquipmentSlot.FEET, 1000, 10, 1, 0, UpgradeChipItem.BOOTS)));
 
         r.register(makeBulb("machinebulbreprocessor_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.MACHINEBULBREPROCESSOR_GROWING, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR, 0)));
         r.register(makeBulb("seedsqueezer_bulb", new MachineBulbItem(() -> ModBlocks.MACHINESHELL_IRON, () -> ModBlocks.SEEDSQUEEZER_GROWING, PlantTechConstants.MACHINETIER_SEEDSQUEEZER, 0)));

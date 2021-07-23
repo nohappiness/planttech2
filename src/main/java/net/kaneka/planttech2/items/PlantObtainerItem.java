@@ -2,25 +2,27 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.InteractionResultHolderType;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.text.*;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.List;
-
-import InteractionResultHolderType;
 
 public class PlantObtainerItem extends Item
 {
@@ -30,15 +32,15 @@ public class PlantObtainerItem extends Item
     }
 
     @Override
-    public InteractionResultHolderType useOn(ItemUseContext context)
+    public InteractionResult useOn(UseOnContext context)
     {
-        World world = context.getLevel();
+        Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
-        BlockState state = world.getBlockState(pos);
-        PlayerEntity player = context.getPlayer();
+        BlockState state = level.getBlockState(pos);
+        Player player = context.getPlayer();
         if (player == null)
         {
-            return InteractionResultHolderType.FAIL;
+            return InteractionResult.FAIL;
         }
         ItemStack stack = player.getMainHandItem();
         initTags(stack);
@@ -48,29 +50,29 @@ public class PlantObtainerItem extends Item
             if (!isFilled(stack) && block.isObtainable(context))
             {
                 setBlockFilled(stack, block.getObtainedBlockState(state));
-                block.onObtained(world, player, stack, pos);
+                block.onObtained(level, player, stack, pos);
 //                world.playSound(player, pos, SoundEvents.BLOCK_PORTAL_TRAVEL, SoundCategory.BLOCKS, 0.15F, 10.0F);
-                return InteractionResultHolderType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
         else if (isFilled(stack))
         {
             IObtainable block = (IObtainable) getBlockStateFilled(stack).getBlock();
-            if (((NaturalPlants) block).canPlaceAt(world, pos.relative(context.getClickedFace())))
+            if (((NaturalPlants) block).canPlaceAt(level, pos.relative(context.getClickedFace())))
             {
                 block.onReleased(context, getBlockStateFilled(stack));
                 setBlockFilled(stack, null);
                 setFilled(stack, false);
 //                world.playSound(player, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1.0F, 10.0F);
-                return InteractionResultHolderType.SUCCESS;
+                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResultHolderType.PASS;
+        return InteractionResult.PASS;
     }
 
     public static ItemStack setBlockFilled(ItemStack stack, BlockState state)
     {
-        CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
+        CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (state == Blocks.AIR.defaultBlockState() || state != null)
         {
             compound.merge(NBTUtil.writeBlockState(state));
@@ -87,7 +89,7 @@ public class PlantObtainerItem extends Item
 
     public static BlockState getBlockStateFilled(ItemStack stack)
     {
-        CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
+        CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         BlockState state = NBTUtil.readBlockState(compound);
         if (state.getBlock() == Blocks.AIR)
         {
@@ -99,7 +101,7 @@ public class PlantObtainerItem extends Item
 
     public static ItemStack setFilled(ItemStack stack, boolean filled)
     {
-        CompoundNBT compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
+        CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (!filled)
         {
             compound.merge(NBTUtil.writeBlockState(Blocks.AIR.defaultBlockState()));
@@ -116,20 +118,20 @@ public class PlantObtainerItem extends Item
 
     public static ItemStack initTags(ItemStack stack)
     {
-        CompoundNBT compound = stack.hasTag() ? stack.getTag() : new CompoundNBT();
+        CompoundTag compound = stack.hasTag() ? stack.getTag() : new CompoundTag();
         stack.setTag(compound);
         return stack;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn)
     {
-        tooltip.add(new StringTextComponent("Right click on an unique plants found planttopia to obtain and store it in the void"));
-        tooltip.add(new StringTextComponent("Right click again to get it back"));
+        tooltip.add(new TextComponent("Right click on an unique plants found planttopia to obtain and store it in the void"));
+        tooltip.add(new TextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-            tooltip.add(new StringTextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getName().setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true))));
+            tooltip.add(new TextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getName().setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true))));
         else
-            tooltip.add(new StringTextComponent("Empty").setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true)));
+            tooltip.add(new TextComponent("Empty").setStyle(Style.EMPTY.withColor(TextColor.parseColor("BLUE")).withBold(true)));
     }
 }

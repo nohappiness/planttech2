@@ -5,24 +5,22 @@ import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.machines.CableBlock;
 import net.kaneka.planttech2.blocks.machines.MachineBaseBlock;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
-import net.minecraft.util.InteractionResultHolderType;
-import net.minecraft.util.Hand;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
-
-import InteractionResultHolderType;
 
 public class WrenchItem extends Item
 {
@@ -33,38 +31,38 @@ public class WrenchItem extends Item
 	}
 
 	@Override
-	public InteractionResultHolderType useOn(ItemUseContext ctx)
+	public InteractionResult useOn(UseOnContext ctx)
 	{
-		World world = ctx.getLevel();
+		Level level = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
-		PlayerEntity player = ctx.getPlayer();
-		if (!world.isClientSide)
+		Player player = ctx.getPlayer();
+		if (!level.isClientSide)
 		{
-			BlockState target = world.getBlockState(pos);
-			ItemStack stack = player.getItemInHand(Hand.MAIN_HAND);
+			BlockState target = level.getBlockState(pos);
+			ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
 			if (stack.getItem() instanceof WrenchItem && player.isCrouching())
 			{
 				Block block = target.getBlock();
-				if (removeIfValid(block, world, pos))
+				if (removeIfValid(block, level, pos))
 				{
 					if (block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 					{
 						if (!player.addItem(new ItemStack(block)))
 						{
-							Block.popResource(world, player.blockPosition(), new ItemStack(block));
+							Block.popResource(level, player.blockPosition(), new ItemStack(block));
 						}
-						return InteractionResultHolderType.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
-					Block.popResource(world, pos, new ItemStack(target.getBlock()));
-					return InteractionResultHolderType.SUCCESS;
+					Block.popResource(level, pos, new ItemStack(target.getBlock()));
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
 		return super.useOn(ctx);
 	}
 
-	private boolean removeIfValid(Block block, World world, BlockPos pos)
+	private boolean removeIfValid(Block block, Level world, BlockPos pos)
 	{
 		if (block instanceof MachineBaseBlock || block instanceof CableBlock || block instanceof BaseElectricFence || block instanceof ElectricFenceGate)
 		{
@@ -75,11 +73,11 @@ public class WrenchItem extends Item
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_cable").getString()));
-		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new StringTextComponent(new TranslationTextComponent("info.wrench_dismantle").getString()));
+		tooltip.add(new TextComponent(new TranslatableComponent("info.wrench_cable").getString()));
+		tooltip.add(new TextComponent(""));
+		tooltip.add(new TextComponent(new TranslatableComponent("info.wrench_dismantle").getString()));
 	}
 
 }

@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.gui.guide;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuideEntry
 {
@@ -34,7 +34,7 @@ public class GuideEntry
 	
 	public String getName()
 	{
-		return new TranslationTextComponent("guide.planttech2." + name + ".header").getString(); 
+		return new TranslationTextComponent("guide.planttech2." + name + ".header").getString();
 	}
 	
 	public ITextComponent getHeader()

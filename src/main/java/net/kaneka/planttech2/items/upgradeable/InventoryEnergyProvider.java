@@ -1,8 +1,8 @@
 package net.kaneka.planttech2.items.upgradeable;
 
 import net.kaneka.planttech2.energy.BioEnergyStorage;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
@@ -12,7 +12,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class InventoryEnergyProvider implements ICapabilitySerializable<CompoundNBT>
+public class InventoryEnergyProvider implements ICapabilitySerializable<CompoundTag>
 {
 	
 	protected BioEnergyStorage energystorage;
@@ -44,16 +44,16 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<Compound
 	}
 
 	@Override
-	public CompoundNBT serializeNBT()
+	public CompoundTag serializeNBT()
 	{
-		CompoundNBT compound = new CompoundNBT();
+		CompoundTag compound = new CompoundTag();
 		compound.put("inventory", itemhandler.serializeNBT());
 		compound.put("energy", energystorage.serializeNBT());
 		return compound;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt)
+	public void deserializeNBT(CompoundTag nbt)
 	{
 		itemhandler.deserializeNBT(nbt.getCompound("inventory"));
 		energystorage.deserializeNBT(nbt.getCompound("energy"));

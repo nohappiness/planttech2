@@ -1,50 +1,45 @@
 package net.kaneka.planttech2.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.container.entities.TechVillagerContainer;
 import net.kaneka.planttech2.entities.capabilities.techvillagertrust.ITechVillagerTrust;
 import net.kaneka.planttech2.entities.capabilities.techvillagertrust.TechVillagerTrust;
 import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTask;
 import net.kaneka.planttech2.entities.tradesandjobs.TechVillagerTrade;
-import net.kaneka.planttech2.packets.DoTechVillagerTaskMessage;
-import net.kaneka.planttech2.packets.DoTechVillagerTradeMessage;
+import net.kaneka.planttech2.inventory.entities.TechVillagerContainer;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.kaneka.planttech2.registries.ModItems;
-import net.kaneka.planttech2.utilities.PlayerInventoryUtils;
+import net.kaneka.planttech2.utilities.InventoryUtils;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 {
 	protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/techvillager.png");
-	protected final PlayerInventory player;
+	protected final Inventory player;
 	protected int invsize;
 	protected IEnergyStorage energystorage;
 	protected TechVillagerTrade selectedTrade = null;
 	protected TechVillagerTask selectedTask = null;
 	protected int selectedID = -1;
-	protected List<ITextComponent> canTradeTextProperties = new ArrayList<>();
+	protected List<Component> canTradeTextProperties = new ArrayList<>();
 	private String profession = "scientist";
 	private String professionname = "loading"; 
 	private int playertrustlevel = 0; 
 
-	public TechVillagerScreen(TechVillagerContainer container, PlayerInventory inv, ITextComponent name)
+	public TechVillagerScreen(TechVillagerContainer container, Inventory inv, ITextComponent name)
 	{
 		super(container, inv, name);
 		this.player = inv;
@@ -127,7 +122,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 
 	}
 
-	public void drawTooltip(MatrixStack mStack, List<ITextComponent> lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(MatrixStack mStack, List<Component> lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.leftPos;
 		posY += this.topPos;
@@ -141,7 +136,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		posX += this.leftPos;
 		posY += this.topPos;
 		if (mouseX >= posX && mouseX <= posX + width && mouseY >= posY && mouseY <= posY + height)
-			renderTooltip(mStack, new StringTextComponent(line), mouseX, mouseY);
+			renderTooltip(mStack, new TextComponent(line), mouseX, mouseY);
 	}
 
 	@Override
@@ -304,18 +299,18 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		return mouseX >= startX && mouseX <= startX + width && mouseY >= startY && mouseY <= startY + height;
 	}
 
-	public List<ITextComponent> getCanTradeTextProperties()
+	public List<Component> getCanTradeTextProperties()
 	{
 		List<String> list = new ArrayList<>();
 		if (selectedTrade != null)
 		{
 			if(selectedTrade.getNeededLevel() <= playertrustlevel)
 			{
-    			if (PlayerInventoryUtils.enoughSpace(player, selectedTrade.getOutputs().size()))
+    			if (InventoryUtils.enoughSpace(player, selectedTrade.getOutputs().size()))
     			{
-    				if (PlayerInventoryUtils.hasList(player, selectedTrade.getInputs()))
+    				if (InventoryUtils.hasList(player, selectedTrade.getInputs()))
     				{
-    					if (PlayerInventoryUtils.enoughCredits(player, selectedTrade.getCreditsBuy()))
+    					if (InventoryUtils.enoughCredits(player, selectedTrade.getCreditsBuy()))
     						if (selectedTrade.getCreditsSell() <= 0 && player.countItem(ModItems.PLANTCARD) <= 0 && selectedTrade.getCreditsSell() > 0)
     							list.add("No plantcard in inventory");
     					else
@@ -332,7 +327,7 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		} 
 		else if(selectedTask != null)
 		{
-			if (PlayerInventoryUtils.hasList(player, selectedTask.getInputs()))
+			if (InventoryUtils.hasList(player, selectedTask.getInputs()))
 			{
 				if(playertrustlevel >= selectedTask.getMinTrustLevel())
 					if(playertrustlevel > selectedTask.getMaxTrustLevel())
@@ -345,9 +340,9 @@ public class TechVillagerScreen extends ContainerScreen<TechVillagerContainer>
 		}
 		else
 			list.add("No trade selected");
-		List<ITextComponent> textPropertiesList = new ArrayList<>();
+		List<Component> textPropertiesList = new ArrayList<>();
 		for (String str : list)
-			textPropertiesList.add(new StringTextComponent(str));
+			textPropertiesList.add(new TextComponent(str));
 		return textPropertiesList;
 	}
 	

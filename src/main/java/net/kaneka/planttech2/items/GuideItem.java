@@ -2,17 +2,15 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.PlantTechClient;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-
-import InteractionResultHolder;
 
 public class GuideItem extends Item
 {
@@ -23,7 +21,7 @@ public class GuideItem extends Item
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn)
+    public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn)
     {
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
 	/*
@@ -42,7 +40,7 @@ public class GuideItem extends Item
 		//CropListEntryConfiguration test = gson.fromJson(new InputStreamReader(rm.getResource(new ResourceLocation("example", "pt2_crops")).getInputStream()), CropListEntryConfiguration.class);
 		
 		//CropListEntryConfiguration.Serializer.readFromJson(new ResourceLocation("planttech2","example"),  gson.)
-        return super.use(worldIn, playerIn, handIn);
+        return super.use(level, playerIn, handIn);
     }
 
     @Override

@@ -2,7 +2,7 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
-import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -21,7 +21,7 @@ public class ParticleItem extends Item
 		return entryName;
 	}
 	
-	public static class ColorHandler implements IItemColor 
+	public static class ColorHandler implements ItemColor
 	{
 		@Override
 		public int getColor(ItemStack stack, int tintIndex)

@@ -9,9 +9,9 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModBlocks;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.item.ItemStack;
 
 public class CarverCategory implements IRecipeCategory<CarverRecipe>
 {
@@ -30,7 +30,7 @@ public class CarverCategory implements IRecipeCategory<CarverRecipe>
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "carver"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 0, 60, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.CARVER));
-    	localizedName = new TranslationTextComponent("planttech2.carver").getString();
+    	localizedName = new TranslatableComponent("planttech2.carver").getString();
     }
 
 	@Override
