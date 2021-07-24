@@ -3,8 +3,6 @@ package net.kaneka.planttech2.world.planttopia;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.kaneka.planttech2.registries.ModDimensions;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.DimensionSettings;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 
