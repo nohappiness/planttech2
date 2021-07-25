@@ -5,9 +5,6 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
@@ -22,7 +19,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class TestCableTileEntity extends BlockEntity implements ITickableTileEntity
+public class TestCableTileEntity extends BlockEntity
 {
     public CableInfo cableInfo = new CableInfo();
     public int maxTransferRate = 20;
@@ -32,7 +29,6 @@ public class TestCableTileEntity extends BlockEntity implements ITickableTileEnt
         super(ModTileEntities.CABLE_TE);
     }
 
-    @Override
     public void tick()
     {
         if (level != null && !level.isClientSide() && isMaster())

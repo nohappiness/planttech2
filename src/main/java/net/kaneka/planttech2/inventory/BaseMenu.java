@@ -1,19 +1,19 @@
 package net.kaneka.planttech2.inventory;
 
 
-import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyBlockEntity;
-import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.BlockEntity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.IIntArray;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
@@ -25,9 +25,9 @@ import java.util.function.Predicate;
 public class BaseContainer extends AbstractContainerMenu
 {
 	protected final EnergyInventoryBlockEntity BlockEntity;
-	protected final IIntArray fieldArray;
+	protected final ContainerData fieldArray;
 
-	public BaseContainer(int id, ContainerType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
+	public BaseContainer(int id, MenuType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
 	{
 		super(type, id);
 		for (int y = 0; y < 3; y++)
@@ -36,7 +36,7 @@ public class BaseContainer extends AbstractContainerMenu
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
 		this.BlockEntity = BlockEntity;
-		fieldArray = BlockEntity.getIntArray();
+		fieldArray = BlockEntity.getContainerData();
 		addDataSlots(fieldArray);
 	}
 
