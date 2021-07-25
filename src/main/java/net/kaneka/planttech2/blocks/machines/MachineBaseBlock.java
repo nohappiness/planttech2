@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyBlockEntity;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -14,17 +15,21 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class MachineBaseBlock extends Block
+public class MachineBaseBlock extends Block implements EntityBlock
 {
 	private final Supplier<? extends BlockEntity> teCreator;
 	private final int tier;
@@ -62,15 +67,16 @@ public class MachineBaseBlock extends Block
 		}
 		return InteractionResult.SUCCESS;
 	}
-	
+
+	@Nullable
 	@Override
-	public boolean hasBlockEntity(BlockState state)
-	{
-		return true;
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		if(!level.isClientSide) return EnergyBlockEntity::tick;
+		return null;
 	}
 
 	@Override
-	public BlockEntity createBlockEntity(BlockState state, BlockGetter world)
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
 		return teCreator.get();
 	}

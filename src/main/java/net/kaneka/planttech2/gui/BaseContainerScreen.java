@@ -1,28 +1,29 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyTileEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyBlockEntity;
 import net.kaneka.planttech2.gui.guide.Guide;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
-import net.kaneka.planttech2.inventory.BaseContainer;
-import net.kaneka.planttech2.inventory.BaseContainer.SlotItemHandlerWithInfo;
+import net.kaneka.planttech2.inventory.BaseMenu;
+import net.kaneka.planttech2.inventory.BaseMenu.SlotItemHandlerWithInfo;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.entity.player.Inventory;
 
-public abstract class BaseContainerScreen<T extends BaseContainer> extends ContainerScreen<T>
+public abstract class BaseContainerScreen<T extends BaseMenu> extends AbstractContainerScreen<T>
 {
 	//protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 	protected final Inventory player;
-	protected final EnergyTileEntity te;
+	protected final EnergyBlockEntity te;
 	protected abstract ResourceLocation getBackgroundTexture();
 
 	@SuppressWarnings("unchecked")
-	public BaseContainerScreen(BaseContainer inventorySlotsIn, Inventory inventoryPlayer, ITextComponent title)
+	public BaseContainerScreen(BaseMenu inventorySlotsIn, Inventory inventoryPlayer, Component title)
 	{
 		super((T) inventorySlotsIn, inventoryPlayer, title);
 		
@@ -39,9 +40,11 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (this.height - this.imageHeight) / 2;
     }
-	
+
+
+
 	@Override
-	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 			this.renderBackground(mStack);
 			super.render(mStack, mouseX, mouseY, partialTicks);
@@ -50,12 +53,12 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 	        this.renderTooltip(mStack, mouseX, mouseY);
 	}
 	
-	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
+	protected void drawTooltips(PoseStack mStack, int mouseX, int mouseY)
 	{
 		drawTooltip(mStack, te.getEnergyStored() + "/" + te.getMaxEnergyStored(), mouseX, mouseY, 148, 27, 16, 55);
 	}
 	
-	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(PoseStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		
 		posX += this.leftPos;
@@ -67,15 +70,15 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bind(getBackgroundTexture());
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		minecraft.getTextureManager().getTexture(getBackgroundTexture());
 		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack mStack, int mouseX, int mouseY)
+	protected void renderLabels(PoseStack mStack, int mouseX, int mouseY)
 	{
 		String tileName = title.getString();
 		int textcolor = Integer.parseInt("000000",16);
@@ -98,16 +101,16 @@ public abstract class BaseContainerScreen<T extends BaseContainer> extends Conta
 
 	//renderHoveredToolTip
 	@Override
-	protected void renderTooltip(MatrixStack mStack, int x, int y)
+	protected void renderTooltip(PoseStack mStack, int x, int y)
 	{
-		if (minecraft.player.inventory.getCarried().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.hasItem() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
-			this.renderTooltip(mStack, new TranslationTextComponent(((SlotItemHandlerWithInfo) this.hoveredSlot).getUsageString()), x, y);
+		if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.hasItem() && this.hoveredSlot instanceof BaseMenu.SlotItemHandlerWithInfo)
+			this.renderTooltip(mStack, new TranslatableComponent(((SlotItemHandlerWithInfo) this.hoveredSlot).getUsageString()), x, y);
 		else
 			super.renderTooltip(mStack, x, y);
 	}
 
 //	@Override
-//	protected void renderHoveredToolTip(MatrixStack mstack, int x, int y)
+//	protected void renderHoveredToolTip(PoseStack mstack, int x, int y)
 //	{
 //		if (this.minecraft.player.inventory.getItemStack().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.getHasStack() && this.hoveredSlot instanceof BaseContainer.SlotItemHandlerWithInfo)
 //		{

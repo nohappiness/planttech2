@@ -1,32 +1,32 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.inventory.EnergySupplierContainer;
+import net.kaneka.planttech2.inventory.EnergySupplierMenu;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.entity.player.Inventory;
 
-public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierContainer>
+public class EnergySupplierScreen extends BaseContainerScreen<EnergySupplierMenu>
 {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/energy_supplier.png");
 
-	public EnergySupplierScreen(EnergySupplierContainer container, Inventory player, ITextComponent name)
+	public EnergySupplierScreen(EnergySupplierMenu container, Inventory player, Component name)
     {
     	super(container, player, name);
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack pStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(pStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
+		blit(pStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
 
 //	@Override
-//	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+//	protected void drawGuiContainerBackgroundLayer(PoseStack mStack, float partialTicks, int mouseX, int mouseY)
 //	{
 //		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 //

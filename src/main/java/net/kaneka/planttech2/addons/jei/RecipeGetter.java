@@ -16,9 +16,9 @@ import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.Blocks;
 
@@ -31,11 +31,11 @@ public class RecipeGetter
 {
 	public static List<ChipalyzerRecipe> getChipalyzerRecipes() {
 		List<ChipalyzerRecipe> results = new ArrayList<>();
-		ClientWorld Level = Minecraft.getInstance().level;
-		RecipeManager recipeManager = world.getRecipeManager();
-		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
+		ClientLevel level = Minecraft.getInstance().level;
+		RecipeManager recipeManager = level.getRecipeManager();
+		Iterator<Recipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext()) {
-			IRecipe<?> recipe = it.next();
+			Recipe<?> recipe = it.next();
 			if (recipe.getType() == ModRecipeTypes.CHIPALYZER) {
 				ChipalyzerRecipe chipalyzerrecipe = (ChipalyzerRecipe) recipe;
 				results.add(chipalyzerrecipe);
@@ -47,12 +47,12 @@ public class RecipeGetter
 	public static List<CompressorRecipe> getCompressorRecipes()
 	{
 		List<CompressorRecipe> results = new ArrayList<CompressorRecipe>();
-		ClientWorld Level = Minecraft.getInstance().level;
-		RecipeManager recipeManager = world.getRecipeManager();
-		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
+		ClientLevel level = Minecraft.getInstance().level;
+		RecipeManager recipeManager = level.getRecipeManager();
+		Iterator<Recipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext())
 		{
-			IRecipe<?> recipe = it.next();
+			Recipe<?> recipe = it.next();
 			if (recipe.getType() == ModRecipeTypes.COMPRESSING)
 			{
 				CompressorRecipe compressorrecipe = (CompressorRecipe) recipe;
@@ -65,12 +65,12 @@ public class RecipeGetter
 	public static List<InfuserRecipe> getInfuserRecipes()
 	{
 		List<InfuserRecipe> results = new ArrayList<InfuserRecipe>();
-		ClientWorld Level = Minecraft.getInstance().level;
-		RecipeManager recipeManager = world.getRecipeManager();
-		Iterator<IRecipe<?>> it = recipeManager.getRecipes().iterator();
+		ClientLevel level = Minecraft.getInstance().level;
+		RecipeManager recipeManager = level.getRecipeManager();
+		Iterator<Recipe<?>> it = recipeManager.getRecipes().iterator();
 		while (it.hasNext())
 		{
-			IRecipe<?> recipe = it.next();
+			Recipe<?> recipe = it.next();
 			if (recipe.getType() == ModRecipeTypes.INFUSING)
 			{
 				InfuserRecipe compressorrecipe = (InfuserRecipe) recipe;

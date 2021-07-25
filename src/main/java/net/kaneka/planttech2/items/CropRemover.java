@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.items;
 
 import com.google.common.collect.Lists;
-import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
+import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
-import net.minecraft.dispenser.OptionalDispenseBehavior;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.InteractionResult;
@@ -29,7 +29,7 @@ public class CropRemover extends Item
 	public CropRemover()
 	{
 		super(new Item.Properties().stacksTo(1).tab(ModCreativeTabs.MAIN).durability(1024));
-		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(this, new OptionalDispenseItemBehavior()
 		{
 			@Override
 			protected ItemStack execute(BlockSource source, ItemStack stack)
@@ -42,7 +42,7 @@ public class CropRemover extends Item
 					stack.setDamageValue(stack.getDamageValue() + 1);
 					if (stack.getDamageValue() >= stack.getMaxDamage())
 						stack.shrink(1);
-					world.levelEvent(2005, target, 0);
+					level.levelEvent(2005, target, 0);
 				}
 				return stack;
 			}
@@ -80,11 +80,11 @@ public class CropRemover extends Item
 	{
 		BlockState state = world.getBlockState(pos);
 		BlockEntity BlockEntity = world.getBlockEntity(pos);
-		if(BlockEntity instanceof CropsTileEntity)
+		if(BlockEntity instanceof CropsBlockEntity cbe)
 		{
 			List<ItemStack> drops = Lists.newArrayList();
 			int growstate = state.getValue(CropBaseBlock.GROWSTATE);
-			((CropsTileEntity) BlockEntity).addDrops(drops, growstate);
+			cbe.addDrops(drops, growstate);
 			for(ItemStack drop : drops)
 				Block.popResource(world, pos, drop);
 			world.setBlockAndUpdate(pos, ModBlocks.CROPBARS.defaultBlockState());

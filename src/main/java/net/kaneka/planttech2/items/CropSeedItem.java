@@ -8,9 +8,11 @@ import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -38,7 +40,7 @@ public class CropSeedItem extends Item
 	{
 		super(new Item.Properties().tab(ModCreativeTabs.SEEDS));
 		this.entryName = entryName;
-		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(this, new OptionalDispenseItemBehavior()
 		{
 			@Override
 			protected ItemStack execute(BlockSource source, ItemStack stack)
@@ -145,26 +147,26 @@ public class CropSeedItem extends Item
 		}
 	}
 
-	private TextFormatting getTraitColor(CompoundTag nbt, String trait)
+	private ChatFormatting getTraitColor(CompoundTag nbt, String trait)
 	{
 		if (nbt.getInt(trait) == Objects.requireNonNull(EnumTraitsInt.getByName(trait)).getMax())
 			return getTraitColor(TRAIT_MAX);
 		if (nbt.getInt(trait) == Objects.requireNonNull(EnumTraitsInt.getByName(trait)).getMin())
 			return getTraitColor(TRAIT_MIN);
-		return TextFormatting.RESET;
+		return ChatFormatting.RESET;
 	}
 
-	private TextFormatting getTraitColor(int level)
+	private ChatFormatting getTraitColor(int level)
 	{
 		if (level == TRAIT_MIN)
 		{
-			return TextFormatting.GRAY;
+			return ChatFormatting.GRAY;
 		}
 		if (level == TRAIT_MAX)
 		{
-			return TextFormatting.GREEN;
+			return ChatFormatting.GREEN;
 		}
-		return TextFormatting.RESET;
+		return ChatFormatting.RESET;
 	}
 
 	public static boolean plant(Level world, BlockPos pos, ItemStack stack)

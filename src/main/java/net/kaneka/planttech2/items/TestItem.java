@@ -4,9 +4,7 @@ package net.kaneka.planttech2.items;
 import net.kaneka.planttech2.datagen.helper.JsonFileConverter;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -146,7 +144,6 @@ public class TestItem extends Item
 	public void appendHoverText(ItemStack p_77624_1_, @Nullable Level p_77624_2_, List<Component> p_77624_3_, TooltipFlag p_77624_4_)
 	{
 		Component text = new TextComponent("Leave me alone!");
-		text.setStyle(Style.EMPTY.applyFormat(TextFormatting.RED));
 		p_77624_3_.add(text);
 	}
 }

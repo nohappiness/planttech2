@@ -3,9 +3,9 @@ package net.kaneka.planttech2.crops;
 import com.google.gson.*;
 import net.kaneka.planttech2.utilities.ISerializable;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.network.FriendlyByteBuf;
 
+import javax.json.Json;
 import java.lang.reflect.Type;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -129,7 +129,7 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
             return new ParentPair(parent1, parent2, mutateChance);
         }
 
-        public ParentPair read(PacketBuffer buf)
+        public ParentPair read(FriendlyByteBuf buf)
         {
             String parent1 = buf.readUtf();
             String parent2 = buf.readUtf();
@@ -137,7 +137,7 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
             return ParentPair.of(parent1, parent2, chance);
         }
 
-        public void write(ParentPair pair,ByteBuf buf)
+        public void write(ParentPair pair, FriendlyByteBuf buf)
         {
             buf.writeUtf(pair.getFirstParent());
             buf.writeUtf(pair.getSecondParent());

@@ -3,13 +3,13 @@ package net.kaneka.planttech2.items.armors;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.swing.*;
 import java.util.function.Supplier;
 
 public enum CustomArmorMaterial implements ArmorMaterial
@@ -25,7 +25,7 @@ public enum CustomArmorMaterial implements ArmorMaterial
 	private final int enchantability;
 	private final SoundEvent soundEvent;
 	private final float toughness;
-	private final UIDefaults.LazyValue<Ingredient> repairMaterial;
+	private final LazyLoadedValue<Ingredient> repairMaterial;
 
 	CustomArmorMaterial(String nameIn, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness,
 	        Supplier<Ingredient> repairMaterial)
@@ -36,7 +36,7 @@ public enum CustomArmorMaterial implements ArmorMaterial
 		this.enchantability = enchantability;
 		this.soundEvent = soundEvent;
 		this.toughness = toughness;
-		this.repairMaterial = new UIDefaults.LazyValue<>(repairMaterial);
+		this.repairMaterial = new LazyLoadedValue<>(repairMaterial);
 	}
 
 	public int getEnchantmentValue()

@@ -3,16 +3,18 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.inventory.SeedConstructorContainer;
+import net.kaneka.planttech2.inventory.SeedConstructorMenu;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 {
@@ -64,9 +66,9 @@ public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 		}
 	};
 
-	public SeedconstructorBlockEntity()
+	public SeedconstructorBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.SEEDCONSTRUCTOR_TE, 1000, 8, 5000, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR);
+		super(ModTileEntities.SEEDCONSTRUCTOR_TE, pos, state, 1000, 8, 5000, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR);
 	}
 
 	@Override
@@ -136,9 +138,9 @@ public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 	}
 	
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new SeedConstructorContainer(id, inv, this);
+		return new SeedConstructorMenu(id, inv, this);
 	}
 
 	@Override

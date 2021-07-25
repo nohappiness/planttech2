@@ -1,13 +1,15 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.SolarGeneratorContainer;
+import net.kaneka.planttech2.inventory.SolarGeneratorMenu;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.world.Container;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.SOLAR_FOCUS;
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
@@ -52,9 +54,9 @@ public class SolarGeneratorBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-	public SolarGeneratorBlockEntity()
+	public SolarGeneratorBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.SOLARGENERATOR_TE, 10000, 5, PlantTechConstants.MACHINETIER_SOLARGENERATOR);
+		super(ModTileEntities.SOLARGENERATOR_TE, pos, state, 10000, 5, PlantTechConstants.MACHINETIER_SOLARGENERATOR);
 	}
 
 	@Override
@@ -111,9 +113,9 @@ public class SolarGeneratorBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new SolarGeneratorContainer(id, inv, this);
+		return new SolarGeneratorMenu(id, inv, this);
 	}
 
 	@Override

@@ -4,9 +4,7 @@ import com.google.gson.*;
 import net.kaneka.planttech2.utilities.ISerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -130,22 +128,22 @@ public class DropEntry implements ISerializable
             int min = 1, max = 1;
             if (json.isJsonPrimitive())
             {
-                itemLocation = new ResourceLocation(JSONUtils.convertToString(json, "drops"));
+                itemLocation = new ResourceLocation(json.getAsJsonArray().get(0).getAsString());
             } else if (json.isJsonObject())
             {
                 JsonObject obj = json.getAsJsonObject();
-                itemLocation = new ResourceLocation(JSONUtils.getAsString(obj, "item"));
+                itemLocation = new ResourceLocation(obj.get( "item").getAsString());
                 if (obj.has("min"))
                 {
-                    min = JSONUtils.getAsInt(obj, "min");
+                    min = obj.get("min").getAsInt();
                 }
                 if (obj.has("max"))
                 {
-                    max = JSONUtils.getAsInt(obj, "max");
+                    max = obj.get("max").getAsInt();
                 }
             } else
             {
-                throw new JsonSyntaxException("Expected either a string or an object, got " + JSONUtils.getType(json));
+                throw new JsonSyntaxException("Expected either a string or an object, got " /*+ JSONUtils.getType(json)*/);
             }
             if (min < 0) { throw new JsonSyntaxException("min has a negative value"); }
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }

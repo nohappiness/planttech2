@@ -5,11 +5,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
+public class CableBlockEntity extends BlockEntity
 {
 	private BlockPos masterPos = null;
 	private boolean isMaster = false;
@@ -42,17 +41,18 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 
 	HashMap<BlockPos, Direction> producer = new HashMap<>(), consumer = new HashMap<>(), storages = new HashMap<>();
 
-	public CableBlockEntity()
+	public CableBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.CABLE_TE);
+		super(ModTileEntities.CABLE_TE, pos, state);
 	}
 
-	@Override
-	public void tick()
+	public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity be)
 	{
-		if (level != null && !level.isClientSide && isMaster)
+		if (level != null && !level.isClientSide)
 		{
-			transferEnergy();
+			if(be instanceof CableBlockEntity cbe) {
+				if(cbe.connectionUpdated) cbe.transferEnergy();
+			}
 		}
 	}
 
@@ -580,7 +580,7 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 		if (!cables.isEmpty())
 		{
 			ListTag cableList = new ListTag();
-			cables.stream().forEach(x -> cableList.add(NBTUtil.writeBlockPos(x)));
+			cables.stream().forEach(x -> cableList.add(NbtUtils.writeBlockPos(x)));
 			compound.put("cables", cableList);
 		}
 
@@ -608,9 +608,9 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		if (compound.contains("ismaster"))
 		{
 			this.isMaster = compound.getBoolean("ismaster");
@@ -626,7 +626,7 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 			this.cables.clear();
 			for (int i = 0; i < cableList.size(); i++)
 			{
-				this.cables.add(NBTUtil.readBlockPos(cableList.getCompound(i)));
+				this.cables.add(NbtUtils.readBlockPos(cableList.getCompound(i)));
 			}
 		}
 		if (compound.contains("connections"))
@@ -717,25 +717,6 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 		}
 	}
 
-	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
-	{
-		return new SUpdateTileEntityPacket(this.worldPosition, 3, this.getUpdateTag());
-	}
-
-	@Override
-	public CompoundTag getUpdateTag()
-	{
-		return this.save(new CompoundTag());
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-	{
-		handleUpdateTag(level.getBlockState(pkt.getPos()), pkt.getTag());
-		// world.markBlockRangeForRenderUpdate(pos, pos);
-	}
-
 	private void sendUpdates()
 	{
 		//world.markForRerender(pos);
@@ -772,4 +753,6 @@ public class CableBlockEntity extends BlockEntity implements TickingBlockEntity
 		}
 		return null;
 	}
+
+
 }

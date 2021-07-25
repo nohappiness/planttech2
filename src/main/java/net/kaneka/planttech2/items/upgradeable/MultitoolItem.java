@@ -9,6 +9,7 @@ import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -87,7 +88,7 @@ public class MultitoolItem extends UpgradeableHandItem
 			}
 			Material material = state.getMaterial();
 			return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK
-			        || block.getBlock() == Blocks.COBWEB;
+			        || block == Blocks.COBWEB;
 		}
 		return false;
 	}
@@ -124,12 +125,12 @@ public class MultitoolItem extends UpgradeableHandItem
 			BlockState state_for_hoe = FARMLAND_MAP.get(level.getBlockState(blockpos).getBlock());
 			Block block_for_strinping = BLOCK_STRIPPING_MAP.get(state.getBlock());
 			Player PlayerEntity = ctx.getPlayer();
-			if (ctx.getClickedFace() != Direction.DOWN && level.getBlockState(blockpos.above()).isAir(level, blockpos.above()) && state_for_spade != null)
+			if (ctx.getClickedFace() != Direction.DOWN && level.getBlockState(blockpos.above()).isAir() && state_for_spade != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockshovel", false))
 				{
 
-					level.playSound(PlayerEntity, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					level.playSound(PlayerEntity, blockpos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
 					if (!level.isClientSide)
 					{
 						level.setBlock(blockpos, state_for_spade, 11);
@@ -145,7 +146,7 @@ public class MultitoolItem extends UpgradeableHandItem
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockaxe", false))
 				{
-					level.playSound(PlayerEntity, blockpos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					level.playSound(PlayerEntity, blockpos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
 					if (!level.isClientSide)
 					{
 						level.setBlock(blockpos, block_for_strinping.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
@@ -161,7 +162,7 @@ public class MultitoolItem extends UpgradeableHandItem
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockhoe", false))
 				{
-					level.playSound(PlayerEntity, blockpos, SoundEvents.HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					level.playSound(PlayerEntity, blockpos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
 					if (!level.isClientSide)
 					{
 						level.setBlock(blockpos, state_for_hoe, 11);

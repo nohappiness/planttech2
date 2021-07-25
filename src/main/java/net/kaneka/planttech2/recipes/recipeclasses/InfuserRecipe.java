@@ -54,7 +54,7 @@ public class InfuserRecipe implements Recipe<Inventory>
 	@Override
 	public boolean matches(Inventory inv, Level worldIn)
 	{
-		return input.getItem() == inv.getItem(0).getItem();
+		return input.asItem() == inv.getItem(0).getItem();
 	}
 
 	@Override

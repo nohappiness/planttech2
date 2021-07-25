@@ -1,13 +1,13 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.inventory.ItemUpgradeableContainer;
 import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.energy.IEnergyStorage;
@@ -15,7 +15,7 @@ import net.minecraftforge.energy.IEnergyStorage;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContainer>
+public class ItemUpgradeableScreen extends AbstractContainerScreen<ItemUpgradeableContainer>
 {
 	protected static final Map<Integer, ResourceLocation> BACKGROUND = new HashMap<Integer, ResourceLocation>()	{
 		private static final long serialVersionUID = 1L; {
@@ -27,7 +27,7 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
     protected int invsize; 
     protected IEnergyStorage energystorage; 
 
-    public ItemUpgradeableScreen(ItemUpgradeableContainer container, Inventory inv, ITextComponent name)
+    public ItemUpgradeableScreen(ItemUpgradeableContainer container, Inventory inv, Component name)
     {
     	super(container, inv, name); 
     	this.player = inv; 
@@ -47,21 +47,21 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
     }
 	
 	@Override
-	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack pStack, int mouseX, int mouseY, float partialTicks)
 	{
-			this.renderBackground(mStack);
-			super.render(mStack, mouseX, mouseY, partialTicks);
-			this.drawTooltips(mStack, mouseX, mouseY);
-	        this.renderTooltip(mStack, mouseX, mouseY);
+			this.renderBackground(pStack);
+			super.render(pStack, mouseX, mouseY, partialTicks);
+			this.drawTooltips(pStack, mouseX, mouseY);
+	        this.renderTooltip(pStack, mouseX, mouseY);
 	}
 
-	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
+	protected void drawTooltips(PoseStack pStack, int mouseX, int mouseY)
 	{
 		if(energystorage != null)
-			drawTooltip(mStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
+			drawTooltip(pStack, energystorage.getEnergyStored() + "/" + energystorage.getMaxEnergyStored(), mouseX, mouseY, 162, 28, 16, 74);
 	}
 	
-	public void drawTooltip(MatrixStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
+	public void drawTooltip(PoseStack mStack, String lines, int mouseX, int mouseY, int posX, int posY, int width, int height)
 	{
 		posX += this.leftPos;
 		posY += this.topPos;
@@ -71,14 +71,14 @@ public class ItemUpgradeableScreen extends ContainerScreen<ItemUpgradeableContai
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int x, int y)
+	protected void renderBg(PoseStack pStack, float partialTicks, int x, int y)
 	{
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bind(BACKGROUND.get(invsize));
-		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		minecraft.getTextureManager().getTexture(BACKGROUND.get(invsize));
+		blit(pStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(pStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 	}
 
 	protected int getEnergyStoredScaled(int pixels)

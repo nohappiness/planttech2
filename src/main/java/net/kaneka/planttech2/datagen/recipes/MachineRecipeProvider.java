@@ -7,13 +7,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DirectoryCache;
-import net.minecraft.data.IDataProvider;
-import net.minecraft.inventory.IInventory;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.HashCache;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipe;
+import net.minecraft.world.item.crafting.Recipe;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,7 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 
-public abstract class MachineRecipeProvider<R extends IRecipe<IInventory>> implements IDataProvider
+public abstract class MachineRecipeProvider<R extends Recipe<Inventory>> implements DataProvider
 {
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private final DataGenerator generator;
@@ -35,7 +35,7 @@ public abstract class MachineRecipeProvider<R extends IRecipe<IInventory>> imple
     }
 
     @Override
-    public void run(DirectoryCache cache) throws IOException
+    public void run(HashCache cache) throws IOException
     {
         Path resourceRoot = generator.getOutputFolder();
 
@@ -62,7 +62,7 @@ public abstract class MachineRecipeProvider<R extends IRecipe<IInventory>> imple
             {
                 e.printStackTrace();
             }
-            cache.putNew(target, IDataProvider.SHA1.hashUnencodedChars(data).toString());
+            cache.putNew(target, DataProvider.SHA1.hashUnencodedChars(data).toString());
         });
     }
 
@@ -112,7 +112,7 @@ public abstract class MachineRecipeProvider<R extends IRecipe<IInventory>> imple
     protected void addWithBiomass(JsonObject json, String key, Item stack, int biomass)
     {
         json.add(key, new JsonParser().parse(GSON.toJson(ImmutableMap.of(
-                "item", stack.getItem().getRegistryName().toString(),
+                "item", stack.asItem().getRegistryName().toString(),
                 "biomass", biomass
         ))));
     }

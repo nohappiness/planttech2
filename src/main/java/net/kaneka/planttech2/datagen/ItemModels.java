@@ -4,7 +4,7 @@ import net.kaneka.planttech2.PlantTechClient;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -252,31 +252,31 @@ public class ItemModels extends ItemModelProvider
 	}
 
 	// Creates model for given item
-	private void singleTexturedItem(IItemProvider item)
+	private void singleTexturedItem(ItemLike item)
 	{
 		singleTexturedItem(item, (ResourceLocation) null);
 	}
 
 	// Creates model for given item, with given texture path
-	private void singleTexturedItem(IItemProvider item, String texturePath)
+	private void singleTexturedItem(ItemLike item, String texturePath)
 	{
 		singleTexturedItem(item, generated, texturePath);
 	}
 
 	// Creates model for given item, with given parent and texture path
-	private void singleTexturedItem(IItemProvider item, ResourceLocation parent, String texturePath)
+	private void singleTexturedItem(ItemLike item, ResourceLocation parent, String texturePath)
 	{
 		singleTexturedItem(item, parent, itemPrefix(texturePath));
 	}
 
 	// Creates model for given item, with parent `item/generated` and optional texture
-	private void singleTexturedItem(IItemProvider item, @Nullable ResourceLocation textureLocation)
+	private void singleTexturedItem(ItemLike item, @Nullable ResourceLocation textureLocation)
 	{
 		singleTexturedItem(item, generated, textureLocation);
 	}
 
 	// Creates model for given item, with given parent and optional texture (defaults to "item/" + item name)
-	private void singleTexturedItem(IItemProvider item, ResourceLocation parent, @Nullable ResourceLocation textureLocation)
+	private void singleTexturedItem(ItemLike item, ResourceLocation parent, @Nullable ResourceLocation textureLocation)
 	{
 		final ResourceLocation loc = Objects.requireNonNull(item.asItem().getRegistryName());
 		if (textureLocation == null)

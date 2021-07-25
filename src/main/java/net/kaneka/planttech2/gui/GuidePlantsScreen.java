@@ -1,14 +1,16 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.crops.DropEntry;
 import net.kaneka.planttech2.crops.ParentPair;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -19,7 +21,7 @@ import java.util.function.Supplier;
 public class GuidePlantsScreen extends GuideBaseScreen
 {
 	private final String[] buttonEntryNames = new String[8];
-	private ITextComponent selectedName = new TextComponent("");
+	private Component selectedName = new TextComponent("");
 	protected ItemStack primarySeed = ItemStack.EMPTY;
 	protected ItemStack soil = ItemStack.EMPTY;
 	protected ItemStack[] seeds = new ItemStack[9];
@@ -39,17 +41,17 @@ public class GuidePlantsScreen extends GuideBaseScreen
 		final int xPos = this.guiLeft + 28, baseYPos = this.guiTop + 10, width = 100, height = 20;
 		for (int id = 0; id < 8; id++)
 		{
-			addButton(new CustomButton(id, xPos, baseYPos + (id * 22), width, height, "Button " + (id + 1), GuidePlantsScreen.this::buttonClicked));
+			addRenderableWidget(new CustomButton(id, xPos, baseYPos + (id * 22), width, height, "Button " + (id + 1), GuidePlantsScreen.this::buttonClicked));
 		}
 		updateButtons();
 	}
 
 	@Override
-	protected void drawForeground(MatrixStack mStack)
+	protected void drawForeground(PoseStack pStack)
 	{
 		if (hasSelection)
 		{
-			blit(mStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.ordinal(), 16, 16, 512, 512);
+			blit(pStack, this.guiLeft + 307, this.guiTop + 65, 0, 196 + 16 * temp.ordinal(), 16, 16, 512, 512);
 			renderItem(this.primarySeed, 261, 32);
 
 //			RenderHelper.disableStandardItemLighting();
@@ -90,26 +92,26 @@ public class GuidePlantsScreen extends GuideBaseScreen
 			if (scrollPos + i < list.size())
 			{
 				CropEntry entry = list.get(scrollPos + i);
-				this.buttons.get(i).setMessage(entry.getDisplayName());
+				if(this.renderables.get(i) instanceof AbstractWidget aWidget) aWidget.setMessage(entry.getDisplayName());
 				buttonEntryNames[i] = entry.getName();
 			}
 		}
 	}
 
 	@Override
-	protected void drawStrings(MatrixStack mStack)
+	protected void drawStrings(PoseStack mStack)
 	{
 		if (!hasSelection)
 		{
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90, TEXT_COLOR);
 		} else
 		{
 			drawCenteredString(mStack, font, selectedName, this.guiLeft + 263, this.guiTop + 15, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.soil"), this.guiLeft + 223, this.guiTop + 54, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.temperature"), this.guiLeft + 306, this.guiTop + 54, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.seeds"), this.guiLeft + 263, this.guiTop + 87, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.drops"), this.guiLeft + 263, this.guiTop + 120, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslationTextComponent("gui.parents"), this.guiLeft + 263, this.guiTop + 153, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.soil"), this.guiLeft + 223, this.guiTop + 54, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.temperature"), this.guiLeft + 306, this.guiTop + 54, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.seeds"), this.guiLeft + 263, this.guiTop + 87, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.drops"), this.guiLeft + 263, this.guiTop + 120, TEXT_COLOR);
+			drawCenteredString(mStack, font, new TranslatableComponent("gui.parents"), this.guiLeft + 263, this.guiTop + 153, TEXT_COLOR);
 		}
 	}
 
@@ -170,7 +172,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	}
 
 	@Override
-	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
+	protected void drawTooltips(PoseStack mStack, int mouseX, int mouseY)
 	{
 		if (hasSelection)
 		{
@@ -267,7 +269,7 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	}
 
 	@Override
-	protected void drawBackground(MatrixStack mStack)
+	protected void drawBackground(PoseStack mStack)
 	{
 		if (!hasSelection)
 		{

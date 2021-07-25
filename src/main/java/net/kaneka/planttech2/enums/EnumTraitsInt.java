@@ -19,7 +19,7 @@ public enum EnumTraitsInt
     private final String name;
     private static final EnumTraitsInt[] META_LOOKUP = new EnumTraitsInt[values().length];
 
-    private EnumTraitsInt(int meta, String name, int min, int max, float transitionpossibility)
+    EnumTraitsInt(int meta, String name, int min, int max, float transitionpossibility)
     {
 	this.meta = meta;
 	this.name = name;

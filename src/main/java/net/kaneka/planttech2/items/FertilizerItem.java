@@ -5,6 +5,7 @@ import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
+import java.util.Random;
 
 public class FertilizerItem extends Item
 {
@@ -27,7 +29,7 @@ public class FertilizerItem extends Item
     public FertilizerItem(CreativeModeTab group)
     {
 		super(new Item.Properties().tab(group));
-		DispenserBlock.registerBehavior(this, new OptionalDispenseBehavior()
+		DispenserBlock.registerBehavior(this, new OptionalDispenseItemBehavior()
 		{
 			@Override
 			protected ItemStack execute(BlockSource source, ItemStack stack)
@@ -86,7 +88,8 @@ public class FertilizerItem extends Item
 		Block block = world.getBlockState(pos).getBlock();
 		if (block instanceof CropBaseBlock)
 		{
-			if (random.nextFloat() < getIncreaseChance(stack.getItem()))
+			Random rand = new Random();
+			if (rand.nextFloat() < getIncreaseChance(stack.getItem()))
 			{
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{

@@ -3,15 +3,16 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
-import net.kaneka.planttech2.inventory.EnergySupplierContainer;
+import net.kaneka.planttech2.inventory.EnergySupplierMenu;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
 
@@ -57,9 +58,9 @@ public class EnergySupplierBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-	public EnergySupplierBlockEntity()
+	public EnergySupplierBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.ENERGY_SUPPLIER_TE, 12000, 2, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER);
+		super(ModTileEntities.ENERGY_SUPPLIER_TE, pos, state, 12000, 2, PlantTechConstants.MACHINETIER_ENERGY_SUPPLIER);
 	}
 
 	@Override
@@ -129,9 +130,9 @@ public class EnergySupplierBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new EnergySupplierContainer(id, inv, this);
+		return new EnergySupplierMenu(id, inv, this);
 	}
 
 	@Override

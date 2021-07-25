@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
-public class InventoryUtils
+public class PlayerInventoryUtils
 {
 	public static boolean enoughSpace(Inventory inv, int neededSpace)
 	{

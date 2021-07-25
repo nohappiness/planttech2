@@ -2,12 +2,12 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 
-public class TeleporterContainer extends Container
+public class TeleporterContainer extends AbstractContainerMenu
 {
 	private ItemStack stack; 
 	
@@ -23,13 +23,13 @@ public class TeleporterContainer extends Container
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player  playerIn)
 	{
 		return true;
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) 
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		return stack;
 	}
@@ -38,4 +38,5 @@ public class TeleporterContainer extends Container
 	{
 		return stack; 
 	}
+
 }

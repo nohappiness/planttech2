@@ -1,23 +1,25 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
-import net.kaneka.planttech2.inventory.SeedSqueezerContainer;
+import net.kaneka.planttech2.inventory.SeedSqueezerMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
-import org.antlr.runtime.misc.ContainerData;
 
 import javax.annotation.Nullable;
 
@@ -75,9 +77,9 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 		}
 	};
 
-	public SeedSqueezerBlockEntity()
+	public SeedSqueezerBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.SEEDSQUEEZER_TE, 10000, 16, 5000, PlantTechConstants.MACHINETIER_SEEDSQUEEZER);
+		super(ModTileEntities.SEEDSQUEEZER_TE, pos, state,10000, 16, 5000, PlantTechConstants.MACHINETIER_SEEDSQUEEZER);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		inputs_provider = LazyOptional.of(() -> inputs);
 	}
@@ -206,9 +208,9 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new SeedSqueezerContainer(id, inv, this);
+		return new SeedSqueezerMenu(id, inv, this);
 	}
 
 	@Override

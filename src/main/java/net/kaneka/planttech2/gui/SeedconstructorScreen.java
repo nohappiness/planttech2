@@ -1,35 +1,35 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.machine.SeedconstructorBlockEntity;
-import net.kaneka.planttech2.inventory.SeedConstructorContainer;
+import net.kaneka.planttech2.inventory.SeedConstructorMenu;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorContainer>
+public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorMenu>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/seedconstructor.png");
 
-	public SeedconstructorScreen(SeedConstructorContainer container, Inventory player, ITextComponent name)
+	public SeedconstructorScreen(SeedConstructorMenu container, Inventory player, Component name)
     {
     	super(container, player, name);
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack pStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(pStack, partialTicks, mouseX, mouseY);
 
 		int l = this.getCookProgressScaled(15);
-		blit(mStack, this.leftPos + 96, this.topPos + 48, 0, 200, 14, l);
+		blit(pStack, this.leftPos + 96, this.topPos + 48, 0, 200, 14, l);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(pStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 
 		int j = this.getFluidStoredScaled(55);
-		blit(mStack, this.leftPos + 41, this.topPos + 28 + (55-j), 224, 55-j, 16, 0 + j);
+		blit(pStack, this.leftPos + 41, this.topPos + 28 + (55-j), 224, 55-j, 16, 0 + j);
 	}
 	
 	private int getCookProgressScaled(int pixels)
@@ -39,7 +39,7 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorCo
 	}
 	
 	@Override
-	protected void drawTooltips(MatrixStack mStack, int mouseX, int mouseY)
+	protected void drawTooltips(PoseStack mStack, int mouseX, int mouseY)
 	{
 	    drawTooltip(mStack, menu.getValue(2) + "/" + menu.getValue(3), mouseX, mouseY, 41, 28, 16, 55);
 	    super.drawTooltips(mStack, mouseX, mouseY);

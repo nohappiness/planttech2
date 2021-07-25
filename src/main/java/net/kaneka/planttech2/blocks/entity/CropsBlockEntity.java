@@ -5,39 +5,37 @@ import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public class CropsBlockEntity extends BlockEntity implements TickingBlockEntity
+public class CropsBlockEntity extends BlockEntity
 {
 	private long startTick = 0;
 	private HashMapCropTraits traits = new HashMapCropTraits();
 
-	public CropsBlockEntity()
+	public CropsBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.CROPS_TE);
+		super(ModTileEntities.CROPS_TE, pos, state);
 	}
 
-	@Override
-	public void tick()
+
+	public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity be)
 	{
-		if (this.level != null && !this.level.isClientSide)
-		{
-			if ((level.getGameTime() - this.startTick) % ((90L - traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L)
-			{
-				Block block = level.getBlockState(worldPosition).getBlock();
-				if (block instanceof CropBaseBlock)
-					((CropBaseBlock) block).updateCrop(this.level, this.worldPosition, this.traits);
+		if (level != null && !level.isClientSide) {
+			if(be instanceof  CropsBlockEntity cbe) {
+				if ((level.getGameTime() - cbe.startTick) % ((90L - cbe.traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L) {
+					Block block = level.getBlockState(cbe.worldPosition).getBlock();
+					if (block instanceof CropBaseBlock)
+						((CropBaseBlock) block).updateCrop(cbe.level, cbe.worldPosition, cbe.traits);
+				}
 			}
 		}
 
@@ -85,20 +83,6 @@ public class CropsBlockEntity extends BlockEntity implements TickingBlockEntity
 		PlantTechMain.getCropList().getByName(this.traits.getType()).calculateDropsReduced(drops, this.traits, growstate, level.random);
 	}
 
-	@Override
-	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket()
-	{
-		CompoundTag nbtTagCompound = new CompoundTag();
-		save(nbtTagCompound);
-		return new SUpdateTileEntityPacket(this.worldPosition, 1, nbtTagCompound);
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet)
-	{
-		load(level.getBlockState(packet.getPos()), packet.getTag());
-	}
 
 	@Override
 	public CompoundTag getUpdateTag()
@@ -106,12 +90,6 @@ public class CropsBlockEntity extends BlockEntity implements TickingBlockEntity
 		CompoundTag nbtTagCompound = new CompoundTag();
 		save(nbtTagCompound);
 		return nbtTagCompound;
-	}
-
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag tag)
-	{
-		super.load(state, tag);
 	}
 
 	@Override
@@ -124,9 +102,9 @@ public class CropsBlockEntity extends BlockEntity implements TickingBlockEntity
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		this.startTick = compound.getLong("starttick");
 		this.traits.fromNBT(compound);
 	}

@@ -3,7 +3,7 @@ package net.kaneka.planttech2.registries;
 import com.mojang.datafixers.types.Type;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
-import net.kaneka.planttech2.blocks.entity.cable.TestCableTileEntity;
+import net.kaneka.planttech2.blocks.entity.cable.TestCableBlockEntity;
 import net.kaneka.planttech2.blocks.entity.machine.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -22,7 +22,7 @@ public class ModTileEntities
 	@ObjectHolder("tileentityseedsqueezer") public static BlockEntityType<SeedSqueezerBlockEntity> SEEDSQUEEZER_TE;
 	@ObjectHolder("tileentitysolargenerator") public static BlockEntityType<SolarGeneratorBlockEntity> SOLARGENERATOR_TE;
 	@ObjectHolder("tileentityplantfarm") public static BlockEntityType<PlantFarmBlockEntity> PLANTFARM_TE;
-	@ObjectHolder("tileentitycable") public static BlockEntityType<TestCableTileEntity> CABLE_TE;
+	@ObjectHolder("tileentitycable") public static BlockEntityType<TestCableBlockEntity> CABLE_TE;
 	@ObjectHolder("tileentitydnaextractor") public static BlockEntityType<DNAExtractorBlockEntity> DNAEXTRACTOR_TE;
 	@ObjectHolder("tileentitydnaremover") public static BlockEntityType<DNARemoverBlockEntity> DNAREMOVER_TE;
 	@ObjectHolder("tileentitydnacleaner") public static BlockEntityType<DNACleanerBlockEntity> DNACLEANER_TE;
@@ -45,7 +45,7 @@ public class ModTileEntities
 		registry.register(make("tileentityseedsqueezer", SeedSqueezerBlockEntity::new, ModBlocks.SEEDSQUEEZER));
 		registry.register(make("tileentitysolargenerator", SolarGeneratorBlockEntity::new, ModBlocks.SOLARGENERATOR));
 		registry.register(make("tileentityplantfarm", PlantFarmBlockEntity::new, ModBlocks.PLANTFARM));
-		registry.register(make("tileentitycable", TestCableTileEntity::new, ModBlocks.CABLE));
+		registry.register(make("tileentitycable", TestCableBlockEntity::new, ModBlocks.CABLE));
 		registry.register(make("tileentitydnaextractor", DNAExtractorBlockEntity::new, ModBlocks.DNA_EXTRACTOR));
 		registry.register(make("tileentitydnaremover", DNARemoverBlockEntity::new, ModBlocks.DNA_REMOVER));
 		registry.register(make("tileentitydnacleaner", DNACleanerBlockEntity::new, ModBlocks.DNA_CLEANER));

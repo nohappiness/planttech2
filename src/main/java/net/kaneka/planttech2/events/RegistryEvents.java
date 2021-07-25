@@ -2,12 +2,11 @@ package net.kaneka.planttech2.events;
 
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.registries.*;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.potion.Effect;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -42,13 +41,13 @@ public class RegistryEvents
 	}
 
 	@SubscribeEvent
-	public static void registerContainer(RegistryEvent.Register<ContainerType<?>> event)
+	public static void registerContainer(RegistryEvent.Register<MenuType<?>> event)
 	{
 		ModContainers.registerAll(event);
 	}
 
 	@SubscribeEvent
-	public static void registerRecipeSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event)
+	public static void registerRecipeSerializers(RegistryEvent.Register<RecipeSerializer<?>> event)
 	{
 		ModRecipeSerializers.registerAll(event);
 	}
@@ -60,16 +59,18 @@ public class RegistryEvents
 	}
 
 	@SubscribeEvent
-	public static void registerPotions(RegistryEvent.Register<Effect> event)
+	public static void registerPotions(RegistryEvent.Register<MobEffect> event)
 	{
 		ModEffects.registerAll(event.getRegistry());
 	}
-
+	/*
 	@SubscribeEvent
 	public static void registerEntityTypes(RegistryEvent.Register<EntityType<?>> event)
 	{
 		ModEntityTypes.registerAll(event.getRegistry());
 	}
+
+ 	*/
 
 	@SubscribeEvent
 	public static void registerConfigs(RegistryEvent.Register<Feature<?>> event)

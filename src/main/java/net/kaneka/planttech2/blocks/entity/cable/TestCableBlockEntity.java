@@ -19,14 +19,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
-public class TestCableTileEntity extends BlockEntity
+public class TestCableBlockEntity extends BlockEntity
 {
     public CableInfo cableInfo = new CableInfo();
     public int maxTransferRate = 20;
 
-    public TestCableTileEntity()
+    public TestCableBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ModTileEntities.CABLE_TE);
+
+        super(ModTileEntities.CABLE_TE, pos, state);
     }
 
     public void tick()
@@ -79,32 +80,6 @@ public class TestCableTileEntity extends BlockEntity
         return super.save(compound);
     }
 
-    @Override
-    public void load(BlockState state, CompoundTag nbt)
-    {
-        super.load(state, nbt);
-        this.cableInfo = new CableInfo(nbt.getCompound("cableinfo"));
-    }
-
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket()
-    {
-        return new SUpdateTileEntityPacket(getBlockPos(), 7414, getUpdateTag());
-    }
-
-    @Override
-    public CompoundTag getUpdateTag()
-    {
-        return this.save(new CompoundTag());
-    }
-
-    @Override
-    public void onDataPacket(NetworkManager manager, SUpdateTileEntityPacket packet)
-    {
-        if (level != null)
-            handleUpdateTag(level.getBlockState(packet.getPos()), packet.getTag());
-    }
-
     public void initCable()
     {
         checkConnections();
@@ -120,13 +95,13 @@ public class TestCableTileEntity extends BlockEntity
             //if there's only a network, add this cable to the network
             if (masters.size() == 1)
             {
-                TestCableTileEntity master = getCableTE(masters.get(0));
+                TestCableBlockEntity master = getCableTE(masters.get(0));
                 if (master != null)
                     master.addCableToNetwork(this);
                 return;
             }
             //else merge all neighbor networks
-            TestCableTileEntity largestNetwork = getLargestNetwork(masters);
+            TestCableBlockEntity largestNetwork = getLargestNetwork(masters);
             if (largestNetwork != null)
             {
                 largestNetwork.addCableToNetwork(this);
@@ -145,7 +120,7 @@ public class TestCableTileEntity extends BlockEntity
      * Adds cable to the network
      * @param cable cable to add to the network
      */
-    public void addCableToNetwork(TestCableTileEntity cable)
+    public void addCableToNetwork(TestCableBlockEntity cable)
     {
         if (!isMaster())
             return;
@@ -179,7 +154,7 @@ public class TestCableTileEntity extends BlockEntity
             BlockPos pos = getBlockPos().relative(direction);
             if (connected.contains(pos))
                 continue;
-            TestCableTileEntity cable = getCableTE(pos);
+            TestCableBlockEntity cable = getCableTE(pos);
             if (cable != null)
             {
                 connected.add(pos);
@@ -201,7 +176,7 @@ public class TestCableTileEntity extends BlockEntity
         getAllConnections(getBlockPos()).forEach((pos) -> {
             if (!pos.equals(getBlockPos()))
             {
-                TestCableTileEntity cable = getCableTE(pos);
+                TestCableBlockEntity cable = getCableTE(pos);
                 if (cable != null)
                 {
                     info().slaves.add(pos);
@@ -218,7 +193,7 @@ public class TestCableTileEntity extends BlockEntity
      * Adds all machines to the network the cable is connected to
      * @param cable target cable
      */
-    public void addMachinesFrom(TestCableTileEntity cable)
+    public void addMachinesFrom(TestCableBlockEntity cable)
     {
         int[] connections = cable.getConnections();
         for (int i=0;i<connections.length;i++)
@@ -253,13 +228,13 @@ public class TestCableTileEntity extends BlockEntity
      * @return the master of the largest network
      */
     @Nullable
-    public TestCableTileEntity getLargestNetwork(ArrayList<BlockPos> masterPositions)
+    public TestCableBlockEntity getLargestNetwork(ArrayList<BlockPos> masterPositions)
     {
         BlockPos largest = BlockPos.ZERO;
         for (BlockPos pos : masterPositions)
         {
-            TestCableTileEntity largestCable = getCableTE(largest);
-            TestCableTileEntity targetCable = getCableTE(pos);
+            TestCableBlockEntity largestCable = getCableTE(largest);
+            TestCableBlockEntity targetCable = getCableTE(pos);
             if (largestCable != null)
             {
                 if (targetCable != null)
@@ -283,10 +258,10 @@ public class TestCableTileEntity extends BlockEntity
             return;
         for (Direction direction : Direction.values())
         {
-            TileEntity te = level.getBlockEntity(getBlockPos().relative(direction));
+            BlockEntity te = level.getBlockEntity(getBlockPos().relative(direction));
             if (te != null)
             {
-                if (te instanceof TestCableTileEntity)
+                if (te instanceof TestCableBlockEntity)
                 {
                     if (getConnection(direction) != 1)
                         setConnection(direction, 1);
@@ -330,7 +305,7 @@ public class TestCableTileEntity extends BlockEntity
         {
             for (BlockPos slave : info().slaves)
             {
-                TestCableTileEntity cable = getCableTE(slave);
+                TestCableBlockEntity cable = getCableTE(slave);
                 if (cable != null)
                     cable.clear(true);
             }
@@ -352,7 +327,7 @@ public class TestCableTileEntity extends BlockEntity
         ArrayList<BlockPos> slaves = new ArrayList<>(info().slaves);
         if (!slaves.isEmpty())
         {
-            TestCableTileEntity cable = getCableTE(slaves.get(0));
+            TestCableBlockEntity cable = getCableTE(slaves.get(0));
             if (cable != null)
                 cable.setAsMaster(this);
         }
@@ -362,7 +337,7 @@ public class TestCableTileEntity extends BlockEntity
      * Merges two masters' info together, this removes the other master
      * @param otherMaster other master to merge
      */
-    public void mergeNetworks(TestCableTileEntity otherMaster)
+    public void mergeNetworks(TestCableBlockEntity otherMaster)
     {
         if (level == null || !info().isMaster || otherMaster == null)
             return;
@@ -380,7 +355,7 @@ public class TestCableTileEntity extends BlockEntity
      * Inherits info from the old master and updates all slave's master pos
      * @param oldMaster old master that new master inherits from
      */
-    public void setAsMaster(@Nullable TestCableTileEntity oldMaster)
+    public void setAsMaster(@Nullable TestCableBlockEntity oldMaster)
     {
         if (level == null)
             return;
@@ -397,7 +372,7 @@ public class TestCableTileEntity extends BlockEntity
         }
     }
 
-    public void updateMaster(TestCableTileEntity master)
+    public void updateMaster(TestCableBlockEntity master)
     {
         updateMaster(master.getBlockPos());
     }
@@ -416,7 +391,7 @@ public class TestCableTileEntity extends BlockEntity
         if (!isMaster())
             return;
         info().slaves.forEach((slave) -> {
-            TestCableTileEntity cable = getCableTE(slave);
+            TestCableBlockEntity cable = getCableTE(slave);
             if (cable != null)
                 cable.updateMaster(this);
         });
@@ -428,12 +403,12 @@ public class TestCableTileEntity extends BlockEntity
      * @param message changes to the cable
      * @return if there's any changes made
      */
-    public boolean getAllConnected(Consumer<TestCableTileEntity> message)
+    public boolean getAllConnected(Consumer<TestCableBlockEntity> message)
     {
         boolean changed = false;
         for (Direction direction : Direction.values())
         {
-            TestCableTileEntity cable = getCableTE(getBlockPos().relative(direction));
+            TestCableBlockEntity cable = getCableTE(getBlockPos().relative(direction));
             if (cable != null)
             {
                 message.accept(cable);
@@ -447,7 +422,7 @@ public class TestCableTileEntity extends BlockEntity
     {
         if (level == null)
             return null;
-        TileEntity tileentity = level.getBlockEntity(pos);
+        BlockEntity tileentity = level.getBlockEntity(pos);
         if (tileentity != null)
         {
             LazyOptional<IEnergyStorage> capability = tileentity.getCapability(CapabilityEnergy.ENERGY, facing);
@@ -609,17 +584,17 @@ public class TestCableTileEntity extends BlockEntity
     }
 
     @Nullable
-    public TestCableTileEntity getMasterCable()
+    public TestCableBlockEntity getMasterCable()
     {
         return getCableTE(getMasterPos());
     }
 
     @Nullable
-    public TestCableTileEntity getCableTE(BlockPos pos)
+    public TestCableBlockEntity getCableTE(BlockPos pos)
     {
         if (level == null)
             return null;
-        TileEntity tileEntity = level.getBlockEntity(pos);
-        return tileEntity instanceof TestCableTileEntity ? (TestCableTileEntity) tileEntity : null;
+        BlockEntity tileEntity = level.getBlockEntity(pos);
+        return tileEntity instanceof TestCableBlockEntity ? (TestCableBlockEntity) tileEntity : null;
     }
 }

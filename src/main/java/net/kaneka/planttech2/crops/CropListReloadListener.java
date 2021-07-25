@@ -10,7 +10,6 @@ import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.util.JSONUtils;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
@@ -23,7 +22,7 @@ import java.util.Map;
 
 import static net.kaneka.planttech2.PlantTechMain.LOGGER;
 
-public class CropListReloadListener extends JsonReloadListener
+public class CropListReloadListener extends JsonReloadListener //Propably SimplePreparableReloadListener
 {
 	public static final String FOLDER = "pt2_crops";
 	private static final Gson GSON = new GsonBuilder()

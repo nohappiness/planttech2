@@ -7,15 +7,11 @@ import net.kaneka.planttech2.energy.IItemChargeable;
 import net.kaneka.planttech2.inventory.ItemUpgradeableContainer;
 import net.kaneka.planttech2.utilities.NBTHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -389,7 +386,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	
 	
 	
-	public static class NamedContainerProvider implements INamedContainerProvider
+	public static class NamedContainerProvider implements MenuProvider
 	{
 		private int slot;
 		private final ItemStack stack; 
@@ -401,16 +398,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 		}
 
 		@Override
-		public Container createMenu(int id, Inventory inv, Player entity)
-		{
-			return this.getMenu(id, inv);
-		}
-
-		private Container getMenu(int id, Inventory inv)
+		public AbstractContainerMenu createMenu(int id, Inventory inv, Player entity)
 		{
 			return new ItemUpgradeableContainer(id, inv, stack, this.slot);
 		}
-
 
 		@Override
 		public Component getDisplayName()

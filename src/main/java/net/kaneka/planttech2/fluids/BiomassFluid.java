@@ -50,7 +50,7 @@ public abstract class BiomassFluid extends FlowingFluid
 	@Override
 	protected void beforeDestroyingBlock(LevelAccessor level, BlockPos pos, BlockState state)
 	{
-		BlockEntity tileentity = state.getBlock().hasBlockEntity(state) ? level.getBlockEntity(pos) : null;
+		BlockEntity tileentity = state.getBlock() != null ? level.getBlockEntity(pos) : null;
 		Block.dropResources(state, level , pos, tileentity);
 	}
 

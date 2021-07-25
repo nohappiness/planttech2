@@ -9,9 +9,9 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -20,34 +20,31 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Random;
 
-abstract public class EnergyTileEntity extends BlockEntity implements TickingBlockEntity, MenuProvider
+abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvider
 {
 
 	protected BioEnergyStorage energystorage;
 	private final LazyOptional<IEnergyStorage> energyCap;
 	public String customname;
 	protected final Random rand = new Random();
-	protected final BlockEntityType<?> type;
 
-	public EnergyTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage)
+	public EnergyBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage)
 	{
 		super(type, pos, state);
-		this.type = type;
 		energystorage = new BioEnergyStorage(energyStorage);
 		energyCap = LazyOptional.of(() -> energystorage);
 	}
 
-	@Override
-	public void tick()
+	public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity be)
 	{
-		if (this.level != null && !this.level.isClientSide)
-			doUpdate();
+		if (level != null && !level.isClientSide){
+			if(be instanceof EnergyBlockEntity ebe){
+				ebe.doUpdate();
+			}
+		}
 	}
 
-	@Override
-	public BlockPos getPos() {
-		return this.getBlockPos();
-	}
+
 
 	public void doUpdate()
 	{
@@ -67,9 +64,9 @@ abstract public class EnergyTileEntity extends BlockEntity implements TickingBlo
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		this.energystorage.deserializeNBT(compound.getCompound("energy"));
 	}
 
@@ -128,8 +125,4 @@ abstract public class EnergyTileEntity extends BlockEntity implements TickingBlo
 		return false;
 	}
 
-	@Override
-	public BlockEntityType<?> getType() {
-		return super.getType();
-	}
 }

@@ -2,17 +2,20 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.MegaFurnaceContainer;
+import net.kaneka.planttech2.inventory.MegaFurnaceMenu;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.FurnaceRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -21,7 +24,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import org.antlr.runtime.misc.ContainerData;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -100,9 +102,9 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-	public MegaFurnaceBlockEntity()
+	public MegaFurnaceBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.MEGAFURNACE_TE, 10000, 16, PlantTechConstants.MACHINETIER_MEGAFURNACE);
+		super(ModTileEntities.MEGAFURNACE_TE, pos, state, 10000, 16, PlantTechConstants.MACHINETIER_MEGAFURNACE);
 		inputs = new RangedWrapper(itemhandler, 0,6); 
 		outputs = new RangedWrapper(itemhandler, 6, 12); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -194,8 +196,8 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 			return ItemStack.EMPTY;
 		dummyitemhandler.setStackInSlot(0, itemhandler.getStackInSlot(slot));
 		RecipeWrapper wrapper = new RecipeWrapper(dummyitemhandler);
-		Optional<FurnaceRecipe> recipeopt = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, wrapper, level);
-		FurnaceRecipe recipe = recipeopt.orElse(null); 
+		Optional<SmeltingRecipe> recipeopt = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, wrapper, level);
+		SmeltingRecipe recipe = recipeopt.orElse(null);
 		return recipe == null ? ItemStack.EMPTY : recipe.getResultItem();
 	}
 
@@ -222,9 +224,9 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		ticksPassed = compound.getContainerData("cooktime");
 	}
 
@@ -235,9 +237,9 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new MegaFurnaceContainer(id, inv, this);
+		return new MegaFurnaceMenu(id, inv, this);
 	}
 
 	@Override

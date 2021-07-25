@@ -150,9 +150,9 @@ public class PlayerRenderRGB implements ICapabilitySerializable<CompoundTag>, IP
         }
 
         @Override
-        public void readNBT(Capability<IPlayerRenderRGB> capability, IPlayerRenderRGB instance, Direction side, INBT nbt)
+        public void readNBT(Capability<IPlayerRenderRGB> capability, IPlayerRenderRGB instance, Direction side, Tag tag)
         {
-            CompoundTag compound = (CompoundTag) nbt;
+            CompoundTag compound = (CompoundTag) tag;
             instance.setRGB(compound.getFloat("red"), compound.getFloat("green"), compound.getFloat("blue"));
             instance.setCurrentFogDensity(compound.getFloat("density"));
         }

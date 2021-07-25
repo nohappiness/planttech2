@@ -1,15 +1,17 @@
 package net.kaneka.planttech2.blocks.entity.machine.baseclasses;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public abstract class ConvertEnergyInventoryFluidBlockEntity extends EnergyInventoryFluidBlockEntity
 {
-    public ConvertEnergyInventoryFluidBlockEntity(BlockEntityType<?> type, int energyStorage, int invSize, int maxBiomassStorage, int tier)
+    public ConvertEnergyInventoryFluidBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage, int invSize, int maxBiomassStorage, int tier)
     {
-        super(type, energyStorage, invSize, maxBiomassStorage, tier);
+        super(type, pos, state, energyStorage, invSize, maxBiomassStorage, tier);
     }
 
     @Override

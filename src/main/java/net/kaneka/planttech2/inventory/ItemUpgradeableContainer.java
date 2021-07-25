@@ -4,11 +4,11 @@ import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
 import net.kaneka.planttech2.items.upgradeable.IUpgradeable;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -18,7 +18,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemUpgradeableContainer extends Container {
+public class ItemUpgradeableContainer extends AbstractContainerMenu {
 	public final static Map<Integer, Integer[]> settings = new HashMap<Integer, Integer[]>() {
 		private static final long serialVersionUID = 1L;
 
@@ -58,20 +58,20 @@ public class ItemUpgradeableContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn)
+	public boolean stillValid(Player playerIn)
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player)
+	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
 //		System.out.println("world isremote:" + player.getEntityWorld().isRemote + "slot: " + this.slot + "clicked slot: " + slotId);
-		return slotId == this.slot ? ItemStack.EMPTY : super.clicked(slotId, dragType, clickTypeIn, player);
+		if(slotId != this.slot) super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = (Slot) this.slots.get(index);
 		if (slot != null && slot.hasItem()) {

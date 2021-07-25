@@ -2,24 +2,24 @@ package net.kaneka.planttech2.effects;
 
 import net.kaneka.planttech2.entities.capabilities.player.RadiationEffect;
 import net.kaneka.planttech2.registries.ModDamageSources;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
-public class RadiationSickness extends Effect
+public class RadiationSickness extends MobEffect
 {
     public RadiationSickness()
     {
-        super(EffectType.HARMFUL, 16744256);
+        super(MobEffectCategory.HARMFUL, 16744256);
     }
 
     @Override
     public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier)
     {
-        if (entityLivingBaseIn instanceof PlayerEntity && !entityLivingBaseIn.getCommandSenderWorld().isClientSide())
-            entityLivingBaseIn.hurt(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayerEntity) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
+        if (entityLivingBaseIn instanceof Player && !entityLivingBaseIn.getCommandSenderWorld().isClientSide())
+            entityLivingBaseIn.hurt(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayer) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
     }
 
     @Override

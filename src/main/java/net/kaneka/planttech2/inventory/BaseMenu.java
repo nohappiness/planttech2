@@ -22,12 +22,12 @@ import net.minecraftforge.items.SlotItemHandler;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-public class BaseContainer extends AbstractContainerMenu
+public class BaseMenu extends AbstractContainerMenu
 {
 	protected final EnergyInventoryBlockEntity BlockEntity;
 	protected final ContainerData fieldArray;
 
-	public BaseContainer(int id, MenuType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
+	public BaseMenu(int id, MenuType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
 	{
 		super(type, id);
 		for (int y = 0; y < 3; y++)
@@ -143,8 +143,8 @@ public class BaseContainer extends AbstractContainerMenu
 			super.setChanged();
 			if (listening)
 			{
-				BaseContainer.this.broadcastChanges();
-				BaseContainer.this.BlockEntity.onContainerUpdated(getSlotIndex());
+				BaseMenu.this.broadcastChanges();
+				BaseMenu.this.BlockEntity.onContainerUpdated(getSlotIndex());
 			}
 		}
 

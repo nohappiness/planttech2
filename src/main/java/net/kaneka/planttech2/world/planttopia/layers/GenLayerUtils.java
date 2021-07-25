@@ -4,15 +4,15 @@ import net.kaneka.planttech2.registries.ModReferences;
 import net.kaneka.planttech2.world.utils.BiomeHolder;
 import net.minecraft.Util;
 import net.minecraft.core.Registry;
-import net.minecraft.world.gen.LazyAreaLayerContext;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.newbiome.area.Area;
 import net.minecraft.world.level.newbiome.area.AreaFactory;
 import net.minecraft.world.level.newbiome.area.LazyArea;
+import net.minecraft.world.level.newbiome.context.BigContext;
+import net.minecraft.world.level.newbiome.context.LazyAreaContext;
 import net.minecraft.world.level.newbiome.layer.Layer;
 import net.minecraft.world.level.newbiome.layer.ZoomLayer;
 import net.minecraft.world.level.newbiome.layer.traits.AreaTransformer1;
-import net.minecraftforge.server.permission.context.ContextKey;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +83,7 @@ public class GenLayerUtils {
     );
 
 
-    private static <T extends Area, C extends ContextKey<T>> AreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry){
+    private static <T extends Area, C extends BigContext<T>> AreaFactory<T> genLayers(LongFunction<C> seed, Registry<Biome> registry){
         //PREPERATION AND LOADING OF DATA
         //-> CATEGORY FOR BORDER-DETECTION (ONLY INSIDE BIOMES AND RIVERS)
         HashMap<Integer, List<Integer>> category = new HashMap<>();
@@ -159,11 +159,11 @@ public class GenLayerUtils {
     }
 
     public static Layer genLayers(long seed, Registry<Biome> registry) {
-        AreaFactory<LazyArea> areaFactory = genLayers((context) -> new LazyAreaLayerContext(25, seed, context), registry);
+        AreaFactory<LazyArea> areaFactory = genLayers((context) -> new LazyAreaContext(25, seed, context), registry);
         return new Layer(areaFactory);
     }
 
-    public static <T extends Area, C extends ContextKey<T>> AreaFactory<T> repeat(long seed, AreaTransformer1 parent, AreaFactory<T> iareafactoryparent, int count,
+    public static <T extends Area, C extends BigContext<T>> AreaFactory<T> repeat(long seed, AreaTransformer1 parent, AreaFactory<T> iareafactoryparent, int count,
                                                                                   LongFunction<C> contextFactory) {
         AreaFactory<T> iareafactory = iareafactoryparent;
         for (int i = 0; i < count; ++i) iareafactory = parent.run(contextFactory.apply(seed + (long) i), iareafactory);

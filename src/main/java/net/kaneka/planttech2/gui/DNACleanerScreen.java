@@ -1,37 +1,37 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.machine.DNACleanerBlockEntity;
-import net.kaneka.planttech2.inventory.DNACleanerContainer;
+import net.kaneka.planttech2.inventory.DNACleanerMenu;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.entity.player.Inventory;
 
-public class DNACleanerScreen extends BaseContainerScreen<DNACleanerContainer>
+public class DNACleanerScreen extends BaseContainerScreen<DNACleanerMenu>
 { 
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/dna_cleaner.png");
 
-	public DNACleanerScreen(DNACleanerContainer container, Inventory player, ITextComponent string)
+	public DNACleanerScreen(DNACleanerMenu container, Inventory player, Component string)
     {
     	super(container, player, string);
 
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack pStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(pStack, partialTicks, mouseX, mouseY);
 
 		int l = this.getCookProgressScaled(32);
-		blit(mStack, this.leftPos + 60, this.topPos + 48, 0, 200, l, 14);
+		blit(pStack, this.leftPos + 60, this.topPos + 48, 0, 200, l, 14);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
+		blit(pStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, k);
 	}
 
 //	@Override
-//	protected void drawGuiContainerBackgroundLayer(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+//	protected void drawGuiContainerBackgroundLayer(PoseStack mStack, float partialTicks, int mouseX, int mouseY)
 //	{
 //		super.drawGuiContainerBackgroundLayer(mStack, partialTicks, mouseX, mouseY);
 //

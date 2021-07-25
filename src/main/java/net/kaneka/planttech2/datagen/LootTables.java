@@ -3,22 +3,28 @@ package net.kaneka.planttech2.datagen;
 import com.mojang.datafixers.util.Pair;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
-import net.minecraft.advancements.criterion.EnchantmentPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.critereon.EnchantmentPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.MatchTool;
-import net.minecraft.loot.conditions.SurvivesExplosion;
-import net.minecraft.loot.functions.ApplyBonus;
-import net.minecraft.loot.functions.ExplosionDecay;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.ValidationContext;
+import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +35,7 @@ import java.util.function.Supplier;
 
 public class LootTables extends LootTableProvider
 {
-    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> tables = new ArrayList<>();
+    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> tables = new ArrayList<>();
 
     public LootTables(DataGenerator dataGeneratorIn)
     {
@@ -37,7 +43,7 @@ public class LootTables extends LootTableProvider
     }
 
     @Override
-    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables()
+    protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables()
     {
         tables.clear();
 
@@ -93,29 +99,29 @@ public class LootTables extends LootTableProvider
     void silkBlockTable(Block b)
     {
         LootPool.Builder pool = LootPool.lootPool();
-        pool.setRolls(ConstantRange.exactly(1));
+        pool.setRolls(ConstantValue.exactly(1));
 
-        StandaloneLootEntry.Builder<?> silk = ItemLootEntry.lootTableItem(b)
+        LootPoolSingletonContainer.Builder<?> silk = LootItem.lootTableItem(b)
                 .when(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(
-                        Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)))));
+                        Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))));
 
-        pool.add(AlternativesLootEntry.alternatives(silk));
+        pool.add(AlternativesEntry.alternatives(silk));
 
         blockTable(b, LootTable.lootTable().withPool(pool));
     }
 
-    void silkFortuneBlockTable(Block b, IItemProvider item)
+    void silkFortuneBlockTable(Block b, ItemLike item)
     {
         LootPool.Builder pool = LootPool.lootPool();
-        pool.setRolls(ConstantRange.exactly(1));
+        pool.setRolls(ConstantValue.exactly(1));
 
-        StandaloneLootEntry.Builder<?> silk = ItemLootEntry.lootTableItem(b)
+        LootPoolSingletonContainer.Builder<?> silk = LootItem.lootTableItem(b)
                 .when(MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(
-                        Enchantments.SILK_TOUCH, MinMaxBounds.IntBound.atLeast(1)))));
-        StandaloneLootEntry.Builder<?> fortune = ItemLootEntry.lootTableItem(item).apply(ExplosionDecay.explosionDecay())
-                .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
+                        Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1)))));
+        LootPoolSingletonContainer.Builder<?> fortune = LootItem.lootTableItem(item).apply(ApplyExplosionDecay.explosionDecay())
+                .apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
 
-        pool.add(AlternativesLootEntry.alternatives(silk, fortune));
+        pool.add(AlternativesEntry.alternatives(silk, fortune));
 
         blockTable(b, LootTable.lootTable().withPool(pool));
     }
@@ -127,24 +133,24 @@ public class LootTables extends LootTableProvider
 
     void blockTable(Block b, LootTable.Builder lootTable)
     {
-        addTable(b.getLootTable(), lootTable, LootParameterSets.BLOCK);
+        addTable(b.getLootTable(), lootTable, LootContextParamSets.BLOCK);
     }
 
-    void addTable(ResourceLocation path, LootTable.Builder lootTable, LootParameterSet paramSet)
+    void addTable(ResourceLocation path, LootTable.Builder lootTable, LootContextParamSet paramSet)
     {
         tables.add(Pair.of(() -> (lootBuilder) -> lootBuilder.accept(path, lootTable), paramSet));
     }
 
-    LootPool.Builder createStandardDrops(IItemProvider itemProvider)
+    LootPool.Builder createStandardDrops(ItemLike itemProvider)
     {
-        return LootPool.lootPool().setRolls(ConstantRange.exactly(1)).when(SurvivesExplosion.survivesExplosion())
-                .add(ItemLootEntry.lootTableItem(itemProvider));
+        return LootPool.lootPool().setRolls(ConstantValue.exactly(1)).when(ExplosionCondition.survivesExplosion())
+                .add(LootItem.lootTableItem(itemProvider));
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker)
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationtracker)
     {
         map.forEach(
-                (p_218436_2_, p_218436_3_) -> LootTableManager.validate(validationtracker, p_218436_2_, p_218436_3_));
+                (p_218436_2_, p_218436_3_) -> net.minecraft.world.level.storage.loot.LootTables.validate(validationtracker, p_218436_2_, p_218436_3_));
     }
 }

@@ -1,13 +1,15 @@
 package net.kaneka.planttech2.gui.guide;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.gui.buttons.CustomButton;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,9 @@ public class GuideScreen extends Screen
 	protected int guiLeft;
 	protected int guiTop;
 	
-	protected final List<Widget> buttons_mainmenu = Lists.newArrayList();
-	protected final List<Widget> buttons_entry = Lists.newArrayList();
-	protected final List<Widget> buttons_navigation = Lists.newArrayList();
+	protected final List<AbstractWidget> buttons_mainmenu = Lists.newArrayList();
+	protected final List<AbstractWidget> buttons_entry = Lists.newArrayList();
+	protected final List<AbstractWidget> buttons_navigation = Lists.newArrayList();
 	private Guide guide = new Guide(); 
 	
 	int mode = 0; //0: mainmenu, 1: entrys, 2: details  
@@ -39,7 +41,7 @@ public class GuideScreen extends Screen
 	
 	public GuideScreen()
 	{
-		super(new TranslationTextComponent("planttech2.guide"));
+		super(new TranslatableComponent("planttech2.guide"));
 	}
 	
 	//When directly open a entry
@@ -86,9 +88,9 @@ public class GuideScreen extends Screen
 		
 	}
 	
-	protected void addButtonList(List<Widget> list, int buttontype, int id, int xPos, int yPos, int width, int height, String displayString)
+	protected void addButtonList(List<AbstractWidget> list, int buttontype, int id, int xPos, int yPos, int width, int height, String displayString)
 	{
-		CustomButton button = addButton(new CustomButton(id, xPos, yPos, width, height, translateUnformated(displayString), (btn)->
+		CustomButton button = addRenderableWidget(new CustomButton(id, xPos, yPos, width, height, translateUnformated(displayString), (btn)->
 		{
 			GuideScreen.this.buttonClicked(buttontype, id); 
 		}));
@@ -133,43 +135,43 @@ public class GuideScreen extends Screen
 		update(modechange); 
 	}
 	
-	private void activateButton(Widget button) 
+	private void activateButton(AbstractWidget button)
 	{
-		button.active = true; 
+		button.active = true;
 		button.visible = true; 
 	}
 	
-	private void deactivateButton(Widget button) 
+	private void deactivateButton(AbstractWidget button)
 	{
 		button.active = false; 
 		button.visible = false; 
 	}
 	
 	@SuppressWarnings("unused")
-	private void activateButtonList(List<Widget> list)
+	private void activateButtonList(List<AbstractWidget> list)
 	{
-		for(Widget button: list)
+		for(AbstractWidget button: list)
 		{
 			activateButton(button);
 		}
 	}
 	
-	private void deactivateButtonList(List<Widget> list)
+	private void deactivateButtonList(List<? extends Widget> list)
 	{
-		for(Widget button: list)
+		for(Widget widget: list)
 		{
-			deactivateButton(button);
+			if(widget instanceof AbstractWidget aWidget) deactivateButton(aWidget);
 		}
 	}
 	
 	private void update(boolean modechange)
 	{
-		deactivateButtonList(buttons); // deactivate all buttons
+		deactivateButtonList(renderables); // deactivate all buttons
 		if(mode == 0)
 		{
     		for(int i = 0; i < buttons_mainmenu.size(); i++)
     		{
-    			Widget button = buttons_mainmenu.get(i); 
+    			AbstractWidget button = buttons_mainmenu.get(i);
     			if(i < guide.getAmountMainMenus())
     			{ 
     				activateButton(button);
@@ -183,7 +185,7 @@ public class GuideScreen extends Screen
 			maxPages = menu.getAmountEntrys()/8; 
 			for(int i = 0; i < buttons_entry.size(); i++)
     		{
-    			Widget button = buttons_entry.get(i); 
+    			AbstractWidget button = buttons_entry.get(i);
     			if(i + page * 10 < menu.getAmountEntrys())
     			{ 
     				activateButton(button);
@@ -222,11 +224,11 @@ public class GuideScreen extends Screen
 	}
 	
 	@Override
-	public void render(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
 		this.renderBackground(mStack);
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().bind(BACKGROUND);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		minecraft.getTextureManager().getTexture(BACKGROUND);
 		
 		this.drawBackground(mStack);
 		this.drawForeground(mStack);
@@ -236,36 +238,36 @@ public class GuideScreen extends Screen
 		
 	}
 
-	private void drawButtons(MatrixStack mStack, int mouseX, int mouseY, float partialTicks)
+	private void drawButtons(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-		for (int i = 0; i < this.buttons.size(); ++i)
+		for (int i = 0; i < this.renderables.size(); ++i)
 		{
-			this.buttons.get(i).render(mStack, mouseX, mouseY, partialTicks);
+			this.renderables.get(i).render(mStack, mouseX, mouseY, partialTicks);
 		}
 	}
 
-	protected void drawBackground(MatrixStack mStack)
+	protected void drawBackground(PoseStack mStack)
 	{
 		blit(mStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize, 512, 512);
 	}
 
-	protected void drawForeground(MatrixStack mStack)
+	protected void drawForeground(PoseStack mStack)
 	{
 		if(mode == 2)
 		{
 			if(!pics.isEmpty() && page == 0)
 			{
-				RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+				RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 				for(GuidePicture pic: pics)
 				{
-    				minecraft.getTextureManager().bind(pic.getResloc());
+    				minecraft.getTextureManager().getTexture(pic.getResloc());
     				blit(mStack, this.guiLeft + pic.getXStart() + 25, this.guiTop + pic.getYStart() + 30, 0, 0, pic.getWidth(), pic.getHeight(), pic.getWidth(), pic.getHeight());
 				}
 			}
 		}
 	}
 	
-	protected void drawStrings(MatrixStack mStack)
+	protected void drawStrings(PoseStack mStack)
 	{
 		if(mode == 0)
 		{
@@ -299,15 +301,15 @@ public class GuideScreen extends Screen
 	
 	protected String translateUnformated(String name)
 	{
-		return new TranslationTextComponent(name).getString();
+		return new TranslatableComponent(name).getString();
 	}
 	
-	protected void drawCenteredString(MatrixStack mStack, String string, int posX, int posY)
+	protected void drawCenteredString(PoseStack mStack, String string, int posX, int posY)
 	{
 		font.draw(mStack, string, posX - (font.width(string) / 2), posY, Integer.parseInt("000000", 16));
 	}
 	
-	protected void drawLine(MatrixStack mStack, String text, int x, int y)
+	protected void drawLine(PoseStack mStack, String text, int x, int y)
 	{
 	    font.draw(mStack, text, x, y, Integer.parseInt("000000",16));
 	}

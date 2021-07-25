@@ -1,19 +1,11 @@
 package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.entities.neutral.TechGhoulEntity;
-import net.kaneka.planttech2.entities.passive.TechPenguinEntity;
-import net.kaneka.planttech2.entities.passive.TechVillagerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
-
-import java.util.function.Consumer;
 
 @ObjectHolder(PlantTechMain.MODID)
 public class ModEntityTypes {
+    /*
     @ObjectHolder(ModReferences.TECHVILLAGER) public static EntityType<TechVillagerEntity> TECHVILLAGERENTITY;
     @ObjectHolder(ModReferences.TECHGHOUL) public static EntityType<TechGhoulEntity> TECHGHOULENTITY;
     @ObjectHolder(ModReferences.TECHPENGUIN) public static EntityType<TechPenguinEntity> TECHPENGUINENTITY;
@@ -42,4 +34,5 @@ public class ModEntityTypes {
         type.setRegistryName(registryName);
         return type;
     }
+    */
 }

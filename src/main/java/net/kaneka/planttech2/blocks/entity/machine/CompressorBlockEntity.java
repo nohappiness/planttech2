@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.CompressorContainer;
+import net.kaneka.planttech2.inventory.CompressorMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
@@ -9,11 +9,10 @@ import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
@@ -23,7 +22,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
-import org.antlr.runtime.misc.ContainerData;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -56,12 +54,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 				return CompressorBlockEntity.this.ticksPassed;
 			case 3:
 				return CompressorBlockEntity.this.selectedId;
-			case 4: 
-				return CompressorBlockEntity.this.worldPosition.getX();
-			case 5: 
-				return CompressorBlockEntity.this.worldPosition.getY();
-			case 6: 
-				return CompressorBlockEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}
@@ -82,15 +74,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 				break;
 			case 3:
 				CompressorBlockEntity.this.setSelectedId(value);
-				break; 
-			case 4:
-				CompressorBlockEntity.this.worldPosition = new BlockPos(value, CompressorBlockEntity.this.worldPosition.getY(), CompressorBlockEntity.this.worldPosition.getZ());
-				break;
-			case 5:
-				CompressorBlockEntity.this.worldPosition = new BlockPos(CompressorBlockEntity.this.worldPosition.getX(), value, CompressorBlockEntity.this.worldPosition.getZ());
-				break;
-			case 6:
-				CompressorBlockEntity.this.worldPosition = new BlockPos(CompressorBlockEntity.this.worldPosition.getX(), CompressorBlockEntity.this.worldPosition.getY(), value);
 				break;
 			}
 		}
@@ -100,9 +83,9 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 		}
 	};
 
-	public CompressorBlockEntity()
+	public CompressorBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.COMPRESSOR_TE, 1000, 26, PlantTechConstants.MACHINETIER_COMPRESSOR);
+		super(ModTileEntities.COMPRESSOR_TE, pos, state, 1000, 26, PlantTechConstants.MACHINETIER_COMPRESSOR);
 		inputs = new RangedWrapper(itemhandler, 0,1); 
 		outputs = new RangedWrapper(itemhandler, 1,2); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -200,7 +183,7 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	@Override
 	public void onContainerUpdated(int slotIndex)
 	{
-		if (level != null && (previousInput == null || previousInput.getItem() != itemhandler.getStackInSlot(0).getItem()))
+		if (level != null && (previousInput == null || previousInput.asItem() != itemhandler.getStackInSlot(0).getItem()))
 			initRecipeList();
 	}
 
@@ -270,19 +253,7 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 		return save(new CompoundTag());
 	}
 
-	@Override
-	public SUpdateTileEntityPacket getUpdatePacket()
-	{
-		return new SUpdateTileEntityPacket(worldPosition, 7414, getUpdateTag());
-	}
 
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-	{
-		if (level == null)
-			return;
-		handleUpdateTag(level.getBlockState(worldPosition), pkt.getTag());
-	}
 
 	@Override
 	public CompoundTag save(CompoundTag compound)
@@ -293,17 +264,17 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		if (compound.contains("selectedId"))
 			setSelectedId(compound.getInt("selectedId"));
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new CompressorContainer(id, inv, this);
+		return new CompressorMenu(id, inv, this);
 	}
 
 	@Override

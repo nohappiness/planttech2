@@ -1,23 +1,26 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryFluidBlockEntity;
-import net.kaneka.planttech2.inventory.InfuserContainer;
+import net.kaneka.planttech2.inventory.InfuserMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import org.antlr.runtime.misc.ContainerData;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -87,9 +90,9 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 		}
 	};
 
-	public InfuserBlockEntity()
+	public InfuserBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.INFUSER_TE, 1000, 8, 5000, MACHINETIER_INFUSER);
+		super(ModTileEntities.INFUSER_TE, pos, state, 1000, 8, 5000, MACHINETIER_INFUSER);
 		inputs = new RangedWrapper(itemhandler, 0,1); 
 		outputs = new RangedWrapper(itemhandler, 1, 2); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -201,9 +204,9 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	}
 	
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new InfuserContainer(id, inv, this);
+		return new InfuserMenu(id, inv, this);
 	}
 
 	@Override

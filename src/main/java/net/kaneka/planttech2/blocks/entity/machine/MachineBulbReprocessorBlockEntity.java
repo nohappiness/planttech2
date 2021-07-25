@@ -1,7 +1,7 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryFluidBlockEntity;
-import net.kaneka.planttech2.inventory.MachineBulbReprocessorContainer;
+import net.kaneka.planttech2.inventory.MachineBulbReprocessorMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.MachineBulbItem;
@@ -9,13 +9,14 @@ import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags.Items;
-import org.antlr.runtime.misc.ContainerData;
 
 public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 {
@@ -41,12 +42,6 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 				return MachineBulbReprocessorBlockEntity.this.selectedId;
 			case 6: 
 				return MachineBulbReprocessorBlockEntity.this.actualTier;
-			case 7: 
-				return MachineBulbReprocessorBlockEntity.this.worldPosition.getX();
-			case 8: 
-				return MachineBulbReprocessorBlockEntity.this.worldPosition.getY();
-			case 9: 
-				return MachineBulbReprocessorBlockEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}
@@ -77,15 +72,6 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 			case 6: 
 				MachineBulbReprocessorBlockEntity.this.actualTier = value;
 				break;
-			case 7:
-				MachineBulbReprocessorBlockEntity.this.worldPosition = new BlockPos(value, MachineBulbReprocessorBlockEntity.this.worldPosition.getY(), MachineBulbReprocessorBlockEntity.this.worldPosition.getZ());
-				break;
-			case 8:
-				MachineBulbReprocessorBlockEntity.this.worldPosition = new BlockPos(MachineBulbReprocessorBlockEntity.this.worldPosition.getX(), value, MachineBulbReprocessorBlockEntity.this.worldPosition.getZ());
-				break;
-			case 9:
-				MachineBulbReprocessorBlockEntity.this.worldPosition = new BlockPos(MachineBulbReprocessorBlockEntity.this.worldPosition.getX(), MachineBulbReprocessorBlockEntity.this.worldPosition.getY(), value);
-				break;
 			}
 		}
 		public int getCount()
@@ -94,9 +80,9 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 		}
 	};
 
-	public MachineBulbReprocessorBlockEntity()
+	public MachineBulbReprocessorBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.MACHINEBULBREPROCESSOR_TE, 5000, 8, 5000, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR);
+		super(ModTileEntities.MACHINEBULBREPROCESSOR_TE, pos, state, 5000, 8, 5000, PlantTechConstants.MACHINETIER_MACHINEBULBREPROCESSOR);
 	}
 
 	@Override
@@ -214,9 +200,9 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 	}
 	
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new MachineBulbReprocessorContainer(id, inv, this);
+		return new MachineBulbReprocessorMenu(id, inv, this);
 	}
 
 	public void setSelectedId(int buttonId)

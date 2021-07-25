@@ -1,17 +1,19 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.DNAExtractorContainer;
+import net.kaneka.planttech2.inventory.DNAExtractorMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
 {
@@ -54,9 +56,9 @@ public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-    public DNAExtractorBlockEntity()
+    public DNAExtractorBlockEntity(BlockPos pos, BlockState state)
     {
-		super(ModTileEntities.DNAEXTRACTOR_TE, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
+		super(ModTileEntities.DNAEXTRACTOR_TE, pos, state, 1000, 7, PlantTechConstants.MACHINETIER_DNA_EXTRACTOR);
     }
 
     @Override
@@ -127,9 +129,9 @@ public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
     }
 
     @Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new DNAExtractorContainer(id, inv, this);
+		return new DNAExtractorMenu(id, inv, this);
 	}
 
 	@Override

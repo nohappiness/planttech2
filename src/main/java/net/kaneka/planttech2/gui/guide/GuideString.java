@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.gui.guide;
 
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 
 public class GuideString
 {
@@ -29,7 +29,7 @@ public class GuideString
 		return string; 
 	}
 	
-	public boolean appendWord(FontRenderer font, String word)
+	public boolean appendWord(Font font, String word)
 	{
 		if(font.width(string) + font.width(" ") + font.width(word) <= width)
 		{
@@ -39,7 +39,7 @@ public class GuideString
 		return false; 
 	}
 	
-	public String fillWithX(FontRenderer font)
+	public String fillWithX(Font font)
 	{
 		String string = ""; 
 		for(int i = 0; i < 100; i++)

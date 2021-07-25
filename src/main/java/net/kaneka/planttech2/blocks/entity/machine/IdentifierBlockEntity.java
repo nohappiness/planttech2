@@ -4,21 +4,23 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.inventory.IdentifierContainer;
+import net.kaneka.planttech2.inventory.IdentifierMenu;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
-import org.antlr.runtime.misc.ContainerData;
 
 import javax.annotation.Nullable;
 
@@ -66,9 +68,9 @@ public class IdentifierBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-	public IdentifierBlockEntity()
+	public IdentifierBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.IDENTIFIER_TE, 10000, 22, PlantTechConstants.MACHINETIER_IDENTIFIER);
+		super(ModTileEntities.IDENTIFIER_TE, pos, state, 10000, 22, PlantTechConstants.MACHINETIER_IDENTIFIER);
 		inputs = new RangedWrapper(itemhandler, 0,9); 
 		outputs = new RangedWrapper(itemhandler, 9, 18); 
 		inputs_provider = LazyOptional.of(() -> inputs);
@@ -209,9 +211,9 @@ public class IdentifierBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new IdentifierContainer(id, inv, this);
+		return new IdentifierMenu(id, inv, this);
 	}
 
 	@Override

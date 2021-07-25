@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.NbtUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public class CableInfo
 
     public CableInfo(CompoundTag compound)
     {
-        this.masterPos = NBTUtil.readBlockPos(compound);
+        this.masterPos = NbtUtils.readBlockPos(compound);
         this.isMaster = compound.getBoolean("ismaster");
         this.connections = compound.getContainerData("connections");
         if (this.isMaster)
@@ -36,7 +37,7 @@ public class CableInfo
 
     public CompoundTag write()
     {
-        CompoundTag compound = NBTUtil.writeBlockPos(masterPos);
+        CompoundTag compound = NbtUtils.writeBlockPos(masterPos);
         compound.putBoolean("ismaster", isMaster);
         compound.putContainerData("connections", connections);
         if (isMaster)

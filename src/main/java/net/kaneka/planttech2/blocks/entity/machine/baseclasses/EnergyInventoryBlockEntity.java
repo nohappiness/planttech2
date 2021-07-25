@@ -6,9 +6,9 @@ import net.kaneka.planttech2.items.TierItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,16 +23,16 @@ import java.util.List;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
-abstract public class EnergyInventoryBlockEntity extends EnergyTileEntity
+abstract public class EnergyInventoryBlockEntity extends EnergyBlockEntity
 {
 	protected ItemStackHandler itemhandler;
 	protected LazyOptional<IItemHandler> inventoryCap;
 	protected int ticksPassed = 0;
 	protected int tier;
 
-	public EnergyInventoryBlockEntity(BlockEntityType<?> type, int energyStorage, int invSize, int tier)
+	public EnergyInventoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage,  int invSize, int tier)
 	{
-		super(type, energyStorage);
+		super(type,pos, state, energyStorage);
 		itemhandler = new ItemStackHandler(invSize);
 		inventoryCap = LazyOptional.of(() -> itemhandler);
 		this.tier = tier;
@@ -90,10 +90,11 @@ abstract public class EnergyInventoryBlockEntity extends EnergyTileEntity
 		return super.save(compound);
 	}
 
+
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
+		super.load(compound);
 		int slotamount = itemhandler.getSlots();// prevent crash
 		itemhandler.deserializeNBT(compound.getCompound("inventory"));
 		if (itemhandler.getSlots() != slotamount)

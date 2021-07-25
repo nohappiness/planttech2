@@ -2,11 +2,11 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -66,13 +66,13 @@ public class DNAContainerItem extends Item
 			}
 		}
 	}
-	private TextFormatting getTraitColor (CompoundTag nbt, String trait) {
+	private ChatFormatting getTraitColor (CompoundTag nbt, String trait) {
 		if (nbt.getInt(trait) == Objects.requireNonNull(EnumTraitsInt.getByName(trait)).getMax()) {
-			return TextFormatting.GREEN;
+			return ChatFormatting.GREEN;
 		}
 		if (nbt.getInt(trait) == Objects.requireNonNull(EnumTraitsInt.getByName(trait)).getMin()) {
-			return TextFormatting.GRAY;
+			return ChatFormatting.GRAY;
 		}
-		return TextFormatting.RESET;
+		return ChatFormatting.RESET;
 	}
 }

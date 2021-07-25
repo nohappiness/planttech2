@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.addons.jei.infuser;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.matrix.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -50,7 +50,7 @@ public class InfuserCategory extends AbstractJeiCategory<InfuserRecipe>
 	}
 	
 	@Override
-	public void draw(InfuserRecipe recipe, MatrixStack mStack, double mouseX, double mouseY)
+	public void draw(InfuserRecipe recipe, PoseStack mStack, double mouseX, double mouseY)
 	{
 		int biomass = recipe.getBiomass();
 		if (biomass > 0) {

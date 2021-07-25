@@ -2,16 +2,18 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.enums.EnumTemperature;
-import net.kaneka.planttech2.inventory.CropAuraGeneratorContainer;
+import net.kaneka.planttech2.inventory.CropAuraGeneratorMenu;
 import net.kaneka.planttech2.items.AuraCoreItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.world.Container;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
 {
@@ -60,9 +62,9 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
         }
     };
 
-    public CropAuraGeneratorBlockEntity()
+    public CropAuraGeneratorBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ModTileEntities.CROP_AURA_GENERATOR_TE, 10000, 9, PlantTechConstants.MACHINETIER_CROP_AURA_GENERATOR);
+        super(ModTileEntities.CROP_AURA_GENERATOR_TE, pos, state, 10000, 9, PlantTechConstants.MACHINETIER_CROP_AURA_GENERATOR);
     }
 
     public boolean consumeEnergy(int requiredEnergy)
@@ -175,9 +177,9 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
     //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public Container createMenu(int id, Inventory inventory, Player player)
+    public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player)
     {
-        return new CropAuraGeneratorContainer(id, inventory, this);
+        return new CropAuraGeneratorMenu(id, inventory, this);
     }
 
     @Override

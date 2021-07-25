@@ -5,6 +5,7 @@ import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
@@ -77,15 +78,16 @@ public class ForgeBusEventsClient
     public static void onWorldStart(EntityJoinWorldEvent evt)
     {
         VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
-        if (evt.getEntity() instanceof ClientPlayer && res.status == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
+        if (evt.getEntity() instanceof LocalPlayer && res.status() == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
         {
-            TextComponent info = new TranslatableComponent("planttech2.update.available");
-            TextComponent link = new TranslatableComponent("planttech2.update.click");
-            link.setStyle(link.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
+            Component info = new TranslatableComponent("planttech2.update.available");
+            Component link = new TranslatableComponent("planttech2.update.click");
+            link.toFlatList(link.getStyle().withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.curseforge.com/minecraft/mc-mods/planttech-2/files"))
                     .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent("planttech2.update.tooltip")))
                     .withColor(TextColor.parseColor("BLUE"))
                     .setUnderlined(true));
-            evt.getEntity().sendMessage(info.append(link), evt.getEntity().getUUID());
+            evt.getEntity().sendMessage(info, evt.getEntity().getUUID());
+            evt.getEntity().sendMessage(link, evt.getEntity().getUUID());
         }
         hasSendUpdateAvailable = true;
     }

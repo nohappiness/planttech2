@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.blocks.machines;
 
-import net.kaneka.planttech2.BlockEntity.cable.TestCableBlockEntity;
+import net.kaneka.planttech2.blocks.ModBlockEntityBlock;
+import net.kaneka.planttech2.blocks.entity.cable.TestCableBlockEntity;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,11 +26,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.util.Constants.BlockFlags;
 import net.minecraftforge.energy.CapabilityEnergy;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class TestCableBlock extends Block
+public class TestCableBlock extends ModBlockEntityBlock
 {
     public static final IntegerProperty
             NORTH = IntegerProperty.create("north", 0, 3),
@@ -172,17 +174,12 @@ public class TestCableBlock extends Block
         }
     }
 
+    @Nullable
     @Override
-    public boolean hasBlockEntity(BlockState state)
-    {
-        return true;
+    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        return new TestCableBlockEntity(blockPos, blockState);
     }
 
-    @Override
-    public BlockEntity createBlockEntity(BlockState state, BlockGetter world)
-    {
-        return new TestCableBlockEntity();
-    }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)

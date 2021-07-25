@@ -1,13 +1,15 @@
 package net.kaneka.planttech2.blocks.entity.machine.baseclasses;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class ConvertEnergyInventoryBlockEntity extends EnergyInventoryBlockEntity
 {
-    public ConvertEnergyInventoryBlockEntity(BlockEntityType<?> type, int energyStorage, int invSize, int tier)
+    public ConvertEnergyInventoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage, int invSize, int tier)
     {
-        super(type, energyStorage, invSize, tier);
+        super(type, pos, state, energyStorage, invSize, tier);
     }
 
     @Override

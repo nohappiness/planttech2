@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.CapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -68,7 +69,7 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundTag>, IR
         this.level = Math.min(Math.max(this.level, 0), 2);
     }
 
-    public static class RadiationEffectStorage implements Capability.IStorage<IRadiationEffect>
+    public static class RadiationEffectStorage extends CapabilityProvider<IRadiationEffect>
     {
         public RadiationEffectStorage(){}
 

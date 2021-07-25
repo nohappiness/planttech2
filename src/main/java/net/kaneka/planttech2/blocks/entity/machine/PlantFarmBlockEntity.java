@@ -3,25 +3,28 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.inventory.PlantFarmContainer;
+import net.kaneka.planttech2.inventory.PlantFarmMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.CropsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.server.ServerWorld;
-import org.antlr.runtime.misc.ContainerData;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
@@ -100,9 +103,9 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 		}
 	};
 
-	public PlantFarmBlockEntity()
+	public PlantFarmBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.PLANTFARM_TE, 1000, 18, 5000, PlantTechConstants.MACHINETIER_PLANTFARM);
+		super(ModTileEntities.PLANTFARM_TE, pos, state, 1000, 18, 5000, PlantTechConstants.MACHINETIER_PLANTFARM);
 	}
 
 	@Override
@@ -162,7 +165,7 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 		if (item instanceof BlockItem)
 		{
 			Block block = ((BlockItem) item).getBlock();
-			return block instanceof CropsBlock;
+			return block instanceof CropBlock;
 		}
 		return false;
 	}
@@ -209,9 +212,9 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 			if (item instanceof BlockItem)
 			{
 				Block block = ((BlockItem) item).getBlock();
-				if (block instanceof CropsBlock)
-					if (level instanceof ServerWorld)
-						drops.addAll(Block.getDrops(block.defaultBlockState().setValue(CropsBlock.AGE, 7), (ServerLevel)level, worldPosition, null));
+				if (block instanceof CropBlock)
+					if (level instanceof ServerLevel)
+						drops.addAll(Block.getDrops(block.defaultBlockState().setValue(CropBlock.AGE, 7), (ServerLevel)level, worldPosition, null));
 			}
 		}
 		return drops; 
@@ -265,9 +268,9 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new PlantFarmContainer(id, inv, this);
+		return new PlantFarmMenu(id, inv, this);
 	}
 
 	@Override

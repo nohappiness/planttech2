@@ -1,30 +1,30 @@
 package net.kaneka.planttech2.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.entity.machine.SolarGeneratorBlockEntity;
-import net.kaneka.planttech2.inventory.SolarGeneratorContainer;
+import net.kaneka.planttech2.inventory.SolarGeneratorMenu;
 import net.kaneka.planttech2.items.TierItem;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.entity.player.Inventory;
 
-public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorContainer>
+public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorMenu>
 {
 	private static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID + ":textures/gui/container/solargenerator.png");
 
-	public SolarGeneratorScreen(SolarGeneratorContainer container, Inventory player, ITextComponent name)
+	public SolarGeneratorScreen(SolarGeneratorMenu container, Inventory player, Component name)
     {
     	super(container, player, name);
     }
 
 	@Override
-	protected void renderBg(MatrixStack mStack, float partialTicks, int mouseX, int mouseY)
+	protected void renderBg(PoseStack pStack, float partialTicks, int mouseX, int mouseY)
 	{
-		super.renderBg(mStack, partialTicks, mouseX, mouseY);
+		super.renderBg(pStack, partialTicks, mouseX, mouseY);
 
 		int k = this.getEnergyStoredScaled(55);
-		blit(mStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
+		blit(pStack, this.leftPos + 149, this.topPos + 28 + (55 - k), 208, 55 - k, 16, 0 + k);
 
 		int l = 0;
 		switch(((SolarGeneratorBlockEntity) this.te).getUpgradeTier(0, TierItem.ItemType.SOLAR_FOCUS))
@@ -36,7 +36,7 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorCont
 			case 4:l = 35; break;
 		}
 		int j = getWorkLoadScaled(17);
-		blit(mStack, this.leftPos + 133, this.topPos + 36, 205, 56, j, l);
+		blit(pStack, this.leftPos + 133, this.topPos + 36, 205, 56, j, l);
 	}
 
 	private int getWorkLoadScaled(int pixels)

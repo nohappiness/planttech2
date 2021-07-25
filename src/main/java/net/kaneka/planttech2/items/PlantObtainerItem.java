@@ -2,14 +2,14 @@ package net.kaneka.planttech2.items;
 
 import net.kaneka.planttech2.blocks.baseclasses.NaturalPlants;
 import net.kaneka.planttech2.blocks.interfaces.IObtainable;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.util.text.*;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
-import java.awt.*;
 import java.util.List;
 
 public class PlantObtainerItem extends Item
@@ -75,12 +74,12 @@ public class PlantObtainerItem extends Item
         CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (state == Blocks.AIR.defaultBlockState() || state != null)
         {
-            compound.merge(NBTUtil.writeBlockState(state));
+            compound.merge(NbtUtils.writeBlockState(state));
             setFilled(stack, true);
         }
         else
         {
-            NBTUtil.writeBlockState(Blocks.AIR.defaultBlockState());
+            NbtUtils.writeBlockState(Blocks.AIR.defaultBlockState());
             setFilled(stack, false);
         }
         stack.setTag(compound);
@@ -90,7 +89,7 @@ public class PlantObtainerItem extends Item
     public static BlockState getBlockStateFilled(ItemStack stack)
     {
         CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
-        BlockState state = NBTUtil.readBlockState(compound);
+        BlockState state = NbtUtils.readBlockState(compound);
         if (state.getBlock() == Blocks.AIR)
         {
             return null;
@@ -104,7 +103,7 @@ public class PlantObtainerItem extends Item
         CompoundTag compound = stack.hasTag() ? stack.getTag() : initTags(stack).getTag();
         if (!filled)
         {
-            compound.merge(NBTUtil.writeBlockState(Blocks.AIR.defaultBlockState()));
+            compound.merge(NbtUtils.writeBlockState(Blocks.AIR.defaultBlockState()));
         }
         compound.putBoolean("filled", filled);
         stack.setTag(compound);
@@ -130,7 +129,7 @@ public class PlantObtainerItem extends Item
         tooltip.add(new TextComponent("Right click again to get it back"));
         initTags(stack);
         if (isFilled(stack))
-            tooltip.add(new TextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getName().setStyle(Style.EMPTY.withColor(Color.fromLegacyFormat(TextFormatting.GREEN)).withBold(true))));
+            tooltip.add(new TextComponent("Plant Obtained: ").append(getBlockStateFilled(stack).getBlock().getName().setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN).withBold(true))));
         else
             tooltip.add(new TextComponent("Empty").setStyle(Style.EMPTY.withColor(TextColor.parseColor("BLUE")).withBold(true)));
     }

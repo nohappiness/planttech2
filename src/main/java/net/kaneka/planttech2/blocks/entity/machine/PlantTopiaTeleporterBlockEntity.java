@@ -1,13 +1,14 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.PlantTopiaTeleporterContainer;
+import net.kaneka.planttech2.inventory.PlantTopiaTeleporterMenu;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 {
@@ -21,12 +22,6 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 				return PlantTopiaTeleporterBlockEntity.this.energystorage.getEnergyStored();
 			case 1:
 				return PlantTopiaTeleporterBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2: 
-				return PlantTopiaTeleporterBlockEntity.this.worldPosition.getX();
-			case 3: 
-				return PlantTopiaTeleporterBlockEntity.this.worldPosition.getY();
-			case 4: 
-				return PlantTopiaTeleporterBlockEntity.this.worldPosition.getZ();
 			default:
 				return 0;
 			}
@@ -42,15 +37,6 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 			case 1:
 				PlantTopiaTeleporterBlockEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
-			case 2:
-				PlantTopiaTeleporterBlockEntity.this.worldPosition = new BlockPos(value, PlantTopiaTeleporterBlockEntity.this.worldPosition.getY(), PlantTopiaTeleporterBlockEntity.this.worldPosition.getZ());
-				break;
-			case 3:
-				PlantTopiaTeleporterBlockEntity.this.worldPosition = new BlockPos(PlantTopiaTeleporterBlockEntity.this.worldPosition.getX(), value, PlantTopiaTeleporterBlockEntity.this.worldPosition.getZ());
-				break;
-			case 4:
-				PlantTopiaTeleporterBlockEntity.this.worldPosition = new BlockPos(PlantTopiaTeleporterBlockEntity.this.worldPosition.getX(), PlantTopiaTeleporterBlockEntity.this.worldPosition.getY(), value);
-				break;
 			}
 		}
 		public int getCount()
@@ -59,9 +45,9 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-	public PlantTopiaTeleporterBlockEntity()
+	public PlantTopiaTeleporterBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.PLANTTOPIATELEPORTER_TE, 10000, 3, 0);
+		super(ModTileEntities.PLANTTOPIATELEPORTER_TE, pos, state, 10000, 3, 0);
 	}
 
 	@Override
@@ -71,9 +57,9 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new PlantTopiaTeleporterContainer(id, inv, this);
+		return new PlantTopiaTeleporterMenu(id, inv, this);
 	}
 
 	@Override

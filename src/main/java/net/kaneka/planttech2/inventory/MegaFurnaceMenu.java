@@ -2,20 +2,20 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.blocks.entity.machine.MegaFurnaceBlockEntity;
 import net.kaneka.planttech2.registries.ModContainers;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class MegaFurnaceContainer extends BaseContainer
+public class MegaFurnaceMenu extends BaseMenu
 {
-	public MegaFurnaceContainer(int id, Inventory inv)
+	public MegaFurnaceMenu(int id, Inventory inv)
 	{
 		this(id, inv, new MegaFurnaceBlockEntity());
 	}
-	public MegaFurnaceContainer(int id, Inventory player, MegaFurnaceBlockEntity tileentity)
+	public MegaFurnaceMenu(int id, Inventory player, MegaFurnaceBlockEntity tileentity)
 	{
 		super(id, ModContainers.MEGAFURNACE, player, tileentity, 15);
 		IItemHandler handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
@@ -30,7 +30,7 @@ public class MegaFurnaceContainer extends BaseContainer
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) 
+	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);

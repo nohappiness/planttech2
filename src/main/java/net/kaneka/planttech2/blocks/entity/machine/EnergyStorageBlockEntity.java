@@ -2,15 +2,16 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.blocks.machines.EnergyStorageBlock;
-import net.kaneka.planttech2.inventory.EnergyStorageContainer;
+import net.kaneka.planttech2.inventory.EnergyStorageMenu;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
-import net.minecraft.world.Container;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.level.block.state.BlockState;
-import org.antlr.runtime.misc.ContainerData;
 
 public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
 {
@@ -48,9 +49,9 @@ public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
-    public EnergyStorageBlockEntity()
+    public EnergyStorageBlockEntity(BlockPos pos, BlockState state)
     {
-	super(ModTileEntities.ENERGYSTORAGE_TE, 1000, 4, 0);
+	super(ModTileEntities.ENERGYSTORAGE_TE, pos, state, 1000, 4, 0);
     }
     
     @Override
@@ -89,9 +90,9 @@ public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
     }
     
     @Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new EnergyStorageContainer(id, inv, this);
+		return new EnergyStorageMenu(id, inv, this);
 	}
 
 	@Override

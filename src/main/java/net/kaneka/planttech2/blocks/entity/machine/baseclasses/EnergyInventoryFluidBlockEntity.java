@@ -4,17 +4,19 @@ import net.kaneka.planttech2.fluids.capability.BiomassFluidEnergy;
 import net.kaneka.planttech2.fluids.capability.IBiomassFluidEnergy;
 import net.kaneka.planttech2.items.BiomassContainerItem;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class EnergyInventoryFluidBlockEntity extends EnergyInventoryBlockEntity
 {
 	protected final IBiomassFluidEnergy biomassCap = BiomassFluidEnergy.getTECap(this);
 
-    public EnergyInventoryFluidBlockEntity(BlockEntityType<?> type, int energyStorage, int invSize, int maxBiomassStorage, int tier)
+    public EnergyInventoryFluidBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int energyStorage, int invSize, int maxBiomassStorage, int tier)
     {
-		super(type, energyStorage, invSize, tier);
+		super(type,pos, state, energyStorage, invSize, tier);
 		biomassCap.setMaxStorage(maxBiomassStorage);
 		biomassCap.setCurrentStorage(0);
     }

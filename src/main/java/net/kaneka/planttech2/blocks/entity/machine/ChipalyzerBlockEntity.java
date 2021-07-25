@@ -1,17 +1,19 @@
 package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryBlockEntity;
-import net.kaneka.planttech2.inventory.ChipalyzerContainer;
+import net.kaneka.planttech2.inventory.ChipalyzerMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
-import net.minecraft.world.Container;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,9 +59,9 @@ public class ChipalyzerBlockEntity extends ConvertEnergyInventoryBlockEntity
 		}
 	};
 
-	public ChipalyzerBlockEntity()
+	public ChipalyzerBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.CHIPALYZER_TE, 1000, 7, PlantTechConstants.MACHINETIER_CHIPALYZER);
+		super(ModTileEntities.CHIPALYZER_TE, pos, state, 1000, 7, PlantTechConstants.MACHINETIER_CHIPALYZER);
 	}
 
 	@Override
@@ -141,10 +143,11 @@ public class ChipalyzerBlockEntity extends ConvertEnergyInventoryBlockEntity
 		return "chipalyzer";
 	}
 
+
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new ChipalyzerContainer(id, inv, this);
+		return new ChipalyzerMenu(id, inv, this);
 	}
 
 	@Override

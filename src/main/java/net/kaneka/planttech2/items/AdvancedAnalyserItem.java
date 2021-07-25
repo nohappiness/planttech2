@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.items;
 
-import net.kaneka.planttech2.BlockEntity.CropsTileEntity;
+import net.kaneka.planttech2.blocks.entity.CropsBlockEntity;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.utilities.ModCreativeTabs;
@@ -39,9 +39,9 @@ public class AdvancedAnalyserItem extends EnergyStorageItem
 		{
 			BlockEntity te = level.getBlockEntity(pos);
 
-			if (te instanceof CropsTileEntity)
+			if (te instanceof CropsBlockEntity)
 			{
-				CropsTileEntity cte = (CropsTileEntity) te;
+				CropsBlockEntity cte = (CropsBlockEntity) te;
 				if (cte.isAnalysed())
 				{
 					HashMapCropTraits traits = cte.getTraits();

@@ -5,9 +5,7 @@ import com.google.gson.*;
 import io.netty.buffer.ByteBuf;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -143,8 +141,8 @@ public class CropEntryConfigData
 		{
 			JsonObject obj = json.getAsJsonObject();
 
-			String name = JSONUtils.getAsString(obj, "crop");
-			boolean enabled = JSONUtils.getAsBoolean(obj, "enabled");
+			String name = obj.get("crop").getAsString();
+			boolean enabled = obj.get("enabled").getAsBoolean();
 
 			EnumTemperature temp = getTemperature(obj.get("temperature"));
 			DropEntry primarySeed = context.deserialize(obj.get("primary_seed"), DropEntry.class);

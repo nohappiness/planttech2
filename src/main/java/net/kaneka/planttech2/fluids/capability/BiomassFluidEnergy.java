@@ -2,6 +2,7 @@ package net.kaneka.planttech2.fluids.capability;
 
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
@@ -125,7 +126,7 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>,
 
         @Nullable
         @Override
-        public INBT writeNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side)
+        public Tag writeNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side)
         {
             CompoundTag compound = new CompoundTag();
             compound.putInt("maxstorage", instance.getMaxStorage());
@@ -134,9 +135,9 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>,
         }
 
         @Override
-        public void readNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side, INBT nbt)
+        public void readNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side, Tag tag)
         {
-            CompoundTag compound = (CompoundTag) nbt;
+            CompoundTag compound = (CompoundTag) tag;
             instance.setMaxStorage(compound.getInt("maxstorage"));
             instance.setCurrentStorage(compound.getInt("currentstorage"));
         }

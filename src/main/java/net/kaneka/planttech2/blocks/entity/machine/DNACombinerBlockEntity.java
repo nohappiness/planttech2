@@ -2,16 +2,18 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryBlockEntity;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
-import net.kaneka.planttech2.inventory.DNACombinerContainer;
+import net.kaneka.planttech2.inventory.DNACombinerMenu;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import org.antlr.runtime.misc.ContainerData;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 {
@@ -54,9 +56,9 @@ public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 		}
 	};
 
-	public DNACombinerBlockEntity()
+	public DNACombinerBlockEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntities.DNACOMBINER_TE, 1000, 8, PlantTechConstants.MACHINETIER_DNA_COMBINER);
+		super(ModTileEntities.DNACOMBINER_TE, pos, state, 1000, 8, PlantTechConstants.MACHINETIER_DNA_COMBINER);
 	}
 
 	@Override
@@ -129,9 +131,9 @@ public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public Container createMenu(int id, Inventory inv, Player player)
+	public AbstractContainerMenu createMenu(int id, Inventory inv, Player player)
 	{
-		return new DNACombinerContainer(id, inv, this);
+		return new DNACombinerMenu(id, inv, this);
 	}
 
 	@Override

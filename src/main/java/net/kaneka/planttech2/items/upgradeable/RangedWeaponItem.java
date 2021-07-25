@@ -1,15 +1,14 @@
 package net.kaneka.planttech2.items.upgradeable;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -19,6 +18,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
+
+import java.util.Random;
 
 public class RangedWeaponItem extends UpgradeableHandItem
 {
@@ -63,12 +64,12 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		
 		if (entityLiving instanceof Player)
 		{
-			Player PlayerEntity = (Player) entityLiving;
-			boolean flag = PlayerEntity.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
-			ItemStack itemstack = this.findAmmo(PlayerEntity);
+			Player player = (Player) entityLiving;
+			boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
+			ItemStack itemstack = this.findAmmo(player);
 
 			int i = this.getUseDuration(stack) - timeLeft;
-			i = ForgeEventFactory.onArrowLoose(stack, level, PlayerEntity, i, !itemstack.isEmpty() || flag);
+			i = ForgeEventFactory.onArrowLoose(stack, level, player, i, !itemstack.isEmpty() || flag);
 			if (i < 0)
 				return;
 
@@ -82,14 +83,14 @@ public class RangedWeaponItem extends UpgradeableHandItem
 				float f = getArrowVelocity(i);
 				if (!((double) f < 0.1D))
 				{
-					boolean flag1 = PlayerEntity.getAbilities().instabuild
-					        || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, PlayerEntity));
+					boolean flag1 = player.getAbilities().instabuild
+					        || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, player));
 					if (!level.isClientSide)
 					{
 						ArrowItem itemarrow = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
-						AbstractArrowEntity entityarrow = itemarrow.createArrow(level, itemstack, PlayerEntity);
+						AbstractArrow entityarrow = itemarrow.createArrow(level, itemstack, player);
 						entityarrow = customizeArrow(entityarrow);
-						entityarrow.shoot(PlayerEntity.xRot, PlayerEntity.yRot, 0.0F, f * 3.0F, 1.0F);
+						entityarrow.shoot(player.xRotO, player.yRotO, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F)
 						{
 							entityarrow.setCritArrow(true);
@@ -112,24 +113,25 @@ public class RangedWeaponItem extends UpgradeableHandItem
 							entityarrow.setSecondsOnFire(100);
 						}
 
-						if(!PlayerEntity.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
-						if (flag1 || PlayerEntity.abilities.instabuild && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
+						if(!player.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
+						if (flag1 || player.getAbilities().instabuild && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
 						{
-							entityarrow.pickup = ArrowEntity.PickupStatus.CREATIVE_ONLY;
+							entityarrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 						}
 
 						level.addFreshEntity(entityarrow);
 						extractEnergy(stack, getEnergyCost(stack), false);
 					}
 
-					level.playSound((Player) null, PlayerEntity.getX(), PlayerEntity.getY(), PlayerEntity.getZ(), SoundEvents.ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F,
-					        1.0F / (random.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-					if (!flag1 && !PlayerEntity.getAbilities().instabuild)
+					Random rand = new Random();
+					level.playSound((Player) null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F,
+					        1.0F / (rand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
+					if (!flag1 && !player.getAbilities().instabuild)
 					{
 						itemstack.shrink(1);
 						if (itemstack.isEmpty())
 						{
-							PlayerEntity.getInventory().removeItem(itemstack);
+							player.getInventory().removeItem(itemstack);
 						}
 					}
 				}
@@ -188,7 +190,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		}
 		else
 		{
-			if (!level.isClientSide && player instanceof ServerPlayerEntity)
+			if (!level.isClientSide && player instanceof ServerPlayer)
 			{
     			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
 			}
@@ -196,7 +198,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
 	}
 
-	public AbstractArrowEntity customizeArrow(AbstractArrowEntity arrow)
+	public AbstractArrow customizeArrow(AbstractArrow arrow)
 	{
 		return arrow;
 	}
