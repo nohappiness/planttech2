@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInve
 import net.kaneka.planttech2.inventory.InfuserMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -89,6 +90,11 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 			return 6;
 		}
 	};
+
+	public InfuserBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.INFUSER.defaultBlockState());
+	}
 
 	public InfuserBlockEntity(BlockPos pos, BlockState state)
 	{

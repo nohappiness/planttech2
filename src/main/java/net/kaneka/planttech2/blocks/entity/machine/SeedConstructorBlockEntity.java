@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInve
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.inventory.SeedConstructorMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -16,7 +17,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
+public class SeedConstructorBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 {
 	protected final ContainerData field_array = new ContainerData()
 	{
@@ -25,15 +26,15 @@ public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 			switch (index)
 			{
 			case 0:
-				return SeedconstructorBlockEntity.this.energystorage.getEnergyStored();
+				return SeedConstructorBlockEntity.this.energystorage.getEnergyStored();
 			case 1:
-				return SeedconstructorBlockEntity.this.energystorage.getMaxEnergyStored();
+				return SeedConstructorBlockEntity.this.energystorage.getMaxEnergyStored();
 			case 2:
-			    return SeedconstructorBlockEntity.this.biomassCap.getCurrentStorage();
+			    return SeedConstructorBlockEntity.this.biomassCap.getCurrentStorage();
 			case 3:
-			    return SeedconstructorBlockEntity.this.biomassCap.getMaxStorage();
+			    return SeedConstructorBlockEntity.this.biomassCap.getMaxStorage();
 			case 4: 
-				return SeedconstructorBlockEntity.this.ticksPassed;
+				return SeedConstructorBlockEntity.this.ticksPassed;
 			default:
 				return 0;
 			}
@@ -44,19 +45,19 @@ public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 			switch (index)
 			{
 			case 0:
-				SeedconstructorBlockEntity.this.energystorage.setEnergyStored(value);
+				SeedConstructorBlockEntity.this.energystorage.setEnergyStored(value);
 				break;
 			case 1:
-				SeedconstructorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				SeedConstructorBlockEntity.this.energystorage.setEnergyMaxStored(value);
 				break;
 			case 2:
-				SeedconstructorBlockEntity.this.biomassCap.setCurrentStorage(value);
+				SeedConstructorBlockEntity.this.biomassCap.setCurrentStorage(value);
 			    break; 
 			case 3: 
-				SeedconstructorBlockEntity.this.biomassCap.setMaxStorage(value);
+				SeedConstructorBlockEntity.this.biomassCap.setMaxStorage(value);
 				break;
 			case 4: 
-				SeedconstructorBlockEntity.this.ticksPassed = value;
+				SeedConstructorBlockEntity.this.ticksPassed = value;
 				break; 
 			}
 		}
@@ -66,7 +67,12 @@ public class SeedconstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 		}
 	};
 
-	public SeedconstructorBlockEntity(BlockPos pos, BlockState state)
+	public SeedConstructorBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.SEEDCONSTRUCTOR.defaultBlockState());
+	}
+
+	public SeedConstructorBlockEntity(BlockPos pos, BlockState state)
 	{
 		super(ModTileEntities.SEEDCONSTRUCTOR_TE, pos, state, 1000, 8, 5000, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR);
 	}

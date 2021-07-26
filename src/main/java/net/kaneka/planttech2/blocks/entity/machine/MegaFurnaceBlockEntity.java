@@ -3,6 +3,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.inventory.MegaFurnaceMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -100,6 +101,11 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 			return 8;
 		}
 	};
+
+	public MegaFurnaceBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.MEGAFURNACE.defaultBlockState());
+	}
 
 	public MegaFurnaceBlockEntity(BlockPos pos, BlockState state)
 	{

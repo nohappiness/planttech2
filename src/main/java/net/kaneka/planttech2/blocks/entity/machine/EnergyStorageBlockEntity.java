@@ -49,6 +49,11 @@ public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
 		}
 	};
 
+    public EnergyStorageBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.ENERGYSTORAGE.defaultBlockState());
+	}
+
     public EnergyStorageBlockEntity(BlockPos pos, BlockState state)
     {
 		super(ModTileEntities.ENERGYSTORAGE_TE, pos, state, 1000, 4, 0);

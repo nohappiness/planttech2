@@ -2,6 +2,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.inventory.PlantTopiaTeleporterMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
@@ -44,6 +45,11 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 			return 5;
 		}
 	};
+
+	public PlantTopiaTeleporterBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.PLANTTOPIA_TELEPORTER.defaultBlockState());
+	}
 
 	public PlantTopiaTeleporterBlockEntity(BlockPos pos, BlockState state)
 	{

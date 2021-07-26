@@ -2,6 +2,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.inventory.SolarGeneratorMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -53,6 +54,11 @@ public class SolarGeneratorBlockEntity extends EnergyInventoryBlockEntity
 			return 3;
 		}
 	};
+
+	public SolarGeneratorBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.SOLARGENERATOR.defaultBlockState());
+	}
 
 	public SolarGeneratorBlockEntity(BlockPos pos, BlockState state)
 	{

@@ -5,6 +5,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBl
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.inventory.IdentifierMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -67,6 +68,11 @@ public class IdentifierBlockEntity extends EnergyInventoryBlockEntity
 			return 3;
 		}
 	};
+
+	public IdentifierBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.IDENTIFIER.defaultBlockState());
+	}
 
 	public IdentifierBlockEntity(BlockPos pos, BlockState state)
 	{

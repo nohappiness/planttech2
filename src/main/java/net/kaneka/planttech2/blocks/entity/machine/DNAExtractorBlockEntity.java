@@ -3,6 +3,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.inventory.DNAExtractorMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -55,6 +56,11 @@ public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
 			return 3;
 		}
 	};
+
+    public DNAExtractorBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.DNA_EXTRACTOR.defaultBlockState());
+	}
 
     public DNAExtractorBlockEntity(BlockPos pos, BlockState state)
     {

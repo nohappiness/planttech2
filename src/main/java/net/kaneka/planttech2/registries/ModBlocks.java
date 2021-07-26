@@ -288,7 +288,7 @@ public class ModBlocks
 		r.register(makeSpecialWithItem("mega_furnace", MACHINES, new MachineFacingBlock(MegaFurnaceBlockEntity::new, PlantTechConstants.MACHINETIER_MEGAFURNACE)));
 		r.register(makeSpecialWithItem("plantfarm", MACHINES, new MachineBaseBlock(PlantFarmBlockEntity::new, PlantTechConstants.MACHINETIER_PLANTFARM)));
 		r.register(makeWithItem("plantium_block", BLOCKS, new Block(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(0.9F))));
-		r.register(makeSpecialWithItem("seedconstructor", MACHINES, new MachineFacingBlock(SeedconstructorBlockEntity::new, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR)));
+		r.register(makeSpecialWithItem("seedconstructor", MACHINES, new MachineFacingBlock(SeedConstructorBlockEntity::new, PlantTechConstants.MACHINETIER_SEEDCONSTRUCTOR)));
 		r.register(makeSpecialWithItem("seedsqueezer", MACHINES, new MachineFacingBlock(SeedSqueezerBlockEntity::new, PlantTechConstants.MACHINETIER_SEEDSQUEEZER)));
 		r.register(makeSpecialWithItem("solargenerator", MACHINES, new MachineBaseBlock(SolarGeneratorBlockEntity::new, PlantTechConstants.MACHINETIER_SOLARGENERATOR)));
 		r.register(makeSpecialWithItem("planttopia_teleporter", MACHINES, new MachineBaseBlock(PlantTopiaTeleporterBlockEntity::new)));

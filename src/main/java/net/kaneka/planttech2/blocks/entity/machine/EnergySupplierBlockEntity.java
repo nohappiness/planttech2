@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.baseclasses.BaseElectricFence;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.blocks.machines.EnergySupplierBlock;
 import net.kaneka.planttech2.inventory.EnergySupplierMenu;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -57,6 +58,11 @@ public class EnergySupplierBlockEntity extends EnergyInventoryBlockEntity
 			return 3;
 		}
 	};
+
+	public EnergySupplierBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.ENERGY_SUPPLIER.defaultBlockState());
+	}
 
 	public EnergySupplierBlockEntity(BlockPos pos, BlockState state)
 	{

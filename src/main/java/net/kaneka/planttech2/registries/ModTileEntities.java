@@ -27,7 +27,7 @@ public class ModTileEntities
 	@ObjectHolder("tileentitydnaremover") public static BlockEntityType<DNARemoverBlockEntity> DNAREMOVER_TE;
 	@ObjectHolder("tileentitydnacleaner") public static BlockEntityType<DNACleanerBlockEntity> DNACLEANER_TE;
 	@ObjectHolder("tileentitydnacombiner") public static BlockEntityType<DNACombinerBlockEntity> DNACOMBINER_TE;
-	@ObjectHolder("tileentityseedconstructor") public static BlockEntityType<SeedconstructorBlockEntity> SEEDCONSTRUCTOR_TE;
+	@ObjectHolder("tileentityseedconstructor") public static BlockEntityType<SeedConstructorBlockEntity> SEEDCONSTRUCTOR_TE;
 	@ObjectHolder("tileentitycompressor") public static BlockEntityType<CompressorBlockEntity> COMPRESSOR_TE;
 	@ObjectHolder("tileentityenergystorage") public static BlockEntityType<EnergyStorageBlockEntity> ENERGYSTORAGE_TE;
 	@ObjectHolder("tileentityinfuser") public static BlockEntityType<InfuserBlockEntity> INFUSER_TE;
@@ -50,7 +50,7 @@ public class ModTileEntities
 		registry.register(make("tileentitydnaremover", DNARemoverBlockEntity::new, ModBlocks.DNA_REMOVER));
 		registry.register(make("tileentitydnacleaner", DNACleanerBlockEntity::new, ModBlocks.DNA_CLEANER));
 		registry.register(make("tileentitydnacombiner", DNACombinerBlockEntity::new, ModBlocks.DNA_COMBINER));
-		registry.register(make("tileentityseedconstructor", SeedconstructorBlockEntity::new, ModBlocks.SEEDCONSTRUCTOR));
+		registry.register(make("tileentityseedconstructor", SeedConstructorBlockEntity::new, ModBlocks.SEEDCONSTRUCTOR));
 		registry.register(make("tileentitycompressor", CompressorBlockEntity::new, ModBlocks.COMPRESSOR));
 		registry.register(make("tileentityenergystorage", EnergyStorageBlockEntity::new, ModBlocks.ENERGYSTORAGE));
 		registry.register(make("tileentityinfuser", InfuserBlockEntity::new, ModBlocks.INFUSER));

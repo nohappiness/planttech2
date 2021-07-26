@@ -6,6 +6,7 @@ import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
 import net.kaneka.planttech2.inventory.PlantFarmMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.TierItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -99,6 +100,11 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 			return 9;
 		}
 	};
+
+	public PlantFarmBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.PLANTFARM.defaultBlockState());
+	}
 
 	public PlantFarmBlockEntity(BlockPos pos, BlockState state)
 	{

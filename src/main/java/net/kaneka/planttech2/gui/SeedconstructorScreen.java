@@ -2,7 +2,7 @@ package net.kaneka.planttech2.gui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.kaneka.planttech2.PlantTechMain;
-import net.kaneka.planttech2.blocks.entity.machine.SeedconstructorBlockEntity;
+import net.kaneka.planttech2.blocks.entity.machine.SeedConstructorBlockEntity;
 import net.kaneka.planttech2.inventory.SeedConstructorMenu;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,7 @@ public class SeedconstructorScreen extends BaseContainerScreen<SeedConstructorMe
 	private int getCookProgressScaled(int pixels)
 	{
 		int i = menu.getValue(4);
-		return i != 0 ? i * pixels / ((SeedconstructorBlockEntity) this.te).ticksPerItem() : 0;
+		return i != 0 ? i * pixels / ((SeedConstructorBlockEntity) this.te).ticksPerItem() : 0;
 	}
 	
 	@Override

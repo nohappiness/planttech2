@@ -3,6 +3,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInventoryBlockEntity;
 import net.kaneka.planttech2.inventory.DNACleanerMenu;
 import net.kaneka.planttech2.items.DNAContainerItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -49,6 +50,11 @@ public class DNACleanerBlockEntity extends ConvertEnergyInventoryBlockEntity
            return 3;
         }
 	};
+
+    public DNACleanerBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.DNA_CLEANER.defaultBlockState());
+	}
 
     public DNACleanerBlockEntity(BlockPos pos, BlockState state)
     {

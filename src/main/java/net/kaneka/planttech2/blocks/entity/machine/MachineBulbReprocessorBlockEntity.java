@@ -5,6 +5,7 @@ import net.kaneka.planttech2.inventory.MachineBulbReprocessorMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.MachineBulbItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModItems;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
@@ -79,6 +80,11 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 			return 10;
 		}
 	};
+
+	public MachineBulbReprocessorBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.MACHINEBULBREPROCESSOR.defaultBlockState());
+	}
 
 	public MachineBulbReprocessorBlockEntity(BlockPos pos, BlockState state)
 	{

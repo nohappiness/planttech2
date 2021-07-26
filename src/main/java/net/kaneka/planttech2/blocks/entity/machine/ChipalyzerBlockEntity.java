@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInve
 import net.kaneka.planttech2.inventory.ChipalyzerMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.ChipalyzerRecipe;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -58,6 +59,11 @@ public class ChipalyzerBlockEntity extends ConvertEnergyInventoryBlockEntity
 			return 3;
 		}
 	};
+
+	public ChipalyzerBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.CHIPALYZER.defaultBlockState());
+	}
 
 	public ChipalyzerBlockEntity(BlockPos pos, BlockState state)
 	{

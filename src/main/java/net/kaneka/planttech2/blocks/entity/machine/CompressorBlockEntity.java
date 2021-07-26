@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.ConvertEnergyInve
 import net.kaneka.planttech2.inventory.CompressorMenu;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.recipes.recipeclasses.CompressorRecipe;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -82,6 +83,11 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 			return 7;
 		}
 	};
+
+	public CompressorBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.COMPRESSOR.defaultBlockState());
+	}
 
 	public CompressorBlockEntity(BlockPos pos, BlockState state)
 	{

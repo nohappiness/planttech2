@@ -4,6 +4,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBl
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.kaneka.planttech2.inventory.CropAuraGeneratorMenu;
 import net.kaneka.planttech2.items.AuraCoreItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -61,6 +62,11 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
             return 2;
         }
     };
+
+    public CropAuraGeneratorBlockEntity()
+    {
+        this(BlockPos.ZERO, ModBlocks.CROP_AURA_GENERATOR.defaultBlockState());
+    }
 
     public CropAuraGeneratorBlockEntity(BlockPos pos, BlockState state)
     {
