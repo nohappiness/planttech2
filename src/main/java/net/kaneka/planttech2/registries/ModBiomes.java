@@ -4,6 +4,7 @@ package net.kaneka.planttech2.registries;
 import com.mojang.datafixers.util.Pair;
 import net.kaneka.planttech2.PlantTechMain;
 import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.biome.VanillaBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.fmllegacy.RegistryObject;
@@ -44,31 +45,31 @@ public class ModBiomes
 
 	static
 	{
-		BEE_FOREST 			= create(ModReferences.BEE_FOREST, BiomeMaker::theVoidBiome);
-		CHORUS_FOREST 		= create(ModReferences.CHORUS_FOREST, BiomeMaker::theVoidBiome);
-		DARK_WETLANDS 		= create(ModReferences.DARK_WETLANDS, BiomeMaker::theVoidBiome);
-		DEAD_FOREST 		= create(ModReferences.DEAD_FOREST, BiomeMaker::theVoidBiome);
-		DREAM_FOREST 		= create(ModReferences.DREAM_FOREST, BiomeMaker::theVoidBiome);
-		DRIED_LAKE 			= create(ModReferences.DRIED_LAKE, BiomeMaker::theVoidBiome);
-		ENERGIZED_FOREST 	= create(ModReferences.ENERGIZED_FOREST, BiomeMaker::theVoidBiome);
-		FLOWER_HILLS 		= create(ModReferences.FLOWER_HILLS, BiomeMaker::theVoidBiome);
-		FLOWER_MEADOWS 		= create(ModReferences.FLOWER_MEADOWS, BiomeMaker::theVoidBiome);
-		FLOWER_MOUNTAINS 	= create(ModReferences.FLOWER_MOUNTAINS, BiomeMaker::theVoidBiome);
-		ICY_CLIFFS 			= create(ModReferences.ICY_CLIFFS, BiomeMaker::theVoidBiome);
-		ICY_MEADOWS 		= create(ModReferences.ICY_MEADOWS, BiomeMaker::theVoidBiome);
-		LAKE 				= create(ModReferences.LAKE, BiomeMaker::theVoidBiome);
-		LLAMA_MEADOW		= create(ModReferences.LLAMA_MEADOW, BiomeMaker::theVoidBiome);
-		MEADOWS 			= create(ModReferences.MEADOWS, BiomeMaker::theVoidBiome);
-		MUSHROOM_FOREST		= create(ModReferences.MUSHROOM_FOREST, BiomeMaker::theVoidBiome);
-		MUSHROOM_HILLS 		= create(ModReferences.MUSHROOM_HILLS, BiomeMaker::theVoidBiome);
-		NIGHTMARE_FOREST 	= create(ModReferences.NIGHTMARE_FOREST, BiomeMaker::theVoidBiome);
-		PUMPKIN_FOREST 		= create(ModReferences.PUMPKIN_FOREST, BiomeMaker::theVoidBiome);
-		RADIATED_WETLANDS 	= create(ModReferences.RADIATED_WETLANDS, BiomeMaker::theVoidBiome);
-		RADIATED_WASTELANDS = create(ModReferences.RADIATED_WASTELANDS, BiomeMaker::theVoidBiome);
-		RIVER 				= create(ModReferences.RIVER, BiomeMaker::theVoidBiome);
-		VULCANO 			= create(ModReferences.VULCANO, BiomeMaker::theVoidBiome);
-		WASTELAND_MESA 		= create(ModReferences.WASTELAND_MESA, BiomeMaker::theVoidBiome);
-		WETLANDS 			= create(ModReferences.WETLANDS, BiomeMaker::theVoidBiome);
+		BEE_FOREST 			= create(ModReferences.BEE_FOREST, VanillaBiomes::theVoidBiome);
+		CHORUS_FOREST 		= create(ModReferences.CHORUS_FOREST, VanillaBiomes::theVoidBiome);
+		DARK_WETLANDS 		= create(ModReferences.DARK_WETLANDS, VanillaBiomes::theVoidBiome);
+		DEAD_FOREST 		= create(ModReferences.DEAD_FOREST, VanillaBiomes::theVoidBiome);
+		DREAM_FOREST 		= create(ModReferences.DREAM_FOREST, VanillaBiomes::theVoidBiome);
+		DRIED_LAKE 			= create(ModReferences.DRIED_LAKE, VanillaBiomes::theVoidBiome);
+		ENERGIZED_FOREST 	= create(ModReferences.ENERGIZED_FOREST, VanillaBiomes::theVoidBiome);
+		FLOWER_HILLS 		= create(ModReferences.FLOWER_HILLS, VanillaBiomes::theVoidBiome);
+		FLOWER_MEADOWS 		= create(ModReferences.FLOWER_MEADOWS, VanillaBiomes::theVoidBiome);
+		FLOWER_MOUNTAINS 	= create(ModReferences.FLOWER_MOUNTAINS, VanillaBiomes::theVoidBiome);
+		ICY_CLIFFS 			= create(ModReferences.ICY_CLIFFS, VanillaBiomes::theVoidBiome);
+		ICY_MEADOWS 		= create(ModReferences.ICY_MEADOWS, VanillaBiomes::theVoidBiome);
+		LAKE 				= create(ModReferences.LAKE, VanillaBiomes::theVoidBiome);
+		LLAMA_MEADOW		= create(ModReferences.LLAMA_MEADOW, VanillaBiomes::theVoidBiome);
+		MEADOWS 			= create(ModReferences.MEADOWS, VanillaBiomes::theVoidBiome);
+		MUSHROOM_FOREST		= create(ModReferences.MUSHROOM_FOREST, VanillaBiomes::theVoidBiome);
+		MUSHROOM_HILLS 		= create(ModReferences.MUSHROOM_HILLS, VanillaBiomes::theVoidBiome);
+		NIGHTMARE_FOREST 	= create(ModReferences.NIGHTMARE_FOREST, VanillaBiomes::theVoidBiome);
+		PUMPKIN_FOREST 		= create(ModReferences.PUMPKIN_FOREST, VanillaBiomes::theVoidBiome);
+		RADIATED_WETLANDS 	= create(ModReferences.RADIATED_WETLANDS, VanillaBiomes::theVoidBiome);
+		RADIATED_WASTELANDS = create(ModReferences.RADIATED_WASTELANDS, VanillaBiomes::theVoidBiome);
+		RIVER 				= create(ModReferences.RIVER, VanillaBiomes::theVoidBiome);
+		VULCANO 			= create(ModReferences.VULCANO, VanillaBiomes::theVoidBiome);
+		WASTELAND_MESA 		= create(ModReferences.WASTELAND_MESA, VanillaBiomes::theVoidBiome);
+		WETLANDS 			= create(ModReferences.WETLANDS, VanillaBiomes::theVoidBiome);
 	}
 
 	private static Pair<ResourceKey<Biome>, RegistryObject<Biome>> create(String name, Supplier<Biome> biome)

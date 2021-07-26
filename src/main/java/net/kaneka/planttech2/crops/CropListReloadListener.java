@@ -9,6 +9,7 @@ import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;

@@ -8,14 +8,14 @@ import net.kaneka.planttech2.registries.ModDimensions;
 import net.kaneka.planttech2.world.planttopia.layers.GenLayerUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryLookupCodec;
-import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.newbiome.layer.Layer;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PlanttopiaBiomeProvider extends BiomeProvider
+public class PlanttopiaBiomeProvider extends BiomeSource
 {
 	private final Layer genLayer;
 	
@@ -51,13 +51,13 @@ public class PlanttopiaBiomeProvider extends BiomeProvider
 	}
 
 	@Override
-	protected Codec<? extends BiomeProvider> codec()
+	protected Codec<? extends BiomeSource> codec()
 	{
 		return CODEC;
 	}
 
 	@Override
-	public BiomeProvider withSeed(long seed)
+	public BiomeSource withSeed(long seed)
 	{
 		return new PlanttopiaBiomeProvider(seed, biomeReg);
 	}

@@ -7,13 +7,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
-import java.awt.*;
 
 public class ModDimensions
 {
 	public static long seed = 3818919209114L;
 	public static final ResourceKey<DimensionType> PLANTTOPIA_DIMENSIONTYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, ModReferences.prefix("planttopia"));
-	public static final ResourceKey<Dimension> PLANTTOPIA_DIMENSION = ResourceKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
+	//public static final ResourceKey<Dimension> PLANTTOPIA_DIMENSION = ResourceKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
 	public static final ResourceKey<Level> PLANTTOPIA_WORLD = ResourceKey.create(Registry.DIMENSION_REGISTRY, ModReferences.prefix("planttopia"));
 	
 	public static void initDimensions()
