@@ -2,6 +2,7 @@ package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -60,7 +61,7 @@ public class ModContainers
 		registry.register(make(CROPAURAGENERATORCONTAINER, new MenuType<>(CropAuraGeneratorMenu::new)));
 	}
 
-	static <C extends Menu> MenuType<C> make(String registryName, MenuType<C> MenuType)
+	static <M extends AbstractContainerMenu> MenuType<M> make(String registryName, MenuType<M> MenuType)
 	{
 		MenuType.setRegistryName(registryName);
 		return MenuType;

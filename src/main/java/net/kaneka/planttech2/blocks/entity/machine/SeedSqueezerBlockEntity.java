@@ -3,6 +3,7 @@ package net.kaneka.planttech2.blocks.entity.machine;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.inventory.SeedSqueezerMenu;
 import net.kaneka.planttech2.items.CropSeedItem;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.kaneka.planttech2.utilities.PlantTechConstants;
 import net.minecraft.core.BlockPos;
@@ -76,6 +77,11 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 			return 5;
 		}
 	};
+
+	public SeedSqueezerBlockEntity()
+	{
+		this(BlockPos.ZERO, ModBlocks.SEEDSQUEEZER.defaultBlockState());
+	}
 
 	public SeedSqueezerBlockEntity(BlockPos pos, BlockState state)
 	{
