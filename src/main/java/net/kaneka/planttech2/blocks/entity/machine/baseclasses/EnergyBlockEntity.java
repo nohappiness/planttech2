@@ -103,7 +103,7 @@ abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvi
 		return -1;
 	}
 
-	public abstract ContainerData getContainerData();
+	public abstract ContainerData getIntArray();
 	
 	@Override
 	public Component getDisplayName()

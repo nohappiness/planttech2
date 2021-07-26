@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -22,9 +21,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.CropsBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.server.ServerWorld;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
@@ -171,7 +168,7 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 	
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}
@@ -250,15 +247,15 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	@Override
 	public CompoundTag save(CompoundTag compound)
 	{
-		compound.putContainerData("progress", progress);
+		compound.putIntArray("progress", progress);
 		return super.save(compound);
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag compound)
+	public void load(CompoundTag compound)
 	{
-		super.load(state, compound);
-		progress = compound.getContainerData("progress");
+		super.load(compound);
+		progress = compound.getIntArray("progress");
 	}
 
 	@Override

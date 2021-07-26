@@ -7,7 +7,6 @@ import com.google.gson.JsonSyntaxException;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
-import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -49,7 +48,7 @@ public class CropListReloadListener extends JsonReloadListener //Propably Simple
 			try
 			{
 				JsonElement element = elementMap.get(key);
-				if (!CraftingHelper.processConditions(JSONUtils.convertToJsonObject(element, "top element"), "conditions"))
+				if (!CraftingHelper.processConditions(GsonHelper.convertToJsonObject(element, "top element"), "conditions"))
 				{
 					LOGGER.debug("Skipping loading crop configuration {} as it's conditions were not met", key);
 					continue;

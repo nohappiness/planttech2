@@ -169,7 +169,7 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}

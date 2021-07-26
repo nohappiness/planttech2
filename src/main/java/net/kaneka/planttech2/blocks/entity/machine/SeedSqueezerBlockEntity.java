@@ -142,7 +142,7 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}

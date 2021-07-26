@@ -3,7 +3,6 @@ package net.kaneka.planttech2.blocks.entity.cable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.nbt.NbtUtils;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class CableInfo
     {
         this.masterPos = NbtUtils.readBlockPos(compound);
         this.isMaster = compound.getBoolean("ismaster");
-        this.connections = compound.getContainerData("connections");
+        this.connections = compound.getIntArray("connections");
         if (this.isMaster)
         {
             this.slaves = readBlockPosList(compound, "slaves");
@@ -39,7 +38,7 @@ public class CableInfo
     {
         CompoundTag compound = NbtUtils.writeBlockPos(masterPos);
         compound.putBoolean("ismaster", isMaster);
-        compound.putContainerData("connections", connections);
+        compound.putIntArray("connections", connections);
         if (isMaster)
         {
             writeBlockPosList(compound, "slaves", slaves);
@@ -72,11 +71,11 @@ public class CableInfo
             if (direction)
                 d.add(connection.direction.get3DDataValue());
         });
-        subCompound.putContainerData("x", x);
-        subCompound.putContainerData("y", y);
-        subCompound.putContainerData("z", z);
+        subCompound.putIntArray("x", x);
+        subCompound.putIntArray("y", y);
+        subCompound.putIntArray("z", z);
         if (direction)
-            subCompound.putContainerData("d", d);
+            subCompound.putIntArray("d", d);
         compound.put(key, subCompound);
     }
 
@@ -84,11 +83,11 @@ public class CableInfo
     {
         HashSet<Connection> connections = new HashSet<>();
         CompoundTag subCompound = compound.getCompound(key);
-        int[] x = subCompound.getContainerData("x");
-        int[] y = subCompound.getContainerData("y");
-        int[] z = subCompound.getContainerData("z");
-        int[] d = subCompound.getContainerData("d");
-        for (int i=0;i<subCompound.getContainerData("x").length;i++)
+        int[] x = subCompound.getIntArray("x");
+        int[] y = subCompound.getIntArray("y");
+        int[] z = subCompound.getIntArray("z");
+        int[] d = subCompound.getIntArray("d");
+        for (int i=0;i<subCompound.getIntArray("x").length;i++)
             connections.add(new Connection(new BlockPos(x[i], y[i], z[i]), Direction.from3DDataValue(d[i])));
         return connections;
     }
@@ -97,10 +96,10 @@ public class CableInfo
     {
         HashSet<BlockPos> blockPos = new HashSet<>();
         CompoundTag subCompound = compound.getCompound(key);
-        int[] x = subCompound.getContainerData("x");
-        int[] y = subCompound.getContainerData("y");
-        int[] z = subCompound.getContainerData("z");
-        for (int i=0;i<subCompound.getContainerData("x").length;i++)
+        int[] x = subCompound.getIntArray("x");
+        int[] y = subCompound.getIntArray("y");
+        int[] z = subCompound.getIntArray("z");
+        for (int i=0;i<subCompound.getIntArray("x").length;i++)
             blockPos.add(new BlockPos(x[i], y[i], z[i]));
         return blockPos;
     }

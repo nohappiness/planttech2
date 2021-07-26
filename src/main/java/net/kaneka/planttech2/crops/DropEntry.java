@@ -143,7 +143,7 @@ public class DropEntry implements ISerializable
                 }
             } else
             {
-                throw new JsonSyntaxException("Expected either a string or an object, got " /*+ JSONUtils.getType(json)*/);
+                throw new JsonSyntaxException("Expected either a string or an object, got " /*+ GsonHelper.getType(json)*/);
             }
             if (min < 0) { throw new JsonSyntaxException("min has a negative value"); }
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }

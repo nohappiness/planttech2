@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.FurnaceRecipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
@@ -158,7 +157,7 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	}
 	
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}
@@ -219,7 +218,7 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	@Override
 	public CompoundTag save(CompoundTag compound)
 	{
-		compound.putContainerData("cooktime", ticksPassed);
+		compound.putIntArray("cooktime", ticksPassed);
 		return super.save(compound);
 	}
 
@@ -227,7 +226,7 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	public void load(CompoundTag compound)
 	{
 		super.load(compound);
-		ticksPassed = compound.getContainerData("cooktime");
+		ticksPassed = compound.getIntArray("cooktime");
 	}
 
 	@Override

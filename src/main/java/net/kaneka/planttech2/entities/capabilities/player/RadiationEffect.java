@@ -41,13 +41,15 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundTag>, IR
     @Override
     public CompoundTag serializeNBT()
     {
-        return (CompoundTag) RADIATION_CAPABILITY.getStorage().writeNBT(RADIATION_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Radiation Effect Capability by Plant Tech 2")), null);
+        CompoundTag compound = new CompoundTag();
+        compound.putFloat("level", getCapability(RADIATION_CAPABILITY).orElseThrow(NullPointerException::new).getLevel());
+        return compound;
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt)
     {
-       RADIATION_CAPABILITY.getStorage().readNBT(RADIATION_CAPABILITY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during reading Radiation Effect Capability by Plant Tech 2")), null, nbt);
+        getCapability(RADIATION_CAPABILITY).orElseThrow(NullPointerException::new).setLevel(nbt.getFloat("level"));
     }
 
     @Override
@@ -67,25 +69,5 @@ public class RadiationEffect implements ICapabilitySerializable<CompoundTag>, IR
     {
         this.level += amount;
         this.level = Math.min(Math.max(this.level, 0), 2);
-    }
-
-    public static class RadiationEffectStorage extends CapabilityProvider<IRadiationEffect>
-    {
-        public RadiationEffectStorage(){}
-
-        @Nullable
-        @Override
-        public INBT writeNBT(Capability<IRadiationEffect> capability, IRadiationEffect instance, Direction side)
-        {
-            CompoundTag compound = new CompoundTag();
-            compound.putFloat("radiationeffect", instance.getLevel());
-            return compound;
-        }
-
-        @Override
-        public void readNBT(Capability<IRadiationEffect> capability, IRadiationEffect instance, Direction side, INBT nbt)
-        {
-            instance.setLevel(((CompoundTag) nbt).getFloat("radiationeffect"));
-        }
     }
 }

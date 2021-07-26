@@ -36,7 +36,7 @@ public class BaseMenu extends AbstractContainerMenu
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
 		this.BlockEntity = BlockEntity;
-		fieldArray = BlockEntity.getContainerData();
+		fieldArray = BlockEntity.getIntArray();
 		addDataSlots(fieldArray);
 	}
 

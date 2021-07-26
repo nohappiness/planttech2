@@ -10,6 +10,8 @@ import net.kaneka.planttech2.items.upgradeable.RangedWeaponItem;
 import net.kaneka.planttech2.registries.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.resources.ResourceLocation;
 
 public class PlantTechClient
@@ -21,26 +23,26 @@ public class PlantTechClient
 
 	public static void addAllItemModelsOverrides()
 	{ 
-		ItemModelsProperties.register(
+		ItemProperties.register(
 				ModItems.MULTITOOL, DRILLING_PREDICATE,
-				(stack, world, entity) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.tickCount % 4) + 1
+				(stack, world, entity, seed) -> entity == null || !(stack.getItem() instanceof MultitoolItem) ? 0.0F : (entity.tickCount % 4) + 1
 		);
-		ItemModelsProperties.register(
+		ItemProperties.register(
 				ModItems.PLANT_OBTAINER, FILLED_PREDICATE,
-				(stack, world, entity) -> {
+				(stack, world, entity, seed) -> {
 					if (!(stack.getItem() instanceof PlantObtainerItem)) return 0.0F;
 					return PlantObtainerItem.isFilled(PlantObtainerItem.initTags(stack)) ? 1.0F : 0.0F;
 				}
 		);
-		ItemModelsProperties.register(ModItems.BIOMASSCONTAINER, FILLED_PREDICATE,
-				(stack, world, entity) -> BiomassContainerItem.getFillLevelModel(stack));
-		ItemModelsProperties.register(
+		ItemProperties.register(ModItems.BIOMASSCONTAINER, FILLED_PREDICATE,
+				(stack, world, entity, seed) -> BiomassContainerItem.getFillLevelModel(stack));
+		ItemProperties.register(
 				ModItems.CYBERBOW, PULL_PREDICATE,
-				(stack, world, entity) -> entity == null || !(entity.getUseItem().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F
+				(stack, world, entity, seed) -> entity == null || !(entity.getUseItem().getItem() instanceof RangedWeaponItem) ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F
 		);
-		ItemModelsProperties.register(
+		ItemProperties.register(
 				ModItems.CYBERBOW, PULLING_PREDICATE,
-				(stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
+				(stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
 	}
 
 	public static void openGuideScreen(GuideItem guide)

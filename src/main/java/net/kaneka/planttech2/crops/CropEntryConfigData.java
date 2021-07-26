@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -210,12 +211,12 @@ public class CropEntryConfigData
 
 		private EnumTemperature getTemperature(JsonElement element)
 		{
-			String tempStr = JSONUtils.convertToString(element, "temperature").toUpperCase(Locale.ROOT);
+			String tempStr = GsonHelper.convertToString(element, "temperature").toUpperCase(Locale.ROOT);
 			EnumTemperature temp = EnumTemperature.byName(tempStr);
 			if (temp == null)
 			{
 				throw new JsonSyntaxException(
-						"Expected temperature to have a value of " + Arrays.toString(EnumTemperature.values()).toLowerCase(Locale.ROOT) + ", got " + JSONUtils
+						"Expected temperature to have a value of " + Arrays.toString(EnumTemperature.values()).toLowerCase(Locale.ROOT) + ", got " + GsonHelper
 								.getType(element));
 			}
 			return temp;
@@ -232,7 +233,7 @@ public class CropEntryConfigData
 				dropsElement.getAsJsonArray().forEach(el -> drops.add(context.deserialize(el, DropEntry.class)));
 			} else
 			{
-				throw new JsonSyntaxException("Expected drops to be a string, JsonObject or JsonArray, was " + JSONUtils.getType(dropsElement));
+				throw new JsonSyntaxException("Expected drops to be a string, JsonObject or JsonArray, was " + GsonHelper.getType(dropsElement));
 			}
 			return drops;
 		}
@@ -249,14 +250,14 @@ public class CropEntryConfigData
 				array.forEach(el -> parents.add(context.deserialize(el, ParentPair.class)));
 			} else
 			{
-				throw new JsonSyntaxException("Expected parents to be a JsonObject or JsonArray, was " + JSONUtils.getType(pairElement));
+				throw new JsonSyntaxException("Expected parents to be a JsonObject or JsonArray, was " + GsonHelper.getType(pairElement));
 			}
 			return parents;
 		}
 
 		private List<Supplier<Item>> getSeeds(JsonElement element)
 		{
-			JsonArray array = JSONUtils.convertToJsonArray(element, "seeds");
+			JsonArray array = GsonHelper.convertToJsonArray(element, "seeds");
 			return StreamSupport.stream(array.spliterator(), false)
 					.map(JsonElement::getAsString)
 					.map(ResourceLocation::new)
@@ -268,16 +269,16 @@ public class CropEntryConfigData
 		{
 			if (element.isJsonPrimitive())
 			{
-//				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(element, "soil")), BLOCKS);
-				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.convertToString(element, "soil")));
+//				return RegistryObject.of(new ResourceLocation(GsonHelper.getString(element, "soil")), BLOCKS);
+				return () -> BLOCKS.getValue(new ResourceLocation(GsonHelper.convertToString(element, "soil")));
 			} else if (element.isJsonObject())
 			{
 				JsonObject obj = element.getAsJsonObject();
-//				return RegistryObject.of(new ResourceLocation(JSONUtils.getString(obj, "block")), BLOCKS);
-				return () -> BLOCKS.getValue(new ResourceLocation(JSONUtils.getAsString(obj, "block")));
+//				return RegistryObject.of(new ResourceLocation(GsonHelper.getString(obj, "block")), BLOCKS);
+				return () -> BLOCKS.getValue(new ResourceLocation(GsonHelper.getAsString(obj, "block")));
 			} else
 			{
-				throw new JsonSyntaxException("Expected soil to be a string or JsonObject, was " + JSONUtils.getType(element));
+				throw new JsonSyntaxException("Expected soil to be a string or JsonObject, was " + GsonHelper.getType(element));
 			}
 		}
 	}

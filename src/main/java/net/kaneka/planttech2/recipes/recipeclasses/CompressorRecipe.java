@@ -1,11 +1,13 @@
 package net.kaneka.planttech2.recipes.recipeclasses;
 
 import com.google.gson.JsonObject;
+import com.mojang.realmsclient.util.JsonUtils;
 import net.kaneka.planttech2.recipes.ModRecipeSerializers;
 import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -112,7 +114,7 @@ public class CompressorRecipe implements Recipe<Inventory>
 			ItemStack inputstack = null;
 			if (inputitem != null)
 			{
-				inputstack = new ItemStack(inputitem, JSONUtils.getAsInt(inputobject, "amount", 1));
+				inputstack = new ItemStack(inputitem, GsonHelper.getAsInt(inputobject, "amount", 1));
 			}
 
 			JsonObject resultobject = json.getAsJsonObject("result");
@@ -128,7 +130,7 @@ public class CompressorRecipe implements Recipe<Inventory>
 				if (resultobject.has("enchantment")) {
 				 	JsonObject enchantment = resultobject.getAsJsonObject("enchantment");
 					enchantType = ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantment.get("type").getAsString()));
-					enchantLevel = JSONUtils.getAsInt(enchantment, "level", 1);
+					enchantLevel = GsonHelper.getAsInt(enchantment, "level", 1);
 				}
 
 			} else if (resultobject.has("block"))// Just in case
@@ -143,7 +145,7 @@ public class CompressorRecipe implements Recipe<Inventory>
 			ItemStack resultstack = null;
 			if (resultitem != null)
 			{
-				resultstack = new ItemStack(resultitem, JSONUtils.getAsInt(resultobject, "amount", 1));
+				resultstack = new ItemStack(resultitem, GsonHelper.getAsInt(resultobject, "amount", 1));
 				if (effect != null) { PotionUtils.setPotion(resultstack, effect); }
 				else if (enchantType != null) { resultstack.enchant(enchantType, enchantLevel); }
 			}

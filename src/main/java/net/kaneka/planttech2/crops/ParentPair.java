@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.kaneka.planttech2.utilities.ISerializable;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
 
 import javax.json.Json;
 import java.lang.reflect.Type;
@@ -123,9 +124,9 @@ public class ParentPair implements BiPredicate<String, String>, ISerializable
         public ParentPair deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
         {
             JsonObject obj = json.getAsJsonObject();
-            String parent1 = JSONUtils.getAsString(obj, "parent_1");
-            String parent2 = JSONUtils.getAsString(obj, "parent_2");
-            float mutateChance = JSONUtils.getAsFloat(obj, "chance");
+            String parent1 = GsonHelper.getAsString(obj, "parent_1");
+            String parent2 = GsonHelper.getAsString(obj, "parent_2");
+            float mutateChance = GsonHelper.getAsFloat(obj, "chance");
             return new ParentPair(parent1, parent2, mutateChance);
         }
 

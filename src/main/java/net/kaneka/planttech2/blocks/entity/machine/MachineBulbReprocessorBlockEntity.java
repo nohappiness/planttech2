@@ -146,7 +146,7 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 	}
 	
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}

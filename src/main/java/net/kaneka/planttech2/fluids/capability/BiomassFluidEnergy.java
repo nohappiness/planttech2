@@ -29,12 +29,6 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>,
         return cap == BIOMASS_FLUID_ENERGY ? lazyOptional.cast() : LazyOptional.empty();
     }
 
-    @Override
-    public CompoundTag serializeNBT()
-    {
-        return (CompoundTag) BIOMASS_FLUID_ENERGY.getStorage().writeNBT(BIOMASS_FLUID_ENERGY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during writing Biomass Capability by Plant Tech 2")), null);
-    }
-
     public static IBiomassFluidEnergy getTECap(BlockEntity te)
     {
         return te.getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(() -> new NullPointerException("getting capability for tileentity"));
@@ -46,10 +40,35 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>,
         return stack.getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(() -> new NullPointerException("getting capability for itemstack"));
     }
 
+    private IBiomassFluidEnergy getCap()
+    {
+        return getCapability(BIOMASS_FLUID_ENERGY).orElseThrow(NullPointerException::new);
+    }
+
+    @Override
+    public CompoundTag serializeNBT()
+    {
+        return write(getCap());
+    }
+
     @Override
     public void deserializeNBT(CompoundTag nbt)
     {
-        BIOMASS_FLUID_ENERGY.getStorage().readNBT(BIOMASS_FLUID_ENERGY, lazyOptional.orElseThrow(() -> new NullPointerException("An error has occur during reading Biomass Capability by Plant Tech 2")), null, nbt);
+        read(getCap(), nbt);
+    }
+
+    public static CompoundTag write(IBiomassFluidEnergy cap)
+    {
+        CompoundTag compound = new CompoundTag();
+        compound.putInt("max", cap.getMaxStorage());
+        compound.putInt("current", cap.getCurrentStorage());
+        return compound;
+    }
+
+    public static void read(IBiomassFluidEnergy cap, CompoundTag nbt)
+    {
+        cap.setMaxStorage(nbt.getInt("max"));
+        cap.setCurrentStorage(nbt.getInt("current"));
     }
 
     @Override
@@ -119,28 +138,4 @@ public class BiomassFluidEnergy implements ICapabilitySerializable<CompoundTag>,
     {
         return this.currentStorage >= target;
     }
-
-    public static class BiomassFluidEnergyStorage implements Capability.IStorage<IBiomassFluidEnergy>
-    {
-        public BiomassFluidEnergyStorage(){}
-
-        @Nullable
-        @Override
-        public Tag writeNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side)
-        {
-            CompoundTag compound = new CompoundTag();
-            compound.putInt("maxstorage", instance.getMaxStorage());
-            compound.putInt("currentstorage", instance.getCurrentStorage());
-            return compound;
-        }
-
-        @Override
-        public void readNBT(Capability<IBiomassFluidEnergy> capability, IBiomassFluidEnergy instance, Direction side, Tag tag)
-        {
-            CompoundTag compound = (CompoundTag) tag;
-            instance.setMaxStorage(compound.getInt("maxstorage"));
-            instance.setCurrentStorage(compound.getInt("currentstorage"));
-        }
-    }
-
 }

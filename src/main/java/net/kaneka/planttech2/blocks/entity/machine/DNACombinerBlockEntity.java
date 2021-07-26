@@ -87,7 +87,7 @@ public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getContainerData()
+	public ContainerData getIntArray()
 	{
 		return field_array;
 	}

@@ -2,12 +2,12 @@ package net.kaneka.planttech2.items;
 
 
 import net.kaneka.planttech2.inventory.TeleporterContainer;
-import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 
 public class TeleporterItem extends EnergyStorageItem
@@ -77,19 +77,18 @@ public class TeleporterItem extends EnergyStorageItem
 
 	}
 	*/
-	public static class NamedContainerProvider implements INamedContainerProvider
+	public static class NamedMenuProvider implements MenuProvider
 	{
 		
 		private final ItemStack stack; 
 		
-		public NamedContainerProvider(ItemStack stack)
+		public NamedMenuProvider(ItemStack stack)
 		{
 			this.stack = stack; 
 		}
-		
 
 		@Override
-		public Container createMenu(int id, Inventory inv, Player entity)
+		public AbstractContainerMenu createMenu(int id, Inventory inv, Player entity)
 		{
 			return new TeleporterContainer(id, inv, stack);
 		}

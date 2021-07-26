@@ -586,7 +586,7 @@ public class CableBlockEntity extends BlockEntity
 
 		if (this.connections.length == 6)
 		{
-			compound.putContainerData("connections", this.connections);
+			compound.putIntArray("connections", this.connections);
 		}
 
 		ListTag connectionlist;
@@ -631,7 +631,7 @@ public class CableBlockEntity extends BlockEntity
 		}
 		if (compound.contains("connections"))
 		{
-			this.connections = compound.getContainerData("connections");
+			this.connections = compound.getIntArray("connections");
 		}
 
 		ListTag list;

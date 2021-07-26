@@ -102,7 +102,7 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
     }
 
     @Override
-    public ContainerData getContainerData()
+    public ContainerData getIntArray()
     {
         return field_array;
     }
