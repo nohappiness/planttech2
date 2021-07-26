@@ -9,12 +9,15 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -183,11 +186,13 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	@Nullable
 	private InfuserRecipe getOutputRecipe()
 	{
-		
 		if (level == null)
 			return null;
-		RecipeWrapper wrapper = new RecipeWrapper(itemhandler);
-		Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSING, wrapper, level);
+		ItemStack[] stacks = new ItemStack[itemhandler.getSlots()];
+		for (int i=0;i<itemhandler.getSlots();i++)
+			stacks[i] = itemhandler.getStackInSlot(i);
+		Container container = new SimpleContainer(stacks);
+		Optional<InfuserRecipe> recipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.INFUSING, container, level);
 		return recipe.orElse(null);
 	}
 

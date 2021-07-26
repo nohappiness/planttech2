@@ -4,6 +4,7 @@ import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.blocks.CropBaseBlock;
 import net.kaneka.planttech2.enums.EnumTraitsInt;
 import net.kaneka.planttech2.hashmaps.HashMapCropTraits;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -21,11 +22,16 @@ public class CropsBlockEntity extends BlockEntity
 	private long startTick = 0;
 	private HashMapCropTraits traits = new HashMapCropTraits();
 
+	public CropsBlockEntity()
+	{
+		// It shouldn't be cropbars here but.... probably better than air
+		this(BlockPos.ZERO, ModBlocks.CROPBARS.defaultBlockState());
+	}
+
 	public CropsBlockEntity(BlockPos pos, BlockState state)
 	{
 		super(ModTileEntities.CROPS_TE, pos, state);
 	}
-
 
 	public static void tick(Level level, BlockPos pos, BlockState state, BlockEntity be)
 	{

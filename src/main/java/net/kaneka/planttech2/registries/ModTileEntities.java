@@ -61,11 +61,11 @@ public class ModTileEntities
 		registry.register(make("tileentitycropauragenerator", CropAuraGeneratorBlockEntity::new, ModBlocks.CROP_AURA_GENERATOR));
 	}
 
-	static <T extends BlockEntity> BlockEntityType<T> make(String registryName, Supplier<T> factory, Block... validBlocks) {
+	static <T extends BlockEntity> BlockEntityType<T> make(String registryName, BlockEntityType.BlockEntitySupplier<T> factory, Block... validBlocks) {
 		return make(registryName, factory, null, validBlocks);
 	}
 
-	static <T extends BlockEntity> BlockEntityType<T> make(String registryName, Supplier<T> factory, Type<?> dataFixer, Block... validBlocks) {
+	static <T extends BlockEntity> BlockEntityType<T> make(String registryName, BlockEntityType.BlockEntitySupplier<T> factory, Type<?> dataFixer, Block... validBlocks) {
 		BlockEntityType<T> result = BlockEntityType.Builder.of(factory, validBlocks).build(dataFixer);
 		result.setRegistryName(registryName);
 		return result;

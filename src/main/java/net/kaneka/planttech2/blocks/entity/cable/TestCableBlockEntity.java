@@ -1,6 +1,7 @@
 package net.kaneka.planttech2.blocks.entity.cable;
 
 import net.kaneka.planttech2.blocks.entity.cable.CableInfo.Connection;
+import net.kaneka.planttech2.registries.ModBlocks;
 import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,9 +25,13 @@ public class TestCableBlockEntity extends BlockEntity
     public CableInfo cableInfo = new CableInfo();
     public int maxTransferRate = 20;
 
+    public TestCableBlockEntity()
+    {
+        this(BlockPos.ZERO, ModBlocks.CABLE.defaultBlockState());
+    }
+
     public TestCableBlockEntity(BlockPos pos, BlockState state)
     {
-
         super(ModTileEntities.CABLE_TE, pos, state);
     }
 

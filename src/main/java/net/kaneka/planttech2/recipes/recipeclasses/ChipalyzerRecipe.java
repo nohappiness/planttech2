@@ -9,7 +9,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChipalyzerRecipe implements Recipe<Inventory>
+public class ChipalyzerRecipe implements Recipe<Container>
 {
 	private final ResourceLocation id;
 	private final ItemStack chip;
@@ -133,13 +133,13 @@ public class ChipalyzerRecipe implements Recipe<Inventory>
 	}
 
 	@Override
-	public boolean matches(Inventory inv, Level worldIn)
+	public boolean matches(Container inv, Level worldIn)
 	{
 		return input.getItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack assemble(Inventory inv)
+	public ItemStack assemble(Container inv)
 	{
 		return output;
 	}

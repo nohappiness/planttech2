@@ -6,6 +6,7 @@ import net.kaneka.planttech2.recipes.ModRecipeTypes;
 import net.kaneka.planttech2.utilities.TagUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-public class InfuserRecipe implements Recipe<Inventory>
+public class InfuserRecipe implements Recipe<Container>
 {
 	private final ResourceLocation id; 
 	private final Item input; 
@@ -52,13 +53,13 @@ public class InfuserRecipe implements Recipe<Inventory>
 	}
 
 	@Override
-	public boolean matches(Inventory inv, Level worldIn)
+	public boolean matches(Container inv, Level worldIn)
 	{
 		return input.asItem() == inv.getItem(0).getItem();
 	}
 
 	@Override
-	public ItemStack assemble(Inventory inv)
+	public ItemStack assemble(Container inv)
 	{
 		return new ItemStack(output);
 	}
