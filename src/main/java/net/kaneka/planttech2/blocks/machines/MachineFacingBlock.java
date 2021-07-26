@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -11,19 +12,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class MachineFacingBlock extends MachineBaseBlock
 {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    public MachineFacingBlock(Supplier<? extends BlockEntity> teCreator, int tier)
+    public MachineFacingBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator, int tier)
     {
         super(teCreator, tier);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
-	public MachineFacingBlock(Supplier<? extends BlockEntity> teCreator)
+	public MachineFacingBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator)
 	{
 		this(teCreator, 0);
 	}

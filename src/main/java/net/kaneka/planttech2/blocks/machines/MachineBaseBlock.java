@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
+import net.kaneka.planttech2.blocks.ModBlockEntityBlock;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyBlockEntity;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -27,22 +28,24 @@ import net.minecraft.world.phys.HitResult;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
-public class MachineBaseBlock extends Block implements EntityBlock
+public class MachineBaseBlock extends ModBlockEntityBlock
 {
-	private final Supplier<? extends BlockEntity> teCreator;
+	private final BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator;
 	private final int tier;
-	public MachineBaseBlock(Supplier<? extends BlockEntity> teCreator, int tier)
+
+	public MachineBaseBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator)
+	{
+		this(teCreator, 0);
+	}
+
+	public MachineBaseBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator, int tier)
 	{
 		super(Block.Properties.of(Material.METAL).strength(5.0f, 10.0f).noOcclusion());
 		this.teCreator = teCreator;
 		this.tier = tier;
-	}
-
-	public MachineBaseBlock(Supplier<? extends BlockEntity> teCreator)
-	{
-		this(teCreator, 0);
 	}
 
 	@Override
@@ -78,13 +81,7 @@ public class MachineBaseBlock extends Block implements EntityBlock
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return teCreator.get();
-	}
-
-	@Override
-	public RenderShape getRenderShape(BlockState state)
-	{
-		return RenderShape.MODEL;
+		return teCreator.apply(pos, state);
 	}
 
 	@SuppressWarnings("deprecation")

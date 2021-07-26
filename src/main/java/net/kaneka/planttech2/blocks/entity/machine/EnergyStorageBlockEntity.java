@@ -51,7 +51,7 @@ public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
 
     public EnergyStorageBlockEntity(BlockPos pos, BlockState state)
     {
-	super(ModTileEntities.ENERGYSTORAGE_TE, pos, state, 1000, 4, 0);
+		super(ModTileEntities.ENERGYSTORAGE_TE, pos, state, 1000, 4, 0);
     }
     
     @Override

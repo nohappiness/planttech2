@@ -476,7 +476,7 @@ public class ModBlocks
 		//Terrain Blocks
 		r.register(makeSpecialWithItem("infused_ice", BLOCKS, new InfusedIceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion()), RenderType.translucent()));
 		r.register(makeWithItem("infused_packed_ice", BLOCKS, new Block(BlockBehaviour.Properties.of(Material.ICE_SOLID).friction(0.98F).strength(0.5F).sound(SoundType.GLASS))));
-		r.register(makeWithItem("infused_blue_ice", BLOCKS, new BreakableBlock(BlockBehaviour.Properties.of(Material.ICE_SOLID).strength(2.8F).friction(0.989F).sound(SoundType.GLASS))));
+		r.register(makeWithItem("infused_blue_ice", BLOCKS, new HalfTransparentBlock(BlockBehaviour.Properties.of(Material.ICE_SOLID).strength(2.8F).friction(0.989F).sound(SoundType.GLASS))));
 		r.register(makeSpecialWithItem("black_ice", BLOCKS, new IceBlock(BlockBehaviour.Properties.of(Material.ICE).friction(0.98F).randomTicks().strength(0.5F).sound(SoundType.GLASS).noOcclusion()), RenderType.translucent()));
 
 		r.register(makeWithItem("infused_stone", BLOCKS, new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5F, 6.0F))));

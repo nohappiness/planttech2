@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class EnergyStorageBlock extends MachineBaseBlock
@@ -23,13 +24,13 @@ public class EnergyStorageBlock extends MachineBaseBlock
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty TIER = IntegerProperty.create("tier", 0, 3);
 
-    public EnergyStorageBlock(Supplier<? extends BlockEntity> teCreator, int tier)
+    public EnergyStorageBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator, int tier)
     {
 	super(teCreator, tier);
 	this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TIER, 0));
     }
 
-	public EnergyStorageBlock(Supplier<? extends BlockEntity> teCreator)
+	public EnergyStorageBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator)
 	{
 		this(teCreator, 0);
 	}

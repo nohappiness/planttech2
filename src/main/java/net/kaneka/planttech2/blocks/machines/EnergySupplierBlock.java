@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.blocks.machines;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -8,12 +9,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import javax.annotation.Nullable;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class EnergySupplierBlock extends MachineBaseBlock
 {
     public static final BooleanProperty SUPPLYING = BooleanProperty.create("supplying");
-    public EnergySupplierBlock(Supplier<? extends BlockEntity> teCreator, int tier)
+    public EnergySupplierBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator, int tier)
     {
         super(teCreator, tier);
         registerDefaultState(defaultBlockState().setValue(SUPPLYING, false));
