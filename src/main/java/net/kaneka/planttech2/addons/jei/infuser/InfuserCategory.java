@@ -1,6 +1,6 @@
 package net.kaneka.planttech2.addons.jei.infuser;
 
-import com.mojang.blaze3d.matrix.PoseStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
@@ -10,8 +10,8 @@ import net.kaneka.planttech2.addons.jei.libs.AbstractJeiCategory;
 import net.kaneka.planttech2.recipes.recipeclasses.InfuserRecipe;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class InfuserCategory extends AbstractJeiCategory<InfuserRecipe>
 {
@@ -54,9 +54,9 @@ public class InfuserCategory extends AbstractJeiCategory<InfuserRecipe>
 	{
 		int biomass = recipe.getBiomass();
 		if (biomass > 0) {
-			String biomassString = biomass + " " + new TranslationTextComponent("fluid.biomass").getString();
+			String biomassString = biomass + " " + new TranslatableComponent("fluid.biomass").getString();
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.font;
+			Font fontRenderer = minecraft.font;
 			int stringWidth = fontRenderer.width(biomassString);
 			fontRenderer.draw(mStack, biomassString, (background.getWidth() - stringWidth)/2, 19, 0xFF808080);
 		}

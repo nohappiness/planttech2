@@ -9,6 +9,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class MachineGrowingCategory implements IRecipeCategory<MachineGrowingRec
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "machine_growing"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 160, 86, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.MACHINEBULBREPROCESSOR_BULB));
-    	localizedName = new TranslationTextComponent("planttech2.machine_growing").getString();
+    	localizedName = new TranslatableComponent("planttech2.machine_growing").getString();
     }
 
 	@Override

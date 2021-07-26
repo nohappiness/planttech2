@@ -9,11 +9,12 @@ import net.kaneka.planttech2.packets.CropListSyncMessage;
 import net.kaneka.planttech2.packets.PlantTech2PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
-import org.antlr.runtime.debug.Profiler;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 import static net.kaneka.planttech2.PlantTechMain.LOGGER;
 
-public class CropListReloadListener extends JsonReloadListener //Propably SimplePreparableReloadListener
+public class CropListReloadListener extends SimpleJsonResourceReloadListener
 {
 	public static final String FOLDER = "pt2_crops";
 	private static final Gson GSON = new GsonBuilder()
@@ -37,7 +38,7 @@ public class CropListReloadListener extends JsonReloadListener //Propably Simple
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> elementMap, ResourceManager resourceManager, Profiler profiler)
+	protected void apply(Map<ResourceLocation, JsonElement> elementMap, ResourceManager resourceManager, ProfilerFiller profiler)
 	{
 		LOGGER.debug("Loading crop configurations");
 		Map<ResourceLocation, CropEntryConfigData> configsDefault = new HashMap<>();

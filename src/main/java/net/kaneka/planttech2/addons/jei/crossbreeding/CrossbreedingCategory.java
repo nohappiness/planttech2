@@ -10,6 +10,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.item.ItemStack;
@@ -31,7 +32,7 @@ public class CrossbreedingCategory implements IRecipeCategory<CrossbreedingRecip
     	this.UID = new ResourceLocation(PlantTechMain.MODID, "crossbreeding"); 
     	this.background = helper.createDrawable(TEXTURE, 32, 96, 78, 18);
     	this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.COLOR_PARTICLES));
-    	localizedName = new TranslationTextComponent("planttech2.crossbreeding").getString();
+    	localizedName = new TranslatableComponent("planttech2.crossbreeding").getString();
     }
 
 	@Override
