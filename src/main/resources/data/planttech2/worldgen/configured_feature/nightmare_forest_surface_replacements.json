@@ -1,39 +1,38 @@
 {
+  "type": "minecraft:decorated",
   "config": {
-    "feature": {
-      "config": {
-        "feature": {
-          "config": {
-            "feature": {
-              "config": {
-                "probability": 0.99
-              },
-              "type": "planttech2:nightmare_forest_surface_replacements"
-            },
-            "decorator": {
-              "config": {
-                "heightmap": "WORLD_SURFACE_WG"
-              },
-              "type": "minecraft:heightmap"
-            }
-          },
-          "type": "minecraft:decorated"
-        },
-        "decorator": {
-          "config": {},
-          "type": "minecraft:square"
-        }
-      },
-      "type": "minecraft:decorated"
-    },
     "decorator": {
+      "type": "minecraft:count_noise_biased",
       "config": {
         "noise_to_count_ratio": 360,
-        "noise_factor": 80.0,
+        "noise_factor": 80,
         "noise_offset": 0
-      },
-      "type": "minecraft:count_noise_biased"
+      }
+    },
+    "feature": {
+      "type": "minecraft:random_patch",
+      "config": {
+        "can_replace": true,
+        "project": true,
+        "need_water": false,
+        "xspread": 16,
+        "zspread": 16,
+        "tries": 16,
+        "state_provider": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:grass_block",
+            "Properties": {
+              "snowy": "false"
+            }
+          }
+        },
+        "block_placer": {
+          "type": "minecraft:simple_block_placer"
+        },
+        "whitelist": [],
+        "blacklist": []
+      }
     }
-  },
-  "type": "minecraft:decorated"
+  }
 }

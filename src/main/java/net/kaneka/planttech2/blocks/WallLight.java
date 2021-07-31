@@ -18,14 +18,14 @@ import javax.annotation.Nullable;
 public class WallLight extends FacingWallLightBase
 {
     public static final VoxelShape NEGATIVE_Z = Block.box(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 4.0D);
-    public static final VoxelShape POSITIVE_Z = Block.box(10.0, 6.0, 16.0, 6.0, 12.0, 12.0);
-    public static final VoxelShape NEGATIVE_X = Block.box(0.0, 6.0, 10.0, 4.0, 12.0, 6.0);
-    public static final VoxelShape POSITIVE_X = Block.box(16.0, 6.0, 6.0, 12.0, 12.0, 10.0);
+    public static final VoxelShape POSITIVE_Z = Block.box(6.0, 6.0, 12.0, 10.0, 12.0, 16.0);
+    public static final VoxelShape NEGATIVE_X = Block.box(0.0, 6.0, 6.0, 4.0, 12.0, 10.0);
+    public static final VoxelShape POSITIVE_X = Block.box(12.0, 6.0, 6.0, 16.0, 12.0, 10.0);
 
     public static final VoxelShape NEGATIVE_Z_BROKE = Block.box(6.0D, 6.0D, 0.0D, 10.0D, 12.0D, 1.0D);
-    public static final VoxelShape POSITIVE_Z_BROKE = Block.box(10.0, 6.0, 16.0, 6.0, 12.0, 15.0);
-    public static final VoxelShape NEGATIVE_X_BROKE = Block.box(0.0, 6.0, 10.0, 1.0, 12.0, 6.0);
-    public static final VoxelShape POSITIVE_X_BROKE = Block.box(16.0, 6.0, 6.0, 15.0, 12.0, 10.0);
+    public static final VoxelShape POSITIVE_Z_BROKE = Block.box(6.0, 6.0, 15.0, 10.0, 12.0, 16.0);
+    public static final VoxelShape NEGATIVE_X_BROKE = Block.box(0.0, 6.0, 6.0, 1.0, 12.0, 10.0);
+    public static final VoxelShape POSITIVE_X_BROKE = Block.box(15.0, 6.0, 6.0, 16.0, 12.0, 10.0);
 
     public WallLight(Properties property)
     {

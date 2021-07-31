@@ -2,7 +2,13 @@
   "bedrock_roof_position": -15,
   "bedrock_floor_position": 0,
   "sea_level": 63,
+  "min_surface_level": 0,
   "disable_mob_generation": false,
+  "noise_caves_enabled": true,
+  "noodle_caves_enabled": true,
+  "aquifers_enabled": true,
+  "deepslate_enabled": true,
+  "ore_veins_enabled": false,
   "default_block": {
     "Name": "minecraft:stone"
   },
@@ -13,6 +19,7 @@
     }
   },
   "noise": {
+	"min_y":0,
     "height": 256,
     "density_factor": 1,
     "density_offset": -0.46875,

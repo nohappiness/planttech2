@@ -1,12 +1,48 @@
 {
+  "type": "minecraft:decorated",
   "config": {
-    "feature": {
+    "decorator": {
+      "type": "minecraft:chance",
       "config": {
-        "feature": {
+        "chance": 25
+      }
+    },
+    "feature": {
+      "type": "minecraft:decorated",
+      "config": {
+        "decorator": {
+          "type": "minecraft:count",
           "config": {
-            "feature": {
+            "count": 35
+          }
+        },
+        "feature": {
+          "type": "minecraft:decorated",
+          "config": {
+            "decorator": {
+              "type": "minecraft:decorated",
               "config": {
+                "outer": {
+                  "type": "minecraft:square",
+                  "config": {}
+                },
+                "inner": {
+                  "type": "minecraft:heightmap",
+                  "config": {
+                    "heightmap": "OCEAN_FLOOR_WG"
+                  }
+                }
+              }
+            },
+            "feature": {
+              "type": "minecraft:decorated",
+              "config": {
+                "decorator": {
+                  "type": "minecraft:spread_32_above",
+                  "config": {}
+                },
                 "feature": {
+                  "type": "minecraft:flower",
                   "config": {
                     "can_replace": false,
                     "project": true,
@@ -14,76 +50,42 @@
                     "xspread": 10,
                     "yspread": 10,
                     "zspread": 10,
-                    "whitelist": [],
-                    "blacklist": [],
                     "tries": 150,
                     "state_provider": {
+                      "type": "minecraft:weighted_state_provider",
                       "entries": [
                         {
                           "weight": 1,
                           "data": {
-                            "Name": "minecraft:dead_tube_coral_fan", 
+                            "Name": "minecraft:dead_tube_coral_fan",
                             "Properties": {
-								"waterlogged": "false"
-								}
+                              "waterlogged": "false"
+                            }
                           }
                         },
                         {
                           "weight": 1,
                           "data": {
-                            "Name": "minecraft:dead_brain_coral_fan", 
+                            "Name": "minecraft:dead_brain_coral_fan",
                             "Properties": {
-								"waterlogged": "false"
-								}
+                              "waterlogged": "false"
+                            }
                           }
                         }
-                      ],
-                      "type": "minecraft:weighted_state_provider"
+                      ]
                     },
                     "block_placer": {
                       "type": "minecraft:simple_block_placer"
-                    }
-                  },
-                  "type": "minecraft:flower"
-                },
-                "decorator": {
-                  "config": {},
-                  "type": "minecraft:spread_32_above"
+                    },
+                    "whitelist": [],
+                    "blacklist": []
+                  }
                 }
-              },
-              "type": "minecraft:decorated"
-            },
-            "decorator": {
-              "config": {
-                "outer": {
-                  "config": {},
-                  "type": "minecraft:square"
-                },
-                "inner": {
-                  "config": {},
-                  "type": "minecraft:heightmap"
-                }
-              },
-              "type": "minecraft:decorated"
+              }
             }
-          },
-          "type": "minecraft:decorated"
-        },
-        "decorator": {
-          "config": {
-            "count": 35
-          },
-          "type": "minecraft:count"
+          }
         }
-      },
-      "type": "minecraft:decorated"
-    },
-    "decorator": {
-      "config": {
-        "chance": 25
-      },
-      "type": "minecraft:chance"
+      }
     }
-  },
-  "type": "minecraft:decorated"
+  }
 }

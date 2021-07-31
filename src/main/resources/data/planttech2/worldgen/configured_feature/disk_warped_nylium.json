@@ -18,7 +18,7 @@
               "config": {}
             },
             "inner": {
-              "type": "minecraft:top_solid_heightmap",
+              "type": "minecraft:square",
               "config": {}
             }
           }
@@ -29,10 +29,7 @@
             "state": {
               "Name": "minecraft:warped_nylium"
             },
-            "radius": {
-              "base": 4,
-              "spread": 4
-            },
+            "radius": 0,
             "half_height": 2,
             "targets": [
               {
