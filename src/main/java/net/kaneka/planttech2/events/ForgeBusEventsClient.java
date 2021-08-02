@@ -1,9 +1,12 @@
 package net.kaneka.planttech2.events;
 
+import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.BackupConfirmScreen;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +20,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+
+import java.lang.reflect.Field;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class ForgeBusEventsClient
@@ -49,7 +55,10 @@ public class ForgeBusEventsClient
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event)
     {
+        Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
+        if (event.phase == TickEvent.Phase.START)
+            return;
         if (player != null)
         {
             CompoundTag data = player.getPersistentData();
@@ -72,7 +81,43 @@ public class ForgeBusEventsClient
                 }
             }
         }
+        //todo find a better way
+        if (minecraft.screen instanceof ConfirmScreen screen)
+        {
+            if (screen.getTitle().getString().equals(new TranslatableComponent("selectWorld.backupQuestion.experimental").getString()))
+            {
+                try
+                {
+                    CALLBACK.setAccessible(true);
+                    ((BooleanConsumer) CALLBACK.get(screen)).accept(true);
+                }
+                catch (Exception e)
+                {
+                    PlantTechMain.LOGGER.error("failed to skip create confirm screen");
+                    e.printStackTrace();
+                }
+            }
+        }
+        else if (minecraft.screen instanceof BackupConfirmScreen screen)
+        {
+            if (screen.getTitle().getString().equals(new TranslatableComponent("selectWorld.backupQuestion.experimental").getString()))
+            {
+                try
+                {
+                    LISTENER.setAccessible(true);
+                    ((BackupConfirmScreen.Listener) LISTENER.get(screen)).proceed(true, false);
+                }
+                catch (Exception e)
+                {
+                    PlantTechMain.LOGGER.error("failed to skip backup confirm screen");
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
+    private static final Field CALLBACK = ObfuscationReflectionHelper.findField(ConfirmScreen.class, "callback");
+    private static final Field LISTENER = ObfuscationReflectionHelper.findField(BackupConfirmScreen.class, "listener");
 
     @SubscribeEvent
     public static void onWorldStart(EntityJoinWorldEvent evt)
