@@ -82,6 +82,8 @@ public class ForgeBusEventsClient
             }
         }
         //todo find a better way
+
+        // Upon world create
         if (minecraft.screen instanceof ConfirmScreen screen)
         {
             if (screen.getTitle().getString().equals(new TranslatableComponent("selectWorld.backupQuestion.experimental").getString()))
@@ -98,6 +100,8 @@ public class ForgeBusEventsClient
                 }
             }
         }
+
+        // Upon load world
         else if (minecraft.screen instanceof BackupConfirmScreen screen)
         {
             if (screen.getTitle().getString().equals(new TranslatableComponent("selectWorld.backupQuestion.experimental").getString()))
