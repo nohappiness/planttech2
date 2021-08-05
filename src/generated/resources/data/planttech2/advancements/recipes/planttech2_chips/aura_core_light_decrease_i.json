@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "planttech2:plantium_ingot"
+            "items": [
+              "planttech2:plantium_ingot"
+            ]
           }
         ]
       }

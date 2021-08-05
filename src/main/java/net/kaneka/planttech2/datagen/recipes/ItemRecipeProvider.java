@@ -4,7 +4,6 @@ import net.kaneka.planttech2.blocks.Hedge;
 import net.kaneka.planttech2.registries.ModBlocks;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.HashCache;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -25,8 +24,8 @@ public class ItemRecipeProvider extends RecipeProvider
 	private Consumer<FinishedRecipe> cons;
 
 	@Override
-	public void run(HashCache p_125982_) {
-		super.run(p_125982_);
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> cons) {
+		this.cons = cons;
 		registerHedgeRecipes(cons);
 		registerAuraCoreRecipes();
 	}
