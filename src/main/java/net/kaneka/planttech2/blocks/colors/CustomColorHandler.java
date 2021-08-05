@@ -12,9 +12,9 @@ public class CustomColorHandler  implements BlockColor
 	{
 		if (tintindex == 0)
 		{
-			if(state.getBlock() instanceof IColoredBlock)
+			if(state.getBlock() instanceof IColoredBlock color)
 			{
-				return ((IColoredBlock) state.getBlock()).getColor(); 
+				return color.getColor();
 			}
 		}
 		return 0xFFFFFFFF;

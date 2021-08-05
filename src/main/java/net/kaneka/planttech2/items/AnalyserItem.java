@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 
 public class AnalyserItem extends Item
 {
@@ -27,11 +26,9 @@ public class AnalyserItem extends Item
 	    Player player = ctx.getPlayer();
 		if(!level.isClientSide && player != null)
 		{
-			Block targetBlock = level.getBlockState(pos).getBlock();
-
-			if(targetBlock instanceof CropBaseBlock)
+			if(level.getBlockState(pos).getBlock() instanceof CropBaseBlock cbb)
 			{
-				String[] messages = ((CropBaseBlock) targetBlock).canGrowString(level, pos);
+				String[] messages = cbb.canGrowString(level, pos);
 				boolean ok = true; 
 				for(int i = 0; i < 5; i++)
 				{

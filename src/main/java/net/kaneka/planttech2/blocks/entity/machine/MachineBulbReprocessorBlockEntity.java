@@ -142,9 +142,9 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 		if(!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if (item instanceof KnowledgeChip)
+			if (item instanceof KnowledgeChip kc)
 			{
-				actualTier = ((KnowledgeChip) item).getTier();
+				actualTier = kc.getTier();
 				return;
 			}
 		}

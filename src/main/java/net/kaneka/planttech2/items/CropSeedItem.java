@@ -22,7 +22,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -177,8 +176,7 @@ public class CropSeedItem extends Item
 		if (entry == null)
 			return false;
 		world.setBlockAndUpdate(pos, ModBlocks.CROPS.get(entry.getName()).defaultBlockState());
-		BlockEntity BlockEntity = world.getBlockEntity(pos);
-		if (BlockEntity instanceof CropsBlockEntity)
+		if (world.getBlockEntity(pos) instanceof CropsBlockEntity cbe)
 		{
 			HashMapCropTraits toPass = new HashMapCropTraits();
 			toPass.setType(entry.getName());
@@ -186,8 +184,8 @@ public class CropSeedItem extends Item
 				toPass.fromStack(stack);
 			else
 				toPass.setAnalysed(true);
-			((CropsBlockEntity) BlockEntity).setTraits(toPass);
-			((CropsBlockEntity) BlockEntity).setStartTick();
+			cbe.setTraits(toPass);
+			cbe.setStartTick();
 			return true;
 		}
 		return false;

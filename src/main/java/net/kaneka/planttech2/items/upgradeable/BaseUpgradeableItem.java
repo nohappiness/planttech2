@@ -258,9 +258,9 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 
 		if(player.isCrouching())
 		{
-			if (!world.isClientSide && player instanceof ServerPlayer)
+			if (!world.isClientSide && player instanceof ServerPlayer sp)
 			{
-    			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
+    			NetworkHooks.openGui(sp, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
 			}
 		}
 		return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
@@ -283,22 +283,21 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 				slot = inv.getStackInSlot(i); 
 				if(!slot.isEmpty())
 				{
-					if(slot.getItem() instanceof UpgradeChipItem)
+					if(slot.getItem() instanceof UpgradeChipItem uci)
 					{
-						UpgradeChipItem item = (UpgradeChipItem) slot.getItem(); 
-						energyCost += item.getEnergyCost(); 
-						increaseCapacity += item.getIncreaseCapacity(); 
-						energyProduction += item.getEnergyProduction(); 
-						increaseHarvestlevel += item.getIncreaseHarvestlevel(); 
-						increaseAttack += item.getIncreaseAttack(); 
-						increaseAttackSpeed += item.getIncreaseAttackSpeed(); 
-						increaseBreakdownRate += item.getIncreaseBreakdownRate(); 
-						if(item.isUnlockShovelFeat()) unlockShovelFeat = true; 
-						if(item.isUnlockAxeFeat()) unlockAxeFeat = true; 
-						if(item.isUnlockHoeFeat()) unlockHoeFeat = true; 
-						if(item.isUnlockShearsFeat()) unlockShearsFeat = true; 
-						Enchantment ench = item.getEnchantment(); 
-						if(item.isAllowed(getSlotId()))
+						energyCost += uci.getEnergyCost();
+						increaseCapacity += uci.getIncreaseCapacity();
+						energyProduction += uci.getEnergyProduction();
+						increaseHarvestlevel += uci.getIncreaseHarvestlevel();
+						increaseAttack += uci.getIncreaseAttack();
+						increaseAttackSpeed += uci.getIncreaseAttackSpeed();
+						increaseBreakdownRate += uci.getIncreaseBreakdownRate();
+						if(uci.isUnlockShovelFeat()) unlockShovelFeat = true;
+						if(uci.isUnlockAxeFeat()) unlockAxeFeat = true;
+						if(uci.isUnlockHoeFeat()) unlockHoeFeat = true;
+						if(uci.isUnlockShearsFeat()) unlockShearsFeat = true;
+						Enchantment ench = uci.getEnchantment();
+						if(uci.isAllowed(getSlotId()))
 						{
     						if(ench != null)
     						{

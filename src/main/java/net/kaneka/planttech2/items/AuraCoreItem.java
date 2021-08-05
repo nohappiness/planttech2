@@ -111,8 +111,8 @@ public class AuraCoreItem extends Item
     private static <V> Optional<V> check(ItemStack stack, Function<AuraCoreItem, V> getter, V defaultV)
     {
         V value = null;
-        if (stack.getItem() instanceof AuraCoreItem)
-            value = getter.apply((AuraCoreItem) stack.getItem());
+        if (stack.getItem() instanceof AuraCoreItem item)
+            value = getter.apply(item);
         return value != null && value != defaultV ? Optional.of(value) : Optional.empty();
     }
 

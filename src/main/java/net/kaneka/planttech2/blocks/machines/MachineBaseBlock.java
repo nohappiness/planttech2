@@ -16,8 +16,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -29,7 +27,6 @@ import net.minecraft.world.phys.HitResult;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Supplier;
 
 public class MachineBaseBlock extends ModBlockEntityBlock
 {
@@ -90,10 +87,9 @@ public class MachineBaseBlock extends ModBlockEntityBlock
 	{
 		if (state.getBlock() != newState.getBlock())
 		{
-			if (level.getBlockEntity(pos) instanceof EnergyInventoryBlockEntity)
+			if (level.getBlockEntity(pos) instanceof EnergyInventoryBlockEntity eibe)
 			{
-				EnergyInventoryBlockEntity te = (EnergyInventoryBlockEntity) level.getBlockEntity(pos);
-				List<ItemStack> toSpawn = te.getInventoryContent();
+				List<ItemStack> toSpawn = eibe.getInventoryContent();
 				for (ItemStack stack : toSpawn)
 				{
 					level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack));

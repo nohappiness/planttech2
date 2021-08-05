@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 public class RadiationSickness extends MobEffect
 {
@@ -18,8 +17,8 @@ public class RadiationSickness extends MobEffect
     @Override
     public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier)
     {
-        if (entityLivingBaseIn instanceof Player && !entityLivingBaseIn.getCommandSenderWorld().isClientSide())
-            entityLivingBaseIn.hurt(ModDamageSources.RADIATION_SICKNESS, ((RadiationEffect.getCap((ServerPlayer) entityLivingBaseIn)).getLevel() - 1) * 6.0F);
+        if (entityLivingBaseIn instanceof ServerPlayer sp && !entityLivingBaseIn.getCommandSenderWorld().isClientSide())
+            entityLivingBaseIn.hurt(ModDamageSources.RADIATION_SICKNESS, (RadiationEffect.getCap(sp).getLevel() - 1) * 6.0F);
     }
 
     @Override

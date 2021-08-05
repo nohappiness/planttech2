@@ -66,12 +66,12 @@ abstract public class EnergyInventoryBlockEntity extends EnergyBlockEntity
 	{
 		ItemStack stack = itemhandler.getStackInSlot(getEnergyInSlot());
 		ItemStack stack2 = itemhandler.getStackInSlot(getEnergyOutSlot());
-		if (stack.getItem() instanceof IItemChargeable)
+		if (stack.getItem() instanceof IItemChargeable chargeable)
 			if (energystorage.getEnergyStored() < energystorage.getMaxEnergyStored())
-				energystorage.receiveEnergy(((IItemChargeable) stack.getItem()).extractEnergy(stack, 1, false));
-		if (stack2.getItem() instanceof IItemChargeable)
+				energystorage.receiveEnergy(chargeable.extractEnergy(stack, 1, false));
+		if (stack2.getItem() instanceof IItemChargeable chargeable)
 			if (energystorage.getEnergyStored() >= 1)
-				energystorage.extractEnergy(((IItemChargeable) stack2.getItem()).receiveEnergy(stack2, 1, false));
+				energystorage.extractEnergy(chargeable.receiveEnergy(stack2, 1, false));
 	}
 
 	@Override
@@ -157,11 +157,10 @@ abstract public class EnergyInventoryBlockEntity extends EnergyBlockEntity
 		if (slot == -1)
 			return 0;
 		ItemStack stack = itemhandler.getStackInSlot(slot);
-		if (!stack.isEmpty() && stack.getItem() instanceof TierItem)
+		if (!stack.isEmpty() && stack.getItem() instanceof TierItem tieritem)
 		{
-			TierItem item = (TierItem) stack.getItem();
-			if (item.getItemType() == itemType)
-				return item.getTier();
+			if (tieritem.getItemType() == itemType)
+				return tieritem.getTier();
 		}
 		return 0;
 	}

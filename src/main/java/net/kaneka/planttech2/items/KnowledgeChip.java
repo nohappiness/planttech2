@@ -45,9 +45,8 @@ public class KnowledgeChip extends Item
 		if(!stack.isEmpty())
 		{
 			Item item = stack.getItem(); 
-			if(item instanceof KnowledgeChip)
+			if(item instanceof KnowledgeChip chip)
 			{
-				KnowledgeChip chip = (KnowledgeChip) item; 
 				if(chip.getTier() <= maxTier)
 				{
 					CompoundTag nbt = stack.getOrCreateTag();

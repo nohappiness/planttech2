@@ -1,28 +1,16 @@
 package net.kaneka.planttech2.events;
 
-import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
-import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.gui.GuidePlantsScreen;
 import net.kaneka.planttech2.gui.guide.GuideScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.BackupConfirmScreen;
-import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.VersionChecker;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-
-import java.lang.reflect.Field;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class ForgeBusEventsClient
@@ -53,20 +41,16 @@ public class ForgeBusEventsClient
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event)
-    {
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = Minecraft.getInstance().player;
         if (event.phase == TickEvent.Phase.START)
             return;
-        if (player != null)
-        {
+        if (player != null) {
             CompoundTag data = player.getPersistentData();
-            if (data.contains("planttech2_screen_delay"))
-            {
+            if (data.contains("planttech2_screen_delay")) {
                 Screen screen = null;
-                switch (data.getInt("planttech2_screen_delay"))
-                {
+                switch (data.getInt("planttech2_screen_delay")) {
                     case 1:
                         screen = new GuideScreen();
                         break;
@@ -74,15 +58,14 @@ public class ForgeBusEventsClient
                         screen = new GuidePlantsScreen();
                         break;
                 }
-                if (screen != null)
-                {
+                if (screen != null) {
                     Minecraft.getInstance().setScreen(screen);
                     data.putInt("planttech2_screen_delay", 0);
                 }
             }
         }
-        //todo find a better way
 
+        /*
         // Upon world create
         if (minecraft.screen instanceof ConfirmScreen screen)
         {
@@ -119,6 +102,9 @@ public class ForgeBusEventsClient
             }
         }
     }
+    */
+    }
+    /*
 
     private static final Field CALLBACK = ObfuscationReflectionHelper.findField(ConfirmScreen.class, "callback");
     private static final Field LISTENER = ObfuscationReflectionHelper.findField(BackupConfirmScreen.class, "listener");
@@ -127,7 +113,7 @@ public class ForgeBusEventsClient
     public static void onWorldStart(EntityJoinWorldEvent evt)
     {
         VersionChecker.CheckResult res = VersionChecker.getResult(ModList.get().getModContainerById(PlantTechMain.MODID).get().getModInfo());
-        if (evt.getEntity() instanceof LocalPlayer && res.status() == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
+        if (evt.getEntity() instanceof LocalPlayer lp && res.status() == VersionChecker.Status.OUTDATED && !hasSendUpdateAvailable)
         {
             Component info = new TranslatableComponent("planttech2.update.available");
             Component link = new TranslatableComponent("planttech2.update.click");
@@ -135,12 +121,12 @@ public class ForgeBusEventsClient
                     .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent("planttech2.update.tooltip")))
                     .withColor(TextColor.parseColor("BLUE"))
                     .setUnderlined(true));
-            evt.getEntity().sendMessage(info, evt.getEntity().getUUID());
-            evt.getEntity().sendMessage(link, evt.getEntity().getUUID());
+            lp.sendMessage(info, lp.getUUID());
+            lp.sendMessage(link, lp.getUUID());
         }
         hasSendUpdateAvailable = true;
     }
-
+    */
 //    @SubscribeEvent
 //    public static void onFogRenderDensity(EntityViewRenderEvent.FogDensity event)
 //    {

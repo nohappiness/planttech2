@@ -62,9 +62,8 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entityLiving, int timeLeft)
 	{
 		
-		if (entityLiving instanceof Player)
+		if (entityLiving instanceof Player player)
 		{
-			Player player = (Player) entityLiving;
 			boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 			ItemStack itemstack = this.findAmmo(player);
 

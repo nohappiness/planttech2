@@ -81,10 +81,9 @@ public class CropBaseBlock extends ModBlockEntityBlock
 							{
 								HashMapCropTraits partnertraits = ((CropsBlockEntity) BlockEntity).getTraits();
 								level.setBlockAndUpdate(blockpos, defaultBlockState());
-								if (level.getBlockEntity(blockpos) instanceof CropsBlockEntity && level.getBlockEntity(pos) instanceof CropsBlockEntity)
+								if (level.getBlockEntity(blockpos) instanceof CropsBlockEntity  cbe && level.getBlockEntity(pos) instanceof CropsBlockEntity cbe2)
 								{
-									((CropsBlockEntity) level.getBlockEntity(blockpos))
-									        .setTraits(((CropsBlockEntity) level.getBlockEntity(pos)).getTraits().calculateNewTraits(partnertraits));
+									cbe.setTraits(cbe2.getTraits().calculateNewTraits(partnertraits));
 									break;
 								}
 							}
@@ -93,8 +92,8 @@ public class CropBaseBlock extends ModBlockEntityBlock
 					if (!(level.getBlockState(blockpos).getBlock() instanceof CropBaseBlock))
 					{
 						level.setBlockAndUpdate(blockpos, defaultBlockState());
-						if (level.getBlockEntity(blockpos) instanceof CropsBlockEntity && level.getBlockEntity(pos) instanceof CropsBlockEntity)
-							((CropsBlockEntity) level.getBlockEntity(blockpos)).setTraits(((CropsBlockEntity) level.getBlockEntity(pos)).getTraits().copy());
+						if (level.getBlockEntity(blockpos) instanceof CropsBlockEntity  cbe && level.getBlockEntity(pos) instanceof CropsBlockEntity cbe2)
+							cbe.setTraits(cbe2.getTraits().copy());
 					}
 					break;
 				}
@@ -142,11 +141,10 @@ public class CropBaseBlock extends ModBlockEntityBlock
 
 	public String[] canGrowString(Level level, BlockPos pos)
 	{
-		BlockEntity te = level.getBlockEntity(pos);
 		String[] messages = new String[10];
-		if (te instanceof CropsBlockEntity)
+		if (level.getBlockEntity(pos) instanceof CropsBlockEntity cbe)
 		{
-			HashMapCropTraits traits = ((CropsBlockEntity) te).getTraits();
+			HashMapCropTraits traits = cbe.getTraits();
 			List<CropAuraGeneratorBlockEntity> generators = getCropAuraGeneratorInRadius(level, pos, 8);
 			if (!enoughLight(level, pos, traits.getTrait(EnumTraitsInt.LIGHTSENSITIVITY), generators))
 				messages[1] = "Not enough light";
@@ -207,8 +205,8 @@ public class CropBaseBlock extends ModBlockEntityBlock
 				for (int z = centre.getZ() - radius; z < centre.getZ() + radius; z++)
 				{
 					BlockEntity te = level.getBlockEntity(new BlockPos(x, y, z));
-					if (te instanceof CropAuraGeneratorBlockEntity && ((CropAuraGeneratorBlockEntity) te).consumeEnergy(25))
-						generators.add((CropAuraGeneratorBlockEntity) te);
+					if (te instanceof CropAuraGeneratorBlockEntity cagbe && cagbe.consumeEnergy(25))
+						generators.add(cagbe);
 				}
 		return generators;
 	}
@@ -283,10 +281,9 @@ public class CropBaseBlock extends ModBlockEntityBlock
 					return InteractionResult.PASS;
 			}
 			NonNullList<ItemStack> drops = NonNullList.create();
-			BlockEntity te = levelIn.getBlockEntity(pos);
-			if (te instanceof CropsBlockEntity)
+			if (levelIn.getBlockEntity(pos) instanceof CropsBlockEntity cbe)
 			{
-				((CropsBlockEntity) te).dropsRemoveOneSeed(drops, growstate);
+				cbe.dropsRemoveOneSeed(drops, growstate);
 				for (ItemStack stack : drops)
 					popResource(levelIn, pos, stack);
 				levelIn.setBlockAndUpdate(pos, state.setValue(GROWSTATE, 0));
@@ -304,10 +301,9 @@ public class CropBaseBlock extends ModBlockEntityBlock
 		if (vec3d != null)
 		{
 			BlockPos pos = new BlockPos(vec3d);
-			BlockEntity te = builder.getLevel().getBlockEntity(pos);
-			if (te instanceof CropsBlockEntity)
+			if (builder.getLevel().getBlockEntity(pos) instanceof CropsBlockEntity cbe)
 			{
-				((CropsBlockEntity) te).addDrops(drops, growstate);
+				cbe.addDrops(drops, growstate);
 				drops.add(new ItemStack(ModBlocks.CROPBARS));
 			}
 		}

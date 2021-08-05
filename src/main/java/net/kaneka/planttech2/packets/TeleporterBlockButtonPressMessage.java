@@ -45,10 +45,10 @@ public class TeleporterBlockButtonPressMessage
 				BlockEntity te = serverPlayer.level.getBlockEntity(pos);
 				if (te != null)
 				{
-					if (te instanceof PlantTopiaTeleporterBlockEntity)
+					if (te instanceof PlantTopiaTeleporterBlockEntity tbe)
 					{
 
-						((PlantTopiaTeleporterBlockEntity) te).doTeleportation();
+						tbe.doTeleportation();
 					}
 				}
 			}

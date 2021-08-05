@@ -165,9 +165,9 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 		Item item = stack.getItem();
 		if (item instanceof CropSeedItem)
 			return true;
-		if (item instanceof BlockItem)
+		if (item instanceof BlockItem bi)
 		{
-			Block block = ((BlockItem) item).getBlock();
+			Block block = bi.getBlock();
 			return block instanceof CropBlock;
 		}
 		return false;
@@ -183,8 +183,7 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	{
 		if (!stack.isEmpty())
 		{
-			Item item = stack.getItem(); 
-			if (item instanceof CropSeedItem)
+			if (stack.getItem() instanceof CropSeedItem)
 			{
 				CompoundTag nbt = stack.getOrCreateTag();
 				if(nbt.contains("growspeed"))
@@ -216,8 +215,8 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 			{
 				Block block = ((BlockItem) item).getBlock();
 				if (block instanceof CropBlock)
-					if (level instanceof ServerLevel)
-						drops.addAll(Block.getDrops(block.defaultBlockState().setValue(CropBlock.AGE, 7), (ServerLevel)level, worldPosition, null));
+					if (level instanceof ServerLevel sl)
+						drops.addAll(Block.getDrops(block.defaultBlockState().setValue(CropBlock.AGE, 7), sl, worldPosition, null));
 			}
 		}
 		return drops; 
@@ -228,11 +227,10 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 		ItemStack stack = itemhandler.getStackInSlot(12);
 		if (!stack.isEmpty())
 		{
-			if (stack.getItem() instanceof TierItem)
+			if (stack.getItem() instanceof TierItem ti)
 			{
-				TierItem item = (TierItem) stack.getItem();
-				if (item.getItemType() == RANGE_UPGRADE)
-					return item.getTier();
+				if (ti.getItemType() == RANGE_UPGRADE)
+					return ti.getTier();
 			}
 		}
 		return 0;

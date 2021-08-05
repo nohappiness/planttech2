@@ -43,9 +43,8 @@ public class PlantObtainerItem extends Item
         }
         ItemStack stack = player.getMainHandItem();
         initTags(stack);
-        if (state.getBlock() instanceof IObtainable)
+        if (state.getBlock() instanceof IObtainable block)
         {
-            IObtainable block = (IObtainable) state.getBlock();
             if (!isFilled(stack) && block.isObtainable(context))
             {
                 setBlockFilled(stack, block.getObtainedBlockState(state));

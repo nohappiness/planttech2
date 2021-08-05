@@ -98,10 +98,10 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 			tag = new CompoundTag();
 		}
 		IEnergyStorage storage = getEnergyCap(stack);
-		if (storage instanceof BioEnergyStorage)
+		if (storage instanceof BioEnergyStorage bes)
 		{
-			tag.putInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
-			tag.putInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
+			tag.putInt("current_energy", bes.getEnergyStored());
+			tag.putInt("max_energy", bes.getMaxEnergyStored());
 		}
 		stack.setTag(tag);
 
@@ -231,9 +231,9 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 
 		if(player.isCrouching())
 		{
-			if (!world.isClientSide && player instanceof ServerPlayer)
+			if (!world.isClientSide && player instanceof ServerPlayer serverPlayer)
 			{
-    			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
+    			NetworkHooks.openGui(serverPlayer, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
 			}
 		}
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
@@ -255,9 +255,8 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 				slot = inv.getStackInSlot(i);
 				if (!slot.isEmpty())
 				{
-					if (slot.getItem() instanceof UpgradeChipItem)
+					if (slot.getItem() instanceof UpgradeChipItem item)
 					{
-						UpgradeChipItem item = (UpgradeChipItem) slot.getItem();
 						energyCost += item.getEnergyCost();
 						increaseCapacity += item.getIncreaseCapacity();
 						energyProduction += item.getEnergyProduction();
@@ -313,9 +312,9 @@ public class UpgradeableArmorItem extends ArmorBaseItem implements IItemChargeab
 			IEnergyStorage energy = getEnergyCap(stack);
 			if (energy != null)
 			{
-				if (energy instanceof BioEnergyStorage)
+				if (energy instanceof BioEnergyStorage bes)
 				{
-					((BioEnergyStorage) energy).setEnergyMaxStored(basecapacity + increaseCapacity);
+					bes.setEnergyMaxStored(basecapacity + increaseCapacity);
 				}
 			}
 		}

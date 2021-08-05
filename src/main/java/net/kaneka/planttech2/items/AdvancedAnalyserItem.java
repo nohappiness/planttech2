@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 
@@ -37,21 +36,19 @@ public class AdvancedAnalyserItem extends EnergyStorageItem
 		Player player = ctx.getPlayer();
 		if (!level.isClientSide && !stack.isEmpty() && player != null)
 		{
-			BlockEntity te = level.getBlockEntity(pos);
 
-			if (te instanceof CropsBlockEntity)
+			if (level.getBlockEntity(pos) instanceof CropsBlockEntity cbe)
 			{
-				CropsBlockEntity cte = (CropsBlockEntity) te;
-				if (cte.isAnalysed())
+				if (cbe.isAnalysed())
 				{
-					HashMapCropTraits traits = cte.getTraits();
+					HashMapCropTraits traits = cbe.getTraits();
 					sendTraits(player, traits);
 				} else
 				{
 					if (currentEnergy(stack) >= getEnergyCosts())
 					{
 						extractEnergy(stack, getEnergyCosts(), false);
-						HashMapCropTraits traits = cte.setAnalysedAndGetTraits();
+						HashMapCropTraits traits = cbe.setAnalysedAndGetTraits();
 						sendTraits(player, traits);
 					} else
 					{

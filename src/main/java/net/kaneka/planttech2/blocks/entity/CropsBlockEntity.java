@@ -39,8 +39,8 @@ public class CropsBlockEntity extends BlockEntity
 			if(be instanceof  CropsBlockEntity cbe) {
 				if ((level.getGameTime() - cbe.startTick) % ((90L - cbe.traits.getTrait(EnumTraitsInt.GROWSPEED) * 6L) * 20L) == 0L) {
 					Block block = level.getBlockState(cbe.worldPosition).getBlock();
-					if (block instanceof CropBaseBlock)
-						((CropBaseBlock) block).updateCrop(cbe.level, cbe.worldPosition, cbe.traits);
+					if (block instanceof CropBaseBlock cbb)
+						cbb.updateCrop(cbe.level, cbe.worldPosition, cbe.traits);
 				}
 			}
 		}

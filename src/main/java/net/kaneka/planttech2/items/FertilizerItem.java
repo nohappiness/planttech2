@@ -16,9 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 import java.util.Random;
@@ -85,20 +83,18 @@ public class FertilizerItem extends Item
 
     public static boolean applyFertillizer(Level world, BlockPos pos, ItemStack stack)
 	{
-		Block block = world.getBlockState(pos).getBlock();
-		if (block instanceof CropBaseBlock)
+		if (world.getBlockState(pos).getBlock() instanceof CropBaseBlock cbb)
 		{
 			Random rand = new Random();
 			if (rand.nextFloat() < getIncreaseChance(stack.getItem()))
 			{
 				if (stack.getItem() != ModItems.FERTILIZER_CREATIVE)
 				{
-					BlockEntity te = world.getBlockEntity(pos);
-					if (te instanceof CropsBlockEntity)
-						((CropBaseBlock) block).updateCrop(world, pos, ((CropsBlockEntity) te).getTraits());
+					if (world.getBlockEntity(pos) instanceof CropsBlockEntity cbe)
+						cbb.updateCrop(world, pos, cbe.getTraits());
 				}
 				else
-					((CropBaseBlock) block).updateCreative(world, pos);
+					cbb.updateCreative(world, pos);
 			}
 			return true;
 		}

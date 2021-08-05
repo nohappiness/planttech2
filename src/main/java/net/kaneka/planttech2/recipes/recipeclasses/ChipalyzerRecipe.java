@@ -85,14 +85,13 @@ public class ChipalyzerRecipe implements Recipe<Container>
 				{
 					for (Tag nbt : EnchantedBookItem.getEnchantments(stack))
 					{
-						if (nbt instanceof CompoundTag)
+						if (nbt instanceof CompoundTag compoundTag)
 						{
-							CompoundTag CompoundTag = (CompoundTag) nbt;
-							if (CompoundTag.contains("id"))
+							if (compoundTag.contains("id"))
 							{
-								if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(CompoundTag.getString("id"))))
+								if (ForgeRegistries.ENCHANTMENTS.containsKey(new ResourceLocation(compoundTag.getString("id"))))
 								{
-									list.add(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(CompoundTag.getString("id"))));
+									list.add(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(compoundTag.getString("id"))));
 								}
 							}
 						}

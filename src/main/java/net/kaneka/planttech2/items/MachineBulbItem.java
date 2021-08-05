@@ -38,12 +38,12 @@ public class MachineBulbItem extends BlockItem
 		ItemStack stack = ctx.getItemInHand();
 		if (target == getHull())
 		{
-			if (getMachine() instanceof FacingGrowingBlock)
+			if (getMachine() instanceof FacingGrowingBlock block)
 			{
 				Direction direction = ctx.getClickedFace();
 				if (!direction.equals(Direction.DOWN) && !direction.equals(Direction.UP))
 				{
-					level.setBlockAndUpdate(pos, getMachine().defaultBlockState().setValue(FacingGrowingBlock.FACING, direction));
+					level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(FacingGrowingBlock.FACING, direction));
 					stack.shrink(1);
 				}
 			}

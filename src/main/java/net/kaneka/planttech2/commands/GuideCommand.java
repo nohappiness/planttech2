@@ -6,14 +6,12 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GuideCommand
 {
-    private static final ArrayList<String> POSSIBLE_OPTIONS = new ArrayList<String>() {{
-           add("overview");
-           add("plant");
-    }};
+    private static final List<String> POSSIBLE_OPTIONS = List.of("overview","plant");
+
 
     public GuideCommand() {}
 
