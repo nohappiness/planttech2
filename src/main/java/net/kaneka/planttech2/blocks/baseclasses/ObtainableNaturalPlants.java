@@ -33,7 +33,6 @@ public class ObtainableNaturalPlants extends NaturalPlants implements IObtainabl
         context.getLevel().setBlockAndUpdate(context.getClickedPos().relative(context.getClickedFace()), state);
     }
 
-
     @Override
     public boolean isObtainable(UseOnContext context)
     {

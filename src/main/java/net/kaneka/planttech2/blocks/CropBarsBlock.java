@@ -23,8 +23,6 @@ public class CropBarsBlock extends Block
 		super(Block.Properties.of(Material.WOOD).noCollission().noOcclusion());
 	}
 
-	
-
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) 
     {
@@ -46,7 +44,6 @@ public class CropBarsBlock extends Block
 	{
 		return true; 
 	}
-
 
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos)

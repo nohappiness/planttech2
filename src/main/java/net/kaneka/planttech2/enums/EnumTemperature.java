@@ -8,7 +8,6 @@ import java.util.List;
 
 public enum EnumTemperature
 {
-
 	EXTREME_COLD(-1.0F, 0.0F, ChatFormatting.BLUE),
 	COLD(0.0F, 0.5F, ChatFormatting.AQUA),
 	NORMAL(0.5F, 1.0F, ChatFormatting.GREEN),
@@ -35,11 +34,8 @@ public enum EnumTemperature
 
 	public static boolean inRange(float value, int tolerance, List<EnumTemperature> temperatures)
 	{
-		System.out.println(temperatures);
-		System.out.println(tolerance);
 		for (EnumTemperature temperature : temperatures)
 		{
-			System.out.println(temperature);
 			if (temperature.inRange(value, tolerance))
 				return true;
 		}

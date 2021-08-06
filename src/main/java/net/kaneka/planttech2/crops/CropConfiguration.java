@@ -168,7 +168,7 @@ public class CropConfiguration implements ISerializable
 
 		public Builder seed(ResourceLocation item)
 		{
-			return this.seed(ObjectSupplier.of(item, ITEMS));
+			return this.seed(RegistryEntrySupplier.of(item, ITEMS));
 		}
 
 		public Builder seed(String item)
@@ -206,7 +206,7 @@ public class CropConfiguration implements ISerializable
 
 		public Builder drop(ResourceLocation item, int min, int max)
 		{
-			return this.drop(ObjectSupplier.of(item, ITEMS), min, max);
+			return this.drop(RegistryEntrySupplier.of(item, ITEMS), min, max);
 		}
 
 		public Builder drop(String item, int min, int max)
@@ -225,15 +225,5 @@ public class CropConfiguration implements ISerializable
 			this.soil = newSoil;
 			return this;
 		}
-//
-//		public Builder soil(ResourceLocation newSoil)
-//		{
-//			return this.soil(of(newSoil, BLOCKS));
-//		}
-//
-//		public Builder soil(String newSoil)
-//		{
-//			return this.soil(new ResourceLocation(newSoil));
-//		}
 	}
 }

@@ -149,7 +149,7 @@ public class DropEntry implements ISerializable
             if (max < 0) { throw new JsonSyntaxException("max has a negative value"); }
             if (min > max) { throw new JsonSyntaxException("min is bigger than max"); }
 
-            return DropEntry.of(ObjectSupplier.of(itemLocation, ITEMS), min, max);
+            return DropEntry.of(RegistryEntrySupplier.of(itemLocation, ITEMS), min, max);
         }
 
         public void write(DropEntry entry, FriendlyByteBuf buffer)
@@ -164,7 +164,7 @@ public class DropEntry implements ISerializable
             final ResourceLocation itemLoc = buffer.readResourceLocation();
             final int min = buffer.readInt();
             final int max = buffer.readInt();
-            return DropEntry.of(ObjectSupplier.of(itemLoc, ITEMS), min, max);
+            return DropEntry.of(RegistryEntrySupplier.of(itemLoc, ITEMS), min, max);
         }
     }
 }

@@ -17,35 +17,32 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DNACleanerBlockEntity extends ConvertEnergyInventoryBlockEntity
 {
-    protected final ContainerData field_array = new ContainerData()
+    protected final ContainerData data = new ContainerData()
 	{
-        public int get(int index) {
-           switch(index) {
-           case 0:
-              return DNACleanerBlockEntity.this.energystorage.getEnergyStored();
-           case 1:
-              return DNACleanerBlockEntity.this.energystorage.getMaxEnergyStored();
-           case 2:
-              return DNACleanerBlockEntity.this.ticksPassed;
-           default:
-              return 0;
-           }
+        public int get(int index)
+		{
+			return switch (index)
+					{
+						case 0 -> DNACleanerBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> DNACleanerBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> DNACleanerBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
         }
 
-        public void set(int index, int value) {
-           switch(index) {
-           case 0:
-        	   DNACleanerBlockEntity.this.energystorage.setEnergyStored(value);
-              break;
-           case 1:
-        	   DNACleanerBlockEntity.this.energystorage.setEnergyMaxStored(value);
-              break;
-           case 2:
-        	   DNACleanerBlockEntity.this.ticksPassed = value;;
-              break;
-           }
-
+        public void set(int index, int value)
+		{
+			switch (index)
+			{
+				case 0 -> DNACleanerBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> DNACleanerBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> {
+					DNACleanerBlockEntity.this.ticksPassed = value;
+					;
+				}
+			}
         }
+
         public int getCount() {
            return 3;
         }
@@ -74,9 +71,9 @@ public class DNACleanerBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
     @Override

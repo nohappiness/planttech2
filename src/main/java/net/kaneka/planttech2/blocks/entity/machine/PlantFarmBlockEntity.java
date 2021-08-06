@@ -31,66 +31,38 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 {
 	private int[] progress = new int[5];
 	
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return PlantFarmBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return PlantFarmBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-			    return PlantFarmBlockEntity.this.biomassCap.getCurrentStorage();
-			case 3:
-			    return PlantFarmBlockEntity.this.biomassCap.getMaxStorage();
-			case 4: 
-				return PlantFarmBlockEntity.this.progress[0];
-			case 5: 
-				return PlantFarmBlockEntity.this.progress[1];
-			case 6: 
-				return PlantFarmBlockEntity.this.progress[2];
-			case 7: 
-				return PlantFarmBlockEntity.this.progress[3];
-			case 8: 
-				return PlantFarmBlockEntity.this.progress[4];
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> PlantFarmBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> PlantFarmBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> PlantFarmBlockEntity.this.biomassCap.getCurrentStorage();
+						case 3 -> PlantFarmBlockEntity.this.biomassCap.getMaxStorage();
+						case 4 -> PlantFarmBlockEntity.this.progress[0];
+						case 5 -> PlantFarmBlockEntity.this.progress[1];
+						case 6 -> PlantFarmBlockEntity.this.progress[2];
+						case 7 -> PlantFarmBlockEntity.this.progress[3];
+						case 8 -> PlantFarmBlockEntity.this.progress[4];
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				PlantFarmBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				PlantFarmBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				PlantFarmBlockEntity.this.biomassCap.setCurrentStorage(value);
-			    break; 
-			case 3: 
-				PlantFarmBlockEntity.this.biomassCap.setMaxStorage(value);
-				break;
-			case 4: 
-				PlantFarmBlockEntity.this.progress[0] = value;
-				break; 
-			case 5: 
-				PlantFarmBlockEntity.this.progress[1] = value;
-				break; 
-			case 6: 
-				PlantFarmBlockEntity.this.progress[2] = value;
-				break; 
-			case 7: 
-				PlantFarmBlockEntity.this.progress[3] = value;
-				break; 
-			case 8: 
-				PlantFarmBlockEntity.this.progress[4] = value;
-				break;
+				case 0 -> PlantFarmBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> PlantFarmBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> PlantFarmBlockEntity.this.biomassCap.setCurrentStorage(value);
+				case 3 -> PlantFarmBlockEntity.this.biomassCap.setMaxStorage(value);
+				case 4 -> PlantFarmBlockEntity.this.progress[0] = value;
+				case 5 -> PlantFarmBlockEntity.this.progress[1] = value;
+				case 6 -> PlantFarmBlockEntity.this.progress[2] = value;
+				case 7 -> PlantFarmBlockEntity.this.progress[3] = value;
+				case 8 -> PlantFarmBlockEntity.this.progress[4] = value;
 			}
 
 		}
@@ -174,9 +146,9 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 	
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 	
 	private int getTicks(ItemStack stack)

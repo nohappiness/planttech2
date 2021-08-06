@@ -27,52 +27,30 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return MachineBulbReprocessorBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return MachineBulbReprocessorBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-			    return MachineBulbReprocessorBlockEntity.this.biomassCap.getCurrentStorage();
-			case 3:
-			    return MachineBulbReprocessorBlockEntity.this.biomassCap.getMaxStorage();
-			case 4: 
-				return MachineBulbReprocessorBlockEntity.this.ticksPassed;
-			case 5: 
-				return MachineBulbReprocessorBlockEntity.this.selectedId;
-			case 6: 
-				return MachineBulbReprocessorBlockEntity.this.actualTier;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> MachineBulbReprocessorBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> MachineBulbReprocessorBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> MachineBulbReprocessorBlockEntity.this.biomassCap.getCurrentStorage();
+						case 3 -> MachineBulbReprocessorBlockEntity.this.biomassCap.getMaxStorage();
+						case 4 -> MachineBulbReprocessorBlockEntity.this.ticksPassed;
+						case 5 -> MachineBulbReprocessorBlockEntity.this.selectedId;
+						case 6 -> MachineBulbReprocessorBlockEntity.this.actualTier;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				MachineBulbReprocessorBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				MachineBulbReprocessorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				MachineBulbReprocessorBlockEntity.this.biomassCap.setCurrentStorage(value);
-			    break; 
-			case 3: 
-				MachineBulbReprocessorBlockEntity.this.biomassCap.setMaxStorage(value);
-				break;
-			case 4: 
-				MachineBulbReprocessorBlockEntity.this.ticksPassed = value;
-				break; 
-			case 5: 
-				MachineBulbReprocessorBlockEntity.this.selectedId = value;
-				break; 
-			case 6: 
-				MachineBulbReprocessorBlockEntity.this.actualTier = value;
-				break;
+				case 0 -> MachineBulbReprocessorBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> MachineBulbReprocessorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> MachineBulbReprocessorBlockEntity.this.biomassCap.setCurrentStorage(value);
+				case 3 -> MachineBulbReprocessorBlockEntity.this.biomassCap.setMaxStorage(value);
+				case 4 -> MachineBulbReprocessorBlockEntity.this.ticksPassed = value;
+				case 5 -> MachineBulbReprocessorBlockEntity.this.selectedId = value;
+				case 6 -> MachineBulbReprocessorBlockEntity.this.actualTier = value;
 			}
 		}
 		public int getCount()
@@ -152,7 +130,7 @@ public class MachineBulbReprocessorBlockEntity extends ConvertEnergyInventoryFlu
 	}
 	
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
 		return field_array;
 	}

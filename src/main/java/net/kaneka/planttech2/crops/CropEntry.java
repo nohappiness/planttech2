@@ -93,29 +93,22 @@ public class CropEntry implements Comparable<CropEntry>, ISerializable
 
 	public List<ItemStack> calculateDrops(List<ItemStack> drops, HashMapCropTraits traits, int growstate, Random rand)
 	{
-		ItemStack seed = this.getPrimarySeed().getDroppedStack(traits.getTrait(EnumTraitsInt.FERTILITY), EnumTraitsInt.FERTILITY.getMax(),
-				rand);
+		ItemStack seed = this.getPrimarySeed().getDroppedStack(traits.getTrait(EnumTraitsInt.FERTILITY), EnumTraitsInt.FERTILITY.getMax(), rand);
 		if (!seed.isEmpty())
 		{
 			if (growstate < 7)
-			{
 				seed.setCount(1);
-			}
 			drops.add(traits.addToItemStack(seed));
 		}
-
 		if (growstate > 6)
 		{
 			List<DropEntry> dropEntries = this.getConfiguration().getDrops();
 			for (int i = 1; i < dropEntries.size(); i++)
 			{
 				DropEntry drop = dropEntries.get(i);
-				ItemStack addDrop = drop.getDroppedStack(traits.getTrait(EnumTraitsInt.PRODUCTIVITY), EnumTraitsInt.PRODUCTIVITY.getMax(),
-						rand);
+				ItemStack addDrop = drop.getDroppedStack(traits.getTrait(EnumTraitsInt.PRODUCTIVITY), EnumTraitsInt.PRODUCTIVITY.getMax(), rand);
 				if (!addDrop.isEmpty())
-				{
 					drops.add(addDrop);
-				}
 			}
 		}
 		return drops;
@@ -135,12 +128,9 @@ public class CropEntry implements Comparable<CropEntry>, ISerializable
 			}
 			for (DropEntry drop : dropEntries)
 			{
-				ItemStack stack = drop.getDroppedStack(traits.getTrait(EnumTraitsInt.PRODUCTIVITY), EnumTraitsInt.PRODUCTIVITY.getMax(),
-						rand);
+				ItemStack stack = drop.getDroppedStack(traits.getTrait(EnumTraitsInt.PRODUCTIVITY), EnumTraitsInt.PRODUCTIVITY.getMax(), rand);
 				if (!stack.isEmpty())
-				{
 					drops.add(stack);
-				}
 			}
 		}
 		return drops;

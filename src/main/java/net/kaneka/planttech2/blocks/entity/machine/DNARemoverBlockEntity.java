@@ -22,36 +22,26 @@ import java.util.List;
 
 public class DNARemoverBlockEntity extends ConvertEnergyInventoryBlockEntity
 {
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return DNARemoverBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return DNARemoverBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return DNARemoverBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> DNARemoverBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> DNARemoverBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> DNARemoverBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				DNARemoverBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				DNARemoverBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				DNARemoverBlockEntity.this.ticksPassed = value;
-				break;
+				case 0 -> DNARemoverBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> DNARemoverBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> DNARemoverBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -89,9 +79,9 @@ public class DNARemoverBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	private List<String> getAvailableTraits(ItemStack stack)

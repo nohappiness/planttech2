@@ -113,6 +113,7 @@ public class BaseElectricFence extends Block
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<Component> tooltip, TooltipFlag flagIn)
     {
+        //todo use TranslatableComponent instead
         tooltip.add(new TextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }
 }

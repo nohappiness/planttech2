@@ -21,35 +21,28 @@ public enum EnumTraitsInt
 
     EnumTraitsInt(int meta, String name, int min, int max, float transitionpossibility)
     {
-	this.meta = meta;
-	this.name = name;
-	this.min = min;
-	this.max = max;
-	this.transitionpossibility = transitionpossibility;
+        this.meta = meta;
+        this.name = name;
+        this.min = min;
+        this.max = max;
+        this.transitionpossibility = transitionpossibility;
     }
-
-    
 
     public static EnumTraitsInt getByMetadata(int meta)
     {
-	if (meta < 0 || meta >= META_LOOKUP.length)
-	{
-	    meta = 0;
-	}
-
-	return META_LOOKUP[meta];
+        if (meta < 0 || meta >= META_LOOKUP.length)
+            meta = 0;
+        return META_LOOKUP[meta];
     }
 
     public static EnumTraitsInt getByName(String name)
     {
-	for (EnumTraitsInt trait : EnumTraitsInt.values())
-	{
-	    if (trait.name.equalsIgnoreCase(name))
-	    {
-		return trait;
-	    }
-	}
-	return null;
+        for (EnumTraitsInt trait : EnumTraitsInt.values())
+        {
+            if (trait.name.equalsIgnoreCase(name))
+                return trait;
+        }
+        return null;
     }
 
     public int getMetadata()
@@ -79,10 +72,8 @@ public enum EnumTraitsInt
 
     static
     {
-	for (EnumTraitsInt type : values())
-	{
-	    META_LOOKUP[type.getMetadata()] = type;
-	}
+        for (EnumTraitsInt type : values())
+            META_LOOKUP[type.getMetadata()] = type;
     }
 
 	public String getSerializedName()

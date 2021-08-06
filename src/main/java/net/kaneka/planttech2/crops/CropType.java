@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.crops;
 
+@Deprecated
 public enum CropType
 {
     ABYSSALNITE("abyssalnite", 0x45005f),

@@ -16,31 +16,24 @@ import net.minecraft.world.level.block.state.BlockState;
 public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
 {
     private int currentTier = -1; // Always forcing a update when loaded
-    protected final ContainerData field_array = new ContainerData()
+    protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return EnergyStorageBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return EnergyStorageBlockEntity.this.energystorage.getMaxEnergyStored();
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> EnergyStorageBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> EnergyStorageBlockEntity.this.energystorage.getMaxEnergyStored();
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				EnergyStorageBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				EnergyStorageBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
+				case 0 -> EnergyStorageBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> EnergyStorageBlockEntity.this.energystorage.setEnergyMaxStored(value);
 			}
 		}
 		public int getCount()
@@ -60,9 +53,9 @@ public class EnergyStorageBlockEntity extends EnergyInventoryBlockEntity
     }
     
     @Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	@Override

@@ -83,9 +83,7 @@ public class MultitoolItem extends UpgradeableHandItem
 			Block block = state.getBlock();
 			int i = getHarvestLevel(stack);
 			if (state.getHarvestTool() == net.minecraftforge.common.ToolType.PICKAXE)
-			{
 				return i >= state.getHarvestLevel();
-			}
 			Material material = state.getMaterial();
 			return material == Material.STONE || material == Material.METAL || material == Material.HEAVY_METAL || block == Blocks.SNOW || block == Blocks.SNOW_BLOCK
 			        || block == Blocks.COBWEB;
@@ -100,14 +98,9 @@ public class MultitoolItem extends UpgradeableHandItem
 		{
 			Material material = state.getMaterial();
 			if (EFFECTIVE_ON_AXE.contains(state.getBlock()) || EFFECTIVE_ON_PICKAXE.contains(state.getBlock()) || EFFECTIVE_ON_SPADE.contains(state.getBlock()))
-			{
 				return getEfficiency(stack);
-			}
-
 			if (state.getBlock() == Blocks.COBWEB)
-			{
 				return 15.0F;
-			}
 			return !MATERIAL_EFFECT_ON.contains(material) ? super.getDestroySpeed(stack, state) : getEfficiency(stack);
 		}
 		return super.getDestroySpeed(stack, state);
@@ -135,14 +128,13 @@ public class MultitoolItem extends UpgradeableHandItem
 					{
 						level.setBlock(blockpos, state_for_spade, 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
-						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
-						}
 					}
 				}
 
 				return InteractionResult.SUCCESS;
-			} else if (block_for_strinping != null)
+			}
+			else if (block_for_strinping != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockaxe", false))
 				{
@@ -151,14 +143,12 @@ public class MultitoolItem extends UpgradeableHandItem
 					{
 						level.setBlock(blockpos, block_for_strinping.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
-						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
-						}
 					}
 				}
-
 				return InteractionResult.SUCCESS;
-			} else if (ctx.getClickedFace() != Direction.DOWN && level.isEmptyBlock(blockpos.above()) && state_for_hoe != null)
+			}
+			else if (ctx.getClickedFace() != Direction.DOWN && level.isEmptyBlock(blockpos.above()) && state_for_hoe != null)
 			{
 				if (NBTHelper.getBoolean(ctx.getItemInHand(), "unlockhoe", false))
 				{
@@ -167,23 +157,18 @@ public class MultitoolItem extends UpgradeableHandItem
 					{
 						level.setBlock(blockpos, state_for_hoe, 11);
 						if (PlayerEntity != null && !PlayerEntity.isCreative())
-						{
 							extractEnergy(ctx.getItemInHand(), getEnergyCost(ctx.getItemInHand()), false);
-						}
 					}
-
 					return InteractionResult.SUCCESS;
 				}
 			}
 		}
-
 		return InteractionResult.PASS;
 	}
 
 	public int getHarvestLevel(ItemStack stack)
 	{
 		return NBTHelper.getInt(stack, "harvestlevel", 0);
-
 	}
 
 	public float getEfficiency(ItemStack stack)
@@ -194,29 +179,31 @@ public class MultitoolItem extends UpgradeableHandItem
 	@Override
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity entityLiving)
 	{
-
 		return super.mineBlock(stack, level, state, pos, entityLiving);
 	}
 
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand)
 	{
-		if (entity.level.isClientSide) return InteractionResult.PASS;
-	      if (entity instanceof IForgeShearable fs) {
+		if (entity.level.isClientSide)
+			return InteractionResult.PASS;
+	  	if (entity instanceof IForgeShearable fs)
+	  	{
 	         BlockPos pos = new BlockPos(entity.getX(), entity.getY(), entity.getZ());
-	         if (fs.isShearable(stack, entity.level, pos)) {
+	         if (fs.isShearable(stack, entity.level, pos))
+	         {
 	            List<ItemStack> drops = fs.onSheared(player, stack, entity.level, pos,
 	            EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
 	            Random rand = new java.util.Random();
 	            drops.forEach(d -> {
 	               ItemEntity ent = entity.spawnAtLocation(d, 1.0F);
-	               ent.setDeltaMovement(ent.getDeltaMovement().add((double)((rand.nextFloat() - rand.nextFloat()) * 0.1F), (double)(rand.nextFloat() * 0.05F), (double)((rand.nextFloat() - rand.nextFloat()) * 0.1F)));
+	               ent.setDeltaMovement(ent.getDeltaMovement().add((rand.nextFloat() - rand.nextFloat()) * 0.1F, rand.nextFloat() * 0.05F, (rand.nextFloat() - rand.nextFloat()) * 0.1F));
 	            });
 	            stack.hurtAndBreak(1, entity, e -> e.broadcastBreakEvent(hand));
 	         }
 	         return InteractionResult.SUCCESS;
-	      }
-	      return InteractionResult.PASS;
+	  	}
+	  	return InteractionResult.PASS;
 	}
 
 }

@@ -14,7 +14,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class InventoryEnergyProvider implements ICapabilitySerializable<CompoundTag>
 {
-	
 	protected BioEnergyStorage energystorage;
 	private LazyOptional<IEnergyStorage> energyCap;
 	protected 	ItemStackHandler itemhandler;
@@ -33,13 +32,9 @@ public class InventoryEnergyProvider implements ICapabilitySerializable<Compound
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side)
 	{
 		if (cap == CapabilityEnergy.ENERGY)
-		{
 		    return energyCap.cast();
-		}
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
 		    return inventoryCap.cast();
-		}
 		return LazyOptional.empty();
 	}
 

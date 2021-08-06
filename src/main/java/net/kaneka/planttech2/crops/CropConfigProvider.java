@@ -39,7 +39,8 @@ public abstract class CropConfigProvider implements DataProvider
 			try
 			{
 				DataProvider.save(GSON, cache, CropListReloadListener.toJson(data), outputFile);
-			} catch (Exception ioexception)
+			}
+			catch (Exception ioexception)
 			{
 				LOGGER.error("Couldn't save crop entry configuration {}", outputFile, ioexception);
 			}

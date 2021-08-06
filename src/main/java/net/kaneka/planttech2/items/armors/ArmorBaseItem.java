@@ -12,25 +12,17 @@ public class ArmorBaseItem extends ArmorItem
 
     public ArmorBaseItem(String resString, ArmorMaterial mat, EquipmentSlot equipmentSlotIn, Properties properties)
     {
-	super(mat, equipmentSlotIn, properties);
-	this.resString = resString;
+		super(mat, equipmentSlotIn, properties);
+		this.resString = resString;
     }
-
 
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type)
     {
-	if (slot == EquipmentSlot.HEAD || slot == EquipmentSlot.CHEST || slot == EquipmentSlot.FEET)
-	{
-	    return "planttech2:textures/models/armor/" + resString + "_layer_1.png";
-	}
-	else if (slot == EquipmentSlot.LEGS)
-	{
-	    return "planttech2:textures/models/armor/" + resString + "_layer_2.png";
-	}
-	else
-	{
-	    return null;
-	}
+		if (slot == EquipmentSlot.HEAD || slot == EquipmentSlot.CHEST || slot == EquipmentSlot.FEET)
+			return "planttech2:textures/models/armor/" + resString + "_layer_1.png";
+		else if (slot == EquipmentSlot.LEGS)
+			return "planttech2:textures/models/armor/" + resString + "_layer_2.png";
+		return "";
     }
 }

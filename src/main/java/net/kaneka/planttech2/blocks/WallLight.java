@@ -36,18 +36,13 @@ public class WallLight extends FacingWallLightBase
     public VoxelShape getShape(BlockState state, BlockGetter levelIn, BlockPos pos, CollisionContext context)
     {
         boolean broke = state.getValue(LIGHT_STATUS) == 0;
-        switch (state.getValue(HORIZONTAL_FACING))
-        {
-            case NORTH:
-            default:
-                return broke ? NEGATIVE_Z_BROKE : NEGATIVE_Z;
-            case SOUTH:
-                return broke ? POSITIVE_Z_BROKE : POSITIVE_Z;
-            case WEST:
-                return broke ? NEGATIVE_X_BROKE : NEGATIVE_X;
-            case EAST:
-                return broke ? POSITIVE_X_BROKE : POSITIVE_X;
-        }
+        return switch (state.getValue(HORIZONTAL_FACING))
+                {
+                    default -> broke ? NEGATIVE_Z_BROKE : NEGATIVE_Z;
+                    case SOUTH -> broke ? POSITIVE_Z_BROKE : POSITIVE_Z;
+                    case WEST -> broke ? NEGATIVE_X_BROKE : NEGATIVE_X;
+                    case EAST -> broke ? POSITIVE_X_BROKE : POSITIVE_X;
+                };
     }
 
     @Override

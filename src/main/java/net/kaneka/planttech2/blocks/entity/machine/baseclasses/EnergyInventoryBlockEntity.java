@@ -40,7 +40,6 @@ abstract public class EnergyInventoryBlockEntity extends EnergyBlockEntity
 
 	/**
 	 * Get Items that will be spawned in the Level when the block is destroyed
-	 *
 	 * @return list of items to spawn
 	 */
 	public List<ItemStack> getInventoryContent()

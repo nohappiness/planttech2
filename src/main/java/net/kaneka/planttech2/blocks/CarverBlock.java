@@ -23,9 +23,7 @@ public class CarverBlock extends Block
 	public static final BooleanProperty EAST = PipeBlock.EAST;
 	public static final BooleanProperty SOUTH = PipeBlock.SOUTH;
 	public static final BooleanProperty WEST = PipeBlock.WEST;
-	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> {
-		return facingProperty.getKey().getAxis().isHorizontal();
-	}).collect(Util.toMap());
+	protected static final Map<Direction, BooleanProperty> FACING_TO_PROPERTY_MAP = PipeBlock.PROPERTY_BY_DIRECTION.entrySet().stream().filter((facingProperty) -> facingProperty.getKey().getAxis().isHorizontal()).collect(Util.toMap());
 
 	public CarverBlock()
 	{
@@ -64,14 +62,11 @@ public class CarverBlock extends Block
 
 	}
 
-
-
 	@Override
 	public RenderShape getRenderShape(BlockState iBlockState)
 	{
 		return RenderShape.MODEL;
 	}
-
 
 	@Override
 	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos)
@@ -82,32 +77,25 @@ public class CarverBlock extends Block
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		switch (rot)
-		{
-		case CLOCKWISE_180:
-			return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
-		case COUNTERCLOCKWISE_90:
-			return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
-		case CLOCKWISE_90:
-			return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
-		default:
-			return state;
-		}
+		return switch (rot)
+				{
+					case CLOCKWISE_180 -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
+					case COUNTERCLOCKWISE_90 -> state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
+					case CLOCKWISE_90 -> state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
+					default -> state;
+				};
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		switch (mirrorIn)
-		{
-			case LEFT_RIGHT:
-				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
-			case FRONT_BACK:
-				return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
-			default:
-				return super.mirror(state, mirrorIn);
-		}
+		return switch (mirrorIn)
+				{
+					case LEFT_RIGHT -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
+					case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
+					default -> super.mirror(state, mirrorIn);
+				};
 	}
 
 	private boolean checkForConnection(BlockState state)
@@ -121,8 +109,6 @@ public class CarverBlock extends Block
 		return block == Blocks.IRON_BLOCK || block == ModBlocks.PLANTIUM_BLOCK || block == ModBlocks.MACHINESHELL_IRON_GROWING || block == ModBlocks.MACHINESHELL_PLANTIUM_GROWING ;
 	}
 
-
-
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor levelIn, BlockPos currentPos, BlockPos facingPos)
@@ -130,8 +116,7 @@ public class CarverBlock extends Block
 		return facing.getAxis().getPlane() == Direction.Plane.HORIZONTAL ? stateIn.setValue(FACING_TO_PROPERTY_MAP.get(facing), Boolean.valueOf(this.checkForConnection(facingState)))
 		        : super.updateShape(stateIn, facing, facingState, levelIn, currentPos, facingPos);
 	}
-
-
+	
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context)
 	{

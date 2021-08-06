@@ -27,6 +27,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -35,8 +36,10 @@ import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 public abstract class BaseUpgradeableItem extends Item implements IItemChargeable, IUpgradeable
 {
@@ -88,32 +91,20 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public int maxEnergy(ItemStack stack)
 	{
-		IEnergyStorage storage = getEnergyCap(stack);
-		if (storage != null)
-		{
-			return storage.getMaxEnergyStored();
-		}
-		return 0;
+		return getEnergyCap(stack, IEnergyStorage::getMaxEnergyStored, 0);
 	}
 
 	@Override
 	public int currentEnergy(ItemStack stack)
 	{
-		IEnergyStorage storage = getEnergyCap(stack);
-		if (storage != null)
-		{
-			return storage.getEnergyStored();
-		}
-		return 0;
+		return getEnergyCap(stack, IEnergyStorage::getEnergyStored, 0);
 	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
 	{
 		if (!((Player) attacker).getAbilities().instabuild)
-		{
 			extractEnergy(stack, getEnergyCost(stack), false);
-		}
 		return true;
 	}
 
@@ -142,26 +133,31 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	{ 
 		return Math.min(baseAttack + NBTHelper.getFloat(stack, "attack", 0), UpgradeChipItem.getAttackMax());
 	}
-	
 
-	public static IEnergyStorage getEnergyCap(ItemStack stack)
+	public static <T> T getEnergyCap(ItemStack stack, Function<IEnergyStorage, T> getter, T defau1t)
 	{
-		LazyOptional<IEnergyStorage> provider = stack.getCapability(CapabilityEnergy.ENERGY);
-		if (provider.isPresent())
-		{
-			return provider.orElse(null);
-		}
-		return null;
+		IEnergyStorage cap = getEnergyCap(stack);
+		if (cap != null)
+			return getter.apply(cap);
+		return defau1t;
 	}
 
+	@Nullable
+	public static IEnergyStorage getEnergyCap(ItemStack stack)
+	{
+		return getCap(stack, CapabilityEnergy.ENERGY);
+	}
+
+	@Nullable
 	public static IItemHandler getInvCap(ItemStack stack)
 	{
-		LazyOptional<IItemHandler> provider = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
-		if (provider.isPresent())
-		{
-			return provider.orElse(null);
-		}
-		return null;
+		return getCap(stack, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+	}
+
+	@Nullable
+	private static <C> C getCap(ItemStack stack, Capability<C> cap)
+	{
+		return stack.getCapability(cap).orElse(null);
 	}
 
 	@Override
@@ -179,16 +175,12 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 
 	protected void updateEnergy(ItemStack stack)
 	{
-		CompoundTag tag = stack.getTag();
-		if (tag == null)
-		{
-			tag = new CompoundTag();
-		}
+		CompoundTag tag = stack.getOrCreateTag();
 		IEnergyStorage storage = getEnergyCap(stack);
 		if (storage instanceof BioEnergyStorage)
 		{
-			tag.putInt("current_energy", ((BioEnergyStorage) storage).getEnergyStored());
-			tag.putInt("max_energy", ((BioEnergyStorage) storage).getMaxEnergyStored());
+			tag.putInt("current_energy", storage.getEnergyStored());
+			tag.putInt("max_energy", storage.getMaxEnergyStored());
 		}
 		stack.setTag(tag);
 	}
@@ -196,25 +188,16 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn)
 	{
-		CompoundTag tag = stack.getTag();
-		if (tag != null)
-		{
-			tooltip.add(new TranslatableComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
-			tooltip.add(new TranslatableComponent("info.energycosts", getEnergyCost(stack)));
-			tooltip.add(new TranslatableComponent("info.openwithshift"));
-		}
-
-		super.appendHoverText(stack, level, tooltip, flagIn);
+		CompoundTag tag = stack.getOrCreateTag();
+		tooltip.add(new TranslatableComponent("info.energy", tag.getInt("current_energy") + "/" + tag.getInt("max_energy")));
+		tooltip.add(new TranslatableComponent("info.energycosts", getEnergyCost(stack)));
+		tooltip.add(new TranslatableComponent("info.openwithshift"));
 	}
 
 	@Override
 	public boolean showDurabilityBar(ItemStack stack)
 	{
-		if (getDurabilityForDisplay(stack) >= 1)
-		{
-			return false;
-		}
-		return true;
+		return !(getDurabilityForDisplay(stack) >= 1);
 	}
 
 	@Override
@@ -222,10 +205,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	{
 		CompoundTag tag = stack.getTag();
 		if (tag != null)
-		{
 			return 1D - ((double) tag.getInt("current_energy") / (double) tag.getInt("max_energy"));
-		}
-
 		return 1D;
 	}
 
@@ -244,24 +224,19 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	public static int getInventorySize(ItemStack stack)
 	{
 		IItemHandler handler = getInvCap(stack);
-		if(handler != null)
-		{
-			return handler.getSlots(); 
-		}
-		return 0; 
+		if (handler != null)
+			return handler.getSlots();
+		return 0;
 	}
 	
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-
-		if(player.isCrouching())
+		if (player.isCrouching())
 		{
 			if (!world.isClientSide && player instanceof ServerPlayer sp)
-			{
     			NetworkHooks.openGui(sp, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
-			}
 		}
 		return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
 	}
@@ -270,7 +245,7 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	public void updateNBTValues(ItemStack stack)
 	{
 		IItemHandler inv = getInvCap(stack); 
-		if(inv != null)
+		if (inv != null)
 		{
 			int energyCost = 0, increaseCapacity = 0, energyProduction = 0, increaseHarvestlevel = 0;
 			float increaseAttack = 0, increaseAttackSpeed = 0, increaseBreakdownRate = 0; 
@@ -278,12 +253,12 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 			HashMap<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
 			
 			ItemStack slot; 
-			for(int i = 0; i < inv.getSlots(); i++)
+			for (int i = 0; i < inv.getSlots(); i++)
 			{
 				slot = inv.getStackInSlot(i); 
-				if(!slot.isEmpty())
+				if (!slot.isEmpty())
 				{
-					if(slot.getItem() instanceof UpgradeChipItem uci)
+					if (slot.getItem() instanceof UpgradeChipItem uci)
 					{
 						energyCost += uci.getEnergyCost();
 						increaseCapacity += uci.getIncreaseCapacity();
@@ -292,24 +267,22 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 						increaseAttack += uci.getIncreaseAttack();
 						increaseAttackSpeed += uci.getIncreaseAttackSpeed();
 						increaseBreakdownRate += uci.getIncreaseBreakdownRate();
-						if(uci.isUnlockShovelFeat()) unlockShovelFeat = true;
-						if(uci.isUnlockAxeFeat()) unlockAxeFeat = true;
-						if(uci.isUnlockHoeFeat()) unlockHoeFeat = true;
-						if(uci.isUnlockShearsFeat()) unlockShearsFeat = true;
+						if (uci.isUnlockShovelFeat()) unlockShovelFeat = true;
+						if (uci.isUnlockAxeFeat()) unlockAxeFeat = true;
+						if (uci.isUnlockHoeFeat()) unlockHoeFeat = true;
+						if (uci.isUnlockShearsFeat()) unlockShearsFeat = true;
 						Enchantment ench = uci.getEnchantment();
-						if(uci.isAllowed(getSlotId()))
+						if (uci.isAllowed(getSlotId()))
 						{
-    						if(ench != null)
+    						if (ench != null)
     						{
-    							if(enchantments.containsKey(ench))
+    							if (enchantments.containsKey(ench))
     							{
     								int nextlevel = enchantments.get(ench) + 1; 
     								enchantments.put(ench, nextlevel); 
     							}
     							else
-    							{
     								enchantments.put(ench, 1);
-    							}
     						}
 						}
 					}
@@ -318,24 +291,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 			stack.getEnchantmentTags().clear();
 			for (Enchantment ench: enchantments.keySet())
 			{
-				int level = enchantments.get(ench);  
-				if(ench.getMaxLevel() < level)
-				{
-					stack.enchant(ench, ench.getMaxLevel());
-				}
-				else
-				{
-					stack.enchant(ench, level);
-				}
+				int level = enchantments.get(ench);
+				stack.enchant(ench, Math.min(ench.getMaxLevel(), level));
 			}
-			
-			
-			CompoundTag nbt = stack.getTag(); 
-			if(nbt == null)
-			{
-				nbt = new CompoundTag(); 
-			}
-			
+			CompoundTag nbt = stack.getOrCreateTag();
 			nbt.putInt("energycost", energyCost);
 			nbt.putInt("energyproduction", energyProduction);
 			nbt.putInt("harvestlevel", increaseHarvestlevel);
@@ -364,16 +323,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entityIn, int itemSlot, boolean isSelected)
 	{
-		if(!world.isClientSide)
-		{
-			if(!stack.isEmpty())
-			{
-				if(world.getGameTime() % 200L == 0)
-				{
+		if (!world.isClientSide)
+			if (!stack.isEmpty())
+				if (world.getGameTime() % 200L == 0)
 					receiveEnergy(stack, NBTHelper.getInt(stack, "energyproduction", 0), false);
-				}
-			}
-		}
 	}
 	
 	@Override
@@ -381,13 +334,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 	{
 		return slotId;
 	}
-	
-	
-	
-	
+
 	public static class NamedContainerProvider implements MenuProvider
 	{
-		private int slot;
+		private final int slot;
 		private final ItemStack stack; 
 		
 		public NamedContainerProvider(ItemStack stack, int slot)

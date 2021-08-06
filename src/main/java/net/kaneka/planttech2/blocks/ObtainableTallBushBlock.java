@@ -77,7 +77,6 @@ public class ObtainableTallBushBlock extends ObtainableNaturalPlants
         return super.canPlaceAt(level, pos) && pos.getY() < 255 && level.isEmptyBlock(pos.above());
     }
 
-
     @Override
     public void onReleased(UseOnContext context, BlockState state)
     {

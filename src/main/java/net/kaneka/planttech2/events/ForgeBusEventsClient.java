@@ -23,16 +23,12 @@ public class ForgeBusEventsClient
         Player player = Minecraft.getInstance().player;
         if (player == null)
             return;
-        int screen = 0;
-        switch (event.getOriginalMessage())
-        {
-            case "/pt2 guide overview":
-                screen = 1;
-                break;
-            case "/pt2 guide plant":
-                screen = 2;
-                break;
-        }
+        int screen = switch (event.getOriginalMessage())
+                {
+                    case "/pt2 guide overview" -> 1;
+                    case "/pt2 guide plant" -> 2;
+                    default -> 0;
+                };
         if (screen != 0)
         {
             player.getPersistentData().putInt("planttech2_screen_delay", screen);
@@ -46,19 +42,18 @@ public class ForgeBusEventsClient
         Player player = Minecraft.getInstance().player;
         if (event.phase == TickEvent.Phase.START)
             return;
-        if (player != null) {
+        if (player != null)
+        {
             CompoundTag data = player.getPersistentData();
             if (data.contains("planttech2_screen_delay")) {
-                Screen screen = null;
-                switch (data.getInt("planttech2_screen_delay")) {
-                    case 1:
-                        screen = new GuideScreen();
-                        break;
-                    case 2:
-                        screen = new GuidePlantsScreen();
-                        break;
-                }
-                if (screen != null) {
+                Screen screen = switch (data.getInt("planttech2_screen_delay"))
+                        {
+                            case 1 -> new GuideScreen();
+                            case 2 -> new GuidePlantsScreen();
+                            default -> null;
+                        };
+                if (screen != null)
+                {
                     Minecraft.getInstance().setScreen(screen);
                     data.putInt("planttech2_screen_delay", 0);
                 }

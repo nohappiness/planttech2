@@ -24,22 +24,18 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
     public Block soil;
     public int fertility;
     public int productivity;
-    private int energyPerTick;
 
-    protected final ContainerData field_array = new ContainerData()
+    protected final ContainerData data = new ContainerData()
     {
         @Override
         public int get(int index)
         {
-            switch (index)
-            {
-                case 0:
-                    return CropAuraGeneratorBlockEntity.this.energystorage.getEnergyStored();
-                case 1:
-                    return CropAuraGeneratorBlockEntity.this.energystorage.getMaxEnergyStored();
-                default:
-                    return 0;
-            }
+            return switch (index)
+                    {
+                        case 0 -> CropAuraGeneratorBlockEntity.this.energystorage.getEnergyStored();
+                        case 1 -> CropAuraGeneratorBlockEntity.this.energystorage.getMaxEnergyStored();
+                        default -> 0;
+                    };
         }
 
         @Override
@@ -47,12 +43,8 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
         {
             switch (index)
             {
-                case 0:
-                    CropAuraGeneratorBlockEntity.this.energystorage.setEnergyStored(value);
-                    break;
-                case 1:
-                    CropAuraGeneratorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-                    break;
+                case 0 -> CropAuraGeneratorBlockEntity.this.energystorage.setEnergyStored(value);
+                case 1 -> CropAuraGeneratorBlockEntity.this.energystorage.setEnergyMaxStored(value);
             }
         }
 
@@ -108,9 +100,9 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
     }
 
     @Override
-    public ContainerData getIntArray()
+    public ContainerData getContainerData()
     {
-        return field_array;
+        return data;
     }
 
     @Override
@@ -118,24 +110,12 @@ public class CropAuraGeneratorBlockEntity extends EnergyInventoryBlockEntity
     {
         switch (slotIndex)
         {
-            case 0:
-                getTemperature();
-                break;
-            case 1:
-                getLightValueDecrease();
-                break;
-            case 2:
-                getWaterRangeDecrease();
-                break;
-            case 3:
-                getSoil();
-                break;
-            case 4:
-                getFertility();
-                break;
-            case 5:
-                getProductivity();
-                break;
+            case 0 -> getTemperature();
+            case 1 -> getLightValueDecrease();
+            case 2 -> getWaterRangeDecrease();
+            case 3 -> getSoil();
+            case 4 -> getFertility();
+            case 5 -> getProductivity();
         }
     }
 

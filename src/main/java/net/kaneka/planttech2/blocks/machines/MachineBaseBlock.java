@@ -60,7 +60,7 @@ public class MachineBaseBlock extends ModBlockEntityBlock
 			if (te instanceof EnergyInventoryBlockEntity eibe)
 			{
 				player.openMenu(eibe);
-				if (eibe.requireSyncOnOpen())
+				if (eibe.requireSyncUponOpen())
 					level.sendBlockUpdated(pos, state, state, 3);
 			}
 			return InteractionResult.CONSUME;
@@ -91,9 +91,7 @@ public class MachineBaseBlock extends ModBlockEntityBlock
 			{
 				List<ItemStack> toSpawn = eibe.getInventoryContent();
 				for (ItemStack stack : toSpawn)
-				{
 					level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack));
-				}
 			}
 			super.onRemove(state, level, pos, newState, isMoving);
 		}

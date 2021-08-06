@@ -2,7 +2,6 @@ package net.kaneka.planttech2.crops;
 
 import com.google.common.collect.ImmutableList;
 import com.google.gson.*;
-import io.netty.buffer.ByteBuf;
 import net.kaneka.planttech2.enums.EnumTemperature;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -187,7 +186,7 @@ public class CropEntryConfigData
 			short seedsAmount = buf.readShort();
 			for (int i = 0; i < seedsAmount; i++)
 			{
-				seeds.add(ObjectSupplier.of(buf.readResourceLocation(), ITEMS));
+				seeds.add(RegistryEntrySupplier.of(buf.readResourceLocation(), ITEMS));
 			}
 
 			short dropsAmount = buf.readShort();
@@ -204,7 +203,7 @@ public class CropEntryConfigData
 				parentPairs.add(ParentPair.Serializer.INSTANCE.read(buf));
 			}
 
-			Supplier<Block> soil = ObjectSupplier.of(buf.readResourceLocation(), BLOCKS);
+			Supplier<Block> soil = RegistryEntrySupplier.of(buf.readResourceLocation(), BLOCKS);
 
 			return new CropEntryConfigData(cropEntryName, enabled, temperature, primarySeed, seeds, drops, parentPairs, soil);
 		}
@@ -261,7 +260,7 @@ public class CropEntryConfigData
 			return StreamSupport.stream(array.spliterator(), false)
 					.map(JsonElement::getAsString)
 					.map(ResourceLocation::new)
-					.map(loc -> ObjectSupplier.of(loc, ITEMS))
+					.map(loc -> RegistryEntrySupplier.of(loc, ITEMS))
 					.collect(Collectors.toList());
 		}
 

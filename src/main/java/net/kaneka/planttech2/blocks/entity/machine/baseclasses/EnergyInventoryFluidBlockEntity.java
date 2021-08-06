@@ -40,10 +40,8 @@ public abstract class EnergyInventoryFluidBlockEntity extends EnergyInventoryBlo
 				if (biomassCap.getCurrentStorage() < biomassCap.getMaxStorage())
 				{
 					biomassCap.changeCurrentStorage(BiomassFluidEnergy.getItemStackCap(stack).extractBiomass(1));
-//					BiomassContainerItem.changeCurrentStorage(stack, -1);
 					itemhandler.setStackInSlot(getFluidInSlot(), stack);
 				}
-//				biomassCap.changeCurrentStorage(BiomassContainerItem.extractBiomass(stack, 1));
 				changesMade = true;
 			}
 			else if (stack.getItem() == ModItems.BIOMASS_BUCKET)
@@ -61,7 +59,6 @@ public abstract class EnergyInventoryFluidBlockEntity extends EnergyInventoryBlo
 			int have = biomassCap.getCurrentStorage();
 			int amount = biomassCap.extractBiomass(Math.min(Math.min(need, have), 4));
 			capability.recieveBiomass(amount);
-//			BiomassContainerItem.changeCurrentStorage(stack2, amount);
 			itemhandler.setStackInSlot(getFluidOutSlot(), stack2);
 			changesMade = true;
 		}
@@ -76,9 +73,7 @@ public abstract class EnergyInventoryFluidBlockEntity extends EnergyInventoryBlo
 			}
 		}
 		if (changesMade)
-		{
 			setChanged();
-		}
     }
 
 	public abstract int getFluidInSlot();

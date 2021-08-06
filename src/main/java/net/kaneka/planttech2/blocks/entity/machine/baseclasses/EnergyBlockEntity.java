@@ -92,7 +92,6 @@ abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvi
 		return player.distanceToSqr((double) this.worldPosition.getX() + 0.5D, (double) this.worldPosition.getY() + 0.5D, (double) this.worldPosition.getZ() + 0.5D) <= 64.0D;
 	}
 
-
 	public void onSlotContentChanged()
 	{
 
@@ -103,7 +102,7 @@ abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvi
 		return -1;
 	}
 
-	public abstract ContainerData getIntArray();
+	public abstract ContainerData getContainerData();
 	
 	@Override
 	public Component getDisplayName()
@@ -120,9 +119,13 @@ abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvi
 		}
 	}
 
-	public boolean requireSyncOnOpen()
+	/**
+	 * Whether this block entity should be marked as changed (sync to client)
+	 * on initial interaction of a player
+	 * @return if sync is needed
+	 */
+	public boolean requireSyncUponOpen()
 	{
 		return false;
 	}
-
 }

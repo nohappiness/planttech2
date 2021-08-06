@@ -18,6 +18,7 @@ public class GuideCommand
     public static ArgumentBuilder<CommandSourceStack, LiteralArgumentBuilder<CommandSourceStack>> register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
         // This does nothing, just for auto completion usage
+        //todo remove this when the client command is out
         LiteralArgumentBuilder<CommandSourceStack> command = Commands.literal("guide");
         for(String entry : POSSIBLE_OPTIONS)
             command = command.then(Commands.literal(entry));

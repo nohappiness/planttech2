@@ -16,15 +16,12 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.RangedWrapper;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -41,51 +38,32 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	private final LazyOptional<IItemHandler> inputs_provider;
 	private final LazyOptional<IItemHandler> outputs_provider;
 	
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return InfuserBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return InfuserBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return InfuserBlockEntity.this.biomassCap.getCurrentStorage();
-			case 3:
-				return InfuserBlockEntity.this.biomassCap.getMaxStorage();
-			case 4: 
-				return InfuserBlockEntity.this.ticksPassed;
-			case 5:
-				return InfuserBlockEntity.this.fluidTotal;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> InfuserBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> InfuserBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> InfuserBlockEntity.this.biomassCap.getCurrentStorage();
+						case 3 -> InfuserBlockEntity.this.biomassCap.getMaxStorage();
+						case 4 -> InfuserBlockEntity.this.ticksPassed;
+						case 5 -> InfuserBlockEntity.this.fluidTotal;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				InfuserBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				InfuserBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				InfuserBlockEntity.this.biomassCap.setCurrentStorage(value);
-			    break; 
-			case 3: 
-				InfuserBlockEntity.this.biomassCap.setMaxStorage(value);
-				break;
-			case 4: 
-				InfuserBlockEntity.this.ticksPassed = value;
-				break;
-			case 5:
-				InfuserBlockEntity.this.fluidTotal = value;
-				break;
+				case 0 -> InfuserBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> InfuserBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> InfuserBlockEntity.this.biomassCap.setCurrentStorage(value);
+				case 3 -> InfuserBlockEntity.this.biomassCap.setMaxStorage(value);
+				case 4 -> InfuserBlockEntity.this.ticksPassed = value;
+				case 5 -> InfuserBlockEntity.this.fluidTotal = value;
 			}
 		}
 		public int getCount()
@@ -149,7 +127,6 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	@Override
 	public int ticksPerItem()
 	{
-		
 		return fluidTotal > 0 ? fluidTotal: 100;
 	}
 
@@ -178,9 +155,9 @@ public class InfuserBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	@Nullable
