@@ -82,7 +82,7 @@ public class BaseElectricFence extends Block
             }
             else
             {
-                entityIn.remove(false);
+                entityIn.remove(Entity.RemovalReason.KILLED);
                 if (levelIn.isClientSide)
                     doCollideAnimation(pos, levelIn, 7, ParticleTypes.SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.8F, 20F);
             }
