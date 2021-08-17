@@ -46,7 +46,7 @@ public abstract class BaseContainerScreen<T extends BaseMenu> extends AbstractCo
 	@Override
 	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-			this.renderBackground(mStack);
+			this.renderBg(mStack, partialTicks, mouseX, mouseY);
 			super.render(mStack, mouseX, mouseY, partialTicks);
 			this.drawTooltips(mStack, mouseX, mouseY);
 //	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
@@ -73,7 +73,7 @@ public abstract class BaseContainerScreen<T extends BaseMenu> extends AbstractCo
 	protected void renderBg(PoseStack mStack, float partialTicks, int mouseX, int mouseY)
 	{
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().getTexture(getBackgroundTexture());
+		RenderSystem.setShaderTexture(0, getBackgroundTexture());
 		blit(mStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 

@@ -124,7 +124,7 @@ public class CompressorRecipe implements Recipe<Container>
 				        .getValue(new ResourceLocation(resultobject.get("item").getAsString()));
 
 				if (resultobject.has("potion_effect")) {
-					effect = ForgeRegistries.POTION_TYPES.getValue(new ResourceLocation(resultobject.get("potion_effect").getAsString()));
+					effect = ForgeRegistries.POTIONS.getValue(new ResourceLocation(resultobject.get("potion_effect").getAsString()));
 				}
 				if (resultobject.has("enchantment")) {
 				 	JsonObject enchantment = resultobject.getAsJsonObject("enchantment");

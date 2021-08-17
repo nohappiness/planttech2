@@ -29,6 +29,7 @@ public abstract class GuideBaseScreen extends Screen
 	public GuideBaseScreen(int scrollMax, boolean allowScroll, String title)
 	{
 		super(new TranslatableComponent(title));
+		this.init();
 		this.scrollMax = scrollMax;
 		this.allowScroll = allowScroll;
 	}
@@ -53,9 +54,9 @@ public abstract class GuideBaseScreen extends Screen
 	@Override
 	public void render(PoseStack pStack, int mouseX, int mouseY, float partialTicks)
 	{
-		this.renderBackground(pStack);
+		//this.renderBackground(pStack);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().getTexture(BACKGROUND);
+		RenderSystem.setShaderTexture(0, BACKGROUND);
 		if (fadeInTimer > 0)
 		{
 			fadeInTimer--;

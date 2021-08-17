@@ -47,7 +47,8 @@ public class SolarGeneratorScreen extends BaseContainerScreen<SolarGeneratorMenu
 	}
 	
 	@Override
-	protected ResourceLocation getBackgroundTexture() { return BACKGROUND; }
+	protected ResourceLocation getBackgroundTexture() {
+		return BACKGROUND; }
 
 	@Override
 	protected String getGuideEntryString()
