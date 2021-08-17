@@ -23,35 +23,25 @@ import java.util.List;
 public class ChipalyzerBlockEntity extends ConvertEnergyInventoryBlockEntity
 {
 	protected List<ChipalyzerRecipe> recipes = null;
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return ChipalyzerBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return ChipalyzerBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return ChipalyzerBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> ChipalyzerBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> ChipalyzerBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> ChipalyzerBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				ChipalyzerBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				ChipalyzerBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				ChipalyzerBlockEntity.this.ticksPassed = value;
-				break;
+				case 0 -> ChipalyzerBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> ChipalyzerBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> ChipalyzerBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -138,9 +128,9 @@ public class ChipalyzerBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	@Override

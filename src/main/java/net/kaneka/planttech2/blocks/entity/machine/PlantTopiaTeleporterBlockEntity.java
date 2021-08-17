@@ -13,31 +13,24 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 {
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return PlantTopiaTeleporterBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return PlantTopiaTeleporterBlockEntity.this.energystorage.getMaxEnergyStored();
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> PlantTopiaTeleporterBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> PlantTopiaTeleporterBlockEntity.this.energystorage.getMaxEnergyStored();
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				PlantTopiaTeleporterBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				PlantTopiaTeleporterBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
+				case 0 -> PlantTopiaTeleporterBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> PlantTopiaTeleporterBlockEntity.this.energystorage.setEnergyMaxStored(value);
 			}
 		}
 		public int getCount()
@@ -81,9 +74,9 @@ public class PlantTopiaTeleporterBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	public void doTeleportation()

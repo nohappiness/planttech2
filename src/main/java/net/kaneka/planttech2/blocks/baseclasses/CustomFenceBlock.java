@@ -43,7 +43,7 @@ public class CustomFenceBlock extends Block
 	public boolean canConnect(BlockState state, boolean isSideSolid, Direction direction)
 	{
 		Block block = state.getBlock();
-		boolean flag = block.getTags().contains(BlockTags.FENCES) && state.getMaterial() == this.material;
+		boolean flag = block.getTags().contains(BlockTags.FENCES.getName()) && state.getMaterial() == this.material;
 		boolean flag1 = block instanceof FenceGateBlock && FenceGateBlock.connectsToDirection(state, direction);
 		boolean flag2 = block instanceof CustomFenceBlock;
 		return !isExceptionForConnection(state) && isSideSolid || flag || flag1 || flag2;
@@ -62,7 +62,7 @@ public class CustomFenceBlock extends Block
 		BlockState blockstate1 = iblockreader.getBlockState(blockpos2);
 		BlockState blockstate2 = iblockreader.getBlockState(blockpos3);
 		BlockState blockstate3 = iblockreader.getBlockState(blockpos4);
-		return super.getStateForPlacement(context)
+		return defaultBlockState()
 				.setValue(NORTH, this.canConnect(blockstate, Block.canSupportCenter(iblockreader, blockpos1, Direction.SOUTH), Direction.SOUTH))
 				.setValue(EAST, this.canConnect(blockstate1, Block.canSupportCenter(iblockreader, blockpos2, Direction.WEST), Direction.WEST))
 				.setValue(SOUTH, this.canConnect(blockstate2, Block.canSupportCenter(iblockreader, blockpos3, Direction.NORTH), Direction.NORTH))
@@ -73,30 +73,25 @@ public class CustomFenceBlock extends Block
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		switch (rot) {
-			case CLOCKWISE_180:
-				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
-			case COUNTERCLOCKWISE_90:
-				return state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
-			case CLOCKWISE_90:
-				return state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
-			default:
-				return state;
-		}
+		return switch (rot)
+				{
+					case CLOCKWISE_180 -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(EAST, state.getValue(WEST)).setValue(SOUTH, state.getValue(NORTH)).setValue(WEST, state.getValue(EAST));
+					case COUNTERCLOCKWISE_90 -> state.setValue(NORTH, state.getValue(EAST)).setValue(EAST, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(WEST)).setValue(WEST, state.getValue(NORTH));
+					case CLOCKWISE_90 -> state.setValue(NORTH, state.getValue(WEST)).setValue(EAST, state.getValue(NORTH)).setValue(SOUTH, state.getValue(EAST)).setValue(WEST, state.getValue(SOUTH));
+					default -> state;
+				};
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn)
 	{
-		switch (mirrorIn) {
-			case LEFT_RIGHT:
-				return state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
-			case FRONT_BACK:
-				return state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
-			default:
-				return super.mirror(state, mirrorIn);
-		}
+		return switch (mirrorIn)
+				{
+					case LEFT_RIGHT -> state.setValue(NORTH, state.getValue(SOUTH)).setValue(SOUTH, state.getValue(NORTH));
+					case FRONT_BACK -> state.setValue(EAST, state.getValue(WEST)).setValue(WEST, state.getValue(EAST));
+					default -> super.mirror(state, mirrorIn);
+				};
 	}
 
 	@SuppressWarnings("deprecation")

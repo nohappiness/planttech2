@@ -18,37 +18,26 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
 {
-    protected final ContainerData field_array = new ContainerData()
+    protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return DNAExtractorBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return DNAExtractorBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return DNAExtractorBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> DNAExtractorBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> DNAExtractorBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> DNAExtractorBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				DNAExtractorBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				DNAExtractorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				DNAExtractorBlockEntity.this.ticksPassed = value;
-				;
-				break;
+				case 0 -> DNAExtractorBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> DNAExtractorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> DNAExtractorBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -116,9 +105,9 @@ public class DNAExtractorBlockEntity extends EnergyInventoryBlockEntity
     }
     
     @Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
     private void endProcess()

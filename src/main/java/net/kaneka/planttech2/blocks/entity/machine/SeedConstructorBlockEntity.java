@@ -19,46 +19,30 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class SeedConstructorBlockEntity extends ConvertEnergyInventoryFluidBlockEntity
 {
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return SeedConstructorBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return SeedConstructorBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-			    return SeedConstructorBlockEntity.this.biomassCap.getCurrentStorage();
-			case 3:
-			    return SeedConstructorBlockEntity.this.biomassCap.getMaxStorage();
-			case 4: 
-				return SeedConstructorBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> SeedConstructorBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> SeedConstructorBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> SeedConstructorBlockEntity.this.biomassCap.getCurrentStorage();
+						case 3 -> SeedConstructorBlockEntity.this.biomassCap.getMaxStorage();
+						case 4 -> SeedConstructorBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				SeedConstructorBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				SeedConstructorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				SeedConstructorBlockEntity.this.biomassCap.setCurrentStorage(value);
-			    break; 
-			case 3: 
-				SeedConstructorBlockEntity.this.biomassCap.setMaxStorage(value);
-				break;
-			case 4: 
-				SeedConstructorBlockEntity.this.ticksPassed = value;
-				break; 
+				case 0 -> SeedConstructorBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> SeedConstructorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> SeedConstructorBlockEntity.this.biomassCap.setCurrentStorage(value);
+				case 3 -> SeedConstructorBlockEntity.this.biomassCap.setMaxStorage(value);
+				case 4 -> SeedConstructorBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -114,9 +98,9 @@ public class SeedConstructorBlockEntity extends ConvertEnergyInventoryFluidBlock
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	@Override

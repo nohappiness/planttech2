@@ -43,57 +43,32 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return MegaFurnaceBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return MegaFurnaceBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return MegaFurnaceBlockEntity.this.ticksPassed[0];
-			case 3:
-				return MegaFurnaceBlockEntity.this.ticksPassed[1];
-			case 4:
-				return MegaFurnaceBlockEntity.this.ticksPassed[2];
-			case 5:
-				return MegaFurnaceBlockEntity.this.ticksPassed[3];
-			case 6:
-				return MegaFurnaceBlockEntity.this.ticksPassed[4];
-			case 7:
-				return MegaFurnaceBlockEntity.this.ticksPassed[5];
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> MegaFurnaceBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> MegaFurnaceBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> MegaFurnaceBlockEntity.this.ticksPassed[0];
+						case 3 -> MegaFurnaceBlockEntity.this.ticksPassed[1];
+						case 4 -> MegaFurnaceBlockEntity.this.ticksPassed[2];
+						case 5 -> MegaFurnaceBlockEntity.this.ticksPassed[3];
+						case 6 -> MegaFurnaceBlockEntity.this.ticksPassed[4];
+						case 7 -> MegaFurnaceBlockEntity.this.ticksPassed[5];
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				MegaFurnaceBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				MegaFurnaceBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				MegaFurnaceBlockEntity.this.ticksPassed[0] = value;
-				break;
-			case 3:
-				MegaFurnaceBlockEntity.this.ticksPassed[1] = value;
-				break;
-			case 4:
-				MegaFurnaceBlockEntity.this.ticksPassed[2] = value;
-				break;
-			case 5:
-				MegaFurnaceBlockEntity.this.ticksPassed[3] = value;
-				break;
-			case 6:
-				MegaFurnaceBlockEntity.this.ticksPassed[4] = value;
-				break;
-			case 7:
-				MegaFurnaceBlockEntity.this.ticksPassed[5] = value;
-				break;
+				case 0 -> MegaFurnaceBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> MegaFurnaceBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> MegaFurnaceBlockEntity.this.ticksPassed[0] = value;
+				case 3 -> MegaFurnaceBlockEntity.this.ticksPassed[1] = value;
+				case 4 -> MegaFurnaceBlockEntity.this.ticksPassed[2] = value;
+				case 5 -> MegaFurnaceBlockEntity.this.ticksPassed[3] = value;
+				case 6 -> MegaFurnaceBlockEntity.this.ticksPassed[4] = value;
+				case 7 -> MegaFurnaceBlockEntity.this.ticksPassed[5] = value;
 			}
 		}
 		public int getCount()
@@ -163,7 +138,7 @@ public class MegaFurnaceBlockEntity extends EnergyInventoryBlockEntity
 	}
 	
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
 		return field_array;
 	}

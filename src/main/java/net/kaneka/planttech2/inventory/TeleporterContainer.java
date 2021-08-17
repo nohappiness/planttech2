@@ -31,12 +31,11 @@ public class TeleporterContainer extends AbstractContainerMenu
 	@Override
 	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
-		return stack;
+		return ItemStack.EMPTY;
 	}
 	
 	public ItemStack getStack()
 	{
 		return stack; 
 	}
-
 }

@@ -28,9 +28,6 @@ public class DevListCommand
             ,"MoonlitLamps", of()
             ,"andrew0030", of("0b37421b-e74e-4852-bf57-23907d295ea1")
             ,"TEMHOTAOKEAHA", of("7f82b856-345b-4b8c-a55b-6a7a0324c1b5"));
-//    public static final Map<String, List<String>> SPECIAL_THANKS = new ImmutableMap.Builder<String, List<String>>()
-//        .put("Sciwhiz12", of())
-//        .build();
 
     public static LiteralArgumentBuilder<CommandSourceStack> register()
     {

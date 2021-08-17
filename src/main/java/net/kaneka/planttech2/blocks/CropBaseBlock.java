@@ -313,7 +313,7 @@ public class CropBaseBlock extends ModBlockEntityBlock
 	/*----------------------RENDERING------------------*/
 
 	@Override
-	public RenderShape getRenderShape(BlockState iBlockState)
+	public RenderShape getRenderShape(BlockState state)
 	{
 		return RenderShape.MODEL;
 	}
@@ -321,11 +321,6 @@ public class CropBaseBlock extends ModBlockEntityBlock
 	public String getEntryName()
 	{
 		return entryName;
-	}
-
-	public static boolean isOpaque(VoxelShape shape)
-	{
-		return true;
 	}
 
 	@Nullable
@@ -337,9 +332,9 @@ public class CropBaseBlock extends ModBlockEntityBlock
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState p_153213_, BlockEntityType<T> p_153214_) {
-		if(!level.isClientSide) return CropsBlockEntity::tick;
-		return null;
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState p_153213_, BlockEntityType<T> p_153214_)
+	{
+		return level.isClientSide() ? null : CropsBlockEntity::tick;
 	}
 
 	public static class ColorHandler implements BlockColor
@@ -351,6 +346,5 @@ public class CropBaseBlock extends ModBlockEntityBlock
 				return PlantTechMain.getCropList().getByName(((CropBaseBlock) state.getBlock()).getEntryName()).getSeedColor();
 			return 0xFFFFFFFF;
 		}
-
 	}
 }

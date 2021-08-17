@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Deprecated
 public class CableBlock extends Block implements EntityBlock
 {
 	public static final IntegerProperty

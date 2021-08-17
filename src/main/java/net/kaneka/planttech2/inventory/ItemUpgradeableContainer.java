@@ -66,46 +66,7 @@ public class ItemUpgradeableContainer extends AbstractContainerMenu {
 	@Override
 	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player)
 	{
-//		System.out.println("world isremote:" + player.getEntityWorld().isRemote + "slot: " + this.slot + "clicked slot: " + slotId);
 		if(slotId != this.slot) super.clicked(slotId, dragType, clickTypeIn, player);
-	}
-
-	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
-		ItemStack stack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			ItemStack stack1 = slot.getItem();
-			stack = stack1.copy();
-			int invsize = BaseUpgradeableItem.getInventorySize(stack);
-
-			if (index > 35) {
-				if (!this.moveItemStackTo(stack1, 0, 35, true)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (index < 36) {
-				if (!this.moveItemStackTo(stack1, 36, 36 + invsize, false)) {
-					return ItemStack.EMPTY;
-				} else if (index >= 0 && index < 27) {
-					if (!this.moveItemStackTo(stack1, 27, 35, false)) return ItemStack.EMPTY;
-				} else if (index >= 27 && index < 36 && !this.moveItemStackTo(stack1, 0, 26, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!this.moveItemStackTo(stack1, 0, 35, false)) {
-				return ItemStack.EMPTY;
-			}
-
-
-			if (stack1.isEmpty()) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-
-			}
-			if (stack1.getCount() == stack.getCount()) return ItemStack.EMPTY;
-			slot.onTake(playerIn, stack1);
-		}
-		return stack;
 	}
 
 	class ChangeCheckSlot extends SlotItemHandlerWithInfo {

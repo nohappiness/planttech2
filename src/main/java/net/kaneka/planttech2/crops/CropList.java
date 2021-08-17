@@ -88,9 +88,7 @@ public class CropList implements ISerializable
 	{
 		CropEntry prev = internalMap.put(name, new CropEntry(name, seedColor, hasParticle, defaultConfig));
 		if (prev != null)
-		{
 			PlantTechMain.LOGGER.warn("A duplicate crop entry for {} was registered; this may be a coding mistake", prev.getName());
-		}
 	}
 
 	public void removeEntry(String name)

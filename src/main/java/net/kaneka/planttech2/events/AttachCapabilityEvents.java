@@ -50,7 +50,7 @@ public class AttachCapabilityEvents
     @SubscribeEvent
     public static void attachTileEntityCapability(final AttachCapabilitiesEvent<BlockEntity> event)
     {
-        if(event.getObject() instanceof EnergyInventoryFluidBlockEntity)
+        if (event.getObject() instanceof EnergyInventoryFluidBlockEntity)
             if (!event.getCapabilities().containsKey(ModReferences.BIOMASSFLUIDENERGYCAP))
                 event.addCapability(ModReferences.BIOMASSFLUIDENERGYCAP, new BiomassFluidEnergy());
     }

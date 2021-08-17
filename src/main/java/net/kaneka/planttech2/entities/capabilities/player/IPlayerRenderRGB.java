@@ -1,5 +1,6 @@
 package net.kaneka.planttech2.entities.capabilities.player;
 
+@Deprecated
 public interface IPlayerRenderRGB
 {
     float[] getRGB();

@@ -5,6 +5,7 @@ import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyBlockEntity
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryBlockEntity;
 import net.kaneka.planttech2.blocks.entity.machine.baseclasses.EnergyInventoryFluidBlockEntity;
 import net.kaneka.planttech2.energy.IItemChargeable;
+import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.items.KnowledgeChip;
 import net.kaneka.planttech2.items.TierItem;
 import net.kaneka.planttech2.registries.ModItems;
@@ -25,7 +26,7 @@ import java.util.function.Predicate;
 public class BaseMenu extends AbstractContainerMenu
 {
 	protected final EnergyInventoryBlockEntity BlockEntity;
-	protected final ContainerData fieldArray;
+	protected final ContainerData data;
 
 	public BaseMenu(int id, MenuType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
 	{
@@ -36,8 +37,8 @@ public class BaseMenu extends AbstractContainerMenu
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
 		this.BlockEntity = BlockEntity;
-		fieldArray = BlockEntity.getIntArray();
-		addDataSlots(fieldArray);
+		data = BlockEntity.getContainerData();
+		addDataSlots(data);
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class BaseMenu extends AbstractContainerMenu
 
 	public int getValue(int id)
 	{
-		return fieldArray.get(id);
+		return data.get(id);
 	}
 
 	protected LimitedItemInfoSlot createSpeedUpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
@@ -119,6 +120,43 @@ public class BaseMenu extends AbstractContainerMenu
 	{
 		return new LimitedItemInfoSlot(handler, index, xPosition, yPosition, usage).setConditions(
 				(stack) -> (isEmpty && stack.getItem() == ModItems.DNA_CONTAINER_EMPTY) || (!isEmpty && stack.getItem() == ModItems.DNA_CONTAINER && stack.hasTag()));
+	}
+
+	@Override
+	public ItemStack quickMoveStack(Player playerIn, int index)
+	{
+		ItemStack stack = ItemStack.EMPTY;
+		Slot slot = slots.get(index);
+		if(slot.hasItem())
+		{
+			ItemStack stack1 = slot.getItem();
+			stack = stack1.copy();
+			if (index > 35)
+			{
+				if (!this.moveItemStackTo(stack1, 0, 34, true))
+					return ItemStack.EMPTY;
+			}
+			else
+			{
+				if (!this.moveItemStackTo(stack1, 36, 37, false) && stack1.getItem() instanceof CropSeedItem)
+					return ItemStack.EMPTY;
+				else if (index >= 0 && index < 27)
+				{
+					if(!this.moveItemStackTo(stack1, 27, 35, false))
+						return ItemStack.EMPTY;
+				}
+				else if (index >= 27 && !this.moveItemStackTo(stack1, 0, 26, false))
+					return ItemStack.EMPTY;
+			}
+			if (stack1.isEmpty())
+				slot.set(ItemStack.EMPTY);
+			else
+				slot.setChanged();
+			if (stack1.getCount() == stack.getCount())
+				return ItemStack.EMPTY;
+			slot.onTake(playerIn, stack1);
+		}
+		return stack;
 	}
 
 	public class SlotItemHandlerWithInfo extends SlotItemHandler

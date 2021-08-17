@@ -41,41 +41,28 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	private final LazyOptional<IItemHandler> inputs_provider;
 	private final LazyOptional<IItemHandler> outputs_provider;
 	
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return CompressorBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return CompressorBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return CompressorBlockEntity.this.ticksPassed;
-			case 3:
-				return CompressorBlockEntity.this.selectedId;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> CompressorBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> CompressorBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> CompressorBlockEntity.this.ticksPassed;
+						case 3 -> CompressorBlockEntity.this.selectedId;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				CompressorBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				CompressorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				CompressorBlockEntity.this.ticksPassed = value;
-				break;
-			case 3:
-				CompressorBlockEntity.this.setSelectedId(value);
-				break;
+				case 0 -> CompressorBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> CompressorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> CompressorBlockEntity.this.ticksPassed = value;
+				case 3 -> CompressorBlockEntity.this.setSelectedId(value);
 			}
 		}
 		public int getCount()
@@ -98,17 +85,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 		outputs_provider = LazyOptional.of(() -> outputs);
 	}
 
-//	@Override
-//	public void tick()
-//	{
-//		super.tick();
-//		if (Level != null && world.getGameTime() % 20 == 0)
-//		{
-//			System.out.println(world.isRemote);
-//			System.out.println(selectedId);
-//		}
-//	}
-
 	@Override
     public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing)
     {
@@ -128,10 +104,7 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 		boolean inputDone = false;
 		
 		if (recipeList == null || previousInput != input.getItem())
-		{
 			initRecipeList();
-		}
-		
 		if (getSelectedId() >= 0)
 		{
 			if (!recipeList.isEmpty() && recipeList.size() > getSelectedId())
@@ -170,18 +143,13 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	public void setSelectedId(int selectedId)
 	{
-//		if (Level != null)
-//		{
-//			System.out.println(world.isRemote);
-//			System.out.println("set" + selectedId);
-//		}
 		this.selectedId = selectedId + 1;
 		notifyClient();
 	}
@@ -207,7 +175,7 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 		// set new values
 		HashMap<Integer, Pair<ItemStack, Integer>> temprecipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
 		List<Integer> keys = new ArrayList<Integer>();
-		recipeList = new HashMap<Integer, Pair<ItemStack, Integer>>();
+		recipeList = new HashMap<>();
 		ItemStack particleStack = itemhandler.getStackInSlot(0);
 		if(!particleStack.isEmpty())
 		{
@@ -223,7 +191,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 						 temprecipeList.put(Item.getId(compRecipe.getResultItem().getItem()),
 						 Pair.of(compRecipe.getResultItem(), compRecipe.getAmountInput()));
 						 keys.add(Item.getId(compRecipe.getResultItem().getItem()));
-						 
 						 previousInput = particle;
 					 }
         		 }
@@ -258,8 +225,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	{
 		return save(new CompoundTag());
 	}
-
-
 
 	@Override
 	public CompoundTag save(CompoundTag compound)
@@ -314,7 +279,7 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public boolean requireSyncOnOpen()
+	public boolean requireSyncUponOpen()
 	{
 		return true;
 	}

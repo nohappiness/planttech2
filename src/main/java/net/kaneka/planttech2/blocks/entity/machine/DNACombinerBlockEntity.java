@@ -18,36 +18,26 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 {
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return DNACombinerBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return DNACombinerBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return DNACombinerBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> DNACombinerBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> DNACombinerBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> DNACombinerBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				DNACombinerBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				DNACombinerBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				DNACombinerBlockEntity.this.ticksPassed = value;
-				break;
+				case 0 -> DNACombinerBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> DNACombinerBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> DNACombinerBlockEntity.this.ticksPassed = value;
 			}
 
 		}
@@ -93,9 +83,9 @@ public class DNACombinerBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	private CompoundTag getCombinedNBT(CompoundTag nbt1, CompoundTag nbt2)

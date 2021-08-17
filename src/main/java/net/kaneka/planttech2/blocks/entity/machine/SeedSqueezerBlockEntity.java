@@ -30,46 +30,30 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 {
 	private final RangedWrapper inputs;
 	private final LazyOptional<IItemHandler> inputs_provider;
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-				case 0:
-					return SeedSqueezerBlockEntity.this.energystorage.getEnergyStored();
-				case 1:
-					return SeedSqueezerBlockEntity.this.energystorage.getMaxEnergyStored();
-				case 2:
-					return SeedSqueezerBlockEntity.this.biomassCap.getCurrentStorage();
-				case 3:
-					return SeedSqueezerBlockEntity.this.biomassCap.getMaxStorage();
-				case 4:
-					return SeedSqueezerBlockEntity.this.ticksPassed;
-				default:
-					return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> SeedSqueezerBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> SeedSqueezerBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> SeedSqueezerBlockEntity.this.biomassCap.getCurrentStorage();
+						case 3 -> SeedSqueezerBlockEntity.this.biomassCap.getMaxStorage();
+						case 4 -> SeedSqueezerBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-				case 0:
-					SeedSqueezerBlockEntity.this.energystorage.setEnergyStored(value);
-					break;
-				case 1:
-					SeedSqueezerBlockEntity.this.energystorage.setEnergyMaxStored(value);
-					break;
-				case 2:
-					SeedSqueezerBlockEntity.this.biomassCap.setCurrentStorage(value);
-					break;
-				case 3:
-					SeedSqueezerBlockEntity.this.biomassCap.setMaxStorage(value);
-					break;
-				case 4:
-					SeedSqueezerBlockEntity.this.ticksPassed = value;
-					break;
+				case 0 -> SeedSqueezerBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> SeedSqueezerBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> SeedSqueezerBlockEntity.this.biomassCap.setCurrentStorage(value);
+				case 3 -> SeedSqueezerBlockEntity.this.biomassCap.setMaxStorage(value);
+				case 4 -> SeedSqueezerBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -148,9 +132,9 @@ public class SeedSqueezerBlockEntity extends EnergyInventoryFluidBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	private int getSqueezeableItem()

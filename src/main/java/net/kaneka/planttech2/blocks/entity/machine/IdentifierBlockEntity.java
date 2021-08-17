@@ -31,36 +31,26 @@ public class IdentifierBlockEntity extends EnergyInventoryBlockEntity
 	private final RangedWrapper outputs;
 	private final LazyOptional<IItemHandler> inputs_provider;
 	private final LazyOptional<IItemHandler> outputs_provider;
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-			case 0:
-				return IdentifierBlockEntity.this.energystorage.getEnergyStored();
-			case 1:
-				return IdentifierBlockEntity.this.energystorage.getMaxEnergyStored();
-			case 2:
-				return IdentifierBlockEntity.this.ticksPassed;
-			default:
-				return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> IdentifierBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> IdentifierBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> IdentifierBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-			case 0:
-				IdentifierBlockEntity.this.energystorage.setEnergyStored(value);
-				break;
-			case 1:
-				IdentifierBlockEntity.this.energystorage.setEnergyMaxStored(value);
-				break;
-			case 2:
-				IdentifierBlockEntity.this.ticksPassed = value;
-				break;
+				case 0 -> IdentifierBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> IdentifierBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> IdentifierBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -119,9 +109,9 @@ public class IdentifierBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	private boolean canIdentify()

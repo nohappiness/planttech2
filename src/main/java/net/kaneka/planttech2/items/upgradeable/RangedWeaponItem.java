@@ -31,24 +31,17 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	protected ItemStack findAmmo(Player player)
 	{
 		if (this.isArrow(player.getItemInHand(InteractionHand.OFF_HAND)))
-		{
 			return player.getItemInHand(InteractionHand.OFF_HAND);
-		} 
 		else if (this.isArrow(player.getItemInHand(InteractionHand.MAIN_HAND)))
-		{
 			return player.getItemInHand(InteractionHand.MAIN_HAND);
-		} 
 		else
 		{
 			for (int i = 0; i < player.getInventory().getContainerSize(); ++i)
 			{
 				ItemStack itemstack = player.getInventory().getItem(i);
 				if (this.isArrow(itemstack))
-				{
 					return itemstack;
-				}
 			}
-
 			return ItemStack.EMPTY;
 		}
 	}
@@ -61,29 +54,22 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entityLiving, int timeLeft)
 	{
-		
 		if (entityLiving instanceof Player player)
 		{
 			boolean flag = player.getAbilities().instabuild || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 			ItemStack itemstack = this.findAmmo(player);
-
 			int i = this.getUseDuration(stack) - timeLeft;
 			i = ForgeEventFactory.onArrowLoose(stack, level, player, i, !itemstack.isEmpty() || flag);
 			if (i < 0)
 				return;
-
 			if (!itemstack.isEmpty() || flag)
 			{
 				if (itemstack.isEmpty())
-				{
 					itemstack = new ItemStack(Items.ARROW);
-				}
-
 				float f = getArrowVelocity(i);
 				if (!((double) f < 0.1D))
 				{
-					boolean flag1 = player.getAbilities().instabuild
-					        || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, player));
+					boolean flag1 = player.getAbilities().instabuild || (itemstack.getItem() instanceof ArrowItem && ((ArrowItem) itemstack.getItem()).isInfinite(itemstack, stack, player));
 					if (!level.isClientSide)
 					{
 						ArrowItem itemarrow = (ArrowItem) (itemstack.getItem() instanceof ArrowItem ? itemstack.getItem() : Items.ARROW);
@@ -91,33 +77,18 @@ public class RangedWeaponItem extends UpgradeableHandItem
 						entityarrow = customizeArrow(entityarrow);
 						entityarrow.shoot(player.xRotO, player.yRotO, 0.0F, f * 3.0F, 1.0F);
 						if (f == 1.0F)
-						{
 							entityarrow.setCritArrow(true);
-						}
-
 						int j = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, stack);
 						if (j > 0)
-						{
 							entityarrow.setBaseDamage(entityarrow.getBaseDamage() + (double) j * 0.5D + 0.5D);
-						}
-
 						int k = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, stack);
 						if (k > 0)
-						{
 							entityarrow.setKnockback(k);
-						}
-
 						if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, stack) > 0)
-						{
 							entityarrow.setSecondsOnFire(100);
-						}
-
 						if(!player.isCreative())extractEnergy(stack, getEnergyCost(stack), false);
 						if (flag1 || player.getAbilities().instabuild && (itemstack.getItem() == Items.SPECTRAL_ARROW || itemstack.getItem() == Items.TIPPED_ARROW))
-						{
 							entityarrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-						}
-
 						level.addFreshEntity(entityarrow);
 						extractEnergy(stack, getEnergyCost(stack), false);
 					}
@@ -129,9 +100,7 @@ public class RangedWeaponItem extends UpgradeableHandItem
 					{
 						itemstack.shrink(1);
 						if (itemstack.isEmpty())
-						{
 							player.getInventory().removeItem(itemstack);
-						}
 					}
 				}
 			}
@@ -143,13 +112,9 @@ public class RangedWeaponItem extends UpgradeableHandItem
 		float f = (float) charge / 20.0F;
 		f = (f * f + f * 2.0F) / 3.0F;
 		if (f > 1.0F)
-		{
 			f = 1.0F;
-		}
-
 		return f;
 	}
-
 
 	public int getUseDuration(ItemStack stack)
 	{
@@ -165,35 +130,25 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand)
 	{
 		ItemStack stack = player.getItemInHand(hand);
-		if(!player.isCrouching())
+		if (!player.isCrouching())
 		{
-			System.out.println(getEnergyCost(stack));
     		if(extractEnergy(stack, getEnergyCost(stack), true) >= getEnergyCost(stack))
     		{
-        		
         		boolean flag = !this.findAmmo(player).isEmpty();
-        
         		InteractionResultHolder<ItemStack> ret = ForgeEventFactory.onArrowNock(stack, level, player, hand, flag);
         		if (ret != null)
         			return ret;
-        
         		if (!player.getAbilities().instabuild && !flag)
-        		{
-        			return flag ? new InteractionResultHolder<>(InteractionResult.PASS, stack) : new InteractionResultHolder<>(InteractionResult.FAIL, stack);
-        		} else
+        			return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+        		else
         		{
         			player.startUsingItem(hand);
         			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         		}
     		}
 		}
-		else
-		{
-			if (!level.isClientSide && player instanceof ServerPlayer)
-			{
+		else if (!level.isClientSide && player instanceof ServerPlayer)
     			NetworkHooks.openGui((ServerPlayer) player, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
-			}
-		}
 		return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
 	}
 
@@ -201,5 +156,4 @@ public class RangedWeaponItem extends UpgradeableHandItem
 	{
 		return arrow;
 	}
-
 }

@@ -75,11 +75,7 @@ public class FacingWallLightBase extends Block
     {
         if (state.getValue(LIGHT_STATUS) != 0)
         {
-            /*if (!projectile.removed && projectile.isAlive())
-            {
-                projectile.remove();
-            }*/
-            levelIn.playSound((Player) null, hit.getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 0.8F, 1.0F);
+            levelIn.playSound(null, hit.getBlockPos(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 0.8F, 1.0F);
             levelIn.setBlockAndUpdate(hit.getBlockPos(), defaultBlockState()
                     .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))
                     .setValue(LIGHT_STATUS, state.getValue(LIGHT_STATUS) - 1)

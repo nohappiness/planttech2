@@ -26,8 +26,8 @@ public class EnergyStorageBlock extends MachineBaseBlock
 
     public EnergyStorageBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator, int tier)
     {
-	super(teCreator, tier);
-	this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TIER, 0));
+        super(teCreator, tier);
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TIER, 0));
     }
 
 	public EnergyStorageBlock(BiFunction<BlockPos, BlockState, ? extends BlockEntity> teCreator)
@@ -35,29 +35,28 @@ public class EnergyStorageBlock extends MachineBaseBlock
 		this(teCreator, 0);
 	}
 
-
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context)
     {
-	return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	    return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
     {
-	 level.setBlock(pos, this.defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()), 2);
+	    level.setBlock(pos, this.defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()), 2);
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rot)
     {
-	return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
+	    return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
 	@Override
     public BlockState mirror(BlockState state, Mirror mirrorIn)
     {
-	return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
+	    return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 
     @Override

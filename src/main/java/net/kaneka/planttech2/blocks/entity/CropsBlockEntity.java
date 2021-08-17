@@ -44,7 +44,6 @@ public class CropsBlockEntity extends BlockEntity
 				}
 			}
 		}
-
 	}
 
 	public void setTraits(HashMapCropTraits traits)

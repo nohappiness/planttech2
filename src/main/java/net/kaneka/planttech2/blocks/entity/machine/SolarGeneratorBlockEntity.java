@@ -17,36 +17,26 @@ import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
 
 public class SolarGeneratorBlockEntity extends EnergyInventoryBlockEntity
 {
-	protected final ContainerData field_array = new ContainerData()
+	protected final ContainerData data = new ContainerData()
 	{
 		public int get(int index)
 		{
-			switch (index)
-			{
-				case 0:
-					return SolarGeneratorBlockEntity.this.energystorage.getEnergyStored();
-				case 1:
-					return SolarGeneratorBlockEntity.this.energystorage.getMaxEnergyStored();
-				case 2:
-					return SolarGeneratorBlockEntity.this.ticksPassed;
-				default:
-					return 0;
-			}
+			return switch (index)
+					{
+						case 0 -> SolarGeneratorBlockEntity.this.energystorage.getEnergyStored();
+						case 1 -> SolarGeneratorBlockEntity.this.energystorage.getMaxEnergyStored();
+						case 2 -> SolarGeneratorBlockEntity.this.ticksPassed;
+						default -> 0;
+					};
 		}
 
 		public void set(int index, int value)
 		{
 			switch (index)
 			{
-				case 0:
-					SolarGeneratorBlockEntity.this.energystorage.setEnergyStored(value);
-					break;
-				case 1:
-					SolarGeneratorBlockEntity.this.energystorage.setEnergyMaxStored(value);
-					break;
-				case 2:
-					SolarGeneratorBlockEntity.this.ticksPassed = value;
-					break;
+				case 0 -> SolarGeneratorBlockEntity.this.energystorage.setEnergyStored(value);
+				case 1 -> SolarGeneratorBlockEntity.this.energystorage.setEnergyMaxStored(value);
+				case 2 -> SolarGeneratorBlockEntity.this.ticksPassed = value;
 			}
 		}
 		public int getCount()
@@ -85,26 +75,21 @@ public class SolarGeneratorBlockEntity extends EnergyInventoryBlockEntity
 	}
 
 	@Override
-	public ContainerData getIntArray()
+	public ContainerData getContainerData()
 	{
-		return field_array;
+		return data;
 	}
 
 	private int getEnergyPerTick(int focusLevel)
 	{
-		switch (focusLevel)
-		{
-			case 1:
-				return 20;
-			case 2:
-				return 60;
-			case 3:
-				return 180;
-			case 4:
-				return 540;
-		}
-
-		return 0;
+		return switch (focusLevel)
+				{
+					case 1 -> 20;
+					case 2 -> 60;
+					case 3 -> 180;
+					case 4 -> 540;
+					default -> 0;
+				};
 	}
 
 	public int getTicksPerAmount()

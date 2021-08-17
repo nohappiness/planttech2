@@ -82,7 +82,7 @@ public class BaseElectricFence extends Block
             }
             else
             {
-                entityIn.remove(Entity.RemovalReason.DISCARDED);
+                entityIn.remove(Entity.RemovalReason.KILLED);
                 if (levelIn.isClientSide)
                     doCollideAnimation(pos, levelIn, 7, ParticleTypes.SMOKE, SoundEvents.FIRE_EXTINGUISH, 0.8F, 20F);
             }
@@ -113,6 +113,7 @@ public class BaseElectricFence extends Block
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter levelIn, List<Component> tooltip, TooltipFlag flagIn)
     {
+        //todo use TranslatableComponent instead
         tooltip.add(new TextComponent("can be dismantled by wrench, connect to a powered energy supplier or electric fence to activate"));
     }
 }
