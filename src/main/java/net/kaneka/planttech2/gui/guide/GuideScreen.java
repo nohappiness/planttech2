@@ -226,6 +226,8 @@ public class GuideScreen extends Screen
 	@Override
 	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
+		if (minecraft == null)
+			return;
 		this.renderBackground(mStack);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		minecraft.getTextureManager().getTexture(BACKGROUND);
