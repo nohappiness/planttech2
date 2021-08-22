@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 public abstract class GuideBaseScreen extends Screen
 {
 	protected static final ResourceLocation BACKGROUND = new ResourceLocation(PlantTechMain.MODID, "textures/gui/plantencyclopaedia_big.png");
-	protected static final int TEXT_COLOR = 0x00e803;
+	protected static final int TEXT_COLOR = 0x000000;
 	protected int xSize = 512;
 	protected int ySize = 196;
 	protected int guiLeft;
@@ -54,7 +54,8 @@ public abstract class GuideBaseScreen extends Screen
 	@Override
 	public void render(PoseStack pStack, int mouseX, int mouseY, float partialTicks)
 	{
-		//this.renderBackground(pStack);
+		if (minecraft == null)
+			return;
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.setShaderTexture(0, BACKGROUND);
 		if (fadeInTimer > 0)

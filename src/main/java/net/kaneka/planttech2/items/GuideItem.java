@@ -9,8 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 
 public class GuideItem extends Item
 {
@@ -23,7 +21,9 @@ public class GuideItem extends Item
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn)
     {
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
+        if(level.isClientSide()) PlantTechClient.openGuideScreen(this);
+        //DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> PlantTechClient.openGuideScreen(this));
+        //NetworkHooks.openGui(playerIn, );
 	/*
 	if(!worldIn.isRemote)
 	{
