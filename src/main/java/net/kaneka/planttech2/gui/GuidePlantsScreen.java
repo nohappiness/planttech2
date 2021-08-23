@@ -38,12 +38,12 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	public void init()
 	{
 		super.init();
-		final int xPos = this.guiLeft + 28, baseYPos = this.guiTop + 10, width = 100, height = 20;
+		final int xPos = this.guiLeft + 31, baseYPos = this.guiTop + 10, width = 100, height = 20;
 		for (int id = 0; id < 8; id++)
 		{
 			addRenderableWidget(new CustomButton(id, xPos, baseYPos + (id * 22), width, height, "Button " + (id + 1), GuidePlantsScreen.this::buttonClicked));
 		}
-		updateButtons();
+		if(buttonEntryNames != null) updateButtons();
 	}
 
 	@Override
@@ -103,16 +103,21 @@ public class GuidePlantsScreen extends GuideBaseScreen
 	{
 		if (!hasSelection)
 		{
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.non_selected"), this.guiLeft + 255, this.guiTop + 90, TEXT_COLOR);
+			drawCenteredString(mStack,  new TranslatableComponent("gui.non_selected").getString(), this.guiLeft + 255, this.guiTop + 90);
 		} else
 		{
-			drawCenteredString(mStack, font, selectedName, this.guiLeft + 263, this.guiTop + 15, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.soil"), this.guiLeft + 223, this.guiTop + 54, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.temperature"), this.guiLeft + 306, this.guiTop + 54, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.seeds"), this.guiLeft + 263, this.guiTop + 87, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.drops"), this.guiLeft + 263, this.guiTop + 120, TEXT_COLOR);
-			drawCenteredString(mStack, font, new TranslatableComponent("gui.parents"), this.guiLeft + 263, this.guiTop + 153, TEXT_COLOR);
+			drawCenteredString(mStack, selectedName.getString(), this.guiLeft + 271, this.guiTop + 15);
+			drawCenteredString(mStack, new TranslatableComponent("gui.soil").getString(), this.guiLeft + 225, this.guiTop + 54);
+			drawCenteredString(mStack, new TranslatableComponent("gui.temperature").getString(), this.guiLeft + 314, this.guiTop + 54);
+			drawCenteredString(mStack, new TranslatableComponent("gui.seeds").getString(), this.guiLeft + 271, this.guiTop + 87);
+			drawCenteredString(mStack, new TranslatableComponent("gui.drops").getString(), this.guiLeft + 271, this.guiTop + 120);
+			drawCenteredString(mStack, new TranslatableComponent("gui.parents").getString(), this.guiLeft + 271, this.guiTop + 153);
 		}
+	}
+
+	protected void drawCenteredString(PoseStack mStack, String string, int posX, int posY)
+	{
+		font.draw(mStack, string, posX - (font.width(string) / 2), posY, Integer.parseInt("000000", 16));
 	}
 
 	protected void buttonClicked(CustomButton button)

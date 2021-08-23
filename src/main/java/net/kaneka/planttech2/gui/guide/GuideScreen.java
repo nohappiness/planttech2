@@ -52,7 +52,8 @@ public class GuideScreen extends Screen
 		this.menuid = menuid; 
 		this.entryid = entryid;
 	}
-	
+
+
 	@Override
 	public void init()
 	{
@@ -230,7 +231,7 @@ public class GuideScreen extends Screen
 			return;
 		this.renderBackground(mStack);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		minecraft.getTextureManager().getTexture(BACKGROUND);
+		RenderSystem.setShaderTexture(0, BACKGROUND);
 		
 		this.drawBackground(mStack);
 		this.drawForeground(mStack);
