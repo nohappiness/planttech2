@@ -76,4 +76,15 @@ public class MachineBulbItem extends BlockItem
 	{
 		return neededBiomass;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "MachineBulbItem{" +
+				"hull=" + hull.get() +
+				", crop=" + crop.get() +
+				", tier=" + tier +
+				", neededBiomass=" + neededBiomass +
+				'}';
+	}
 }

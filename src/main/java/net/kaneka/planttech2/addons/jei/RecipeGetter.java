@@ -5,6 +5,7 @@ import net.kaneka.planttech2.addons.jei.carver.CarverRecipe;
 import net.kaneka.planttech2.addons.jei.crossbreeding.CrossbreedingRecipe;
 import net.kaneka.planttech2.addons.jei.machine_growing.MachineGrowingRecipe;
 import net.kaneka.planttech2.addons.jei.machinebulbreprocessor.MachinebulbReprocessorRecipe;
+import net.kaneka.planttech2.blocks.GrowingBlock;
 import net.kaneka.planttech2.crops.CropEntry;
 import net.kaneka.planttech2.crops.CropList;
 import net.kaneka.planttech2.crops.ParentPair;
@@ -125,7 +126,7 @@ public class RecipeGetter
 		List<MachineGrowingRecipe> results = new ArrayList<MachineGrowingRecipe>();
 		for(Supplier<MachineBulbItem> bulb: ModItems.MACHINE_BULBS)
 		{
-			results.add(new MachineGrowingRecipe(new ItemStack(bulb.get()), new ItemStack(bulb.get().getHull()), new ItemStack(bulb.get().getMachine())));
+			results.add(new MachineGrowingRecipe(new ItemStack(bulb.get()), new ItemStack(bulb.get().getHull()), new ItemStack(((GrowingBlock) bulb.get().getMachine()).blockSupplier.get())));
 		}
 		return results;
 	}
