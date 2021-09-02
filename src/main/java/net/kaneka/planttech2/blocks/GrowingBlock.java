@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class GrowingBlock extends Block
 {
 	public static final IntegerProperty GROWINGSTATE = IntegerProperty.create("growingstate", 0, 6);
-	protected final Supplier<Block> blockSupplier;
+	public final Supplier<Block> blockSupplier;
 	protected boolean growAlone; 
 	
 	public GrowingBlock(Supplier<Block> blockSupplier, boolean growAlone)
