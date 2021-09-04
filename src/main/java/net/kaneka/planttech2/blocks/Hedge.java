@@ -59,6 +59,8 @@ public class Hedge extends CustomFenceBlock
 		tooltip.add(new TextComponent("Soil: " + getSoil().getName().getString()));
 	}
 
+
+
 	public static class ColorHandler implements BlockColor
 	{
 		private final Block leaves, soil;
@@ -97,6 +99,8 @@ public class Hedge extends CustomFenceBlock
 		}
 
 	}
+
+
 
 	public static class ColorHandlerItem implements ItemColor
 	{
