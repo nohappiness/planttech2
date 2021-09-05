@@ -11,6 +11,7 @@ displayName="PlantTech 2"
 credits="Artists: veyezx, BeerCav, DinoSoup, MoonlitLamps and andrew0030"
 authors="Kaneka, Setrion, poopoodice"
 updateJSONURL="https://bitbucket.org/kaneka/planttech2/raw/1.16.x/update.json"
+logoFile="icon.png"
 description='''
 PlantTech 2 combines plants and tech for a whole new experience
 '''
