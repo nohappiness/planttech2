@@ -194,7 +194,7 @@ public class CropBaseBlock extends ContainerBlock
 		Block block = PlantTechMain.getCropList().getByName(name).getConfiguration().getSoil().get();
 		Block soil = world.getBlockState(pos.below()).getBlock();
 		List<Block> extraSoils = getCropAuraInRadiusList(generators, (generator) -> generator.soil, (block2) -> block2 != Blocks.AIR && block2 != Blocks.CAVE_AIR && block2 != Blocks.VOID_AIR);
-		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil);
+		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil) || (soil == Blocks.GRASS_BLOCK && block == Blocks.DIRT);
 	}
 
 	public boolean rightTemperature(World world, BlockPos pos, String name, int tolerance, List<CropAuraGeneratorTileEntity> generators)
