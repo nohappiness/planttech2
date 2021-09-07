@@ -37,7 +37,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -186,7 +185,7 @@ public class CropBaseBlock extends ModBlockEntityBlock
 		Block block = PlantTechMain.getCropList().getByName(name).getConfiguration().getSoil().get();
 		Block soil = level.getBlockState(pos.below()).getBlock();
 		List<Block> extraSoils = getCropAuraInRadiusList(generators, (generator) -> generator.soil, (block2) -> block2 != Blocks.AIR && block2 != Blocks.CAVE_AIR && block2 != Blocks.VOID_AIR);
-		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil);
+		return soil == block || soil == ModBlocks.UNIVERSAL_SOIL_INFUSED || extraSoils.contains(soil) || (soil == Blocks.GRASS_BLOCK && block == Blocks.DIRT);
 	}
 
 	public boolean rightTemperature(Level level, BlockPos pos, String name, int tolerance, List<CropAuraGeneratorBlockEntity> generators)
