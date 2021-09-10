@@ -3,6 +3,7 @@ package net.kaneka.planttech2.blocks.machines;
 import net.kaneka.planttech2.blocks.ModBlockEntityBlock;
 import net.kaneka.planttech2.blocks.entity.cable.TestCableBlockEntity;
 import net.kaneka.planttech2.registries.ModItems;
+import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -13,7 +14,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DaylightDetectorBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -172,6 +176,12 @@ public class TestCableBlock extends ModBlockEntityBlock
                 te.initCable();
             }
         }
+    }
+
+    @Nullable
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type)
+    {
+        return !world.isClientSide && type == ModTileEntities.CABLE_TE ? TestCableBlockEntity::tick : null;
     }
 
     @Nullable

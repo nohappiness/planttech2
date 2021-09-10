@@ -6,6 +6,7 @@ import net.kaneka.planttech2.registries.ModTileEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,14 +36,15 @@ public class TestCableBlockEntity extends BlockEntity
         super(ModTileEntities.CABLE_TE, pos, state);
     }
 
+    public static <T extends BlockEntity> void tick(Level level, BlockPos blockPos, BlockState blockState, T t)
+    {
+        ((TestCableBlockEntity) t).tick();
+    }
+
     public void tick()
     {
         if (level != null && !level.isClientSide() && isMaster())
             transferEnergy();
-//        if (Level != null && !world.isRemote() && !isMaster())
-//        {
-//            System.out.println(getMasterPos());
-//        }
     }
 
     private void transferEnergy()

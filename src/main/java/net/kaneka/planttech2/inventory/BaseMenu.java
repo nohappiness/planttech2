@@ -59,18 +59,12 @@ public class BaseMenu extends AbstractContainerMenu
 
 	protected LimitedItemInfoSlot createSpeedUpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.speedupgrade").setConditions((stack) -> {
-			Item item = stack.getItem();
-			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.SPEED_UPGRADE;
-		}).setLimited();
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.speedupgrade").setConditions(TierItem.ItemType.SPEED_UPGRADE).setLimited();
 	}
 
 	protected LimitedItemInfoSlot createRangeUpgradeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.rangeupgrade").setConditions((stack) -> {
-			Item item = stack.getItem();
-			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.RANGE_UPGRADE;
-		}).setLimited();
+		return new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.rangeupgrade").setConditions(TierItem.ItemType.RANGE_UPGRADE).setLimited();
 	}
 
 	protected LimitedItemInfoSlot createKnowledgeChipSlot(IItemHandler itemHandler, int xPosition, int yPosition)
@@ -80,10 +74,7 @@ public class BaseMenu extends AbstractContainerMenu
 
 	protected LimitedItemInfoSlot createCapacityChipSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
 	{
-		return (LimitedItemInfoSlot) new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.energystorageupgrade").setConditions((stack) -> 			{
-			Item item = stack.getItem();
-			return item instanceof TierItem && ((TierItem) item).getItemType() == TierItem.ItemType.CAPACITY_UPGRADE;
-		}).setLimited().setShouldListen();
+		return (LimitedItemInfoSlot) new LimitedItemInfoSlot(itemHandler, index, xPosition, yPosition, "slot.util.energystorageupgrade").setConditions(TierItem.ItemType.CAPACITY_UPGRADE).setLimited().setShouldListen();
 	}
 
 	protected LimitedItemInfoSlot createEnergyInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
@@ -242,6 +233,12 @@ public class BaseMenu extends AbstractContainerMenu
 		public LimitedItemInfoSlot setConditions(Predicate<ItemStack> conditions)
 		{
 			this.conditions = conditions;
+			return this;
+		}
+
+		public LimitedItemInfoSlot setConditions(TierItem.ItemType type)
+		{
+			this.conditions = (stack) -> stack.getItem() instanceof TierItem && ((TierItem) stack.getItem()).getItemType() == type;
 			return this;
 		}
 

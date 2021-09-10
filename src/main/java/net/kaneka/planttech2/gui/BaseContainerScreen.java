@@ -46,11 +46,12 @@ public abstract class BaseContainerScreen<T extends BaseMenu> extends AbstractCo
 	@Override
 	public void render(PoseStack mStack, int mouseX, int mouseY, float partialTicks)
 	{
-			this.renderBg(mStack, partialTicks, mouseX, mouseY);
-			super.render(mStack, mouseX, mouseY, partialTicks);
-			this.drawTooltips(mStack, mouseX, mouseY);
+		renderBackground(mStack);
+		this.renderBg(mStack, partialTicks, mouseX, mouseY);
+		super.render(mStack, mouseX, mouseY, partialTicks);
+		this.drawTooltips(mStack, mouseX, mouseY);
 //	        this.renderHoveredToolTip(mStack, mouseX, mouseY);
-	        this.renderTooltip(mStack, mouseX, mouseY);
+		this.renderTooltip(mStack, mouseX, mouseY);
 	}
 	
 	protected void drawTooltips(PoseStack mStack, int mouseX, int mouseY)
