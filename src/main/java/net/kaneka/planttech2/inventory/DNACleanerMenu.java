@@ -2,10 +2,8 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.blocks.entity.machine.DNACleanerBlockEntity;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -28,4 +26,9 @@ public class DNACleanerMenu extends BaseMenu
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
     }
+
+    public DNACleanerMenu(int i, Inventory inventory, BlockPos blockPos)
+    {
+		this(i, inventory, (DNACleanerBlockEntity) inventory.player.level.getBlockEntity(blockPos));
+	}
 }

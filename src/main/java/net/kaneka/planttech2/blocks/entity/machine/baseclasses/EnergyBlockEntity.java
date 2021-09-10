@@ -44,7 +44,11 @@ abstract public class EnergyBlockEntity extends BlockEntity implements MenuProvi
 		}
 	}
 
-
+	@Override
+	public CompoundTag getUpdateTag()
+	{
+		return save(new CompoundTag());
+	}
 
 	public void doUpdate()
 	{

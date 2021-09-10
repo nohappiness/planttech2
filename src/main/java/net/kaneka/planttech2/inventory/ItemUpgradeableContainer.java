@@ -1,6 +1,5 @@
 package net.kaneka.planttech2.inventory;
 
-import net.kaneka.planttech2.items.upgradeable.BaseUpgradeableItem;
 import net.kaneka.planttech2.items.upgradeable.IUpgradeable;
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
@@ -57,7 +56,7 @@ public class ItemUpgradeableContainer extends AbstractContainerMenu {
 		this.slot = this.slots.size() - 9 + slot;
 	}
 
-	@Override
+    @Override
 	public boolean stillValid(Player playerIn)
 	{
 		return true;

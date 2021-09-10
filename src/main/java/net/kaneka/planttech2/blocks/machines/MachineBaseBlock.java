@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -54,12 +56,12 @@ public class MachineBaseBlock extends ModBlockEntityBlock
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray)
 	{
-		if (!level.isClientSide)
+		if (!level.isClientSide && player instanceof ServerPlayer)
 		{
 			BlockEntity te = level.getBlockEntity(pos);
 			if (te instanceof EnergyInventoryBlockEntity eibe)
 			{
-				player.openMenu(eibe);
+				NetworkHooks.openGui((ServerPlayer) player, eibe, pos);
 				if (eibe.requireSyncUponOpen())
 					level.sendBlockUpdated(pos, state, state, 3);
 			}

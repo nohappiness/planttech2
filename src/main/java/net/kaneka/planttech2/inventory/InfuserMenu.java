@@ -3,6 +3,7 @@ package net.kaneka.planttech2.inventory;
 import net.kaneka.planttech2.blocks.entity.machine.InfuserBlockEntity;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -33,5 +34,10 @@ public class InfuserMenu extends BaseMenu
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
 		
+	}
+
+    public InfuserMenu(int i, Inventory inventory, BlockPos blockPos)
+    {
+		this(i, inventory, (InfuserBlockEntity) inventory.player.level.getBlockEntity(blockPos));
 	}
 }

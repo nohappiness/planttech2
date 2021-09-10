@@ -221,12 +221,6 @@ public class CompressorBlockEntity extends ConvertEnergyInventoryBlockEntity
 	}
 
 	@Override
-	public CompoundTag getUpdateTag()
-	{
-		return save(new CompoundTag());
-	}
-
-	@Override
 	public CompoundTag save(CompoundTag compound)
 	{
 		if (level != null && !level.isClientSide())

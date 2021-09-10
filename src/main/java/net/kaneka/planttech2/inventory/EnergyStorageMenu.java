@@ -3,6 +3,7 @@ package net.kaneka.planttech2.inventory;
 import net.kaneka.planttech2.blocks.entity.machine.EnergyStorageBlockEntity;
 import net.kaneka.planttech2.items.CropSeedItem;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -26,6 +27,11 @@ public class EnergyStorageMenu extends BaseMenu
 		this.addSlot(createEnergyOutSlot(handler, 168, 86));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
     }
+
+    public EnergyStorageMenu(int i, Inventory inventory, BlockPos blockPos)
+    {
+		this(i, inventory, (EnergyStorageBlockEntity) inventory.player.level.getBlockEntity(blockPos));
+	}
 }
 
 

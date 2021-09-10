@@ -236,7 +236,10 @@ public abstract class BaseUpgradeableItem extends Item implements IItemChargeabl
 		if (player.isCrouching())
 		{
 			if (!world.isClientSide && player instanceof ServerPlayer sp)
-    			NetworkHooks.openGui(sp, new NamedContainerProvider(stack, player.getInventory().selected), buffer -> buffer.writeItem(stack));
+    			NetworkHooks.openGui(sp, new NamedContainerProvider(stack, player.getInventory().selected), (buffer) -> {
+    				buffer.writeItem(stack);
+    				buffer.writeInt(player.getInventory().selected);
+				});
 		}
 		return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, stack);
 	}

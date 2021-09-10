@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import org.apache.logging.log4j.Level;
 
 import static net.kaneka.planttech2.items.TierItem.ItemType.RANGE_UPGRADE;
 import static net.kaneka.planttech2.items.TierItem.ItemType.SPEED_UPGRADE;
@@ -230,6 +231,8 @@ public class PlantFarmBlockEntity extends EnergyInventoryFluidBlockEntity
 	@Override
 	public void load(CompoundTag compound)
 	{
+//		if (level != null && level.isClientSide)
+//			throw new NullPointerException();
 		super.load(compound);
 		progress = compound.getIntArray("progress");
 	}

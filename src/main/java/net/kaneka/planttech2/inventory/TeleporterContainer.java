@@ -2,6 +2,7 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.registries.ModContainers;
 import net.kaneka.planttech2.registries.ModItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -13,16 +14,16 @@ public class TeleporterContainer extends AbstractContainerMenu
 	
 	public TeleporterContainer(int id, Inventory inv)
 	{
-		this(id, inv, new ItemStack(ModItems.CYBERBOW)); 
+		this(id, inv, new ItemStack(ModItems.CYBERBOW), -1);
 	}
 	
-	public TeleporterContainer(int id, Inventory playerInv, ItemStack itemInv)
+	public TeleporterContainer(int id, Inventory playerInv, ItemStack itemInv, int slot)
 	{ 
 		super(ModContainers.TELEPORTERITEM, id); 
 		stack = itemInv; 
 	}
 
-	@Override
+    @Override
 	public boolean stillValid(Player  playerIn)
 	{
 		return true;

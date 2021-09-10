@@ -25,7 +25,7 @@ import java.util.function.Predicate;
 
 public class BaseMenu extends AbstractContainerMenu
 {
-	protected final EnergyInventoryBlockEntity BlockEntity;
+	protected final EnergyInventoryBlockEntity blockEntity;
 	protected final ContainerData data;
 
 	public BaseMenu(int id, MenuType<?> type, Inventory player, EnergyInventoryBlockEntity BlockEntity, int slots)
@@ -36,7 +36,7 @@ public class BaseMenu extends AbstractContainerMenu
 				addSlot(new Slot(player, x + y * 9 + 9, 23 + x * 18, 106 + y * 18));
 		for (int x = 0; x < 9; x++)
 			addSlot(new Slot(player, x, 23 + x * 18, 164));
-		this.BlockEntity = BlockEntity;
+		this.blockEntity = BlockEntity;
 		data = BlockEntity.getContainerData();
 		addDataSlots(data);
 	}
@@ -44,12 +44,12 @@ public class BaseMenu extends AbstractContainerMenu
 	@Override
 	public boolean stillValid(Player playerIn)
 	{
-		return BlockEntity.isUsableByPlayer(playerIn);
+		return blockEntity.isUsableByPlayer(playerIn);
 	}
 
 	public EnergyBlockEntity getTE()
 	{
-		return BlockEntity;
+		return blockEntity;
 	}
 
 	public int getValue(int id)
@@ -75,7 +75,7 @@ public class BaseMenu extends AbstractContainerMenu
 
 	protected LimitedItemInfoSlot createKnowledgeChipSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
+		return new LimitedItemInfoSlot(itemHandler, blockEntity.getKnowledgeChipSlot(), xPosition, yPosition, "slot.util.knowledgechip").setConditions((stack) -> stack.getItem() instanceof KnowledgeChip);
 	}
 
 	protected LimitedItemInfoSlot createCapacityChipSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
@@ -88,22 +88,22 @@ public class BaseMenu extends AbstractContainerMenu
 
 	protected LimitedItemInfoSlot createEnergyInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, blockEntity.getEnergyInSlot(), xPosition, yPosition, "slot.util.energyin").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createEnergyOutSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, BlockEntity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
+		return new LimitedItemInfoSlot(itemHandler, blockEntity.getEnergyOutSlot(), xPosition, yPosition, "slot.util.energyout").setConditions((stack) -> stack.getItem() instanceof IItemChargeable);
 	}
 
 	protected LimitedItemInfoSlot createFluidInSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) BlockEntity).getFluidInSlot(), xPosition, yPosition, "slot.util.fluidin");
+		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) blockEntity).getFluidInSlot(), xPosition, yPosition, "slot.util.fluidin");
 	}
 
 	protected LimitedItemInfoSlot createFluidOutSlot(IItemHandler itemHandler, int xPosition, int yPosition)
 	{
-		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) BlockEntity).getFluidOutSlot(), xPosition, yPosition, "slot.util.fluidout");
+		return new LimitedItemInfoSlot(itemHandler, ((EnergyInventoryFluidBlockEntity) blockEntity).getFluidOutSlot(), xPosition, yPosition, "slot.util.fluidout");
 	}
 
 	protected LimitedItemInfoSlot createFakeSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, String usage)
@@ -182,7 +182,7 @@ public class BaseMenu extends AbstractContainerMenu
 			if (listening)
 			{
 				BaseMenu.this.broadcastChanges();
-				BaseMenu.this.BlockEntity.onContainerUpdated(getSlotIndex());
+				BaseMenu.this.blockEntity.onContainerUpdated(getSlotIndex());
 			}
 		}
 

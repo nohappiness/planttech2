@@ -2,13 +2,19 @@ package net.kaneka.planttech2.registries;
 
 import net.kaneka.planttech2.PlantTechMain;
 import net.kaneka.planttech2.inventory.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fmllegacy.network.IContainerFactory;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.awt.*;
+import java.util.function.Function;
 
 import static net.kaneka.planttech2.registries.ModReferences.*;
 
@@ -39,31 +45,70 @@ public class ModContainers
 	public static void registerAll(RegistryEvent.Register<MenuType<?>> event)
 	{
 		IForgeRegistry<MenuType<?>> registry = event.getRegistry();
-		registry.register(make(COMPRESSORCONTAINER, new MenuType<>(CompressorMenu::new)));
-		registry.register(make(DNACLEANERCONTAINER, new MenuType<>(DNACleanerMenu::new)));
-		registry.register(make(DNACOMBINERCONTAINER, new MenuType<>(DNACombinerMenu::new)));
-		registry.register(make(DNAEXTRACTORCONTAINER, new MenuType<>(DNAExtractorMenu::new)));
-		registry.register(make(DNAREMOVERCONTAINER, new MenuType<>(DNARemoverMenu::new)));
-		registry.register(make(ENERGYSTORAGECONTAINER, new MenuType<>(EnergyStorageMenu::new)));
-		registry.register(make(IDENTIFIERCONTAINER, new MenuType<>(IdentifierMenu::new)));
-		registry.register(make(INFUSERCONTAINER, new MenuType<>(InfuserMenu::new)));
-		registry.register(make(UPGRADEABLEITEMCONTAINER, new MenuType<>(ItemUpgradeableContainer::new)));
-		registry.register(make(MEGAFURNACECONTAINER, new MenuType<>(MegaFurnaceMenu::new)));
-		registry.register(make(PLANTFARMCONTAINER, new MenuType<>(PlantFarmMenu::new)));
-		registry.register(make(SEEDCONSTRUCTORCONTAINER, new MenuType<>(SeedConstructorMenu::new)));
-		registry.register(make(SEEDQUEEZERCONTAINER, new MenuType<>(SeedSqueezerMenu::new)));
-		registry.register(make(SOLARGENERATORCONTAINER, new MenuType<>(SolarGeneratorMenu::new)));
-		registry.register(make(CHIPALYZERCONTAINER, new MenuType<>(ChipalyzerMenu::new)));
-		registry.register(make(MACHINEBULBREPROCESSORCONTAINER, new MenuType<>(MachineBulbReprocessorMenu::new)));
-		registry.register(make(TELEPORTERBLOCKCONTAINER, new MenuType<>(PlantTopiaTeleporterMenu::new)));
-		registry.register(make(TELEPORTERITEMCONTAINER, new MenuType<>(TeleporterContainer::new)));
-		registry.register(make(ENERGYSUPPLIERCONTAINER, new MenuType<>(EnergySupplierMenu::new)));
-		registry.register(make(CROPAURAGENERATORCONTAINER, new MenuType<>(CropAuraGeneratorMenu::new)));
+		registry.register(makeBlock(COMPRESSORCONTAINER, CompressorMenu::new));
+		registry.register(make(DNACLEANERCONTAINER, DNACleanerMenu::new));
+		registry.register(makeBlock(DNACOMBINERCONTAINER, DNACombinerMenu::new));
+		registry.register(makeBlock(DNAEXTRACTORCONTAINER, DNAExtractorMenu::new));
+		registry.register(makeBlock(DNAREMOVERCONTAINER, DNARemoverMenu::new));
+		registry.register(makeBlock(ENERGYSTORAGECONTAINER, EnergyStorageMenu::new));
+		registry.register(makeBlock(IDENTIFIERCONTAINER, IdentifierMenu::new));
+		registry.register(makeBlock(INFUSERCONTAINER, InfuserMenu::new));
+		registry.register(makeItem(UPGRADEABLEITEMCONTAINER, ItemUpgradeableContainer::new));
+		registry.register(makeBlock(MEGAFURNACECONTAINER, MegaFurnaceMenu::new));
+		registry.register(makeBlock(PLANTFARMCONTAINER, PlantFarmMenu::new));
+		registry.register(makeBlock(SEEDCONSTRUCTORCONTAINER, SeedConstructorMenu::new));
+		registry.register(makeBlock(SEEDQUEEZERCONTAINER, SeedSqueezerMenu::new));
+		registry.register(makeBlock(SOLARGENERATORCONTAINER, SolarGeneratorMenu::new));
+		registry.register(makeBlock(CHIPALYZERCONTAINER, ChipalyzerMenu::new));
+		registry.register(makeBlock(MACHINEBULBREPROCESSORCONTAINER, MachineBulbReprocessorMenu::new));
+		registry.register(makeBlock(TELEPORTERBLOCKCONTAINER, PlantTopiaTeleporterMenu::new));
+		registry.register(makeItem(TELEPORTERITEMCONTAINER, TeleporterContainer::new));
+		registry.register(makeBlock(ENERGYSUPPLIERCONTAINER, EnergySupplierMenu::new));
+		registry.register(makeBlock(CROPAURAGENERATORCONTAINER, CropAuraGeneratorMenu::new));
 	}
 
-	static <M extends AbstractContainerMenu> MenuType<M> make(String registryName, MenuType<M> MenuType)
+//	static <M extends AbstractContainerMenu> MenuType<M> make(String registryName, MenuType<M> menuType)
+//	{
+//		menuType.setRegistryName(registryName);
+//		return menuType;
+//	}
+
+	static <M extends AbstractContainerMenu> MenuType<M> makeItem(String registryName, PlantTechItemMenuFactory<M> factory)
 	{
-		MenuType.setRegistryName(registryName);
-		return MenuType;
+		return make(registryName, factory);
+	}
+
+	static <M extends AbstractContainerMenu> MenuType<M> makeBlock(String registryName, PlantTechMachineMenuFactory<M> factory)
+	{
+		return make(registryName, factory);
+	}
+
+	static <M extends AbstractContainerMenu> MenuType<M> make(String registryName, MenuType.MenuSupplier<M> factory)
+	{
+		MenuType<M> menuType = new MenuType<>(factory);
+		menuType.setRegistryName(registryName);
+		return menuType;
+	}
+
+	interface PlantTechMachineMenuFactory<M extends AbstractContainerMenu> extends IContainerFactory<M>
+	{
+		@Override
+		default M create(int windowId, Inventory inv, FriendlyByteBuf data)
+		{
+			return create(windowId, inv, data.readBlockPos());
+		}
+
+		M create(int id, Inventory inventory, BlockPos te);
+	}
+
+	interface PlantTechItemMenuFactory<M extends AbstractContainerMenu> extends IContainerFactory<M>
+	{
+		@Override
+		default M create(int windowId, Inventory inv, FriendlyByteBuf data)
+		{
+			return create(windowId, inv, data.readItem(), data.readInt());
+		}
+
+		M create(int id, Inventory inventory, ItemStack type, int slot);
 	}
 }

@@ -2,6 +2,7 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.blocks.entity.machine.MegaFurnaceBlockEntity;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
@@ -27,5 +28,10 @@ public class MegaFurnaceMenu extends BaseMenu
 		this.addSlot(createEnergyInSlot(handler, 167, 38));
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 		this.addSlot(createKnowledgeChipSlot(handler, 12, 9));
+	}
+
+    public MegaFurnaceMenu(int i, Inventory inventory, BlockPos blockPos)
+    {
+		this(i, inventory, (MegaFurnaceBlockEntity) inventory.player.level.getBlockEntity(blockPos));
 	}
 }

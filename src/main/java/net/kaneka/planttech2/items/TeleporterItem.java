@@ -90,7 +90,7 @@ public class TeleporterItem extends EnergyStorageItem
 		@Override
 		public AbstractContainerMenu createMenu(int id, Inventory inv, Player entity)
 		{
-			return new TeleporterContainer(id, inv, stack);
+			return new TeleporterContainer(id, inv, stack, entity.getInventory().selected);
 		}
 
 		@Override

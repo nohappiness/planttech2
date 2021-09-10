@@ -2,6 +2,7 @@ package net.kaneka.planttech2.inventory;
 
 import net.kaneka.planttech2.blocks.entity.machine.EnergySupplierBlockEntity;
 import net.kaneka.planttech2.registries.ModContainers;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +24,12 @@ public class EnergySupplierMenu extends BaseMenu
 		this.addSlot(createEnergyOutSlot(handler, 167, 57));
 	}
 
-	@Override
+    public EnergySupplierMenu(int i, Inventory inventory, BlockPos blockPos)
+    {
+		this(i, inventory, (EnergySupplierBlockEntity) inventory.player.level.getBlockEntity(blockPos));
+	}
+
+    @Override
 	public ItemStack quickMoveStack(Player playerIn, int index)
 	{
 		return ItemStack.EMPTY;
